@@ -1,0 +1,38 @@
+{
+	"name": "learndash_elementor",
+	"description": "LearnDash Elementor Add-on",
+	"repository": "https://github.com/learndash",
+	"private": true,
+	"version": "1.0.0",
+	"devDependencies": {
+		"babel-core": "^6.26.0",
+		"babel-minify": "^0.5.0",
+		"babel-preset-env": "^1.7.0",
+		"cssnano": "^4.1.7",
+		"cssnano-preset-advanced": "^4.0.5",
+		"eslint": "^5.9.0",
+		"eslint-config-wordpress": "^2.0.0",
+		"postcss-cli": "^6.0.1",
+		"rimraf": "^2.6.2"
+	},
+	"scripts": {
+		"make-pot": "wp i18n make-pot . languages/learndash-elementor.pot"
+	},
+	"babel": {
+		"presets": [
+			"env"
+		]
+	},
+	"cssnano": {
+		"preset": "default"
+	},
+	"eslintConfig": {
+		"extends": "wordpress",
+		"root": true,
+		"env": {
+			"jest": true,
+			"node": true,
+			"es6": true
+		}
+	}
+}

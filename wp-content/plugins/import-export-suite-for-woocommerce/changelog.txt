@@ -1,0 +1,146 @@
+*** Import Export Suite for WooCommerce Changelog ***
+2024-04-16 - version 1.2.7
+ * Update: Tested OK with WooCommerce 8.7.0
+ * Update: Tested OK with WordPress 6.5.2
+ * Fix: Importing user_role contains space.
+ * Update: Revert woo.com to woocommerce.com
+
+2024-03-12 - version 1.2.6
+ * Update: Tested OK with WooCommerce 8.6.1
+
+2024-02-12 - version 1.2.5
+ * Add: Option to skip guest users on user import.
+ * Fix: Duplicate order items while re-importing subscription with the same ID when HPOS is enabled and sync is disabled.
+ * Update: Tested OK with WooCommerce 8.5.2
+ * Update: Tested OK with WordPress 6.4.3
+
+2024-01-09 - version 1.2.4
+ * Fix: Imported Subscription not linked with the user when checked by customer_email.
+ * Fix: Subscription ID changes while import.
+ * Fix: Tax data missing with the imported subscription details.
+ * Fix: Subscription export by status and payment method filters not working properly.
+ * Fix: Compatibility issue with WooCommerce 7.0.1
+ * Update: Improved processing of hashed/plaintext passwords during customer import.
+ * Update: Tested OK with WooCommerce 8.4.0
+
+2023-12-09 - version 1.2.3
+ * Fix: Issue with tax data on order import.
+ * Update: Tested OK with WooCommerce 8.3.1
+ * Update: Tested OK with WordPress 6.4.2
+
+2023-11-09 - version 1.2.2
+ * Add: Option to export subscription orders line items into a separate column.
+ * Add: HPOS compatibility for subscription orders import/export.
+ * Fix: Issue with serialized data on import mapping evaluation.
+ * Update: Tested OK with WooCommerce 8.2.2
+ * Update: Tested OK with WordPress 6.4.1
+ * Update: Changed woocommerce.com to woo.com
+
+2023-10-09 - version 1.2.1
+ * Add: Automatically generate product description using ChatGPT API while importing.
+ * Fix: Missing rate_percent meta in order tax_items.
+ * Fix: Product variation duplicates in the export file.
+ * Update: Tested OK with WooCommerce 8.1.1
+ * Update: Tested OK with WordPress 6.3.1
+
+2023-09-07 - version 1.2.0
+ * Fix: Corrected product sale start and sale end date value while export.
+ * Update: Tested OK with WooCommerce 8.0.3
+ * Update: Tested OK with WordPress 6.3
+
+2023-08-07 - version 1.1.9
+ * Fix: Issue while triggering scheduled import
+ * Fix: Removed redundant meta columns in the mapping screen
+ * Fix: The download link in the history tab didn’t work for FTP export
+ * Fix: Line item metadata missing when importing subscriptions
+ * Fix: The link of product variation on successful import is not working
+ * Fix: The link to the sample CSV on the import page not working in the product review.
+ * Fix: The link to settings on the error popup not working.
+ * Fix: Error when clicking the "View details" button after importing Product Review.
+ * Update: Tested OK with WooCommerce 7.9.0
+
+2023-07-07 - version 1.1.8
+ * Update: Tested OK with WooCommerce 7.8.2
+ * Fix: Order export - Incorrect max count value of line items.
+
+2023-06-07 - version 1.1.7
+ * Add: HPOS ( High performance order storage ) support
+ * Update: Tested OK with WooCommerce 7.7.2
+ * Fix: Importing custom CSV contains colon in the column heading.
+ * Fix: Auto delete history option not removing import logs
+
+2023-05-07 - version 1.1.6
+ * Update: Tested OK with WooCommerce 7.6
+ * Fix: Subscription status set to pending when imported without ID.
+
+2023-04-07 - version 1.1.5
+ * Update: Tested OK with WooCommerce 7.5, WordPress 6.2 and PHP 8.2
+ * Fix: Issue with Tab delimiter on import
+
+2023-03-07 - version 1.1.4
+ * Add: Total spent amount in customer export file
+ * Update: Tested OK with WooCommerce 7.4
+ * Fix: Error when exporting subscriptions without some line item details(line_total,line_tax)
+ * Fix: Issue with Tab and Space delimiter on export and import
+ * Fix: Parse categories issue on product importer during Cron
+
+2023-02-07 - version 1.1.3
+ * Update: Tested OK with WooCommerce 7.3
+ * Fix: Update the date fields of the subscription with just the ID and date columns
+ * Fix: Fatal error fix in quick export
+ * Fix: Uncaught TypeError on set_time_limit()
+ * Fix: Error occurs on import when the user CSV does not contain roles column
+
+2023-01-07 - version 1.1.2
+ * Update: Tested OK with WooCommerce 7.2
+ * Fix: Security fixes
+
+2022-12-07 - version 1.1.1
+ * Update: Tested OK with WooCommerce 7.1
+ * Fix: Metadata missing on subscription import
+ * Fix: Error on order export when there are no line items
+
+2022-11-07 - version 1.1.0
+ * Update: Tested OK with WooCommerce 7.0
+ * Fix: XML export format
+ * Add: Option to set custom delimiter was missing
+ * Fix: Shipping items metadata not exporting
+
+2022-10-07 - version 1.0.9
+ * Update: Tested OK with WooCommerce 6.9
+ * New: Pagination and bulk action in import log listing page
+
+2022-09-07 - version 1.0.8
+ * Update: Tested OK with WooCommerce 6.8
+ * Fix: Product export filter not working on tags and categories for non-Latin languages
+ * Fix: Product sales price start date and end date not importing
+
+2022-08-07 - version 1.0.7
+ * Update: Tested OK with WooCommerce 6.7
+ * Add - Sample CSV provided for all post types in the import screen
+ * Fix: Export error when export guest users option is enabled
+
+2022-07-07 - version 1.0.6
+ * Update: Tested OK with WooCommerce 6.6
+ * New - Added hook to alter the export file types.
+ * New - Added hook to alter the subscription after import.
+
+2022-06-07 - version 1.0.5
+ * Update: Tested OK with WordPress 6.0 and WooCommerce 6.5
+ * Fix: Importing empty custom field columns of order
+
+2022-05-11 - version 1.0.4
+ * New: sFTP support for export and import
+ * Fix: Subscription import
+
+2022-04-07 - version 1.0.3
+ * Fix: Subscription export and guest user export/import
+
+2022-03-07 - version 1.0.2
+ * Update: Documentation and support link updates
+
+2022-03-04 - version 1.0.1
+ * Bug fixes and text corrections
+
+2021-12-30 - version 1.0.0
+ * First release

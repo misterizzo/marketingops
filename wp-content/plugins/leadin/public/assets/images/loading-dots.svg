@@ -1,0 +1,45 @@
+<svg width="82.5" height="75" viewBox="0 0 55 50" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @keyframes loadingColorAnimation {
+      25% {
+        fill: #0091ae;
+      }
+      75% {
+        fill: #0091ae;
+      }
+    }
+
+    @keyframes loadingAnimation {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      25% {
+        transform: translateY(.25em);
+      }
+      50% {
+        transform: translateY(0);
+      }
+      75% {
+        transform: translateY(-.25em);
+      }
+    }
+
+    circle {
+      fill: #f5f8fa;
+      animation: loadingAnimation 1s linear infinite, loadingColorAnimation  1s linear infinite;
+    }
+
+    g circle:nth-child(2) {
+      animation-delay: -0.66s;
+    }
+
+    g circle:nth-child(3) {
+      animation-delay: -0.33s;
+    }
+  </style>
+  <g>
+    <circle cx="10" cy="25" r="5"></circle>
+    <circle cx="25" cy="25" r="5"></circle>
+    <circle cx="40" cy="25" r="5"></circle>
+  </g>
+</svg>
