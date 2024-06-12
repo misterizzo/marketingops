@@ -1,0 +1,202 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: HubSpot All-In-One Marketing - Forms, Popups, Live Chat {{ DEV_VERSION }}\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/leadin\n"
+"Last-Translator: Hubspot <wordpress-support-groups@hubspot.com>\n"
+"Language-Team: Hubspot <wordpress-support-groups@hubspot.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-06-04T16:12:14+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Language: \n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Domain: leadin\n"
+
+#. Plugin Name of the plugin
+#: leadin.php
+msgid "HubSpot All-In-One Marketing - Forms, Popups, Live Chat"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: leadin.php
+msgid "http://www.hubspot.com/integrations/wordpress"
+msgstr ""
+
+#. Description of the plugin
+#: leadin.php
+msgid "HubSpot’s official WordPress plugin allows you to add forms, popups, and live chat to your website and integrate with the best WordPress CRM."
+msgstr ""
+
+#. Author of the plugin
+#: leadin.php
+#: public/admin/class-gutenberg.php:36
+#: public/admin/class-leadinadmin.php:200
+#: public/admin/class-leadinadmin.php:218
+msgid "HubSpot"
+msgstr "HubSpot"
+
+#. Author URI of the plugin
+#: leadin.php
+msgid "http://hubspot.com/products/wordpress"
+msgstr ""
+
+#: public/admin/class-deactivationform.php:29
+msgid "We're sorry to see you go"
+msgstr "Ci dispiace di vederti andare via"
+
+#: public/admin/class-deactivationform.php:39
+msgid "If you have a moment, please let us know why you're deactivating the plugin"
+msgstr "Se hai un attimo, facci sapere per quale motivo stai disattivando il plugin."
+
+#: public/admin/class-deactivationform.php:54
+msgid "I can't sign up or log in"
+msgstr "Non riesco a effettuare la registrazione o a effettuare l'accesso"
+
+#: public/admin/class-deactivationform.php:55
+msgid "The plugin is impacting website performance"
+msgstr "Il plugin sta influendo sulle prestazioni del sito web"
+
+#: public/admin/class-deactivationform.php:56
+msgid "The plugin isn't working"
+msgstr "Il plugin non funziona"
+
+#: public/admin/class-deactivationform.php:57
+msgid "The plugin isn't useful"
+msgstr "Il plugin non è utile"
+
+#: public/admin/class-deactivationform.php:58
+msgid "Temporarily disabling or troubleshooting"
+msgstr "Sto disabilitando temporaneamente o sto effettuando la risoluzione dei problemi"
+
+#: public/admin/class-deactivationform.php:59
+msgid "Other"
+msgstr "Altro"
+
+#: public/admin/class-deactivationform.php:81
+msgid "Feedback"
+msgstr "Feedback..."
+
+#: public/admin/class-deactivationform.php:86
+msgid "Submit & deactivate"
+msgstr "Invia e disattiva"
+
+#: public/admin/class-deactivationform.php:91
+msgid "Skip & deactivate"
+msgstr "Ignora e disattiva"
+
+#: public/admin/class-leadinadmin.php:72
+#: public/class-leadin.php:41
+msgid "Hubspot"
+msgstr "Hubspot"
+
+#: public/admin/class-leadinadmin.php:80
+msgid "Select the content type HubSpot Analytics uses to track this page"
+msgstr "Seleziona il tipo di contenuti usato da HubSpot Analytics per monitorare questa pagina."
+
+#: public/admin/class-leadinadmin.php:84
+msgid "Detect Automatically"
+msgstr "Rileva automaticamente"
+
+#: public/admin/class-leadinadmin.php:85
+msgid "Blog Post"
+msgstr "Articolo blog"
+
+#: public/admin/class-leadinadmin.php:86
+msgid "Knowledge Article"
+msgstr "Articolo della knowledge base"
+
+#: public/admin/class-leadinadmin.php:87
+msgid "Landing Page"
+msgstr "Landing page"
+
+#: public/admin/class-leadinadmin.php:88
+msgid "Listing Page"
+msgstr "Pagina di prospetto"
+
+#: public/admin/class-leadinadmin.php:89
+msgid "Standard Page"
+msgstr "Pagina standard"
+
+#: public/admin/class-leadinadmin.php:202
+msgid "User Guide"
+msgstr "Guida dell'utente"
+
+#: public/admin/class-leadinadmin.php:203
+msgid "Forms"
+msgstr "Form"
+
+#: public/admin/class-leadinadmin.php:204
+msgid "Live Chat"
+msgstr "Chat dal vivo"
+
+#: public/admin/class-leadinadmin.php:206
+msgid "Contacts"
+msgstr "Contatti"
+
+#: public/admin/class-leadinadmin.php:207
+msgid "Email"
+msgstr "E-mail"
+
+#: public/admin/class-leadinadmin.php:208
+msgid "Lists"
+msgstr "Elenchi"
+
+#: public/admin/class-leadinadmin.php:209
+msgid "Reporting"
+msgstr "Creazione di rapporti"
+
+#: public/admin/class-leadinadmin.php:211
+#: public/admin/class-pluginactionsmanager.php:35
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: public/admin/class-leadinadmin.php:213
+#: public/admin/class-pluginactionsmanager.php:50
+msgid "Upgrade"
+msgstr "Esegui l'upgrade"
+
+#: public/admin/class-leadinadmin.php:258
+#: public/admin/class-leadinadmin.php:264
+msgid "HubSpot All-In-One Marketing %1$s requires PHP %2$s or higher Please upgrade WordPress first"
+msgstr "Marketing all-in-one di HubSpot %1$s richiede il PHP %2$s o superiore. Prima aggiorna WordPress."
+
+#: public/admin/class-noticemanager.php:35
+msgid "The HubSpot plugin is not connected right now To use HubSpot tools on your WordPress site, %1$sconnect the plugin now%2$s"
+msgstr "Il plugin di HubSpot non è connesso al momento. Per utilizzare gli strumenti di HubSpot sul tuo sito WordPress, %1$sconnetti subito il plugin%2$s."
+
+#: public/admin/class-reviewbanner.php:27
+msgid "Dismiss this notice"
+msgstr "Ignora questo avviso."
+
+#: public/admin/class-reviewbanner.php:29
+msgid "Hey %1$s,"
+msgstr "Hey %1$s,"
+
+#: public/admin/class-reviewbanner.php:32
+msgid "Have you got 2 minutes to complete %1$sthis survey%2$s about the HubSpot for WordPress plugin?"
+msgstr "Hai 2 minuti per completare %1$squesto sondaggio%2$s sul plugin HubSpot per WordPress?"
+
+#: public/admin/class-reviewbanner.php:33
+msgid "We read every response Your feedback helps our team make the improvements that you need the most"
+msgstr "Leggiamo ogni risposta. Il tuo feedback aiuta il nostro team ad apportare le migliorie di cui hai più bisogno."
+
+#: public/admin/class-reviewbanner.php:34
+msgid "HubSpot for WordPress Team"
+msgstr "Il team di HubSpot per WordPress"
+
+#: public/admin/class-reviewbanner.php:35
+msgid "Thanks,"
+msgstr "Grazie,"
+
+#: public/admin/class-reviewbanner.php:59
+msgid "Leave us a review | link opens in a new tab"
+msgstr "Lasciaci una recensione | il link si apre in una nuova scheda"
+
+#: public/admin/widgets/class-elementorform.php:85
+msgid "Form"
+msgstr "Form"
+
+#: public/admin/widgets/class-elementormeeting.php:84
+msgid "Meetings Scheduler"
+msgstr "Strumento di pianificazione delle riunioni"
