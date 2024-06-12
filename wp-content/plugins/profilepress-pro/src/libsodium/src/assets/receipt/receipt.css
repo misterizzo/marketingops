@@ -1,0 +1,335 @@
+html,
+body,
+span {
+    border: 0 !important;
+    margin: 0 !important;
+    outline: 0 !important;
+    text-decoration: none !important;
+}
+
+.invoice-actions {
+    border-bottom: 1px solid #ccd0d4;
+    padding: 20px;
+}
+
+.button {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 3px;
+    color: #3c434a;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-size: 14px;
+    padding: 5px 10px;
+    text-decoration: none;
+}
+
+a,
+span,
+td,
+th {
+    -webkit-font-smoothing: antialiased !important;
+}
+
+table {
+    border-collapse: separate;
+}
+
+/* typography */
+body {
+    color: #000000;
+    font-size: 14px;
+    line-height: 150%;
+    font-weight: 400;
+    max-width: 800px;
+    width: 100%;
+    margin: auto !important;
+}
+
+a {
+    color: #635BFF;
+}
+
+.logo-gray {
+    color: RGB(128, 128, 128);
+}
+
+.light-gray {
+    color: #BFBFBF;
+}
+
+.h1, h1 {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 130%;
+}
+
+.h2, h2 {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 130%;
+}
+
+.bold, strong {
+    font-weight: 600;
+}
+
+.regular {
+    font-weight: 400;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.break-word {
+    word-wrap: break-word;
+}
+
+.fs-13 {
+    font-size: 13px;
+}
+
+/* widths */
+.width-0 {
+    width: 0;
+}
+
+.width-12point5 {
+    width: 12.5%;
+}
+
+.width-16point7 {
+    width: 16.7%;
+}
+
+.width-40 {
+    width: 40%;
+}
+
+.width-50 {
+    width: 50%;
+}
+
+.width-100 {
+    width: 100%;
+}
+
+/* margin classes */
+.mb5 {
+    margin-bottom: 5px;
+}
+
+.mb10 {
+    margin-bottom: 10px;
+}
+
+.mb20 {
+    margin-bottom: 20px;
+}
+
+.mb30 {
+    margin-bottom: 30px;
+}
+
+.mt5 {
+    margin-top: 5px;
+}
+
+.mt10 {
+    margin-top: 10px;
+}
+
+.mt20 {
+    margin-top: 20px;
+}
+
+/* padding classes */
+.pr5 {
+    padding-right: 5px;
+}
+
+.pr8 {
+    padding-right: 8px;
+}
+
+.pr15 {
+    padding-right: 15px;
+}
+
+.pt20 {
+    padding-top: 20px;
+}
+
+.pb5 {
+    padding-bottom: 5px;
+}
+
+.pb30 {
+    padding-bottom: 30px;
+}
+
+/* flex classes */
+.flex-horizontal {
+    display: flex;
+}
+
+/* text alignment */
+.align-right {
+    text-align: right;
+}
+
+/* misc */
+.logo-img {
+    max-width: 168px;
+    max-height: 54px;
+}
+
+.hidden {
+    display: none;
+}
+
+.light-gray-border-top {
+    border-top: 1px solid #EBEBEB;
+    /* light gray */
+}
+
+.line-height-140 {
+    line-height: 140%;
+}
+
+/* line item table */
+.line-item-table {
+    width: 100%;
+    overflow: hidden;
+    table-layout: fixed;
+    page-break-inside: avoid;
+}
+
+.line-height-1point3 {
+    line-height: 1.3
+}
+
+.bottom-valign {
+    vertical-align: bottom
+}
+
+.table-headers > td {
+    padding-bottom: 5px;
+    font-size: 14px;
+}
+
+.line-item-row > td {
+    vertical-align: top;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.line-item-row > td:last-child {
+    text-align: right;
+}
+
+.summary-amount > td:not(:first-child) {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+/* row borders */
+.line-item-row > td {
+    border-top: 1px solid #EBEBEB;
+}
+
+.table-headers + .line-item-row > td {
+    border-top: 1px solid #000000;
+}
+
+.summary-amount-border > td:not(:first-child) {
+    border-top: 1px solid #EBEBEB;
+    /* light gray */
+}
+
+.summary-amount-border + .summary-amount-border > td:not(:first-child) {
+    border: 0;
+}
+
+/* metadata */
+.metadata tr:first-child td {
+    font-weight: 600;
+}
+
+.metadata td:first-child {
+    padding-right: 8px;
+}
+
+.metadata td {
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.maintain-newlines {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.avoid-page-break {
+    page-break-inside: avoid;
+}
+
+.invoice-top {
+    display: flex;
+    padding: 0 0 2px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.brand-logo-container {
+    text-align: right;
+}
+
+.invoice-top > div {
+    width: 50%;
+}
+
+.main-one {
+    margin: 40px 40px 0;
+    overflow: hidden;
+    min-height: 700px;
+}
+
+.main-head {
+    margin-bottom: 20px;
+}
+
+@media print {
+    .invoice-actions, .hide-on-print {
+        display: none
+    }
+
+    #receipt-wrap {
+        max-width: 100%
+    }
+}
+
+body {
+    font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* regular */
+@font-face {
+    font-family: "Inter";
+    font-weight: 400;
+    src: url('./fonts/inter-regular.ttf');
+}
+
+/* medium */
+@font-face {
+    font-family: "Inter";
+    font-weight: 500;
+    src: url('./fonts/inter-medium.ttf');
+}
+
+/* semibold */
+@font-face {
+    font-family: "Inter";
+    font-weight: 600;
+    src: url('./fonts/inter-bold.ttf');
+}
