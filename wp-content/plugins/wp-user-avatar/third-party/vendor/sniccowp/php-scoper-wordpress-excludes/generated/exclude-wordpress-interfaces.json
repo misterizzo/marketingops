@@ -1,0 +1,8 @@
+[
+    "SimplePie_Cache_Base",
+    "WpOrg\\Requests\\Auth",
+    "WpOrg\\Requests\\Capability",
+    "WpOrg\\Requests\\HookManager",
+    "WpOrg\\Requests\\Proxy",
+    "WpOrg\\Requests\\Transport"
+]
