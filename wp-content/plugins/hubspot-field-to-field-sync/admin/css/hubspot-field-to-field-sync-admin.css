@@ -1,0 +1,143 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+.wrap.hubwoo_ftf_settings{
+  background: #fff;
+  padding: 0 10px;
+  border: 1px solid #bababa;
+  border-radius: 6px;
+}
+.hubwoo_ftf_license_text p{
+ text-align: justify;
+}
+.wrap.hubwoo_ftf{
+   background: #fff;
+   padding: 10px;
+ }
+.wrap.hubwoo_ftf h2{
+  font-size: 18px;
+}
+.hubwoo_ftf_show{
+ display: inline;
+ width: 30px; 
+ height: 30px;
+ vertical-align: middle;
+}
+.hubwoo_ftf_hide{
+  display: none;
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+}
+#hubwoo_ftf_loader.loading-style-bg img {
+  left: 0;
+  margin: 0 auto;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100px;
+}
+#hubwoo_ftf_loader.loading-style-bg {
+  background-color: rgba(0, 0, 0, 0.65);
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 2147483647;
+}
+#hubwoo_ftf_license_key{
+  float: left;
+}
+/*mycss*/
+.hubwoo_ftf .hubwoo_remove_row{
+  background-color: #D70101;
+  border: 0 none;
+  border-radius: 0;
+  color: #fff;
+  padding: 5px 19px;
+  font-size: 17px;
+  margin-top: 16px;
+  cursor: pointer;
+}
+.hubwoo_ftf .hubwoo_delete_row{
+  background-color: #D70101;
+  border: 0 none;
+  border-radius: 0;
+  color: #fff;
+  padding: 5px 19px;
+  font-size: 17px;
+  margin-top: 16px;
+  cursor: pointer;
+}
+.hubwoo_ftf  #hubwoo_new_row{
+ background: #000 none repeat scroll 0 0;
+ border: 0 none;
+ color: #fff;
+ font-size: 15px;
+ padding: 10px 22px;
+ transition: 0.3s linear all;
+ cursor: pointer;
+
+}
+.hubwoo_ftf  #hubwoo_new_row:hover{
+  background-color: #3e3e3e;
+  transition: 0.3s linear all;
+}
+.hubwoo_ftf .hubwoo_new_rule {
+  text-align: center;
+  margin: 30px;
+
+}
+.hubwoo_ftf #hubwoo_ftf_table .hubwoo_map{
+ height: 40px !important;
+ margin: 10px 15px;
+ width: 90%;
+ font-size: 100%;
+
+}
+.hubwoo_ftf #hubwoo_ftf_table{
+  margin: 0 auto;
+}
+.hubwoo_ftf{
+  text-align: center;
+}
+/*.hubwoo_ftf #hubwoo_ftf_settings{
+  border-radius: 0;
+  font-size: 15px;
+  padding: 0 15px;
+}*/
+.hubwoo_ftf h1{
+  background: #efefef none repeat scroll 0 0;
+  border-radius: 5px;
+  padding: 15px;
+}
+#hubwoo_ftf_table h4 {
+  font-size: 16px;
+}
+@media only screen and (max-width:768px ){
+  .hubwoo_ftf .hubwoo_remove_row {
+    font-size: 13px;
+    margin-top: 21px;
+    padding: 3px 9px;
+  }
+  .hubwoo_ftf_settings input[type=text]{
+  width: 100%;
+  }
+  .hubwoo_ftf .hubwoo_delete_row{
+   font-size: 13px;
+   margin-top: 21px;
+   padding: 3px 9px;
+ }
+}
+@media only screen and (max-width:480px ){
+ #hubwoo_ftf_license_key {
+  width: 80%;
+  height: auto !important;
+  float: left;
+}
+}
