@@ -6119,4 +6119,16 @@ class Marketing_Ops_Core_Public {
 		);
 		wp_die();
 	}
+
+	/**
+	 * Add custom meta data to the steipe transactions.
+	 *
+	 * @param array    $metadata This is the array of meta data.
+	 * @param WC_Order $order This is the WooCommerce order object.
+	 * @param string   $source The order source.
+	 */
+	public function mops_wc_stripe_payment_metadata_callback( $metadata, $order, $source ) {
+
+		return $metadata;
+	}
 }
