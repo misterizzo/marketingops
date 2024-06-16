@@ -45,11 +45,7 @@ if ( is_user_logged_in() ) {
 	$ye_selected          = ! empty( $year_experience ) ? 'moc_change_selection' : '';
 	$location_class       = ! empty( $location ) ? 'moc_change_selection' : '';
 	$jsd_selected_class   = ! empty( $job_seeker_details ) ? 'moc_change_selection' : '';
-	
-	// debug( $default_user_img );
-	// die;
-	
-	?>
+?>
 
 <section class="profile_setup">
 	<div class="loader_bg">
@@ -227,7 +223,7 @@ if ( is_user_logged_in() ) {
 
 					<?php if ( '183.82.162.107' === $_SERVER['REMOTE_ADDR'] ) { ?>
 						<!-- form row -->
-						<div class="form_row">
+						<div class="form_row smtc_network">
 							<!-- input with error -->
 							<div class="content_boxed">
 								<input type="checkbox" id="moc_join_smtc_network" value="1" />

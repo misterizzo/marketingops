@@ -480,16 +480,15 @@ div#moc_apaloza_workshop.popup .popup_container .popup_content .box_content .box
 .apaloooza-session-speakers.nodesktops{display:none;}
 .onlymobilecontent{display:none;}
 .fourimageboxs .elementor-col-100.maintickbox{width:49%!important;margin:0 auto;}
-@media (min-width: 992px) and (max-width: 1199px) 
-{
+
+@media (min-width: 992px) and (max-width: 1199px) {
 	.maindinnerexp ul {gap: 135px;}
 	.dinnerblocksmain_4 {margin-left: 470px;}
 	.dinnerlogo {right: 9px;}
 	.fourimageboxs .elementor-col-100.maintickbox{width:49%!important;margin:0 auto;}
 }    
 
-@media (min-width: 768px) and (max-width: 991px) 
-{
+@media (min-width: 768px) and (max-width: 991px) {
 	.maindinnerexp ul {gap: 99px;}
 	.dinnerblocksmain_2 {margin-left: 30px;}
 	.dinnerblocksmain_3 {margin-left: 75px;}
@@ -501,8 +500,7 @@ div#moc_apaloza_workshop.popup .popup_container .popup_content .box_content .box
 	
 }
 	
-@media (max-width: 767px) 
-{
+@media (max-width: 767px) {
 	.broughtmainbox .broughtmainboxcolumn {max-width: 672px;margin-left: 0;}
 	.roadtomopza .roadtomopzaright {max-width: 100%!important; width: 100%!important;}
 	.mobileformroadmopza .elementor-widget-wrap.elementor-element-populated {width: 95%;margin: 0 auto;}
@@ -555,14 +553,12 @@ div#moc_apaloza_workshop.popup .popup_container .popup_content .box_content .box
 .chaptermainbanner{position: relative;height:250px;}
 .chaptermainbanner .elementor-container{position: relative;height:250px;}
 .chaptermainbanner .elementor-container:before{content: '';background: rgba(0,0,0,0.8) url('/wp-content/uploads/2024/04/Group-1420-1-scaled.jpg');height: 100%;width: 100vw;position: absolute;top: 0;bottom: 0;background-position: center center;background-repeat: no-repeat;background-size: cover;left: -20vw;border-radius: 0px 0px 200px 0px;}
-@media (min-width: 2500px) and (max-width: 5000px)  
-{
+@media (min-width: 2500px) and (max-width: 5000px) {
 	.chaptermainbanner{position: relative;height:350px;}
 	.chaptermainbanner .elementor-container{position: relative;height:350px;}
  	.chaptermainbanner .elementor-container:before{content: '';background: rgba(0,0,0,0.8) url('/wp-content/uploads/2024/04/Group-1420-1-scaled.jpg');height: 100%;width: calc(100vw + 1150px);position: absolute;top: 0;bottom: 0;background-position:100% -35vh;background-repeat: no-repeat;background-size: cover;left: -100vw;border-radius: 0px 0px 200px 0px;}
 }
-@media (min-width: 1920px) and (max-width: 2500px)  
-{
+@media (min-width: 1920px) and (max-width: 2500px) {
 	.chaptermainbanner{position: relative;height:350px;}
 	.chaptermainbanner .elementor-container{position: relative;height:350px;}
  	.chaptermainbanner .elementor-container:before{content: '';background: rgba(0,0,0,0.8) url('/wp-content/uploads/2024/04/Group-1420-1-scaled.jpg');height: 100%;width: calc(100vw + 1150px);position: absolute;top: 0;bottom: 0;background-position:center center;background-repeat: no-repeat;background-size: cover;left: -100vw;border-radius: 0px 0px 200px 0px;}
@@ -578,17 +574,9 @@ div#moc_apaloza_workshop.popup .popup_container .popup_content .box_content .box
 .mopschapter-comunity h2.elementor-heading-title.elementor-size-default,
 .yourchapteryourhome h3.elementor-heading-title.elementor-size-default,
 .emergingchapters h4.elementor-heading-title.elementor-size-default{background: var(--horizontal-grad-1,linear-gradient(90deg,#FD4B7A -2.36%,#4D00AE 159.05%));background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}
-.mopschaptertitle p {
-	margin-bottom: 0;
-}
-.elementor-226100 .elementor-element.elementor-element-6f4d0ea {
-	margin-bottom: 0;
-}
-.mopschapter-comunity h2.elementor-heading-title.elementor-size-default{background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A 16.64%, #4D00AE 159.05%));
-background-clip: text;
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;}
-
+.mopschaptertitle p {margin-bottom: 0;}
+.elementor-226100 .elementor-element.elementor-element-6f4d0ea {margin-bottom: 0;}
+.mopschapter-comunity h2.elementor-heading-title.elementor-size-default{background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A 16.64%, #4D00AE 159.05%));background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}
 .becomchapterinner h5.elementor-heading-title.elementor-size-default{background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}
 .mopschapter-comunity .mopschaptertitle {margin: 0 auto;}
 .comunitywithicon .elementor-icon-box-icon span.elementor-icon {width: 80px;height: 80px;background: #F1F3F4;display: flex;align-items: center;align-content: center;justify-content: center;border-radius: 50%;}
@@ -610,7 +598,6 @@ background-clip: text;
 .comunitywithicon:after {content: "";width: 332px;height: 534px;position: absolute;top: -70%;bottom: 0;right: 0;background-image: url("/wp-content/uploads/2024/04/blurcircle1-1.png");background-repeat: no-repeat;background-size: contain;z-index: 1;}
 .emergingchapters:after {content: "";width: 370px;height: 711px;position: absolute;top:-25em;bottom: 0;left: 0;background-image: url("/wp-content/uploads/2024/04/blur2-1.png");background-repeat: no-repeat;background-size: contain;z-index: 1;}
 .applychapter:before {content: "";width: 375px;height: 546px;position: absolute;top: -15em;bottom: 0;right: 0;background-image: url("/wp-content/uploads/2024/04/blur3-1.png");background-repeat: no-repeat;background-size: contain;z-index: -1;}
-
 .social_proof.forthsocialproof{margin-top:-80px;}
 .sp_column_three.sp_column.forthsocialproofinner {max-width: 957px;margin-left: auto;margin-right: 80px;}
 .sp_column_three.sp_column.forthsocialproofinner .elementor-container.elementor-column-gap-default{flex-wrap:nowrap;}
@@ -641,9 +628,10 @@ background-clip: text;
 .joinusgetbox{position:relative;}
 .socitytopbox:after{content:"";width:433px;height:665px;position:absolute;top:80%;bottom:0;right:0;background-image:url("/wp-content/uploads/2024/04/blur2-1-1.png");background-repeat:no-repeat;background-size:contain;z-index:1;}
 .joinusgetbox:after{content:"";width:312px;height:534px;position:absolute;top:38%;bottom:0;left:0;background-image:url("/wp-content/uploads/2024/04/blurcircle1-1-1.png");background-repeat:no-repeat;background-size:contain;z-index:1;}
+.profile_setup .form_row.smtc_network input[type="checkbox"] {opacity: 0;position: absolute;margin: 0;left: 0;right: 0;width: 25px;height: 25px;text-align: left;z-index: 99;top: 50%;transform: translateY(-50%);}
+.profile_setup .form_row.smtc_network label {height: inherit;line-height: inherit;}
 
-@media only screen and (max-width: 767px) 
-{
+@media only screen and (max-width: 767px) {
 	.socitytopbox .socitytopbox_left .elementor-widget-wrap.elementor-element-populated,.socitytopbox .socitytopbox_right .elementor-widget-wrap.elementor-element-populated{margin:0 auto;}
 	.socitytopbox .socitytopbox_left .elementor-widget-wrap.elementor-element-populated .elementor-icon-box-wrapper,.socitytopbox .socitytopbox_right .elementor-widget-wrap.elementor-element-populated .elementor-icon-box-wrapper{min-height:inherit;}
 	.joinusgetbox .joinus_innerpage{width:95%;}
@@ -1426,13 +1414,13 @@ background-clip: text;
 margin: 10px 0;
 }
 .background_color_sec .elementor-container.elementor-column-gap-default {
-    background: #FBFBFB;
-    max-width: 668px !important;
-    border-radius: 5px;
+	background: #FBFBFB;
+	max-width: 668px !important;
+	border-radius: 5px;
 }
 
 .subscribeprobox.membershipbox_other .elementor-element.elementor-widget.elementor-widget-image {
-    margin-bottom: 0;
+	margin-bottom: 0;
 }
 
 
@@ -2004,9 +1992,9 @@ section.conferencevaultevent.elementor-section.elementor-section-boxed .blog_art
 
 
 	.cardContainer .cardBox.is-expanded .card__inner {
-    visibility: hidden;
-    max-height: 0;
-    padding: 0;
+	visibility: hidden;
+	max-height: 0;
+	padding: 0;
 }
 
 }
@@ -2044,7 +2032,7 @@ section.conferencevaultevent.presentation.elementor-section.elementor-section-bo
 
 .mops_subscribe_page .sign_up_enroll .elementor-widget-wrap.elementor-element-populated {align-content: flex-start;}
 .mops_subscribe_page .sign_up_enroll .elementor-widget-wrap.elementor-element-populated p {
-    margin-bottom: 0;
+	margin-bottom: 0;
 }
 
 
@@ -2084,24 +2072,24 @@ a#enrollbtns{color:#fff;cursor:pointer;}
 .mainpricebox .innermainpricebox .mainpriceboxclose button.closebuttonmainprice{background:transparent;border-radius:0;padding:0;margin:10px;cursor:pointer;}
 
 .elementor-column.elementor-col-25.elementor-top-column.elementor-element.elementor-element-241a8774.pro_sec.membershipbox_one {
-    width: 25% !important;
+	width: 25% !important;
 }
 
 .elementor-column.elementor-col-25.elementor-top-column.elementor-element.elementor-element-241a8774.membershipbox_one.elementor-hidden-mobile {
-    width: 25% !important;
+	width: 25% !important;
 }
 .mainpricebox .innermainpricebox .innerboxprice h2 {
-    background: -moz-linear-gradient(top,#FD4B7A 0%,#4D00AE 166.67%);
-    background: -webkit-linear-gradient(top,#FD4B7A 0%,#4D00AE 166.67%);
-    background: linear-gradient(to bottom,#FD4B7A 0%,#4D00AE 166.67%);
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 20px;
-    text-align: center;
-    margin: 30px 0 0;
-    font-weight: 400;
+	background: -moz-linear-gradient(top,#FD4B7A 0%,#4D00AE 166.67%);
+	background: -webkit-linear-gradient(top,#FD4B7A 0%,#4D00AE 166.67%);
+	background: linear-gradient(to bottom,#FD4B7A 0%,#4D00AE 166.67%);
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-size: 20px;
+	text-align: center;
+	margin: 30px 0 0;
+	font-weight: 400;
 }
 
 
