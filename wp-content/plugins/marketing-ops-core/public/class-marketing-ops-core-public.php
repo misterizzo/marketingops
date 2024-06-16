@@ -6125,9 +6125,49 @@ class Marketing_Ops_Core_Public {
 	 *
 	 * @param array    $metadata This is the array of meta data.
 	 * @param WC_Order $order This is the WooCommerce order object.
-	 * @param string   $source The order source.
+	 *
+	 * @return array $metadata Stripe transaction metadata.
+	 *
+	 * @since 1.0.0
 	 */
-	public function mops_wc_stripe_payment_metadata_callback( $metadata, $order, $source ) {
+	public function mops_wc_stripe_intent_metadata_callback( $metadata, $order ) {
+
+		// Get order data
+		$order_data = $order->get_data();
+		$count      = 1; // Counter for list items.
+
+		// Prepare the metadata array.
+		$metadata['customer_phone']           = sanitize_text_field( $order_data['billing']['phone'] );
+		$metadata['order_discount_total']     = sanitize_text_field( $order_data['discount_total'] );
+		$metadata['order_discount_tax']       = sanitize_text_field( $order_data['discount_tax'] );
+		$metadata['order_shipping_total']     = sanitize_text_field( $order_data['shipping_total'] );
+		$metadata['order_shipping_tax']       = sanitize_text_field( $order_data['shipping_tax'] );
+		$metadata['order_total']              = sanitize_text_field( $order_data['cart_tax'] );
+		$metadata['order_total_tax']          = sanitize_text_field( $order_data['total_tax'] );
+		$metadata['order_customer_id']        = sanitize_text_field( $order_data['customer_id'] );
+		$metadata['order_billing_first_name'] = sanitize_text_field( $order_data['billing']['first_name'] );
+		$metadata['order_billing_last_name']  = sanitize_text_field( $order_data['billing']['last_name'] );
+		$metadata['order_billing_company']    = sanitize_text_field( $order_data['billing']['company'] );
+		$metadata['order_billing_address_1']  = sanitize_text_field( $order_data['billing']['address_1'] );
+		$metadata['order_billing_address_2']  = sanitize_text_field( $order_data['billing']['address_2'] );
+		$metadata['order_billing_city']       = sanitize_text_field( $order_data['billing']['city'] );
+		$metadata['order_billing_state']      = sanitize_text_field( $order_data['billing']['state'] );
+		$metadata['order_billing_postcode']   = sanitize_text_field( $order_data['billing']['postcode'] );
+		$metadata['order_billing_country']    = sanitize_text_field( $order_data['billing']['country'] );
+		$metadata['order_billing_email']      = sanitize_text_field( $order_data['billing']['email'] );
+		$metadata['order_billing_phone']      = sanitize_text_field( $order_data['billing']['phone'] );
+
+		// List products purchased
+		foreach( $order->get_items() as $item_id => $line_item ) {
+			$item_data                         = $line_item->get_data();
+			$product                           = $line_item->get_product();
+			$product_name                      = $product->get_name();
+			$product_sku                       = $product->get_sku();
+			$item_quantity                     = $line_item->get_quantity();
+			$item_total                        = $line_item->get_total();
+			$metadata[ 'line_item_' . $count ] = 'Product name: ' . $product_name . ' | Product SKU: ' . $product_sku . ' | Quantity: '.$item_quantity.' | Item total: '. number_format( $item_total, 2 );
+			$count += 1;
+		}
 
 		return $metadata;
 	}
