@@ -9037,24 +9037,33 @@ if ( ! function_exists( 'moc_conference_vault_video_box_html' ) ) {
 			return;
 		}
 
-		$name            = get_the_title( $post_id );
+		$session_title   = get_the_title( $post_id );
 		$session_by      = get_field( 'session_author', $post_id );
 		$session_link    = get_field( 'vimeo_video_url', $post_id );
 		$session_excerpt = get_post_field( 'post_excerpt', $post_id );
 
-		var_dump( $session_by, $session_link, $session_excerpt );
-
 		ob_start();
 		?>
-		<li>
+		<li data-video="<?php echo esc_url( $session_link ); ?>" data-post="<?php echo esc_attr( $post_id ); ?>">
 			<div class="conferencevaultinnergridboximage">
 				<div class="innerimagebox">
 					<img src="https://marketingops.com/wp-content/uploads/2024/05/Rectangle-868.jpg" />
 				</div>
 				<div class="innerimageboxdescriptions">
-					<h4><?php echo wp_kses_post( $name ); ?></h4>
-					<small>by Darrell Alfonso</small>
-					<p>Sem integer vitae justo eget magna fermentum. Arcu dui vivamus arcu felis bibendum. Nibh nisl condimentum id venenatis a condimentum. In arcu cursus euismod quis viverra.</p>
+					<!-- Session Title -->
+					<?php if ( ! empty( $session_title ) ) { ?>
+						<h4><?php echo wp_kses_post( $session_title ); ?></h4>
+					<?php } ?>
+
+					<!-- Session Author -->
+					<?php if ( ! empty( $session_by ) ) { ?>
+						<small><?php echo esc_html( sprintf( __( 'by %1$s', 'marketing-ops-core' ), $session_by ) ); ?></small>
+					<?php } ?>
+
+					<!-- Session Short Description -->
+					<?php if ( ! empty( $session_excerpt ) ) { ?>
+						<p><?php echo wp_kses_post( $session_excerpt ); ?></p>
+					<?php } ?>
 				</div>
 			</div>
 		</li>
