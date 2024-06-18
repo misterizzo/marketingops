@@ -5897,6 +5897,7 @@ class Marketing_Ops_Core_Public {
 	 */
 	public function mops_moc_posts_query_args_callback( $args = array() ) {
 		$current_category = filter_input( INPUT_GET, 'cat', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$term_id          = get_queried_object()->term_id;// Get the current queried term ID.
 
 		// If the current page is strategists.
 		if ( is_page( 'strategists' ) ) {
@@ -5913,6 +5914,24 @@ class Marketing_Ops_Core_Public {
 			if ( 'template' === $args['post_type'] ) {
 				$args['post_status'] = 'publish';
 			}
+		} elseif ( is_tax( 'cv_pillar' ) ) {
+			$args['tax_query'][] = array(
+				'taxonomy' => 'cv_pillar',
+				'field'    => 'term_id',
+				'terms'    => array( $term_id ),
+			);
+		} elseif ( is_tax( 'cv_conference' ) ) {
+			$args['tax_query'][] = array(
+				'taxonomy' => 'cv_conference',
+				'field'    => 'term_id',
+				'terms'    => array( $term_id ),
+			);
+		} elseif ( is_tax( 'cv_skill_level' ) ) {
+			$args['tax_query'][] = array(
+				'taxonomy' => 'cv_skill_level',
+				'field'    => 'term_id',
+				'terms'    => array( $term_id ),
+			);
 		}
 
 		return $args;
