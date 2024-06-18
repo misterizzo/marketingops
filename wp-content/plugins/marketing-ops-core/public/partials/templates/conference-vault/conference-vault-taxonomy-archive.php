@@ -23,6 +23,14 @@ $taxonomy         = get_queried_object()->taxonomy;
 $term_title       = get_field( 'term_title', "{$taxonomy}_{$term_id}" );
 $video_query_args = moc_posts_query_args( 'conference_vault' );
 $video_query      = new WP_Query( $video_query_args );
+$pillars          = get_terms( // Get the pillars.
+	array(
+		'taxonomy'   => 'cv_pillar',
+		'hide_empty' => true,
+	)
+);
+
+debug( $pillars );
 ?>
 <section class="marketingopstemplatesconfernace conferencevaultevent elementor-section elementor-section-boxed">
 	<div class="margktingimgss"></div>
@@ -48,7 +56,7 @@ $video_query      = new WP_Query( $video_query_args );
 		<div class="blog_articles">
 			<div class="elementor-container elementor-column-gap-default">
 				<div class="categories_tags articled_container">
-					<div class="tag_box text_box">Pillars</div>
+					<div class="tag_box text_box"><?php esc_html_e( 'Pillars', 'marketing-ops-core' ); ?></div>
 					<a href="javascript:void(0);" data-termid="" class="tag_box moc_all_tags moc_selected_taxonomy">ALL</a>
 					<a href="javascript:void(0);" data-termid="" class="tag_box">Technology Management</a>
 					<a href="javascript:void(0);" data-termid="" class="tag_box">Strategy Operations</a> 

@@ -20,9 +20,9 @@ get_header();
 
 // Get the pillars.
 $pillars = get_terms(
-   array(
-      'taxonomy'   => 'post_tag',
-   'hide_empty' => false,
+array(
+'taxonomy'   => 'post_tag',
+'hide_empty' => false,
 ) );
 ?>
 <section class="marketingopstemplatesconfernace conferencevault elementor-section elementor-section-boxed">
