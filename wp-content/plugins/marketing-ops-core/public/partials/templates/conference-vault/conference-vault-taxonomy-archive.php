@@ -20,7 +20,7 @@ get_header();
 
 $term_id          = get_queried_object()->term_id;
 
-debug( get_term_meta( $term_id ) );
+debug( get_queried_object() );
 
 $term_title       = get_field( 'term_title', $term_id );
 $video_query_args = moc_posts_query_args( 'conference-vault' );
