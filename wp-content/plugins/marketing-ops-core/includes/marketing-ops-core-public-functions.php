@@ -9047,7 +9047,13 @@ if ( ! function_exists( 'moc_conference_vault_video_box_html' ) ) {
 		<li data-video="<?php echo esc_url( $session_link ); ?>" data-post="<?php echo esc_attr( $post_id ); ?>">
 			<div class="conferencevaultinnergridboximage">
 				<div class="innerimagebox">
-					<img src="https://marketingops.com/wp-content/uploads/2024/05/Rectangle-868.jpg" />
+					<?php if ( has_post_thumbnail( $post_id ) ) {
+						$session_image = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'single-post-thumbnail' );
+						var_dump( $session_image );
+						?>
+					<?php } else { ?>
+						<img src="/wp-content/uploads/2024/05/Rectangle-868.jpg" alt="conference-video-default-image" title="<?php esc_html_e( 'Conference Video Default Image', 'marketing-ops-core' ); ?>" />
+					<?php } ?>
 				</div>
 				<div class="innerimageboxdescriptions">
 					<!-- Session Title -->
