@@ -18,6 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
+var_dump( get_queried_object() );
 $term_id          = get_queried_object()->term_id;
 
 // debug( get_queried_object() );
