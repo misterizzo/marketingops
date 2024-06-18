@@ -29,8 +29,6 @@ $pillars          = get_terms( // Get the pillars.
 		'hide_empty' => true,
 	)
 );
-
-debug( $pillars );
 ?>
 <section class="marketingopstemplatesconfernace conferencevaultevent elementor-section elementor-section-boxed">
 	<div class="margktingimgss"></div>
@@ -53,16 +51,22 @@ debug( $pillars );
 	  	</div>
 	</div>
 	<div class="elementor-container elementor-column-gap-default">
-		<div class="blog_articles">
-			<div class="elementor-container elementor-column-gap-default">
-				<div class="categories_tags articled_container">
-					<div class="tag_box text_box"><?php esc_html_e( 'Pillars', 'marketing-ops-core' ); ?></div>
-					<a href="javascript:void(0);" data-termid="" class="tag_box moc_all_tags moc_selected_taxonomy">ALL</a>
-					<a href="javascript:void(0);" data-termid="" class="tag_box">Technology Management</a>
-					<a href="javascript:void(0);" data-termid="" class="tag_box">Strategy Operations</a> 
+		<!-- Check if the pillars are available. -->
+		<?php if ( ! empty( $pillars ) && is_array( $pillars ) ) { ?>
+			<div class="blog_articles">
+				<div class="elementor-container elementor-column-gap-default">
+					<div class="categories_tags articled_container">
+						<div class="tag_box text_box"><?php esc_html_e( 'Pillars', 'marketing-ops-core' ); ?></div>
+						<a href="javascript:void(0);" data-termid="-1" class="tag_box moc_all_tags moc_selected_taxonomy"><?php esc_html_e( 'ALL', 'marketing-ops-core' ); ?></a>
+
+						<!-- Loop thorugh the pillars -->
+						<?php foreach ( $pillars as $pillar_term ) { ?>
+							<a href="javascript:void(0);" data-termid="<?php echo esc_attr( $pillar_term->term_id ); ?>" class="tag_box"><?php echo wp_kses_post( $pillar_term->name ); ?></a>
+						<?php } ?>
+					</div>
 				</div>
 			</div>
-		</div>
+		<?php } ?>
 	</div>
 	<div class="elementor-container elementor-column-gap-default">
 		<div class="conferencevaultinner_innerright_inner">
