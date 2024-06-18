@@ -1,3 +1,23 @@
+<?php
+/**
+ * Conference details page template.
+ *
+ * This template can be overridden by copying it to activetheme/marketing-ops-core/conference-vault/conference-vault-single.php
+ *
+ * @see         https://marketingops.com/
+ * @author      Adarsh Verma
+ * @package     Marketing_Ops_Core
+ * @category    Template
+ * @since       1.0.0
+ * @version     1.0.0
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+get_header();
+?>
 <section class="marketingopstemplatesconfernace conferencevaultevent presentation elementor-section elementor-section-boxed">
    <div class="margktingimgss"></div>	
    <div class="elementor-container elementor-column-gap-default">
@@ -189,3 +209,5 @@
       </div>
    </div>
 </section>
+<?php
+get_footer();
