@@ -9037,6 +9037,13 @@ if ( ! function_exists( 'moc_conference_vault_video_box_html' ) ) {
 			return;
 		}
 
+		$name            = get_the_title( $post_id );
+		$session_by      = get_field( 'session_author', $post_id );
+		$session_link    = get_field( 'vimeo_video_url', $post_id );
+		$session_excerpt = get_post_field( 'post_excerpt', $post_id );
+
+		var_dump( $session_by, $session_link, $session_excerpt );
+
 		ob_start();
 		?>
 		<li>
@@ -9045,7 +9052,7 @@ if ( ! function_exists( 'moc_conference_vault_video_box_html' ) ) {
 					<img src="https://marketingops.com/wp-content/uploads/2024/05/Rectangle-868.jpg" />
 				</div>
 				<div class="innerimageboxdescriptions">
-					<h4>Unveiling the New Pillars</h4>
+					<h4><?php echo wp_kses_post( $name ); ?></h4>
 					<small>by Darrell Alfonso</small>
 					<p>Sem integer vitae justo eget magna fermentum. Arcu dui vivamus arcu felis bibendum. Nibh nisl condimentum id venenatis a condimentum. In arcu cursus euismod quis viverra.</p>
 				</div>

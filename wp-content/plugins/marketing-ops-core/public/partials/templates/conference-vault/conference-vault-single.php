@@ -78,7 +78,7 @@ get_header();
 			<iframe class="elementor-video-iframe" allowfullscreen="" allow="clipboard-write" title="vimeo Video Player" src="https://player.vimeo.com/video/698695898?color&amp;autopause=0&amp;loop=0&amp;muted=0&amp;title=1&amp;portrait=1&amp;byline=1&amp;h=427b06ed1e#t="></iframe> 
 		</div>
 
-         <p>
+        <p>
             <strong>Transcript:</strong>
             Michael Hartmann: [00:00:00] Welcome to another episode of Opscasts brought to you by MarketingOps.com powered by the MoPros. I’m your host, Michael Hartmann. Flying solo today, which is all good. Uh, Mike and Naomi will be back soon, I’m sure. All right. For this episode, it’s the first of a series that we’re working on that is going to help educate our audience about some emerging go to market approaches and help provide guidance on how you as marketing professional is going to be an enabler.        	
          </p>
