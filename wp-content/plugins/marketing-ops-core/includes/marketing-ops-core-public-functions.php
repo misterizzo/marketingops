@@ -4807,7 +4807,7 @@ if ( ! function_exists( 'moc_no_bs_demo_lists_html' ) ) {
 									$term_name = strtoupper( $term_name );
 									$term_slug = $get_all_term->slug; 
 									$get_show_category_in_frontend = get_term_meta( $term_id, 'moc_show_category_in_frontend', true );
-									if ( in_array( 'yes', $get_show_category_in_frontend, true ) ) {
+									if ( ! empty( $get_show_category_in_frontend ) && is_array( $get_show_category_in_frontend ) && in_array( 'yes', $get_show_category_in_frontend, true ) ) {
 										?>
 										<li class="tab_box moc_tab_category_box">
 											<a href="javascript:void(0);" class="moc_no_bs_category" data-catid="<?php echo esc_attr( $term_id ); ?>"><?php echo esc_html( $term_name ); ?></a>
