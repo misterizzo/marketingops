@@ -9017,3 +9017,42 @@ if ( ! function_exists( 'moc_template_card_box_html' ) ) {
 		
 	}
 }
+
+
+/**
+ * Check if the function exists.
+ */
+if ( ! function_exists( 'moc_conference_vault_video_box_html' ) ) {
+	/**
+	 * Function to return the inner html of the conferene video on the listing page.
+	 *
+	 * @param $post_id int Conference video post ID.
+	 * @return string
+	 *
+	 * @since 1.0.0
+	 */
+	function moc_conference_vault_video_box_html( $post_id = 1 ) {
+		// Return, if the template ID is -1.
+		if ( -1 === $post_id ) {
+			return;
+		}
+
+		ob_start();
+		?>
+		<li>
+			<div class="conferencevaultinnergridboximage">
+				<div class="innerimagebox">
+					<img src="https://marketingops.com/wp-content/uploads/2024/05/Rectangle-868.jpg" />
+				</div>
+				<div class="innerimageboxdescriptions">
+					<h4>Unveiling the New Pillars</h4>
+					<small>by Darrell Alfonso</small>
+					<p>Sem integer vitae justo eget magna fermentum. Arcu dui vivamus arcu felis bibendum. Nibh nisl condimentum id venenatis a condimentum. In arcu cursus euismod quis viverra.</p>
+				</div>
+			</div>
+		</li>
+		<?php
+
+		return ob_get_clean();
+	}
+}
