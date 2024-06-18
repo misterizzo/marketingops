@@ -18,12 +18,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
-debug( get_queried_object() );
 $term_id          = get_queried_object()->term_id;
-
-// debug( get_queried_object() );
-
-$term_title       = get_field( 'term_title', $term_id );
+$taxonomy         = get_queried_object()->taxonomy;
+$term_title       = get_field( 'term_title', "{$taxonomy}_{$term_id}" );
 $video_query_args = moc_posts_query_args( 'conference-vault' );
 $video_query      = new WP_Query( $video_query_args );
 
