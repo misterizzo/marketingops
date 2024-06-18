@@ -1,6 +1,6 @@
 <?php
 /**
- * Conference details page template.
+ * Conference vault details page template.
  *
  * This template can be overridden by copying it to activetheme/marketing-ops-core/conference-vault/conference-vault-single.php
  *

@@ -1013,6 +1013,11 @@ class Marketing_Ops_Core_Public {
 			$templates = MOC_PLUGIN_PATH . 'public/partials/templates/conference-vault/conference-vault-single.php';
 		}
 
+		// Check if it's the conference vault taxonomy archive page.
+		if ( is_tax( 'cv_pillar' ) || is_tax( 'cv_conference' ) || is_tax( 'cv_skill_level' ) ) {
+			$templates = MOC_PLUGIN_PATH . 'public/partials/templates/conference-vault/conference-vault-taxonomy-archive.php';
+		}
+
 		return $templates;
 	}
 
