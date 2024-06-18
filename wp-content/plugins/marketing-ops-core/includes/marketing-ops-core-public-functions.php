@@ -7358,9 +7358,13 @@ if ( ! function_exists( 'moc_get_courses_by_search_keyword' ) ) {
 		$wp_user_query = new WP_User_Query( $user_arguments );
 		$authors       = $wp_user_query->get_results();
 		$author_ids    = array();
-		foreach ( $authors as $author ) {
-			$author_ids[]= $author->data->ID;
+
+		if ( ! empty( $authors ) && is_array( $authors ) ) {
+			foreach ( $authors as $author ) {
+				$author_ids[]= $author->data->ID;
+			}
 		}
+
 		$args = array(
 			'post_type'              => $post_type,
 			'post_status'            => 'publish',
