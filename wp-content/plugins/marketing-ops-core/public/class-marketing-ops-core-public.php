@@ -1009,10 +1009,8 @@ class Marketing_Ops_Core_Public {
 		}
 
 		// Check if it's the conference vault details page.
-		if ( '183.82.162.107' === $_SERVER['REMOTE_ADDR'] ) {
-			if ( is_singular( 'conference_vault' ) ) {
-				wp_die( 'is singular' );
-			}
+		if ( is_singular( 'conference_vault' ) ) {
+			$templates = MOC_PLUGIN_PATH . 'public/partials/templates/conference-vault/conference-vault-single.php';
 		}
 
 		return $templates;
