@@ -17,13 +17,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 get_header();
+
+$term_id          = get_queried_object()->term_id;
+$term_title       = get_field( 'term_title', $term_id );
+$video_query_args = moc_posts_query_args( 'conference-vault' );
+$video_query      = new WP_Query( $video_query_args );
+
+debug( $video_query );
 ?>
 <section class="marketingopstemplatesconfernace conferencevaultevent elementor-section elementor-section-boxed">
 	<div class="margktingimgss"></div>
 	<div class="elementor-container elementor-column-gap-default">
 		<div class="conferencevaultinner">
-			<?php var_dump( get_queried_object()->term_id ); ?>
-			<h1>Mops-A-palooza 2023 <span>Conference Vault</span></h1>
+			<h1><?php echo wp+kses_post( $term_title ); ?></h1>
 			<ul>
 				<li>
 					<a href="javascript:void(0)">
