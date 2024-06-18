@@ -8644,6 +8644,170 @@ if ( ! function_exists( 'moc_templates_custom_post_type_and_category_taxonomy' )
 /**
  * Check if the function exists.
  */
+if ( ! function_exists( 'moc_conference_vault_custom_post_type_and_category_taxonomy' ) ) {
+	/**
+	 * Function to register templates custom post type.
+	 *
+	 * @since 1.0.0
+	 */
+	function moc_conference_vault_custom_post_type_and_category_taxonomy() {
+		register_post_type(
+			'conference_vault',
+			array(
+				'label'               => __( 'Conference Vault', 'marketing-ops-core' ),
+				'description'         => __( 'Its custom post type for marketingops conference vault.', 'marketing-ops-core' ),
+				'labels'              => array(
+					'name'                  => _x( 'Conference Vault Videos', 'Template General Name', 'marketing-ops-core' ),
+					'singular_name'         => _x( 'Conference Vault Video', 'Template Singular Name', 'marketing-ops-core' ),
+					'menu_name'             => __( 'Conference Vault Videos', 'marketing-ops-core' ),
+					'name_admin_bar'        => __( 'Conference Vault Videos', 'marketing-ops-core' ),
+					'archives'              => __( 'Conference Vault Video Archives', 'marketing-ops-core' ),
+					'attributes'            => __( 'Conference Vault Video Attributes', 'marketing-ops-core' ),
+					'parent_item_colon'     => __( 'Parent Conference Vault Video:', 'marketing-ops-core' ),
+					'all_items'             => __( 'All Conference Vault Videos', 'marketing-ops-core' ),
+					'add_new_item'          => __( 'Add New Conference Vault Video', 'marketing-ops-core' ),
+					'add_new'               => __( 'Add New', 'marketing-ops-core' ),
+					'new_item'              => __( 'New Conference Vault Video', 'marketing-ops-core' ),
+					'edit_item'             => __( 'Edit Conference Vault Video', 'marketing-ops-core' ),
+					'update_item'           => __( 'Update Conference Vault Video', 'marketing-ops-core' ),
+					'view_item'             => __( 'View Conference Vault Video', 'marketing-ops-core' ),
+					'view_items'            => __( 'View Conference Vault Videos', 'marketing-ops-core' ),
+					'search_items'          => __( 'Search Conference Vault Video', 'marketing-ops-core' ),
+					'not_found'             => __( 'No Conference Vault Video found', 'marketing-ops-core' ),
+					'not_found_in_trash'    => __( 'No Conference Vault Video found in trash', 'marketing-ops-core' ),
+					'featured_image'        => __( 'Featured Image', 'marketing-ops-core' ),
+					'set_featured_image'    => __( 'Set featured image', 'marketing-ops-core' ),
+					'remove_featured_image' => __( 'Remove featured image', 'marketing-ops-core' ),
+					'use_featured_image'    => __( 'Use as featured image', 'marketing-ops-core' ),
+					'insert_into_item'      => __( 'Insert into Conference Vault Video', 'marketing-ops-core' ),
+					'uploaded_to_this_item' => __( 'Uploaded to this Conference Vault Video', 'marketing-ops-core' ),
+					'items_list'            => __( 'Conference Vault Videos list', 'marketing-ops-core' ),
+					'items_list_navigation' => __( 'Conference Vault Videos list navigation', 'marketing-ops-core' ),
+					'filter_items_list'     => __( 'Filter Conference Vault Videos list', 'marketing-ops-core' ),
+				),
+				'supports'            => array( 'title', 'editor', 'author', 'excerpt', 'thumbnail' ),
+				'hierarchical'        => true,
+				'public'              => true,
+				'show_ui'             => true,
+				'show_in_menu'        => true,
+				'menu_position'       => 65,
+				'menu_icon'           => 'dashicons-media-document',
+				'show_in_admin_bar'   => true,
+				'show_in_nav_menus'   => true,
+				'can_export'          => true,
+				'has_archive'         => true,
+				'rewrite'             => array( 'slug' => 'conference_vault' ),
+				'exclude_from_search' => false,
+				'publicly_queryable'  => true,
+				'capability_type'     => 'post',
+				'show_in_rest'        => true,
+			)
+		);
+
+		// Register taxonomy, pillar.
+		register_taxonomy( 'cv_pillar', array( 'conference_vault' ), array(
+			'labels'            => array(
+				'name'                       => _x( 'Pillars', 'Taxonomy General Name', 'marketing-ops-core' ),
+				'singular_name'              => _x( 'Pillar', 'Taxonomy Singular Name', 'marketing-ops-core' ),
+				'menu_name'                  => __( 'Pillars', 'marketing-ops-core' ),
+				'all_items'                  => __( 'All Pillars', 'marketing-ops-core' ),
+				'parent_item'                => __( 'Parent Pillar', 'marketing-ops-core' ),
+				'parent_item_colon'          => __( 'Parent Pillar:', 'marketing-ops-core' ),
+				'new_item_name'              => __( 'New Pillar Name', 'marketing-ops-core' ),
+				'add_new_item'               => __( 'Add New Pillar', 'marketing-ops-core' ),
+				'edit_item'                  => __( 'Edit Pillar', 'marketing-ops-core' ),
+				'update_item'                => __( 'Update Pillar', 'marketing-ops-core' ),
+				'view_item'                  => __( 'View Pillar', 'marketing-ops-core' ),
+				'separate_items_with_commas' => __( 'Separate Pillarss with commas', 'marketing-ops-core' ),
+				'add_or_remove_items'        => __( 'Add or remove Pillarss', 'marketing-ops-core' ),
+				'choose_from_most_used'      => __( 'Choose from the most used', 'marketing-ops-core' ),
+				'popular_items'              => __( 'Popular Pillarss', 'marketing-ops-core' ),
+				'search_items'               => __( 'Search Pillarss', 'marketing-ops-core' ),
+				'not_found'                  => __( 'Not Found', 'marketing-ops-core' ),
+				'no_terms'                   => __( 'No Pillarss', 'marketing-ops-core' ),
+				'items_list'                 => __( 'Pillarss list', 'marketing-ops-core' ),
+				'items_list_navigation'      => __( 'Pillars list navigation', 'marketing-ops-core' ),
+			),
+			'hierarchical'      => true,
+			'public'            => true,
+			'show_ui'           => true,
+			'show_in_menu'      => true,
+			'show_admin_column' => true,
+			'show_in_nav_menus' => true,
+			'show_in_rest'      => true,
+		) );
+
+		// Register taxonomy, conference.
+		register_taxonomy( 'cv_conference', array( 'conference_vault' ), array(
+			'labels'            => array(
+				'name'                       => _x( 'Conferences', 'Taxonomy General Name', 'marketing-ops-core' ),
+				'singular_name'              => _x( 'Conference', 'Taxonomy Singular Name', 'marketing-ops-core' ),
+				'menu_name'                  => __( 'Conferencess', 'marketing-ops-core' ),
+				'all_items'                  => __( 'All Conferencess', 'marketing-ops-core' ),
+				'parent_item'                => __( 'Parent Conference', 'marketing-ops-core' ),
+				'parent_item_colon'          => __( 'Parent Conference:', 'marketing-ops-core' ),
+				'new_item_name'              => __( 'New Conference Name', 'marketing-ops-core' ),
+				'add_new_item'               => __( 'Add New Conference', 'marketing-ops-core' ),
+				'edit_item'                  => __( 'Edit Conference', 'marketing-ops-core' ),
+				'update_item'                => __( 'Update Conference', 'marketing-ops-core' ),
+				'view_item'                  => __( 'View Conference', 'marketing-ops-core' ),
+				'separate_items_with_commas' => __( 'Separate Conferencess with commas', 'marketing-ops-core' ),
+				'add_or_remove_items'        => __( 'Add or remove Conferencess', 'marketing-ops-core' ),
+				'choose_from_most_used'      => __( 'Choose from the most used', 'marketing-ops-core' ),
+				'popular_items'              => __( 'Popular Conferencess', 'marketing-ops-core' ),
+				'search_items'               => __( 'Search Conferencess', 'marketing-ops-core' ),
+				'not_found'                  => __( 'Not Found', 'marketing-ops-core' ),
+				'no_terms'                   => __( 'No Conferencess', 'marketing-ops-core' ),
+				'items_list'                 => __( 'Conferencess list', 'marketing-ops-core' ),
+				'items_list_navigation'      => __( 'Conferences list navigation', 'marketing-ops-core' ),
+			),
+			'hierarchical'      => true,
+			'public'            => true,
+			'show_ui'           => true,
+			'show_in_menu'      => true,
+			'show_admin_column' => true,
+			'show_in_nav_menus' => true,
+			'show_in_rest'      => true,
+		) );
+
+		// Register taxonomy, skill level.
+		register_taxonomy( 'cv_skill_level', array( 'conference_vault' ), array(
+			'labels'            => array(
+				'name'                       => _x( 'Skill Levels', 'Taxonomy General Name', 'marketing-ops-core' ),
+				'singular_name'              => _x( 'Skill Level', 'Taxonomy Singular Name', 'marketing-ops-core' ),
+				'menu_name'                  => __( 'Skill Levels', 'marketing-ops-core' ),
+				'all_items'                  => __( 'All Skill Levels', 'marketing-ops-core' ),
+				'parent_item'                => __( 'Parent Skill Level', 'marketing-ops-core' ),
+				'parent_item_colon'          => __( 'Parent Skill Level:', 'marketing-ops-core' ),
+				'new_item_name'              => __( 'New Skill Level Name', 'marketing-ops-core' ),
+				'add_new_item'               => __( 'Add New Skill Level', 'marketing-ops-core' ),
+				'edit_item'                  => __( 'Edit Skill Level', 'marketing-ops-core' ),
+				'update_item'                => __( 'Update Skill Level', 'marketing-ops-core' ),
+				'view_item'                  => __( 'View Skill Level', 'marketing-ops-core' ),
+				'separate_items_with_commas' => __( 'Separate Skill Levels with commas', 'marketing-ops-core' ),
+				'add_or_remove_items'        => __( 'Add or remove Skill Levels', 'marketing-ops-core' ),
+				'choose_from_most_used'      => __( 'Choose from the most used', 'marketing-ops-core' ),
+				'popular_items'              => __( 'Popular Skill Levels', 'marketing-ops-core' ),
+				'search_items'               => __( 'Search Skill Levels', 'marketing-ops-core' ),
+				'not_found'                  => __( 'Not Found', 'marketing-ops-core' ),
+				'no_terms'                   => __( 'No Skill Levels', 'marketing-ops-core' ),
+				'items_list'                 => __( 'Skill Levels list', 'marketing-ops-core' ),
+				'items_list_navigation'      => __( 'Skill Levels list navigation', 'marketing-ops-core' ),
+			),
+			'hierarchical'      => true,
+			'public'            => true,
+			'show_ui'           => true,
+			'show_in_menu'      => true,
+			'show_admin_column' => true,
+			'show_in_nav_menus' => true,
+			'show_in_rest'      => true,
+		) );
+	}
+}
+
+/**
+ * Check if the function exists.
+ */
 if ( ! function_exists( 'moc_strategists_box_inner_html' ) ) {
 	/**
 	 * Function to return the inner html of the strategists on the listing page.
