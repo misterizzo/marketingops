@@ -23,7 +23,7 @@ $term_title       = get_field( 'term_title', $term_id );
 $video_query_args = moc_posts_query_args( 'conference-vault' );
 $video_query      = new WP_Query( $video_query_args );
 
-debug( $video_query );
+// debug( $video_query );
 ?>
 <section class="marketingopstemplatesconfernace conferencevaultevent elementor-section elementor-section-boxed">
 	<div class="margktingimgss"></div>
