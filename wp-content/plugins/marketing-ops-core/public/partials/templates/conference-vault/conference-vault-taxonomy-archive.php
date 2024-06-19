@@ -81,6 +81,8 @@ $pillars          = get_terms( // Get the pillars.
 					?>
 				</ul>
 			<?php } ?>
+
+			<?php debug( get_taxonomies() ); ?>
 			<div class="confernceloadmore">
 				<div class="confernceloadmoreinner">
 					<a href="javascript:void(0);"><?php esc_html_e( 'Load More', 'marketing-ops-core' ); ?></a>

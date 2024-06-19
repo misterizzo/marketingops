@@ -1930,7 +1930,7 @@ section.conferencevault.elementor-section.elementor-section-boxed{padding-top:20
 .mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright{display:flex;max-width:877px;width:100%;align-items:flex-start;align-content:flex-start;gap:0;flex-wrap:wrap;}
 .mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright h2{color:var(--Primary-text,#45474F);font-family:"Futura LT","Open Sans";font-size:25px;font-style:normal;font-weight:700;line-height:normal;width:100%;margin:0;}
 .mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright p{color:var(--Secondary-text,#5B5E6B);font-family:"Open Sans";font-size:16px;font-style:normal;font-weight:400;line-height:normal;margin:0 0 20px;}
-.mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright ul{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);grid-column-gap:32px;grid-row-gap:32px;padding:0;list-style:none;margin-bottom:0;}
+.mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright ul{display:grid;grid-template-columns:repeat(3,1fr);grid-column-gap:32px;grid-row-gap:32px;padding:0;list-style:none;margin-bottom:0;}
 .mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright ul li{width:100%;}
 .mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright ul li .innerimagebox img{display:block;width:100%;}
 .mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright ul li .innerimageboxdescriptions h4{color:var(--Primary-text,#45474F);max-width:269px;font-family:"Futura LT","Open Sans";font-size:14px;font-style:normal;font-weight:700;line-height:normal;margin:10px 0 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
@@ -1945,7 +1945,7 @@ section.conferencevault.elementor-section.elementor-section-boxed{padding-top:20
 
 @media (min-width:992px) and (max-width:1199px){
 	.mops_conference-vault_page .conferencevaultinner_inner{display:flex;width:100%;position:relative;padding:15px;}
-	.mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright ul{display:grid;grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(2,1fr);grid-column-gap:25px;grid-row-gap:25px;padding:0;list-style:none;margin-bottom:0;}
+	.mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright ul{display:grid;grid-template-columns:repeat(2,1fr);grid-column-gap:25px;grid-row-gap:25px;padding:0;list-style:none;margin-bottom:0;}
 }
 @media screen and (min-width:768px) and (max-width:991px){
 	.mops_conference-vault_page .conferencevaultinner_inner{padding:15px;}
@@ -1966,7 +1966,7 @@ section.conferencevaultevent .conferencevaultinner{width:100%;text-align:center;
 section.conferencevaultevent .conferencevaultinner h1{text-align:center;color:var(--Primary-text,#45474F);text-align:center;font-family:"Futura LT","Open Sans";font-size:34px;font-style:normal;font-weight:700;line-height:normal;margin:0 0 10px;}
 section.conferencevaultevent .conferencevaultinner h1 span{background:var(--horizontal-grad-1,linear-gradient(90deg,#FD4B7A -2.36%,#4D00AE 159.05%));background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-family:"Futura LT","Open Sans";font-size:34px;font-style:normal;font-weight:700;line-height:normal;}
 .conferencevaultevent .conferencevaultinner_innerright_inner{display:flex;max-width:100%;width:100%;align-items:flex-start;align-content:flex-start;gap:0;flex-wrap:wrap;    padding-bottom: 45px;}
-.conferencevaultevent .conferencevaultinner_innerright_inner ul{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,1fr);grid-column-gap:32px;grid-row-gap:32px;padding:0;list-style:none;margin-bottom:0;}
+.conferencevaultevent .conferencevaultinner_innerright_inner ul{display:grid;grid-template-columns:repeat(4,1fr);grid-column-gap:32px;grid-row-gap:32px;padding:0;list-style:none;margin-bottom:0;}
 .conferencevaultevent .conferencevaultinner_innerright_inner ul li .innerimagebox img{display:block;width:100%;}
 .conferencevaultevent .conferencevaultinner_innerright_inner ul li .innerimageboxdescriptions h4{color:var(--Primary-text,#45474F);max-width:269px;font-family:futura lt,open sans;font-size:14px;font-style:normal;font-weight:700;line-height:normal;margin:10px 0 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
 .conferencevaultevent .conferencevaultinner_innerright_inner ul li .innerimageboxdescriptions small{color:var(--Secondary-text,#5B5E6B);text-align:left;font-family:open sans;font-size:11px;font-style:normal;font-weight:700;line-height:18px;margin:0 0 10px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;}
