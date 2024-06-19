@@ -1930,7 +1930,7 @@ section.conferencevault.elementor-section.elementor-section-boxed{padding-top:20
 .mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright{display:flex;max-width:877px;width:100%;align-items:flex-start;align-content:flex-start;gap:0;flex-wrap:wrap;}
 .mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright h2{color:var(--Primary-text,#45474F);font-family:"Futura LT","Open Sans";font-size:25px;font-style:normal;font-weight:700;line-height:normal;width:100%;margin:0;}
 .mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright p{color:var(--Secondary-text,#5B5E6B);font-family:"Open Sans";font-size:16px;font-style:normal;font-weight:400;line-height:normal;margin:0 0 20px;}
-.mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright ul{display:grid;grid-template-columns:repeat(3,1fr);grid-column-gap:32px;grid-row-gap:32px;padding:0;list-style:none;margin-bottom:0;}
+.mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright ul{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);grid-column-gap:32px;grid-row-gap:32px;padding:0;list-style:none;margin-bottom:0;}
 .mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright ul li{width:100%;}
 .mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright ul li .innerimagebox img{display:block;width:100%;}
 .mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright ul li .innerimageboxdescriptions h4{color:var(--Primary-text,#45474F);max-width:269px;font-family:"Futura LT","Open Sans";font-size:14px;font-style:normal;font-weight:700;line-height:normal;margin:10px 0 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
@@ -1939,7 +1939,7 @@ section.conferencevault.elementor-section.elementor-section-boxed{padding-top:20
 .conferencevaultinnergridboximage .conferencevaultinnergridboximageshowmore{display:flex;width:271px;height:157px;padding:0px 36px 0px 37px;justify-content:center;align-items:center;flex-shrink:0;border-radius:12px;background:rgba(255,255,255,0.50);box-shadow:0px 40px 80px 0px rgba(0,0,0,0.05);}
 .conferencevaultinnergridboximage .conferencevaultinnergridboximageshowmore a{display:flex;padding:15px 30px;justify-content:center;align-items:center;gap:5px;border-radius:302px;background:var(--gray-color,#F1F3F4);color:var(--text-main,#242730);font-family:"Open Sans";font-size:16px;font-style:normal;font-weight:400;line-height:82%; /* 13.12px */}
 .mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright .conferencevaultinner_innerright_inner{margin:0 0 50px;}
-.confernceloadmore{flex-shrink:0;margin:0 auto;}
+.confernceloadmore{width:238px;height:89px;flex-shrink:0;margin:0 auto;}
 .confernceloadmore .confernceloadmoreinner{width:238px;height:89px;flex-shrink:0;border-radius:53px;border:1px solid rgba(231,239,239,0.75);background:var(--gray-lt2,#F8F9F9);position:relative;}
 .confernceloadmore .confernceloadmoreinner a{display:flex;width:198px;padding:20px 30px;justify-content:center;align-items:center;gap:10px;border-radius:302px;background:var(--horizontal-grad-1,linear-gradient(90deg,#FD4B7A -2.36%,#4D00AE 159.05%));color:var(--pure-white,#FFF);font-family:"Open Sans";font-size:16px;font-style:normal;font-weight:400;line-height:82%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);}
 
@@ -1966,7 +1966,7 @@ section.conferencevaultevent .conferencevaultinner{width:100%;text-align:center;
 section.conferencevaultevent .conferencevaultinner h1{text-align:center;color:var(--Primary-text,#45474F);text-align:center;font-family:"Futura LT","Open Sans";font-size:34px;font-style:normal;font-weight:700;line-height:normal;margin:0 0 10px;}
 section.conferencevaultevent .conferencevaultinner h1 span{background:var(--horizontal-grad-1,linear-gradient(90deg,#FD4B7A -2.36%,#4D00AE 159.05%));background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-family:"Futura LT","Open Sans";font-size:34px;font-style:normal;font-weight:700;line-height:normal;}
 .conferencevaultevent .conferencevaultinner_innerright_inner{display:flex;max-width:100%;width:100%;align-items:flex-start;align-content:flex-start;gap:0;flex-wrap:wrap;    padding-bottom: 45px;}
-.conferencevaultevent .conferencevaultinner_innerright_inner ul{display:grid;grid-template-columns:repeat(4,1fr);grid-column-gap:32px;grid-row-gap:32px;padding:0;list-style:none;margin-bottom:0;}
+.conferencevaultevent .conferencevaultinner_innerright_inner ul{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,1fr);grid-column-gap:32px;grid-row-gap:32px;padding:0;list-style:none;margin-bottom:0;}
 .conferencevaultevent .conferencevaultinner_innerright_inner ul li .innerimagebox img{display:block;width:100%;}
 .conferencevaultevent .conferencevaultinner_innerright_inner ul li .innerimageboxdescriptions h4{color:var(--Primary-text,#45474F);max-width:269px;font-family:futura lt,open sans;font-size:14px;font-style:normal;font-weight:700;line-height:normal;margin:10px 0 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
 .conferencevaultevent .conferencevaultinner_innerright_inner ul li .innerimageboxdescriptions small{color:var(--Secondary-text,#5B5E6B);text-align:left;font-family:open sans;font-size:11px;font-style:normal;font-weight:700;line-height:18px;margin:0 0 10px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;}
@@ -2116,3 +2116,91 @@ a#enrollbtns{color:#fff;cursor:pointer;}
 	.elementor-column.elementor-col-25.elementor-top-column.elementor-element.elementor-element-4430f24.pro_plus_sec.member_plan.membershipbox_other{width:35%!important;margin-left:auto;margin-top:-30px;}
 }
 /* pricepopup */
+
+/* cv_conf */
+.conferencevaultevent .conferencevaultinner_innerright_inner ul li:hover{box-shadow:0px 10px 15px -3px rgba(0,0,0,0.1);border-bottom-left-radius:12px;border-bottom-right-radius:12px;}
+.conferencevaultevent .conferencevaultinner_innerright_inner ul li .innerimageboxdescriptions{padding:10px 10px;}
+.conferencevaultevent .conferencevaultinner_innerright_inner ul li .conferencevaultinnergridboximage .innerimagebox{position:relative;border-radius:12px;overflow:hidden;}
+.conferencevaultevent .conferencevaultinner_innerright_inner ul li .conferencevaultinnergridboximage .innerimagebox .overlayimagicon{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.5);top:0;left:0;right:0;bottom:0;z-index:99;cursor:pointer;opacity:0;}
+.conferencevaultevent .conferencevaultinner_innerright_inner ul li:hover .conferencevaultinnergridboximage .innerimagebox .overlayimagicon{opacity:1;transition:opacity 0.3s ease-in;}
+.conferencevaultevent .conferencevaultinner_innerright_inner ul li .conferencevaultinnergridboximage .innerimagebox .overlayimagicon svg{width:36px;height:36px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);}
+.popupwithvideoandtext{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,0.5);justify-content:center;align-items:center;z-index:9999;}
+.popup-contentvideotext{background-color:#fff;padding:20px;border-radius:5px;box-shadow:0 0 10px rgba(0,0,0,0.1);position:relative;}
+.closevideotext {
+    position: absolute;
+    top: -40px;
+    right: -20px;
+    font-size: 30px;
+    cursor: pointer;
+    background: rgba(255,255,255,0.8);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+
+.videowithtext {
+    display: flex;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+.videowithtext .rightextpopup {
+    width: 100%;
+    max-width: 450px;
+    display: none;
+}
+
+.videowithtext .rightextpopup .rightextpopupinner {
+    height: 350px;
+    overflow: auto;
+    margin-left: 15px;
+}
+
+@media (min-width: 1401px) and (max-width: 4000px) 
+{
+	.videowithtext .rightextpopup{display: flex;}
+}
+
+@media (min-width:992px) and (max-width:1024px)
+{
+	.popup-contentvideotext{width:90%;}
+	.popup-contentvideotext .leftvideopopup{width:100%;}
+	.popup-contentvideotext .leftvideopopup iframe{width:100%;}
+}	
+
+@media screen and (min-width:768px) and (max-width:991px)
+{
+	.popup-contentvideotext{width:90%;}
+	.popup-contentvideotext .leftvideopopup{width:100%;}
+	.popup-contentvideotext .leftvideopopup iframe{width:100%;}
+}
+
+@media screen and (max-width:767px)
+{
+	.popup-contentvideotext{width:90%;}
+	.popup-contentvideotext .leftvideopopup{width:100%;}
+	.popup-contentvideotext .leftvideopopup iframe{width:100%;}
+}
+/* cv_conf */
+
+.hideondesktop{display: none;}
+
+@media (min-width:992px) and (max-width:1024px)
+{
+	.hideondesktop{display: block;}
+}	
+
+@media screen and (min-width:768px) and (max-width:991px)
+{
+	.hideondesktop{display: block;}
+}
+
+@media screen and (max-width:767px)
+{
+	.hideondesktop{display: block;}
+}
