@@ -8738,7 +8738,7 @@ if ( ! function_exists( 'moc_conference_vault_custom_post_type_and_category_taxo
 		) );
 
 		// Register taxonomy, conference.
-		register_taxonomy( 'cv_conference', array( 'conference_vault' ), array(
+		register_taxonomy( 'conference', array( 'conference_vault' ), array(
 			'labels'            => array(
 				'name'                       => _x( 'Conferences', 'Taxonomy General Name', 'marketing-ops-core' ),
 				'singular_name'              => _x( 'Conference', 'Taxonomy Singular Name', 'marketing-ops-core' ),

@@ -1014,7 +1014,7 @@ class Marketing_Ops_Core_Public {
 		}
 
 		// Check if it's the conference vault taxonomy archive page.
-		if ( is_tax( 'cv_pillar' ) || is_tax( 'cv_conference' ) || is_tax( 'cv_skill_level' ) ) {
+		if ( is_tax( 'cv_pillar' ) || is_tax( 'conference' ) || is_tax( 'cv_skill_level' ) ) {
 			$templates = MOC_PLUGIN_PATH . 'public/partials/templates/conference-vault/conference-vault-taxonomy-archive.php';
 		}
 
@@ -5920,9 +5920,9 @@ class Marketing_Ops_Core_Public {
 				'field'    => 'term_id',
 				'terms'    => array( $term_id ),
 			);
-		} elseif ( is_tax( 'cv_conference' ) ) {
+		} elseif ( is_tax( 'conference' ) ) {
 			$args['tax_query'][] = array(
-				'taxonomy' => 'cv_conference',
+				'taxonomy' => 'conference',
 				'field'    => 'term_id',
 				'terms'    => array( $term_id ),
 			);
