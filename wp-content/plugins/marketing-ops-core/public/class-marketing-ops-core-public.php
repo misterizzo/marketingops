@@ -1411,6 +1411,11 @@ class Marketing_Ops_Core_Public {
 			// require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-accelevents-purchase-tickets.php';
 		}
 
+		// Add the video to only the taxonomy pages.
+		if ( is_tax( 'cv_pillar' ) || is_tax( 'conference' ) || is_tax( 'cv_skill_level' ) || is_page( 'conference-vault' ) ) {
+			require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-conference-vault-video.php';
+		}
+
 		// Add the restricted content modal.
 		if (
 			is_page( 'premium-event-with-darrell-alfonso' ) ||
