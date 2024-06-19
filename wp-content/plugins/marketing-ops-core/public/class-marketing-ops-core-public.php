@@ -1014,7 +1014,7 @@ class Marketing_Ops_Core_Public {
 		}
 
 		// Check if it's the conference vault taxonomy archive page.
-		if ( is_tax( 'cv_pillar' ) || is_tax( 'conference' ) || is_tax( 'cv_skill_level' ) ) {
+		if ( is_tax( 'pillar' ) || is_tax( 'conference' ) || is_tax( 'conference_skill_level' ) ) {
 			$templates = MOC_PLUGIN_PATH . 'public/partials/templates/conference-vault/conference-vault-taxonomy-archive.php';
 		}
 
@@ -1412,7 +1412,7 @@ class Marketing_Ops_Core_Public {
 		}
 
 		// Add the video to only the taxonomy pages.
-		if ( is_tax( 'cv_pillar' ) || is_tax( 'conference' ) || is_tax( 'cv_skill_level' ) || is_page( 'conference-vault' ) ) {
+		if ( is_tax( 'pillar' ) || is_tax( 'conference' ) || is_tax( 'conference_skill_level' ) || is_page( 'conference-vault' ) ) {
 			require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-conference-vault-video.php';
 		}
 
@@ -5919,9 +5919,9 @@ class Marketing_Ops_Core_Public {
 			if ( 'template' === $args['post_type'] ) {
 				$args['post_status'] = 'publish';
 			}
-		} elseif ( is_tax( 'cv_pillar' ) ) {
+		} elseif ( is_tax( 'pillar' ) ) {
 			$args['tax_query'][] = array(
-				'taxonomy' => 'cv_pillar',
+				'taxonomy' => 'pillar',
 				'field'    => 'term_id',
 				'terms'    => array( $term_id ),
 			);
@@ -5931,9 +5931,9 @@ class Marketing_Ops_Core_Public {
 				'field'    => 'term_id',
 				'terms'    => array( $term_id ),
 			);
-		} elseif ( is_tax( 'cv_skill_level' ) ) {
+		} elseif ( is_tax( 'conference_skill_level' ) ) {
 			$args['tax_query'][] = array(
-				'taxonomy' => 'cv_skill_level',
+				'taxonomy' => 'conference_skill_level',
 				'field'    => 'term_id',
 				'terms'    => array( $term_id ),
 			);

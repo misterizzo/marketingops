@@ -8705,7 +8705,7 @@ if ( ! function_exists( 'moc_conference_vault_custom_post_type_and_category_taxo
 		);
 
 		// Register taxonomy, pillar.
-		register_taxonomy( 'cv_pillar', array( 'conference_vault' ), array(
+		register_taxonomy( 'pillar', array( 'conference_vault' ), array(
 			'labels'            => array(
 				'name'                       => _x( 'Pillars', 'Taxonomy General Name', 'marketing-ops-core' ),
 				'singular_name'              => _x( 'Pillar', 'Taxonomy Singular Name', 'marketing-ops-core' ),
@@ -8771,7 +8771,7 @@ if ( ! function_exists( 'moc_conference_vault_custom_post_type_and_category_taxo
 		) );
 
 		// Register taxonomy, skill level.
-		register_taxonomy( 'cv_skill_level', array( 'conference_vault' ), array(
+		register_taxonomy( 'conference_skill_level', array( 'conference_vault' ), array(
 			'labels'            => array(
 				'name'                       => _x( 'Skill Levels', 'Taxonomy General Name', 'marketing-ops-core' ),
 				'singular_name'              => _x( 'Skill Level', 'Taxonomy Singular Name', 'marketing-ops-core' ),

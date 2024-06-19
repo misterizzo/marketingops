@@ -25,7 +25,7 @@ $video_query_args = moc_posts_query_args( 'conference_vault' );
 $video_query      = new WP_Query( $video_query_args );
 $pillars          = get_terms( // Get the pillars.
 	array(
-		'taxonomy'   => 'cv_pillar',
+		'taxonomy'   => 'pillar',
 		'hide_empty' => true,
 	)
 );
@@ -81,8 +81,6 @@ $pillars          = get_terms( // Get the pillars.
 					?>
 				</ul>
 			<?php } ?>
-
-			<?php debug( get_taxonomies() ); ?>
 			<div class="confernceloadmore">
 				<div class="confernceloadmoreinner">
 					<a href="javascript:void(0);"><?php esc_html_e( 'Load More', 'marketing-ops-core' ); ?></a>
