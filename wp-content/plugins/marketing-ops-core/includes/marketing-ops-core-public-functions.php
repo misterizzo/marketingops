@@ -9038,6 +9038,7 @@ if ( ! function_exists( 'moc_conference_vault_video_box_html' ) ) {
 		}
 
 		$session_title   = get_the_title( $post_id );
+		$session_content = get_the_content( $post_id );
 		$session_by      = get_field( 'session_author', $post_id );
 		$session_link    = get_field( 'vimeo_video_url', $post_id );
 		$session_excerpt = get_post_field( 'post_excerpt', $post_id );
@@ -9081,6 +9082,11 @@ if ( ! function_exists( 'moc_conference_vault_video_box_html' ) ) {
 					<!-- Session Short Description -->
 					<?php if ( ! empty( $session_excerpt ) ) { ?>
 						<p><?php echo wp_kses_post( $session_excerpt ); ?></p>
+					<?php } ?>
+
+					<!-- Session Content -->
+					<?php if ( ! empty( $session_content ) ) { ?>
+						<div class="conference-vault-session-details" style="display: none;"><?php echo wp_kses_post( $session_content ); ?></p>
 					<?php } ?>
 				</div>
 			</div>
