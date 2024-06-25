@@ -158,7 +158,18 @@ $merged_terms             = array_merge( $terms_from_conference, $terms_from_pil
 								<p>83 Sessions</p>
 								<ul>
 									<?php foreach ( $video_ids as $video_id ) { ?>
-										<?php echo moc_conference_vault_video_box_html( $video_id = 1 ); ?>
+										<li>
+											<div class="conferencevaultinnergridboximage">
+												<div class="innerimagebox">
+													<img src="https://marketingops.com/wp-content/uploads/2024/05/Rectangle-868.jpg" />
+												</div>
+												<div class="innerimageboxdescriptions">
+													<h4>Unveiling the New Pillars</h4>
+													<small>by Darrell Alfonso</small>
+													<p>Sem integer vitae justo eget magna fermentum. Arcu dui vivamus arcu felis bibendum. Nibh nisl condimentum id venenatis a condimentum. In arcu cursus euismod quis viverra. </p>
+												</div>
+											</div>
+										</li>
 									<?php } ?>
 									<li>
 										<div class="conferencevaultinnergridboximage">
