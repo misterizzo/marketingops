@@ -9096,3 +9096,49 @@ if ( ! function_exists( 'moc_conference_vault_video_box_html' ) ) {
 		return ob_get_clean();
 	}
 }
+
+/**
+ * Check if the function exists.
+ */
+if ( ! function_exists( 'moc_get_conference_videos' ) ) {
+	/**
+	 * Get the conference vault videos.
+	 *
+	 * @param string $post_type Post type.
+	 * @param int    $paged Paged value.
+	 * @param int    $posts_per_page Posts per page.
+	 * @return object
+	 * @since 1.0.0
+	 */
+	function moc_get_conference_videos( $post_type = 'post', $paged = 1, $posts_per_page = '', $tax_query = array() ) {
+		// Prepare the arguments array.
+		$args = array(
+			'post_type'      => $post_type,
+			'paged'          => $paged,
+			'posts_per_page' => ( ! empty( $posts_per_page ) ) ? $posts_per_page : get_option( 'posts_per_page' ),
+			'post_status'    => 'publish',
+			'fields'         => 'ids',
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+		);
+
+		// If the tax arguments are available.
+		if ( ! empty( $tax_query ) && is_array( $tax_query ) ) {
+			$args['tax_query'][] = $tax_query;
+		}
+
+		/**
+		 * Posts/custom posts listing arguments filter.
+		 *
+		 * This filter helps to modify the arguments for retreiving posts of default/custom post types.
+		 *
+		 * @param array $args Holds the post arguments.
+		 * @return array
+		 */
+		$args = apply_filters( 'moc_get_conference_videos_args', $args );
+
+		debug( $args );
+
+		return new WP_Query( $args );
+	}
+}
