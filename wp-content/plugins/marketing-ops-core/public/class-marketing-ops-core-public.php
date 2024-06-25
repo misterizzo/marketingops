@@ -5905,6 +5905,8 @@ class Marketing_Ops_Core_Public {
 		$term_id          = get_queried_object()->term_id;// Get the current queried term ID.
 		$posted_values    = filter_input_array( INPUT_POST );
 
+		var_dump( $posted_values['action'], is_tax( 'conference' ) );
+
 		// If the current page is strategists.
 		if ( is_page( 'strategists' ) ) {
 			// If the category is available.
