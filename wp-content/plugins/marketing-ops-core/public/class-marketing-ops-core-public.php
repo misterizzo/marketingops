@@ -6206,4 +6206,21 @@ class Marketing_Ops_Core_Public {
 
 		return $metadata;
 	}
+
+	/**
+	 * Load more conference videos.
+	 *
+	 * @since 1.0.0
+	 */
+	public function load_more_conf_videos() {
+		$page      = filter_input( INPUT_POST, 'page', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$max_pages = filter_input( INPUT_POST, 'max_pages', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+
+		// Fetch the posts.
+		$video_query_args = moc_posts_query_args( 'conference_vault', $page, 16 );
+		$video_query      = new WP_Query( $video_query_args );
+
+		debug( $video_query );
+		die;
+	}
 }

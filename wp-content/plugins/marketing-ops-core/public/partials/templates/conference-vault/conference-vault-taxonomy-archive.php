@@ -21,10 +21,10 @@ get_header();
 $term_id          = get_queried_object()->term_id;
 $taxonomy         = get_queried_object()->taxonomy;
 $term_title       = get_field( 'term_title', "{$taxonomy}_{$term_id}" );
-$video_query_args = moc_posts_query_args( 'conference_vault', 1, 90 );
+$video_query_args = moc_posts_query_args( 'conference_vault', 1, 16 );
 $video_query      = new WP_Query( $video_query_args );
 
-debug( $video_query );
+// debug( $video_query );
 
 $pillars          = get_terms( // Get the pillars.
 	array(
@@ -86,15 +86,21 @@ $pillars          = get_terms( // Get the pillars.
 			<?php } ?>
 
 			<?php if ( 1 < $video_query->max_num_pages ) { ?>
+				<!-- Load More -->
 				<div class="confernceloadmore">
 					<div class="confernceloadmoreinner">
 						<input type="hidden" id="current_page" value="1" />
 						<input type="hidden" id="prev_page" value="0" />
 						<input type="hidden" id="next_page" value="2" />
-						<a href="javascript:void(0);"><?php esc_html_e( 'Load More', 'marketing-ops-core' ); ?></a>
+						<input type="hidden" id="max_pages" value="<?php echo esc_attr( $video_query->max_num_pages ); ?>" />
+						<a class="load" href="javascript:void(0);"><?php esc_html_e( 'Load More', 'marketing-ops-core' ); ?></a>
 					</div>
 				</div>
 			<?php } ?>
+
+			<div class="loader_bg">
+				<div class="loader"></div>
+			</div>
 		</div>
 	</div>
 	<!-- This is what will be included inside the popup -->	

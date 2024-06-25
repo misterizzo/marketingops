@@ -72,6 +72,47 @@
 	// Remove the free column from the pricing table.
 	$( '.subscribe_table .table_head .head_colum.free_colum, .subscribe_table .table_body .table_tr.btn_tr .body_colum.free_colum, .subscribe_table .table_body .table_tr.odd .body_colum.free_colum, .subscribe_table .table_body .table_tr.even .body_colum.free_colum' ).remove();
 
+	// Conference load more.
+	if ( $( '.confernceloadmore' ).length ) {
+		// Click on load more to fetch more videos.
+		$( document ).on( 'click', '.confernceloadmore .load', function() {
+			var current_page = $( '#current_page' ).val();
+			var prev_page = $( '#prev_page' ).val();
+			var next_page = $( '#next_page' ).val();
+			var max_pages = $( '#max_pages' ).val();
+
+			// Fire the ajax to fetch the videos.
+			$.ajax( {
+				dataType: 'json',
+				url: ajaxurl,
+				type: 'POST',
+				data: {
+					'action': 'load_more_conf_videos',
+					'page': ( current_page + 1 ),
+					'max_pages': max_pages,
+				},
+				beforeSend: function() {
+
+				},
+				complete: function() {
+
+				},
+				success: function(response) {
+					// Check for invalid ajax request.
+					if (0 === response) {
+						console.log('MarketingOps: invalid ajax request');
+						return false;
+					}
+					if ( 'moc-open-video-course-success' === response.data.code ) {
+						$('.moc_iframe_popup').removeClass('non-active').addClass('active');
+						$('.moc_home_loader').removeClass('show');
+						$( '.moc_popup_embeded_video' ).html( response.data.html );
+					}
+				}
+			} );
+		} );
+	}
+
 	// Set the timer on the apalooza page.
 	if ( $( '.mops-apalooza-timer' ).length ) {
 		// Set the date we're counting down to.
@@ -202,7 +243,7 @@
 						$( '.moc_popup_embeded_video' ).html( response.data.html );
 					}
 				}
-			});
+			} );
 		}
 		/* $('.moc_home_watch_video').removeClass('non-active').addClass('active');
 		$('body').addClass('popup-active'); */

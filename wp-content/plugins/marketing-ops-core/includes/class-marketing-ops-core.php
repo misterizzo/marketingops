@@ -369,6 +369,8 @@ class Marketing_Ops_Core {
 		$this->loader->add_action( 'wp_ajax_unlike_template', $plugin_public, 'mops_unlike_template_callback' );
 		$this->loader->add_action( 'wp_ajax_download_template', $plugin_public, 'mops_download_template_callback' );
 		$this->loader->add_filter( 'wc_stripe_intent_metadata', $plugin_public, 'mops_wc_stripe_intent_metadata_callback', 10, 2 );
+		$this->loader->add_action( 'wp_ajax_load_more_conf_videos', $plugin_public, 'mops_load_more_conf_videos_callback' );
+		$this->loader->add_action( 'wp_ajax_nopriv_load_more_conf_videos', $plugin_public, 'mops_load_more_conf_videos_callback' );
 	}
 
 	/**
