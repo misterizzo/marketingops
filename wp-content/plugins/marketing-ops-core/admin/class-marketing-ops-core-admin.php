@@ -1313,4 +1313,43 @@ class Marketing_Ops_Core_Admin {
 
 		return $email;
 	}
+
+	/**
+	 * Add custom columns to the 'conference_vault' posts.
+	 *
+	 * @param array $default_cols Columns array.
+	 * @return array
+	 * @since 1.0.0
+	 */
+	public function cf_manage_edit_conference_vault_columns_callback( $default_cols ) {
+		// If the array key doesn't exist for session video.
+		if ( ! array_key_exists( 'session_video', $default_cols ) ) {
+			$default_cols['session_video'] = __( 'Video', 'marketing-ops-core' );
+		}
+
+		// If the array key doesn't exist for session speakers.
+		if ( ! array_key_exists( 'session_speaker', $default_cols ) ) {
+			$default_cols['session_speaker'] = __( 'Speaker(s)', 'marketing-ops-core' );
+		}
+
+		return $default_cols;
+	}
+
+	/**
+	 * Add custom column data to the 'conference_vault' posts.
+	 *
+	 * @param string $column_name Column name.
+	 * @param int    $post_id Post ID.
+	 * @since 1.0.0
+	 */
+	public function cf_manage_conference_vault_posts_custom_column_callback( $column_name, $post_id ) {
+		// Print the content for "session video" column name.
+		if ( 'session_video' === $column_name ) {
+			echo 'video here';
+		}
+
+		if ( 'session_speaker' === $column_name ) {
+			echo 'speakers here';
+		}
+	}
 }

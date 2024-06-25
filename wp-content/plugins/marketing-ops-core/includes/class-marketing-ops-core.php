@@ -137,12 +137,12 @@ class Marketing_Ops_Core {
 		$this->loader->add_action( 'edit_user_profile', $plugin_admin, 'moc_user_add_extra_field_callback', 99 );
 		$this->loader->add_action( 'personal_options_update', $plugin_admin, 'moc_user_add_extra_field_update_callback', 99 );
 		$this->loader->add_action( 'edit_user_profile_update', $plugin_admin, 'moc_user_add_extra_field_update_callback', 99 );
-		$this->loader->add_filter( 'manage_edit-category_columns', $plugin_admin, 'moc_add_show_in_frontend_column_columns');
-		$this->loader->add_filter( 'manage_category_custom_column', $plugin_admin, 'moc_add_show_in_frontend_column_content', 99, 3);
-		$this->loader->add_filter( 'manage_edit-podcast_category_columns', $plugin_admin, 'moc_add_show_in_frontend_podcast_category_column_columns');
-		$this->loader->add_filter( 'manage_podcast_category_custom_column', $plugin_admin, 'moc_add_show_in_frontend_podcast_category_column_content', 99, 3);
-		$this->loader->add_filter( 'manage_edit-no_bs_demo_category_columns', $plugin_admin, 'moc_add_show_in_frontend_nobsdemo_category_column_columns');
-		$this->loader->add_filter( 'manage_no_bs_demo_category_custom_column', $plugin_admin, 'moc_add_show_in_frontend_nobsdemo_category_column_content', 99, 3);
+		$this->loader->add_filter( 'manage_edit-category_columns', $plugin_admin, 'moc_add_show_in_frontend_column_columns' );
+		$this->loader->add_filter( 'manage_category_custom_column', $plugin_admin, 'moc_add_show_in_frontend_column_content', 99, 3 );
+		$this->loader->add_filter( 'manage_edit-podcast_category_columns', $plugin_admin, 'moc_add_show_in_frontend_podcast_category_column_columns' );
+		$this->loader->add_filter( 'manage_podcast_category_custom_column', $plugin_admin, 'moc_add_show_in_frontend_podcast_category_column_content', 99, 3 );
+		$this->loader->add_filter( 'manage_edit-no_bs_demo_category_columns', $plugin_admin, 'moc_add_show_in_frontend_nobsdemo_category_column_columns' );
+		$this->loader->add_filter( 'manage_no_bs_demo_category_custom_column', $plugin_admin, 'moc_add_show_in_frontend_nobsdemo_category_column_content', 99, 3 );
 		$this->loader->add_action( 'wp_ajax_moc_make_enable_disable_show_in_frontend', $plugin_admin, 'moc_make_enable_disable_show_in_frontend_callback' );
 		$this->loader->add_action( 'wp_ajax_moc_make_enable_disable_show_in_frontend_for_all', $plugin_admin, 'moc_make_enable_disable_show_in_frontend_for_all_callback' );
 		$this->loader->add_filter( 'woocommerce_product_data_tabs', $plugin_admin, 'moc_woocommerce_product_data_tabs_callback' );
@@ -171,6 +171,8 @@ class Marketing_Ops_Core {
 		$this->loader->add_filter( 'manage_edit-podcast_columns', $plugin_admin, 'cf_manage_edit_podcast_columns_callback' );
 		$this->loader->add_action( 'manage_podcast_posts_custom_column', $plugin_admin, 'cf_manage_podcast_posts_custom_column_callback', 10, 2 );
 		$this->loader->add_filter( 'recovery_mode_email', $plugin_admin, 'moc_recovery_mode_email_callback', 20, 2 );
+		$this->loader->add_filter( 'manage_edit-conference_vault_columns', $plugin_admin, 'cf_manage_edit_conference_vault_columns_callback' );
+		$this->loader->add_action( 'manage_conference_vault_posts_custom_column', $plugin_admin, 'cf_manage_conference_vault_posts_custom_column_callback', 10, 2 );
 	}
 
 	/**
