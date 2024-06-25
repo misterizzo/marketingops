@@ -6280,6 +6280,9 @@ class Marketing_Ops_Core_Public {
 		$video_query      = new WP_Query( $video_query_args );
 		$html             = '';
 
+		debug( $video_query );
+		die;
+
 		// Return, if there are no posts found.
 		if ( empty( $video_query->posts ) || ! is_array( $video_query->posts ) ) {
 			wp_send_json_success(
