@@ -2125,18 +2125,12 @@ a#enrollbtns{color:#fff;cursor:pointer;}
 .conferencevaultevent .conferencevaultinner_innerright_inner ul li:hover .conferencevaultinnergridboximage .innerimagebox .overlayimagicon{opacity:1;transition:opacity 0.3s ease-in;}
 .conferencevaultevent .conferencevaultinner_innerright_inner ul li .conferencevaultinnergridboximage .innerimagebox .overlayimagicon svg{width:36px;height:36px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);}
 .popupwithvideoandtext{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,0.5);justify-content:center;align-items:center;z-index:9999;}
-.popup-contentvideotext {
-	background-color: #fff;
-	padding: 10px;
-	border-radius: 5px;
-	box-shadow: 0 0 10px rgba(0,0,0,0.1);
-	position: relative;
-		width: 60%;
-}
-.leftvideopopup {max-width: 100%;width: 100%;}
-.leftvideopopup iframe{width: 100%;}
-.closevideotext {position: absolute;top: -40px;right: -20px;font-size: 30px;cursor: pointer;background: rgba(255,255,255,0.8);border-radius: 50%;width: 30px;height: 30px;display: flex;align-items: center;align-content: center;justify-content: center;}
-.videowithtext {display: flex;align-items: flex-start;align-content: flex-start;}
+.popup-contentvideotext{background-color:transparent;padding:0px;border-radius:24px;box-shadow:0 0 10px rgba(0,0,0,0.1);position:relative;width:60%;}
+.leftvideopopup{max-width:100%;position:relative;width:100%;height:0;padding-bottom:56.25%;}
+.leftvideopopup iframe{position:absolute;left:0;top:0;height:100%;width:100%;}
+.conferencevaultevent .conferencevaultinner_innerright_inner ul li .innerimageboxdescriptions h4 a{color:var(--Primary-text,#45474F);max-width:269px;font-family:futura lt,open sans;font-size:14px;font-style:normal;font-weight:700;line-height:normal;margin:10px 0 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.closevideotext{position:absolute;top:-35px;right:-21px;font-size:23px;cursor:pointer;background:transparent;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;align-content:center;justify-content:center;border:solid 1px #fff;color:#fff;font-weight:400;text-align:center;}
+.videowithtext{display:flex;align-items:flex-start;align-content:flex-start;overflow:hidden;border-radius:24px;}
 .videowithtext .rightextpopup {width: 30%;max-width: 30%;display: none;}
 .videowithtext .rightextpopup .rightextpopupinner {height: 350px;overflow: auto;margin-left: 15px;}
 a.viewconferancebtn {display: flex;width: 198px;padding: 20px 30px;justify-content: center;align-items: center;gap: 10px;border-radius: 302px;background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));color: var(--pure-white, #FFF);font-family: "Open Sans";font-size: 16px;font-style: normal;font-weight: 400;line-height: 82%;position: relative;top: 0;left: 50%;transform: translate(-50%, -0%);margin:5px 0 0;}
@@ -2150,8 +2144,8 @@ section.profile_setup .content_boxed input:checked~label:after{border-radius: 6p
 section.profile_setup .content_boxed input:checked~label:after{background: #FA4A7A;background: -webkit-linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%);background: -moz-linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%);background: linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%);}
 section.profile_setup .content_boxed label:after{content: "";position: absolute;left: 0;top: 25%;transform: translateY(-50%);width: 25px;height: 25px;background: rgba(246, 247, 247, 0.5);border: 1px solid #E7EFEF;box-sizing: border-box;border-radius: 6px;}
 @media (min-width: 1401px) and (max-width: 4000px) {
-	.leftvideopopup {max-width: 100%;width: 100%;}
-	.leftvideopopup iframe{width: 100%;height: 40vh;}
+	.leftvideopopup{max-width:100%;position:relative;width:100%;height:0;padding-bottom:56.25%;}
+	.leftvideopopup iframe{position:absolute;left:0;top:0;height:100%;width:100%;}
 	.videowithtext .rightextpopup{display: flex;}
 	.popup-contentvideotext {background-color: #fff;padding: 10px;border-radius: 5px;box-shadow: 0 0 10px rgba(0,0,0,0.1);position: relative;width: 60%;}
 }
