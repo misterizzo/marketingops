@@ -76,10 +76,10 @@
 	if ( $( '.confernceloadmore' ).length ) {
 		// Click on load more to fetch more videos.
 		$( document ).on( 'click', '.confernceloadmore .load', function() {
-			var current_page = $( '#current_page' ).val();
-			var prev_page = $( '#prev_page' ).val();
-			var next_page = $( '#next_page' ).val();
-			var max_pages = $( '#max_pages' ).val();
+			var current_page = parseInt( $( '#current_page' ).val() );
+			var prev_page = parseInt( $( '#prev_page' ).val() );
+			var next_page = parseInt( $( '#next_page' ).val() );
+			var max_pages = parseInt( $( '#max_pages' ).val() );
 
 			// Fire the ajax to fetch the videos.
 			$.ajax( {
@@ -88,7 +88,7 @@
 				type: 'POST',
 				data: {
 					'action': 'load_more_conf_videos',
-					'page': ( current_page + 1 ),
+					'page': next_page,
 					'max_pages': max_pages,
 				},
 				beforeSend: function() {
@@ -98,11 +98,6 @@
 
 				},
 				success: function(response) {
-					// Check for invalid ajax request.
-					if (0 === response) {
-						console.log('MarketingOps: invalid ajax request');
-						return false;
-					}
 					if ( 'moc-open-video-course-success' === response.data.code ) {
 						$('.moc_iframe_popup').removeClass('non-active').addClass('active');
 						$('.moc_home_loader').removeClass('show');
