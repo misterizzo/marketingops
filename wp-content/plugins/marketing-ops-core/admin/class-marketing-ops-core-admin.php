@@ -1327,6 +1327,11 @@ class Marketing_Ops_Core_Admin {
 			$default_cols['session_video'] = __( 'Video', 'marketing-ops-core' );
 		}
 
+		// If the array key doesn't exist for session speakers.
+		if ( ! array_key_exists( 'session_speaker', $default_cols ) ) {
+			$default_cols['session_speaker'] = __( 'Speaker(s)', 'marketing-ops-core' );
+		}
+
 		return $default_cols;
 	}
 
@@ -1341,10 +1346,12 @@ class Marketing_Ops_Core_Admin {
 		// Print the content for "session video" column name.
 		if ( 'session_video' === $column_name ) {
 			$video_url = get_field( 'vimeo_video_url', $post_id );
-			$video_speaker = get_field( 'session_author', $post_id );
+			echo '<a href="' . $video_url . '" target="_blank" title="' . $video_url . '">' . $video_url . '</a>';
+		}
 
-			echo '<iframe src="https://player.vimeo.com/video/896725734?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;color=ffffff" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>';
-			echo '<p>Video by: ' . $video_speaker . '</p>';
+		if ( 'session_speaker' === $column_name ) {
+			$video_speaker = get_field( 'session_author', $post_id );
+			echo $video_speaker;
 		}
 	}
 }
