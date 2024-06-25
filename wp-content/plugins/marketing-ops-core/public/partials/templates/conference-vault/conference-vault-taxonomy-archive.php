@@ -60,6 +60,7 @@ $pillars          = get_terms( // Get the pillars.
 				<div class="elementor-container elementor-column-gap-default">
 					<div class="categories_tags articled_container conference_pillars_filter">
 						<div class="tag_box text_box"><?php esc_html_e( 'Pillars', 'marketing-ops-core' ); ?></div>
+						<input type="hidden" id="conf_taxonomy" value="conference" data-term="<?php echo esc_attr( $term_id ); ?>" />
 						<button data-termid="-1" class="tag_box moc_all_tags moc_selected_taxonomy single_pillar"><?php esc_html_e( 'ALL', 'marketing-ops-core' ); ?></button>
 
 						<!-- Loop thorugh the pillars -->

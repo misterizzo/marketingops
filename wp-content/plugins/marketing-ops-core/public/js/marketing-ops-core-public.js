@@ -140,6 +140,8 @@
 					data: {
 						'action': 'filter_conf_videos',
 						'termid': termid,
+						'current_taxonomy': $( '#conf_taxonomy' ).val(),
+						'current_taxonomy_term': $( '#conf_taxonomy' ).data( 'term' ),
 					},
 					success: function( response ) {
 						if ( 'videos-found' === response.data.code ) {
