@@ -65,6 +65,7 @@ $pillars          = get_terms( // Get the pillars.
 						<!-- Loop thorugh the pillars -->
 						<?php foreach ( $pillars as $pillar_term ) { ?>
 							<a href="javascript:void(0);" data-termid="<?php echo esc_attr( $pillar_term->term_id ); ?>" class="tag_box single_pillar"><?php echo wp_kses_post( $pillar_term->name ); ?></a>
+							<button data-termid="<?php echo esc_attr( $pillar_term->term_id ); ?>" class="tag_box single_pillar"><?php echo wp_kses_post( $pillar_term->name ); ?> Button</button>
 						<?php } ?>
 					</div>
 				</div>
