@@ -54,7 +54,7 @@ $videos_from_conference = moc_get_conference_videos(
 	array(
 		'taxonomy' => 'conference',
 		'field'    => 'term_id',
-		'terms'    => array( $terms_from_conference ),
+		'terms'    => $terms_from_conference,
 	)
 );
 
