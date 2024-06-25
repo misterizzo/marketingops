@@ -6219,6 +6219,26 @@ class Marketing_Ops_Core_Public {
 		// Fetch the posts.
 		$video_query_args = moc_posts_query_args( 'conference_vault', $page, 16 );
 		$video_query      = new WP_Query( $video_query_args );
+		$html             = '';
+
+		// Return, if there are no posts found.
+		if ( empty( $video_query->posts ) || ! is_array( $video_query->posts ) ) {
+			wp_send_json_success(
+				array(
+					'code' => 'no-videos-found',
+				)
+			);
+		}
+
+		// Loop through the videos to create the HTML.
+		foreach ( $video_query->posts as $video_id ) {
+			$html .= moc_conference_vault_video_box_html( $video_id );
+		}
+
+		// See if the load more button has to be hidden.
+		var_dump( $page, $max_pages );
+
+		// $hide_load_more = (  );
 
 		debug( $video_query );
 		die;
