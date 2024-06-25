@@ -6213,8 +6213,8 @@ class Marketing_Ops_Core_Public {
 	 * @since 1.0.0
 	 */
 	public function mops_load_more_conf_videos_callback() {
-		$page      = filter_input( INPUT_POST, 'page', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-		$max_pages = filter_input( INPUT_POST, 'max_pages', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$page      = (int) filter_input( INPUT_POST, 'page', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$max_pages = (int) filter_input( INPUT_POST, 'max_pages', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 		// Fetch the posts.
 		$video_query_args = moc_posts_query_args( 'conference_vault', $page, 16 );
@@ -6236,9 +6236,16 @@ class Marketing_Ops_Core_Public {
 		}
 
 		// See if the load more button has to be hidden.
-		var_dump( $page, $max_pages );
+		$hide_load_more = ( $page === $max_pages ) ? 'yes' : 'no';
 
-		// $hide_load_more = (  );
+		// Return the ajax response.
+		wp_send_json_success(
+			array(
+				'code'           => 'videos-found',
+				'html'           => $html,
+				'hide_load_more' => $hide_load_more,
+			)
+		);
 
 		debug( $video_query );
 		die;
