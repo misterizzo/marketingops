@@ -40,14 +40,12 @@ $page_id      = get_the_ID();
 
 // Get the terms from which the videos should be shown.
 $terms_from_pillar      = get_post_meta( $page_id, 'select_pillar', true );
-// $terms_from_conference  = get_field( 'select_conference', "page_{$page_id}" );
-// $terms_from_skill_level = get_field( 'select_skill_level', "page_{$page_id}" );
+$terms_from_conference  = get_post_meta( $page_id, 'select_conference', true );
+$terms_from_skill_level = get_post_meta( $page_id, 'select_skill_level', true );
 
-debug( get_the_ID() );
 debug( $terms_from_pillar );
-var_dump( $terms_from_pillar );
-// debug( $terms_from_conference );
-// debug( $terms_from_skill_level );
+debug( $terms_from_conference );
+debug( $terms_from_skill_level );
 ?>
 <section class="marketingopstemplatesconfernace conferencevault elementor-section elementor-section-boxed">
 	<div class="margktingimgss"></div>
