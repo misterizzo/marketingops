@@ -36,11 +36,12 @@ $skill_levels = get_terms( // Get the skill levels.
 		'hide_empty' => true,
 	)
 );
+$page_id      = get_the_ID();
 
 // Get the terms from which the videos should be shown.
-$terms_from_pillar      = get_field( 'select_pillar', get_the_ID() );
-$terms_from_conference  = get_field( 'select_conference', get_the_ID() );
-$terms_from_skill_level = get_field( 'select_skill_level', get_the_ID() );
+$terms_from_pillar      = get_field( 'select_pillar', "page_{$page_id}" );
+$terms_from_conference  = get_field( 'select_conference', "page_{$page_id}" );
+$terms_from_skill_level = get_field( 'select_skill_level', "page_{$page_id}" );
 
 debug( get_the_ID() );
 debug( $terms_from_pillar );
