@@ -6212,7 +6212,7 @@ class Marketing_Ops_Core_Public {
 	 *
 	 * @since 1.0.0
 	 */
-	public function load_more_conf_videos() {
+	public function mops_load_more_conf_videos_callback() {
 		$page      = filter_input( INPUT_POST, 'page', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$max_pages = filter_input( INPUT_POST, 'max_pages', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
