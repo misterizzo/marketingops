@@ -2126,167 +2126,36 @@ a#enrollbtns{color:#fff;cursor:pointer;}
 .conferencevaultevent .conferencevaultinner_innerright_inner ul li .conferencevaultinnergridboximage .innerimagebox .overlayimagicon svg{width:36px;height:36px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);}
 .popupwithvideoandtext{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,0.5);justify-content:center;align-items:center;z-index:9999;}
 .popup-contentvideotext {
-    background-color: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    position: relative;
-        width: 60%;
+	background-color: #fff;
+	padding: 10px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0,0,0,0.1);
+	position: relative;
+		width: 60%;
 }
-.leftvideopopup {
-    max-width: 100%;
-    width: 100%;
-}
+.leftvideopopup {max-width: 100%;width: 100%;}
 .leftvideopopup iframe{width: 100%;}
-.closevideotext {
-    position: absolute;
-    top: -40px;
-    right: -20px;
-    font-size: 30px;
-    cursor: pointer;
-    background: rgba(255,255,255,0.8);
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-}
-
-
-.videowithtext {
-    display: flex;
-    align-items: flex-start;
-    align-content: flex-start;
-}
-
-.videowithtext .rightextpopup {
-    width: 30%;
-    max-width: 30%;
-    display: none;
-}
-
-.videowithtext .rightextpopup .rightextpopupinner {
-    height: 350px;
-    overflow: auto;
-    margin-left: 15px;
-}
-
-a.viewconferancebtn {
-    display: flex;
-    width: 198px;
-    padding: 20px 30px;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    border-radius: 302px;
-    background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));
-    color: var(--pure-white, #FFF);
-    font-family: "Open Sans";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 82%;
-    position: relative;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -0%);
-    margin:5px 0 0;
-}
-
-section.profile_setup .content_boxed {
-    display: flex;
-    align-items: flex-start;
-    align-content: flex-start;
-}
-section.profile_setup .content_boxed input[type="checkbox"]{
-    opacity: 0 !important;
-    position: absolute;
-    margin: 0;
-    left: 0;
-    right: 0;
-    width: 25px;
-    height: 25px;
-    text-align: left;
-    z-index: 99;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-section.profile_setup .content_boxed label{
-font-family: 'open_sansregular';
-    font-size: 14px;
-    color: #45474F;
-    display: flex;
-    align-items: center;
-    padding-left: 35px;
-    position: relative;
-}
-.profile_setup .setup_container .form_btn p {
-    text-align: left;
-    margin-left: 35px !important;
-}
-section.profile_setup .content_boxed label:before{
-    content: "";
-    position: absolute;
-    left: 5px;
-    top: 25%;
-    transform: translateY(-50%);
-    width: 15px;
-    height: 15px;
-    background-image: url(/wp-content/themes/hello-elementor_child/images/svg/true_checkbox.svg);
-    background-repeat: no-repeat;
-    background-size: contain;
-    opacity: 0;
-    z-index: 9;
-}
+.closevideotext {position: absolute;top: -40px;right: -20px;font-size: 30px;cursor: pointer;background: rgba(255,255,255,0.8);border-radius: 50%;width: 30px;height: 30px;display: flex;align-items: center;align-content: center;justify-content: center;}
+.videowithtext {display: flex;align-items: flex-start;align-content: flex-start;}
+.videowithtext .rightextpopup {width: 30%;max-width: 30%;display: none;}
+.videowithtext .rightextpopup .rightextpopupinner {height: 350px;overflow: auto;margin-left: 15px;}
+a.viewconferancebtn {display: flex;width: 198px;padding: 20px 30px;justify-content: center;align-items: center;gap: 10px;border-radius: 302px;background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));color: var(--pure-white, #FFF);font-family: "Open Sans";font-size: 16px;font-style: normal;font-weight: 400;line-height: 82%;position: relative;top: 0;left: 50%;transform: translate(-50%, -0%);margin:5px 0 0;}
+section.profile_setup .content_boxed {display: flex;align-items: flex-start;align-content: flex-start;}
+section.profile_setup .content_boxed input[type="checkbox"]{opacity: 0 !important;position: absolute;margin: 0;left: 0;right: 0;width: 25px;height: 25px;text-align: left;z-index: 99;top: 50%;transform: translateY(-50%);}
+section.profile_setup .content_boxed label{font-family: 'open_sansregular';font-size: 14px;color: #45474F;display: flex;align-items: center;padding-left: 35px;position: relative;}
+.profile_setup .setup_container .form_btn p {text-align: left;margin-left: 35px !important;}
+section.profile_setup .content_boxed label:before{content: "";position: absolute;left: 5px;top: 25%;transform: translateY(-50%);width: 15px;height: 15px;background-image: url(/wp-content/themes/hello-elementor_child/images/svg/true_checkbox.svg);background-repeat: no-repeat;background-size: contain;opacity: 0;z-index: 9;}
 section.profile_setup .content_boxed input:checked~label:before{opacity: 1;}
 section.profile_setup .content_boxed input:checked~label:after{border-radius: 6px;}
-
-section.profile_setup .content_boxed input:checked~label:after{
-    background: #FA4A7A;
-    background: -webkit-linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%);
-    background: -moz-linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%);
-    background: linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%);
-
-}
-
-section.profile_setup .content_boxed label:after{
-content: "";
-    position: absolute;
-    left: 0;
-    top: 25%;
-    transform: translateY(-50%);
-    width: 25px;
-    height: 25px;
-    background: rgba(246, 247, 247, 0.5);
-    border: 1px solid #E7EFEF;
-    box-sizing: border-box;
-    border-radius: 6px;
-}
-@media (min-width: 1401px) and (max-width: 4000px) 
-{
-
-	.leftvideopopup {
-    max-width: 70%;
-    width: 70%;
-}
-.leftvideopopup iframe{width: 100%;height: 40vh;}
-
+section.profile_setup .content_boxed input:checked~label:after{background: #FA4A7A;background: -webkit-linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%);background: -moz-linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%);background: linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%);}
+section.profile_setup .content_boxed label:after{content: "";position: absolute;left: 0;top: 25%;transform: translateY(-50%);width: 25px;height: 25px;background: rgba(246, 247, 247, 0.5);border: 1px solid #E7EFEF;box-sizing: border-box;border-radius: 6px;}
+@media (min-width: 1401px) and (max-width: 4000px) {
+	.leftvideopopup {max-width: 70%;width: 70%;}
+	.leftvideopopup iframe{width: 100%;height: 40vh;}
 	.videowithtext .rightextpopup{display: flex;}
-	.popup-contentvideotext {
-    background-color: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    position: relative;
-    width: 60%;
+	.popup-contentvideotext {background-color: #fff;padding: 10px;border-radius: 5px;box-shadow: 0 0 10px rgba(0,0,0,0.1);position: relative;width: 60%;}
 }
-}
-
-@media (min-width:992px) and (max-width:1024px)
-{
+@media (min-width:992px) and ( max-width:1024px ) {
 	.popup-contentvideotext{width:90%;max-width: 640px;}
 	.popup-contentvideotext .leftvideopopup{width:100%;}
 	.popup-contentvideotext .leftvideopopup iframe{width:100%;}
@@ -2294,8 +2163,7 @@ content: "";
 	a.viewconferancebtn{margin:0px 0 5px;}
 }	
 
-@media screen and (min-width:768px) and (max-width:991px)
-{
+@media screen and (min-width:768px) and ( max-width:991px ) {
 	.popup-contentvideotext{width:90%;max-width: 640px;}
 	.popup-contentvideotext .leftvideopopup{width:100%;}
 	.popup-contentvideotext .leftvideopopup iframe{width:100%;}
@@ -2303,8 +2171,7 @@ content: "";
 	a.viewconferancebtn{margin:0px 0 5px;}
 }
 
-@media screen and (max-width:767px)
-{
+@media screen and ( max-width:767px ) {
 	.popup-contentvideotext{width:90%;max-width:640px;}
 	.popup-contentvideotext .leftvideopopup{width:100%;}
 	.popup-contentvideotext .leftvideopopup iframe{width:100%;height:190px;}
