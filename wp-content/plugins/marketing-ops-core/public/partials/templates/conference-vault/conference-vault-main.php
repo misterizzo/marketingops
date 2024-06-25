@@ -42,6 +42,7 @@ $terms_from_pillar      = get_field( 'select_pillar', get_the_ID() );
 $terms_from_conference  = get_field( 'select_conference', get_the_ID() );
 $terms_from_skill_level = get_field( 'select_skill_level', get_the_ID() );
 
+debug( get_the_ID() );
 debug( $terms_from_pillar );
 debug( $terms_from_conference );
 debug( $terms_from_skill_level );
