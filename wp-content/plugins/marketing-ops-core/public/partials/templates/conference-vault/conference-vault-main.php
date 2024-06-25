@@ -36,8 +36,6 @@ $skill_levels = get_terms( // Get the skill levels.
 		'hide_empty' => true,
 	)
 );
-
-debug( $pillars );
 ?>
 <section class="marketingopstemplatesconfernace conferencevault elementor-section elementor-section-boxed">
 	<div class="margktingimgss"></div>
@@ -51,51 +49,68 @@ debug( $pillars );
 		<div class="conferencevaultinner_inner">
 			<div class="conferencevaultinner_innerleft">
 				<div class="elementor-shortcode">
-					<div class="common_filter_row">
-						<div class="elementor-widget-wrap elementor-element-populated">
-							<div class="directory_search_form">
-								<div class="expandableCollapsibleDiv platform_section">
-									<h3 class="open"><?php esc_html_e( 'Pillar', 'marketing-ops-core' ); ?></h3>
-									<ul class="moc_training_filters" style="">
-										<li>
-											<input id="technologymanagement" type="checkbox" name="pillar[]" value="" data-taxonomy="">
-											<label for="technologymanagement">Technology Management </label>
-										</li>
-									</ul>
+					<?php if ( ! empty( $pillars ) && is_array( $pillars ) ) { ?>
+						<!-- PILLARS -->
+						<div class="common_filter_row">
+							<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="directory_search_form">
+									<div class="expandableCollapsibleDiv platform_section">
+										<h3 class="open"><?php esc_html_e( 'Pillar', 'marketing-ops-core' ); ?></h3>
+										<ul class="moc_training_filters">
+											<?php foreach ( $pillars as $pillar ) { ?>
+												<li>
+													<input id="<?php echo esc_attr( $pillar->slug ); ?>" type="checkbox" name="<?php echo esc_attr( $pillar->taxonomy ); ?>" value="<?php echo esc_attr( $pillar->term_id ); ?>">
+													<label for="<?php echo esc_attr( $pillar->slug ); ?>"><?php echo esc_html( $pillar->name ); ?></label>
+												</li>
+											<?php } ?>
+										</ul>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="common_filter_row">
-						<div class="elementor-widget-wrap elementor-element-populated">
-							<div class="directory_search_form">
-								<div class="expandableCollapsibleDiv platform_section">
-									<h3 class="open">Conference</h3>
-									<ul class="moc_training_filters" style="">
-										<li>
-											<input id="Mops23" type="checkbox" name="conference[]" value="" data-taxonomy="">
-											<label for="Mops23">Mops-A-palooza 23</label>
-										</li>
-									</ul>
+					<?php } ?>
+
+					<?php if ( ! empty( $conferences ) && is_array( $conferences ) ) { ?>
+						<!-- CONFERENCES -->
+						<div class="common_filter_row">
+							<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="directory_search_form">
+									<div class="expandableCollapsibleDiv platform_section">
+										<h3 class="open"><?php esc_html_e( 'Conference', 'marketing-ops-core' ); ?></h3>
+										<ul class="moc_training_filters">
+											<?php foreach ( $conferences as $conference ) { ?>
+												<li>
+													<input id="<?php echo esc_attr( $conference->slug ); ?>" type="checkbox" name="<?php echo esc_attr( $conference->taxonomy ); ?>" value="<?php echo esc_attr( $conference->term_id ); ?>">
+													<label for="<?php echo esc_attr( $conference->slug ); ?>"><?php echo esc_html( $conference->name ); ?></label>
+												</li>
+											<?php } ?>
+										</ul>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="common_filter_row">
-						<div class="elementor-widget-wrap elementor-element-populated">
-							<div class="directory_search_form">
-								<div class="expandableCollapsibleDiv platform_section">
-									<h3 class="open">Skill level</h3>
-									<ul class="moc_training_filters" style="">
-										<li>
-											<input id="Intermediate" type="checkbox" name="skilllevel[]" value="" data-taxonomy="">
-											<label for="Intermediate">Intermediate</label>
-										</li>
-									</ul>
+					<?php } ?>
+					
+					<?php if ( ! empty( $skill_levels ) && is_array( $skill_levels ) ) { ?>
+						<!-- SKILL LEVELS -->
+						<div class="common_filter_row">
+							<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="directory_search_form">
+									<div class="expandableCollapsibleDiv platform_section">
+										<h3 class="open"><?php esc_html_e( 'Skill Level', 'marketing-ops-core' ); ?></h3>
+										<ul class="moc_training_filters">
+											<?php foreach ( $skill_levels as $skill_level ) { ?>
+												<li>
+													<input id="<?php echo esc_attr( $skill_level->slug ); ?>" type="checkbox" name="<?php echo esc_attr( $skill_level->taxonomy ); ?>" value="<?php echo esc_attr( $skill_level->term_id ); ?>">
+													<label for="<?php echo esc_attr( $skill_level->slug ); ?>"><?php echo esc_html( $skill_level->name ); ?></label>
+												</li>
+											<?php } ?>
+										</ul>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
+					<?php } ?>
 					<div class="common_filter_row">
 						<div class="elementor-widget-wrap elementor-element-populated">
 							<div class="directory_search_form mainsidbarsearch">
