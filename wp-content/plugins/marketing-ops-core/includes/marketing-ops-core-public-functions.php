@@ -9071,7 +9071,7 @@ if ( ! function_exists( 'moc_conference_vault_video_box_html' ) ) {
 				<div class="innerimageboxdescriptions">
 					<!-- Session Title -->
 					<?php if ( ! empty( $session_title ) ) { ?>
-						<h4><?php echo wp_kses_post( $session_title ); ?></h4>
+						<h4><a title="<?php echo wp_kses_post( $session_title ); ?>" href="<?php get_permalink( $post_id ); ?>"><?php echo wp_kses_post( $session_title ); ?></a></h4>
 					<?php } ?>
 
 					<!-- Session Author -->
