@@ -75,7 +75,7 @@
 	// Conference load more.
 	if ( $( '.confernceloadmore' ).length ) {
 		// Click on load more to fetch more videos.
-		$( document ).on( 'click', '.confernceloadmore a', function() {
+		$( document ).on( 'click', '.confernceloadmore button', function() {
 			var current_page = parseInt( $( '#current_page' ).val() );
 			var next_page = parseInt( $( '#next_page' ).val() );
 			var max_pages = parseInt( $( '#max_pages' ).val() );

@@ -60,12 +60,11 @@ $pillars          = get_terms( // Get the pillars.
 				<div class="elementor-container elementor-column-gap-default">
 					<div class="categories_tags articled_container conference_pillars_filter">
 						<div class="tag_box text_box"><?php esc_html_e( 'Pillars', 'marketing-ops-core' ); ?></div>
-						<a href="javascript:void(0);" data-termid="-1" class="tag_box moc_all_tags moc_selected_taxonomy single_pillar"><?php esc_html_e( 'ALL', 'marketing-ops-core' ); ?></a>
+						<button data-termid="-1" class="tag_box moc_all_tags moc_selected_taxonomy single_pillar"><?php esc_html_e( 'ALL', 'marketing-ops-core' ); ?></button>
 
 						<!-- Loop thorugh the pillars -->
 						<?php foreach ( $pillars as $pillar_term ) { ?>
-							<a href="javascript:void(0);" data-termid="<?php echo esc_attr( $pillar_term->term_id ); ?>" class="tag_box single_pillar"><?php echo wp_kses_post( $pillar_term->name ); ?></a>
-							<button data-termid="<?php echo esc_attr( $pillar_term->term_id ); ?>" class="tag_box single_pillar"><?php echo wp_kses_post( $pillar_term->name ); ?> Button</button>
+							<button data-termid="<?php echo esc_attr( $pillar_term->term_id ); ?>" class="tag_box single_pillar"><?php echo wp_kses_post( $pillar_term->name ); ?></button>
 						<?php } ?>
 					</div>
 				</div>
@@ -94,7 +93,7 @@ $pillars          = get_terms( // Get the pillars.
 						<input type="hidden" id="prev_page" value="0" />
 						<input type="hidden" id="next_page" value="2" />
 						<input type="hidden" id="max_pages" value="<?php echo esc_attr( $video_query->max_num_pages ); ?>" />
-						<a href="javascript:void(0);"><?php esc_html_e( 'Load More', 'marketing-ops-core' ); ?></a>
+						<button type="button"><?php esc_html_e( 'Load More', 'marketing-ops-core' ); ?></button>
 					</div>
 				</div>
 			<?php } ?>
