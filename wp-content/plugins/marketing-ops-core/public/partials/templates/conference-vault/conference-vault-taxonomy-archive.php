@@ -93,7 +93,7 @@ $pillars          = get_terms( // Get the pillars.
 						<input type="hidden" id="prev_page" value="0" />
 						<input type="hidden" id="next_page" value="2" />
 						<input type="hidden" id="max_pages" value="<?php echo esc_attr( $video_query->max_num_pages ); ?>" />
-						<a class="load" href="javascript:void(0);"><?php esc_html_e( 'Load More', 'marketing-ops-core' ); ?></a>
+						<a href="javascript:void(0);"><?php esc_html_e( 'Load More', 'marketing-ops-core' ); ?></a>
 					</div>
 				</div>
 			<?php } ?>

@@ -75,44 +75,48 @@
 	// Conference load more.
 	if ( $( '.confernceloadmore' ).length ) {
 		// Click on load more to fetch more videos.
-		$( document ).on( 'click', '.confernceloadmore .load', function() {
+		$( document ).on( 'click', '.confernceloadmore a', function() {
 			var current_page = parseInt( $( '#current_page' ).val() );
 			var next_page = parseInt( $( '#next_page' ).val() );
 			var max_pages = parseInt( $( '#max_pages' ).val() );
 
+			// Show the loader.
+			if ( $( '.loader_bg' ).length ) {
+				$( '.loader_bg' ).css( 'display', 'flex' );
+			}
+
 			// Fire the ajax to fetch the videos.
-			$.ajax( {
-				dataType: 'json',
-				url: ajaxurl,
-				type: 'POST',
-				data: {
-					'action': 'load_more_conf_videos',
-					'page': next_page,
-					'max_pages': max_pages,
-				},
-				beforeSend: function() {
+			// $.ajax( {
+			// 	dataType: 'json',
+			// 	url: ajaxurl,
+			// 	type: 'POST',
+			// 	data: {
+			// 		'action': 'load_more_conf_videos',
+			// 		'page': next_page,
+			// 		'max_pages': max_pages,
+			// 	},
+			// 	success: function( response ) {
+			// 		if ( 'videos-found' === response.data.code ) {
+			// 			// Hide the loader.
+			// 			if ( $( '.loader_bg' ).length ) {
+			// 				$( '.loader_bg' ).css( 'display', 'none' );
+			// 			}
 
-				},
-				complete: function() {
+			// 			// Load the HTML.
+			// 			$( '.conferencevaultinner_innerright_inner ul' ).append( response.data.html );
 
-				},
-				success: function( response ) {
-					if ( 'videos-found' === response.data.code ) {
-						// Load the HTML.
-						$( '.conferencevaultinner_innerright_inner ul' ).append( response.data.html );
+			// 			// Set the pagination values.
+			// 			$( '#current_page' ).val( next_page );
+			// 			$( '#prev_page' ).val( current_page );
+			// 			$( '#next_page' ).val( ( next_page + 1 ) );
 
-						// Set the pagination values.
-						$( '#current_page' ).val( next_page );
-						$( '#prev_page' ).val( current_page );
-						$( '#next_page' ).val( ( next_page + 1 ) );
-
-						// If the load more should be hidden.
-						if ( 'yes' === response.data.hide_load_more ) {
-							$( '.confernceloadmore' ).remove();
-						}
-					}
-				}
-			} );
+			// 			// If the load more should be hidden.
+			// 			if ( 'yes' === response.data.hide_load_more ) {
+			// 				$( '.confernceloadmore' ).remove();
+			// 			}
+			// 		}
+			// 	}
+			// } );
 		} );
 	}
 
