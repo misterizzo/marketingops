@@ -77,7 +77,6 @@
 		// Click on load more to fetch more videos.
 		$( document ).on( 'click', '.confernceloadmore .load', function() {
 			var current_page = parseInt( $( '#current_page' ).val() );
-			var prev_page = parseInt( $( '#prev_page' ).val() );
 			var next_page = parseInt( $( '#next_page' ).val() );
 			var max_pages = parseInt( $( '#max_pages' ).val() );
 
@@ -97,11 +96,20 @@
 				complete: function() {
 
 				},
-				success: function(response) {
-					if ( 'moc-open-video-course-success' === response.data.code ) {
-						$('.moc_iframe_popup').removeClass('non-active').addClass('active');
-						$('.moc_home_loader').removeClass('show');
-						$( '.moc_popup_embeded_video' ).html( response.data.html );
+				success: function( response ) {
+					if ( 'videos-found' === response.data.code ) {
+						// Load the HTML.
+						$( '.conferencevaultinner_innerright_inner ul' ).append( response.data.html );
+
+						// Set the pagination values.
+						$( '#current_page' ).val( next_page );
+						$( '#prev_page' ).val( current_page );
+						$( '#next_page' ).val( ( next_page + 1 ) );
+
+						// If the load more should be hidden.
+						if ( 'yes' === response.data.hide_load_more ) {
+							$( '.confernceloadmore' ).remove();
+						}
 					}
 				}
 			} );

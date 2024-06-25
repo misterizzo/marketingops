@@ -6246,8 +6246,6 @@ class Marketing_Ops_Core_Public {
 				'hide_load_more' => $hide_load_more,
 			)
 		);
-
-		debug( $video_query );
-		die;
+		wp_die();
 	}
 }
