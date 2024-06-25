@@ -76,8 +76,7 @@ $pillars          = get_terms( // Get the pillars.
 					<?php
 					// Loop through the conference video posts.
 					foreach ( $video_query->posts as $post_id ) {
-						// Print the conference video post.
-						echo moc_conference_vault_video_box_html( $post_id );
+						echo moc_conference_vault_video_box_html( $post_id ); // Print the conference video post.
 					}
 					?>
 				</ul>
