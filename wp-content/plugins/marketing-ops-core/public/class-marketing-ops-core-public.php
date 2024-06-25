@@ -5904,8 +5904,6 @@ class Marketing_Ops_Core_Public {
 		$current_category = filter_input( INPUT_GET, 'cat', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$term_id          = get_queried_object()->term_id;// Get the current queried term ID.
 		$posted_values    = filter_input_array( INPUT_POST );
-		
-		debug( $posted_values );
 
 		// If the current page is strategists.
 		if ( is_page( 'strategists' ) ) {
@@ -5934,6 +5932,20 @@ class Marketing_Ops_Core_Public {
 				'field'    => 'term_id',
 				'terms'    => array( $term_id ),
 			);
+
+			// If the pillar filter request is there.
+			if ( ! empty( $posted_values['action'] ) && 'filter_conf_videos' === $posted_values['action'] ) {
+
+				// If the term id is available.
+				if ( ! empty( $posted_values['termid'] ) && -1 !== $posted_values['termid'] ) {
+					$args['tax_query']['relation'] = 'AND';
+					$args['tax_query'][]           = array(
+						'taxonomy' => 'pillar',
+						'field'    => 'term_id',
+						'terms'    => array( $posted_values['termid'] ),
+					);
+				}
+			}
 		} elseif ( is_tax( 'conference_skill_level' ) ) {
 			$args['tax_query'][] = array(
 				'taxonomy' => 'conference_skill_level',
