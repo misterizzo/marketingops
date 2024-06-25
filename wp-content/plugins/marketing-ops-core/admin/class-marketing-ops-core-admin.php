@@ -1345,11 +1345,13 @@ class Marketing_Ops_Core_Admin {
 	public function cf_manage_conference_vault_posts_custom_column_callback( $column_name, $post_id ) {
 		// Print the content for "session video" column name.
 		if ( 'session_video' === $column_name ) {
-			echo 'video here';
+			$video_url = get_field( 'vimeo_video_url', $post_id );
+			echo $video_url;
 		}
 
 		if ( 'session_speaker' === $column_name ) {
-			echo 'speakers here';
+			$video_speaker = get_field( 'session_author', $post_id );
+			echo $video_speaker;
 		}
 	}
 }
