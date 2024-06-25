@@ -23,6 +23,9 @@ $taxonomy         = get_queried_object()->taxonomy;
 $term_title       = get_field( 'term_title', "{$taxonomy}_{$term_id}" );
 $video_query_args = moc_posts_query_args( 'conference_vault' );
 $video_query      = new WP_Query( $video_query_args );
+
+debug( $video_query );
+
 $pillars          = get_terms( // Get the pillars.
 	array(
 		'taxonomy'   => 'pillar',
