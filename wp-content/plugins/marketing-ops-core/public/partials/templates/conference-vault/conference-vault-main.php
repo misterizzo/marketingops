@@ -45,44 +45,44 @@ $terms_from_skill_level   = get_post_meta( $page_id, 'select_skill_level', true 
 $terms_from_skill_level   = ( ! empty( $terms_from_skill_level ) && is_array( $terms_from_skill_level ) ) ? $terms_from_skill_level : array();
 $merged_terms             = array_merge( $terms_from_conference, $terms_from_pillar, $terms_from_skill_level ); // Merge all the terms.
 
-$conference_videos_query  = moc_get_conference_videos(
-	'conference_vault',
-	1,
-	5,
-	array(
-		'taxonomy' => 'conference',
-		'field'    => 'term_id',
-		'terms'    => $terms_from_conference,
-	)
-);
-$conference_video_ids     = ( ! empty( $conference_videos_query->posts ) && is_array( $conference_videos_query->posts ) ) ? $conference_videos_query->posts : array();
-$pillar_videos_query      = moc_get_conference_videos(
-	'conference_vault',
-	1,
-	5,
-	array(
-		'taxonomy' => 'pillar',
-		'field'    => 'term_id',
-		'terms'    => $terms_from_pillar,
-	)
-);
-$pillar_video_ids         = ( ! empty( $pillar_videos_query->posts ) && is_array( $pillar_videos_query->posts ) ) ? $pillar_videos_query->posts : array();
-$skill_level_videos_query = moc_get_conference_videos(
-	'conference_vault',
-	1,
-	5,
-	array(
-		'taxonomy' => 'conference_skill_level',
-		'field'    => 'term_id',
-		'terms'    => $terms_from_skill_level,
-	)
-);
-$skill_level_video_ids    = ( ! empty( $skill_level_videos_query->posts ) && is_array( $skill_level_videos_query->posts ) ) ? $skill_level_videos_query->posts : array();
+// $conference_videos_query  = moc_get_conference_videos(
+// 	'conference_vault',
+// 	1,
+// 	5,
+// 	array(
+// 		'taxonomy' => 'conference',
+// 		'field'    => 'term_id',
+// 		'terms'    => $terms_from_conference,
+// 	)
+// );
+// $conference_video_ids     = ( ! empty( $conference_videos_query->posts ) && is_array( $conference_videos_query->posts ) ) ? $conference_videos_query->posts : array();
+// $pillar_videos_query      = moc_get_conference_videos(
+// 	'conference_vault',
+// 	1,
+// 	5,
+// 	array(
+// 		'taxonomy' => 'pillar',
+// 		'field'    => 'term_id',
+// 		'terms'    => $terms_from_pillar,
+// 	)
+// );
+// $pillar_video_ids         = ( ! empty( $pillar_videos_query->posts ) && is_array( $pillar_videos_query->posts ) ) ? $pillar_videos_query->posts : array();
+// $skill_level_videos_query = moc_get_conference_videos(
+// 	'conference_vault',
+// 	1,
+// 	5,
+// 	array(
+// 		'taxonomy' => 'conference_skill_level',
+// 		'field'    => 'term_id',
+// 		'terms'    => $terms_from_skill_level,
+// 	)
+// );
+// $skill_level_video_ids    = ( ! empty( $skill_level_videos_query->posts ) && is_array( $skill_level_videos_query->posts ) ) ? $skill_level_videos_query->posts : array();
 
 
-debug( $conference_video_ids );
-debug( $pillar_video_ids );
-debug( $skill_level_video_ids );
+// debug( $conference_video_ids );
+// debug( $pillar_video_ids );
+// debug( $skill_level_video_ids );
 ?>
 <section class="marketingopstemplatesconfernace conferencevault elementor-section elementor-section-boxed">
 	<div class="margktingimgss"></div>
@@ -178,6 +178,7 @@ debug( $skill_level_video_ids );
 				<div class="conferencevaultinner_innerright">
 					<?php foreach ( $merged_terms as $term_id ) {
 						$term = get_term( $term_id );
+						debug( $term );
 						?>
 						<div class="conferencevaultinner_innerright_inner this_should_repeat">
 							<h2><?php echo wp_kses_post( $term->name ); ?></h2>

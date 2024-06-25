@@ -9137,8 +9137,6 @@ if ( ! function_exists( 'moc_get_conference_videos' ) ) {
 		 */
 		$args = apply_filters( 'moc_get_conference_videos_args', $args );
 
-		debug( $args );
-
 		return new WP_Query( $args );
 	}
 }
