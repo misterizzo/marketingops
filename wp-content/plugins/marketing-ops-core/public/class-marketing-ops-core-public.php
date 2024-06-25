@@ -5951,12 +5951,14 @@ class Marketing_Ops_Core_Public {
 						'field'    => 'term_id',
 						'terms'    => array( $posted_term_id ),
 					);
-					$args['tax_query'][]           = array(
-						'taxonomy' => $posted_values['current_taxonomy'],
-						'field'    => 'term_id',
-						'terms'    => array( $posted_current_taxonomy_term ),
-					);
 				}
+
+				// Set the current taxonomy.
+				$args['tax_query'][]           = array(
+					'taxonomy' => $posted_values['current_taxonomy'],
+					'field'    => 'term_id',
+					'terms'    => array( $posted_current_taxonomy_term ),
+				);
 			}
 		}
 
