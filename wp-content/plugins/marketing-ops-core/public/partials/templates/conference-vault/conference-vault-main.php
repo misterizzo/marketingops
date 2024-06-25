@@ -36,6 +36,15 @@ $skill_levels = get_terms( // Get the skill levels.
 		'hide_empty' => true,
 	)
 );
+
+// Get the terms from which the videos should be shown.
+$terms_from_pillar      = get_field( 'select_pillar', get_the_ID() );
+$terms_from_conference  = get_field( 'select_conference', get_the_ID() );
+$terms_from_skill_level = get_field( 'select_skill_level', get_the_ID() );
+
+debug( $terms_from_pillar );
+debug( $terms_from_conference );
+debug( $terms_from_skill_level );
 ?>
 <section class="marketingopstemplatesconfernace conferencevault elementor-section elementor-section-boxed">
 	<div class="margktingimgss"></div>
