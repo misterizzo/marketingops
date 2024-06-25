@@ -5903,6 +5903,9 @@ class Marketing_Ops_Core_Public {
 	public function mops_moc_posts_query_args_callback( $args = array() ) {
 		$current_category = filter_input( INPUT_GET, 'cat', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$term_id          = get_queried_object()->term_id;// Get the current queried term ID.
+		$posted_values    = filter_input_array( INPUT_POST );
+		
+		debug( $posted_values );
 
 		// If the current page is strategists.
 		if ( is_page( 'strategists' ) ) {
@@ -6218,6 +6221,47 @@ class Marketing_Ops_Core_Public {
 
 		// Fetch the posts.
 		$video_query_args = moc_posts_query_args( 'conference_vault', $page, 16 );
+		$video_query      = new WP_Query( $video_query_args );
+		$html             = '';
+
+		// Return, if there are no posts found.
+		if ( empty( $video_query->posts ) || ! is_array( $video_query->posts ) ) {
+			wp_send_json_success(
+				array(
+					'code' => 'no-videos-found',
+				)
+			);
+		}
+
+		// Loop through the videos to create the HTML.
+		foreach ( $video_query->posts as $video_id ) {
+			$html .= moc_conference_vault_video_box_html( $video_id );
+		}
+
+		// See if the load more button has to be hidden.
+		$hide_load_more = ( $page === $max_pages ) ? 'yes' : 'no';
+
+		// Return the ajax response.
+		wp_send_json_success(
+			array(
+				'code'           => 'videos-found',
+				'html'           => $html,
+				'hide_load_more' => $hide_load_more,
+			)
+		);
+		wp_die();
+	}
+
+	/**
+	 * Load more conference videos.
+	 *
+	 * @since 1.0.0
+	 */
+	public function mops_filter_conf_videos_callback() {
+		$termid = (int) filter_input( INPUT_POST, 'termid', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+
+		// Fetch the posts.
+		$video_query_args = moc_posts_query_args( 'conference_vault', 1, 16 );
 		$video_query      = new WP_Query( $video_query_args );
 		$html             = '';
 

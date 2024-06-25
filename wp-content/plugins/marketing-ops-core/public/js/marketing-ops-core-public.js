@@ -127,6 +127,43 @@
 			$( document ).on( 'click', '.conference_pillars_filter .single_pillar', function() {
 				var termid = parseInt( $( this ).data( 'termid' ) );
 
+				// Show the loader.
+				if ( $( '.loader_bg' ).length ) {
+					$( '.loader_bg' ).css( 'display', 'flex' );
+				}
+
+				// Fire the ajax to fetch the videos.
+				$.ajax( {
+					dataType: 'json',
+					url: ajaxurl,
+					type: 'POST',
+					data: {
+						'action': 'filter_conf_videos',
+						'termid': termid,
+					},
+					success: function( response ) {
+						if ( 'videos-found' === response.data.code ) {
+							// Hide the loader.
+							if ( $( '.loader_bg' ).length ) {
+								$( '.loader_bg' ).css( 'display', 'none' );
+							}
+
+							// Load the HTML.
+							$( '.conferencevaultinner_innerright_inner ul' ).append( response.data.html );
+
+							// Set the pagination values.
+							$( '#current_page' ).val( next_page );
+							$( '#prev_page' ).val( current_page );
+							$( '#next_page' ).val( ( next_page + 1 ) );
+
+							// If the load more should be hidden.
+							if ( 'yes' === response.data.hide_load_more ) {
+								$( '.confernceloadmore' ).remove();
+							}
+						}
+					}
+				} );
+
 				console.log( 'termid', termid );
 			} );
 		}
