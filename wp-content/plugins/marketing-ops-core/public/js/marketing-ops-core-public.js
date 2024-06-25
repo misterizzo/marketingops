@@ -85,6 +85,8 @@
 				$( '.loader_bg' ).css( 'display', 'flex' );
 			}
 
+			console.log( 'clicked here' );
+
 			// Fire the ajax to fetch the videos.
 			$.ajax( {
 				dataType: 'json',
