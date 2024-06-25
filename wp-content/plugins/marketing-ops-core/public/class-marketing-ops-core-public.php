@@ -5933,6 +5933,8 @@ class Marketing_Ops_Core_Public {
 				'terms'    => array( $term_id ),
 			);
 
+			var_dump( $posted_values['action'] );
+
 			// If the pillar filter request is there.
 			if ( ! empty( $posted_values['action'] ) && 'filter_conf_videos' === $posted_values['action'] ) {
 
