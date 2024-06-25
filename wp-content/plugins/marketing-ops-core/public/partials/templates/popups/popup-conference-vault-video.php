@@ -37,5 +37,6 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 				</div>
 			</div>	
 		</div>
+		<a href="javascript:void(0);" class="viewconferancebtn">View conference</a>
 	</div>
 </div>

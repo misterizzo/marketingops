@@ -221,7 +221,7 @@ if ( is_user_logged_in() ) {
 						</div>
 					</div>
 
-					<?php if ( '183.82.162.107' === $_SERVER['REMOTE_ADDR'] ) { ?>
+					<?php // if ( '183.82.162.107' === $_SERVER['REMOTE_ADDR'] ) { ?>
 						<!-- form row -->
 						<div class="form_row smtc_network">
 							<!-- input with error -->
@@ -230,7 +230,7 @@ if ( is_user_logged_in() ) {
 								<label for="moc_join_smtc_network"><?php esc_html_e( 'My primary income is from consulting and I would like to join the MarketingOps private network: Society of Marketing Technology Consultants (SMTC).', 'marketing-ops-core' ); ?></label>
 							</div>
 						</div>
-					<?php } ?>
+					<?php // } ?>
 
 					<!-- form row -->
 					<div class="form_row form_btn">
