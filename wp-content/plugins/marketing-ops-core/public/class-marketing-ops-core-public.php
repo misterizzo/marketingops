@@ -5941,6 +5941,9 @@ class Marketing_Ops_Core_Public {
 		} elseif ( ! empty( $posted_values['action'] ) && 'filter_conf_videos' === $posted_values['action'] ) {
 			// Taxonomy id conference.
 			if ( ! empty( $posted_values['current_taxonomy'] ) && 'conference' === $posted_values['current_taxonomy'] ) {
+
+				var_dump( $posted_values['termid'] );
+
 				if ( ! empty( $posted_values['termid'] ) && -1 !== $posted_values['termid'] ) {
 					$args['tax_query']['relation'] = 'AND';
 					$args['tax_query'][]           = array(
