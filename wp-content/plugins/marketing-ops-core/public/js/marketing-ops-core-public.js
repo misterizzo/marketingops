@@ -125,7 +125,8 @@
 		if ( $( '.conference_pillars_filter' ).length ) {
 			// Click on the pillar to filter the videos.
 			$( document ).on( 'click', '.conference_pillars_filter .single_pillar', function() {
-				var termid = parseInt( $( this ).data( 'termid' ) );
+				var this_button = $( this );
+				var termid      = parseInt( this_button.data( 'termid' ) );
 
 				// Show the loader.
 				if ( $( '.loader_bg' ).length ) {
@@ -150,13 +151,12 @@
 								$( '.loader_bg' ).css( 'display', 'none' );
 							}
 
-							// Load the HTML.
-							$( '.conferencevaultinner_innerright_inner ul' ).append( response.data.html );
+							// Adjust the active pillar.
+							$( '.conference_pillars_filter .single_pillar' ).removeClass( 'moc_selected_taxonomy' );
+							this_button.addClass( 'moc_selected_taxonomy' );
 
-							// Set the pagination values.
-							$( '#current_page' ).val( next_page );
-							$( '#prev_page' ).val( current_page );
-							$( '#next_page' ).val( ( next_page + 1 ) );
+							// Load the HTML.
+							$( '.conferencevaultinner_innerright_inner ul' ).html( response.data.html );
 
 							// If the load more should be hidden.
 							if ( 'yes' === response.data.hide_load_more ) {

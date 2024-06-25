@@ -6280,9 +6280,6 @@ class Marketing_Ops_Core_Public {
 		$video_query      = new WP_Query( $video_query_args );
 		$html             = '';
 
-		debug( $video_query );
-		die;
-
 		// Return, if there are no posts found.
 		if ( empty( $video_query->posts ) || ! is_array( $video_query->posts ) ) {
 			wp_send_json_success(
@@ -6298,7 +6295,7 @@ class Marketing_Ops_Core_Public {
 		}
 
 		// See if the load more button has to be hidden.
-		$hide_load_more = ( $page === $max_pages ) ? 'yes' : 'no';
+		$hide_load_more = ( ! empty( $video_query->max_num_pages ) && 1 === $video_query->max_num_pages ) ? 'yes' : 'no';
 
 		// Return the ajax response.
 		wp_send_json_success(
