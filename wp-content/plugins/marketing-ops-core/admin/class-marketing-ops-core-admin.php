@@ -1327,11 +1327,6 @@ class Marketing_Ops_Core_Admin {
 			$default_cols['session_video'] = __( 'Video', 'marketing-ops-core' );
 		}
 
-		// If the array key doesn't exist for session speakers.
-		if ( ! array_key_exists( 'session_speaker', $default_cols ) ) {
-			$default_cols['session_speaker'] = __( 'Speaker(s)', 'marketing-ops-core' );
-		}
-
 		return $default_cols;
 	}
 
