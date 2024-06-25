@@ -171,6 +171,24 @@
 		}
 	}
 
+	// Open the conference popup.
+	if ( $( '.conferencevaultinnergridboximage .openPopupBtn' ).length ) {
+		$( document ).on( 'click', '.conferencevaultinnergridboximage .openPopupBtn', function() {
+			$( '.popupwithvideoandtext' ).css( 'display', 'flex' );
+		} );
+
+		$( document ).on( 'click', '.popupwithvideoandtext .closevideotext', function() {
+			$( '.popupwithvideoandtext' ).css( 'display', 'none' );
+		} );
+
+		$( window ).click( function( event ) {
+			const popup = document.querySelector( '.popupwithvideoandtext' );
+			if ( event.target === popup ) {
+				popup.style.display = 'none';
+			}
+		} );
+	}
+
 	// Set the timer on the apalooza page.
 	if ( $( '.mops-apalooza-timer' ).length ) {
 		// Set the date we're counting down to.

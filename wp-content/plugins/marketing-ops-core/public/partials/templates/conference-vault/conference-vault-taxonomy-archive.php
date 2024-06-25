@@ -103,28 +103,5 @@ $pillars          = get_terms( // Get the pillars.
 	<!-- This is what will be included inside the popup -->	
 </section>
 
-<script>
-document.addEventListener('DOMContentLoaded', (event) => {
-    const openPopupBtn = document.querySelector('.openPopupBtn');
-    const closePopupBtn = document.querySelector('.closevideotext');
-    const popup = document.querySelector('.popupwithvideoandtext');
-
-    openPopupBtn.addEventListener('click', () => {
-        popup.style.display = 'flex'; 
-    });
-
-    closePopupBtn.addEventListener('click', () => {
-        popup.style.display = 'none'; 
-    });
-
-    window.addEventListener('click', (event) => {
-        if (event.target === popup) {
-            popup.style.display = 'none';
-        }
-    });
-});
-</script>
 <?php
 get_footer();
-
-
