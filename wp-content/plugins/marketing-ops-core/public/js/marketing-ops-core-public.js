@@ -120,6 +120,16 @@
 				}
 			} );
 		} );
+
+		// Filter the videos by pillars.
+		if ( $( '.conference_pillars_filter' ).length ) {
+			// Click on the pillar to filter the videos.
+			$( document ).on( 'click', '.conference_pillars_filter .single_pillar', function() {
+				var termid = parseInt( $( this ).data( 'termid' ) );
+
+				console.log( 'termid', termid );
+			} );
+		}
 	}
 
 	// Set the timer on the apalooza page.
