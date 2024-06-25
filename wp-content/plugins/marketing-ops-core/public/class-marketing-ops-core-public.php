@@ -5944,7 +5944,7 @@ class Marketing_Ops_Core_Public {
 				$posted_term_id               = ( ! empty( $posted_values['termid'] ) ) ? (int) $posted_values['termid'] : -1;
 				$posted_current_taxonomy_term = ( ! empty( $posted_values['current_taxonomy_term'] ) ) ? (int) $posted_values['current_taxonomy_term'] : -1;
 
-				if ( -1 !== $term_id ) {
+				if ( -1 !== $posted_term_id ) {
 					$args['tax_query']['relation'] = 'AND';
 					$args['tax_query'][]           = array(
 						'taxonomy' => 'pillar',
