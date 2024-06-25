@@ -1347,7 +1347,7 @@ class Marketing_Ops_Core_Admin {
 		if ( 'session_video' === $column_name ) {
 			$video_url = get_field( 'vimeo_video_url', $post_id );
 			
-			echo '<iframe src="https://player.vimeo.com/video/896725734?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;color=ffffff" width="640" height="360" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>';
+			echo '<iframe src="https://player.vimeo.com/video/896725734?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;color=ffffff" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>';
 		}
 
 		if ( 'session_speaker' === $column_name ) {
