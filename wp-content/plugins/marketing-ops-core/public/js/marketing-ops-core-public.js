@@ -198,7 +198,6 @@
 				var this_section = $( this );
 				var filter_ul    = this_section.find( 'ul.moc_training_filters' );
 				var temp_arr     = [];
-				var taxonomy     = filter_ul.data( 'taxonomy' );
 
 				$( filter_ul.find( 'li' ) ).each( function() {
 					var this_li         = $( this );
@@ -213,7 +212,8 @@
 				// Gather all the slugs in an array.
 				filter_checkboxes.push(
 					{
-						taxonomy: temp_arr,
+						'taxonomy': filter_ul.data( 'taxonomy' ),
+						'terms': temp_arr,
 					}
 				);
 			} );
