@@ -153,7 +153,13 @@ $merged_terms             = array_merge( $terms_from_conference, $terms_from_pil
 						?>
 						<div class="conferencevaultevent">
 							<h2><?php echo wp_kses_post( $term->name ); ?></h2>
-							<?php var_dump( get_term_link( $term_id ) ); ?>
+							<?php
+							var_dump( $term_id );
+							debug( $term );
+							debug( get_term_link( $term_id ) );
+							debug( get_term_link( $term->term_id ) );
+							var_dump( get_term_link( $term_id ) );
+							?>
 
 							<?php if ( ! empty( $video_ids ) && is_array( $video_ids ) ) { ?>
 								<p>83 Sessions</p>
