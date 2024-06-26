@@ -45,9 +45,12 @@ $get_conference_skill_level = filter_input( INPUT_GET, 'conference_skill_level',
 $get_search                 = filter_input( INPUT_GET, 'search', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 $get_search                 = ( ! is_null( $get_search ) ) ? $get_search : '';
 
-var_dump( $get_conference );
+var_dump( $get_conference, is_null( $get_conference ) );
+var_dump( $get_pillar, is_null( $get_pillar ) );
+var_dump( $get_conference_skill_level, is_null( $get_conference_skill_level ) );
 
-if ( ! ( is_null( $get_conference ) || is_null( $get_pillar ) || is_null( $get_conference_skill_level ) ) ) {
+if ( ( ! is_null( $get_conference ) ) || ( ! is_null( $get_pillar ) ) || ( ! is_null( $get_conference_skill_level ) ) ) {
+// if ( ! ( is_null( $get_conference ) || is_null( $get_pillar ) || is_null( $get_conference_skill_level ) ) ) {
 	var_dump( 'if' );
 	$get_conference             = ( ! is_null( $get_conference ) ) ? explode( '|', $get_conference ) : array();
 	$get_pillar                 = ( ! is_null( $get_pillar ) ) ? explode( '|', $get_pillar ) : array();
