@@ -6343,4 +6343,23 @@ class Marketing_Ops_Core_Public {
 		);
 		wp_die();
 	}
+
+	/**
+	 * Modify the posts query arguments.
+	 *
+	 * @param $args array WP Query arguments.
+	 *
+	 * @return array
+	 *
+	 * @since 1.0.0
+	 */
+	public function mops_moc_get_conference_videos_args_callback( $args ) {
+		// If it's the conference video details page.
+		if ( is_singular( 'conference_vault' ) ) {
+			$session_id = get_the_ID();
+			$args['post__not_in'] = array( $session_id );
+		}
+
+		return $args;
+	}
 }
