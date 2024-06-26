@@ -22,7 +22,9 @@ $session_by    = get_field( 'session_author', $session_id );
 $session_link  = get_field( 'vimeo_video_url', $session_id );
 $conference    = wp_get_object_terms( $session_id, 'conference' );
 $conference    = ( ! empty( $conference[0]->name ) ) ? $conference[0]->name : '';
-$back_link     = ( ! empty( $conference[0]->name ) ) ? get_term_link( $conference[0]->term_id ) : '';
+$back_link     = ( ! empty( $conference[0]->term_id ) ) ? get_term_link( $conference[0]->term_id ) : '';
+
+var_dump( $back_link );
 
 get_header();
 ?>
