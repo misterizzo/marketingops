@@ -199,7 +199,7 @@
 
 				$( filter_ul.find( 'li' ) ).each( function() {
 					var this_li         = $( this );
-					var filter_checkbox = this_li.find( 'input[type="checkbox:checked"]' );
+					var filter_checkbox = this_li.find( 'input[type="checkbox"]:checked' );
 
 					console.log( 'filter checkbox checked', filter_checkbox.val(), filter_checkbox.attr( 'id' ), filter_checkbox.is( ':checked' ) );
 				} );
