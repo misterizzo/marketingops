@@ -191,19 +191,34 @@
 
 	// Filter the conference main page.
 	if ( $( '.conference_tax_filters' ).length ) {
+		var filter_checkboxes = [];
 		$( document ).on( 'click', '.conference_tax_filters ul.moc_training_filters li input[type="checkbox"]', function() {
 			// Loop thorugh the conference filters.
 			$( '.common_filter_row.conference_tax_filters' ).each( function() {
 				var this_section = $( this );
 				var filter_ul    = this_section.find( 'ul.moc_training_filters' );
+				var temp_arr     = [];
+				var taxonomy     = filter_ul.data( 'taxonomy' );
 
 				$( filter_ul.find( 'li' ) ).each( function() {
 					var this_li         = $( this );
-					var filter_checkbox = this_li.find( 'input[type="checkbox"]:checked' );
+					var filter_checkbox = this_li.find( 'input[type="checkbox"]' );
 
-					console.log( 'filter checkbox checked', filter_checkbox.val(), filter_checkbox.attr( 'id' ), filter_checkbox.is( ':checked' ) );
+					// If the filter checkbox is checked, add to the array.
+					if ( filter_checkbox.is( ':checked' ) ) {
+						temp_arr.push( filter_checkbox.attr( 'id' ) );
+					}
 				} );
+
+				// Gather all the slugs in an array.
+				filter_checkboxes.push(
+					{
+						taxonomy: temp_arr,
+					}
+				);
 			} );
+
+			console.log( 'filter_checkboxes', filter_checkboxes );
 		} );
 	}
 
