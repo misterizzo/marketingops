@@ -281,7 +281,9 @@
 	 * @returns 
 	 */
 	function moc_get_url_for_fiters_conference_vault_main( filter_checkboxes, search_keyword ) {
-		var filter_url = current_page_url;
+		var address_bar_url = current_page_url;
+
+		console.log( 'address_bar_url', address_bar_url );
 
 		// Loop through the filter checkboxes.
 		$.each( filter_checkboxes, function( index, term_arr ) {
@@ -289,18 +291,18 @@
 			var tax_terms = term_arr['terms'];
 
 			if ( 0 === index ) {
-				filter_url += '?' + tax_name + '=' + tax_terms.join( '|' );
+				address_bar_url += '?' + tax_name + '=' + tax_terms.join( '|' );
 			} else {
-				filter_url += '&' + tax_name + '=' + tax_terms.join( '|' );
+				address_bar_url += '&' + tax_name + '=' + tax_terms.join( '|' );
 			}
 		} );
 
 		// Add the search to the URL.
 		if ( '' !== search_keyword ) {
-			filter_url += '&search=' + search_keyword;
+			address_bar_url += '&search=' + search_keyword;
 		}
 
-		return filter_url;
+		return address_bar_url;
 	}
 
 	/**
