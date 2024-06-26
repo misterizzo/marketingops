@@ -191,6 +191,11 @@ $merged_terms             = array_merge( $terms_from_conference, $terms_from_pil
 				</div>
 			<?php } ?>
 		</div>
+
+		<!-- AJAX LOADER -->
+		<div class="loader_bg">
+			<div class="loader"></div>
+		</div>
 	</div>
 </section>
 <?php get_footer();

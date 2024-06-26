@@ -229,6 +229,12 @@
 					'action': 'filter_conference_vault_main',
 					'filter_checkboxes': filter_checkboxes,
 				},
+				beforeSend: function() {
+					// Show the loader.
+					if ( $( '.loader_bg' ).length ) {
+						$( '.loader_bg' ).css( 'display', 'flex' );
+					}
+				},
 				success: function( response ) {
 					if ( 'videos-found' === response.data.code ) {
 						// Hide the loader.
