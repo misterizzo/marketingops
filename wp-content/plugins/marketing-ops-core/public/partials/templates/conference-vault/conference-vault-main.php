@@ -65,7 +65,10 @@ $merged_terms             = array_merge( $terms_from_conference, $terms_from_pil
 									<div class="expandableCollapsibleDiv platform_section">
 										<h3 class="open"><?php esc_html_e( 'Pillar', 'marketing-ops-core' ); ?></h3>
 										<ul class="moc_training_filters">
-											<?php foreach ( $pillars as $pillar ) { ?>
+											<?php foreach ( $pillars as $pillar ) {
+												var_dump( $terms_from_pillar );
+												var_dump( $pillar->term_id );
+												?>
 												<li>
 													<input id="<?php echo esc_attr( $pillar->slug ); ?>" type="checkbox" name="<?php echo esc_attr( $pillar->taxonomy ); ?>" value="<?php echo esc_attr( $pillar->term_id ); ?>">
 													<label for="<?php echo esc_attr( $pillar->slug ); ?>"><?php echo esc_html( $pillar->name ); ?></label>
@@ -154,14 +157,6 @@ $merged_terms             = array_merge( $terms_from_conference, $terms_from_pil
 						?>
 						<div class="conferencevaultevent">
 							<h2><?php echo wp_kses_post( $term->name ); ?></h2>
-							<?php
-							var_dump( $term_id );
-							debug( $term );
-							debug( get_term_link( $term_id ) );
-							debug( get_term_link( $term->term_id ) );
-							var_dump( get_term_link( $term_id ) );
-							?>
-
 							<?php if ( ! empty( $video_ids ) && is_array( $video_ids ) ) { ?>
 								<p>83 Sessions</p>
 								<div class="conferencevaultinner_innerright_inner">
