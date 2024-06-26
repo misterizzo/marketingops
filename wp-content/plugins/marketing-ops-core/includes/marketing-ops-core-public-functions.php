@@ -9169,10 +9169,11 @@ if ( ! function_exists( 'moc_conference_vault_main_html' ) ) {
 				$search_keyword
 			);
 			$video_ids     = ( ! empty( $videos_query->posts ) && is_array( $videos_query->posts ) ) ? $videos_query->posts : array();
-			?>
-			<div class="conferencevaultevent">
-				<h2><?php echo wp_kses_post( $term->name ); ?></h2>
-				<?php if ( ! empty( $video_ids ) && is_array( $video_ids ) ) { ?>
+
+			// Show the section if the term has videos, otherwise not.
+			if ( ! empty( $video_ids ) && is_array( $video_ids ) ) { ?>
+				<div class="conferencevaultevent">
+					<h2><?php echo wp_kses_post( $term->name ); ?></h2>
 					<p><?php echo esc_html( sprintf( _n( '%s session', '%s sessions', $videos_query->found_posts, 'marketing-ops-core' ), number_format_i18n( $videos_query->found_posts ) ) ); ?></p>
 					<div class="conferencevaultinner_innerright_inner">
 						<ul>
@@ -9193,8 +9194,8 @@ if ( ! function_exists( 'moc_conference_vault_main_html' ) ) {
 							</li>
 						</ul>
 					</div>
-				<?php } ?>
-			</div>
+				</div>
+			<?php } ?>
 		<?php } ?>
 		<!-- <div class="confernceloadmore">
 			<div class="confernceloadmoreinner">
