@@ -188,9 +188,9 @@
 
 	// Filter the conference main page.
 	if ( $( '.conference_tax_filters' ).length ) {
-		var filter_checkboxes = [];
 		$( document ).on( 'click', '.conference_tax_filters ul.moc_training_filters li input[type="checkbox"]', function() {
-			filter_checkboxes  = moc_get_conference_main_filters();
+			var filter_checkboxes = [];
+			filter_checkboxes     = moc_get_conference_main_filters();
 
 			console.log( 'filter_checkboxes', filter_checkboxes );
 
@@ -280,8 +280,6 @@
 	 */
 	function moc_get_url_for_fiters_conference_vault_main( filter_checkboxes, search_keyword ) {
 		var address_bar_url = current_page_url;
-
-		console.log( 'address_bar_url', address_bar_url );
 
 		// Loop through the filter checkboxes.
 		$.each( filter_checkboxes, function( index, term_arr ) {
