@@ -178,6 +178,7 @@
 			if ( '' !== video_link ) {
 				var iframe_src = video_link + '?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;color=ffffff';
 				var iframe     = '<iframe src="' + iframe_src + '" width="640" height="360" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>';
+				console.log( 'iframe', iframe );
 				$( '.popupwithvideoandtext .leftvideopopup' ).html( iframe );
 				$( '.popupwithvideoandtext' ).css( 'display', 'flex' ); // Open the popup.
 			} else {
