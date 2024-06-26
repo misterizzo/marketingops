@@ -86,8 +86,6 @@
 				$( '.loader_bg' ).css( 'display', 'flex' );
 			}
 
-			console.log( 'clicked here' );
-
 			// Fire the ajax to fetch the videos.
 			$.ajax( {
 				dataType: 'json',
@@ -166,8 +164,6 @@
 						}
 					}
 				} );
-
-				console.log( 'termid', termid );
 			} );
 		}
 	}
@@ -198,9 +194,10 @@
 
 			// Loop thorugh the conference filters.
 			$( '.common_filter_row.conference_tax_filters' ).each( function() {
-				var this_section = $( this );
-				var filter_ul    = this_section.find( 'ul.moc_training_filters' );
-				var temp_arr     = [];
+				var this_section  = $( this );
+				var filter_ul     = this_section.find( 'ul.moc_training_filters' );
+				var temp_arr_slug = [];
+				var temp_arr_id   = [];
 
 				$( filter_ul.find( 'li' ) ).each( function() {
 					var this_li         = $( this );
@@ -208,7 +205,8 @@
 
 					// If the filter checkbox is checked, add to the array.
 					if ( filter_checkbox.is( ':checked' ) ) {
-						temp_arr.push( filter_checkbox.attr( 'id' ) );
+						temp_arr_slug.push( filter_checkbox.attr( 'id' ) );
+						temp_arr_id.push( filter_checkbox.val() );
 					}
 				} );
 
@@ -216,25 +214,52 @@
 				filter_checkboxes.push(
 					{
 						'taxonomy': filter_ul.data( 'taxonomy' ),
-						'terms': temp_arr,
+						'terms': temp_arr_slug,
+						'term_ids': temp_arr_id,
 					}
 				);
 			} );
 
-			// Generate the URL.
-			$.each( filter_checkboxes, function( index, term_arr ) {
-				var tax_name  = term_arr['taxonomy'];
-				var tax_terms = term_arr['terms'];
+			// Put the AJAX to filter the conference video listings.
+			$.ajax( {
+				dataType: 'json',
+				url: ajaxurl,
+				type: 'POST',
+				data: {
+					'action': 'filter_conference_vault_main',
+					'filter_checkboxes': filter_checkboxes,
+				},
+				success: function( response ) {
+					if ( 'videos-found' === response.data.code ) {
+						// Hide the loader.
+						if ( $( '.loader_bg' ).length ) {
+							$( '.loader_bg' ).css( 'display', 'none' );
+						}
 
-				if ( 0 === index ) {
-					filter_url += '?' + tax_name + '=' + tax_terms.join( '|' );
-				} else {
-					filter_url += '&' + tax_name + '=' + tax_terms.join( '|' );
+						// Adjust the active pillar.
+						$( '.conference_pillars_filter .single_pillar' ).removeClass( 'moc_selected_taxonomy' );
+						this_button.addClass( 'moc_selected_taxonomy' );
+
+						// Load the HTML.
+						$( '.conferencevaultinner_innerright_inner ul' ).html( response.data.html );
+
+						// Generate the URL.
+						$.each( filter_checkboxes, function( index, term_arr ) {
+							var tax_name  = term_arr['taxonomy'];
+							var tax_terms = term_arr['terms'];
+
+							if ( 0 === index ) {
+								filter_url += '?' + tax_name + '=' + tax_terms.join( '|' );
+							} else {
+								filter_url += '&' + tax_name + '=' + tax_terms.join( '|' );
+							}
+						} );
+
+						// Put the URL in the address bar.
+						window.history.pushState({ path: filter_url },'', filter_url );
+					}
 				}
 			} );
-
-			// Put the URL in the address bar.
-			window.history.pushState({ path: filter_url },'', filter_url );
 		} );
 	}
 
@@ -357,11 +382,6 @@
 				type: 'POST',
 				data: data,
 				success: function(response) {
-					// Check for invalid ajax request.
-					if (0 === response) {
-						console.log('MarketingOps: invalid ajax request');
-						return false;
-					}
 					if ( 'moc-open-video-course-success' === response.data.code ) {
 						$('.moc_iframe_popup').removeClass('non-active').addClass('active');
 						$('.moc_home_loader').removeClass('show');
@@ -389,7 +409,6 @@
 		if ( this_icon.hasClass( 'moc_show_password' ) ) {
 			this_icon.removeClass( 'moc_show_password' );
 			this_icon.addClass( 'moc_hide_password' );
-			// console.log( $( '.moc_pass_icon' ).closest( '.moc-password-element' ).find( ) );
 			this_icon.closest( '.moc-password-element' ).find( 'input[type="text"]' ).attr( 'type', 'password' );
 			this_icon.find( 'img' ).attr( 'src', plugin_url + '/public/images/password_unhide_icon.svg' );
 			this_icon.find( 'img' ).attr( 'alt', 'password_hide' );
@@ -594,12 +613,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				if ('marketing-social-links-add-empty-html' === response.data.code) {
 					$(response.data.html).appendTo('.moc_social_link_section');
 					unblock_element($('.loader_bg'));
@@ -630,12 +644,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				if ('marketing-martech-add-empty-html' === response.data.code) {
 					$(response.data.html).appendTo('.moc_martech_main_section');
 					unblock_element($('.loader_bg'));
@@ -663,12 +672,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				if ('marketing-skill-add-empty-html' === response.data.code) {
 					$(response.data.html).appendTo('.moc_skill_main_section');
 					unblock_element($('.loader_bg'));
@@ -694,12 +698,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				if ('marketing-work-add-empty-html' === response.data.code) {
 					$(response.data.html).appendTo('.moc_repeated_work_section_container');
 					unblock_element($('.loader_bg'));
@@ -845,12 +844,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				if ('marketinops-save-user-general-info' === response.data.code) {
 					moc_show_toast('bg-success', 'fa-check-circle', toast_success_heading, response.data.toast_message);
 					this_btn.closest('.moc_not_changable_container').find('.box_about_content').removeClass('moc_doing_edit_section');
@@ -1144,12 +1138,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				if ('marketinops-save-skill' === response.data.code) {
 					moc_show_toast('bg-success', 'fa-check-circle', toast_success_heading, response.data.toast_message);
 					this_btn.closest('.moc_not_changable_container').find('.box_about_content').removeClass('moc_doing_edit_section');
@@ -1269,7 +1258,6 @@
 			}
 			if ('' === moc_start_mm) {
 				process_execute = false;
-				console.log(this_element.find('.moc_end_month').closest('.years_month').find('.moc_error.moc_wrong_month_err span'));
 				this_element.find('.moc_start_month').closest('.years_month').find('.moc_error.moc_wrong_month_err span').text(user_bio_empty_err_msg);
 				// this_element.find('.start_year').css( 'border', '1px solid red' );
 			}
@@ -1336,12 +1324,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				if ('marketinops-save-work' === response.data.code) {
 					moc_show_toast('bg-success', 'fa-check-circle', toast_success_heading, response.data.toast_message);
 					this_btn.closest('.moc_not_changable_container').find('.box_about_content').removeClass('moc_doing_edit_section');
@@ -1392,12 +1375,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				if ('marketinops-added-certificate' === response.data.code) {
 					moc_show_toast('bg-success', 'fa-check-circle', toast_success_heading, response.data.toast_message);
 					this_btn.closest('.moc_not_changable_container').find('.box_about_content').removeClass('moc_doing_edit_section');
@@ -1435,12 +1413,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				if ('marketinops-deleted-certificate' === response.data.code) {
 					moc_show_toast('bg-success', 'fa-check-circle', toast_success_heading, response.data.toast_message);
 					this_btn.closest('.moc_not_changable_container').find('.box_about_content').removeClass('moc_doing_edit_section');
@@ -1468,7 +1441,6 @@
 				return false;
 			}
 			var files = evt.target.files;
-			console.log(files);
 			var done = function(url){
 				image.src = url;
 				crop_modal.modal('show');
@@ -1482,7 +1454,6 @@
 					done(reader.result);
 				};
 				reader.readAsDataURL(files[0]);
-				console.log( reader );
 			}
 		});
 
@@ -1542,12 +1513,7 @@
 						data: formData,
 						contentType: false,
 						processData: false,
-						success: function(response) {
-							// Check for invalid ajax request.
-							if (0 === response) {
-								console.log('MarketingOps: invalid ajax request');
-								return false;
-							}
+						success: function( response ) {
 							if ('marketinops-update-user_avtar' === response.data.code) {
 								moc_show_toast('bg-success', 'fa-check-circle', toast_success_heading, response.data.toast_message);
 							} else if ('marketinops-avtar-image-size-notcorrect' === response.data.code) {
@@ -1612,12 +1578,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				if ('marketinops-be-guest-ops-cast' === response.data.code) {
 					this_element.text('Submit');
 					unblock_element($('.loader_bg'));
@@ -1626,11 +1587,9 @@
 					$('#moc_profile_subject').val('');
 					$('#moc_profile_description').val('');
 				}
-
 			},
-		});
-
-	});
+		} );
+	} );
 
 	// jQuery ajax for submit request from adding custom certificate.
 	$(document).on('click', '.moc_add_custom_certificate_submit', function(event) {
@@ -1673,12 +1632,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				if ('marketinops-add-custom-certificate' === response.data.code) {
 					this_element.text('Submit');
 					unblock_element($('.loader_bg'));
@@ -1690,41 +1644,31 @@
 					$('#moc_add_custom_certificate_subject').val('');
 					$('#moc_add_custom_certificate_description').val('');
 				}
-
 			},
-		});
-
-	});
+		} );
+	} );
 
 	$(document).on('click', '.moc_user_bio_cancel_btn', function(event) {
 		event.preventDefault();
 		var this_btn = $(this);
-		var data = {
-			action: 'moc_user_bio_cancel_btn',
-			user_id: current_user_id,
-		};
 		block_element(this_btn.closest('div.moc_not_changable_container').find('.loader_bg'));
 		$.ajax({
 			dataType: 'json',
 			url: ajaxurl,
 			type: 'POST',
-			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			data: {
+				action: 'moc_user_bio_cancel_btn',
+				user_id: current_user_id,
+			},
+			success: function( response ) {
 				if ('marketinops-cancel-user-bio-btn' === response.data.code) {
 					unblock_element($('.loader_bg'));
 					$('.moc_user_bio_container').html(response.data.html);
 				}
-
 			},
-		});
+		} );
+	} );
 
-
-	});
 	$(document).on('click', '.moc_cancel_general_info', function(event) {
 		event.preventDefault();
 		var this_btn = $(this);
@@ -1738,22 +1682,14 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				if ('marketinops-cancel-general-info-btn' === response.data.code) {
 					unblock_element($('.loader_bg'));
 					$('.moc_general_user_info').html(response.data.html);
 				}
-
 			},
-		});
-
-
-	});
+		} );
+	} );
 
 	// jQuery ajax for submit request from host a workshop.
 	$(document).on('click', '.moc_host_workshop_submit', function(event) {
@@ -1793,12 +1729,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				if ('marketinops-host-workshop' === response.data.code) {
 					this_element.text('Submit');
 					unblock_element($('.loader_bg'));
@@ -1807,11 +1738,9 @@
 					$('#moc_host_workshop_subject').val('');
 					$('#moc_host_workshop_description').val('');
 				}
-
 			},
-		});
-
-	});
+		} );
+	} );
 
 	//jQuery to add change effect on edit option.
 	$(document).on('click', '.moc_user_work_section_edit_btn', function() {
@@ -2617,12 +2546,7 @@
 				url: ajaxurl,
 				type: 'POST',
 				data: data,
-				success: function(response) {
-					// Check for invalid ajax request.
-					if (0 === response) {
-						console.log('MarketingOps: invalid ajax request');
-						return false;
-					}
+				success: function( response ) {
 					if ('moc-failure-login' === response.data.code) {
 						moc_show_toast( 'bg-danger', 'fa-skull-crossbones', toast_error_heading, response.data.user_response_msg );
 						$('.moc-email').val( '' );
@@ -2637,13 +2561,13 @@
 								window.location.href = response.data.redirect_to;
 							}, 1000);
 						}
-						
 					}
 					unblock_element($('.loader_bg'));
 				}
-			});
+			} );
 		}
 	} );
+
 	/**
 	 * jQuery to run ajax for forgot password.
 	 */
@@ -2844,12 +2768,7 @@
 				url: ajaxurl,
 				type: 'POST',
 				data: data,
-				success: function(response) {
-					// Check for invalid ajax request.
-					if (0 === response) {
-						console.log('MarketingOps: invalid ajax request');
-						return false;
-					}
+				success: function( response ) {
 					if ('marketingops-verified-otp' === response.data.code) {
 						$( '.otp-backspace .svg_icon img' ).attr( 'src', plugin_url + '/public/images/Vector.svg' );
 						moc_show_toast('bg-success', 'fa-check-circle', toast_success_heading, response.data.toast_message);
@@ -2870,10 +2789,9 @@
 					unblock_element($('.loader_bg'));
 					// this_button.text('Verify');
 				}
-
-			});
+			} );
 		}
-	});
+	} );
 
 	/**
 	 * Ajax to serve resend otp.
@@ -3095,9 +3013,8 @@
 		document.execCommand('copy');  
 		$( '.moc_box' ).text( 'Copied!' );
 		$( '.moc_box' ).addClass( 'moc_copied' );
-		// console.log('copied text : ', copyText);
-		// alert('copied text: ' + copyText); 
-	});
+	} );
+
 	$( "a.moc_share_profile" ).hover(
 		function() {   
 		 var title = $(this).attr("data-title");
@@ -3375,13 +3292,7 @@
 				url: ajaxurl,
 				type: 'POST',
 				data: data,
-				success: function(response) {
-					// Check for invalid ajax request.
-					if (0 === response) {
-						console.log('MarketingOps: invalid ajax request');
-						return false;
-					}
-				}
+				success: function( response ) {}
 			});
 		}
 
@@ -3424,12 +3335,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				unblock_element( $( '.loader_bg' ) );
 				if ( 'courses-added-cart' === response.data.code ) {
 					window.location.href = response.data.return_url;
@@ -3456,12 +3362,7 @@
 				url: ajaxurl,
 				type: 'POST',
 				data: data,
-				success: function(response) {
-					// Check for invalid ajax request.
-					if (0 === response) {
-						console.log('MarketingOps: invalid ajax request');
-						return false;
-					}
+				success: function( response ) {
 					unblock_element( $( '.loader_bg' ) );
 					if ( 'moc-open-video-course-success' === response.data.code ) {
 						moc_open_popup($('.moc_iframe_popup'));
@@ -3533,15 +3434,9 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				unblock_element( $( '.course_list .loader_bg' ) );
 				if ( 'courses-not-found' === response.data.code ) {
-					console.log( 'courses not found' );
 				} else if ( 'courses-found' === response.data.code ) { // If there are courses available.
 					$( '.course_list .course_list_box_content' ).html( response.data.html );
 					// moc_equal_heights($('.course_list_box_content .content_box'));
@@ -3555,8 +3450,7 @@
 	if ( 'yes' === post_new_page ) {
 		$( window ).resize(function() {
 			moc_input_resize_dynamic_width();
-			console.log( "resizere load" );
-		});
+		} );
 	}
 
 	$( document ).on( 'click', '.moc_submit_course_review', function( event ) {	
@@ -3636,7 +3530,6 @@
 					}
 				},
 				error: function( xhr ) {
-					console.log( xhr.statusText + xhr.responseText );
 					this_element.parents( '.key_speaker_container' ).next( '.loader_bg' ).removeClass( 'show' );  // Hide the loader.
 				},
 				complete: function() {
@@ -3785,7 +3678,6 @@
 					}
 				},
 				error: function( xhr ) {
-					console.log( xhr.statusText + xhr.responseText );
 					$( '.strategists-load-more-container' ).next( '.loader_bg' ).removeClass( 'show' );  // Show up the loader.
 				},
 				complete: function() {
@@ -3841,7 +3733,6 @@
 					}
 				},
 				error: function( xhr ) {
-					console.log( xhr.statusText + xhr.responseText );
 				},
 				complete: function() {},
 			} );
@@ -3899,7 +3790,6 @@
 					}
 				},
 				error: function( xhr ) {
-					console.log( xhr.statusText + xhr.responseText );
 				},
 				complete: function() {},
 			} );
@@ -3936,11 +3826,9 @@
 	 * Move the required * after the anchor tag on the checkout page.
 	 */
 	// $( document.body ).on( 'updated_cart_totals', function() {
-	// 	console.log( 'hello bhai, good morning text' );
 	// } );
 	// if ( $( '.woocommerce-terms-and-conditions-checkbox-text' ).length ) {
 	// 	$( document.body ).on( 'updated_cart_totals', function() {
-	// 		console.log( 'hello bhai, good morning' );
 	// 	} );
 	// 	setTimeout( function() {
 	// 		var target_abbr = $( '.woocommerce-terms-and-conditions-checkbox-text' ).siblings( 'abbr.required' );
@@ -3972,12 +3860,7 @@
 			url: ajaxurl,	
 			type: 'POST',	
 			data: data,	
-			success: function(response) {	
-				// Check for invalid ajax request.	
-				if (0 === response) {	
-					console.log('MarketingOps: invalid ajax request');	
-					return false;	
-				}	
+			success: function( response ) {
 				if ( 'moc-course-review-success' === response.data.code ) {	
 					$( '.moc_course_review' ).hide();	
 					$( '.courses_review_success' ).removeClass( 'hide' );
@@ -4008,12 +3891,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				unblock_element( $( '.moc_write_a_post_content_section .loader_bg' ) );
 				if ( 'moc-load-write-post-html-success' === response.data.code ) {
 					$('html, body').animate({
@@ -4078,12 +3956,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				if ( 'moc-successfully-load-post-count-data' === response.data.code ) {
 					$( '.moc_post_count_details' ).html( response.data.html );
 					unblock_element( $( '.loader_bg' ) );
@@ -4150,12 +4023,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				if ( 'moc-successfully-saved-data' === response.data.code ) {
 					$( '.tabbing_content_container .tab_box.active_tab a.moc_tab_link' ).click();
 					moc_load_post_count_data_ajax();
@@ -4189,12 +4057,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				unblock_element( $( '.moc_write_a_post_content_section .loader_bg' ) );
 				if ( 'moc-success-load-all-posts' === response.data.code ) {
 					// $('html, body').animate({
@@ -4206,11 +4069,11 @@
 					}
 					// $( '.moc_data_to_show .tabbing_content_details' ).show();
 					// $('.input_row').datepicker("setDate", response.data.html);
-					
 				}
 			}
-		});
+		} );
 	}
+
 	/**
 	 * Function to return ajax call for moops episodes.
 	 *
@@ -4227,12 +4090,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				unblock_element($('.loader_bg'));
 				if ( 'moc-load-episoded-btn-success' === response.data.code ) {
 					unblock_element($('.loader_bg'));
@@ -4242,9 +4100,9 @@
 					// $( '.moc_load_next_data' ).data( 'nextpage', response.data.nextpage );
 				}
 			}
-		});
-		
+		} );
 	}
+
 	/**
 	 * Function to return ajax call for moops episodes.
 	 */
@@ -4259,12 +4117,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				unblock_element($('.loader_bg'));
 				if ( 'moc-load-episoded-success' === response.data.code ) {
 					unblock_element($('.loader_bg'));
@@ -4292,19 +4145,15 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				if ( 'moc-blocker-success' === response.data.code ) {
 					unblock_element($('.loader_bg'));
 					$( '.moc-nobs-demo-content' ).append( response.data.html );
 				}
 			}
-		});
+		} );
 	}
+
 	/**
 	 * Function to return timer.
 	 */
@@ -4397,12 +4246,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				if ('marketingops=already-email-exist' === response.data.code) {
 					moc_show_toast('bg-danger', 'fa-skull-crossbones', toast_error_heading, invalid_empty_message);
 					if ('username' === response.data.flag) {
@@ -4471,21 +4315,18 @@
 
 		$('.otp-inputs').find('input').on('blur', function() {
 			if (!$(this).val()) {
-				console.log('show');
 				$(this).next('.placeholder').show();
 			}
 		});
 
 		$('.otp-inputs').find('input').on('focus', function() {
 			if (!$(this).val()) {
-				console.log('hide');
 				$(this).next('.placeholder').hide();
 			}
 		});
 
 		$('.otp-inputs').find('input').on('input', function() {
 			if (!$(this).val()) {
-				console.log('hide 1');
 				$(this).next('.placeholder').hide();
 			}
 		});
@@ -4597,21 +4438,14 @@
 		event.preventDefault();
 		var this_element = $( this );
 		if ( 0 < this_element.closest( '.moc_loop_no_bs_demo_coupon' ).find( '.no_bs_demo_popup' ).length  ) {
-			console.log( "hear1" );
 			var closest_popup  = this_element.closest( '.moc_loop_no_bs_demo_coupon' ).find( '.no_bs_demo_popup' );
 			moc_close_popup( closest_popup );
 		} else {
-			console.log( "hear2" );
 			window.location.href = moc_signup_url;
 		}
 		
 		
 	} );
-
-	// $( document ).on( 'click', '.moc_slack_invite_request .moc_popup_close_btn', function( event ) {
-	// 	event.preventDefault();
-		
-	// } );
 
 	$( document ).on( 'click', '#mobile_filter_box .reset_btn', function( event ) {
 		event.preventDefault();
@@ -4738,12 +4572,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				if ('marketing-change-products-by-search-keyword' === response.data.code) {
 					$('.moc_product_inner_section').html(response.data.html);
 					$('.moc_training_results').html(response.data.post_result_html);
@@ -4759,14 +4588,11 @@
 							autoplaySpeed: 3000,
 							rows: 1,
 						};
-					
 						$('.custom_slider_ajax').slick(slickopts);
 					}, 500 );
 				}
-
 			},
-		});
-
+		} );
 	}
 
 	/**
@@ -4799,14 +4625,8 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				if ('marketinops-load-blogs-listings' === response.data.code) {
-
 					$('.page-template-blog-listing-tempate .moc_article_main_section').html(response.data.html);
 					$('html, body').animate({
 						scrollTop: $(".moc_blog_section").offset().top - 200
@@ -4814,14 +4634,13 @@
 					setTimeout(function() {
 						unblock_element($('.page-template-blog-listing-tempate .loader_bg'));
 					}, 1500);
-					
 					moc_equal_heights($('.blog_box'));
 					moc_equal_heights($('.box_content'));
 				}
-
 			},
-		});
+		} );
 	}
+
 	/**
 	 * Function for ajax call for podcast listiong
 	 *
@@ -4878,7 +4697,6 @@
 	 */
 	function moc_get_all_members(paged) {
 		var search_term = jQuery("#member_s").val();
-		console.log('search_term', search_term);
 		var sortby = jQuery('.sortby_members').val();
 		var category_array = [];
 		jQuery("input[name='category[]']:checked").each(function(i) {
@@ -4951,12 +4769,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				if ('marketinops-load-member-listings' === response.data.code) {
 					var totalusers;
 					$('.members_directory').html(response.data.html);
@@ -5009,12 +4822,7 @@
 				paged: paged,
 				category_array: category_array
 			},
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				if ( 'moc_load_no_bs_demos_successfully' === response.data.code ) {
 					$( '.moc_no_bs_demo_loop_sectiion' ).html( response.data.html );
 					$( '.moc_load_no_bs_demo_form' ).html('');
@@ -5045,12 +4853,7 @@
 			url: ajaxurl,
 			type: 'POST',
 			data: data,
-			success: function(response) {
-				// Check for invalid ajax request.
-				if (0 === response) {
-					console.log('MarketingOps: invalid ajax request');
-					return false;
-				}
+			success: function( response ) {
 				if ( 'moc_load_no_bs_demo_coupons_successfully' === response.data.code ) {
 					$( '.moc_load_lists_no_bs_demo_coupons_inner_section' ).html( response.data.html );
 					unblock_element($('.loader_bg'));
@@ -5146,7 +4949,6 @@
 	 * @param {string} element Holds the selected element.
 	 */
 	function moc_equal_heights( element ) {
-		// console.log( element );
 		if ( 768 < $( window ).width() ) {
 			var max_height = 120;
 		} else if ( 768 === $( window ).width() ) {
@@ -5156,8 +4958,6 @@
 		$( element ).each( function() {
 			max_height = Math.max( $( element ).height(), max_height );
 		} );
-
-		// console.log( 'max_height', max_height );
 
 		$( element ).each( function() {
 			$( element ).height( max_height );
@@ -5259,9 +5059,6 @@
 	}
 
 	function get_editor_content( editor_id ) {
-		// console.log( editor_id );
-		// return false;
-
 		var mce_editor = tinymce.get(editor_id);
 		
 		if( mce_editor ) {
@@ -5269,8 +5066,8 @@
 		} else {
 		  var val = $( '#'+ editor_id ).val(); // HTML tab is active
 		}
+
 		return val;
-	  
 	}
 
 	function profile_links_box () {	
