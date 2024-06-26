@@ -227,9 +227,9 @@
 				var tax_terms = term_arr['terms'];
 
 				if ( 0 === index ) {
-					filter_url = current_page_url + '?' + tax_name + '=' + tax_terms.join( '|' );
+					filter_url += current_page_url + '?' + tax_name + '=' + tax_terms.join( '|' );
 				} else {
-					filter_url = current_page_url + '&' + tax_name + '=' + tax_terms.join( '|' );
+					filter_url += current_page_url + '&' + tax_name + '=' + tax_terms.join( '|' );
 				}
 			} );
 
