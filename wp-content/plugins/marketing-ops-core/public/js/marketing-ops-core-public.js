@@ -192,7 +192,12 @@
 	// Filter the conference main page.
 	if ( $( '.conference_tax_filters' ).length ) {
 		$( document ).on( 'click', '.conference_tax_filters ul.moc_training_filters li input[type="checkbox"]', function() {
-			
+			// Loop thorugh the conference filters.
+			$( '.common_filter_row.conference_tax_filters' ).each( function() {
+				var this_section    = $( this );
+				var filter_checkbox = this_section.find( 'ul.moc_training_filters li input[type="checkbox"]' );
+				console.log( 'filter checkbox checked', filter_checkbox.val(), filter_checkbox.is( ':checked' ) );
+			} );
 		} );
 	}
 
