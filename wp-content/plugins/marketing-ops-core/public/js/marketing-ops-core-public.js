@@ -174,12 +174,9 @@
 			var this_button = $( this );
 			var video_link  = this_button.parents( 'li' ).data( 'video' );
 
-			console.log( 'video_link', video_link );
-
 			// If the video link is available.
 			if ( '' !== video_link ) {
 				var iframe_src = video_link + '?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;color=ffffff';
-				console.log( 'iframe_src', iframe_src );
 				$( '.popupwithvideoandtext iframe' ).attr( 'src', iframe_src );
 				$( '.popupwithvideoandtext' ).css( 'display', 'flex' ); // Open the popup.
 			} else {
