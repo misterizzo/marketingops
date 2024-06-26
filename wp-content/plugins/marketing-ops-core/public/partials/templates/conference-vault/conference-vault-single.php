@@ -45,10 +45,11 @@ if ( ! empty( $conference_term[0]->taxonomy ) ) {
 $other_conferences_args            = array(
 	'taxonomy'   => 'conference',
 	'hide_empty' => true,
-	'exclude'    => [1, 3, 5],
 );
 $other_conferences_args['exclude'] = ( ! empty( $conference_term[0]->term_id ) ) ? array( $conference_term[0]->term_id ) : array();
 $other_conferences                 = get_terms( $other_conferences_args );
+
+debug( $other_conferences );
 
 
 get_header();
