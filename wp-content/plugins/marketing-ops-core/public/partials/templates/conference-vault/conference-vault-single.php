@@ -24,7 +24,7 @@ $conference    = wp_get_object_terms( $session_id, 'conference' );
 $conference    = ( ! empty( $conference[0]->name ) ) ? $conference[0]->name : '';
 $back_link     = ( ! empty( $conference[0]->term_id ) ) ? get_term_link( $conference[0]->term_id ) : '';
 
-var_dump( $back_link );
+var_dump( $conference[0]->term_id, $back_link );
 
 get_header();
 ?>
