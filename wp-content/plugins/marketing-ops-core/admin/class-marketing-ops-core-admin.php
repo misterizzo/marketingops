@@ -1115,6 +1115,8 @@ class Marketing_Ops_Core_Admin {
 			return false;
 		} elseif ( 'conference_vault' === $post_type ) { // If the post type is conference vault videos.
 			return false;
+		} elseif ( 'page' === $post_type ) { // If the post type is page.
+			return false;
 		}
 
 		return $current_status;
