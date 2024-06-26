@@ -219,7 +219,7 @@
 			} );
 
 			// Generate the URL.
-			console.log( 'url', window.location );
+			console.log( 'url', window.location.origin + window.location.pathname );
 			$.each( filter_checkboxes, function( index, term_arr ) {
 				var tax_name  = term_arr['taxonomy'];
 				var tax_terms = term_arr['terms'];
