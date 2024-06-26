@@ -190,35 +190,8 @@
 	if ( $( '.conference_tax_filters' ).length ) {
 		var filter_checkboxes = [];
 		$( document ).on( 'click', '.conference_tax_filters ul.moc_training_filters li input[type="checkbox"]', function() {
-			var filter_url = current_page_url;
-
-			// Loop thorugh the conference filters.
-			$( '.common_filter_row.conference_tax_filters' ).each( function() {
-				var this_section  = $( this );
-				var filter_ul     = this_section.find( 'ul.moc_training_filters' );
-				var temp_arr_slug = [];
-				var temp_arr_id   = [];
-
-				$( filter_ul.find( 'li' ) ).each( function() {
-					var this_li         = $( this );
-					var filter_checkbox = this_li.find( 'input[type="checkbox"]' );
-
-					// If the filter checkbox is checked, add to the array.
-					if ( filter_checkbox.is( ':checked' ) ) {
-						temp_arr_slug.push( filter_checkbox.attr( 'id' ) );
-						temp_arr_id.push( filter_checkbox.val() );
-					}
-				} );
-
-				// Gather all the slugs in an array.
-				filter_checkboxes.push(
-					{
-						'taxonomy': filter_ul.data( 'taxonomy' ),
-						'terms': temp_arr_slug,
-						'term_ids': temp_arr_id,
-					}
-				);
-			} );
+			var filter_url    = current_page_url;
+			filter_checkboxes = moc_get_conference_main_filters();
 
 			// Put the AJAX to filter the conference video listings.
 			$.ajax( {
@@ -266,13 +239,50 @@
 		} );
 	}
 
+	function moc_get_conference_main_filters() {
+		// Loop thorugh the conference filters.
+		$( '.common_filter_row.conference_tax_filters' ).each( function() {
+			var this_section  = $( this );
+			var filter_ul     = this_section.find( 'ul.moc_training_filters' );
+			var temp_arr_slug = [];
+			var temp_arr_id   = [];
+
+			$( filter_ul.find( 'li' ) ).each( function() {
+				var this_li         = $( this );
+				var filter_checkbox = this_li.find( 'input[type="checkbox"]' );
+
+				// If the filter checkbox is checked, add to the array.
+				if ( filter_checkbox.is( ':checked' ) ) {
+					temp_arr_slug.push( filter_checkbox.attr( 'id' ) );
+					temp_arr_id.push( filter_checkbox.val() );
+				}
+			} );
+
+			// Gather all the slugs in an array.
+			filter_checkboxes.push(
+				{
+					'taxonomy': filter_ul.data( 'taxonomy' ),
+					'terms': temp_arr_slug,
+					'term_ids': temp_arr_id,
+				}
+			);
+		} );
+
+		return filter_checkboxes;
+	}
+
 	/**
 	 * Search the conference main vault keyword.
 	 */
 	if ( $( 'input[name="conference_main_search_keyword"]' ).length ) {
-		$( document ).on( 'keyup', 'input[name="conference_main_search_keyword"]', function() {
+		$( document ).on( 'keyup', 'input[name="conference_main_search_keyword"]', function( event ) {
 			var this_input = $( this );
-			console.log( 'this_input', this_input.val() );
+			var keycode    = ( event.keyCode ) ? event.keyCode : event.which;
+
+			if ( 13 === keycode ) {
+				filter_checkboxes = moc_get_conference_main_filters();
+				console.log( 'filter_checkboxes', filter_checkboxes );
+			}
 		} );
 	}
 
