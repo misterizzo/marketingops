@@ -237,17 +237,8 @@
 				},
 				success: function( response ) {
 					if ( 'videos-found' === response.data.code ) {
-						// Hide the loader.
-						if ( $( '.loader_bg' ).length ) {
-							$( '.loader_bg' ).css( 'display', 'none' );
-						}
-
-						// Adjust the active pillar.
-						$( '.conference_pillars_filter .single_pillar' ).removeClass( 'moc_selected_taxonomy' );
-						this_button.addClass( 'moc_selected_taxonomy' );
-
 						// Load the HTML.
-						$( '.conferencevaultinner_innerright_inner ul' ).html( response.data.html );
+						$( '.conferencevaultinner_innerright' ).html( response.data.html );
 
 						// Generate the URL.
 						$.each( filter_checkboxes, function( index, term_arr ) {
