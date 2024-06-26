@@ -190,7 +190,16 @@
 	if ( $( '.conference_tax_filters' ).length ) {
 		var filter_checkboxes = [];
 		$( document ).on( 'click', '.conference_tax_filters ul.moc_training_filters li input[type="checkbox"]', function() {
-			filter_checkboxes = moc_get_conference_main_filters();
+			filter_checkboxes  = moc_get_conference_main_filters();
+			var search_keyword = $( 'input[name="conference_main_search_keyword"]' ).val();
+
+			/* temp code */
+			var filter_url = moc_get_url_for_fiters_conference_vault_main( filter_checkboxes, search_keyword );
+
+			console.log( 'filter_url', filter_url );
+			return false;
+
+			/* temp code */
 
 			// Put the AJAX to filter the conference video listings.
 			$.ajax( {
@@ -213,7 +222,7 @@
 						$( '.conferencevaultinner_innerright' ).html( response.data.html );
 
 						// Generate the URL.
-						var filter_url = moc_get_url_for_fiters_conference_vault_main( filter_checkboxes, '' );
+						var filter_url = moc_get_url_for_fiters_conference_vault_main( filter_checkboxes, search_keyword );
 
 						// Put the URL in the address bar.
 						window.history.pushState({ path: filter_url },'', filter_url );
