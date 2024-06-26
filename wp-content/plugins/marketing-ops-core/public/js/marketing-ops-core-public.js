@@ -174,9 +174,12 @@
 			var this_button = $( this );
 			var video_link  = this_button.parents( 'li' ).data( 'video' );
 
-			console.log( 'video_link', video_link );
-
-			$( '.popupwithvideoandtext' ).css( 'display', 'flex' );
+			// If the video link is available.
+			if ( '' !== video_link ) {
+				video_link = video_link + '?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;color=ffffff';
+				$( '.popupwithvideoandtext iframe' ).attr( 'src', video_link );
+				$( '.popupwithvideoandtext' ).css( 'display', 'flex' ); // Open the popup.
+			}
 		} );
 
 		$( document ).on( 'click', '.popupwithvideoandtext .closevideotext', function() {
