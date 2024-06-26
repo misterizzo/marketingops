@@ -6319,7 +6319,7 @@ class Marketing_Ops_Core_Public {
 	 * @since 1.0.0
 	 */
 	public function mops_filter_conference_vault_main_callback() {
-		$filter_checkboxes = filter_input_array( INPUT_POST );
+		$filter_checkboxes = filter_input_array( INPUT_POST, 'filter_checkboxes' );
 
 		debug( $filter_checkboxes );
 		die;
