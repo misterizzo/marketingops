@@ -177,13 +177,14 @@
 			// If the video link is available.
 			if ( '' !== video_link ) {
 				video_link = video_link + '?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;color=ffffff';
-				$( '.popupwithvideoandtext iframe' ).attr( 'src', video_link );
+				$( '.popupwithvideoandtext iframe' ).attr( 'src', video_link ).show();
 				$( '.popupwithvideoandtext' ).css( 'display', 'flex' ); // Open the popup.
 			}
 		} );
 
 		$( document ).on( 'click', '.popupwithvideoandtext .closevideotext', function() {
 			$( '.popupwithvideoandtext' ).css( 'display', 'none' );
+			$( '.popupwithvideoandtext iframe' ).attr( 'src', '' ).hide();
 		} );
 
 		$( window ).click( function( event ) {
@@ -191,6 +192,8 @@
 			if ( event.target === popup ) {
 				popup.style.display = 'none';
 			}
+
+			$( '.popupwithvideoandtext iframe' ).attr( 'src', '' ).hide();
 		} );
 	}
 
