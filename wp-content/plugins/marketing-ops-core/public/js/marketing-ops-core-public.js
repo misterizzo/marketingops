@@ -190,7 +190,6 @@
 	if ( $( '.conference_tax_filters' ).length ) {
 		var filter_checkboxes = [];
 		$( document ).on( 'click', '.conference_tax_filters ul.moc_training_filters li input[type="checkbox"]', function() {
-			var filter_url    = current_page_url;
 			filter_checkboxes = moc_get_conference_main_filters();
 
 			// Put the AJAX to filter the conference video listings.
@@ -214,16 +213,7 @@
 						$( '.conferencevaultinner_innerright' ).html( response.data.html );
 
 						// Generate the URL.
-						$.each( filter_checkboxes, function( index, term_arr ) {
-							var tax_name  = term_arr['taxonomy'];
-							var tax_terms = term_arr['terms'];
-
-							if ( 0 === index ) {
-								filter_url += '?' + tax_name + '=' + tax_terms.join( '|' );
-							} else {
-								filter_url += '&' + tax_name + '=' + tax_terms.join( '|' );
-							}
-						} );
+						var filter_url = moc_get_url_for_fiters_conference_vault_main( filter_checkboxes );
 
 						// Put the URL in the address bar.
 						window.history.pushState({ path: filter_url },'', filter_url );
@@ -239,6 +229,11 @@
 		} );
 	}
 
+	/**
+	 * Get the filters from the conference main vault.
+	 *
+	 * @returns array
+	 */
 	function moc_get_conference_main_filters() {
 		// Loop thorugh the conference filters.
 		$( '.common_filter_row.conference_tax_filters' ).each( function() {
@@ -269,6 +264,29 @@
 		} );
 
 		return filter_checkboxes;
+	}
+
+	/**
+	 * 
+	 * @param {*} filter_checkboxes 
+	 * @returns 
+	 */
+	function moc_get_url_for_fiters_conference_vault_main( filter_checkboxes ) {
+		var filter_url = current_page_url;
+
+		// Loop through the filter checkboxes.
+		$.each( filter_checkboxes, function( index, term_arr ) {
+			var tax_name  = term_arr['taxonomy'];
+			var tax_terms = term_arr['terms'];
+
+			if ( 0 === index ) {
+				filter_url += '?' + tax_name + '=' + tax_terms.join( '|' );
+			} else {
+				filter_url += '&' + tax_name + '=' + tax_terms.join( '|' );
+			}
+		} );
+
+		return filter_url;
 	}
 
 	/**
