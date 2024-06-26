@@ -44,8 +44,12 @@ $get_pillar                 = filter_input( INPUT_GET, 'pillar', FILTER_SANITIZE
 $get_conference_skill_level = filter_input( INPUT_GET, 'conference_skill_level', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 if ( ! ( is_null( $get_conference ) || is_null( $get_pillar ) || is_null( $get_conference_skill_level ) ) ) {
-	var_dump( $get_conference, $get_pillar, $get_conference_skill_level );
-	var_dump( 'hello' );
+	$get_conference             = ( ! is_null( $get_conference ) ) ? explode( '|', $get_conference );
+	$get_pillar                 = ( ! is_null( $get_pillar ) ) ? explode( '|', $get_pillar );
+	$get_conference_skill_level = ( ! is_null( $get_conference_skill_level ) ) ? explode( '|', $get_conference_skill_level );
+	debug( $get_conference );
+	debug( $get_pillar );
+	debug( $get_conference_skill_level );
 } else {
 	$terms_from_pillar        = get_post_meta( $page_id, 'select_pillar', true ); // Get the terms from which the videos should be shown.
 	$terms_from_pillar        = ( ! empty( $terms_from_pillar ) && is_array( $terms_from_pillar ) ) ? array_map( 'intval', $terms_from_pillar ) : array();
@@ -54,7 +58,6 @@ if ( ! ( is_null( $get_conference ) || is_null( $get_pillar ) || is_null( $get_c
 	$terms_from_skill_level   = get_post_meta( $page_id, 'select_skill_level', true );
 	$terms_from_skill_level   = ( ! empty( $terms_from_skill_level ) && is_array( $terms_from_skill_level ) ) ? array_map( 'intval', $terms_from_skill_level ) : array();
 	$merged_terms             = array_merge( $terms_from_conference, $terms_from_pillar, $terms_from_skill_level ); // Merge all the terms.
-	var_dump( 'hello else' );
 }
 ?>
 <section class="marketingopstemplatesconfernace conferencevault elementor-section elementor-section-boxed">
