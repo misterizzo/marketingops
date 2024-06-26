@@ -47,10 +47,25 @@ $other_conferences_args            = array(
 	'hide_empty' => true,
 );
 $other_conferences_args['exclude'] = ( ! empty( $conference_term[0]->term_id ) ) ? array( $conference_term[0]->term_id ) : array();
-$other_conferences                 = get_terms( $other_conferences_args );
+$other_conferences                 = array_values( get_terms( $other_conferences_args ) );
 
 debug( $other_conferences );
 
+// Get sessions from other conference.
+// if ( ! empty( $conference_term[0]->taxonomy ) ) {
+// 	$same_conference_videos_query = moc_get_conference_videos(
+// 		'conference_vault',
+// 		1,
+// 		3,
+// 		array(
+// 			'taxonomy' => $conference_term[0]->taxonomy,
+// 			'field'    => 'term_id',
+// 			'terms'    => array( $conference_term[0]->term_id ),
+// 		),
+// 		''
+// 	);
+// 	$same_conference_video_ids    = ( ! empty( $same_conference_videos_query->posts ) ) ? $same_conference_videos_query->posts : '';
+// }
 
 get_header();
 ?>
