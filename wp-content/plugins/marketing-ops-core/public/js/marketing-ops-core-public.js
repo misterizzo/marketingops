@@ -177,7 +177,7 @@
 			// If the video link is available.
 			if ( '' !== video_link ) {
 				console.log( video_link + '?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;color=ffffff' );
-				$( '.popupwithvideoandtext iframe' ).attr( 'src', video_link + '?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;color=ffffff' );
+				$( '.popupwithvideoandtext .leftvideopopup iframe.conference-video' ).attr( 'src', video_link + '?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;color=ffffff' );
 				$( '.popupwithvideoandtext' ).css( 'display', 'flex' ); // Open the popup.
 			} else {
 				console.warn( 'video link not found.' );
