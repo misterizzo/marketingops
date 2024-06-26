@@ -6321,6 +6321,7 @@ class Marketing_Ops_Core_Public {
 	public function mops_filter_conference_vault_main_callback() {
 		$posted_array      = filter_input_array( INPUT_POST );
 		$filter_checkboxes = ( ! empty( $posted_array['filter_checkboxes'] ) ) ? $posted_array['filter_checkboxes'] : array();
+		$search_keyword    = ( ! empty( $posted_array['search_keyword'] ) ) ? $posted_array['search_keyword'] : '';
 		$term_ids          = array();
 
 		// Gather the terms from the requested filters.
@@ -6331,7 +6332,7 @@ class Marketing_Ops_Core_Public {
 		}
 
 		// Get the HTML for the conference vault main page.
-		$html = moc_conference_vault_main_html( $term_ids );
+		$html = moc_conference_vault_main_html( $term_ids, $search_keyword );
 
 		// Return the ajax response.
 		wp_send_json_success(

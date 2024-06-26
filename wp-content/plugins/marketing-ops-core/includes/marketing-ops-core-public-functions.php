@@ -9110,7 +9110,7 @@ if ( ! function_exists( 'moc_get_conference_videos' ) ) {
 	 * @return object
 	 * @since 1.0.0
 	 */
-	function moc_get_conference_videos( $post_type = 'post', $paged = 1, $posts_per_page = '', $tax_query = array() ) {
+	function moc_get_conference_videos( $post_type = 'post', $paged = 1, $posts_per_page = '', $tax_query = array(), $search_keyword = '' ) {
 		// Prepare the arguments array.
 		$args = array(
 			'post_type'      => $post_type,
@@ -9121,6 +9121,11 @@ if ( ! function_exists( 'moc_get_conference_videos' ) ) {
 			'orderby'        => 'date',
 			'order'          => 'DESC',
 		);
+
+		// If the search is available.
+		if ( ! empty( $search_keyword ) ) {
+			$args['s'] = $search_keyword;
+		}
 
 		// If the tax arguments are available.
 		if ( ! empty( $tax_query ) && is_array( $tax_query ) ) {
@@ -9153,7 +9158,7 @@ if ( ! function_exists( 'moc_conference_vault_main_html' ) ) {
 	 * @return string
 	 * @since 1.0.0
 	 */
-	function moc_conference_vault_main_html( $term_ids ) {
+	function moc_conference_vault_main_html( $term_ids, $search_keyword ) {
 		ob_start();
 
 		foreach ( $term_ids as $term_id ) {
@@ -9166,7 +9171,8 @@ if ( ! function_exists( 'moc_conference_vault_main_html' ) ) {
 					'taxonomy' => $term->taxonomy,
 					'field'    => 'term_id',
 					'terms'    => array( $term->term_id ),
-				)
+				),
+				$search_keyword
 			);
 			$video_ids     = ( ! empty( $videos_query->posts ) && is_array( $videos_query->posts ) ) ? $videos_query->posts : array();
 			?>

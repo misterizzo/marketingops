@@ -188,7 +188,7 @@ if ( ! ( is_null( $get_conference ) || is_null( $get_pillar ) || is_null( $get_c
 			<?php
 			if ( ! empty( $merged_terms ) && is_array( $merged_terms ) ) {
 				?><div class="conferencevaultinner_innerright"><?php
-					echo moc_conference_vault_main_html( $merged_terms );
+					echo moc_conference_vault_main_html( $merged_terms, '' );
 				?></div><?php
 			}
 			?>

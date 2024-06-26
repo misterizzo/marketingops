@@ -213,7 +213,7 @@
 						$( '.conferencevaultinner_innerright' ).html( response.data.html );
 
 						// Generate the URL.
-						var filter_url = moc_get_url_for_fiters_conference_vault_main( filter_checkboxes );
+						var filter_url = moc_get_url_for_fiters_conference_vault_main( filter_checkboxes, '' );
 
 						// Put the URL in the address bar.
 						window.history.pushState({ path: filter_url },'', filter_url );
@@ -271,7 +271,7 @@
 	 * @param {*} filter_checkboxes 
 	 * @returns 
 	 */
-	function moc_get_url_for_fiters_conference_vault_main( filter_checkboxes ) {
+	function moc_get_url_for_fiters_conference_vault_main( filter_checkboxes, search_keyword ) {
 		var filter_url = current_page_url;
 
 		// Loop through the filter checkboxes.
@@ -286,6 +286,11 @@
 			}
 		} );
 
+		// Add the search to the URL.
+		if ( '' !== search_keyword ) {
+			filter_url += '&search=' + search_keyword;
+		}
+
 		return filter_url;
 	}
 
@@ -299,7 +304,42 @@
 
 			if ( 13 === keycode ) {
 				filter_checkboxes = moc_get_conference_main_filters();
-				console.log( 'filter_checkboxes', filter_checkboxes );
+
+				// Put the AJAX to filter the conference video listings.
+				$.ajax( {
+					dataType: 'json',
+					url: ajaxurl,
+					type: 'POST',
+					data: {
+						'action': 'filter_conference_vault_main',
+						'filter_checkboxes': filter_checkboxes,
+						'search_keyword': this_input.val(),
+					},
+					beforeSend: function() {
+						// Show the loader.
+						if ( $( '.loader_bg' ).length ) {
+							$( '.loader_bg' ).css( 'display', 'flex' );
+						}
+					},
+					success: function( response ) {
+						if ( 'videos-found' === response.data.code ) {
+							// Load the HTML.
+							$( '.conferencevaultinner_innerright' ).html( response.data.html );
+
+							// Generate the URL.
+							var filter_url = moc_get_url_for_fiters_conference_vault_main( filter_checkboxes, this_input.val() );
+
+							// Put the URL in the address bar.
+							window.history.pushState({ path: filter_url },'', filter_url );
+						}
+					},
+					complete: function() {
+						// Hide the loader.
+						if ( $( '.loader_bg' ).length ) {
+							$( '.loader_bg' ).css( 'display', 'none' );
+						}
+					}
+				} );
 			}
 		} );
 	}
