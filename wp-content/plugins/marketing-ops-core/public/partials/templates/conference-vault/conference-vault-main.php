@@ -59,12 +59,12 @@ $merged_terms             = array_merge( $terms_from_conference, $terms_from_pil
 				<div class="elementor-shortcode">
 					<?php if ( ! empty( $pillars ) && is_array( $pillars ) ) { ?>
 						<!-- PILLARS -->
-						<div class="common_filter_row">
+						<div class="common_filter_row conference_tax_filters">
 							<div class="elementor-widget-wrap elementor-element-populated">
 								<div class="directory_search_form">
 									<div class="expandableCollapsibleDiv platform_section">
 										<h3 class="open"><?php esc_html_e( 'Pillar', 'marketing-ops-core' ); ?></h3>
-										<ul class="moc_training_filters">
+										<ul class="moc_training_filters" data-taxonomy="pillar">
 											<?php foreach ( $pillars as $pillar ) {
 												$pillar_checked = ( in_array( $pillar->term_id, $terms_from_pillar, true ) ) ? 'checked' : '';
 												?>
@@ -82,12 +82,12 @@ $merged_terms             = array_merge( $terms_from_conference, $terms_from_pil
 
 					<?php if ( ! empty( $conferences ) && is_array( $conferences ) ) { ?>
 						<!-- CONFERENCES -->
-						<div class="common_filter_row">
+						<div class="common_filter_row conference_tax_filters">
 							<div class="elementor-widget-wrap elementor-element-populated">
 								<div class="directory_search_form">
 									<div class="expandableCollapsibleDiv platform_section">
 										<h3 class="open"><?php esc_html_e( 'Conference', 'marketing-ops-core' ); ?></h3>
-										<ul class="moc_training_filters">
+										<ul class="moc_training_filters" data-taxonomy="conference">
 											<?php foreach ( $conferences as $conference ) {
 												$conference_checked = ( in_array( $conference->term_id, $terms_from_conference, true ) ) ? 'checked' : '';
 												?>
@@ -105,12 +105,12 @@ $merged_terms             = array_merge( $terms_from_conference, $terms_from_pil
 					
 					<?php if ( ! empty( $skill_levels ) && is_array( $skill_levels ) ) { ?>
 						<!-- SKILL LEVELS -->
-						<div class="common_filter_row">
+						<div class="common_filter_row conference_tax_filters">
 							<div class="elementor-widget-wrap elementor-element-populated">
 								<div class="directory_search_form">
 									<div class="expandableCollapsibleDiv platform_section">
 										<h3 class="open"><?php esc_html_e( 'Skill Level', 'marketing-ops-core' ); ?></h3>
-										<ul class="moc_training_filters">
+										<ul class="moc_training_filters" data-taxonomy="conference_skill_level">
 											<?php foreach ( $skill_levels as $skill_level ) {
 												$skill_level_checked = ( in_array( $skill_level->term_id, $terms_from_skill_level, true ) ) ? 'checked' : '';
 												?>

@@ -189,6 +189,13 @@
 		} );
 	}
 
+	// Filter the conference main page.
+	if ( $( '.conference_tax_filters' ).length ) {
+		$( document ).on( 'click', '.conference_tax_filters ul.moc_training_filters li input[type="checkbox"]', function() {
+			
+		} );
+	}
+
 	// Set the timer on the apalooza page.
 	if ( $( '.mops-apalooza-timer' ).length ) {
 		// Set the date we're counting down to.
