@@ -258,6 +258,9 @@
 				}
 			} );
 
+			console.log( 'temp_arr_slug', temp_arr_slug, temp_arr_slug.length );
+			console.log( 'temp_arr_id', temp_arr_id, temp_arr_id.length );
+
 			// Gather all the slugs in an array.
 			filter_checkboxes.push(
 				{
