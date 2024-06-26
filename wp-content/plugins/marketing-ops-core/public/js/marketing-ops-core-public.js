@@ -177,7 +177,7 @@
 			// If the video link is available.
 			if ( '' !== video_link ) {
 				var iframe_src = video_link + '?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;color=ffffff';
-				var iframe     = '<iframe src="' + iframe_src + '" width="640" height="360" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe><p>hello</p>';
+				var iframe     = '<iframe src="' + iframe_src + '" width="640" height="360" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>';
 				$( '.popupwithvideoandtext .leftvideopopup' ).html( iframe );
 				$( '.popupwithvideoandtext' ).css( 'display', 'flex' ); // Open the popup.
 			} else {
@@ -185,9 +185,10 @@
 			}
 		} );
 
+		// Close the video popup.
 		$( document ).on( 'click', '.popupwithvideoandtext .closevideotext', function() {
-			$( '.popupwithvideoandtext' ).css( 'display', 'none' );
-			$( '.popupwithvideoandtext iframe' ).attr( 'src', '' );
+			$( '.popupwithvideoandtext .leftvideopopup' ).html( '' ); // Remove the iframe.
+			$( '.popupwithvideoandtext' ).css( 'display', 'none' ); // Hide the modal.
 		} );
 
 		$( window ).click( function( event ) {
@@ -196,7 +197,7 @@
 				popup.style.display = 'none';
 			}
 
-			$( '.popupwithvideoandtext iframe' ).attr( 'src', '' );
+			$( '.popupwithvideoandtext .leftvideopopup' ).html( '' ); // Remove the iframe.
 		} );
 	}
 
