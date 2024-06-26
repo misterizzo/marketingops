@@ -17,6 +17,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $session_title = get_the_title();
+$session_id    = get_the_ID();
+$session_by    = get_field( 'session_author', $session_id );
+$session_link  = get_field( 'vimeo_video_url', $session_id );
+$conference    = wp_get_object_terms( $session_id, 'conference' );
+
+debug( $conference );
 
 get_header();
 ?>
