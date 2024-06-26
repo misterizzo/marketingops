@@ -138,6 +138,7 @@ $merged_terms             = array_merge( $terms_from_conference, $terms_from_pil
 			<?php if ( ! empty( $merged_terms ) && is_array( $merged_terms ) ) { ?>
 				<div class="conferencevaultinner_innerright">
 					<?php foreach ( $merged_terms as $term_id ) {
+						$term_id       = (int) $term_id;
 						$term          = get_term( $term_id );
 						$videos_query  = moc_get_conference_videos(
 							'conference_vault',
