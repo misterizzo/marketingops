@@ -193,14 +193,6 @@
 			filter_checkboxes  = moc_get_conference_main_filters();
 			var search_keyword = $( 'input[name="conference_main_search_keyword"]' ).val();
 
-			/* temp code */
-			var filter_url = moc_get_url_for_fiters_conference_vault_main( filter_checkboxes, search_keyword );
-
-			console.log( 'filter_url', filter_url );
-			return false;
-
-			/* temp code */
-
 			// Put the AJAX to filter the conference video listings.
 			$.ajax( {
 				dataType: 'json',
@@ -223,6 +215,7 @@
 
 						// Generate the URL.
 						var filter_url = moc_get_url_for_fiters_conference_vault_main( filter_checkboxes, search_keyword );
+						console.log( 'filter_url', filter_url );
 
 						// Put the URL in the address bar.
 						window.history.pushState({ path: filter_url },'', filter_url );
