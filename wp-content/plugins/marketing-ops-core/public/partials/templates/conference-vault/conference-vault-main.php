@@ -37,6 +37,14 @@ $skill_levels             = get_terms( // Get the skill levels.
 		'hide_empty' => true,
 	)
 );
+
+// Check if the terms are in the URL.
+$get_conference             = filter_input( INPUT_GET, 'conference', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+$get_pillar                 = filter_input( INPUT_GET, 'pillar', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+$get_conference_skill_level = filter_input( INPUT_GET, 'conference_skill_level', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+
+var_dump( $get_conference, $get_pillar, $get_conference_skill_level );
+
 $terms_from_pillar        = get_post_meta( $page_id, 'select_pillar', true ); // Get the terms from which the videos should be shown.
 $terms_from_pillar        = ( ! empty( $terms_from_pillar ) && is_array( $terms_from_pillar ) ) ? array_map( 'intval', $terms_from_pillar ) : array();
 $terms_from_conference    = get_post_meta( $page_id, 'select_conference', true );
