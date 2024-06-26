@@ -80,6 +80,8 @@ if ( ! ( is_null( $get_conference ) || is_null( $get_pillar ) || is_null( $get_c
 			$terms_from_skill_level[]    = $conference_skill_level_term->term_id;
 		}
 	}
+
+	var_dump( $terms_from_conference );
 } else {
 	$terms_from_pillar        = get_post_meta( $page_id, 'select_pillar', true ); // Get the terms from which the videos should be shown.
 	$terms_from_pillar        = ( ! empty( $terms_from_pillar ) && is_array( $terms_from_pillar ) ) ? array_map( 'intval', $terms_from_pillar ) : array();
