@@ -67,6 +67,7 @@ $merged_terms             = array_merge( $terms_from_conference, $terms_from_pil
 										<ul class="moc_training_filters">
 											<?php foreach ( $pillars as $pillar ) {
 												$pillar_checked = ( in_array( $pillar->term_id, $pillars, true ) ) ? 'checked' : '';
+												var_dump( $pillar_checked );
 												?>
 												<li>
 													<input <?php echo esc_attr( $pillar_checked ); ?> id="<?php echo esc_attr( $pillar->slug ); ?>" type="checkbox" name="<?php echo esc_attr( $pillar->taxonomy ); ?>" value="<?php echo esc_attr( $pillar->term_id ); ?>">
