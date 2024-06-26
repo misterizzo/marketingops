@@ -65,6 +65,7 @@
 	var member_plan                     = ( 0 === member_plan_slug.length ) ? 'inactive' : ( ( 1 === member_plan_slug.length && -1 !== $.inArray( 'free-membership', member_plan_slug ) ) ? 'free' : 'pro' );
 	var crop_modal                      = $('#cropModal');
 	var image                           = document.getElementById('crop_profile_image');
+	var current_page_url                = window.location.origin + window.location.pathname;
 	var cropBoxData;
     var canvasData;
     var cropper;
@@ -219,15 +220,13 @@
 			} );
 
 			// Generate the URL.
-			console.log( 'url', window.location.origin + window.location.pathname );
+			// console.log( 'url', wicurrent_page_url );
 			$.each( filter_checkboxes, function( index, term_arr ) {
 				var tax_name  = term_arr['taxonomy'];
 				var tax_terms = term_arr['terms'];
-				console.log( 'tax_name', tax_name, 'tax_terms', tax_terms );
+				console.log( 'index', index, 'tax_name', tax_name, 'tax_terms', tax_terms );
 			} );
 			// window.history.pushState({ path: response.data.updated_url },'', response.data.updated_url);
-
-			console.log( 'filter_checkboxes', filter_checkboxes );
 		} );
 	}
 
