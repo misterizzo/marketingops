@@ -47,14 +47,33 @@ if ( ! ( is_null( $get_conference ) || is_null( $get_pillar ) || is_null( $get_c
 	$get_conference             = ( ! is_null( $get_conference ) ) ? explode( '|', $get_conference ) : array();
 	$get_pillar                 = ( ! is_null( $get_pillar ) ) ? explode( '|', $get_pillar ) : array();
 	$get_conference_skill_level = ( ! is_null( $get_conference_skill_level ) ) ? explode( '|', $get_conference_skill_level ) : array();
+	$merged_terms               = array();
 
 	// Loop through the conference taxonomy to collect the term IDs.
 	if ( ! empty( $get_conference ) && is_array( $get_conference ) ) {
 		foreach ( $get_conference as $term_slug ) {
 			$conference_term = get_term_by( 'slug', $term_slug, 'conference' );
-			debug( $conference_term ); die;
+			$merged_terms[]  = $conference_term->term_id;
 		}
 	}
+
+	// Loop through the pillar taxonomy to collect the term IDs.
+	if ( ! empty( $get_pillar ) && is_array( $get_pillar ) ) {
+		foreach ( $get_pillar as $term_slug ) {
+			$pillar_term = get_term_by( 'slug', $term_slug, 'pillar' );
+			$merged_terms[]  = $pillar_term->term_id;
+		}
+	}
+
+	// Loop through the conference_skill_level taxonomy to collect the term IDs.
+	if ( ! empty( $get_conference_skill_level ) && is_array( $get_conference_skill_level ) ) {
+		foreach ( $get_conference_skill_level as $term_slug ) {
+			$conference_skill_level_term = get_term_by( 'slug', $term_slug, 'conference_skill_level' );
+			$merged_terms[]  = $conference_skill_level_term->term_id;
+		}
+	}
+
+	debug( $merged_terms );
 } else {
 	$terms_from_pillar        = get_post_meta( $page_id, 'select_pillar', true ); // Get the terms from which the videos should be shown.
 	$terms_from_pillar        = ( ! empty( $terms_from_pillar ) && is_array( $terms_from_pillar ) ) ? array_map( 'intval', $terms_from_pillar ) : array();
