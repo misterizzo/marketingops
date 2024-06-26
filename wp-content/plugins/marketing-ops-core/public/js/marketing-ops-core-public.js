@@ -220,8 +220,10 @@
 
 			// Generate the URL.
 			console.log( 'url', window.location );
-			$.each( filter_checkboxes, function( tax, term_arr ) {
-				console.log( 'tax', tax, 'term_arr', term_arr );
+			$.each( filter_checkboxes, function( index, term_arr ) {
+				var tax_name  = term_arr['taxonomy'];
+				var tax_terms = term_arr['terms'];
+				console.log( 'tax_name', tax_name, 'tax_terms', tax_terms );
 			} );
 			// window.history.pushState({ path: response.data.updated_url },'', response.data.updated_url);
 
