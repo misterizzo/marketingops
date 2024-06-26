@@ -39,8 +39,6 @@ if ( ! empty( $conference_term[0]->taxonomy ) ) {
 		''
 	);
 	$same_conference_video_ids    = ( ! empty( $same_conference_videos_query->posts ) ) ? $same_conference_videos_query->posts : '';
-
-	debug( $same_conference_video_ids );
 }
 
 get_header();
@@ -70,7 +68,10 @@ get_header();
 					</li>
 				<?php } ?>
 			</ul>
-			<?php // echo wp_kses_post( $session_content ); ?>
+
+			<div class="conference-session-details">
+				<?php echo wp_kses_post( $session_content ); ?>
+			</div>
 
 			<!-- SESSION VIDEO -->
 			<?php if ( ! empty( $session_link ) ) { ?>
@@ -78,59 +79,33 @@ get_header();
 					<iframe class="elementor-video-iframe" allowfullscreen="" allow="clipboard-write" title="vimeo Video Player" src="<?php echo esc_url( $session_link ); ?>?color&amp;autopause=0&amp;loop=0&amp;muted=0&amp;title=1&amp;portrait=1&amp;byline=1&amp;h=427b06ed1e#t="></iframe> 
 				</div>
 			<?php } ?>
-			<p><strong>Transcript:</strong>Michael Hartmann: [00:00:00] Welcome to another episode of Opscasts brought to you by MarketingOps.com powered by the MoPros. I’m your host, Michael Hartmann. Flying solo today, which is all good. Uh, Mike and Naomi will be back soon, I’m sure. All right. For this episode, it’s the first of a series that we’re working on that is going to help educate our audience about some emerging go to market approaches and help provide guidance on how you as marketing professional is going to be an enabler.        	</p>
-			<p>Or an advocate, even for some of these approaches at your organization to join us in that conversation for this first one is Justin Gray. We’re going to be talking about near bound go to market strategies. Justin is an award winning five time entrepreneur who has made a career of launching and scaling companies and guiding them to successful equity exits of over 250 million in 2018.</p>
-			<p>He started angel investing and to make strategic investments in founders. He believes in, and is currently a limited partner in several funds. He is now also co founder and managing director of in revenue capital, where he couples go to market [00:01:00] expertise with venture funding to empower seed stage founders and their startups through a first of its kind model called operator immersive capital, uh, he is a strong voice of.</p>
-			<p>For pragmatic entrepreneurship, partner like growth and building intentional performance culture and is recognized speaker and thought leader, and he has presented at top industry conferences and published over 500 times in publications. So wow on that. So, Justin, uh, thanks for joining us today.</p>
-			<p>Justin Gray: Yeah, that’s a lot of intro to live up to.</p>
-			<p>I’ll try to, uh, not fall on my face here.</p>
-			<p>Michael Hartmann: It’ll, it’ll be good. We’re, we’re, we’re gentle. So we try to be, um, so I think, I think, um, one of the things we’re going to need to do for a lot of these, if it’s, if our audience is like me, some of these, um, terms that are going to be used in these new approaches. Uh, and we make, if you’re like me, you make assumptions about what they all mean, but I don’t want to do that.</p>
-			<p>So, yeah, so this idea of near [00:02:00] bound go to market strategy, maybe it would be helpful for you to just give a thumbnail sketch of what does that actually mean?</p>
-			<div class="conferencevaultinner_inner">
-				<div class="conferencevaultinner_innerright">
-					<div class="conferencevaultinner_innerright_inner">
-						<h3>Sessions from this event</h3>
-						<ul>
-							<li>
-								<div class="conferencevaultinnergridboximage">
-									<div class="innerimagebox">
-										<img src="https://marketingops.com/wp-content/uploads/2024/05/Rectangle-868.jpg">
-									</div>
-									<div class="innerimageboxdescriptions">
-										<h4>Unveiling the New Pillars</h4>
-										<small>by Darrell Alfonso</small>
-										<p>Sem integer vitae justo eget magna fermentum. Arcu dui vivamus arcu felis bibendum. Nibh nisl condimentum id venenatis a condimentum. In arcu cursus euismod quis viverra.</p>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="conferencevaultinnergridboximage">
-									<div class="innerimagebox">
-										<img src="https://marketingops.com/wp-content/uploads/2024/05/Rectangle-868-1.jpg">
-									</div>
-									<div class="innerimageboxdescriptions">
-										<h4>The Future is Now: Embracing the AI-Powered CRM Revolution</h4>
-										<small>by Connor Jeffers</small>
-										<p>Sem integer vitae justo eget magna fermentum. Arcu dui vivamus arcu felis bibendum. Nibh nisl condimentum id venenatis a condimentum. In arcu cursu</p>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="conferencevaultinnergridboximage">
-									<div class="innerimagebox">
-										<img src="https://marketingops.com/wp-content/uploads/2024/05/Rectangle-868-2.jpg">
-									</div>
-									<div class="innerimageboxdescriptions">
-										<h4>How MarketingOps Leads Building An Annual Marketing Plan on Behalf of the CMO</h4>
-										<small>by Rani Salehi</small>
-										<p>Sem integer vitae justo eget magna fermentum. Arcu dui vivamus arcu felis b</p>
-									</div>
-								</div>
-							</li>
-						</ul>
+
+			<div class="conference-session-transcript">
+				<p><strong>Transcript:</strong>Michael Hartmann: [00:00:00] Welcome to another episode of Opscasts brought to you by MarketingOps.com powered by the MoPros. I’m your host, Michael Hartmann. Flying solo today, which is all good. Uh, Mike and Naomi will be back soon, I’m sure. All right. For this episode, it’s the first of a series that we’re working on that is going to help educate our audience about some emerging go to market approaches and help provide guidance on how you as marketing professional is going to be an enabler.        	</p>
+				<p>Or an advocate, even for some of these approaches at your organization to join us in that conversation for this first one is Justin Gray. We’re going to be talking about near bound go to market strategies. Justin is an award winning five time entrepreneur who has made a career of launching and scaling companies and guiding them to successful equity exits of over 250 million in 2018.</p>
+				<p>He started angel investing and to make strategic investments in founders. He believes in, and is currently a limited partner in several funds. He is now also co founder and managing director of in revenue capital, where he couples go to market [00:01:00] expertise with venture funding to empower seed stage founders and their startups through a first of its kind model called operator immersive capital, uh, he is a strong voice of.</p>
+				<p>For pragmatic entrepreneurship, partner like growth and building intentional performance culture and is recognized speaker and thought leader, and he has presented at top industry conferences and published over 500 times in publications. So wow on that. So, Justin, uh, thanks for joining us today.</p>
+				<p>Justin Gray: Yeah, that’s a lot of intro to live up to.</p>
+				<p>I’ll try to, uh, not fall on my face here.</p>
+				<p>Michael Hartmann: It’ll, it’ll be good. We’re, we’re, we’re gentle. So we try to be, um, so I think, I think, um, one of the things we’re going to need to do for a lot of these, if it’s, if our audience is like me, some of these, um, terms that are going to be used in these new approaches. Uh, and we make, if you’re like me, you make assumptions about what they all mean, but I don’t want to do that.</p>
+				<p>So, yeah, so this idea of near [00:02:00] bound go to market strategy, maybe it would be helpful for you to just give a thumbnail sketch of what does that actually mean?</p>
+			</div>
+
+			<?php if ( ! empty( $same_conference_video_ids ) && is_array( $same_conference_video_ids ) ) { ?>
+				<div class="conferencevaultinner_inner">
+					<div class="conferencevaultinner_innerright">
+						<div class="conferencevaultinner_innerright_inner">
+							<h3>Sessions from this event</h3>
+							<ul>
+								<?php
+								foreach ( $same_conference_video_ids as $video_id ) {
+									echo moc_conference_vault_video_box_html( $video_id ); // Print the conference video post.
+								} ?>
+							</ul>
+						</div>
 					</div>
 				</div>
-			</div>
+			<?php } ?>
 			<div class="conferencevaultinner_inner">
 				<div class="conferencevaultinner_innerright">
 					<div class="conferencevaultinner_innerright_inner">
