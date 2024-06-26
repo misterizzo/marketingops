@@ -191,6 +191,9 @@
 		var filter_checkboxes = [];
 		$( document ).on( 'click', '.conference_tax_filters ul.moc_training_filters li input[type="checkbox"]', function() {
 			filter_checkboxes  = moc_get_conference_main_filters();
+
+			console.log( 'filter_checkboxes', filter_checkboxes );
+
 			var search_keyword = $( 'input[name="conference_main_search_keyword"]' ).val();
 
 			// Put the AJAX to filter the conference video listings.
