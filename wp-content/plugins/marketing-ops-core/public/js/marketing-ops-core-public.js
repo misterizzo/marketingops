@@ -194,7 +194,7 @@
 	if ( $( '.conference_tax_filters' ).length ) {
 		var filter_checkboxes = [];
 		$( document ).on( 'click', '.conference_tax_filters ul.moc_training_filters li input[type="checkbox"]', function() {
-			var filter_url = '';
+			var filter_url = current_page_url;
 
 			// Loop thorugh the conference filters.
 			$( '.common_filter_row.conference_tax_filters' ).each( function() {
@@ -227,9 +227,9 @@
 				var tax_terms = term_arr['terms'];
 
 				if ( 0 === index ) {
-					filter_url += current_page_url + '?' + tax_name + '=' + tax_terms.join( '|' );
+					filter_url += '?' + tax_name + '=' + tax_terms.join( '|' );
 				} else {
-					filter_url += current_page_url + '&' + tax_name + '=' + tax_terms.join( '|' );
+					filter_url += '&' + tax_name + '=' + tax_terms.join( '|' );
 				}
 			} );
 
