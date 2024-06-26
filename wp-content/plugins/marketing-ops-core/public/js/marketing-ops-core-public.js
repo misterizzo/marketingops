@@ -180,7 +180,7 @@
 				var iframe     = '<iframe src="' + iframe_src + '" width="640" height="360" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>';
 				console.log( 'iframe', iframe );
 				$( '.popupwithvideoandtext .leftvideopopup' ).addClass( 'vermadarsh' );
-				$( '.popupwithvideoandtext .leftvideopopup' ).html( iframe );
+				$( '.popupwithvideoandtext .leftvideopopup' ).append( iframe );
 				$( '.popupwithvideoandtext' ).css( 'display', 'flex' ); // Open the popup.
 			} else {
 				console.warn( 'video link not found.' );
