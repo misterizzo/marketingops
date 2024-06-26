@@ -6325,9 +6325,13 @@ class Marketing_Ops_Core_Public {
 
 		// Gather the terms from the requested filters.
 		foreach ( $filter_checkboxes as $filter ) {
-			debug( $filter );
-			die;
+			if ( ! empty( $filter['term_ids'] ) && is_array( $filter['term_ids'] ) ) {
+				$term_ids = array_merge( $term_ids, $filter['term_ids'] );
+			}
 		}
+
+		debug( $term_ids );
+		die;
 
 		// Fetch the posts.
 		$video_query_args = moc_posts_query_args( 'conference_vault', 1, 16 );
