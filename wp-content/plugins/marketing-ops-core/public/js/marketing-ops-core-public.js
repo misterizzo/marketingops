@@ -258,17 +258,16 @@
 				}
 			} );
 
-			console.log( 'temp_arr_slug', temp_arr_slug, temp_arr_slug.length );
-			console.log( 'temp_arr_id', temp_arr_id, temp_arr_id.length );
-
-			// Gather all the slugs in an array.
-			filter_checkboxes.push(
-				{
-					'taxonomy': filter_ul.data( 'taxonomy' ),
-					'terms': temp_arr_slug,
-					'term_ids': temp_arr_id,
-				}
-			);
+			// Gather all the slugs in an array, if any of the term is checked.
+			if ( 0 < temp_arr_slug.length ) {
+				filter_checkboxes.push(
+					{
+						'taxonomy': filter_ul.data( 'taxonomy' ),
+						'terms': temp_arr_slug,
+						'term_ids': temp_arr_id,
+					}
+				);
+			}
 		} );
 
 		return filter_checkboxes;
