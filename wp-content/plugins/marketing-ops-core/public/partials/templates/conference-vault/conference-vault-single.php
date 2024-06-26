@@ -70,7 +70,7 @@ get_header();
 					</li>
 				<?php } ?>
 			</ul>
-			<?php echo wp_kses_post( $session_content ); ?>
+			<?php // echo wp_kses_post( $session_content ); ?>
 
 			<!-- SESSION VIDEO -->
 			<?php if ( ! empty( $session_link ) ) { ?>
