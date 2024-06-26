@@ -38,11 +38,11 @@ $skill_levels             = get_terms( // Get the skill levels.
 	)
 );
 $terms_from_pillar        = get_post_meta( $page_id, 'select_pillar', true ); // Get the terms from which the videos should be shown.
-$terms_from_pillar        = ( ! empty( $terms_from_pillar ) && is_array( $terms_from_pillar ) ) ? $terms_from_pillar : array();
+$terms_from_pillar        = ( ! empty( $terms_from_pillar ) && is_array( $terms_from_pillar ) ) ? array_map( 'intval', $terms_from_pillar ) : array();
 $terms_from_conference    = get_post_meta( $page_id, 'select_conference', true );
-$terms_from_conference    = ( ! empty( $terms_from_conference ) && is_array( $terms_from_conference ) ) ? $terms_from_conference : array();
+$terms_from_conference    = ( ! empty( $terms_from_conference ) && is_array( $terms_from_conference ) ) ? array_map( 'intval', $terms_from_conference ) : array();
 $terms_from_skill_level   = get_post_meta( $page_id, 'select_skill_level', true );
-$terms_from_skill_level   = ( ! empty( $terms_from_skill_level ) && is_array( $terms_from_skill_level ) ) ? $terms_from_skill_level : array();
+$terms_from_skill_level   = ( ! empty( $terms_from_skill_level ) && is_array( $terms_from_skill_level ) ) ? array_map( 'intval', $terms_from_skill_level ) : array();
 $merged_terms             = array_merge( $terms_from_conference, $terms_from_pillar, $terms_from_skill_level ); // Merge all the terms.
 ?>
 <section class="marketingopstemplatesconfernace conferencevault elementor-section elementor-section-boxed">
@@ -141,7 +141,6 @@ $merged_terms             = array_merge( $terms_from_conference, $terms_from_pil
 			<?php if ( ! empty( $merged_terms ) && is_array( $merged_terms ) ) { ?>
 				<div class="conferencevaultinner_innerright">
 					<?php foreach ( $merged_terms as $term_id ) {
-						$term_id       = (int) $term_id;
 						$term          = get_term( $term_id );
 						$videos_query  = moc_get_conference_videos(
 							'conference_vault',
