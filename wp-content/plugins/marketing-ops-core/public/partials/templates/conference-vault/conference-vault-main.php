@@ -66,9 +66,7 @@ $merged_terms             = array_merge( $terms_from_conference, $terms_from_pil
 										<h3 class="open"><?php esc_html_e( 'Pillar', 'marketing-ops-core' ); ?></h3>
 										<ul class="moc_training_filters">
 											<?php foreach ( $pillars as $pillar ) {
-												var_dump( $pillar->term_id, $pillars );
-												$pillar_checked = ( in_array( $pillar->term_id, $pillars, true ) ) ? 'checked' : '';
-												var_dump( $pillar_checked );
+												$pillar_checked = ( in_array( $pillar->term_id, $terms_from_pillar, true ) ) ? 'checked' : '';
 												?>
 												<li>
 													<input <?php echo esc_attr( $pillar_checked ); ?> id="<?php echo esc_attr( $pillar->slug ); ?>" type="checkbox" name="<?php echo esc_attr( $pillar->taxonomy ); ?>" value="<?php echo esc_attr( $pillar->term_id ); ?>">
@@ -91,7 +89,7 @@ $merged_terms             = array_merge( $terms_from_conference, $terms_from_pil
 										<h3 class="open"><?php esc_html_e( 'Conference', 'marketing-ops-core' ); ?></h3>
 										<ul class="moc_training_filters">
 											<?php foreach ( $conferences as $conference ) {
-												$conference_checked = ( in_array( $conference->term_id, $pillars, true ) ) ? 'checked' : '';
+												$conference_checked = ( in_array( $conference->term_id, $terms_from_conference, true ) ) ? 'checked' : '';
 												?>
 												<li>
 													<input <?php echo esc_attr( $conference_checked ); ?> id="<?php echo esc_attr( $conference->slug ); ?>" type="checkbox" name="<?php echo esc_attr( $conference->taxonomy ); ?>" value="<?php echo esc_attr( $conference->term_id ); ?>">
@@ -114,7 +112,7 @@ $merged_terms             = array_merge( $terms_from_conference, $terms_from_pil
 										<h3 class="open"><?php esc_html_e( 'Skill Level', 'marketing-ops-core' ); ?></h3>
 										<ul class="moc_training_filters">
 											<?php foreach ( $skill_levels as $skill_level ) {
-												$skill_level_checked = ( in_array( $skill_level->term_id, $pillars, true ) ) ? 'checked' : '';
+												$skill_level_checked = ( in_array( $skill_level->term_id, $terms_from_skill_level, true ) ) ? 'checked' : '';
 												?>
 												<li>
 													<input <?php echo esc_attr( $skill_level_checked ); ?> id="<?php echo esc_attr( $skill_level->slug ); ?>" type="checkbox" name="<?php echo esc_attr( $skill_level->taxonomy ); ?>" value="<?php echo esc_attr( $skill_level->term_id ); ?>">
