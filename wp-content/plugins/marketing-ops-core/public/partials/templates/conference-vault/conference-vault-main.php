@@ -43,6 +43,7 @@ $get_conference             = filter_input( INPUT_GET, 'conference', FILTER_SANI
 $get_pillar                 = filter_input( INPUT_GET, 'pillar', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 $get_conference_skill_level = filter_input( INPUT_GET, 'conference_skill_level', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 $get_search                 = filter_input( INPUT_GET, 'search', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+$get_search                 = ( ! is_null( $get_search ) ) ? $get_search : '';
 
 if ( ! ( is_null( $get_conference ) || is_null( $get_pillar ) || is_null( $get_conference_skill_level ) ) ) {
 	$get_conference             = ( ! is_null( $get_conference ) ) ? explode( '|', $get_conference ) : array();
@@ -188,7 +189,7 @@ if ( ! ( is_null( $get_conference ) || is_null( $get_pillar ) || is_null( $get_c
 			<?php
 			if ( ! empty( $merged_terms ) && is_array( $merged_terms ) ) {
 				?><div class="conferencevaultinner_innerright"><?php
-					echo moc_conference_vault_main_html( $merged_terms, '' );
+					echo moc_conference_vault_main_html( $merged_terms, $get_search );
 				?></div><?php
 			}
 			?>
