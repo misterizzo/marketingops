@@ -57,29 +57,6 @@ $merged_terms             = array_merge( $terms_from_conference, $terms_from_pil
 		<div class="conferencevaultinner_inner">
 			<div class="conferencevaultinner_innerleft">
 				<div class="elementor-shortcode">
-					<?php if ( ! empty( $pillars ) && is_array( $pillars ) ) { ?>
-						<!-- PILLARS -->
-						<div class="common_filter_row conference_tax_filters">
-							<div class="elementor-widget-wrap elementor-element-populated">
-								<div class="directory_search_form">
-									<div class="expandableCollapsibleDiv platform_section">
-										<h3 class="open"><?php esc_html_e( 'Pillar', 'marketing-ops-core' ); ?></h3>
-										<ul class="moc_training_filters" data-taxonomy="pillar">
-											<?php foreach ( $pillars as $pillar ) {
-												$pillar_checked = ( in_array( $pillar->term_id, $terms_from_pillar, true ) ) ? 'checked' : '';
-												?>
-												<li>
-													<input <?php echo esc_attr( $pillar_checked ); ?> id="<?php echo esc_attr( $pillar->slug ); ?>" type="checkbox" name="<?php echo esc_attr( $pillar->taxonomy ); ?>" value="<?php echo esc_attr( $pillar->term_id ); ?>">
-													<label for="<?php echo esc_attr( $pillar->slug ); ?>"><?php echo esc_html( $pillar->name ); ?></label>
-												</li>
-											<?php } ?>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-					<?php } ?>
-
 					<?php if ( ! empty( $conferences ) && is_array( $conferences ) ) { ?>
 						<!-- CONFERENCES -->
 						<div class="common_filter_row conference_tax_filters">
@@ -94,6 +71,29 @@ $merged_terms             = array_merge( $terms_from_conference, $terms_from_pil
 												<li>
 													<input <?php echo esc_attr( $conference_checked ); ?> id="<?php echo esc_attr( $conference->slug ); ?>" type="checkbox" name="<?php echo esc_attr( $conference->taxonomy ); ?>" value="<?php echo esc_attr( $conference->term_id ); ?>">
 													<label for="<?php echo esc_attr( $conference->slug ); ?>"><?php echo esc_html( $conference->name ); ?></label>
+												</li>
+											<?php } ?>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					<?php } ?>
+
+					<?php if ( ! empty( $pillars ) && is_array( $pillars ) ) { ?>
+						<!-- PILLARS -->
+						<div class="common_filter_row conference_tax_filters">
+							<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="directory_search_form">
+									<div class="expandableCollapsibleDiv platform_section">
+										<h3 class="open"><?php esc_html_e( 'Pillar', 'marketing-ops-core' ); ?></h3>
+										<ul class="moc_training_filters" data-taxonomy="pillar">
+											<?php foreach ( $pillars as $pillar ) {
+												$pillar_checked = ( in_array( $pillar->term_id, $terms_from_pillar, true ) ) ? 'checked' : '';
+												?>
+												<li>
+													<input <?php echo esc_attr( $pillar_checked ); ?> id="<?php echo esc_attr( $pillar->slug ); ?>" type="checkbox" name="<?php echo esc_attr( $pillar->taxonomy ); ?>" value="<?php echo esc_attr( $pillar->term_id ); ?>">
+													<label for="<?php echo esc_attr( $pillar->slug ); ?>"><?php echo esc_html( $pillar->name ); ?></label>
 												</li>
 											<?php } ?>
 										</ul>
