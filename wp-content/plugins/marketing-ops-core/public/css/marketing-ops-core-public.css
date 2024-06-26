@@ -1912,9 +1912,9 @@ margin: 10px 0;
 
 /* Conference Vault */
 .common_filter_row .directory_search_form.mainsidbarsearch h3:after{display:none;}
-.common_filter_row .directory_search_form.mainsidbarsearch .moc_input_field:after{content:"";background-color:transparent!important;background-image:url('/wp-content/themes/hello-elementor_child/images/svg/search.svg')!important;background-repeat:no-repeat;background-position:center;width:24px;height:24px;position:absolute;left:14px;top:73%;transform:translateY(-50%);background-size:cover;}
+.common_filter_row .directory_search_form.mainsidbarsearch .moc_input_field:after{content:"";background-color:transparent!important;background-image:url('/wp-content/themes/hello-elementor_child/images/svg/search.svg')!important;background-repeat:no-repeat;background-position:center;width:24px;height:24px;position:absolute;right:14px;top:73%;transform:translateY(-50%);background-size:cover;}
 .common_filter_row .directory_search_form.mainsidbarsearch .moc_input_field{border-radius:6px;border:1px solid var(--gray-stroke,#E7EFEF);background:rgba(246,247,247,0.50);display:flex;padding:8px 10px;align-items:flex-start;gap:20px;width:100%;max-width:200px;margin-top:10px;}
-.common_filter_row .directory_search_form.mainsidbarsearch .moc_input_field input#search_keywords{border:none;background:transparent;padding:0;padding-left:30px;position: relative;}
+.common_filter_row .directory_search_form.mainsidbarsearch .moc_input_field input#search_keywords{border:none;background:transparent;padding:0;padding-right:30px;position: relative;}
 .marketingopstemplatesconfernace{position: relative;}
 .marketingopstemplatesconfernace:before {background-image: url('/wp-content/themes/hello-elementor_child/images/marketingtemplate/marketingnewtemplate-1.png');left:0;top:65%;width:519px;height:711px;content:"";background-repeat:no-repeat;background-position:top left;position:absolute;z-index:-1;}
 .marketingopstemplatesconfernace:after {background-image: url('/wp-content/themes/hello-elementor_child/images/marketingtemplate/marketingnewtemplate-2.png');width:360px;height:533px;right:0;top:-139px;z-index:0;content:"";background-repeat:no-repeat;background-position:top left;position:absolute;}
@@ -1975,6 +1975,80 @@ section.conferencevaultevent .conferencevaultinner h1 span{background:var(--hori
 section.conferencevaultevent .conferencevaultinner ul{padding:0;list-style:none;align-items:center;align-content:center;display:flex;justify-content:space-around;margin-bottom:20px;}
 section.conferencevaultevent .conferencevaultinner ul li a{text-align:center;font-family:"Open Sans";font-size:14px;font-style:normal;font-weight:400;line-height:normal;background:var(--horizontal-grad-1,linear-gradient(90deg,#FD4B7A -2.36%,#4D00AE 159.05%));background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 section.conferencevaultevent .conferencevaultinner ul li{color:var(--Primary-text,#45474F);text-align:center;font-family:"Open Sans";font-size:16px;font-style:normal;font-weight:400;line-height:normal;}
+section.conferencevaultevent .conferencevaultinner ul li {
+    color: var(--Secondary-text, #5B5E6B);
+    text-align: center;
+    font-family: "Futura LT","Open Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+.conference-session-details h2 {
+    color: var(--Primary-text, #45474F);
+    font-family: "Futura LT", "Open Sans";
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    display: block;
+    margin-bottom: 10px;
+}
+section.conferencevaultevent .conferencevaultinner ul.key_takeaways_list {
+    flex-wrap: wrap;
+}
+section.conferencevaultevent .conferencevaultinner ul.key_takeaways_list li {
+    color: var(--Primary-text,#45474F);
+    text-align: left;
+    font-family: "Open Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    width: 100%;
+    margin-bottom: 5px;
+    padding-left: 16px;
+    position: relative;
+}
+
+section.conferencevaultevent .conferencevaultinner ul.key_takeaways_list li:after {
+    content: "";
+    width: 7px;
+    height: 7px;
+    position: absolute;
+    left: 0;
+    top: 8px;
+    border-radius: 100%;
+    background: #45474F;
+}
+
+.single-conference_vault section.conferencevaultevent.presentation.elementor-section.elementor-section-boxed .conferencevaultinner_inner {
+    padding-left: 0;
+    padding-right: 0;
+}
+.single-conference_vault section.conferencevaultevent.presentation.elementor-section.elementor-section-boxed .conferencevaultinner_inner .conferencevaultinner_innerright ul {
+    align-items: flex-start;
+}
+
+
+section.conferencevaultevent.presentation.elementor-section.elementor-section-boxed .conferencevaultinner_inner .conferencevaultinner_innerright ul li .innerimageboxdescriptions h4 a {
+    color: var(--Primary-text,#45474F);
+    max-width: 269px;
+    font-family: futura lt,open sans;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin: 10px 0 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-align: left;
+    background: transparent;
+    -webkit-text-fill-color: #45474F;
+}
+
 section.conferencevaultevent.elementor-section.elementor-section-boxed .blog_articles{margin:0 auto 45px;}
 
 @media (min-width:992px) and (max-width:1199px)
@@ -2145,8 +2219,8 @@ section.profile_setup .content_boxed input:checked~label:after{background: #FA4A
 section.profile_setup .content_boxed label:after{content: "";position: absolute;left: 0;top: 25%;transform: translateY(-50%);width: 25px;height: 25px;background: rgba(246, 247, 247, 0.5);border: 1px solid #E7EFEF;box-sizing: border-box;border-radius: 6px;}
 
 .mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright ul li:last-child .conferencevaultinnergridboximage .conferencevaultinnergridboximageshowmore {
-    background: transparent;
-    box-shadow: none;
+    background: rgba(255,255,255,0.50);
+    box-shadow: 0px 40px 80px 0px rgba(0,0,0,0.05);
 }
 .mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright ul li:last-child:hover {
     box-shadow: none;

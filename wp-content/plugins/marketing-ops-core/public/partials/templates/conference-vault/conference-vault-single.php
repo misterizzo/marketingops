@@ -52,20 +52,20 @@ $other_conferences                 = array_values( get_terms( $other_conferences
 debug( $other_conferences );
 
 // Get sessions from other conference.
-// if ( ! empty( $conference_term[0]->taxonomy ) ) {
-// 	$same_conference_videos_query = moc_get_conference_videos(
-// 		'conference_vault',
-// 		1,
-// 		3,
-// 		array(
-// 			'taxonomy' => $conference_term[0]->taxonomy,
-// 			'field'    => 'term_id',
-// 			'terms'    => array( $conference_term[0]->term_id ),
-// 		),
-// 		''
-// 	);
-// 	$same_conference_video_ids    = ( ! empty( $same_conference_videos_query->posts ) ) ? $same_conference_videos_query->posts : '';
-// }
+if ( ! empty( $other_conferences[0]->taxonomy ) ) {
+	$same_conference_videos_query = moc_get_conference_videos(
+		'conference_vault',
+		1,
+		3,
+		array(
+			'taxonomy' => $conference_term[0]->taxonomy,
+			'field'    => 'term_id',
+			'terms'    => array( $conference_term[0]->term_id ),
+		),
+		''
+	);
+	$same_conference_video_ids    = ( ! empty( $same_conference_videos_query->posts ) ) ? $same_conference_videos_query->posts : '';
+}
 
 get_header();
 ?>
