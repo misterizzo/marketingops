@@ -14,9 +14,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 		<div class="popup-contentvideotext">
 		<span id="closePopupBtn" class="close closevideotext">&times;</span>
 		<div class="videowithtext">
-			<div class="leftvideopopup">
-				<iframe class="conference-video" src="" width="640" height="360" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
-			</div>
+			<div class="leftvideopopup"></div>
 		</div>
 	</div>
 </div>
