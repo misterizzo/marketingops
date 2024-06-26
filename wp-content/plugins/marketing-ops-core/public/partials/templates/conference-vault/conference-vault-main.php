@@ -73,6 +73,7 @@ if ( ! ( is_null( $get_conference ) || is_null( $get_pillar ) || is_null( $get_c
 		}
 	}
 
+	var_dump( $merged_terms );
 	debug( $merged_terms );
 } else {
 	$terms_from_pillar        = get_post_meta( $page_id, 'select_pillar', true ); // Get the terms from which the videos should be shown.
