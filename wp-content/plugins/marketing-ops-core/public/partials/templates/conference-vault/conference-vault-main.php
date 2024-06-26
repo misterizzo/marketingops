@@ -66,6 +66,7 @@ $merged_terms             = array_merge( $terms_from_conference, $terms_from_pil
 										<h3 class="open"><?php esc_html_e( 'Pillar', 'marketing-ops-core' ); ?></h3>
 										<ul class="moc_training_filters">
 											<?php foreach ( $pillars as $pillar ) {
+												var_dump( $pillar->term_id, $pillars );
 												$pillar_checked = ( in_array( $pillar->term_id, $pillars, true ) ) ? 'checked' : '';
 												var_dump( $pillar_checked );
 												?>
