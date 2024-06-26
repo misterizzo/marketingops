@@ -6319,10 +6319,15 @@ class Marketing_Ops_Core_Public {
 	 * @since 1.0.0
 	 */
 	public function mops_filter_conference_vault_main_callback() {
-		$filter_checkboxes = filter_input_array( INPUT_POST, 'filter_checkboxes' );
+		$posted_array      = filter_input_array( INPUT_POST );
+		$filter_checkboxes = ( ! empty( $posted_array['filter_checkboxes'] ) ) ? $posted_array['filter_checkboxes'] : array();
+		$term_ids          = array();
 
-		debug( $filter_checkboxes );
-		die;
+		// Gather the terms from the requested filters.
+		foreach ( $filter_checkboxes as $filter ) {
+			debug( $filter );
+			die;
+		}
 
 		// Fetch the posts.
 		$video_query_args = moc_posts_query_args( 'conference_vault', 1, 16 );

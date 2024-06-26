@@ -264,6 +264,12 @@
 						// Put the URL in the address bar.
 						window.history.pushState({ path: filter_url },'', filter_url );
 					}
+				},
+				complete: function() {
+					// Hide the loader.
+					if ( $( '.loader_bg' ).length ) {
+						$( '.loader_bg' ).css( 'display', 'none' );
+					}
 				}
 			} );
 		} );
