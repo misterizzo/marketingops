@@ -16,15 +16,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-$session_title = get_the_title();
-$session_id    = get_the_ID();
-$session_by    = get_field( 'session_author', $session_id );
-$session_link  = get_field( 'vimeo_video_url', $session_id );
-$conference    = wp_get_object_terms( $session_id, 'conference' );
-$conference    = ( ! empty( $conference[0]->name ) ) ? $conference[0]->name : '';
-$back_link     = ( ! empty( $conference[0]->term_id ) ) ? get_term_link( $conference[0]->term_id ) : '';
-
-var_dump( $conference[0]->term_id, $back_link );
+$session_title   = get_the_title();
+$session_id      = get_the_ID();
+$session_by      = get_field( 'session_author', $session_id );
+$session_link    = get_field( 'vimeo_video_url', $session_id );
+$conference_term = wp_get_object_terms( $session_id, 'conference' );
+$conference      = ( ! empty( $conference_term[0]->name ) ) ? $conference_term[0]->name : '';
+$back_link       = ( ! empty( $conference_term[0]->term_id ) ) ? get_term_link( $conference_term[0]->term_id ) : '';
 
 get_header();
 ?>
