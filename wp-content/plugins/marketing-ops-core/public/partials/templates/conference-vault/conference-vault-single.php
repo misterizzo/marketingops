@@ -41,6 +41,16 @@ if ( ! empty( $conference_term[0]->taxonomy ) ) {
 	$same_conference_video_ids    = ( ! empty( $same_conference_videos_query->posts ) ) ? $same_conference_videos_query->posts : '';
 }
 
+// Check if the other conferences have videos.
+$other_conferences_args            = array(
+	'taxonomy'   => 'conference',
+	'hide_empty' => true,
+	'exclude'    => [1, 3, 5],
+);
+$other_conferences_args['exclude'] = ( ! empty( $conference_term[0]->term_id ) ) ? array( $conference_term[0]->term_id ) : array();
+$other_conferences                 = get_terms( $other_conferences_args );
+
+
 get_header();
 ?>
 <section class="marketingopstemplatesconfernace conferencevaultevent presentation elementor-section elementor-section-boxed">
@@ -92,10 +102,10 @@ get_header();
 			</div>
 
 			<?php if ( ! empty( $same_conference_video_ids ) && is_array( $same_conference_video_ids ) ) { ?>
-				<div class="conferencevaultinner_inner">
+				<div class="conferencevaultinner_inner sessions-from-same-conference">
 					<div class="conferencevaultinner_innerright">
 						<div class="conferencevaultinner_innerright_inner">
-							<h3><?php esc_html_e( 'Sessions from this event', 'marketing-ops-core' ); ?></h3>
+							<h3><?php echo esc_html( sprintf( __( 'More from %1$s', 'marketing-ops-core' ), $conference ) ); ?></h3>
 							<ul>
 								<?php
 								foreach ( $same_conference_video_ids as $video_id ) {
@@ -106,39 +116,22 @@ get_header();
 					</div>
 				</div>
 			<?php } ?>
-			<div class="conferencevaultinner_inner">
-				<div class="conferencevaultinner_innerright">
-					<div class="conferencevaultinner_innerright_inner">
-						<h3><?php esc_html_e( 'Sessions like this', 'marketing-ops-core' ); ?></h3>
-						<ul>
-							<li>
-								<div class="conferencevaultinnergridboximage">
-									<div class="innerimagebox">
-										<img src="https://marketingops.com/wp-content/uploads/2024/05/Rectangle-868.jpg">
-									</div>
-									<div class="innerimageboxdescriptions">
-										<h4>Unveiling the New Pillars</h4>
-										<small>by Darrell Alfonso</small>
-										<p>Sem integer vitae justo eget magna fermentum. Arcu dui vivamus arcu felis bibendum. Nibh nisl condimentum id venenatis a condimentum. In arcu cursus euismod quis viverra.</p>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="conferencevaultinnergridboximage">
-									<div class="innerimagebox">
-										<img src="https://marketingops.com/wp-content/uploads/2024/05/Rectangle-868-2.jpg">
-									</div>
-									<div class="innerimageboxdescriptions">
-										<h4>How MarketingOps Leads Building An Annual Marketing Plan on Behalf of the CMO</h4>
-										<small>by Rani Salehi</small>
-										<p>Sem integer vitae justo eget magna fermentum. Arcu dui vivamus arcu felis b</p>
-									</div>
-								</div>
-							</li>
-						</ul>
+
+			<?php if ( ! empty( $same_conference_video_ids ) && is_array( $same_conference_video_ids ) ) { ?>
+				<div class="conferencevaultinner_inner sessions-from-other-conference">
+					<div class="conferencevaultinner_innerright">
+						<div class="conferencevaultinner_innerright_inner">
+							<h3><?php esc_html_e( 'Sessions like this', 'marketing-ops-core' ); ?></h3>
+							<ul>
+								<?php
+								foreach ( $same_conference_video_ids as $video_id ) {
+									echo moc_conference_vault_video_box_html( $video_id ); // Print the conference video post.
+								} ?>
+							</ul>
+						</div>
 					</div>
 				</div>
-			</div>
+			<?php } ?>
 		</div>
 	</div>
 </section>
