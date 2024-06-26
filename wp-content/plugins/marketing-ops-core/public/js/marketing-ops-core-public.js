@@ -220,11 +220,18 @@
 			} );
 
 			// Generate the URL.
-			// console.log( 'url', wicurrent_page_url );
+			// console.log( 'url', current_page_url );
 			$.each( filter_checkboxes, function( index, term_arr ) {
 				var tax_name  = term_arr['taxonomy'];
 				var tax_terms = term_arr['terms'];
-				console.log( 'index', index, 'tax_name', tax_name, 'tax_terms', tax_terms );
+
+				if ( 0 === index ) {
+					current_page_url += '?' + tax_name + '=' + tax_terms.join( '|' );
+				} else {
+					current_page_url += '&' + tax_name + '=' + tax_terms.join( '|' );
+				}
+
+				console.log( 'current_page_url', current_page_url );
 			} );
 			// window.history.pushState({ path: response.data.updated_url },'', response.data.updated_url);
 		} );
