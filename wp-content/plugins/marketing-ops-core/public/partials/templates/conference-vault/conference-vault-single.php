@@ -95,7 +95,7 @@ get_header();
 				<div class="conferencevaultinner_inner">
 					<div class="conferencevaultinner_innerright">
 						<div class="conferencevaultinner_innerright_inner">
-							<h3>Sessions from this event</h3>
+							<h3><?php esc_html_e( 'Sessions from this event', 'marketing-ops-core' ); ?></h3>
 							<ul>
 								<?php
 								foreach ( $same_conference_video_ids as $video_id ) {
@@ -109,7 +109,7 @@ get_header();
 			<div class="conferencevaultinner_inner">
 				<div class="conferencevaultinner_innerright">
 					<div class="conferencevaultinner_innerright_inner">
-						<h3>Sessions like this</h3>
+						<h3><?php esc_html_e( 'Sessions like this', 'marketing-ops-core' ); ?></h3>
 						<ul>
 							<li>
 								<div class="conferencevaultinnergridboximage">
