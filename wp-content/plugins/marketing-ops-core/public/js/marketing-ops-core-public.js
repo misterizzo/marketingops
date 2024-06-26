@@ -195,7 +195,7 @@
 				popup.style.display = 'none';
 			}
 
-			$( '.popupwithvideoandtext iframe' ).attr( 'src', '' ).hide();
+			$( '.popupwithvideoandtext iframe' ).attr( 'src', '' );
 		} );
 	}
 
