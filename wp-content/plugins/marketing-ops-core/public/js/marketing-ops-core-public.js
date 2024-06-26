@@ -246,6 +246,7 @@
 			var filter_ul     = this_section.find( 'ul.moc_training_filters' );
 			var temp_arr_slug = [];
 			var temp_arr_id   = [];
+			var conf_filters  = [];
 
 			$( filter_ul.find( 'li' ) ).each( function() {
 				var this_li         = $( this );
@@ -260,7 +261,7 @@
 
 			// Gather all the slugs in an array, if any of the term is checked.
 			if ( 0 < temp_arr_slug.length ) {
-				filter_checkboxes.push(
+				conf_filters.push(
 					{
 						'taxonomy': filter_ul.data( 'taxonomy' ),
 						'terms': temp_arr_slug,
@@ -270,7 +271,7 @@
 			}
 		} );
 
-		return filter_checkboxes;
+		return conf_filters;
 	}
 
 	/**
