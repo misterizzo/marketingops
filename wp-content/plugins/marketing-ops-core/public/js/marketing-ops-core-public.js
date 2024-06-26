@@ -240,13 +240,14 @@
 	 * @returns array
 	 */
 	function moc_get_conference_main_filters() {
+		var conf_filters = [];
+
 		// Loop thorugh the conference filters.
 		$( '.common_filter_row.conference_tax_filters' ).each( function() {
 			var this_section  = $( this );
 			var filter_ul     = this_section.find( 'ul.moc_training_filters' );
 			var temp_arr_slug = [];
 			var temp_arr_id   = [];
-			var conf_filters  = [];
 
 			$( filter_ul.find( 'li' ) ).each( function() {
 				var this_li         = $( this );
