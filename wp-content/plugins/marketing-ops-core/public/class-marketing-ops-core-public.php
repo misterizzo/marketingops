@@ -1412,7 +1412,7 @@ class Marketing_Ops_Core_Public {
 		}
 
 		// Add the video to only the taxonomy pages.
-		if ( is_tax( 'pillar' ) || is_tax( 'conference' ) || is_tax( 'conference_skill_level' ) || is_page( 'conference-vault' ) ) {
+		if ( is_tax( 'pillar' ) || is_tax( 'conference' ) || is_tax( 'conference_skill_level' ) || is_page( 'conference-vault' ) || is_singular( 'conference_vault' ) ) {
 			require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-conference-vault-video.php';
 		}
 
