@@ -49,22 +49,20 @@ $other_conferences_args            = array(
 $other_conferences_args['exclude'] = ( ! empty( $conference_term[0]->term_id ) ) ? array( $conference_term[0]->term_id ) : array();
 $other_conferences                 = array_values( get_terms( $other_conferences_args ) );
 
-debug( $other_conferences );
-
 // Get sessions from other conference.
 if ( ! empty( $other_conferences[0]->taxonomy ) ) {
-	$same_conference_videos_query = moc_get_conference_videos(
+	$other_conference_videos_query = moc_get_conference_videos(
 		'conference_vault',
 		1,
 		3,
 		array(
-			'taxonomy' => $conference_term[0]->taxonomy,
+			'taxonomy' => $other_conferences[0]->taxonomy,
 			'field'    => 'term_id',
-			'terms'    => array( $conference_term[0]->term_id ),
+			'terms'    => array( $other_conferences[0]->term_id ),
 		),
 		''
 	);
-	$same_conference_video_ids    = ( ! empty( $same_conference_videos_query->posts ) ) ? $same_conference_videos_query->posts : '';
+	$other_conference_video_ids    = ( ! empty( $other_conference_videos_query->posts ) ) ? $other_conference_videos_query->posts : '';
 }
 
 get_header();
@@ -133,14 +131,14 @@ get_header();
 				</div>
 			<?php } ?>
 
-			<?php if ( ! empty( $same_conference_video_ids ) && is_array( $same_conference_video_ids ) ) { ?>
+			<?php if ( ! empty( $other_conference_video_ids ) && is_array( $other_conference_video_ids ) ) { ?>
 				<div class="conferencevaultinner_inner sessions-from-other-conference">
 					<div class="conferencevaultinner_innerright">
 						<div class="conferencevaultinner_innerright_inner">
-							<h3><?php esc_html_e( 'Sessions like this', 'marketing-ops-core' ); ?></h3>
+							<h3><?php echo esc_html( sprintf( __( 'Sessions from %1$s', 'marketing-ops-core' ), $other_conferences[0]->name ) ); ?></h3>
 							<ul>
 								<?php
-								foreach ( $same_conference_video_ids as $video_id ) {
+								foreach ( $other_conference_video_ids as $video_id ) {
 									echo moc_conference_vault_video_box_html( $video_id ); // Print the conference video post.
 								} ?>
 							</ul>
