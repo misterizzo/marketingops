@@ -171,6 +171,11 @@
 	// Open the conference popup.
 	if ( $( '.conferencevaultinnergridboximage .openPopupBtn' ).length ) {
 		$( document ).on( 'click', '.conferencevaultinnergridboximage .openPopupBtn', function() {
+			var this_button = $( this );
+			var video_link  = this_button.parents( 'li' ).data( 'video' );
+
+			console.log( 'video_link', video_link );
+
 			$( '.popupwithvideoandtext' ).css( 'display', 'flex' );
 		} );
 
