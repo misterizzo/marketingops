@@ -42,6 +42,7 @@ $skill_levels             = get_terms( // Get the skill levels.
 $get_conference             = filter_input( INPUT_GET, 'conference', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 $get_pillar                 = filter_input( INPUT_GET, 'pillar', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 $get_conference_skill_level = filter_input( INPUT_GET, 'conference_skill_level', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+$get_search                 = filter_input( INPUT_GET, 'search', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 if ( ! ( is_null( $get_conference ) || is_null( $get_pillar ) || is_null( $get_conference_skill_level ) ) ) {
 	$get_conference             = ( ! is_null( $get_conference ) ) ? explode( '|', $get_conference ) : array();
@@ -172,9 +173,9 @@ if ( ! ( is_null( $get_conference ) || is_null( $get_pillar ) || is_null( $get_c
 						<div class="elementor-widget-wrap elementor-element-populated">
 							<div class="directory_search_form mainsidbarsearch">
 								<div class="platform_section">
-									<h3 class="open">Search</h3>
+									<h3 class="open"><?php esc_html_e( 'Search', 'marketing-ops-core' ); ?></h3>
 									<div class="moc_input_field">
-										<input type="text" id="search_keywords" name="search_keywords" placeholder="" value="">
+										<input type="text" id="search_keywords" name="conference_main_search_keyword" placeholder="E.g.: Revenue" value="<?php echo esc_html( ( ! is_null( $get_search ) ? $get_search : '' ) ); ?>">
 									</div>
 								</div>
 							</div>

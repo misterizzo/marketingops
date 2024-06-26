@@ -266,6 +266,16 @@
 		} );
 	}
 
+	/**
+	 * Search the conference main vault keyword.
+	 */
+	if ( $( 'input[name="conference_main_search_keyword"]' ).length ) {
+		$( document ).on( 'keyup', 'input[name="conference_main_search_keyword"]', function() {
+			var this_input = $( this );
+			console.log( 'this_input', this_input.val() );
+		} );
+	}
+
 	// Set the timer on the apalooza page.
 	if ( $( '.mops-apalooza-timer' ).length ) {
 		// Set the date we're counting down to.
