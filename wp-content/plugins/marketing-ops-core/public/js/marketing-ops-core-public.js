@@ -218,6 +218,13 @@
 				);
 			} );
 
+			// Generate the URL.
+			console.log( 'url', window.location );
+			$.each( filter_checkboxes, function( tax, term_arr ) {
+				console.log( 'tax', tax, 'term_arr', term_arr );
+			} );
+			// window.history.pushState({ path: response.data.updated_url },'', response.data.updated_url);
+
 			console.log( 'filter_checkboxes', filter_checkboxes );
 		} );
 	}
