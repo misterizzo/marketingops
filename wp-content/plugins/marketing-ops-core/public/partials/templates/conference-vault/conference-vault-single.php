@@ -16,14 +16,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-$session_title   = get_the_title();
-$session_id      = get_the_ID();
-$session_by      = get_field( 'session_author', $session_id );
-$session_link    = get_field( 'vimeo_video_url', $session_id );
-$conference_term = wp_get_object_terms( $session_id, 'conference' );
-$conference      = ( ! empty( $conference_term[0]->name ) ) ? $conference_term[0]->name : '';
-$back_link       = ( ! empty( $conference_term[0]->term_id ) ) ? get_term_link( $conference_term[0]->term_id ) : '';
-$session_content = get_the_content();
+$session_title      = get_the_title();
+$session_id         = get_the_ID();
+$session_by         = get_field( 'session_author', $session_id );
+$session_link       = get_field( 'vimeo_video_url', $session_id );
+$conference_term    = wp_get_object_terms( $session_id, 'conference' );
+$conference         = ( ! empty( $conference_term[0]->name ) ) ? $conference_term[0]->name : '';
+$back_link          = ( ! empty( $conference_term[0]->term_id ) ) ? get_term_link( $conference_term[0]->term_id ) : '';
+$session_content    = get_the_content();
+$session_chatscript = get_field( 'session_chatscript', $session_id );
 
 // Get more sessions from the same conference.
 if ( ! empty( $conference_term[0]->taxonomy ) ) {
@@ -104,16 +105,12 @@ get_header();
 				</div>
 			<?php } ?>
 
-			<div class="conference-session-transcript">
-				<p><strong>Transcript:</strong>Michael Hartmann: [00:00:00] Welcome to another episode of Opscasts brought to you by MarketingOps.com powered by the MoPros. I’m your host, Michael Hartmann. Flying solo today, which is all good. Uh, Mike and Naomi will be back soon, I’m sure. All right. For this episode, it’s the first of a series that we’re working on that is going to help educate our audience about some emerging go to market approaches and help provide guidance on how you as marketing professional is going to be an enabler.        	</p>
-				<p>Or an advocate, even for some of these approaches at your organization to join us in that conversation for this first one is Justin Gray. We’re going to be talking about near bound go to market strategies. Justin is an award winning five time entrepreneur who has made a career of launching and scaling companies and guiding them to successful equity exits of over 250 million in 2018.</p>
-				<p>He started angel investing and to make strategic investments in founders. He believes in, and is currently a limited partner in several funds. He is now also co founder and managing director of in revenue capital, where he couples go to market [00:01:00] expertise with venture funding to empower seed stage founders and their startups through a first of its kind model called operator immersive capital, uh, he is a strong voice of.</p>
-				<p>For pragmatic entrepreneurship, partner like growth and building intentional performance culture and is recognized speaker and thought leader, and he has presented at top industry conferences and published over 500 times in publications. So wow on that. So, Justin, uh, thanks for joining us today.</p>
-				<p>Justin Gray: Yeah, that’s a lot of intro to live up to.</p>
-				<p>I’ll try to, uh, not fall on my face here.</p>
-				<p>Michael Hartmann: It’ll, it’ll be good. We’re, we’re, we’re gentle. So we try to be, um, so I think, I think, um, one of the things we’re going to need to do for a lot of these, if it’s, if our audience is like me, some of these, um, terms that are going to be used in these new approaches. Uh, and we make, if you’re like me, you make assumptions about what they all mean, but I don’t want to do that.</p>
-				<p>So, yeah, so this idea of near [00:02:00] bound go to market strategy, maybe it would be helpful for you to just give a thumbnail sketch of what does that actually mean?</p>
-			</div>
+			<!-- CHAT SCRIPT -->
+			<?php if ( ! empty( $session_chatscript ) ) { ?>
+				<div class="conference-session-transcript">
+					<?php echo wp_kses_post( $session_chatscript ); ?>
+				</div>
+			<?php } ?>
 
 			<?php if ( ! empty( $same_conference_video_ids ) && is_array( $same_conference_video_ids ) ) { ?>
 				<div class="conferencevaultinner_inner sessions-from-same-conference">
