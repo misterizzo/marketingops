@@ -378,6 +378,8 @@ class Marketing_Ops_Core {
 		$this->loader->add_action( 'wp_ajax_filter_conference_vault_main', $plugin_public, 'mops_filter_conference_vault_main_callback' );
 		$this->loader->add_action( 'wp_ajax_nopriv_filter_conference_vault_main', $plugin_public, 'mops_filter_conference_vault_main_callback' );
 		$this->loader->add_filter( 'moc_get_conference_videos_args', $plugin_public, 'mops_moc_get_conference_videos_args_callback' );
+		$this->loader->add_action( 'wp_ajax_open_conference_video', $plugin_public, 'mops_open_conference_video_callback' );
+		$this->loader->add_action( 'wp_ajax_nopriv_open_conference_video', $plugin_public, 'mops_open_conference_video_callback' );
 	}
 
 	/**

@@ -176,12 +176,36 @@
 
 			// If the video link is available.
 			if ( '' !== video_link ) {
-				var iframe_src = video_link + '?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;color=ffffff';
-				var iframe     = '<iframe src="' + iframe_src + '" width="640" height="360" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>';
-				console.log( 'iframe', iframe );
-				$( '.popupwithvideoandtext .leftvideopopup' ).addClass( 'vermadarsh' );
-				$( '.popupwithvideoandtext .leftvideopopup' ).append( iframe );
-				$( '.popupwithvideoandtext' ).css( 'display', 'flex' ); // Open the popup.
+				// Put the AJAX to fetch the video in the iframe.
+				$.ajax( {
+					dataType: 'json',
+					url: ajaxurl,
+					type: 'POST',
+					data: {
+						'action': 'open_conference_video',
+						'video_link': video_link,
+					},
+					beforeSend: function() {
+						// Show the loader.
+						if ( $( '.loader_bg' ).length ) {
+							$( '.loader_bg' ).css( 'display', 'flex' );
+						}
+					},
+					success: function( response ) {
+						if ( 'videos-iframe-generated' === response.data.code ) {
+							// Load the HTML.
+							$( '.popupwithvideoandtext .leftvideopopup' ).append( response.data.html );
+							$( '.popupwithvideoandtext .leftvideopopup' ).addClass( 'vermadarshnew' );
+							$( '.popupwithvideoandtext' ).css( 'display', 'flex' ); // Open the popup.
+						}
+					},
+					complete: function() {
+						// Hide the loader.
+						if ( $( '.loader_bg' ).length ) {
+							$( '.loader_bg' ).css( 'display', 'none' );
+						}
+					}
+				} );
 			} else {
 				console.warn( 'video link not found.' );
 			}

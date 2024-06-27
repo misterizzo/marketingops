@@ -6362,4 +6362,30 @@ class Marketing_Ops_Core_Public {
 
 		return $args;
 	}
+
+	/**
+	 * AJAX to send the iframe for the conference video.
+	 *
+	 * @since 1.0.0
+	 */
+	public function mops_open_conference_video_callback() {
+		$video_link = filter_input( INPUT_POST, 'video_link', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$iframe_src = "{$video_link}?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;color=ffffff";
+
+		// Prepare the iframe.
+		ob_start();
+		?>
+		<iframe src="<?php echo esc_url( $iframe_src ); ?>" width="640" height="360" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+		<?php
+		$iframe_html = ob_get_clean();
+
+		// Return the ajax response.
+		wp_send_json_success(
+			array(
+				'code' => 'videos-iframe-generated',
+				'html' => $iframe_html,
+			)
+		);
+		wp_die();
+	}
 }
