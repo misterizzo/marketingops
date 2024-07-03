@@ -349,7 +349,7 @@
 			var keycode    = ( event.keyCode ) ? event.keyCode : event.which;
 
 			if ( 13 === keycode ) {
-				filter_checkboxes = moc_get_conference_main_filters();
+				var filter_checkboxes = moc_get_conference_main_filters();
 
 				// Put the AJAX to filter the conference video listings.
 				$.ajax( {
