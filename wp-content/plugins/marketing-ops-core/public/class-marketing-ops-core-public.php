@@ -6337,7 +6337,11 @@ class Marketing_Ops_Core_Public {
 		}
 
 		// Get the HTML for the conference vault main page.
-		$html = moc_conference_vault_main_html( $term_ids, $search_keyword );
+		if ( ! empty( $term_ids ) && is_array( $term_ids ) ) {
+			$html = moc_conference_vault_main_html( $term_ids, $search_keyword );
+		} else {
+			$html = moc_no_conference_found_html();
+		}
 
 		// Return the ajax response.
 		wp_send_json_success(
