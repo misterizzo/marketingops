@@ -131,6 +131,7 @@ form#commentform .comment-form-rating .stars:nth-child(2) {display: none;}
 .ops-date-g-box p span.gradient{background: #FA4A7A;background: -webkit-linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%);background: -moz-linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%);background: -o-linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%);background: linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;background-clip: text;text-fill-color: transparent;}
 .ops-register {display: flex;align-items: center;border:1px solid #E7EFEF;background: -webkit-linear-gradient(90deg, hsla(200, 12%, 95%, 1) 50%, hsla(180, 20%, 92%, 1) 74%);border-radius: 12px;max-width: 461px;margin:0 auto;padding: 10px 15px;}
 .ops-register.no-conference-selected {max-width: unset;}
+.ops-register.no-conference-selected .title p {margin: 0;}
 .ops-register p {margin-bottom: 0;font-size: 14px;line-height: 19.4px;color: #45474F;font-weight: 600;}
 .ops-register a {background: linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%);padding: 15px;font-size: 16px;line-height: 13.12px;font-weight: 400;color: #fff;border-radius: 302px;    min-width: 172px;display: inline-block;text-align: center;}
 .mops_strategists_page a.is-paid-member.member-only-sessions-registration-btn{background: linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%);padding: 15px;font-size: 14px;line-height: 13.12px;font-weight: 400;color: #fff;border-radius: 302px;    min-width: 172px;display: inline-block;text-align: center;}
