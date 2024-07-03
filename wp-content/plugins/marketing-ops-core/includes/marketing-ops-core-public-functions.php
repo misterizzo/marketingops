@@ -9224,7 +9224,7 @@ if ( ! function_exists( 'moc_no_conference_found_html' ) ) {
 		<div class="ops-register no-conference-selected">
 			<div class="title"><p><?php esc_html_e( 'No conference is selected. Please pick up a conference from the left side to check out the sessions from that conference.', 'marketing-ops-core' ); ?></p></div>
 			<div class="r-btn">
-				<a class="member-only-sessions-registration-btn" title="<?php esc_html_e( 'Reset', 'marketing-ops-core' ); ?>" href="/"><?php esc_html_e( 'Reset', 'marketing-ops-core' ); ?>&nbsp;
+				<a class="member-only-sessions-registration-btn" title="<?php esc_html_e( 'Reset', 'marketing-ops-core' ); ?>" href="/"><?php esc_html_e( 'Reset Filters', 'marketing-ops-core' ); ?>&nbsp;
 					<img decoding="async" src="/wp-content/uploads/2023/08/icons8_right_arrow_1-1.png" alt="icons8 right arrow 1 1" title="arrow-img" />
 				</a>
 			</div>
