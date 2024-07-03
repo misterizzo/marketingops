@@ -9195,7 +9195,9 @@ if ( ! function_exists( 'moc_conference_vault_main_html' ) ) {
 						</ul>
 					</div>
 				</div>
-			<?php } ?>
+			<?php } else {
+				moc_no_conference_found_html();
+			} ?>
 		<?php } ?>
 		<!-- <div class="confernceloadmore">
 			<div class="confernceloadmoreinner">
