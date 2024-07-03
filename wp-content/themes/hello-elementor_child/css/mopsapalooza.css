@@ -1124,9 +1124,8 @@ body.active-popup {overflow: hidden !important;}
 }
 
 @media only screen and (max-width: 767px) {
-	.mops_apalooza_community_leds .mpa_cl_column .mpa_cl_icon_list ul {
-		flex-direction: column;
-	}
+	section.newmopstwentyfour.mops_apalooza_key_speaker .key_speaker_column .key_speaker_inner .key_speaker_inner_column {max-width: 375px;}
+	.mops_apalooza_community_leds .mpa_cl_column .mpa_cl_icon_list ul {flex-direction: column;}
 	.mops_apalooza_community_leds .mpa_cl_column .mpa_cl_icon_list ul li .elementor-icon-list-text {
 		max-width: 255px;
 		width: 100%;
