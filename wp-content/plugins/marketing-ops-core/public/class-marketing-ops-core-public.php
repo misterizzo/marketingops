@@ -6331,6 +6331,11 @@ class Marketing_Ops_Core_Public {
 			}
 		}
 
+		if ( '183.82.162.107' === $_SERVER['REMOTE_ADDR'] ) {
+			debug( $term_ids );
+			die("pool");
+		}
+
 		// Get the HTML for the conference vault main page.
 		$html = moc_conference_vault_main_html( $term_ids, $search_keyword );
 
