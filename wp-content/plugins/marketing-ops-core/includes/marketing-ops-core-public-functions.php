@@ -9223,7 +9223,7 @@ if ( ! function_exists( 'moc_no_conference_found_html' ) ) {
 	 * @since 1.0.0
 	 */
 	function moc_no_conference_found_html( $message = '' ) {
-		$message ( empty( $message ) ) ? $message = __( 'No videos found matching your search criteria. Please try again.', 'marketing-ops-core' ) : $message;
+		$message = ( empty( $message ) ) ? __( 'No videos found matching your search criteria. Please try again.', 'marketing-ops-core' ) : $message;
 
 		// Start preparing the HTML.
 		ob_start();
