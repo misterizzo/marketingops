@@ -9217,14 +9217,19 @@ if ( ! function_exists( 'moc_no_conference_found_html' ) ) {
 	/**
 	 * Get the HTML when no conference is selected.
 	 *
+	 * @param string $message Message.
+	 *
 	 * @return string
 	 * @since 1.0.0
 	 */
-	function moc_no_conference_found_html() {
+	function moc_no_conference_found_html( $message = '' ) {
+		$message ( empty( $message ) ) ? $message = __( 'No videos found matching your search criteria. Please try again.', 'marketing-ops-core' ) : $message;
+
+		// Start preparing the HTML.
 		ob_start();
 		?>
 		<div class="ops-register no-conference-selected">
-			<div class="title"><p><?php esc_html_e( 'No conference is selected. Please pick up a conference from the left side to check out the sessions from that conference.', 'marketing-ops-core' ); ?></p></div>
+			<div class="title"><p><?php echo esc_html( $message ); ?></p></div>
 			<div class="r-btn">
 				<a class="member-only-sessions-registration-btn" title="<?php esc_html_e( 'Reset', 'marketing-ops-core' ); ?>" href="/"><?php esc_html_e( 'Reset Filters', 'marketing-ops-core' ); ?>&nbsp;
 					<img decoding="async" src="/wp-content/uploads/2023/08/icons8_right_arrow_1-1.png" alt="icons8 right arrow 1 1" title="arrow-img" />

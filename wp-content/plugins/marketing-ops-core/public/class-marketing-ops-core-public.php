@@ -6340,7 +6340,8 @@ class Marketing_Ops_Core_Public {
 		if ( ! empty( $term_ids ) && is_array( $term_ids ) ) {
 			$html = moc_conference_vault_main_html( $term_ids, $search_keyword );
 		} else {
-			$html = moc_no_conference_found_html();
+			$message = __( 'No conference is selected. Please pick up a conference from the left side to check out the sessions from that conference.', 'marketing-ops-core' );
+			$html    = moc_no_conference_found_html( $message );
 		}
 
 		// Return the ajax response.
