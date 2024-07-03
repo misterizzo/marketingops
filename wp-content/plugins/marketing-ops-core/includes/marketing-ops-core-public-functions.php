@@ -9221,7 +9221,7 @@ if ( ! function_exists( 'moc_no_conference_found_html' ) ) {
 	function moc_no_conference_found_html() {
 		ob_start();
 		?>
-		<div class="ops-register">
+		<div class="ops-register no-conference-selected">
 			<div class="title"><p><?php esc_html_e( 'No conference is selected. Please pick up a conference from the left side to check out the sessions from that conference.', 'marketing-ops-core' ); ?></p></div>
 			<div class="r-btn">
 				<a class="member-only-sessions-registration-btn" title="<?php esc_html_e( 'Reset', 'marketing-ops-core' ); ?>" href="/"><?php esc_html_e( 'Reset', 'marketing-ops-core' ); ?>&nbsp;
