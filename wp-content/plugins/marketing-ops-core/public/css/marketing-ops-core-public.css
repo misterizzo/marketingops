@@ -114,8 +114,6 @@ form#commentform .comment-form-rating .stars:nth-child(2) {display: none;}
 .apalooza_in_person_speakers_container .key_speaker_row .key_speaker_box:nth-child(10){min-height: 253px !important;}
 .popup .popup_container .popup_content{padding: 30px 37px !important;}
 .popup .popup_container .popup_content{max-width: 641px !important;}
-
-
 .popup .popup_container .popup_content .popup_content_box .box_content .speaker_content{padding-right: 30px;}
 .popup .popup_container .popup_content .popup_content_box{scroll-behavior: smooth !important;}
 
