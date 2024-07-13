@@ -1425,6 +1425,11 @@ class Marketing_Ops_Core_Public {
 			require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content.php';
 		}
 
+		// Add the restricted content modal for pro-plus members.
+		if ( is_page( 'conference-vault' ) ) {
+			require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content-pro-plus-members.php';
+		}
+
 		// Add custom script for woocommerce lightbox on the templates page.
 		if ( is_post_type_archive( 'template' ) ) {
 			wc_enqueue_js( "

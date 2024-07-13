@@ -168,19 +168,18 @@
 		}
 	}
 
-	console.log( 'container_user_subscription_class', $( 'section.marketingopstemplatesconfernace' ).data( 'usersubscriptionclass' ) );
-
 	// Open the conference popup.
 	if ( $( '.conferencevaultinnergridboximage .openPopupBtn' ).length ) {
 		$( document ).on( 'click', '.conferencevaultinnergridboximage .openPopupBtn', function() {
-			var this_button = $( this );
+			var this_button                       = $( this );
+			var video_link                        = this_button.parents( 'li' ).data( 'video' );
+			var container_user_subscription_class = $( 'section.marketingopstemplatesconfernace' ).data( 'usersubscriptionclass' ); // Check if the current video is available based on user membership.
 
-			// Check if the current video is available based on user membership.
-			var container_user_subscription_class = $( 'section.marketingopstemplatesconfernace' ).data( 'usersubscriptionclass' );
-
-			console.log( 'container_user_subscription_class', container_user_subscription_class );
-
-			var video_link  = this_button.parents( 'li' ).data( 'video' );
+			// Open the restriction modal.
+			if ( 1 === is_valid_string( container_user_subscription_class ) && 'is-pro-plus-member' !== container_user_subscription_class ) {
+				$( '.moc_paid_content_restriction_modal' ).addClass( 'active blog_popup' );
+				return false;
+			}
 
 			// If the video link is available.
 			if ( '' !== video_link ) {
