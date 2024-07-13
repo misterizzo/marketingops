@@ -16,6 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+// Get the header first.
+get_header();
+
 $session_title      = get_the_title();
 $session_id         = get_the_ID();
 $session_by         = get_field( 'session_author', $session_id );
@@ -66,9 +69,22 @@ if ( ! empty( $other_conferences[0]->taxonomy ) ) {
 	$other_conference_video_ids    = ( ! empty( $other_conference_videos_query->posts ) ) ? $other_conference_videos_query->posts : '';
 }
 
-get_header();
+// Restrict the modal based on user active membership.
+$user_memberships = moc_get_membership_plan_slug();
+
+if ( false === $user_memberships ) {
+	$conference_vault_container_class = 'is-unregistered-member';
+} elseif ( ! empty( $user_memberships ) && is_array( $user_memberships ) ) {
+	if ( 1 === count( $user_memberships ) && in_array( 'free-membership', $user_memberships, true ) ) {
+		$conference_vault_container_class = 'is-free-member';
+	} elseif ( in_array( 'pro-plus-membership', $user_memberships, true ) ) {
+		$conference_vault_container_class = 'is-pro-plus-member';
+	} else {
+		$conference_vault_container_class = 'is-other-membership-member';
+	}
+}
 ?>
-<section class="marketingopstemplatesconfernace conferencevaultevent presentation elementor-section elementor-section-boxed">
+<section class="marketingopstemplatesconfernace conferencevaultevent conferencevaulteventdetails presentation elementor-section elementor-section-boxed" data-usersubscriptionclass="<?php echo esc_attr( $conference_vault_container_class ); ?>">
 	<div class="margktingimgss"></div>
 	<div class="elementor-container elementor-column-gap-default">
 		<div class="conferencevaultinner">

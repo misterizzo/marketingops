@@ -185,6 +185,13 @@
 		} );
 	}
 
+	// Restrict the conference details page.
+	if ( $( '.marketingopstemplatesconfernace.conferencevaulteventdetails' ).length ) {
+		var container_user_subscription_class = $( 'section.marketingopstemplatesconfernace.conferencevaulteventdetails' ).data( 'usersubscriptionclass' ); // Check if the current video is available based on user membership.
+
+		console.log( 'container_user_subscription_class', container_user_subscription_class );
+	}
+
 	// Open the conference popup.
 	if ( $( '.conferencevaultinnergridboximage .openPopupBtn' ).length ) {
 		$( document ).on( 'click', '.conferencevaultinnergridboximage .openPopupBtn', function() {
