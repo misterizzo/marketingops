@@ -168,13 +168,15 @@
 		}
 	}
 
+	console.log( 'container_user_subscription_class', $( 'section.marketingopstemplatesconfernace' ).data( 'usersubscriptionclass' ) );
+
 	// Open the conference popup.
 	if ( $( '.conferencevaultinnergridboximage .openPopupBtn' ).length ) {
 		$( document ).on( 'click', '.conferencevaultinnergridboximage .openPopupBtn', function() {
 			var this_button = $( this );
 
 			// Check if the current video is available based on user membership.
-			var container_user_subscription_class = this_button.parents( '.marketingopstemplatesconfernace' ).data( 'usersubscriptionclass' );
+			var container_user_subscription_class = $( 'section.marketingopstemplatesconfernace' ).data( 'usersubscriptionclass' );
 
 			console.log( 'container_user_subscription_class', container_user_subscription_class );
 
