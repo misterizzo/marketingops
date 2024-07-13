@@ -91,17 +91,25 @@ if ( ( ! is_null( $get_conference ) ) || ( ! is_null( $get_pillar ) ) || ( ! is_
 }
 
 // Restrict the modal based on user active membership.
-$user_memberships = moc_get_membership_plan_slug();
+$user_memberships        = moc_get_membership_plan_slug();
 
 if ( false === $user_memberships ) {
 	$conference_vault_container_class = 'is-unregistered-member';
 } elseif ( ! empty( $user_memberships ) && is_array( $user_memberships ) ) {
-	if ( 1 === count( $user_memberships ) && in_array( 'free-membership', $user_memberships, true ) ) {
-		$conference_vault_container_class = 'is-free-member';
-	} elseif ( in_array( 'pro-plus-membership', $user_memberships, true ) ) {
-		$conference_vault_container_class = 'is-pro-plus-member';
+	$user_id                 = get_current_user_id();
+	$access_conference_vault = get_user_meta( $user_id, 'moc_access_conference_vault', true );
+
+	// If the user is allowed by the admin.
+	if ( ! empty( $access_conference_vault ) && 'yes' === $access_conference_vault ) {
+		$conference_vault_container_class = '';
 	} else {
-		$conference_vault_container_class = 'is-other-membership-member';
+		if ( 1 === count( $user_memberships ) && in_array( 'free-membership', $user_memberships, true ) ) {
+			$conference_vault_container_class = 'is-free-member';
+		} elseif ( in_array( 'pro-plus-membership', $user_memberships, true ) ) {
+			$conference_vault_container_class = 'is-pro-plus-member';
+		} else {
+			$conference_vault_container_class = 'is-other-membership-member';
+		}
 	}
 }
 ?>
