@@ -156,6 +156,7 @@ class Marketing_Ops_Core {
 		$this->loader->add_filter( 'manage_users_custom_column', $plugin_admin, 'moc_manage_users_custom_column_callback', 99, 3 );
 		$this->loader->add_filter( 'manage_users_sortable_columns', $plugin_admin, 'moc_manage_users_sortable_columns_callback', 99 );
 		$this->loader->add_action( 'wp_ajax_toggle_user_visiblity', $plugin_admin, 'moc_toggle_user_visiblity_callback' );
+		$this->loader->add_action( 'wp_ajax_toggle_user_conference_vault_access', $plugin_admin, 'moc_toggle_user_conference_vault_access_callback' );
 		$this->loader->add_filter( 'wc_membership_plan_data_tabs', $plugin_admin, 'moc_wc_membership_plan_data_tabs_callback', 99 );
 		$this->loader->add_action( 'wc_membership_plan_data_panels', $plugin_admin, 'moc_wc_membership_plan_data_panels_callback' );
 		$this->loader->add_filter( 'learndash_achievements_triggers', $plugin_admin, 'moc_add_more_triggers_in_ld_achivements', 99 );

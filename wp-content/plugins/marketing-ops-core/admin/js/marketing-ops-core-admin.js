@@ -20,19 +20,17 @@
 		var closest_skill_level_btn = this_element.closest( 'td' ).find( '.moc_skill_span' );
     	var range_value             = parseInt( this_element.val() );
 		var text_to_change          = '';
+
 		if ( 1 === range_value ) {
 			text_to_change  = 'BASIC';
-			
 		} else if ( 2 === range_value ) {
 			text_to_change = 'INTERMEDIATE';
-			
 		} else if ( 3 === range_value ) {
 			text_to_change = 'ADVANCED';
-			
 		} else {
 			text_to_change = 'EXPERT';
-			
 		}
+
 		closest_skill_level_btn.text( text_to_change );
 	} );
 
@@ -158,7 +156,7 @@
 		
 	}
 
-	// Click the featured partyguru checkbox.
+	// Click the checkbox to confirm the frontend visibility.
 	$( document ).on( 'click', '.toggle-show-in-frontend', function() {
 		var this_checkbox = $( this );
 		var row_id        = this_checkbox.parents( 'tr' ).attr( 'id' );
@@ -189,6 +187,38 @@
 			},
 		} );
 	} );
+
+	// Click the checkbox to confirm the conference vault access.
+	$( document ).on( 'click', '.toggle-access-conference-vault', function() {
+		var this_checkbox = $( this );
+		var row_id        = this_checkbox.parents( 'tr' ).attr( 'id' );
+		var user_id       = row_id.replace( 'user-', '' );
+
+		// Shoot the AJAX now.
+		$.ajax( {
+			type: 'POST',
+			url: ajaxurl,
+			dataType: 'JSON',
+			data: {
+				action: 'toggle_user_conference_vault_access',
+				user_id: user_id,
+				access_conference_vault: this_checkbox.is( ':checked' ) ? 'yes' : 'no',
+			},
+			beforeSend: function() {
+				block_element( this_checkbox.parents( 'tr' ) ); // Block element.
+			},
+			complete: function() {
+				unblock_element( this_checkbox.parents( 'tr' ) ); // Unblock element.
+			},
+			success: function ( response ) {
+				// If there is AJAX success.
+				if ( 'toggled-access-conference-vault-user' === response.data.code ) {
+					// cf_show_notification( 'bg-success', 'fa-check-circle', toast_success_heading, response.data.toast_message );
+				}
+			},
+		} );
+	} );
+
 	/**
 		 * Block element.
 		 *

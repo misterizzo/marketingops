@@ -849,8 +849,20 @@ class Marketing_Ops_Core_Admin {
 	 * @return array
 	 */
 	public function moc_manage_users_columns_callback( $defaults ) {
-		$defaults['show-in-frontend'] = __( 'Public Visiblity', 'marketing-ops-core' );
-		$defaults['memeber_since']    = __( 'Member Since', 'marketing-ops-core' );
+		// If the column key, "show-in-frontend" doesn't exist.
+		if ( ! array_key_exists( 'show-in-frontend', $defaults ) ) {
+			$defaults['show-in-frontend'] = __( 'Public Visiblity', 'marketing-ops-core' );
+		}
+
+		// If the column key, "access-conference-vault" doesn't exist.
+		if ( ! array_key_exists( 'access-conference-vault', $defaults ) ) {
+			$defaults['access-conference-vault'] = __( 'Access Conference Vault', 'marketing-ops-core' );
+		}
+
+		// If the column key, "memeber-since" doesn't exist.
+		if ( ! array_key_exists( 'memeber-since', $defaults ) ) {
+			$defaults['memeber-since'] = __( 'Member Since', 'marketing-ops-core' );
+		}
 		
 		return $defaults;
 	}
@@ -864,15 +876,21 @@ class Marketing_Ops_Core_Admin {
 	 * @return array
 	 */
 	public function moc_manage_users_custom_column_callback( $column_content, $column_name, $user_id ) {
-		if ( 'show-in-frontend' == $column_name ) {
+		if ( 'show-in-frontend' === $column_name ) {
 			$show_in_frontend = get_user_meta( $user_id, 'moc_show_in_frontend', true );
 			ob_start();
 			?><input type="checkbox" class="toggle-show-in-frontend" value="1" <?php echo esc_attr( ( ! empty( $show_in_frontend ) && 'yes' === $show_in_frontend ) ? 'checked' : '' ); ?> /><?php
 			
 			$column_content = ob_get_clean();
-		} elseif ( 'memeber_since' === $column_name ) {
+		} elseif ( 'memeber-since' === $column_name ) {
 			$user_info      = get_userdata( $user_id );
-			$column_content = $user_info->user_registered;
+			$column_content = gmdate( 'F j, Y, H:i:s', strtotime( $user_info->user_registered ) );
+		} elseif ( 'access-conference-vault' === $column_name ) {
+			$access_conference_vault = get_user_meta( $user_id, 'moc_access_conference_vault', true );
+			ob_start();
+			?><input type="checkbox" class="toggle-access-conference-vault" value="1" <?php echo esc_attr( ( ! empty( $access_conference_vault ) && 'yes' === $access_conference_vault ) ? 'checked' : '' ); ?> /><?php
+			
+			$column_content = ob_get_clean();
 		}
 
 		return $column_content;
@@ -892,13 +910,12 @@ class Marketing_Ops_Core_Admin {
 	}
 
 	/**
-	 * AJAX for toggling featured partyguru.
+	 * AJAX for toggling frontend visibility.
 	 *
 	 * @since 1.0.0
 	 */
 	public function moc_toggle_user_visiblity_callback() {
-		// Posted data.
-		$user_id     = (int) filter_input( INPUT_POST, 'user_id', FILTER_SANITIZE_NUMBER_INT );
+		$user_id          = (int) filter_input( INPUT_POST, 'user_id', FILTER_SANITIZE_NUMBER_INT );
 		$show_in_frontend = filter_input( INPUT_POST, 'show_in_frontend', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 		update_user_meta( $user_id, 'moc_show_in_frontend', $show_in_frontend ); // Update the usermeta.
@@ -908,6 +925,27 @@ class Marketing_Ops_Core_Admin {
 			array(
 				'code'          => 'toggled-show-in-frontend-user',
 				'toast_message' => ( 'yes' === $show_in_frontend ) ? __( 'User visiblity enabled.', 'marketing-ops-core' ) : __( 'User visiblity disabled.', 'marketing-ops-core' ),
+			)
+		);
+		wp_die();
+	}
+
+	/**
+	 * AJAX for toggling access to conference vault.
+	 *
+	 * @since 1.0.0
+	 */
+	public function moc_toggle_user_conference_vault_access_callback() {
+		$user_id                 = (int) filter_input( INPUT_POST, 'user_id', FILTER_SANITIZE_NUMBER_INT );
+		$access_conference_vault = filter_input( INPUT_POST, 'access_conference_vault', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+
+		update_user_meta( $user_id, 'moc_access_conference_vault', $access_conference_vault ); // Update the usermeta.
+
+		// Send the AJAX response now.
+		wp_send_json_success(
+			array(
+				'code'          => 'toggled-access-conference-vault-user',
+				'toast_message' => ( 'yes' === $access_conference_vault ) ? __( 'Access to conference vault enabled.', 'marketing-ops-core' ) : __( 'Access to conference vault disabled.', 'marketing-ops-core' ),
 			)
 		);
 		wp_die();
