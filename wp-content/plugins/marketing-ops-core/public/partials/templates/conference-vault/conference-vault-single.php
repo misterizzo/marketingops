@@ -80,13 +80,13 @@ if ( false === $user_memberships ) {
 	
 	var_dump( $access_conference_vault );
 	
-	// if ( 1 === count( $user_memberships ) && in_array( 'free-membership', $user_memberships, true ) ) {
-	// 	$conference_vault_container_class = 'is-free-member';
-	// } elseif ( in_array( 'pro-plus-membership', $user_memberships, true ) ) {
-	// 	$conference_vault_container_class = 'is-pro-plus-member';
-	// } else {
-	// 	$conference_vault_container_class = 'is-other-membership-member';
-	// }
+	if ( 1 === count( $user_memberships ) && in_array( 'free-membership', $user_memberships, true ) ) {
+		$conference_vault_container_class = 'is-free-member';
+	} elseif ( in_array( 'pro-plus-membership', $user_memberships, true ) ) {
+		$conference_vault_container_class = 'is-pro-plus-member';
+	} else {
+		$conference_vault_container_class = 'is-other-membership-member';
+	}
 }
 ?>
 <section class="marketingopstemplatesconfernace conferencevaultevent conferencevaulteventdetails presentation elementor-section elementor-section-boxed" data-usersubscriptionclass="<?php echo esc_attr( $conference_vault_container_class ); ?>">
