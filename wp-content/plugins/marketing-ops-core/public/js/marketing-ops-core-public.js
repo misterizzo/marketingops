@@ -174,7 +174,7 @@
 			var this_link                         = $( this );
 			var container_user_subscription_class = $( 'section.marketingopstemplatesconfernace' ).data( 'usersubscriptionclass' ); // Check if the current video is available based on user membership.
 
-			console.log( 'hello', this_link.parents( 'li' ).data( 'url' ) );
+			window.location.href = this_link.parents( 'li' ).data( 'url' );
 
 			// Open the restriction modal.
 			if ( 1 === is_valid_string( container_user_subscription_class ) && 'is-pro-plus-member' !== container_user_subscription_class ) {
@@ -183,7 +183,7 @@
 			}
 
 			// Open the conference details page.
-			console.log( 'hello1', this_link.parents( 'li' ).data( 'url' ) );
+			window.location.href = this_link.parents( 'li' ).data( 'url' );
 		} );
 	}
 
