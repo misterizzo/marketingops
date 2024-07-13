@@ -183,7 +183,7 @@
 			}
 
 			// Open the conference details page.
-			console.log( 'hello', this_link.parents( 'li' ).data( 'url' ) );
+			console.log( 'hello1', this_link.parents( 'li' ).data( 'url' ) );
 		} );
 	}
 
