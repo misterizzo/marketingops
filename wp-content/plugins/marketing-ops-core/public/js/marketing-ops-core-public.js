@@ -189,7 +189,12 @@
 	if ( $( '.marketingopstemplatesconfernace.conferencevaulteventdetails' ).length ) {
 		var container_user_subscription_class = $( 'section.marketingopstemplatesconfernace.conferencevaulteventdetails' ).data( 'usersubscriptionclass' ); // Check if the current video is available based on user membership.
 
-		console.log( 'container_user_subscription_class', container_user_subscription_class );
+		// Open the restriction modal.
+		if ( 1 === is_valid_string( container_user_subscription_class ) && 'is-pro-plus-member' !== container_user_subscription_class ) {
+			$( '.moc_paid_content_restriction_modal' ).addClass( 'active blog_popup' );
+			$( '.moc_paid_content_restriction_modal .moc_popup_close' ).remove();
+			return false;
+		}
 	}
 
 	// Open the conference popup.
