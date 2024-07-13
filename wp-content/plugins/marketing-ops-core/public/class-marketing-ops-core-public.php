@@ -1426,7 +1426,7 @@ class Marketing_Ops_Core_Public {
 		}
 
 		// Add the restricted content modal for pro-plus members.
-		if ( is_page( 'conference-vault' ) ) {
+		if ( is_page( 'conference-vault' ) || is_singular( 'conference_vault' ) ) {
 			require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content-pro-plus-members.php';
 		}
 
