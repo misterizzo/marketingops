@@ -172,6 +172,12 @@
 	if ( $( '.conferencevaultinnergridboximage .openPopupBtn' ).length ) {
 		$( document ).on( 'click', '.conferencevaultinnergridboximage .openPopupBtn', function() {
 			var this_button = $( this );
+
+			// Check if the current video is available based on user membership.
+			var container_user_subscription_class = this_button.parents( 'marketingopstemplatesconfernace' ).data( 'usersubscriptionclass' );
+
+			console.log( 'container_user_subscription_class', container_user_subscription_class );
+
 			var video_link  = this_button.parents( 'li' ).data( 'video' );
 
 			// If the video link is available.

@@ -89,8 +89,23 @@ if ( ( ! is_null( $get_conference ) ) || ( ! is_null( $get_pillar ) ) || ( ! is_
 	$terms_from_skill_level   = ( ! empty( $terms_from_skill_level ) && is_array( $terms_from_skill_level ) ) ? array_map( 'intval', $terms_from_skill_level ) : array();
 	$merged_terms             = array_merge( $terms_from_conference, $terms_from_pillar, $terms_from_skill_level ); // Merge all the terms.
 }
+
+// Restrict the modal based on user active membership.
+$user_memberships = moc_get_membership_plan_slug();
+
+if ( false === $user_memberships ) {
+	$conference_vault_container_class = 'is-unregistered-member';
+} elseif ( ! empty( $user_memberships ) && is_array( $user_memberships ) ) {
+	if ( 1 === count( $user_memberships ) && in_array( 'free-membership', $user_memberships, true ) ) {
+		$conference_vault_container_class = 'is-free-member';
+	} elseif ( 1 === count( $user_memberships ) && in_array( 'pro-plus-membership', $user_memberships, true ) ) {
+		$conference_vault_container_class = 'is-pro-plus-member';
+	} else {
+		$conference_vault_container_class = 'is-other-membership-member';
+	}
+}
 ?>
-<section class="marketingopstemplatesconfernace conferencevault elementor-section elementor-section-boxed">
+<section class="marketingopstemplatesconfernace conferencevault elementor-section elementor-section-boxed" data-usersubscriptionclass="<?php echo esc_attr( $conference_vault_container_class ); ?>">
 	<div class="margktingimgss"></div>
 	<div class="elementor-container elementor-column-gap-default">
 		<div class="conferencevaultinner">
@@ -196,9 +211,7 @@ if ( ( ! is_null( $get_conference ) ) || ( ! is_null( $get_pillar ) ) || ( ! is_
 		</div>
 
 		<!-- AJAX LOADER -->
-		<div class="loader_bg">
-			<div class="loader"></div>
-		</div>
+		<div class="loader_bg"><div class="loader"></div></div>
 	</div>
 </section>
 <?php get_footer();
