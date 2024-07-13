@@ -98,7 +98,7 @@ if ( false === $user_memberships ) {
 } elseif ( ! empty( $user_memberships ) && is_array( $user_memberships ) ) {
 	if ( 1 === count( $user_memberships ) && in_array( 'free-membership', $user_memberships, true ) ) {
 		$conference_vault_container_class = 'is-free-member';
-	} elseif ( 1 === count( $user_memberships ) && in_array( 'pro-plus-membership', $user_memberships, true ) ) {
+	} elseif ( in_array( 'pro-plus-membership', $user_memberships, true ) ) {
 		$conference_vault_container_class = 'is-pro-plus-member';
 	} else {
 		$conference_vault_container_class = 'is-other-membership-member';

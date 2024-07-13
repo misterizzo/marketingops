@@ -18,7 +18,7 @@
 						</svg>
 					</span>
 				</div>
-				<p><?php esc_html_e( 'Sorry, this page is for our Pro Plus members only. You can easily access it by purchasing a membership - it\'s the best way to showcase your talents ❤️', 'marketing-ops-core' ); ?></p>
+				<p><?php esc_html_e( 'Sorry, this content is for our Pro Plus members only. You can easily access it by purchasing a membership - it\'s the best way to showcase your talents ❤️', 'marketing-ops-core' ); ?></p>
 				<a href="/subscribe/" class="btn black_btn">
 					<span><?php esc_html_e( 'Create my profile', 'marketing-ops-core' ); ?></span>
 					<span class="icon"><img src="/wp-content/uploads/2022/03/right_arrow_partner.svg"></span>
