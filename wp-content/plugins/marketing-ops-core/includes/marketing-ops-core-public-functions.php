@@ -9044,7 +9044,7 @@ if ( ! function_exists( 'moc_conference_vault_video_box_html' ) ) {
 
 		ob_start();
 		?>
-		<li data-video="<?php echo esc_url( $session_link ); ?>" data-post="<?php echo esc_attr( $post_id ); ?>">
+		<li data-video="<?php echo esc_url( $session_link ); ?>" data-post="<?php echo esc_attr( $post_id ); ?>" data-url="<?php echo esc_url( get_permalink( $post_id ) ); ?>">
 			<div class="conferencevaultinnergridboximage">
 				<div class="innerimagebox">
 					<?php if ( has_post_thumbnail( $post_id ) ) {
@@ -9065,7 +9065,7 @@ if ( ! function_exists( 'moc_conference_vault_video_box_html' ) ) {
 				<div class="innerimageboxdescriptions">
 					<!-- Session Title -->
 					<?php if ( ! empty( $session_title ) ) { ?>
-						<h4 class="session-title"><a title="<?php echo wp_kses_post( $session_title ); ?>" href="<?php echo esc_url( get_permalink( $post_id ) ); ?>"><?php echo wp_kses_post( $session_title ); ?></a></h4>
+						<h4 class="session-title"><a title="<?php echo wp_kses_post( $session_title ); ?>" href="javascript:void(0);"><?php echo wp_kses_post( $session_title ); ?></a></h4>
 					<?php } ?>
 
 					<!-- Session Author -->
