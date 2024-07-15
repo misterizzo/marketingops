@@ -8691,7 +8691,7 @@ if ( ! function_exists( 'moc_conference_vault_custom_post_type_and_category_taxo
 				'show_ui'             => true,
 				'show_in_menu'        => true,
 				'menu_position'       => 65,
-				'menu_icon'           => 'dashicons-media-document',
+				'menu_icon'           => 'dashicons-format-video',
 				'show_in_admin_bar'   => true,
 				'show_in_nav_menus'   => true,
 				'can_export'          => true,
