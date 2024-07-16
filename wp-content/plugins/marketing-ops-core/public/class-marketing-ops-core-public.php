@@ -3765,9 +3765,26 @@ class Marketing_Ops_Core_Public {
 					$lastname       = ! empty( $all_user_meta['last_name'] ) ? $all_user_meta['last_name'][0] : '';
 					$user_name      = ! empty( $firstname ) ? $firstname . ' ' . $lastname : $all_user_meta['nickname'][0];
 					$member_slug    = moc_get_membership_plan_slug();
-					$badge_text     = ( empty( $member_slug ) || ! is_array( $member_slug ) ) ? __( 'INACTIVE', 'marketing-ops-core' ) : ( ( 1 === count( $member_slug ) && in_array( 'free-membership', $member_slug, true ) ) ? __( 'FREE', 'marketing-ops-core' ) : __( 'PRO', 'marketing-ops-core' ) );
+					$badge_text     = '';
+					$badge_class    = '';
+
+					if ( empty( $member_slug ) || ! is_array( $member_slug ) ) {
+						$badge_text  = __( 'INACTIVE', 'marketing-ops-core' );
+						$badge_class = 'inactive_tag';
+					} else {
+						if ( 1 === count( $member_slug ) && in_array( 'free-membership', $member_slug, true ) ) {
+							$badge_text  = __( 'FREE', 'marketing-ops-core' );
+							$badge_class = 'free_tag';
+						} elseif ( in_array( 'pro-plus-membership', $member_slug, true ) ) {
+							$badge_text  = __( 'PRO+', 'marketing-ops-core' );
+							$badge_class = 'pro_plus_tag';
+						} else {
+							$badge_text  = __( 'PRO', 'marketing-ops-core' );
+							$badge_class = 'pro_tag';
+						}
+					}
+
 					$get_header_menus = get_field( 'top_header_user_menu', 'option' );
-					$badge_class    = ( ! empty( $member_slug ) && is_array( $member_slug ) && 1 === count( $member_slug ) && in_array( 'free-membership', $member_slug, true ) ) ? 'free_tag' : 'pro_tag';
 					?>
 					<a href="javascript:;" class="profile_menu">
 						<!-- If user has logged or an image -->
@@ -3794,7 +3811,7 @@ class Marketing_Ops_Core_Public {
 									</svg>                            
 								</span>
 							</div>
-							<div class="box_tag 1">
+							<div class="box_tag">
 								<span class="<?php echo esc_attr( $badge_class ); ?> tag"><?php echo esc_html( $badge_text ); ?></span>
 							</div>
 						</div>
@@ -3828,7 +3845,7 @@ class Marketing_Ops_Core_Public {
 										<div class="box_content">
 											<h6><?php echo esc_attr( $user_name ); ?></h6>
 										</div>
-										<div class="box_tag 2">
+										<div class="box_tag">
 											<span class="<?php echo esc_attr( $badge_class ); ?> tag"><?php echo esc_html( $badge_text ); ?></span>
 										</div>
 									</div>
@@ -3997,19 +4014,35 @@ class Marketing_Ops_Core_Public {
 											<!-- Profile Details -->
 											<?php
 											if ( is_user_logged_in() ) {
-												$user_id        = get_current_user_id();
-												$useravtar_id   = ! empty( get_user_meta( $user_id, 'wp_user_avatar', true ) ) ? get_user_meta( $user_id, 'wp_user_avatar', true ) : '';
-												$user_image_url = ! empty( $useravtar_id ) ? wp_get_attachment_image_src( $useravtar_id, 'full' ) : '';
-												$user_image_url = ! empty( $user_image_url ) ? $user_image_url[0] : get_avatar_url( $user_id, array( 'size' => 211 ) ) ;
-												$image_url      = ! empty( $user_image_url ) ? $user_image_url : '';
-												$all_user_meta  = get_user_meta( $user_id );
-												$firstname      = ! empty( $all_user_meta['first_name'] ) ? $all_user_meta['first_name'][0] : '';
-												$lastname       = ! empty( $all_user_meta['last_name'] ) ? $all_user_meta['last_name'][0] : '';
-												$user_name      = ! empty( $firstname ) ? $firstname . ' ' . $lastname : $all_user_meta['nickname'][0];
-												$member_slug    = moc_get_membership_plan_slug();
-												$badge_text = ( empty( $member_slug ) || ! is_array( $member_slug ) ) ? __( 'INACTIVE', 'marketing-ops-core' ) : ( ( 1 === count( $member_slug ) && in_array( 'free-membership', $member_slug, true ) ) ? __( 'FREE', 'marketing-ops-core' ) : __( 'PRO', 'marketing-ops-core' ) );
+												$user_id          = get_current_user_id();
+												$useravtar_id     = ! empty( get_user_meta( $user_id, 'wp_user_avatar', true ) ) ? get_user_meta( $user_id, 'wp_user_avatar', true ) : '';
+												$user_image_url   = ( ! empty( $useravtar_id ) ) ? wp_get_attachment_image_src( $useravtar_id, 'full' ) : '';
+												$user_image_url   = ( ! empty( $user_image_url ) ) ? $user_image_url[0] : get_avatar_url( $user_id, array( 'size' => 211 ) ) ;
+												$image_url        = ( ! empty( $user_image_url ) ) ? $user_image_url : '';
+												$all_user_meta    = get_user_meta( $user_id );
+												$firstname        = ( ! empty( $all_user_meta['first_name'] ) ) ? $all_user_meta['first_name'][0] : '';
+												$lastname         = ( ! empty( $all_user_meta['last_name'] ) ) ? $all_user_meta['last_name'][0] : '';
+												$user_name        = ( ! empty( $firstname ) ) ? $firstname . ' ' . $lastname : $all_user_meta['nickname'][0];
+												$member_slug      = moc_get_membership_plan_slug();
+												$badge_text       = '';
+												$badge_class      = '';
 												$get_header_menus = get_field( 'top_header_user_menu', 'option' );
-												$badge_class    = ( ! empty( $member_slug ) && is_array( $member_slug ) && 1 === count( $member_slug ) && in_array( 'free-membership', $member_slug, true ) ) ? 'free_tag' : 'pro_tag';
+
+												if ( empty( $member_slug ) || ! is_array( $member_slug ) ) {
+													$badge_text  = __( 'INACTIVE', 'marketing-ops-core' );
+													$badge_class = 'inactive_tag';
+												} else {
+													if ( 1 === count( $member_slug ) && in_array( 'free-membership', $member_slug, true ) ) {
+														$badge_text  = __( 'FREE', 'marketing-ops-core' );
+														$badge_class = 'free_tag';
+													} elseif ( in_array( 'pro-plus-membership', $member_slug, true ) ) {
+														$badge_text  = __( 'PRO+', 'marketing-ops-core' );
+														$badge_class = 'pro_plus_tag';
+													} else {
+														$badge_text  = __( 'PRO', 'marketing-ops-core' );
+														$badge_class = 'pro_tag';
+													}
+												}
 												?>
 												<div class="topbar_box">
 													<div class="top_bar_user_profile">
@@ -4040,11 +4073,7 @@ class Marketing_Ops_Core_Public {
 																			</svg>                            
 																		</span>
 																	</div>
-																	<div class="box_tag 3">
-																		<!--
-																			pro_tag  - for pro membership
-																			free_tag - for free tag user
-																		-->
+																	<div class="box_tag">
 																		<span class="<?php echo esc_attr( $badge_class ); ?> tag"><?php echo esc_html( $badge_text ); ?></span>
 																	</div>
 																</div>
@@ -4079,7 +4108,7 @@ class Marketing_Ops_Core_Public {
 																				<div class="box_content">
 																					<h6><?php echo esc_attr( $user_name ); ?></h6>
 																				</div>
-																				<div class="box_tag 4">
+																				<div class="box_tag">
 																					<span class="<?php echo esc_attr( $badge_class ); ?> tag"><?php echo esc_html( $badge_text ); ?></span>
 																				</div>
 																			</div>
