@@ -3794,7 +3794,7 @@ class Marketing_Ops_Core_Public {
 									</svg>                            
 								</span>
 							</div>
-							<div class="box_tag">
+							<div class="box_tag 1">
 								<span class="<?php echo esc_attr( $badge_class ); ?> tag"><?php echo esc_html( $badge_text ); ?></span>
 							</div>
 						</div>
@@ -3828,7 +3828,7 @@ class Marketing_Ops_Core_Public {
 										<div class="box_content">
 											<h6><?php echo esc_attr( $user_name ); ?></h6>
 										</div>
-										<div class="box_tag">
+										<div class="box_tag 2">
 											<span class="<?php echo esc_attr( $badge_class ); ?> tag"><?php echo esc_html( $badge_text ); ?></span>
 										</div>
 									</div>
@@ -4040,7 +4040,7 @@ class Marketing_Ops_Core_Public {
 																			</svg>                            
 																		</span>
 																	</div>
-																	<div class="box_tag">
+																	<div class="box_tag 3">
 																		<!--
 																			pro_tag  - for pro membership
 																			free_tag - for free tag user
@@ -4079,7 +4079,7 @@ class Marketing_Ops_Core_Public {
 																				<div class="box_content">
 																					<h6><?php echo esc_attr( $user_name ); ?></h6>
 																				</div>
-																				<div class="box_tag">
+																				<div class="box_tag 4">
 																					<span class="<?php echo esc_attr( $badge_class ); ?> tag"><?php echo esc_html( $badge_text ); ?></span>
 																				</div>
 																			</div>
