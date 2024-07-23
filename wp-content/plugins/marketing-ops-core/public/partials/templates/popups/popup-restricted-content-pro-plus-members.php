@@ -18,9 +18,9 @@
 						</svg>
 					</span>
 				</div>
-				<p><?php esc_html_e( 'Sorry, this content is for our Pro Plus members only. You can easily access it by purchasing a membership - it\'s the best way to showcase your talents ❤️', 'marketing-ops-core' ); ?></p>
-				<a href="/subscribe/" class="btn black_btn">
-					<span><?php esc_html_e( 'Create my profile', 'marketing-ops-core' ); ?></span>
+				<p><?php esc_html_e( 'Sorry, this content is for our Pro+ members only. Unlock access to this content as a member today! Membership is the best way to elevate your MOps Career ❤️', 'marketing-ops-core' ); ?></p>
+				<a href="/?add-to-cart=224512" class="btn black_btn">
+					<span><?php esc_html_e( 'Purchase Pro+ Membership', 'marketing-ops-core' ); ?></span>
 					<span class="icon"><img src="/wp-content/uploads/2022/03/right_arrow_partner.svg"></span>
 				</a>
 				<?php if ( ! is_user_logged_in() ) { ?>
