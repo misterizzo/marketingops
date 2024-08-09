@@ -1019,6 +1019,11 @@ class Marketing_Ops_Core_Public {
 			$templates = MOC_PLUGIN_PATH . 'public/partials/templates/conference-vault/conference-vault-taxonomy-archive.php';
 		}
 
+		// Check if it's the agency details page.
+		if ( is_singular( 'agency' ) ) {
+			$templates = MOC_PLUGIN_PATH . 'public/partials/templates/agency/single.php';
+		}
+
 		return $templates;
 	}
 
