@@ -5689,6 +5689,7 @@ if ( ! function_exists( 'moc_script_settings' ) ) {
 		return $settings;
 	}
 }
+
 /**
  * Check if function exists or not.
  */
@@ -5698,8 +5699,8 @@ if ( ! function_exists( 'moc_get_membership_plan_object' ) ) {
 		
 		return wc_memberships_get_user_memberships( get_current_user_id(), $args );
 	}
-	
 }
+
 /**
  * Check if function exists or not.
  */
@@ -9234,5 +9235,70 @@ if ( ! function_exists( 'moc_no_conference_found_html' ) ) {
 		<?php
 
 		return ob_get_clean();
+	}
+}
+
+/**
+ * Check if the function exists.
+ */
+if ( ! function_exists( 'moc_agency_custom_post_type_and_category_taxonomy' ) ) {
+	/**
+	 * Function to register templates custom post type.
+	 *
+	 * @since 1.0.0
+	 */
+	function moc_agency_custom_post_type_and_category_taxonomy() {
+		register_post_type(
+			'agency',
+			array(
+				'label'               => __( 'Agencies', 'marketing-ops-core' ),
+				'description'         => __( 'Its custom post type for marketingops agencies.', 'marketing-ops-core' ),
+				'labels'              => array(
+					'name'                  => _x( 'Agencies', 'Template General Name', 'marketing-ops-core' ),
+					'singular_name'         => _x( 'Agency', 'Template Singular Name', 'marketing-ops-core' ),
+					'menu_name'             => __( 'Agencies', 'marketing-ops-core' ),
+					'name_admin_bar'        => __( 'Agencies', 'marketing-ops-core' ),
+					'archives'              => __( 'Agency Archives', 'marketing-ops-core' ),
+					'attributes'            => __( 'Agency Attributes', 'marketing-ops-core' ),
+					'parent_item_colon'     => __( 'Parent Agency:', 'marketing-ops-core' ),
+					'all_items'             => __( 'All Agencies', 'marketing-ops-core' ),
+					'add_new_item'          => __( 'Add New Agency', 'marketing-ops-core' ),
+					'add_new'               => __( 'Add New', 'marketing-ops-core' ),
+					'new_item'              => __( 'New Agency', 'marketing-ops-core' ),
+					'edit_item'             => __( 'Edit Agency', 'marketing-ops-core' ),
+					'update_item'           => __( 'Update Agency', 'marketing-ops-core' ),
+					'view_item'             => __( 'View Agency', 'marketing-ops-core' ),
+					'view_items'            => __( 'View Agencies', 'marketing-ops-core' ),
+					'search_items'          => __( 'Search Agency', 'marketing-ops-core' ),
+					'not_found'             => __( 'No Agency found', 'marketing-ops-core' ),
+					'not_found_in_trash'    => __( 'No Agency found in trash', 'marketing-ops-core' ),
+					'featured_image'        => __( 'Featured Image', 'marketing-ops-core' ),
+					'set_featured_image'    => __( 'Set featured image', 'marketing-ops-core' ),
+					'remove_featured_image' => __( 'Remove featured image', 'marketing-ops-core' ),
+					'use_featured_image'    => __( 'Use as featured image', 'marketing-ops-core' ),
+					'insert_into_item'      => __( 'Insert into Agency', 'marketing-ops-core' ),
+					'uploaded_to_this_item' => __( 'Uploaded to this Agency', 'marketing-ops-core' ),
+					'items_list'            => __( 'Agencies list', 'marketing-ops-core' ),
+					'items_list_navigation' => __( 'Agencies list navigation', 'marketing-ops-core' ),
+					'filter_items_list'     => __( 'Filter Agencies list', 'marketing-ops-core' ),
+				),
+				'supports'            => array( 'title', 'editor', 'author', 'excerpt', 'thumbnail' ),
+				'hierarchical'        => false,
+				'public'              => false,
+				'show_ui'             => true,
+				'show_in_menu'        => true,
+				'menu_position'       => 65,
+				'menu_icon'           => 'dashicons-media-document',
+				'show_in_admin_bar'   => true,
+				'show_in_nav_menus'   => true,
+				'can_export'          => true,
+				'has_archive'         => false,
+				'rewrite'             => array( 'slug' => 'agency' ),
+				'exclude_from_search' => false,
+				'publicly_queryable'  => true,
+				'capability_type'     => 'post',
+				'show_in_rest'        => true,
+			)
+		);
 	}
 }

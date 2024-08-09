@@ -391,6 +391,7 @@ class Marketing_Ops_Core_Public {
 		moc_strategists_custom_post_type_and_category_taxonomy(); // Register strategists custom post type.
 		moc_templates_custom_post_type_and_category_taxonomy(); // Register templates custom post type.
 		moc_conference_vault_custom_post_type_and_category_taxonomy(); // Register templates custom post type.
+		moc_agency_custom_post_type_and_category_taxonomy(); // Register templates custom post type.
 	}
 
 	/**
