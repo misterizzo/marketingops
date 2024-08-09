@@ -360,6 +360,8 @@ class Marketing_Ops_Core {
 		$this->loader->add_action( 'woocommerce_account_premium-content_endpoint', $plugin_public, 'mops_woocommerce_account_premium_content_endpoint_callback' );
 		$this->loader->add_action( 'woocommerce_account_ld-certificates_endpoint', $plugin_public, 'mops_woocommerce_account_ld_certificates_endpoint_callback' );
 		$this->loader->add_action( 'woocommerce_account_project-templates_endpoint', $plugin_public, 'mops_woocommerce_account_project_templates_endpoint_callback' );
+		$this->loader->add_action( 'woocommerce_account_agency-profile_endpoint', $plugin_public, 'mops_woocommerce_account_agency_profile_endpoint_callback' );
+		$this->loader->add_action( 'woocommerce_account_platform-profile_endpoint', $plugin_public, 'mops_woocommerce_account_platform_profile_endpoint_callback' );
 		$this->loader->add_shortcode( 'apalooza_timer', $plugin_public, 'mops_apalooza_timer_callback' );
 		$this->loader->add_shortcode( 'moc_member_only_button', $plugin_public, 'mops_moc_member_only_button_callback' );
 		$this->loader->add_shortcode( 'moc_strategists', $plugin_public, 'mops_moc_strategists_callback' );

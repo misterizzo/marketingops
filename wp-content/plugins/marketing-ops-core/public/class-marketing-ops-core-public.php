@@ -5736,6 +5736,16 @@ class Marketing_Ops_Core_Public {
 				if ( ! array_key_exists( 'project-templates', $endpoints ) ) {
 					$new_endpoints['project-templates'] = __( 'Project Templates', 'marketing-ops-core' );
 				}
+
+				// Add the "agency-profile" endpoint.
+				if ( ! array_key_exists( 'agency-profile', $endpoints ) ) {
+					$new_endpoints['agency-profile'] = __( 'Agency Profile', 'marketing-ops-core' );
+				}
+
+				// Add the "platform-profile" endpoint.
+				if ( ! array_key_exists( 'platform-profile', $endpoints ) ) {
+					$new_endpoints['platform-profile'] = __( 'Platform Profile', 'marketing-ops-core' );
+				}
 			}
 		}
 
@@ -5753,6 +5763,8 @@ class Marketing_Ops_Core_Public {
 		$vars['premium-content']   = 'premium-content';
 		$vars['ld-certificates']   = 'ld-certificates';
 		$vars['project-templates'] = 'project-templates';
+		$vars['agency-profile']    = 'agency-profile';
+		$vars['platform-profile']  = 'platform-profile';
 
 		return $vars;
 	}
@@ -5770,6 +5782,8 @@ class Marketing_Ops_Core_Public {
 		$is_premium_content_endpoint   = isset( $wp_query->query_vars['premium-content'] ); // Is premium content endpoint.
 		$is_ld_certificates_endpoint   = isset( $wp_query->query_vars['ld-certificates'] ); // Is learndash certificates endpoint.
 		$is_project_templates_endpoint = isset( $wp_query->query_vars['project-templates'] ); // Is project templates endpoint.
+		$is_agency_profile_endpoint    = isset( $wp_query->query_vars['agency-profile'] ); // Is agency profile endpoint.
+		$is_platform_profile_endpoint  = isset( $wp_query->query_vars['platform-profile'] ); // Is platform profile endpoint.
 
 		// Premium content endpoint title.
 		if ( $is_premium_content_endpoint && ! is_admin() && is_main_query() && in_the_loop() && is_account_page() ) {
@@ -5788,6 +5802,20 @@ class Marketing_Ops_Core_Public {
 		// Project templates endpoint title.
 		if ( $is_project_templates_endpoint && ! is_admin() && is_main_query() && in_the_loop() && is_account_page() ) {
 			$title = __( 'Project Templates', 'marketing-ops-core' );
+
+			remove_filter( 'the_title', array( $this, 'mops_the_title_callback' ) );
+		}
+
+		// Agency profile endpoint title.
+		if ( $is_agency_profile_endpoint && ! is_admin() && is_main_query() && in_the_loop() && is_account_page() ) {
+			$title = __( 'Agency Profile', 'marketing-ops-core' );
+
+			remove_filter( 'the_title', array( $this, 'mops_the_title_callback' ) );
+		}
+
+		// Platform profile endpoint title.
+		if ( $is_platform_profile_endpoint && ! is_admin() && is_main_query() && in_the_loop() && is_account_page() ) {
+			$title = __( 'Platform Profile', 'marketing-ops-core' );
 
 			remove_filter( 'the_title', array( $this, 'mops_the_title_callback' ) );
 		}
@@ -5820,6 +5848,24 @@ class Marketing_Ops_Core_Public {
 	 */
 	public function mops_woocommerce_account_project_templates_endpoint_callback() {
 		include_once 'partials/templates/woocommerce/myaccount/project-templates.php';
+	}
+
+	/**
+	 * Template for customer dashboard - agency profile.
+	 *
+	 * @since 1.0.0
+	 */
+	public function mops_woocommerce_account_agency_profile_endpoint_callback() {
+		include_once 'partials/templates/woocommerce/myaccount/agency-profile.php';
+	}
+
+	/**
+	 * Template for customer dashboard - platform profile.
+	 *
+	 * @since 1.0.0
+	 */
+	public function mops_woocommerce_account_platform_profile_endpoint_callback() {
+		include_once 'partials/templates/woocommerce/myaccount/platform-profile.php';
 	}
 
 	/**
