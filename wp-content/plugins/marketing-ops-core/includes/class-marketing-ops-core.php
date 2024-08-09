@@ -245,6 +245,7 @@ class Marketing_Ops_Core {
 		$this->loader->add_shortcode( 'moc_member_search_html_shortcode', $plugin_public, 'moc_member_search_html_shortcode_html_callback' );
 		$this->loader->add_shortcode( 'moc_member_quick_filter', $plugin_public, 'moc_member_quick_filter_shortcode_html_callback' );
 		$this->loader->add_shortcode( 'moc_member_directory', $plugin_public, 'moc_member_directory_html_shortcode_callback' );
+		$this->loader->add_shortcode( 'moc_agency_directory', $plugin_public, 'moc_agency_directory_html_shortcode_callback' );
 		$this->loader->add_action( 'wp_ajax_nopriv_moc_member_load_listings', $plugin_public, 'moc_member_load_listings_callback' );
 		$this->loader->add_action( 'wp_ajax_moc_member_load_listings', $plugin_public, 'moc_member_load_listings_callback' );
 		$this->loader->add_action( 'wp_ajax_nopriv_moc_blogs_listings', $plugin_public, 'moc_blogs_listings_callback' );

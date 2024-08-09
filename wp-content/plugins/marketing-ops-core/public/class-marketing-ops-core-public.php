@@ -2253,6 +2253,7 @@ class Marketing_Ops_Core_Public {
 		<?php
 		return ob_get_clean();
 	}
+
 	/**
 	 * Function to return shortcode for load HTML of Member listings.
 	 *
@@ -2265,6 +2266,25 @@ class Marketing_Ops_Core_Public {
 		<?php
 		return ob_get_clean();
 	}
+
+	/**
+	 * Function to return shortcode for load HTML of agency directory.
+	 *
+	 * @since    1.0.0
+	 */
+	public function moc_agency_directory_html_shortcode_callback() {
+		// If it's the admin dashboard, return blank.
+		if ( is_admin() ) {
+			return;
+		}
+
+		// Start preparing the directory page html.
+		ob_start();
+		include MOC_PLUGIN_PATH . 'public/partials/templates/agency/list.php';
+
+		return ob_get_clean();
+	}
+
 	/**
 	 * Function to return ajax call for listings of member listings.
 	 *
