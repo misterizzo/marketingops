@@ -2355,10 +2355,11 @@ background-size: cover;
 	outline: none;
   }
   .select-dropdown__button .zmdi-chevron-down {
-	position: absolute;
-	right: 10px;
-	top: 12px;
-  }
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
   .select-dropdown__list {
     position: absolute;
     display: block;
@@ -2413,10 +2414,10 @@ font-weight: 400;
 line-height: normal;
   }
   .select-dropdown__list-item:hover {
-	background-color: #1fc69d;
-	color: #fff;
-	transition: all ease-in-out 0.3s;
-  }
+    background-color: #F0F2F3;
+    color: #45474F;
+    transition: all ease-in-out 0.3s;
+}
 
 
 
@@ -2490,5 +2491,13 @@ background-position: center center;
 background-size: cover;
 width: 10px;
 height: 10px;
+display: block;
 }
+
+
+.select-dropdown:last-child {
+    margin-right: 0;
+}
+
+.select-dropdown{display:none;}
 /* agenct */

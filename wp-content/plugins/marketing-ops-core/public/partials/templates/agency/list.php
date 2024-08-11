@@ -767,6 +767,10 @@ function createSelect() {
 			}, false);
 		}
 }
+
+
+var selectbox = document.getElementsByClassName('select-dropdown');
+selectbox.style.display = "block";
 </script>	
 <?php
 get_footer();
