@@ -163,7 +163,7 @@ get_header();
 				<li>
 					<div class="inneragencylistbox">
 						<h4>PARTNER</h4>
-						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/LTPartners.png" alt="img" />
+						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/LTPartners1.png" alt="img" />
 						<h3>LT Partners</h3>
 						<ul>
 						
@@ -185,7 +185,7 @@ get_header();
 				<li>
 					<div class="inneragencylistbox">
 						
-						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/LTPartners.png" alt="img" />
+						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/LTPartners1.png" alt="img" />
 						<h3>LT Partners</h3>
 						<ul>
 						
@@ -345,7 +345,7 @@ get_header();
 				<li>
 					<div class="inneragencylistbox">
 						
-						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/LTPartners.png" alt="img" />
+						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/LTPartners1.png" alt="img" />
 						<h3>LT Partners</h3>
 						<ul>
 						
