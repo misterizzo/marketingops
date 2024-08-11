@@ -34,36 +34,56 @@ get_header();
 		<h1>Agency Directory</h1>
 		<h2>Curated list of Wubba Lubba dub-dub agencies, top of the line. </h2>
 		<div id="container" class="agency-containe">
-			<select id="normal-select-1" placeholder-text="Item 1">
-				<option value="1" class="select-dropdown__list-item">Item 1</option>
-				<option value="2" class="select-dropdown__list-item">Item 2</option>
-				<option value="3" class="select-dropdown__list-item">Item 3</option>
-				<option value="4" class="select-dropdown__list-item">Item 4</option>
+			<select id="normal-select-1" placeholder-text="Email Marketing" style="display:none;">
+				<option value="1" class="select-dropdown__list-item">All Services</option>
+				<option value="2" class="select-dropdown__list-item">Affiliate Marketing</option>
+				<option value="3" class="select-dropdown__list-item">Branded Content</option>
+				<option value="4" class="select-dropdown__list-item">Database Acquisition</option>
+				<option value="4" class="select-dropdown__list-item">Email Marketing</option>
+				<option value="4" class="select-dropdown__list-item">Performance Pr</option>
+				<option value="4" class="select-dropdown__list-item">Programmatic</option>
+				<option value="4" class="select-dropdown__list-item">SEM</option>
+				<option value="4" class="select-dropdown__list-item">SEO</option>
+				<option value="4" class="select-dropdown__list-item">Social Media</option>
 			</select>
 			
-			<select id="normal-select-2" placeholder-text="Item 1">
-				<option value="1" class="select-dropdown__list-item">Item 1</option>
-				<option value="2" class="select-dropdown__list-item">Item 2</option>
-				<option value="3" class="select-dropdown__list-item">Item 3</option>
-				<option value="4" class="select-dropdown__list-item">Item 4</option>
-				<option value="5" class="select-dropdown__list-item">Item 5</option>
-				<option value="6" class="select-dropdown__list-item">Item 6</option>
+			<select id="normal-select-2" placeholder-text="DTC" style="display:none;">
+			<option value="1" class="select-dropdown__list-item">All Services</option>
+				<option value="2" class="select-dropdown__list-item">Affiliate Marketing</option>
+				<option value="3" class="select-dropdown__list-item">Branded Content</option>
+				<option value="4" class="select-dropdown__list-item">Database Acquisition</option>
+				<option value="4" class="select-dropdown__list-item">Email Marketing</option>
+				<option value="4" class="select-dropdown__list-item">Performance Pr</option>
+				<option value="4" class="select-dropdown__list-item">Programmatic</option>
+				<option value="4" class="select-dropdown__list-item">SEM</option>
+				<option value="4" class="select-dropdown__list-item">SEO</option>
+				<option value="4" class="select-dropdown__list-item">Social Media</option>
 			</select>
 
-			<select id="normal-select-3" placeholder-text="Item 1">
-				<option value="1" class="select-dropdown__list-item">Item 1</option>
-				<option value="2" class="select-dropdown__list-item">Item 2</option>
-				<option value="3" class="select-dropdown__list-item">Item 3</option>
-				<option value="4" class="select-dropdown__list-item">Item 4</option>
+			<select id="normal-select-3" placeholder-text="Holding company" style="display:none;">
+				<option value="1" class="select-dropdown__list-item">All Services</option>
+				<option value="2" class="select-dropdown__list-item">Affiliate Marketing</option>
+				<option value="3" class="select-dropdown__list-item">Branded Content</option>
+				<option value="4" class="select-dropdown__list-item">Database Acquisition</option>
+				<option value="4" class="select-dropdown__list-item">Email Marketing</option>
+				<option value="4" class="select-dropdown__list-item">Performance Pr</option>
+				<option value="4" class="select-dropdown__list-item">Programmatic</option>
+				<option value="4" class="select-dropdown__list-item">SEM</option>
+				<option value="4" class="select-dropdown__list-item">SEO</option>
+				<option value="4" class="select-dropdown__list-item">Social Media</option>
 			</select>
 			
-			<select id="normal-select-4" placeholder-text="Item 1">
-				<option value="1" class="select-dropdown__list-item">Item 1</option>
-				<option value="2" class="select-dropdown__list-item">Item 2</option>
-				<option value="3" class="select-dropdown__list-item">Item 3</option>
-				<option value="4" class="select-dropdown__list-item">Item 4</option>
-				<option value="5" class="select-dropdown__list-item">Item 5</option>
-				<option value="6" class="select-dropdown__list-item">Item 6</option>
+			<select id="normal-select-4" placeholder-text="South America" style="display:none;">
+			<option value="1" class="select-dropdown__list-item">All Services</option>
+				<option value="2" class="select-dropdown__list-item">Affiliate Marketing</option>
+				<option value="3" class="select-dropdown__list-item">Branded Content</option>
+				<option value="4" class="select-dropdown__list-item">Database Acquisition</option>
+				<option value="4" class="select-dropdown__list-item">Email Marketing</option>
+				<option value="4" class="select-dropdown__list-item">Performance Pr</option>
+				<option value="4" class="select-dropdown__list-item">Programmatic</option>
+				<option value="4" class="select-dropdown__list-item">SEM</option>
+				<option value="4" class="select-dropdown__list-item">SEO</option>
+				<option value="4" class="select-dropdown__list-item">Social Media</option>
 			</select>
 		</div>
 
@@ -769,8 +789,10 @@ function createSelect() {
 }
 
 
-var selectbox = document.getElementsByClassName('select-dropdown');
-selectbox.style.display = "block";
+var selectboxes = document.querySelectorAll('.select-dropdown');
+selectboxes.forEach(function(selectbox) {
+    selectbox.style.display = "block";
+});
 </script>	
 <?php
 get_footer();
