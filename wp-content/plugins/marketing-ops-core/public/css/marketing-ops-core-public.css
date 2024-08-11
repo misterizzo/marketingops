@@ -2227,4 +2227,14 @@ font-style: normal;
 font-weight: 400;
 line-height: normal;
 }
+
+.agency-spotlight .agency-container .spotlitlist li .spotilebox .spotligtext h4.articalstitle
+{
+	color: var(--text-main2-45474F, #45474F);
+font-family: Futura;
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
 /* agency detail */
