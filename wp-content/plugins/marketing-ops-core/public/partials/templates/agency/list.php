@@ -184,7 +184,7 @@ get_header();
 
 				<li>
 					<div class="inneragencylistbox">
-						
+						<h4 style="visibility:hidden">PARTNER</h4>
 						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/LTPartners1.png" alt="img" />
 						<h3>LT Partners</h3>
 						<ul>
@@ -206,7 +206,7 @@ get_header();
 
 				<li>
 					<div class="inneragencylistbox">
-						
+						<h4 style="visibility:hidden">PARTNER</h4>
 						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/thedigitalvoice.png" alt="img" />
 						<h3>The Digital Voice</h3>
 						<ul>
@@ -229,7 +229,7 @@ get_header();
 
 				<li>
 					<div class="inneragencylistbox">
-						
+						<h4 style="visibility:hidden">PARTNER</h4>
 						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/thepartneragency.png" alt="img" />
 						<h3>The Partner Agency - B2B Affiliate</h3>
 						<ul>
@@ -256,7 +256,7 @@ get_header();
 
 				<li>
 					<div class="inneragencylistbox">
-						
+						<h4 style="visibility:hidden">PARTNER</h4>
 						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/amdx.png" alt="img" />
 						<h3>Affiliate Marketing Dynamics</h3>
 						<a href="javascript:void(0);" class="learnmorebtnagency">
@@ -272,7 +272,7 @@ get_header();
 
 				<li>
 					<div class="inneragencylistbox">
-						
+						<h4 style="visibility:hidden">PARTNER</h4>
 						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/affiverse.png" alt="img" />
 						<h3>Affiverse</h3>
 						<ul>
@@ -299,7 +299,7 @@ get_header();
 
 				<li>
 					<div class="inneragencylistbox">
-						
+						<h4 style="visibility:hidden">PARTNER</h4>
 						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/acelleration.png" alt="img" />
 						<h3>affprogramhub</h3>
 						<ul>
@@ -321,7 +321,7 @@ get_header();
 
 				<li>
 					<div class="inneragencylistbox">
-						
+						<h4 style="visibility:hidden">PARTNER</h4>
 						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/roundbarn.png" alt="img" />
 						<h3>ROUND BARN LABS</h3>
 						<ul>
@@ -344,7 +344,7 @@ get_header();
 
 				<li>
 					<div class="inneragencylistbox">
-						
+						<h4 style="visibility:hidden">PARTNER</h4>
 						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/LTPartners1.png" alt="img" />
 						<h3>LT Partners</h3>
 						<ul>
@@ -366,7 +366,7 @@ get_header();
 
 				<li>
 					<div class="inneragencylistbox">
-						
+						<h4 style="visibility:hidden">PARTNER</h4>
 						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/eaccountable.png" alt="img" />
 						<h3>eAccountable</h3>
 						<ul>
@@ -396,7 +396,7 @@ get_header();
 
 				<li>
 					<div class="inneragencylistbox">
-						
+						<h4 style="visibility:hidden">PARTNER</h4>
 						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/thedigitalvoice.png" alt="img" />
 						<h3>The Digital Voice</h3>
 						<ul>
@@ -419,7 +419,7 @@ get_header();
 
 				<li>
 					<div class="inneragencylistbox">
-						
+						<h4 style="visibility:hidden">PARTNER</h4>
 						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/acelleration.png" alt="img" />
 						<h3>Acceleration Partners</h3>
 						<ul>
@@ -447,7 +447,7 @@ get_header();
 
 				<li>
 					<div class="inneragencylistbox">
-						
+						<h4 style="visibility:hidden">PARTNER</h4>
 						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/allinclusive.png" alt="img" />
 						<h3>All Inclusive Marketing Inc.</h3>
 						<ul>
@@ -471,7 +471,7 @@ get_header();
 
 				<li>
 					<div class="inneragencylistbox">
-						
+						<h4 style="visibility:hidden">PARTNER</h4>
 						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/dmipartners.png" alt="img" />
 						<h3>DMi Partners</h3>
 						<ul>
@@ -498,7 +498,7 @@ get_header();
 
 				<li>
 					<div class="inneragencylistbox">
-						
+						<h4 style="visibility:hidden">PARTNER</h4>
 						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/allison.png" alt="img" />
 						<h3>Allison</h3>
 						<ul>
@@ -526,7 +526,7 @@ get_header();
 
 				<li>
 					<div class="inneragencylistbox">
-						
+						<h4 style="visibility:hidden">PARTNER</h4>
 						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/acelleration.png" alt="img" />
 						<h3>Acceleration Partners</h3>
 						<ul>
@@ -554,7 +554,7 @@ get_header();
 
 				<li>
 					<div class="inneragencylistbox">
-						
+						<h4 style="visibility:hidden">PARTNER</h4>
 						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/allinclusive.png" alt="img" />
 						<h3>All Inclusive Marketing Inc.</h3>
 						<ul>
@@ -578,7 +578,7 @@ get_header();
 
 				<li>
 					<div class="inneragencylistbox">
-						
+						<h4 style="visibility:hidden">PARTNER</h4>
 						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/dmipartners.png" alt="img" />
 						<h3>DMi Partners</h3>
 						<ul>
@@ -605,7 +605,7 @@ get_header();
 
 				<li>
 					<div class="inneragencylistbox">
-						
+						<h4 style="visibility:hidden">PARTNER</h4>
 						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/allison.png" alt="img" />
 						<h3>Allison</h3>
 						<ul>
