@@ -27,7 +27,7 @@ get_header();
 				<li>
 					<div class="inneragencylistbox">
 						<h4>PARTNER</h4>
-						<img src="<?php echo base_url()?>hello-elementor_child/images/agencypages/acelleration.png" alt="img" />
+						<img src="<?php echo base_url()?>/hello-elementor_child/images/agencypages/acelleration.png" alt="img" />
 						<h3>Acceleration Partners</h3>
 						<ul>
 							<li> Affiliate Marketing </li>
