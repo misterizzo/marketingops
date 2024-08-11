@@ -2217,87 +2217,16 @@ background-size: cover;
 .agency-spotlight .agency-container .spotlitlist li .spotilebox .spotligtext p.articals{color: var(--text-main2-45474F, #45474F);font-family: "Open Sans";font-size: 14px;font-style: normal;font-weight: 400;line-height: normal;}
 .agency-spotlight .agency-container .spotlitlist li .spotilebox .spotligtext h4.articalstitle{color: var(--text-main2-45474F, #45474F);font-family: "Futura LT";font-size: 16px;font-style: normal;font-weight: 700;line-height: normal;}
 
-
-
 .agaeny_jobs .agency-container{max-width:1180px;margin:0 auto 30px;}
-
-.agaeny_jobs .agency-container .jobdetailbox{
-max-width: 877px;
-flex-shrink: 0;
-border-radius: 24px;
-border: 1px solid rgba(231, 239, 239, 0.75);
-background: rgba(255, 255, 255, 0.50);
-box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.03);
-}
-
-
-.agaeny_jobs .agency-container .jobdetailbox .joinnermainbox{display: flex;}
-
-.agaeny_jobs .agency-container .jobdetailbox .joinnermainbox .jobinnerright h4{
-color: var(--Primary-text, #45474F);
-margin: 0;
-font-family: "Futura LT";
-font-size: 19px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
-}
-
-.agaeny_jobs .agency-container .jobdetailbox .joinnermainbox .jobinnerright h5{
-	color: var(--Primary-text, #45474F);
-	text-align: center;
-	font-family: "Open Sans";
-	font-size: 16px;
-	font-style: normal;
-	font-weight: 600;
-	line-height: normal;
-	margin: 0;
-	}
-
-
-	.agaeny_jobs .agency-container .jobdetailbox .joinnermainbox .jobbtns{
-	display: inline-flex;
-	padding: 4px 14px;
-	align-items: flex-start;
-	gap: 10px;
-	border-radius: 6px;
-border: 2px solid var(--pinky-FD4B7A, #FD4B7A);
-background: #F0F2F3;	
-color: var(--pinky-FD4B7A, #FD4B7A);
-font-family: "Open Sans";
-font-size: 12px;
-font-style: normal;
-font-weight: 700;
-line-height: 24px; /* 200% */
-text-transform: uppercase;
-	}
-
-
-	.agaeny_jobs .agency-container .jobdetailbox .joinnermainbox .fulltimbtn{
-		display: inline-flex;
-padding: 4px 14px;
-align-items: flex-start;
-gap: 10px;
-border-radius: 6px;
-background: #F0F2F3;	
-color: var(--inkblue-4D00AE, #4D00AE);
-font-family: "Open Sans";
-font-size: 12px;
-font-style: normal;
-font-weight: 700;
-line-height: 24px; /* 200% */
-text-transform: uppercase;
-		}
-
-
-		.agaeny_jobs .agency-container .jobdetailbox p
-		{
-			color: var(--Primary-text, #45474F);
-font-family: "Open Sans";
-font-size: 14px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-max-width: 736px;
-		}
+.agaeny_jobs .agency-container .jobdetailbox{max-width:877px;flex-shrink:0;border-radius:24px;border:1px solid rgba(231,239,239,0.75);background:rgba(255,255,255,0.50);box-shadow:0px 20px 40px 0px rgba(0,0,0,0.03);padding:20px 20px;}
+.agaeny_jobs .agency-container .jobdetailbox .joinnermainbox{display:flex;justify-content:space-between;}
+.agaeny_jobs .agency-container .jobdetailbox .joinnermainbox .jobinnerbox{display:flex;align-items:center;align-content:center;}
+.agaeny_jobs .agency-container .jobdetailbox .joinnermainbox .jobinnerright h4{color:var(--Primary-text,#45474F);margin:0;font-family:"Futura LT";font-size:19px;font-style:normal;font-weight:700;line-height:normal;}
+.agaeny_jobs .agency-container .jobdetailbox .joinnermainbox .jobinnerright h5{color:var(--Primary-text,#45474F);text-align:left;font-family:"Open Sans";font-size:16px;font-style:normal;font-weight:600;line-height:normal;margin:0;}
+.agaeny_jobs .agency-container .jobdetailbox .joinnermainbox .jobbtns .seniurlevelbtn{display:inline-flex;padding:4px 14px;align-items:flex-start;gap:10px;border-radius:6px;border:2px solid var(--pinky-FD4B7A,#FD4B7A);background:#F0F2F3;color:var(--pinky-FD4B7A,#FD4B7A);font-family:"Open Sans";font-size:12px;font-style:normal;font-weight:700;line-height:24px;text-transform:uppercase;margin-right:5px;}
+.agaeny_jobs .agency-container .jobdetailbox .joinnermainbox .fulltimbtn{display:inline-flex;padding:4px 14px;align-items:flex-start;gap:10px;border-radius:6px;background:#F0F2F3;color:var(--inkblue-4D00AE,#4D00AE);font-family:"Open Sans";font-size:12px;font-style:normal;font-weight:700;line-height:24px; /* 200% */text-transform:uppercase;}
+.agaeny_jobs .agency-container .jobdetailbox p{color:var(--Primary-text,#45474F);font-family:"Open Sans";font-size:14px;font-style:normal;font-weight:400;line-height:normal;max-width:736px;margin:0 20px 30px;}
+.agaeny_jobs .agency-container .jobdetailbox ul{list-style:none;display:flex;align-items:center;align-content:center;padding:0 15px;margin:0;gap:25px;}
+.agaeny_jobs .agency-container .jobdetailbox ul li i{width:24px;height:24px;display:block;margin-right:5px;}
+.agaeny_jobs .agency-container .jobdetailbox ul li{display:flex;align-items:center;align-content:center;color:var(--Primary-text,#45474F);text-align:center;font-family:"Open Sans";font-size:16px;font-style:normal;font-weight:400;line-height:normal;}
 /* agency detail */
