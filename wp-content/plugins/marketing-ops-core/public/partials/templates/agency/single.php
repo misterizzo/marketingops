@@ -228,14 +228,14 @@ get_header();
 </section>
 
 
-<section class="agaeny_clients">
+<section class="agaeny_jobs">
 	<div class="agency-container">
 		<h3>Jobs</h3>
 		<div class="jobdetailbox">
 			<div class="joinnermainbox">
 				<div class="jobinnerbox">
 					<div class="jobinnerleft">
-						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/laptop-computer.png" alt="img" /> 
+						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/shopify.png" alt="img" /> 
 					</div>
 					<div class="jobinnerright">
 						<h4>Communications manager</h4>
