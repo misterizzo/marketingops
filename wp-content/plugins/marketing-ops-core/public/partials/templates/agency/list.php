@@ -696,6 +696,35 @@ get_header();
 				</li>
 			</ul>
 		</div>	
+
+
+		<div class="agancypagination">
+			<ul>
+				<li>
+					<a href="javascript:void(0);">
+						<span>1</spann>
+					</a>
+				</li>
+				<li>
+					<a href="javascript:void(0);">
+						<span>2</spann>
+					</a>
+				</li>
+				<li>
+					<a href="javascript:void(0);">
+						<span>3</spann>
+					</a>
+				</li>
+				<li>
+					<a href="javascript:void(0);">
+						<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none">
+							<circle cx="25" cy="25" r="25" fill="#F1F3F4"/>
+							<path d="M22 18L29 26L22 34" stroke="#45474F" stroke-width="1.3"/>
+						</svg>
+					</a>
+				</li>
+			</ul>
+		</div>
 	</div>
 </section>
 
