@@ -17,6 +17,59 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 ?>
+
+<section class="agency-spotlight">
+	<div class="agency-container">
+		<h2>In the Spotlight</h2>
+		<ul class="spotlitlist">
+			<li>
+				<div class="spotilebox">
+					<div class="spotlightimgbox">
+						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/achievement-american.png" alt="img" /> 
+					</div>
+					<div class="spotligtext">
+						<h4>Natalie Filion</h4>
+						<p>Account Director</p>
+						<a href="javascript:void(0);" class="sociallinkbtn">
+							LinkedIn
+						</a>
+					</div>
+				</div>
+			</li>
+
+			<li>
+				<div class="spotilebox">
+					<div class="spotlightimgbox">
+						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/man-sea-coast-water.png" alt="img" /> 
+					</div>
+					<div class="spotligtext">
+						<h4>Jen Watson</h4>
+						<p>Director of Strategic Operations</p>
+						<a href="javascript:void(0);" class="sociallinkbtn">
+							LinkedIn
+						</a>
+					</div>
+				</div>
+			</li>
+
+			<li>
+				<div class="spotilebox">
+					<div class="spotlightimgbox">
+						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/laptop-computer-.png" alt="img" /> 
+					</div>
+					<div class="spotligtext">
+						<h4>Mesa Stevens</h4>
+						<p>Account Director</p>
+						<a href="javascript:void(0);" class="sociallinkbtn">
+							LinkedIn
+						</a>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>	
+</section>
+
 <section class="agaeny_clients">
 	<div class="agency-container">
 		<h3>Clients</h3>
