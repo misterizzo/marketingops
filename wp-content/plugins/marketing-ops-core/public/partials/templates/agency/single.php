@@ -17,6 +17,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 ?>
+<section class="mainagencydetails">
+	<div class="agency-container">
+		<h1><span>Directly</span> Agency Details</h1>
+		<div class="agencymaintwotable">
+			<div class="agencymaintwotable-left">
+				<img src="/wp-content/themes/hello-elementor_child/images/agencypages/dircaly.png" alt="img" />
+				<p>
+					Founded in 2007, Acceleration Partners is the only truly integrated global partnerships agency and a six-time Global Performance Marketing Award (GPMA) winner in the "Best Affiliate and Partner Marketing Agency" category. Acceleration Partners manages programs in 40+ countries for over 200 brands.
+				</p>
+				<a href="javascript:void(0);">
+					Contact agency <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_84_218)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="white"/></g><defs><clipPath id="clip0_84_218"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i>
+				</a>
+			</div>
+			<div class="agencymaintwotable-right">
+
+			</div>
+		</div>
+	</div>
+</section>
 
 <section class="agency-spotlight">
 	<div class="agency-container">
