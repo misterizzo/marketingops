@@ -23,7 +23,7 @@ get_header();
 		<h2>Curated list of Wubba Lubba dub-dub agencies, top of the line. </h2>
 
 		<div class="agency-mainlistboxs">
-			<ul>
+			<ul class="innermainlistboxs">
 				<li>
 					<div class="inneragencylistbox">
 						<h4>PARTNER</h4>
