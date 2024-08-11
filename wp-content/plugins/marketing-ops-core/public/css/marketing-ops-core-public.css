@@ -2532,4 +2532,33 @@ background-repeat: no-repeat no-repeat;
 background-position: center center;
 background-size: cover;
 }
+
+
+
+@media (max-width: 767px) 
+{
+	.leftbgbar,
+	.leftbgbar_two,
+	.rightbgbar,
+	.rightbgbar_two{display: none;}
+
+	.agency-mainlistboxs ul.innermainlistboxs>li {
+		width: 94%;
+		box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.03);
+		border-radius: 24px;
+		background: #fff;
+		border: 1px solid rgba(231, 239, 239, 0.75);
+		position: relative;
+		margin: 0 auto;
+	}
+
+	.select-dropdown {
+		width: calc((100% / 2) - 30px);
+	}
+	.select-dropdown button.select-dropdown__button{width: 100%;}
+
+	.select-dropdown:last-child {
+		margin-right: 15px;
+	}
+}
 /* agenct */
