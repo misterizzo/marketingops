@@ -2403,4 +2403,37 @@ background-size: cover;
   }
 
 
+
+
+  .leftbgbar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: -1;
+}  
+.leftbgbar_two {
+    position: absolute;
+    top: 111%;
+    right: 0;
+    z-index: -1;
+    overflow: hidden;
+}
+.leftbgbar_two img {
+    position: relative;
+    right: -40%;
+}
+.rightbgbar {
+    position: absolute;
+    top: 200%;
+    left: -120px;
+    overflow: hidden;
+    z-index: -1;
+}
+.rightbgbar_two {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 265%;
+    z-index: -1;
+}
 /* agenct */

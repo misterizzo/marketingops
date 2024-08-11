@@ -28,7 +28,7 @@ get_header();
 		<img src="/wp-content/themes/hello-elementor_child/images/agencypages/blur2.png" alt="img" />
 	</div>
 	<div class="rightbgbar_two">
-		<img src="/wp-content/themes/hello-elementor_child/images/agencypages/blurcircle1.png" alt="img" />
+		<img src="/wp-content/themes/hello-elementor_child/images/agencypages/blur33.png" alt="img" />
 	</div>
 	<div class="agency-container">
 		<h1>Agency Directory</h1>
