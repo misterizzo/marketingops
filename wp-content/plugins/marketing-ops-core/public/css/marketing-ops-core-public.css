@@ -2102,9 +2102,10 @@ margin: 20px 0 10px;
     margin: 0 0 30px;
 }
 
-.agency-mainlistboxs ul li .inneragencylistbox{
-display: flex;
+.agency-mainlistboxs ul li .inneragencylistbox {
+    display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 .agency-mainlistboxs ul.innermainlistboxs {
@@ -2218,5 +2219,6 @@ height: 11px;
     text-decoration: none;
     align-items: center;
     align-content: center;
+	margin-top: auto;
 }
 /* agenct */
