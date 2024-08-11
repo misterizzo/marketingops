@@ -701,7 +701,7 @@ get_header();
 		<div class="agancypagination">
 			<ul>
 				<li>
-					<a href="javascript:void(0);">
+					<a href="javascript:void(0);" class="active">
 						<span>1</spann>
 					</a>
 				</li>
