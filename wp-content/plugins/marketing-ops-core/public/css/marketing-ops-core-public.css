@@ -2202,23 +2202,37 @@ background-clip: text;
 
 .agencymaintwotable{display: flex;gap:0 27px;}
 .agencymaintwotable-left{
-width: 372px;
+max-width: 372px;
+width: 100%;
 flex-shrink: 0;
 border-radius: 24px;
 border: 1px solid rgba(231, 239, 239, 0.75);
 background: #FFF;
 box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.03);
+padding: 40px 30px;
 }
 
 .agencymaintwotable-right{
-width: 776px;
+max-width: 776px;
+width: 100%;
 flex-shrink: 0;
 border-radius: 24px;
 border: 1px solid rgba(231, 239, 239, 0.75);
 background: #FFF;
 box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.03);
+padding: 40px 30px;
 }
 
+.agencymaintwotable-left p{
+color: var(--Primary-text, #45474F);
+font-family: "Open Sans";
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+margin: 0;
+max-width: 318px;
+}
 
 .agency-spotlight .agency-container{max-width: 1180px;margin:0 auto 30px;}
 .agaeny_clients{display: flex;max-width: 1180px;padding: 20px 30px 30px 30px;flex-direction: column;align-items: flex-start;gap: 10px;border-radius: 24px;border: 1px solid rgba(231, 239, 239, 0.75);background: #FFF;box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.03);margin: 0 auto 30px;}
