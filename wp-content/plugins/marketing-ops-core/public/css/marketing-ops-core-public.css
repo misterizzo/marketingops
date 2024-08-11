@@ -2138,6 +2138,7 @@ background-repeat: no-repeat no-repeat;
 background-position: center center;
 background-size: cover;
 }
+.agancypagination {margin: 0 15px;}
 
 @media (min-width: 992px) and (max-width: 1199px) 
 {
