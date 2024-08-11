@@ -2229,11 +2229,11 @@ background-size: cover;
 .agaeny_jobs .agency-container .jobdetailbox ul{list-style:none;display:flex;align-items:center;align-content:center;padding:0 15px;margin:0;gap:25px;}
 .agaeny_jobs .agency-container .jobdetailbox ul li i{width:24px;height:24px;display:block;margin-right:5px;}
 .agaeny_jobs .agency-container .jobdetailbox ul li{display:flex;align-items:center;align-content:center;color:var(--Primary-text,#45474F);text-align:center;font-family:"Open Sans";font-size:16px;font-style:normal;font-weight:400;line-height:normal;}
-
+.agaeny_jobs .agency-container h3{color:var(--Primary-text,#45474F);font-family:"Futura LT";font-size:25px;font-style:normal;font-weight:700;line-height:normal;margin:0 0 20px 30px;}
 @media (min-width:992px) and (max-width:1199px){
 	section.mainagencydetails,section.agency-spotlight,.agaeny_clients,section.agaeny_jobs{margin-left:15px;margin-right:15px;}
 	.agencymaintwotable-right{max-width:calc((100% - 372px) - 27px);width:100%;flex-shrink:0;border-radius:24px;border:1px solid rgba(231,239,239,0.75);background:#FFF;box-shadow:0px 20px 40px 0px rgba(0,0,0,0.03);padding:40px 30px;-webkit-border-radius:24px;-moz-border-radius:24px;-ms-border-radius:24px;-o-border-radius:24px;}
-}}
+}
 @media (min-width:768px) and (max-width:991px){
 	.agencymaintwotable{display:flex;gap:0 27px;flex-wrap:wrap;padding:0 15px;}
 	.agencymaintwotable-left{margin-bottom:20px;width:100%;max-width:100%;}
