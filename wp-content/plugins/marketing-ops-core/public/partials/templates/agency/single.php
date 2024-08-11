@@ -110,5 +110,48 @@ get_header();
 		</ul>
 	</div>	
 </section>
+
+<section class="agency-spotlight">
+	<div class="agency-container">
+		<h2>Articles & Press Releases</h2>
+		<ul class="spotlitlist">
+			<li>
+				<div class="spotilebox">
+					<div class="spotlightimgbox">
+						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/achievement-american.png" alt="img" /> 
+					</div>
+					<div class="spotligtext">
+						<h4>MO Pros Logo Socks</h4>
+						<p class="articals">Sem integer vitae justo eget magna fermentum. Arcu dui vivamus arcu felis bibendum. Nibh nisl condimentum id venenatis a condimentum...</p>
+					</div>
+				</div>
+			</li>
+
+			<li>
+				<div class="spotilebox">
+					<div class="spotlightimgbox">
+						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/man-sea-coast-water.png" alt="img" /> 
+					</div>
+					<div class="spotligtext">
+						<h4>Ut porttitor leo a diam sollicitudin tempor id eu nisl. Scond line example</h4>
+						<p class="articals">Vitae suscipit tellus mauris a diam maecenas sed. Diam maecenas sed enim ut sem viverra....</p>
+					</div>
+				</div>
+			</li>
+
+			<li>
+				<div class="spotilebox">
+					<div class="spotlightimgbox">
+						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/laptop-computer-.png" alt="img" /> 
+					</div>
+					<div class="spotligtext">
+						<h4>MO Pros Logo Socks</h4>
+						<p class="articals">Felis bibendum ut tristique et egestas quis ipsum suspendisse. Nisl nisi scelerisque eu ultrices vitae auctor eu.</p>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>	
+</section>
 <?php
 get_footer();

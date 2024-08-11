@@ -2189,5 +2189,42 @@ background-size: cover;
 .agaeny_clients .agency-container ul li { padding-left: 0px; }
 .agaeny_clients .agency-container ul li {color: var(--Primary-text, #45474F);margin: 0;font-family: "Open Sans";font-size: 16px;font-style: normal;font-weight: 400;line-height: normal;}
 .agaeny_clients .agency-container ul li::before {content: "•";padding-right: 8px;color: var(--Primary-text, #45474F);}
+.agency-spotlight .agency-container h2{color: var(--Primary-text, #45474F);font-family: "Futura LT";font-size: 25px;font-style: normal;font-weight: 700;line-height: normal;margin:0 0 20px 30px;}
+.agency-spotlight .agency-container .spotlitlist li .spotilebox .spotligtext h4{color: var(--text-main2-45474F, #45474F);font-family: "Futura LT";font-size: 19px;font-style: normal;font-weight: 700;line-height: normal;margin:0 0 5px;}
+.agency-spotlight .agency-container .spotlitlist li .spotilebox .spotligtext p{color: var(--text-main2-45474F, #45474F);font-family: "Open Sans";font-size: 16px;font-style: normal;font-weight: 400;line-height: normal;margin:0 0 10px;}
+.agency-spotlight .agency-container .spotlitlist li .spotilebox .spotligtext .sociallinkbtn{display: inline-flex;padding: 7px 20px 8px 20px;justify-content: center;align-items: center;gap: 5px;border-radius: 302px;background: var(--Primary-text, #45474F);color: var(--pure-white, #FFF);text-align: center;font-family: "Open Sans";font-size: 14px;font-style: normal;font-weight: 400;line-height: 82%; /* 11.48px */}
 
+.agency-spotlight .agency-container ul.spotlitlist {
+    display: flex;
+    gap: 32px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.agency-spotlight .agency-container ul.spotlitlist li {
+    border-radius: 24px;
+    border: 1px solid rgba(231, 239, 239, 0.75);
+    background: rgba(255, 255, 255, 0.50);
+    box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.03);
+    width: calc(100% / 3);
+    overflow: hidden;
+}
+
+.agency-spotlight .agency-container ul.spotlitlist li .spotilebox .spotlightimgbox img {
+    max-width: 100%;
+    display: block;
+}
+.agency-spotlight .agency-container ul.spotlitlist li .spotilebox .spotligtext {
+    padding: 20px;
+}
+
+.agency-spotlight .agency-container .spotlitlist li .spotilebox .spotligtext p.articals{
+color: var(--text-main2-45474F, #45474F);
+font-family: "Open Sans";
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
 /* agency detail */
