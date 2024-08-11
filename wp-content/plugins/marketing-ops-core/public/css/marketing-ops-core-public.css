@@ -2065,14 +2065,153 @@ section.profile_setup .content_boxed label:after{content: "";position: absolute;
 
 
 /* agecy */
+
+.mops_marketing-operations-agency-directory_page header.page-header {
+    display: none;
+}
+
 .agenctdirectoryblock .agency-container{
 	max-width: 1190px;
     margin-right: auto;
     margin-left: auto;
     position: relative;
-	display:flex;
-	
-	
 }
 
+.agenctdirectoryblock .agency-container h1{
+text-align: center;
+font-family: "Futura LT";
+font-size: 34px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));
+background-clip: text;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+margin: 20px 0 10px;
+}
+
+.agenctdirectoryblock .agency-container h2 {
+    color: var(--Primary-text, #45474F);
+    text-align: center;
+    font-family: "Open Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 0 0 30px;
+}
+
+.agency-mainlistboxs ul li .inneragencylistbox{
+border-radius: 24px;
+border: 1px solid rgba(231, 239, 239, 0.75);
+background: #FFF;
+box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.03);
+display: flex;
+    flex-direction: column;
+}
+
+.agency-mainlistboxs ul {
+    margin: 0;
+    gap: 30px;
+    padding: 0;
+    display: flex;
+    list-style: none;
+}
+
+.agency-mainlistboxs ul li {
+    width: calc((100% / 4) - 23px);
+}
+
+.agency-mainlistboxs ul li .inneragencylistbox h4{
+display: flex;
+width: 87px;
+height: 29px;
+padding: 7px 10px 8px 10px;
+justify-content: center;
+align-items: center;
+gap: 5px;
+flex-shrink: 0;
+border-radius: 0px 0px 12px 12px;
+background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));
+margin: 0 auto;
+color: var(--pure-white, #FFF);
+font-family: "Open Sans";
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: 82%; /* 9.84px */
+}
+
+.agency-mainlistboxs ul li .inneragencylistbox h3 {
+    color: var(--Primary-text, #45474F);
+    font-family: "Open Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0 30px 10px;
+}
+.agency-mainlistboxs ul li .inneragencylistbox ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 30px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+.agency-mainlistboxs ul li .inneragencylistbox ul li{
+color: var(--Primary-text, #45474F);
+font-family: "Open Sans";
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.agency-mainlistboxs ul li .inneragencylistbox .learnmorebtnagency{
+display: inline-flex;
+height: 26px;
+padding: 7px 10px 8px 10px;
+justify-content: flex-end;
+align-items: flex-end;
+gap: 5px;
+flex-shrink: 0;
+border-radius: 302px;
+background: var(--gray-color, #F1F3F4);
+color: var(--Primary-text, #45474F);
+font-family: "Open Sans";
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 82%; /* 11.48px */
+}
+
+.agency-mainlistboxs ul li .inneragencylistbox .learnmorebtnagency .lernmoresvg{
+width: 15px;
+height: 11px;
+}
+
+
+.agency-mainlistboxs ul li .inneragencylistbox .learnmorebtnagency {
+    display: inline-flex;
+    height: 26px;
+    padding: 7px 10px 8px 10px;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 5px;
+    flex-shrink: 0;
+    border-radius: 302px;
+    background: var(--gray-color, #F1F3F4);
+    color: var(--Primary-text, #45474F);
+    font-family: "Open Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 82%;
+    margin-left: auto;
+    margin-bottom: 15px;
+    margin-right: 15px;
+
+}
 /* agenct */
