@@ -703,6 +703,11 @@ get_header();
 <script>
 
 document.addEventListener('DOMContentLoaded', createSelect, false);
+var selectboxes = document.querySelectorAll('.select-dropdown');
+selectboxes.forEach(function(selectbox) {
+    selectbox.style.display = "block";
+});
+
 function createSelect() {
     var select = document.getElementsByTagName('select'),
       liElement,
@@ -787,12 +792,6 @@ function createSelect() {
 			}, false);
 		}
 }
-
-
-var selectboxes = document.querySelectorAll('.select-dropdown');
-selectboxes.forEach(function(selectbox) {
-    selectbox.style.display = "block";
-});
 </script>	
 <?php
 get_footer();
