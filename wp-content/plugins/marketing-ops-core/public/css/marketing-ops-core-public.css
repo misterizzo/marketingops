@@ -2170,7 +2170,7 @@ background-size: cover;
 .agency-containe{display:flex;flex-flow:wrap;justify-content:unset;align-items:center;gap:0px 10px;margin:0 auto;flex-direction:row;width:95%;}
 .select-dropdown{width:calc((100% / 2 - 5px));margin:0 0 15px;max-width:inherit;}
 .select-dropdown button.select-dropdown__button{width:100%;}
-.select-dropdown:last-child{margin-right:15px;}
+.select-dropdown:last-child{margin-right:0px;}
 .select-dropdown button.select-dropdown__button span.select-dropdown{margin-bottom:0;width:100%;text-align:left;}
 .agency-mainlistboxs ul li .inneragencylistbox img{max-width:60%;display:block;max-height:auto;margin:0 auto;}
 .agancypagination {margin: 0 15px;}
