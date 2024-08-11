@@ -18,6 +18,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header();
 ?>
 <section class="mainagencydetails">
+<div class="leftbgbar">
+		<img src="/wp-content/themes/hello-elementor_child/images/agencypages/blurcircle1.png" alt="img" />
+	</div>
+	<div class="leftbgbar_two">
+		<img src="/wp-content/themes/hello-elementor_child/images/agencypages/blur3.png" alt="img" />
+	</div>
+	<div class="rightbgbar">
+		<img src="/wp-content/themes/hello-elementor_child/images/agencypages/blur2.png" alt="img" />
+	</div>
 	<div class="agency-container">
 		<h1><span>Directly</span> Agency Details</h1>
 		<div class="agencymaintwotable">
