@@ -335,16 +335,16 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
         </div>
     </section>
 
-    <section class="agencyformone">
+    <section class="agencyformone mentions">
         <h6>Special mentions</h6>
-        <div class="agencyformgroup videogroup articals">
+        <div class="agencyformgroup videogroup articals" style="margin-top:0;">
         <h5>Testimonial</h5>
             <label>Text </label>
             <textarea id="Text" name="Text" rows="4" cols="50"></textarea>
             <small>0 of 400 max character</small>    
         </div>
 
-        <div class="agencyformgroup">
+        <div class="agencyformgroup person">
             <label>Name of the person quoted </label>
             <input type="text" class="agancyinputbox" id="person" name="person">
         </div>
