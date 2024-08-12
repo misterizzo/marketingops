@@ -2359,7 +2359,13 @@ section.agencyformone.spotlit .upload-btn-wrapper{width:245px;padding:26px 27px 
 .contactlist h4{color:var(--Primary-text,#45474F);font-family:"Open Sans";font-size:16px;font-style:normal;font-weight:700;line-height:normal;margin:0 0 10px;}
 section.agencyformone.detailsblock .contactlist .agencyformgroups{margin-top:0;margin-bottom:0;}
 .agencyformgroup.withselect select{height:40px;flex-shrink:0;border-radius:6px;border:1px solid var(--gray-stroke,#E7EFEF);background:rgba(246,247,247,0.50);color:var(--Primary-text,#45474F);font-family:"Open Sans";font-size:16px;font-style:normal;font-weight:400;line-height:normal;margin:0 0 5px;}
-.contactlist{margin-top:40px;}
+.contactlist {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+.agencyformgroup.withselect {
+    margin-bottom: 20px;
+}
 section.agencyformone.detailsblock .agencyformgroups.withoutmargin{margin:0;}
 @media (max-width:767px){
 	section.agencyformone{padding:20px 15px;}
