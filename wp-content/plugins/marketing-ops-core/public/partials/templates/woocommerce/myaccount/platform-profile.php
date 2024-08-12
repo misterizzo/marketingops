@@ -52,53 +52,45 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
     <section class="agencyformone detailsblock">
         <h3>Details</h3>
-        <h5>Agency type <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></h5>
+        <h5>Type of the Platform</h5>
         <p>
             <input type="radio" id="affiliate" name="radio-group" checked>
-            <label for="affiliate">Affiliate/OPM
-                <small>Affiliate is the primary service provided by the agency</small>
+            <label for="affiliate">Affiliate
             </label>
         </p>
         <p>
             <input type="radio" id="consultant" name="radio-group">
-            <label for="consultant">Consultant
-                <small>Martech strategy, product selection and stack implementation</small>
+            <label for="consultant">Amazon
             </label>
         </p>
         <p>
             <input type="radio" id="digital" name="radio-group">
-            <label for="digital">Digital
-                <small>Full suite of digital marketing services</small>
+            <label for="digital">Branded Content
             </label>
         </p>
         <p>
             <input type="radio" id="holding" name="radio-group">
-            <label for="holding">Holding company
-                <small>Agency is part of a global collection of agencies</small>
+            <label for="holding">Call Tracking
             </label>
         </p>
         <p>
             <input type="radio" id="influencer" name="radio-group">
-            <label for="influencer">Influencer / Creator agency
-                <small>Influencer / creator is the primary service</small>
+            <label for="influencer">Influencer
             </label>
         </p>
         <p>
             <input type="radio" id="PR" name="radio-group">
-            <label for="PR">PR agency
-                <small>PR & performance PR is the primary service provided by the agency</small>
+            <label for="PR">Lead Cen
             </label>
         </p>
         <p>
             <input type="radio" id="Reddit" name="radio-group">
-            <label for="Reddit">Reddit agency
-                <small>What is this?</small>
+            <label for="Reddit">Publisher Tech
             </label>
         </p>
         <p>
             <input type="radio" id="Search" name="radio-group">
-            <label for="Search">Search/social
-                <small>Search & social are the primary services</small>
+            <label for="Search">SMS
             </label>
         </p>
         <div class="agencyformgroups">
