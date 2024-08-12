@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
             <small>This will be how your name will be displayed in the account section</small>
         </div> 
 
-        <div class="agencyformgroup">
+        <div class="agencyformgroup logoupload">
             <label>Logo <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></label>
             <div class="upload-btn-wrapper">
                 <button class="btn">Select an image</button>
@@ -50,7 +50,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
         </div>
     </section>
 
-    <section class="agencyformone">
+    <section class="agencyformone detailsblock">
         <h3>Details</h3>
         <h5>Agency type <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></h5>
         <p>
@@ -255,8 +255,8 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
         </div>
     </section>
 
-    <section class="agencyformone">
-        <h3>In the spotlight</h3>
+    <section class="agencyformone spotlit">
+        <h3 class="spotlit">In the spotlight</h3>
         <h4>Person 1</h4>
         <div class="agencyformgroups">
             <div class="agencyfirstblock">
@@ -268,7 +268,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
                 <input type="text" class="agancyinputbox" id="position" name="position">
             </div>    
         </div>
-        <div class="agencyformgroup">
+        <div class="agencyformgroup bottomtext">
             <label>LinkedIn URL </label>
             <input type="text" class="agancyinputbox" id="linkedin" name="linkedin">
         </div>
@@ -294,7 +294,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
                 <input type="text" class="agancyinputbox" id="position" name="position">
             </div>    
         </div>
-        <div class="agencyformgroup">
+        <div class="agencyformgroup bottomtext">
             <label>LinkedIn URL </label>
             <input type="text" class="agancyinputbox" id="linkedin" name="linkedin">
         </div>
@@ -320,7 +320,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
                 <input type="text" class="agancyinputbox" id="position" name="position">
             </div>    
         </div>
-        <div class="agencyformgroup">
+        <div class="agencyformgroup bottomtext">
             <label>LinkedIn URL </label>
             <input type="text" class="agancyinputbox" id="linkedin" name="linkedin">
         </div>
@@ -335,59 +335,64 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
         </div>
     </section>
 
-    <section class="agencyformone">
-        <h6>Special mentions</h6>
+    <section class="agencyformone mentions">
+        <h6 class="special">Special mentions</h6>
+        <div class="agencyformgroup videogroup articals" style="margin-top:0;">
         <h5>Testimonial</h5>
-        <div class="agencyformgroup">
             <label>Text </label>
             <textarea id="Text" name="Text" rows="4" cols="50"></textarea>
             <small>0 of 400 max character</small>    
         </div>
 
-        <div class="agencyformgroup">
+        <div class="agencyformgroup person">
             <label>Name of the person quoted </label>
             <input type="text" class="agancyinputbox" id="person" name="person">
         </div>
 
+        <div class="agencyformgroup videogroup articals">
         <h5>Clients</h5>
-        <div class="agencyformgroup">
             <label>Text </label>
             <textarea id="Text" name="Text" rows="4" cols="50"></textarea>
             <small> list as many as you want</small>    
         </div>
 
+        <div class="agencyformgroup videogroup articals">
         <h5>Certifications</h5>
-        <div class="agencyformgroup">
             <label>Text </label>
             <textarea id="Text" name="Text" rows="4" cols="50"></textarea>
             <small> list as many as you want</small>    
         </div>
 
+        <div class="agencyformgroup videogroup articals">
         <h5>Awards</h5>
-        <div class="agencyformgroup">
             <label>Text </label>
             <textarea id="Text" name="Text" rows="4" cols="50"></textarea>
             <small> Please list one award per line to create a list</small>    
         </div>
+        
 
-        <h6>Articles & Press Releses</h6>
-        <div class="fromgops">
-            <div class="agencyformgroup form-group">
-                <input type="checkbox" id="articles">
-                <label for="articles">Publish articles & press releases posted by me</label>
+        <div class="agencyformgroup videogroup articals">
+            <h6 class="jbtitle">Articles & Press Releses</h6>
+            <div class="fromgops">
+                <div class="agencyformgroup form-group">
+                    <input type="checkbox" id="articles">
+                    <label for="articles">Publish articles & press releases posted by me</label>
+                </div>
+                <a href="javascript:void(0);">
+                    Select <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_102_2793)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="white"/></g><defs><clipPath id="clip0_102_2793"><rect width="15" height="11" fill="white"/></clipPath></defs></svg></i>
+                </a>
             </div>
-            <a href="javascript:void(0);">
-                Select <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_102_2793)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="white"/></g><defs><clipPath id="clip0_102_2793"><rect width="15" height="11" fill="white"/></clipPath></defs></svg></i>
-            </a>
         </div>  
         
-        <div class="agencyformgroup">
-            <label>Video </label>
+        
+        <div class="agencyformgroup videogroup">
+        <h6 class="jbtitle">Video</h6>
+            <label>Youtube / Vimeo link </label>
             <input type="text" class="agancyinputbox" id="Video" name="Video">
         </div>
 
-        <h6>Jobs</h6>
-        <div class="form-group">
+        <h6 class="jbtitle">Jobs</h6>
+        <div class="agencyformgroup form-group">
             <input type="checkbox" id="jobs">
             <label for="jobs">Include jobs posted by me to this page</label>
         </div>
