@@ -369,7 +369,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
             <textarea id="Text" name="Text" rows="4" cols="50"></textarea>
             <small> Please list one award per line to create a list</small>    
         </div>
-        </div>
+        
 
         <div class="agencyformgroup videogroup articals">
             <h6 class="jbtitle">Articles & Press Releses</h6>
