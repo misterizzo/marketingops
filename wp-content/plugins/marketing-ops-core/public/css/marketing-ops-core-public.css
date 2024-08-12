@@ -2271,3 +2271,56 @@ background-size: cover;
 	.agaeny_jobs .agency-container .jobdetailbox ul{list-style:none;display:flex;align-items:center;align-content:center;padding:0 0px;margin:0;gap:25px;flex-wrap:wrap;}
 }
 /* agency detail */
+
+/* agency form */
+section.agencyformone{
+	display: flex;
+	flex-direction:column;
+	padding: 40px 80px;
+	gap: 10px;
+	align-self: stretch;
+	border-radius: 24px;
+	border: 1px solid rgba(231, 239, 239, 0.75);
+	background: rgba(255, 255, 255, 0.50);
+	box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.03);
+	}
+
+
+
+	section.agencyformone h1{
+	color: var(--Primary-text, #45474F);
+font-family: "Futura LT";
+font-size: 19px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+	}
+
+
+
+	.agencyformgroup label{
+	color: var(--text-main, #242730);
+font-family: "Open Sans";
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+margin:0 0 10px;
+	}
+
+
+	.agencyformgroup .agancyinputbox{	
+height: 40px;
+flex-shrink: 0;
+	border-radius: 6px;
+border: 1px solid var(--gray-stroke, #E7EFEF);
+background: rgba(246, 247, 247, 0.50);
+color: var(--Primary-text, #45474F);
+font-family: "Open Sans";
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+	}
+/* agency form */
+
