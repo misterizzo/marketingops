@@ -255,8 +255,8 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
         </div>
     </section>
 
-    <section class="agencyformone">
-        <h3>In the spotlight</h3>
+    <section class="agencyformone spotlit">
+        <h3 class="spotlit">In the spotlight</h3>
         <h4>Person 1</h4>
         <div class="agencyformgroups">
             <div class="agencyfirstblock">

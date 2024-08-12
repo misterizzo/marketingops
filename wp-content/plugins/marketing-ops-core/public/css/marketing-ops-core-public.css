@@ -2804,7 +2804,8 @@ text-decoration: none;
 					}
 
 
-					.agencyformone.mentions h6.special{
+					.agencyformone.mentions h6.special,
+					.agencyformone.spotlit h3.spotlit{
 					color: #000;
 font-family: "Futura LT";
 font-size: 25px;
@@ -2813,6 +2814,33 @@ font-weight: 700;
 line-height: normal;
 margin:0 0 20px;
 					}
+
+
+					button.addregion {
+						display: flex;
+						padding: 7px 20px 8px 20px;
+						justify-content: center;
+						align-items: center;
+						gap: 5px;
+						border-radius: 302px;
+						background: var(--Primary-text, #45474F);
+						color: var(--pure-white, #FFF);
+						text-align: center;
+						font-family: "Open Sans";
+						font-size: 14px;
+						font-style: normal;
+						font-weight: 400;
+						line-height: 82%;
+						margin: 15px 0;
+					}
+
+
+					.agencyformone.spotlit h4{color: var(--Primary-text, #45474F);
+						font-family: "Open Sans";
+						font-size: 16px;
+						font-style: normal;
+						font-weight: 700;
+						line-height: normal;margin:0 0 10px;}
 /* agency form */
 
 
