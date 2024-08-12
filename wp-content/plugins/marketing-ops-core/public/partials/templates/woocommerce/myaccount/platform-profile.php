@@ -128,7 +128,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
             </div>    
         </div>
 
-        <div class="agencyformgroup">
+        <div class="agencyformgroup withselect">
             <label>Do you have a publisher network?</label>
             <select>
                 <option value="1">Option 1</option>
@@ -137,7 +137,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
             </select>
         </div>
 
-        <div class="agencyformgroup">
+        <div class="agencyformgroup withselect">
             <label>Do you execute payments to publishers on behalf of your advertisers?  <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></label>
                 <select>
                     <option value="1">Option 1</option>
@@ -146,6 +146,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
                 </select>
         </div>
 
+        <div class="contactlist">
         <h4>Contact</h4>
         <div class="agencyformgroups">
             <div class="agencyfirstblock">
@@ -156,6 +157,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
                 <label>E-mail</label>
                 <input type="text" class="agancyinputbox" id="position" name="position">
             </div>    
+        </div>
         </div>
         <div class="agencyformgroup">
             <label>Platform Website <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></label>
