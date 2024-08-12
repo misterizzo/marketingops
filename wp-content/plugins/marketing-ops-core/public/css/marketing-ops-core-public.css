@@ -2355,6 +2355,20 @@ button.addregion{display:flex;padding:7px 20px 8px 20px;justify-content:center;a
 .agencyformone.spotlit h4{color:var(--Primary-text,#45474F);font-family:"Open Sans";font-size:16px;font-style:normal;font-weight:700;line-height:normal;margin:0 0 10px;}
 section.agencyformone.spotlit .upload-btn-wrapper{width:245px;padding:26px 27px 21px 27px;}
 .agencyformgroup.bottomtext{margin-bottom:20px;}
+
+
+@media (max-width:767px){
+	section.agencyformone{padding:20px 15px;}
+	.upload-btn-wrapper{width:100%;}
+	.agencyformgroup label{margin:0 15px 10px;}
+	.agencyformgroups{flex-wrap:wrap;}
+	.agencyformgroups .agencyfirstblock{width:100%;}
+	section.agencyformone.spotlit .upload-btn-wrapper{width:100%;padding:26px 27px 21px 27px;}
+	.fromgops{flex-wrap:wrap;}
+	.fromgops a{margin:15px 0 0;}
+	.agencyformgroup.form-group label{margin-left:0;margin-top:5px;}
+	section.agencyformone ul{list-style:none;display:flex;gap:10px;align-items:center;margin:0;align-content:center;justify-content:center;padding:0;margin-left:0;width:100%;}
+}
 /* agency form */
 
 
