@@ -2432,7 +2432,7 @@ p [type="radio"]:checked + label,
 p [type="radio"]:not(:checked) + label
 {
     position: relative;
-    padding-left: 40px;
+    padding-left: 35px;
     cursor: pointer;
     line-height: 20px;
     display: inline-block;
@@ -2443,7 +2443,7 @@ p [type="radio"]:not(:checked) + label:before {
     content: '';
     position: absolute;
     left: 0;
-    top: 0;
+    top: 5px;
     width: 25px;
     height: 25px;
     border-radius: 100%;
@@ -2462,7 +2462,7 @@ background-repeat: no-repeat no-repeat;
 background-position: center center;
 background-size: cover;
     position: absolute;
-    top: 0px;
+    top: 5px;
     left: 0px;
     border-radius: 100%;
     -webkit-transition: all 0.2s ease;
@@ -2524,5 +2524,70 @@ font-weight: 400;
 line-height: normal;
 display: block;
 }
+
+section.agencyformone.detailsblock .agencyformgroups {
+    margin: 40px 0;
+}
+
+.agencyformgroups .agencyfirstblock select{height: 40px;
+	flex-shrink: 0;
+	border-radius: 6px;
+	border: 1px solid var(--gray-stroke, #E7EFEF);
+	background: rgba(246, 247, 247, 0.50);
+	color: var(--Primary-text, #45474F);
+	font-family: "Open Sans";
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	margin: 0 0 5px;}
+
+
+	section.agencyformone ul {
+		list-style: none;
+		display: flex;
+		gap: 10px;
+		align-items: center;
+		margin: 0;
+		align-content: center;
+		justify-content: flex-end;
+		padding: 0;
+		margin-left: auto;
+	}
+	
+	section.agencyformone ul li .savedratbtn{
+	display: flex;
+padding: 15px 30px;
+justify-content: center;
+align-items: center;
+gap: 5px;
+border-radius: 302px;
+background: var(--gray-color, #F1F3F4);
+color: var(--text-main, #242730);
+font-family: "Open Sans";
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 82%; /* 13.12px */
+text-decoration: none;
+	}
+
+
+	section.agencyformone ul li .profilebtn{
+		display: flex;
+padding: 15px 30px;
+justify-content: center;
+align-items: center;
+gap: 5px;
+border-radius: 302px;
+background: var(--green, #33C46D);
+color: var(--pure-white, #FFF);
+font-family: "Open Sans";
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 82%; /* 13.12px */
+text-decoration: none;
+		}
 /* agency form */
 
