@@ -29,7 +29,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
         <div class="agencyformgroup">
             <label>Description </label>
-            <textarea id="description" name="description" rows="4" cols="50">
+            <textarea id="description" name="description" rows="4" cols="50"></textarea>
             <small>0 of 400 max character</small>    
         </div>
 
@@ -340,7 +340,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
         <h5>Testimonial</h5>
         <div class="agencyformgroup">
             <label>Text </label>
-            <textarea id="Text" name="Text" rows="4" cols="50">
+            <textarea id="Text" name="Text" rows="4" cols="50"></textarea>
             <small>0 of 400 max character</small>    
         </div>
 
@@ -352,21 +352,21 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
         <h5>Clients</h5>
         <div class="agencyformgroup">
             <label>Text </label>
-            <textarea id="Text" name="Text" rows="4" cols="50">
+            <textarea id="Text" name="Text" rows="4" cols="50"></textarea>
             <small> list as many as you want</small>    
         </div>
 
         <h5>Certifications</h5>
         <div class="agencyformgroup">
             <label>Text </label>
-            <textarea id="Text" name="Text" rows="4" cols="50">
+            <textarea id="Text" name="Text" rows="4" cols="50"></textarea>
             <small> list as many as you want</small>    
         </div>
 
         <h5>Awards</h5>
         <div class="agencyformgroup">
             <label>Text </label>
-            <textarea id="Text" name="Text" rows="4" cols="50">
+            <textarea id="Text" name="Text" rows="4" cols="50"></textarea>
             <small> Please list one award per line to create a list</small>    
         </div>
 
