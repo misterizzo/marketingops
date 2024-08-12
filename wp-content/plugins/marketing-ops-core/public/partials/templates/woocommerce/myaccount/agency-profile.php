@@ -268,7 +268,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
                 <input type="text" class="agancyinputbox" id="position" name="position">
             </div>    
         </div>
-        <div class="agencyformgroup">
+        <div class="agencyformgroup bottomtext">
             <label>LinkedIn URL </label>
             <input type="text" class="agancyinputbox" id="linkedin" name="linkedin">
         </div>
@@ -294,7 +294,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
                 <input type="text" class="agancyinputbox" id="position" name="position">
             </div>    
         </div>
-        <div class="agencyformgroup">
+        <div class="agencyformgroup bottomtext">
             <label>LinkedIn URL </label>
             <input type="text" class="agancyinputbox" id="linkedin" name="linkedin">
         </div>
@@ -320,7 +320,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
                 <input type="text" class="agancyinputbox" id="position" name="position">
             </div>    
         </div>
-        <div class="agencyformgroup">
+        <div class="agencyformgroup bottomtext">
             <label>LinkedIn URL </label>
             <input type="text" class="agancyinputbox" id="linkedin" name="linkedin">
         </div>
