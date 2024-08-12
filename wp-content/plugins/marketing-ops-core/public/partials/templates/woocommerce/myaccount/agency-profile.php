@@ -336,7 +336,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
     </section>
 
     <section class="agencyformone mentions">
-        <h6>Special mentions</h6>
+        <h6 class="special">Special mentions</h6>
         <div class="agencyformgroup videogroup articals" style="margin-top:0;">
         <h5>Testimonial</h5>
             <label>Text </label>

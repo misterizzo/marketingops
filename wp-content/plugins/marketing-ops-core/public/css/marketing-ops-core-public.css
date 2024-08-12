@@ -2804,7 +2804,7 @@ text-decoration: none;
 					}
 
 
-					.agencyformone.mentions h6{
+					.agencyformone.mentions h6.special{
 					color: #000;
 font-family: "Futura LT";
 font-size: 25px;
