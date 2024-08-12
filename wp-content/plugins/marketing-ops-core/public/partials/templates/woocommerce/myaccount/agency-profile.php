@@ -349,15 +349,15 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
             <input type="text" class="agancyinputbox" id="person" name="person">
         </div>
 
+        <div class="agencyformgroup videogroup articals">
         <h5>Clients</h5>
-        <div class="agencyformgroup">
             <label>Text </label>
             <textarea id="Text" name="Text" rows="4" cols="50"></textarea>
             <small> list as many as you want</small>    
         </div>
 
+        <div class="agencyformgroup videogroup articals">
         <h5>Certifications</h5>
-        <div class="agencyformgroup">
             <label>Text </label>
             <textarea id="Text" name="Text" rows="4" cols="50"></textarea>
             <small> list as many as you want</small>    

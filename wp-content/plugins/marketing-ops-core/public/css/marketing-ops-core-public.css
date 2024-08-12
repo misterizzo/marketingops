@@ -2785,5 +2785,13 @@ text-decoration: none;
 				.agencyformgroup.videogroup.articals {
 					margin-bottom: 0;
 				}
+
+
+				.agencyformgroup.videogroup.articals h5{color: var(--Primary-text, #45474F);
+					font-family: "Open Sans";
+					font-size: 16px;
+					font-style: normal;
+					font-weight: 700;
+					line-height: normal;margin:0 0 5px;}
 /* agency form */
 
