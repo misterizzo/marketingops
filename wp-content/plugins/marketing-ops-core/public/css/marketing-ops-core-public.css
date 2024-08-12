@@ -2738,8 +2738,8 @@ text-decoration: none;
 		}
 
 
-		.jbtitle{color: var(--Primary-text, #45474F);
-			font-family: "Open Sans";
+		section.agencyformone .jbtitle{color: var(--Primary-text, #45474F);
+			font-family: "Open Sans" ;
 			font-size: 16px;
 			font-style: normal;
 			margin: 0 0 5px;
@@ -2765,7 +2765,7 @@ text-decoration: none;
 				display: inline-flex;
 				padding: 15px 30px;
 				justify-content: center;
-				align-items: center;
+				align-items: center !important;
 				gap: 5px;
 				border-radius: 302px;
 				background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));
@@ -2775,9 +2775,11 @@ text-decoration: none;
 				font-style: normal;
 				font-weight: 400;
 				line-height: 82%;
-				text-decoration: none;
+				text-decoration: none !important;
 				align-items: center;
 				align-content: center;
 			}
+			.fromgops a:hover { background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));
+				color: var(--pure-white, #FFF);}
 /* agency form */
 
