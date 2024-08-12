@@ -2781,5 +2781,9 @@ text-decoration: none;
 			}
 			.fromgops a:hover { background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));
 				color: var(--pure-white, #FFF);}
+
+				.agencyformgroup.videogroup.articals {
+					margin-bottom: 0;
+				}
 /* agency form */
 
