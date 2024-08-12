@@ -93,9 +93,25 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
             <label for="Search">SMS
             </label>
         </p>
+
+        <h5>What services do you provide?  <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></h5>
+        <div class="agencyformgroup form-group">
+            <input type="checkbox" id="Integration">
+            <label for="Integration">Program Set up & Integration</label>
+        </div>
+        <div class="agencyformgroup form-group">
+            <input type="checkbox" id="Services">
+            <label for="Services">Full Managed Services</label>
+        </div>
+        <div class="agencyformgroup form-group">
+            <input type="checkbox" id="Onboarding">
+            <label for="USOnboarding">Publisher Recruitment & Onboarding</label>
+        </div>
+        <button class="addregion">Add new choice</button>
+
         <div class="agencyformgroups">
             <div class="agencyfirstblock">
-                <label>Year founded</label>
+                <label>Agency Certification Program?</label>
                 <select>
                     <option value="1">Option 1</option>
                     <option value="2">Option 2</option>
@@ -103,7 +119,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
                 </select>
             </div> 
             <div class="agencyfirstblock">
-                <label>Employees</label>
+                <label>Agency Support Team?</label>
                 <select>
                     <option value="1">Option 1</option>
                     <option value="2">Option 2</option>
@@ -111,139 +127,39 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
                 </select>
             </div>    
         </div>
-        <div class="agencyformgroup form-group">
-            <input type="checkbox" id="APAC">
-            <label for="APAC">APAC</label>
-        </div>
-        <div class="agencyformgroup form-group">
-            <input type="checkbox" id="northamerica">
-            <label for="northamerica">North America</label>
-        </div>
-        <div class="agencyformgroup form-group">
-            <input type="checkbox" id="US">
-            <label for="US">US</label>
-        </div>
-        <div class="agencyformgroup form-group">
-            <input type="checkbox" id="EMEA">
-            <label for="EMEA">EMEA</label>
-        </div>
-        <div class="agencyformgroup form-group">
-            <input type="checkbox" id="southamerica">
-            <label for="southamerica">South America</label>
-        </div>
-        <button class="addregion">Add another region</button>
 
+        <div class="agencyformgroup">
+            <label>Do you have a publisher network?</label>
+            <select>
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+                <option value="3">Option 3</option>
+            </select>
+        </div>
+
+        <div class="agencyformgroup">
+            <label>Do you execute payments to publishers on behalf of your advertisers?  <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></label>
+                <select>
+                    <option value="1">Option 1</option>
+                    <option value="2">Option 2</option>
+                    <option value="3">Option 3</option>
+                </select>
+        </div>
+
+        <h4>Contact</h4>
         <div class="agencyformgroups">
             <div class="agencyfirstblock">
-                <label>Primary Verticals <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></label>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="Automotive">
-                    <label for="Automotive">Automotive</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="ConsumerPackageGoods">
-                    <label for="ConsumerPackageGoods">Consumer Packaged Goods</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="Education">
-                    <label for="Education">Education</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="FinancialServices">
-                    <label for="FinancialServices">Financial Services</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="Healthcare">
-                    <label for="Healthcare">Healthcare</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="Retail">
-                    <label for="Retail">Retail</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="Subscription">
-                    <label for="Subscription">Subscription</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="Travel">
-                    <label for="Travel">Travel</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="B2B">
-                    <label for="B2B">B2B</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="DTC">
-                    <label for="DTC">DTC</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="Entertainment">
-                    <label for="Entertainment">Entertainment</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="Caming">
-                    <label for="Caming">Caming</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="Real Estate">
-                    <label for="Real Estate">Real Estate</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="SMB">
-                    <label for="SMB">SMB</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="Telecom">
-                    <label for="Telecom">Telecom</label>
-                </div>
-                <button class="addregion">Add new vertical</button>
-            </div>
-
-
+                <label>Name</label>
+                <input type="text" class="agancyinputbox" id="fullnmame" name="fullnmame">
+            </div> 
             <div class="agencyfirstblock">
-                <label>What services do you provide? <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></label>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="Affiliate Marketing">
-                    <label for="Affiliate Marketing">Affiliate Marketing</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="Database Acquisition">
-                    <label for="Database Acquisition">Database Acquisition</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="Influencer Marketing">
-                    <label for="Influencer Marketing">Influencer Marketing</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="Programmatic">
-                    <label for="Programmatic">Programmatic</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="SEO">
-                    <label for="SEO">SEO</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="Branded Content">
-                    <label for="Branded Content">Branded Content</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="Email Marketing">
-                    <label for="Email Marketing">Email Marketing</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="Performance PR">
-                    <label for="Performance PR">Performance PR</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="SEM">
-                    <label for="SEM">SEM</label>
-                </div>
-                <div class="agencyformgroup form-group">
-                    <input type="checkbox" id="Social media">
-                    <label for="Social media">Social media</label>
-                </div>
-                <button class="addregion">Add new service</button>
-            </div>
+                <label>E-mail</label>
+                <input type="text" class="agancyinputbox" id="position" name="position">
+            </div>    
+        </div>
+        <div class="agencyformgroup">
+            <label>Platform Website <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></label>
+            <input type="text" class="agancyinputbox" id="person" name="person">
         </div>
     </section>
 
