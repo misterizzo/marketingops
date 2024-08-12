@@ -387,7 +387,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
         </div>
 
         <h6>Jobs</h6>
-        <div class="form-group">
+        <div class="agencyformgroup form-group">
             <input type="checkbox" id="jobs">
             <label for="jobs">Include jobs posted by me to this page</label>
         </div>
