@@ -109,24 +109,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
         </div>
         <button class="addregion">Add new choice</button>
 
-        <div class="agencyformgroups">
-            <div class="agencyfirstblock">
-                <label>Agency Certification Program?</label>
-                <select>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
-                </select>
-            </div> 
-            <div class="agencyfirstblock">
-                <label>Agency Support Team?</label>
-                <select>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
-                </select>
-            </div>    
-        </div>
+        
 
         <div class="agencyformgroup withselect">
             <label>Do you have a publisher network?</label>
@@ -144,6 +127,24 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
                     <option value="2">Option 2</option>
                     <option value="3">Option 3</option>
                 </select>
+        </div>
+        <div class="agencyformgroups withoutmargin">
+            <div class="agencyfirstblock">
+                <label>Agency Certification Program?</label>
+                <select>
+                    <option value="1">Option 1</option>
+                    <option value="2">Option 2</option>
+                    <option value="3">Option 3</option>
+                </select>
+            </div> 
+            <div class="agencyfirstblock">
+                <label>Agency Support Team?</label>
+                <select>
+                    <option value="1">Option 1</option>
+                    <option value="2">Option 2</option>
+                    <option value="3">Option 3</option>
+                </select>
+            </div>    
         </div>
 
         <div class="contactlist">
