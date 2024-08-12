@@ -370,7 +370,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
             <small> Please list one award per line to create a list</small>    
         </div>
 
-        <h6>Articles & Press Releses</h6>
+        <h6 class="jbtitle">Articles & Press Releses</h6>
         <div class="fromgops">
             <div class="agencyformgroup form-group">
                 <input type="checkbox" id="articles">
@@ -381,12 +381,12 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
             </a>
         </div>  
         
-        <div class="agencyformgroup">
+        <div class="agencyformgroup videogroup">
             <label>Video </label>
             <input type="text" class="agancyinputbox" id="Video" name="Video">
         </div>
 
-        <h6>Jobs</h6>
+        <h6 class="jbtitle">Jobs</h6>
         <div class="agencyformgroup form-group">
             <input type="checkbox" id="jobs">
             <label for="jobs">Include jobs posted by me to this page</label>
