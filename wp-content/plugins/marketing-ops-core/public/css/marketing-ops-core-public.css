@@ -2732,5 +2732,9 @@ text-decoration: none;
 			padding-left: 35px;
 			position: relative;
 		}
+
+		.agencyformgroup.form-group {
+			position: relative;
+		}
 /* agency form */
 
