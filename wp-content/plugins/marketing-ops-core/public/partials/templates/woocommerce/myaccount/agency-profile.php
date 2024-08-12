@@ -337,8 +337,8 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
     <section class="agencyformone">
         <h6>Special mentions</h6>
+        <div class="agencyformgroup videogroup articals">
         <h5>Testimonial</h5>
-        <div class="agencyformgroup">
             <label>Text </label>
             <textarea id="Text" name="Text" rows="4" cols="50"></textarea>
             <small>0 of 400 max character</small>    
