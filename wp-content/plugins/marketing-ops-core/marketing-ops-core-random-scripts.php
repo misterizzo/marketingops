@@ -202,16 +202,34 @@ function fetch_mopza24_speakers() {
 		)
 	);
 
-	$session_board_event_speakers = wp_remote_get(
-		esc_url_raw( "https://public-api.sessionboard.com/v1/event/{$event_id}/speakers" ),
-		array(
-			'headers' => array(
-				'x-access-token' => $api_token,
-			),
+	$session_board_event_speakers = wp_remote_post( "https://public-api.sessionboard.com/v1/event/{$event_id}/speakers", array(
+		'method'      => 'POST',
+		'timeout'     => 45,
+		'redirection' => 5,
+		'httpversion' => '1.0',
+		'blocking'    => true,
+		'headers'     => array(
+			'x-access-token' => $api_token,
+		),
+		'body'        => array(
+			'page'     => 1,
+			'pageSize' => 50
+		),
+		'cookies'     => array()
 		)
 	);
 
-	debug( $session_board_event_speakers ); die;
+	debug( $session_board_event_speakers );
+	die;
+	
+	// if ( is_wp_error( $session_board_event_speakers ) ) {
+	// 	$error_message = $session_board_event_speakers->get_error_message();
+	// 	echo "Something went wrong: $error_message";
+	// } else {
+	// 	echo 'Response:<pre>';
+	// 	print_r( $session_board_event_speakers );
+	// 	echo '</pre>';
+	// }
 }
 
 fetch_mopza24_speakers();
