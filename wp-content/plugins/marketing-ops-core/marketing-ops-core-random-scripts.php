@@ -191,9 +191,9 @@ function fetch_mopza24_speakers() {
 	// Event ID: 4630
 	// API Doc: https://sessionboard.stoplight.io/docs/sessionboard/1zjc8l9djyez6-getting-started
 
-	$api_token                    = '9bzYF5mj5yxgVrZSI9fbdZDL0dcrtaJKQTeZRc/eVpToFNn3R5oZVI8aRujeG3HcAWw3+QAwNI5rAhvIqAW7oTZmODIzZjY3LTFhYWQtNGU5Zi1hZTU4LTc5M2VhMzU3NGE5Yzk2Mzg2';
-	$event_id                     = 4630;
-	$mopza24_speakers_api_request = wp_remote_get(
+	$api_token            = '9bzYF5mj5yxgVrZSI9fbdZDL0dcrtaJKQTeZRc/eVpToFNn3R5oZVI8aRujeG3HcAWw3+QAwNI5rAhvIqAW7oTZmODIzZjY3LTFhYWQtNGU5Zi1hZTU4LTc5M2VhMzU3NGE5Yzk2Mzg2';
+	$event_id             = 4630;
+	$session_board_events = wp_remote_get(
 		esc_url_raw( 'https://public-api.sessionboard.com/v1/events/' ),
 		array(
 			'headers' => array(
@@ -202,7 +202,16 @@ function fetch_mopza24_speakers() {
 		)
 	);
 
-	debug( $mopza24_speakers_api_request ); die;
+	$session_board_event_speakers = wp_remote_get(
+		esc_url_raw( "https://public-api.sessionboard.com/v1/event/{$event_id}/speakers" ),
+		array(
+			'headers' => array(
+				'x-access-token' => $api_token,
+			),
+		)
+	);
+
+	debug( $session_board_event_speakers ); die;
 }
 
 fetch_mopza24_speakers();
