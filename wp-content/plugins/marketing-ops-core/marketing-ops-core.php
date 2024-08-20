@@ -117,9 +117,9 @@ if ( ! function_exists( 'debug' ) ) {
  */
 add_action( 'admin_init', function() {
 	// Return, if it's not Adarsh's IP.
-	if ( '183.82.163.223' !== $_SERVER['REMOTE_ADDR'] ) {
+	if ( '183.82.162.11' !== $_SERVER['REMOTE_ADDR'] ) {
 		return;
 	}
 
-	// include_once 'marketing-ops-core-random-scripts.php';
+	include_once 'marketing-ops-core-random-scripts.php';
 } );
