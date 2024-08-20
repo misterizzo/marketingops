@@ -192,7 +192,7 @@ function fetch_mopza24_speakers() {
 	// API Doc: https://sessionboard.stoplight.io/docs/sessionboard/1zjc8l9djyez6-getting-started
 
 	$mopza24_speakers_api_request = wp_remote_get(
-		esc_url_raw( 'https://public-api.sessionboard.com/v1/event/4630/speakers' ),
+		esc_url_raw( 'https://public-api.sessionboard.com/v1/events/' ),
 		array(
 			'headers' => array()
 		)
