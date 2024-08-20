@@ -202,6 +202,11 @@ function fetch_mopza24_speakers() {
 		)
 	);
 
+	$filters = new stdClass();
+	$filters->filters = array(
+		'status' => 'accepted',
+	);
+
 	$session_board_event_speakers = wp_remote_post(
 		add_query_arg(
 			array(
@@ -220,9 +225,7 @@ function fetch_mopza24_speakers() {
 				'x-access-token' => $api_token,
 			),
 			'body'        => array(
-				'filters' => array(
-					'status' => 'accepted',
-				),
+				'filters' => $filters
 			),
 			'cookies'     => array()
 		)
