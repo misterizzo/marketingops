@@ -220,6 +220,9 @@ function fetch_mopza24_speakers() {
 				'x-access-token' => $api_token,
 			),
 			'body'        => array(
+				'filters' => array(
+					'status' => 'accepted',
+				),
 			),
 			'cookies'     => array()
 		)
