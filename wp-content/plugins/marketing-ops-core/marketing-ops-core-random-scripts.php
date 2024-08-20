@@ -225,17 +225,12 @@ function fetch_mopza24_speakers() {
 		)
 	);
 
-	debug( $session_board_event_speakers );
+	$session_board_event_speakers_response_code = wp_remote_retrieve_response_code( $session_board_event_speakers );
+	$session_board_event_speakers_response_body = wp_remote_retrieve_body( $session_board_event_speakers );
+
+	var_dump( $session_board_event_speakers_response_code );
+	debug( json_decode( $session_board_event_speakers_response_body ) );
 	die;
-	
-	// if ( is_wp_error( $session_board_event_speakers ) ) {
-	// 	$error_message = $session_board_event_speakers->get_error_message();
-	// 	echo "Something went wrong: $error_message";
-	// } else {
-	// 	echo 'Response:<pre>';
-	// 	print_r( $session_board_event_speakers );
-	// 	echo '</pre>';
-	// }
 }
 
 fetch_mopza24_speakers();
