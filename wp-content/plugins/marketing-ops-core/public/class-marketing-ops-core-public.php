@@ -6541,16 +6541,67 @@ class Marketing_Ops_Core_Public {
 			$sessions = json_decode( $sessions, true );
 		}
 
-		// $sessions = ( ! empty( $sessions->results ) ) ? $sessions->results : array();
-
-		debug( $sessions );
-		die;
+		$sessions = ( ! empty( $sessions['results'] ) ) ? $sessions['results'] : array();
 
 		// Start with the html.
 		ob_start();
-		?>
-		<p>speakers coming soon</p>
-		<?php
+
+		// If there are no sessions, print a message.
+		if ( ! empty( $sessions ) && is_array( $sessions ) ) {
+			?>
+			<div class="key_speaker_content apalooza_in_person_speakers_container mopza24">
+				<h3 style="color: #fff;"><?php esc_html_e( 'SESSIONS', 'marketing-ops-core' ); ?></h3>
+				<div class="key_speaker_container">
+					<div class="key_speaker_row">
+						<?php
+						// Loop through the sessions.
+						foreach ( $sessions as $session ) {
+							// debug( $session );
+							$session_id          = ( ! empty( $session['id'] ) ) ? $session['id'] : '';
+							$session_friendly_id = ( ! empty( $session['friendly_id'] ) ) ? $session['friendly_id'] : '';
+							$session_title       = ( ! empty( $session['title'] ) ) ? $session['title'] : '';
+							$session_description = ( ! empty( $session['description'] ) ) ? $session['description'] : '';
+							$session_speakers    = ( ! empty( $session['speakers'] ) ) ? $session['speakers'] : array();
+							?>
+							<div class="key_speaker_box" data-session_id="<?php echo esc_attr( $session_id ); ?>" data-session_friendly_id="<?php echo esc_attr( $session_friendly_id ); ?>">
+								<h5><a href="javascript:void(0);" class="popup_btn moc_open_speaker_session_details"><?php echo wp_kses_post( $session_title ); ?></a></h5>
+								<div class="session_description" style="display: none;"><?php echo wp_kses_post( $session_description ); ?></div>
+								<div class="key_speaker_details">
+									<!-- Popup Button -->
+									<div class="ks_button">
+										<a href="javascript:void(0);" class="popup_btn button moc_open_speaker_session_details">
+											<span class="text"><?php esc_html_e( 'View', 'marketing-ops-core' ); ?></span>
+											<span class="svg_icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="11" viewBox="0 0 20 11" fill="none"><path d="M14.7859 0.74192C14.4643 0.729551 14.1659 0.913544 14.0345 1.20731C13.9015 1.50109 13.9587 1.84433 14.1814 2.07935L16.6135 4.70782H1.30494C1.0189 4.70318 0.754506 4.85316 0.610713 5.10055C0.465374 5.34639 0.465374 5.65253 0.610713 5.89837C0.754506 6.14575 1.0189 6.29573 1.30494 6.29109H16.6135L14.1814 8.91957C13.9835 9.12675 13.9139 9.42361 13.9974 9.69728C14.0809 9.97096 14.3051 10.1781 14.5834 10.24C14.8632 10.3018 15.1539 10.2075 15.3441 9.99569L19.5017 5.49946L15.3441 1.00322C15.2018 0.845513 14.9993 0.749651 14.7859 0.74192Z" fill="white"></path></svg></span>
+										</a>
+									</div>
+
+									<?php if ( ! empty( $session_speakers ) && is_array( $session_speakers ) ) { ?>
+										<!-- Speaker Details -->
+										<div class="ks_details moc_open_speaker_session_details">
+											<?php foreach ( $session_speakers as $speaker ) {
+												$speaker_id          = ( ! empty( $speaker['id'] ) ) ? $speaker['id'] : '';
+												$speaker_friendly_id = ( ! empty( $speaker['friendly_id'] ) ) ? $speaker['friendly_id'] : '';
+												$speaker_name        = ( ! empty( $speaker['full_name'] ) ) ? $speaker['full_name'] : '';
+												$speaker_photo_url   = ( ! empty( $speaker['photo_url'] ) ) ? $speaker['photo_url'] : '';
+												?>
+												<a href="javascript:void(0);" class="ks_link" data-speaker_id="<?php echo esc_attr( $speaker_id ); ?>" data-speaker_friendly_id="<?php echo esc_attr( $speaker_friendly_id ); ?>">
+													<span class="ks_text"><?php echo wp_kses_post( $speaker_name ); ?></span>
+													<span class="ks_img"><img decoding="async" src="<?php echo esc_url( $speaker_photo_url ); ?>" alt="Profile picture of <?php echo wp_kses_post( $speaker_name ); ?>" title="Profile picture of <?php echo wp_kses_post( $speaker_name ); ?>" /></span>
+												</a>
+											<?php } ?>
+										</div>
+									<?php } ?>
+								</div>
+							</div>
+						<?php } ?>
+						</div>
+					</div>
+				</div>
+			<?php
+		} else {
+			?><p style="color: #fff;"><?php esc_html_e( 'There are no sessions fetched from API. Please contact the site administrator', 'marketing-ops-core' ); ?></p><?php
+		}
+
 		return ob_get_clean();
 	}
 }

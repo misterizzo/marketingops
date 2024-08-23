@@ -3703,6 +3703,50 @@
 	}
 
 	/**
+	 * Open the apaloooza session moodal.
+	 */
+	if ( $( '.key_speaker_content.mopza24 .moc_open_speaker_session_details' ).length ) {
+		$( document ).on( 'click', '.key_speaker_content.mopza24 .moc_open_speaker_session_details', function() {
+			var this_element  = $( this );
+
+			// Return, if the session index or type is unavailable.
+			if ( '' === session_index || '' === session_type ) {
+				return false;
+			}
+
+			// Kickoff the AJAX call to open the modal.
+			$.ajax( {
+				dataType: 'JSON',
+				url: ajaxurl,
+				type: 'POST',
+				data: {
+					action: 'apalooza_agenda_details',
+					session_index: session_index,
+					session_type: session_type,
+					moc_post_id: $( 'input[name="moc_post_id"]' ).val(),
+				},
+				beforeSend: function() {
+					this_element.parents( '.key_speaker_container' ).next( '.loader_bg' ).addClass( 'show' );  // Show up the loader.
+				},
+				success: function ( response ) {
+					// If the session data is available.
+					if ( 'session-data-available' === response.data.code ) {
+						$( '#moc_apaloza_session' ).addClass( 'active' ).removeClass( 'non-active' );
+						$( '#moc_apaloza_session .popup_content_box' ).html( response.data.html );
+						$( 'body' ).addClass( 'active-popup' );
+					}
+				},
+				error: function( xhr ) {
+					this_element.parents( '.key_speaker_container' ).next( '.loader_bg' ).removeClass( 'show' );  // Hide the loader.
+				},
+				complete: function() {
+					this_element.parents( '.key_speaker_container' ).next( '.loader_bg' ).removeClass( 'show' );  // Hide the loader.
+				},
+			} );
+		} );
+	}
+
+	/**
 	 * Open the Accelevents purchase tickets modal.
 	 */
 	// if ( $( '.open_accelevents_purchase_tickets_modal' ).length ) {
