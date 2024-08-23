@@ -6499,4 +6499,30 @@ class Marketing_Ops_Core_Public {
 		);
 		wp_die();
 	}
+
+	/**
+	 * Shortcode for rendering the in-person speakers on apalooza page.
+	 *
+	 * @param array $args Shortcode arguments.
+	 * @return string
+	 * @since 1.0.0
+	 */
+	public function mops_mopza24_sessions_callback( $args = array() ) {
+		// Return, if it's admin.
+		if ( is_admin() ) {
+			return;
+		}
+
+		// Return, if it's other IP addresses than Adarsh's.
+		if ( '183.82.162.11' !== $_SERVER['REMOTE_ADDR'] ) {
+			return;
+		}
+
+		// Start with the html.
+		ob_start();
+		?>
+		<p>speakers coming soon</p>
+		<?php
+		return ob_get_clean();
+	}
 }
