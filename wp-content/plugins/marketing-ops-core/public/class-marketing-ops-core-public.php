@@ -6557,11 +6557,12 @@ class Marketing_Ops_Core_Public {
 						// Loop through the sessions.
 						foreach ( $sessions as $session ) {
 							// debug( $session );
-							$session_id          = ( ! empty( $session['id'] ) ) ? $session['id'] : '';
-							$session_friendly_id = ( ! empty( $session['friendly_id'] ) ) ? $session['friendly_id'] : '';
-							$session_title       = ( ! empty( $session['title'] ) ) ? $session['title'] : '';
-							$session_description = ( ! empty( $session['description'] ) ) ? $session['description'] : '';
-							$session_speakers    = ( ! empty( $session['speakers'] ) ) ? $session['speakers'] : array();
+							$session_id           = ( ! empty( $session['id'] ) ) ? $session['id'] : '';
+							$session_friendly_id  = ( ! empty( $session['friendly_id'] ) ) ? $session['friendly_id'] : '';
+							$session_title        = ( ! empty( $session['title'] ) ) ? $session['title'] : '';
+							$session_description  = ( ! empty( $session['description'] ) ) ? $session['description'] : '';
+							$session_speakers     = ( ! empty( $session['speakers'] ) ) ? $session['speakers'] : array();
+							$session_speaker_data = '';
 							?>
 							<div class="key_speaker_box" data-session_id="<?php echo esc_attr( $session_id ); ?>" data-session_friendly_id="<?php echo esc_attr( $session_friendly_id ); ?>">
 								<h5><a href="javascript:void(0);" class="popup_btn moc_open_speaker_session_details"><?php echo wp_kses_post( $session_title ); ?></a></h5>
@@ -6583,12 +6584,30 @@ class Marketing_Ops_Core_Public {
 												$speaker_friendly_id = ( ! empty( $speaker['friendly_id'] ) ) ? $speaker['friendly_id'] : '';
 												$speaker_name        = ( ! empty( $speaker['full_name'] ) ) ? $speaker['full_name'] : '';
 												$speaker_photo_url   = ( ! empty( $speaker['photo_url'] ) ) ? $speaker['photo_url'] : '';
+												$speaker_linkedin    = ( ! empty( $speaker['linkedin_url'] ) ) ? $speaker['linkedin_url'] : '';
+												$speaker_twitter     = ( ! empty( $speaker['twitter_url'] ) ) ? $speaker['twitter_url'] : '';
+
+												$session_speaker_data .= '<div class="speaker_details">';
+												$session_speaker_data .= '<div class="speaker_img">';
+												$session_speaker_data .= '<img src="' . $speaker_photo_url . '" alt="Profile picture of ' . $speaker_name . '" />';
+												$session_speaker_data .= '</div>';
+												$session_speaker_data .= '<div class="speaker_details_box">';
+												$session_speaker_data .= '<div class="details_box">';
+												$session_speaker_data .= '<h2>' . $speaker_name . '</h2>';
+												$session_speaker_data .= '<h5>Middesk&nbsp;•&nbsp;Revenue Operations &amp; Strategy</h5>';
+												$session_speaker_data .= '</div>';
+												$session_speaker_data .= '<div class="socail_icons">';
+												$session_speaker_data .= '<a href="' . $speaker_linkedin . '" target="_blank"><svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="19" cy="19" r="19" fill="#1F2840"></circle><path d="M25.2104 11.3684H12.3007C11.5101 11.3684 10.8684 12.0101 10.8684 12.8007V25.7104C10.8684 26.501 11.5101 27.1427 12.3007 27.1427H25.2104C26.001 27.1427 26.6427 26.501 26.6427 25.7104V12.8007C26.6427 12.0101 26.001 11.3684 25.2104 11.3684ZM15.8528 24.2743H13.7406V17.4681H15.8528V24.2743ZM14.7757 16.4941C14.092 16.4941 13.542 15.9441 13.542 15.2642C13.542 14.5806 14.0958 14.0306 14.7757 14.0306C15.4556 14.0306 16.0094 14.5844 16.0094 15.2642C16.0094 15.9441 15.4556 16.4941 14.7757 16.4941ZM23.7781 24.2743H21.6622V20.9667C21.6622 20.176 21.6507 19.1601 20.566 19.1601C19.4622 19.1601 19.2941 20.0195 19.2941 20.9094V24.2743H17.182V17.4681H19.2101V18.4H19.2406C19.5195 17.8653 20.2108 17.3 21.2382 17.3C23.3809 17.3 23.7781 18.7094 23.7781 20.5427V24.2743Z" fill="white"></path></svg></a>';
+												$session_speaker_data .= '</div>';
+												$session_speaker_data .= '</div>';
+												$session_speaker_data .= '</div>';
 												?>
 												<a href="javascript:void(0);" class="ks_link" data-speaker_id="<?php echo esc_attr( $speaker_id ); ?>" data-speaker_friendly_id="<?php echo esc_attr( $speaker_friendly_id ); ?>">
 													<span class="ks_text"><?php echo wp_kses_post( $speaker_name ); ?></span>
 													<span class="ks_img"><img decoding="async" src="<?php echo esc_url( $speaker_photo_url ); ?>" alt="Profile picture of <?php echo wp_kses_post( $speaker_name ); ?>" title="Profile picture of <?php echo wp_kses_post( $speaker_name ); ?>" /></span>
 												</a>
 											<?php } ?>
+											<div class="popup_speaker_data" style="display: none;"><?php echo wp_kses_post( $session_speaker_data ); ?></div>
 										</div>
 									<?php } ?>
 								</div>

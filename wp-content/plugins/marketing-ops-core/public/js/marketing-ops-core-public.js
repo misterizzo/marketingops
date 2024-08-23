@@ -3707,43 +3707,15 @@
 	 */
 	if ( $( '.key_speaker_content.mopza24 .moc_open_speaker_session_details' ).length ) {
 		$( document ).on( 'click', '.key_speaker_content.mopza24 .moc_open_speaker_session_details', function() {
-			var this_element        = $( this );
-			var session_description = this_element.parents( '.key_speaker_box' ).find( 'div.session_description' ).html();
-			var session_title       = this_element.parents( '.key_speaker_box' ).find( 'h5 a.moc_open_speaker_session_details' ).text();
+			var this_element         = $( this );
+			var session_description  = this_element.parents( '.key_speaker_box' ).find( 'div.session_description' ).html();
+			var session_speaker_data = this_element.parents( '.key_speaker_box' ).find( 'div.popup_speaker_data' ).html();
+			var session_title        = this_element.parents( '.key_speaker_box' ).find( 'h5 a.moc_open_speaker_session_details' ).text();
 			this_element.parents( '.key_speaker_container' ).next( '.loader_bg' ).addClass( 'show' );  // Show up the loader.
 
 			// Set the modal html.
 			var session_modal_html ='<div class="box_content">';
-			session_modal_html    += '<div class="apaloooza-session-speakers">';
-			session_modal_html    += '<div class="speaker_details">';
-			session_modal_html    += '<div class="speaker_img">';
-			session_modal_html    += '<img src="https://marketingops.com/wp-content/uploads/2023/11/Ying-Ying-Lim.jpeg" alt="Profile picture of Ying Ying Lim">';
-			session_modal_html    += '</div>';
-			session_modal_html    += '<div class="speaker_details_box">';
-			session_modal_html    += '<div class="details_box">';
-			session_modal_html    += '<h2>Ying Ying Lim</h2>';
-			session_modal_html    += '<h5>Middesk&nbsp;•&nbsp;Revenue Operations &amp; Strategy</h5>';
-			session_modal_html    += '</div>';
-			session_modal_html    += '<div class="socail_icons">';
-			session_modal_html    += '<a href="https://www.linkedin.com/in/lim-ying-ying/" target="_blank"><svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="19" cy="19" r="19" fill="#1F2840"></circle><path d="M25.2104 11.3684H12.3007C11.5101 11.3684 10.8684 12.0101 10.8684 12.8007V25.7104C10.8684 26.501 11.5101 27.1427 12.3007 27.1427H25.2104C26.001 27.1427 26.6427 26.501 26.6427 25.7104V12.8007C26.6427 12.0101 26.001 11.3684 25.2104 11.3684ZM15.8528 24.2743H13.7406V17.4681H15.8528V24.2743ZM14.7757 16.4941C14.092 16.4941 13.542 15.9441 13.542 15.2642C13.542 14.5806 14.0958 14.0306 14.7757 14.0306C15.4556 14.0306 16.0094 14.5844 16.0094 15.2642C16.0094 15.9441 15.4556 16.4941 14.7757 16.4941ZM23.7781 24.2743H21.6622V20.9667C21.6622 20.176 21.6507 19.1601 20.566 19.1601C19.4622 19.1601 19.2941 20.0195 19.2941 20.9094V24.2743H17.182V17.4681H19.2101V18.4H19.2406C19.5195 17.8653 20.2108 17.3 21.2382 17.3C23.3809 17.3 23.7781 18.7094 23.7781 20.5427V24.2743Z" fill="white"></path></svg></a>';
-			session_modal_html    += '</div>';
-			session_modal_html    += '</div>';
-			session_modal_html    += '</div>';
-			session_modal_html    += '<div class="speaker_details">';
-			session_modal_html    += '<div class="speaker_img">';
-			session_modal_html    += '<img src="https://marketingops.com/wp-content/uploads/2023/08/Sydney-Mulligan@2x.jpg" alt="Profile picture of Sydney Mulligan">';
-			session_modal_html    += '</div>';
-			session_modal_html    += '<div class="speaker_details_box">';
-			session_modal_html    += '<div class="details_box">';
-			session_modal_html    += '<h2>Sydney Mulligan</h2>';
-			session_modal_html    += '<h5>EMMIE Collective&nbsp;•&nbsp;Co-founder</h5>';
-			session_modal_html    += '</div>';
-			session_modal_html    += '<div class="socail_icons">';
-			session_modal_html    += '<a href="https://www.linkedin.com/in/sydneymulligan/" target="_blank"><svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="19" cy="19" r="19" fill="#1F2840"></circle><path d="M25.2104 11.3684H12.3007C11.5101 11.3684 10.8684 12.0101 10.8684 12.8007V25.7104C10.8684 26.501 11.5101 27.1427 12.3007 27.1427H25.2104C26.001 27.1427 26.6427 26.501 26.6427 25.7104V12.8007C26.6427 12.0101 26.001 11.3684 25.2104 11.3684ZM15.8528 24.2743H13.7406V17.4681H15.8528V24.2743ZM14.7757 16.4941C14.092 16.4941 13.542 15.9441 13.542 15.2642C13.542 14.5806 14.0958 14.0306 14.7757 14.0306C15.4556 14.0306 16.0094 14.5844 16.0094 15.2642C16.0094 15.9441 15.4556 16.4941 14.7757 16.4941ZM23.7781 24.2743H21.6622V20.9667C21.6622 20.176 21.6507 19.1601 20.566 19.1601C19.4622 19.1601 19.2941 20.0195 19.2941 20.9094V24.2743H17.182V17.4681H19.2101V18.4H19.2406C19.5195 17.8653 20.2108 17.3 21.2382 17.3C23.3809 17.3 23.7781 18.7094 23.7781 20.5427V24.2743Z" fill="white"></path></svg></a>';
-			session_modal_html    += '</div>';
-			session_modal_html    += '</div>';
-			session_modal_html    += '</div>';
-			session_modal_html    += '</div>';
+			session_modal_html    += '<div class="apaloooza-session-speakers">' + session_speaker_data + '</div>';
 			session_modal_html    += '<div class="speaker_content">';
 			session_modal_html    += '<h2 class="session_title">' + session_title + '</h2>';
 			session_modal_html    += session_description;
