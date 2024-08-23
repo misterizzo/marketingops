@@ -6516,7 +6516,7 @@ class Marketing_Ops_Core_Public {
 		}
 
 		// Return, if it's other IP addresses than Adarsh's.
-		if ( '183.82.162.11' !== $_SERVER['REMOTE_ADDR'] ) {
+		if ( '183.82.162.11' !== $_SERVER['REMOTE_ADDR'] || '99.82.224.176' !== $_SERVER['REMOTE_ADDR'] ) {
 			return;
 		}
 
