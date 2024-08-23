@@ -3708,7 +3708,7 @@
 	if ( $( '.key_speaker_content.mopza24 .moc_open_speaker_session_details' ).length ) {
 		$( document ).on( 'click', '.key_speaker_content.mopza24 .moc_open_speaker_session_details', function() {
 			var this_element        = $( this );
-			var session_description = '';
+			var session_description = this_element.parents( '.key_speaker_box' ).find( 'div.session_description' ).html();
 			var session_title       = this_element.parents( '.key_speaker_box' ).find( 'h5 a.moc_open_speaker_session_details' ).text();
 			this_element.parents( '.key_speaker_container' ).next( '.loader_bg' ).addClass( 'show' );  // Show up the loader.
 
@@ -3746,12 +3746,7 @@
 			session_modal_html    += '</div>';
 			session_modal_html    += '<div class="speaker_content">';
 			session_modal_html    += '<h2 class="session_title">' + session_title + '</h2>';
-			session_modal_html    += '<p>New leads enter your Marketo instance every day, but are they enriched, normalized, stamped, sourced, and routed correctly BEFORE they are synced to your CRM? We are getting down and dirty with strategies to architect your Marketo Initial Processing for scale and speed.</p>';
-			session_modal_html    += '<h2>Key Takeaways</h2>';
-			session_modal_html    += '<ul class="key_takeaways_list">';
-			session_modal_html    += '<li>The business value of centralizing your original processing operational programs.</li>';
-			session_modal_html    += '<li>How to architect intelligently and at scale.</li>';
-			session_modal_html    += '</ul>';
+			session_modal_html    += session_description;
 			session_modal_html    += '</div>';
 			session_modal_html    += '</div>';
 
@@ -3760,7 +3755,7 @@
 				$( '#moc_apaloza_session .popup_content_box' ).html( session_modal_html );
 				$( 'body' ).addClass( 'active-popup' );
 				this_element.parents( '.key_speaker_container' ).next( '.loader_bg' ).removeClass( 'show' );  // Hide the loader.
-			}, 2000 );
+			}, 500 );
 		} );
 	}
 
