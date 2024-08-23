@@ -9302,3 +9302,57 @@ if ( ! function_exists( 'moc_agency_custom_post_type_and_category_taxonomy' ) ) 
 		);
 	}
 }
+
+
+/**
+ * Check if the function exists.
+ */
+if ( ! function_exists( 'fetch_mopza24_sessions' ) ) {
+	/**
+	 * Fetch mopza24 sessions.
+	 *
+	 * @return string
+	 * @since 1.0.0
+	 */
+	function fetch_mopza24_sessions() {
+		$api_token                         = '9bzYF5mj5yxgVrZSI9fbdZDL0dcrtaJKQTeZRc/eVpToFNn3R5oZVI8aRujeG3HcAWw3+QAwNI5rAhvIqAW7oTZmODIzZjY3LTFhYWQtNGU5Zi1hZTU4LTc5M2VhMzU3NGE5Yzk2Mzg2';
+		$event_id                          = 4630;
+		$filters                           = new stdClass();
+		$filters->filters                  = new stdClass();
+		$filters->filters->status          = 'accepted';
+		$session_board_event_sessions_body = json_encode( $filters );
+
+		$session_board_event_sessions      = wp_remote_post(
+			add_query_arg(
+				array(
+					'page'     => 1,
+				),
+				"https://public-api.sessionboard.com/v1/event/{$event_id}/sessions/"
+			),
+			array(
+				'method'      => 'POST',
+				'timeout'     => 45,
+				'redirection' => 5,
+				'httpversion' => '1.0',
+				'blocking'    => true,
+				'headers'     => array(
+					'x-access-token' => $api_token,
+					'Content-Type'   => 'application/json',
+				),
+				'body'        => $session_board_event_sessions_body,
+				'cookies'     => array()
+			)
+		);
+
+		$session_board_event_sessions_response_code = wp_remote_retrieve_response_code( $session_board_event_sessions );
+
+		// If the API response is 200 OK.
+		if ( 200 === $session_board_event_sessions_response_code ) {
+			$session_board_event_sessions_response_body = wp_remote_retrieve_body( $session_board_event_sessions );
+
+			return json_decode( $session_board_event_sessions_response_body );
+		}
+
+		return false;
+	}
+}

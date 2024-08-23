@@ -6523,10 +6523,25 @@ class Marketing_Ops_Core_Public {
 		// Fetch the products data from the transient.
 		$sessions = get_transient( 'mopza24_sessions' );
 
-		echo 'hello, testing text start';
-		var_dump( $sessions );
-		echo 'hello, testing text end';
+		// If there are no sessions in the transient.
+		if ( false === $sessions || empty( $sessions ) ) {
+			// Get the sessions from the API.
+			$sessions = fetch_mopza24_sessions(); // Shoot the API to get sessions.
 
+			/**
+			 * Store the response data in a cookie.
+			 * This cookie data will be used to display the sessions on the mopza24 page.
+			 * The transients will be stored for 24 hours.
+			 */
+			if ( false !== $sessions ) {
+				set_transient( 'mopza24_sessions', wp_json_encode( $sessions ), ( 60 * 60 * 24 ) );
+			}
+		} else {
+			// If you're here, the data is already in transients.
+			$sessions = json_decode( $sessions, true );
+		}
+
+		debug( $sessions );
 		die;
 
 		// Start with the html.
