@@ -187,29 +187,20 @@ function mops_update_podcasts_titles() {
  * Fetch mosapalooza24 speakers.
  */
 function fetch_mopza24_speakers() {
-	// API Token: 
-	// Event ID: 4630
 	// API Doc: https://sessionboard.stoplight.io/docs/sessionboard/1zjc8l9djyez6-getting-started
 
 	$api_token            = '9bzYF5mj5yxgVrZSI9fbdZDL0dcrtaJKQTeZRc/eVpToFNn3R5oZVI8aRujeG3HcAWw3+QAwNI5rAhvIqAW7oTZmODIzZjY3LTFhYWQtNGU5Zi1hZTU4LTc5M2VhMzU3NGE5Yzk2Mzg2';
 	$event_id             = 4630;
-	$session_board_events = wp_remote_get(
-		esc_url_raw( 'https://public-api.sessionboard.com/v1/events/' ),
-		array(
-			'headers' => array(
-				'x-access-token' => $api_token,
-			),
-		)
-	);
 
 	$filters = new stdClass();
+	$filters->filters = new stdClass();
 	$filters->filters->status = 'accepted';
+	$session_board_event_sessions_body = json_encode( $filters );
 
-	$session_board_event_speakers = wp_remote_post(
+	$session_board_event_sessions      = wp_remote_post(
 		add_query_arg(
 			array(
 				'page'     => 1,
-				'pageSize' => 50,
 			),
 			"https://public-api.sessionboard.com/v1/event/{$event_id}/sessions/"
 		),
@@ -221,22 +212,19 @@ function fetch_mopza24_speakers() {
 			'blocking'    => true,
 			'headers'     => array(
 				'x-access-token' => $api_token,
+				'Content-Type'   => 'application/json',
 			),
-			'body'        => json_encode(
-				array(
-					'filters' => $filters
-				)
-			),
+			'body'        => $session_board_event_sessions_body,
 			'cookies'     => array()
 		)
 	);
 
-	$session_board_event_speakers_response_code = wp_remote_retrieve_response_code( $session_board_event_speakers );
-	$session_board_event_speakers_response_body = wp_remote_retrieve_body( $session_board_event_speakers );
+	$session_board_event_sessions_response_code = wp_remote_retrieve_response_code( $session_board_event_sessions );
+	$session_board_event_sessions_response_body = wp_remote_retrieve_body( $session_board_event_sessions );
 
-	var_dump( $session_board_event_speakers_response_code );
-	debug( json_decode( $session_board_event_speakers_response_body ) );
+	var_dump( $session_board_event_sessions_response_code );
+	debug( json_decode( $session_board_event_sessions_response_body ) );
 	die;
 }
 
-fetch_mopza24_speakers();
+// fetch_mopza24_speakers();
