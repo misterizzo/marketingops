@@ -9326,6 +9326,7 @@ if ( ! function_exists( 'fetch_mopza24_sessions' ) ) {
 			add_query_arg(
 				array(
 					'page'     => 1,
+					'pageSize' => 100,
 				),
 				"https://public-api.sessionboard.com/v1/event/{$event_id}/sessions/"
 			),

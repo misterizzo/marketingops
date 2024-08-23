@@ -6520,10 +6520,14 @@ class Marketing_Ops_Core_Public {
 			return;
 		}
 
+		delete_transient( 'mopza24_sessions' );
+
 		// Fetch the products data from the transient.
 		$sessions = get_transient( 'mopza24_sessions' );
 
 		var_dump( $sessions );
+
+		die("pool");
 
 		// If there are no sessions in the transient.
 		if ( false === $sessions || empty( $sessions ) ) {
