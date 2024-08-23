@@ -6520,14 +6520,14 @@ class Marketing_Ops_Core_Public {
 			return;
 		}
 
-		die( "hello, good morning" );
-
 		// Fetch the products data from the transient.
 		$sessions = get_transient( 'mopza24_sessions' );
 
 		echo 'hello, testing text start';
 		var_dump( $sessions );
 		echo 'hello, testing text end';
+
+		die;
 
 		// Start with the html.
 		ob_start();
