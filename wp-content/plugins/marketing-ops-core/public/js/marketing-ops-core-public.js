@@ -3707,42 +3707,59 @@
 	 */
 	if ( $( '.key_speaker_content.mopza24 .moc_open_speaker_session_details' ).length ) {
 		$( document ).on( 'click', '.key_speaker_content.mopza24 .moc_open_speaker_session_details', function() {
-			var this_element  = $( this );
+			var this_element        = $( this );
+			var session_description = '';
+			this_element.parents( '.key_speaker_container' ).next( '.loader_bg' ).addClass( 'show' );  // Show up the loader.
 
-			// Return, if the session index or type is unavailable.
-			if ( '' === session_index || '' === session_type ) {
-				return false;
-			}
+			// Set the modal html.
+			var session_modal_html ='<div class="box_content">';
+			session_modal_html    += '<div class="apaloooza-session-speakers">';
+			session_modal_html    += '<div class="speaker_details">';
+			session_modal_html    += '<div class="speaker_img">';
+			session_modal_html    += '<img src="https://marketingops.com/wp-content/uploads/2023/11/Ying-Ying-Lim.jpeg" alt="Profile picture of Ying Ying Lim">';
+			session_modal_html    += '</div>';
+			session_modal_html    += '<div class="speaker_details_box">';
+			session_modal_html    += '<div class="details_box">';
+			session_modal_html    += '<h2>Ying Ying Lim</h2>';
+			session_modal_html    += '<h5>Middesk&nbsp;•&nbsp;Revenue Operations &amp; Strategy</h5>';
+			session_modal_html    += '</div>';
+			session_modal_html    += '<div class="socail_icons">';
+			session_modal_html    += '<a href="https://www.linkedin.com/in/lim-ying-ying/" target="_blank"><svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="19" cy="19" r="19" fill="#1F2840"></circle><path d="M25.2104 11.3684H12.3007C11.5101 11.3684 10.8684 12.0101 10.8684 12.8007V25.7104C10.8684 26.501 11.5101 27.1427 12.3007 27.1427H25.2104C26.001 27.1427 26.6427 26.501 26.6427 25.7104V12.8007C26.6427 12.0101 26.001 11.3684 25.2104 11.3684ZM15.8528 24.2743H13.7406V17.4681H15.8528V24.2743ZM14.7757 16.4941C14.092 16.4941 13.542 15.9441 13.542 15.2642C13.542 14.5806 14.0958 14.0306 14.7757 14.0306C15.4556 14.0306 16.0094 14.5844 16.0094 15.2642C16.0094 15.9441 15.4556 16.4941 14.7757 16.4941ZM23.7781 24.2743H21.6622V20.9667C21.6622 20.176 21.6507 19.1601 20.566 19.1601C19.4622 19.1601 19.2941 20.0195 19.2941 20.9094V24.2743H17.182V17.4681H19.2101V18.4H19.2406C19.5195 17.8653 20.2108 17.3 21.2382 17.3C23.3809 17.3 23.7781 18.7094 23.7781 20.5427V24.2743Z" fill="white"></path></svg></a>';
+			session_modal_html    += '</div>';
+			session_modal_html    += '</div>';
+			session_modal_html    += '</div>';
+			session_modal_html    += '<div class="speaker_details">';
+			session_modal_html    += '<div class="speaker_img">';
+			session_modal_html    += '<img src="https://marketingops.com/wp-content/uploads/2023/08/Sydney-Mulligan@2x.jpg" alt="Profile picture of Sydney Mulligan">';
+			session_modal_html    += '</div>';
+			session_modal_html    += '<div class="speaker_details_box">';
+			session_modal_html    += '<div class="details_box">';
+			session_modal_html    += '<h2>Sydney Mulligan</h2>';
+			session_modal_html    += '<h5>EMMIE Collective&nbsp;•&nbsp;Co-founder</h5>';
+			session_modal_html    += '</div>';
+			session_modal_html    += '<div class="socail_icons">';
+			session_modal_html    += '<a href="https://www.linkedin.com/in/sydneymulligan/" target="_blank"><svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="19" cy="19" r="19" fill="#1F2840"></circle><path d="M25.2104 11.3684H12.3007C11.5101 11.3684 10.8684 12.0101 10.8684 12.8007V25.7104C10.8684 26.501 11.5101 27.1427 12.3007 27.1427H25.2104C26.001 27.1427 26.6427 26.501 26.6427 25.7104V12.8007C26.6427 12.0101 26.001 11.3684 25.2104 11.3684ZM15.8528 24.2743H13.7406V17.4681H15.8528V24.2743ZM14.7757 16.4941C14.092 16.4941 13.542 15.9441 13.542 15.2642C13.542 14.5806 14.0958 14.0306 14.7757 14.0306C15.4556 14.0306 16.0094 14.5844 16.0094 15.2642C16.0094 15.9441 15.4556 16.4941 14.7757 16.4941ZM23.7781 24.2743H21.6622V20.9667C21.6622 20.176 21.6507 19.1601 20.566 19.1601C19.4622 19.1601 19.2941 20.0195 19.2941 20.9094V24.2743H17.182V17.4681H19.2101V18.4H19.2406C19.5195 17.8653 20.2108 17.3 21.2382 17.3C23.3809 17.3 23.7781 18.7094 23.7781 20.5427V24.2743Z" fill="white"></path></svg></a>';
+			session_modal_html    += '</div>';
+			session_modal_html    += '</div>';
+			session_modal_html    += '</div>';
+			session_modal_html    += '</div>';
+			session_modal_html    += '<div class="speaker_content">';
+			session_modal_html    += '<h2 class="session_title">Where We Begin: Efficient Original Processing in Marketo</h2>';
+			session_modal_html    += '<p>New leads enter your Marketo instance every day, but are they enriched, normalized, stamped, sourced, and routed correctly BEFORE they are synced to your CRM? We are getting down and dirty with strategies to architect your Marketo Initial Processing for scale and speed.</p>';
+			session_modal_html    += '<h2>Key Takeaways</h2>';
+			session_modal_html    += '<ul class="key_takeaways_list">';
+			session_modal_html    += '<li>The business value of centralizing your original processing operational programs.</li>';
+			session_modal_html    += '<li>How to architect intelligently and at scale.</li>';
+			session_modal_html    += '</ul>';
+			session_modal_html    += '</div>';
+			session_modal_html    += '</div>';
 
-			// Kickoff the AJAX call to open the modal.
-			$.ajax( {
-				dataType: 'JSON',
-				url: ajaxurl,
-				type: 'POST',
-				data: {
-					action: 'apalooza_agenda_details',
-					session_index: session_index,
-					session_type: session_type,
-					moc_post_id: $( 'input[name="moc_post_id"]' ).val(),
-				},
-				beforeSend: function() {
-					this_element.parents( '.key_speaker_container' ).next( '.loader_bg' ).addClass( 'show' );  // Show up the loader.
-				},
-				success: function ( response ) {
-					// If the session data is available.
-					if ( 'session-data-available' === response.data.code ) {
-						$( '#moc_apaloza_session' ).addClass( 'active' ).removeClass( 'non-active' );
-						$( '#moc_apaloza_session .popup_content_box' ).html( response.data.html );
-						$( 'body' ).addClass( 'active-popup' );
-					}
-				},
-				error: function( xhr ) {
-					this_element.parents( '.key_speaker_container' ).next( '.loader_bg' ).removeClass( 'show' );  // Hide the loader.
-				},
-				complete: function() {
-					this_element.parents( '.key_speaker_container' ).next( '.loader_bg' ).removeClass( 'show' );  // Hide the loader.
-				},
-			} );
+			setTimeout( function() {
+				$( '#moc_apaloza_session' ).addClass( 'active' ).removeClass( 'non-active' );
+				$( '#moc_apaloza_session .popup_content_box' ).html( session_modal_html );
+				$( 'body' ).addClass( 'active-popup' );
+				this_element.parents( '.key_speaker_container' ).next( '.loader_bg' ).removeClass( 'show' );  // Hide the loader.
+			}, 2000 );
 		} );
 	}
 

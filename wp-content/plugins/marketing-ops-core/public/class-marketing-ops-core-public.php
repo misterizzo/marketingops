@@ -6594,9 +6594,10 @@ class Marketing_Ops_Core_Public {
 								</div>
 							</div>
 						<?php } ?>
-						</div>
 					</div>
 				</div>
+				<div class="loader_bg"><div class="loader"></div></div>
+			</div>
 			<?php
 		} else {
 			?><p style="color: #fff;"><?php esc_html_e( 'There are no sessions fetched from API. Please contact the site administrator', 'marketing-ops-core' ); ?></p><?php
