@@ -6523,6 +6523,8 @@ class Marketing_Ops_Core_Public {
 		// Fetch the products data from the transient.
 		$sessions = get_transient( 'mopza24_sessions' );
 
+		var_dump( $sessions );
+
 		// If there are no sessions in the transient.
 		if ( false === $sessions || empty( $sessions ) ) {
 			// Get the sessions from the API.
@@ -6541,7 +6543,7 @@ class Marketing_Ops_Core_Public {
 			$sessions = json_decode( $sessions, true );
 		}
 
-		debug( $sessions );
+		// debug( $sessions );
 		die;
 
 		// Start with the html.
