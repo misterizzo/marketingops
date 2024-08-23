@@ -211,7 +211,7 @@ function fetch_mopza24_speakers() {
 				'page'     => 1,
 				'pageSize' => 50,
 			),
-			"https://public-api.sessionboard.com/v1/event/{$event_id}/speakers"
+			"https://public-api.sessionboard.com/v1/event/{$event_id}/sessions/"
 		),
 		array(
 			'method'      => 'POST',
