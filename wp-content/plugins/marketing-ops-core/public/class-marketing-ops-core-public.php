@@ -6541,7 +6541,7 @@ class Marketing_Ops_Core_Public {
 			$sessions = json_decode( $sessions, true );
 		}
 
-		$sessions = ( ! empty( $sessions->results ) ) ? $sessions->results : array();
+		// $sessions = ( ! empty( $sessions->results ) ) ? $sessions->results : array();
 
 		debug( $sessions );
 		die;
