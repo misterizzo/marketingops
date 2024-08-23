@@ -6515,8 +6515,6 @@ class Marketing_Ops_Core_Public {
 			return;
 		}
 
-		var_dump( $_SERVER['REMOTE_ADDR'] );
-
 		// Return, if it's other IP addresses than Adarsh's.
 		if ( '183.82.162.11' !== $_SERVER['REMOTE_ADDR'] ) {
 			return;
@@ -6525,7 +6523,9 @@ class Marketing_Ops_Core_Public {
 		// Fetch the products data from the transient.
 		$sessions = get_transient( 'mopza24_sessions' );
 
-		var_dump( $sessions, 'hello, testing text' );
+		echo 'hello, testing text start';
+		var_dump( $sessions );
+		echo 'hello, testing text end';
 
 		// Start with the html.
 		ob_start();
