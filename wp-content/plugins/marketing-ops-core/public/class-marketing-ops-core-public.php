@@ -6520,6 +6520,8 @@ class Marketing_Ops_Core_Public {
 			return;
 		}
 
+		die( "hello, good morning" );
+
 		// Fetch the products data from the transient.
 		$sessions = get_transient( 'mopza24_sessions' );
 
