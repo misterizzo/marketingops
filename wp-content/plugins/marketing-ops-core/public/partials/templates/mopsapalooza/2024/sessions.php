@@ -12,11 +12,11 @@
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 // Check if the live sessions are requested.
-$get_sessions = filter_input( INPUT_GET, 'sessions', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+// $get_sessions = filter_input( INPUT_GET, 'sessions', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
-if ( ! is_null( $get_sessions ) && 'live' === $get_sessions ) {
-	delete_transient( 'mopza24_sessions' );
-}
+// if ( ! is_null( $get_sessions ) && 'live' === $get_sessions ) {
+// 	delete_transient( 'mopza24_sessions' );
+// }
 
 // Fetch the products data from the transient.
 $sessions = get_transient( 'mopza24_sessions' );
