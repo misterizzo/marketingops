@@ -21,10 +21,6 @@ if ( ! is_null( $get_sessions ) && 'live' === $get_sessions ) {
 // Fetch the products data from the transient.
 $sessions = get_transient( 'mopza24_sessions' );
 
-echo 'start';
-var_dump( $sessions );
-echo 'end';
-
 // If there are no sessions in the transient.
 if ( false === $sessions || empty( $sessions ) ) {
 	// Get the sessions from the API.
