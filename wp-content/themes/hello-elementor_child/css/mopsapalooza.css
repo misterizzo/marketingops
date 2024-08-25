@@ -1627,13 +1627,8 @@ transition: visibility 0s, opacity 0.5s ease;
 	}
 }
 @media only screen and (max-width: 500px) {
-	.mops_mopsapalooza24_page .new_vip .elementor-element.elementor-element-6153d12{
-		bottom: 0px !important;
-	top: auto !important;
+	.mops_mopsapalooza24_page .new_vip .elementor-element.elementor-element-6153d12{bottom: 0px !important;top: auto !important;}
 }
-	
-}
-
 
 .elementor-220825 .elementor-element.elementor-element-20df417 .elementor-price-list-item{pointer-events: none;}
 .mops_mopsapalooza24_page .add_price_list li:first-child .elementor-price-list-title,
@@ -1643,8 +1638,6 @@ transition: visibility 0s, opacity 0.5s ease;
 .mops_mopsapalooza24_page .add_price_list li:nth-child(2) .elementor-price-list-price{color:#5B719A!important;text-decoration:line-through;}
 .mops_mopsapalooza24_page .add_price_list li:nth-child(2) p.elementor-price-list-description{text-decoration:line-through;font-family:"Open Sans",Open Sans;font-size:14px;font-weight:400;line-height:5px;color:#5B719A!important;margin-bottom:5px;margin-left:92px;}
 .mops_mopsapalooza24_page .add_price_list li:nth-child(2) .elementor-price-list-price{line-height:0;position:relative;top:10px;}
-
 .mops_mopsapalooza24_page .add_price_list li:nth-child(3) .elementor-price-list-title,
 .mops_mopsapalooza24_page .add_price_list li:nth-child(3) .elementor-price-list-price{color:#fff!important;}
-
-
+.mops_mopsapalooza24_page .key_speaker_content.mopza24 .heading {color: #FFF;font-family: "Futura LT", Open Sans;font-size: 36px;font-weight: 700;text-transform: uppercase;line-height: 45px;}

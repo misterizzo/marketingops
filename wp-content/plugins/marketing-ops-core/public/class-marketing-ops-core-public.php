@@ -6548,7 +6548,7 @@ class Marketing_Ops_Core_Public {
 			if ( ! empty( $sessions ) && is_array( $sessions ) ) {
 				?>
 				<div class="key_speaker_content apalooza_in_person_speakers_container mopza24">
-					<h3 style="color: #fff;"><?php esc_html_e( 'SESSIONS', 'marketing-ops-core' ); ?></h3>
+					<h2 class="heading"><?php esc_html_e( 'SESSIONS', 'marketing-ops-core' ); ?></h3>
 					<div class="key_speaker_container">
 						<div class="key_speaker_row">
 							<?php
@@ -6613,7 +6613,7 @@ class Marketing_Ops_Core_Public {
 														<span class="ks_img"><img decoding="async" src="<?php echo esc_url( $speaker_photo_url ); ?>" alt="Profile picture of <?php echo wp_kses_post( $speaker_name ); ?>" title="Profile picture of <?php echo wp_kses_post( $speaker_name ); ?>" /></span>
 													</a>
 												<?php } ?>
-												<div class="popup_speaker_data" style="display: none;"><?php echo wp_kses_post( $session_speaker_data ); ?></div>
+												<div class="popup_speaker_data" style="display: none;"><?php echo $session_speaker_data; ?></div>
 											</div>
 										<?php } ?>
 									</div>
