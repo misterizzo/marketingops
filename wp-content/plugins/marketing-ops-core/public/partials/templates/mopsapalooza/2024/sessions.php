@@ -11,8 +11,19 @@
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
+// Check if the live sessions are requested.
+$get_sessions = filter_input( INPUT_GET, 'sessions', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+
+if ( ! is_null( $get_sessions ) && 'live' === $get_sessions ) {
+	delete_transient( 'mopza24_sessions' );
+}
+
 // Fetch the products data from the transient.
 $sessions = get_transient( 'mopza24_sessions' );
+
+echo 'start';
+var_dump( $sessions );
+echo 'end';
 
 // If there are no sessions in the transient.
 if ( false === $sessions || empty( $sessions ) ) {
@@ -33,8 +44,6 @@ if ( false === $sessions || empty( $sessions ) ) {
 }
 
 $sessions = ( ! empty( $sessions['results'] ) ) ? $sessions['results'] : array();
-
-var_dump( get_field( 'moc_user_default_image', 'option' ) );
 
 // If there are no sessions, print a message.
 if ( ! empty( $sessions ) && is_array( $sessions ) ) {
@@ -73,7 +82,7 @@ if ( ! empty( $sessions ) && is_array( $sessions ) ) {
 										$speaker_id          = ( ! empty( $speaker['id'] ) ) ? $speaker['id'] : '';
 										$speaker_friendly_id = ( ! empty( $speaker['friendly_id'] ) ) ? $speaker['friendly_id'] : '';
 										$speaker_name        = ( ! empty( $speaker['full_name'] ) ) ? $speaker['full_name'] : '';
-										$speaker_photo_url   = ( ! empty( $speaker['photo_url'] ) ) ? $speaker['photo_url'] : '';
+										$speaker_photo_url   = ( ! empty( $speaker['photo_url'] ) ) ? $speaker['photo_url'] : get_field( 'moc_user_default_image', 'option' );
 										$speaker_linkedin    = ( ! empty( $speaker['linkedin_url'] ) ) ? $speaker['linkedin_url'] : '';
 										$speaker_twitter     = ( ! empty( $speaker['twitter_url'] ) ) ? $speaker['twitter_url'] : '';
 
