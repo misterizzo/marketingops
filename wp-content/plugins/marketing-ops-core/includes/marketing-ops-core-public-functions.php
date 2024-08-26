@@ -9351,7 +9351,7 @@ if ( ! function_exists( 'fetch_mopza24_sessions' ) ) {
 		if ( 200 === $session_board_event_sessions_response_code ) {
 			$session_board_event_sessions_response_body = wp_remote_retrieve_body( $session_board_event_sessions );
 
-			return json_decode( $session_board_event_sessions_response_body );
+			return json_decode( $session_board_event_sessions_response_body, true );
 		}
 
 		return false;

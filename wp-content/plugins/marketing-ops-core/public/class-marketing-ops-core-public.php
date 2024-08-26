@@ -6514,9 +6514,7 @@ class Marketing_Ops_Core_Public {
 
 		// Start with the html.
 		ob_start();
-		if ( '183.82.162.11' === $_SERVER['REMOTE_ADDR'] ) {
-			require_once MOC_PLUGIN_PATH . 'public/partials/templates/mopsapalooza/2024/sessions.php';
-		}
+		require_once MOC_PLUGIN_PATH . 'public/partials/templates/mopsapalooza/2024/sessions.php';
 
 		return ob_get_clean();
 	}
