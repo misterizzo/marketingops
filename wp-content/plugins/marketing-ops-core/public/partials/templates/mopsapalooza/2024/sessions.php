@@ -89,7 +89,7 @@ if ( ! empty( $sessions ) && is_array( $sessions ) ) {
 										$session_speaker_data .= '<div class="speaker_details_box">';
 										$session_speaker_data .= '<div class="details_box">';
 										$session_speaker_data .= '<h2>' . $speaker_name . '</h2>';
-										$session_speaker_data .= '<h5>Middesk&nbsp;•&nbsp;Revenue Operations &amp; Strategy</h5>';
+										// $session_speaker_data .= '<h5>Middesk&nbsp;•&nbsp;Revenue Operations &amp; Strategy</h5>';
 										$session_speaker_data .= '</div>';
 										$session_speaker_data .= '<div class="socail_icons">';
 
