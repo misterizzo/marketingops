@@ -850,10 +850,6 @@ class Admin extends App {
 		$this->add_component( 'feedback', new Feedback() );
 		$this->add_component( 'admin-notices', new Admin_Notices() );
 
-		if ( Plugin::$instance->experiments->is_feature_active( 'admin_menu_rearrangement' ) ) {
-			$this->register_menu();
-		}
-
 		add_action( 'admin_init', [ $this, 'maybe_redirect_to_getting_started' ] );
 
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
@@ -882,6 +878,8 @@ class Admin extends App {
 		add_action( 'in_plugin_update_message-' . ELEMENTOR_PLUGIN_BASE, function( $plugin_data ) {
 			$this->version_update_warning( ELEMENTOR_VERSION, $plugin_data['new_version'] );
 		} );
+
+		add_action( 'elementor/ajax/register_actions', [ $this, 'register_ajax_hints' ] );
 	}
 
 	/**
@@ -951,12 +949,8 @@ class Admin extends App {
 			} )->all();
 	}
 
-	private function register_menu() {
-		$this->menus['main'] = new MainMenu();
-	}
-
 	private function maybe_enqueue_hints() {
-		if ( ! Hints::should_display_hint( 'image-optimization-once-media-modal' ) && ! Hints::should_display_hint( 'image-optimization-media-modal' ) ) {
+		if ( ! Hints::should_display_hint( 'image-optimization' ) ) {
 			return;
 		}
 
@@ -968,26 +962,18 @@ class Admin extends App {
 			true
 		);
 
-		$once_dismissed = Hints::is_dismissed( 'image-optimization-once-media-modal' );
-		$content = $once_dismissed ?
-			sprintf("%1\$s <a href='%2\$s' class='e-btn-1' target='_blank'>%3\$s</a> %4\$s",
-				__( 'This image is large and may slow things down.', 'elementor' ),
-				Hints::get_plugin_action_url( 'image-optimization' ),
-				( Hints::is_plugin_installed( 'image-optimization' ) ? __( 'Activate', 'elementor' ) : __( 'Install', 'elementor' ) ) . ' ' . __( 'Image Optimizer', 'elementor' ),
-				__( 'to reduce size without losing quality.', 'elementor' )
-			) :
-			sprintf("%1\$s <a class='e-btn-1' href='%2\$s' target='_blank'>%3\$s</a>!",
-				__( 'Don’t let unoptimized images be the downfall of your site’s performance.', 'elementor' ),
-				Hints::get_plugin_action_url( 'image-optimization' ),
-				( Hints::is_plugin_installed( 'image-optimization' ) ? __( 'Activate', 'elementor' ) : __( 'Install', 'elementor' ) ) . ' ' . __( 'Image Optimizer', 'elementor' )
-			);
+		$content = sprintf("%1\$s <a class='e-btn-1' href='%2\$s' target='_blank'>%3\$s</a>!",
+			__( 'Optimize your images to enhance site performance by using Image Optimizer.', 'elementor' ),
+			Hints::get_plugin_action_url( 'image-optimization' ),
+			( Hints::is_plugin_installed( 'image-optimization' ) ? __( 'Activate', 'elementor' ) : __( 'Install', 'elementor' ) ) . ' ' . __( 'Image Optimizer', 'elementor' )
+		);
 
-		$dismissible = $once_dismissed ? 'image-optimization-media-modal' : 'image-optimization-once-media-modal';
+		$dismissible = 'image_optimizer_hint';
 
 		wp_localize_script( 'media-hints', 'elementorAdminHints', [
 			'mediaHint' => [
-				'display' => ! $once_dismissed,
-				'type' => $once_dismissed ? 'warning' : 'info',
+				'display' => true,
+				'type' => 'info',
 				'content' => $content,
 				'icon' => true,
 				'dismissible' => $dismissible,
@@ -1002,5 +988,23 @@ class Admin extends App {
 		] );
 
 		wp_enqueue_script( 'media-hints' );
+	}
+
+	public function register_ajax_hints( $ajax_manager ) {
+		$ajax_manager->register_ajax_action( 'elementor_image_optimization_campaign', [ $this, 'ajax_set_image_optimization_campaign' ] );
+	}
+
+	public function ajax_set_image_optimization_campaign( $request ) {
+		if ( empty( $request['source'] ) ) {
+			return;
+		}
+
+		$campaign_data = [
+			'source' => sanitize_key( $request['source'] ),
+			'campaign' => 'io-plg',
+			'medium' => 'wp-dash',
+		];
+
+		set_transient( 'elementor_image_optimization_campaign', $campaign_data, 30 * DAY_IN_SECONDS );
 	}
 }
