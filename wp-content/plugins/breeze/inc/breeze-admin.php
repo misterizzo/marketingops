@@ -95,6 +95,8 @@ class Breeze_Admin {
 	 * Check the page status and if the current page is
 	 * in the excluded ecommerce pages list.
 	 *
+	 * Clears the cache when a scheduled post get's published.
+	 *
 	 * @param string $new_status
 	 * @param string $old_status
 	 * @param object $post
@@ -107,6 +109,12 @@ class Breeze_Admin {
 
 		if ( $new_status != $old_status && Breeze_Ecommerce_Cache::is_excluded_ecom_page( $post->ID ) ) {
 			Breeze_ConfigCache::write_config_cache();
+		}
+		// Clear cache when a scheduled post get's published.
+		if ( 'future' === $old_status && 'publish' === $new_status ) {
+			do_action( 'breeze_clear_varnish' );
+			Breeze_PurgeCache::breeze_cache_flush();
+			Breeze_MinificationCache::clear_minification();
 		}
 	}
 
@@ -401,7 +409,9 @@ INLINEJS;
 	 * @param WP_Admin_Bar $wp_admin_bar
 	 */
 	function register_admin_bar_menu( WP_Admin_Bar $wp_admin_bar ) {
-		if ( ! current_user_can( 'manage_options' ) && ! current_user_can( 'editor' ) ) {
+
+		if ( ! ( current_user_can( 'manage_options' ) || current_user_can( 'editor' ) )
+		&& ! ( is_plugin_active( 'woocommerce/woocommerce.php' ) && current_user_can( 'manage_woocommerce' ) ) ) {
 			return;
 		}
 
@@ -471,7 +481,7 @@ INLINEJS;
 		);
 		$wp_admin_bar->add_node( $args );
 
-		// Editor role can only use Purge all cache option
+		// Only admin can purge cache per module.
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}

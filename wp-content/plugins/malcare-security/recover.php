@@ -2,7 +2,7 @@
 if (!defined('ABSPATH')) exit;
 if (!class_exists('MCRecover')) :
 	class MCRecover {
-		public static $default_secret_key = 'bvSecretKey';
+		public static $default_secret_key = 'bv_default_secret_key';
 
 		public static function defaultSecret($settings) {
 			$secret = self::getDefaultSecret($settings);
@@ -13,39 +13,57 @@ if (!class_exists('MCRecover')) :
 		}
 
 		public static function refreshDefaultSecret($settings) {
-			$secret = MCAccount::randString(32);
-			self::updateDefaultSecret($settings, $secret);
-			return $secret;
+			$key_details = array();
+			$key_details["key"] = MCAccount::randString(32);
+			$key_details["expires_at"] = time() + (24 * 60 * 60);
+
+			$settings->updateOption(self::$default_secret_key, $key_details);
+
+			return $key_details["key"];
 		}
+
 
 		public static function deleteDefaultSecret($settings) {
 			$settings->deleteOption(self::$default_secret_key);
 		}
 
 		public static function getDefaultSecret($settings) {
-			return $settings->getOption(self::$default_secret_key);
-		}
+			$key_details = $settings->getOption(self::$default_secret_key);
 
-		public static function updateDefaultSecret($settings, $secret) {
-			$settings->updateOption(self::$default_secret_key, $secret);
-		}
-
-		public static function validate($pubkey) {
-			if ($pubkey && strlen($pubkey) >= 32) {
-				return true;
-			} else {
-				return false;
+			if (is_array($key_details) && $key_details["expires_at"] > time()) {
+				return $key_details["key"];
 			}
+
+			return null;
+		}
+
+		public static function getSecretStatus($settings) {
+			$key_details = $settings->getOption(self::$default_secret_key);
+			$status = 'ACTIVE';
+			if (!is_array($key_details)) {
+				  $status = 'DELETED';
+			} elseif ($key_details["expires_at"] <= time()) {
+				  $status = 'EXPIRED';
+			}
+
+			return $status;
+		}
+
+		public static function validate($key) {
+			return $key && strlen($key) >= 32;
 		}
 
 		public static function find($settings, $pubkey) {
 			if (!self::validate($pubkey)) {
 				return null;
 			}
+
 			$secret = self::getDefaultSecret($settings);
-			if (!empty($secret) && (strlen($secret) >= 32)) {
-				$account = new MCAccount($settings, $pubkey, $secret);
+			if (!self::validate($secret)) {
+				return null;
 			}
+
+			$account = new MCAccount($settings, $pubkey, $secret);
 			return $account;
 		}
 	}

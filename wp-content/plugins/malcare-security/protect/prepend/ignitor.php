@@ -4,5 +4,5 @@ if (!defined('MCDATAPATH')) exit;
 if (defined('MCCONFKEY')) {
 	require_once dirname( __FILE__ ) . '/../protect.php';
 
-	MCProtect_V556::init(MCProtect_V556::MODE_PREPEND);
+	MCProtect_V568::init(MCProtect_V568::MODE_PREPEND);
 }

@@ -11,7 +11,7 @@ class BVMiscCallback extends BVCallbackBase {
 	public $bvapi;
 	public $db;
 
-	const MISC_WING_VERSION = 1.2;
+	const MISC_WING_VERSION = 1.3;
 
 	public function __construct($callback_handler) {
 		$this->settings = $callback_handler->settings;

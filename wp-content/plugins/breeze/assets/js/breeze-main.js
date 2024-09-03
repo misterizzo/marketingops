@@ -953,7 +953,7 @@ jQuery( document ).ready(
 		if ( window.history && typeof window.history.pushState === 'function' ) {
 			var clean_url = remove_query_arg( window.location.href, 'save-settings' );
 			clean_url     = remove_query_arg( clean_url, 'database-cleanup' );
-			window.history.pushState( null, null, clean_url );
+			window.history.replaceState( null, null, clean_url );
 		}
 
 		/**

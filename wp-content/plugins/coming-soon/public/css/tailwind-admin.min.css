@@ -2241,6 +2241,20 @@ p.om-tagline2{max-width:550px;font-size:18px !important;font-weight:500;margin-l
 #seedprod-flyout .seedprod-flyout-head:hover .seedprod-flyout-label{opacity:1;-webkit-transform:translateY(-50%) scale(1);transform:translateY(-50%) scale(1);margin-right:0}
 #seedprod-flyout .seedprod-flyout-head img{width:54px;height:54px;display:block;padding:10px;border-radius:50%;overflow:inherit;box-shadow:0 3px 20px rgba(0,0,0,0.2);transition:all .2s ease-in-out;-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px)}
 #seedprod-flyout .seedprod-flyout-item i{color:#fff;font-size:20px;line-height:40px;vertical-align:middle}
+.wpcode-content{text-align:center;max-width:860px;margin:0 auto;color:#111827 !important;font-family:"General Sans",system-ui,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Segoe UI Symbol",sans-serif}
+.wpcode-headline{margin-top:84px;font-size:44px;font-weight:700;line-height:1.2;margin-bottom:9px}
+.wpcode-tagline{color:#41495b !important;margin-top:0;margin-bottom:32px !important;line-height:1.5 !important;font-weight:500;font-size:16px}
+.wpcode-feature-icons{display:flex;flex-direction:row;justify-content:space-evenly}
+.wpcode-feature-icon{padding:10px;border-radius:8px;height:48px;border-width:1px;border-style:solid;border-color:#e5e7eb}
+.wpcode-feature-text p{font-size:14px;text-align:center}
+.wpcode-cta{background-color:#3568b7;padding:13px 38px;color:#fff;border-radius:4px;border:0;font-size:26px;font-weight:600;margin-top:40px;margin-bottom:35px;cursor:pointer}
+.wpcode-feature-list-container{width:auto;max-width:1200px;display:flex;flex-direction:row}
+.wpcode-feature-list-image{width:100%}
+.wpcode-feature-list-text{justify-content:center;display:flex;flex-direction:column;text-align:center}
+.wpcode-feature-list-text p{font-size:16px;line-height:normal;margin:0;padding:10px}
+.wpcode-feature-list-text-right{padding-right:20px !important;text-align:left}
+.wpcode-feature-list-text-left{padding-left:20px !important;text-align:left}
+.wpcode-feature-list-text h2{font-size:24px;line-height:normal;margin:0;padding:10px}
 @media(min-width:640px){.sm\:sp-sr-only{position:absolute !important;width:1px !important;height:1px !important;padding:0 !important;margin:-1px !important;overflow:hidden !important;clip:rect(0,0,0,0) !important;white-space:nowrap !important;border-width:0 !important}
 .sm\:sp-not-sr-only{position:static !important;width:auto !important;height:auto !important;padding:0 !important;margin:0 !important;overflow:visible !important;clip:auto !important;white-space:normal !important}
 .sm\:focus\:sp-sr-only:focus{position:absolute !important;width:1px !important;height:1px !important;padding:0 !important;margin:-1px !important;overflow:hidden !important;clip:rect(0,0,0,0) !important;white-space:nowrap !important;border-width:0 !important}

@@ -1,8 +1,8 @@
 <?php
 if (!defined('ABSPATH') && !defined('MCDATAPATH')) exit;
 
-if (!class_exists('MCProtectRequest_V556')) :
-class MCProtectRequest_V556 {
+if (!class_exists('MCProtectRequest_V568')) :
+class MCProtectRequest_V568 {
 	public $ip;
 	public $host = '';
 	public $uri;
@@ -18,8 +18,8 @@ class MCProtectRequest_V556 {
 	public $raw_body = '';
 	public $files;
 	public $respcode;
-	public $status = MCProtectRequest_V556::STATUS_ALLOWED;
-	public $category = MCProtectRequest_V556::CATEGORY_NORMAL;
+	public $status = MCProtectRequest_V568::STATUS_ALLOWED;
+	public $category = MCProtectRequest_V568::CATEGORY_NORMAL;
 
 	public $wp_user;
 
@@ -45,7 +45,7 @@ class MCProtectRequest_V556 {
 	const CATEGORY_GLOBAL_BOT_BLOCKED = 90;
 
 	public function __construct($ip_header, $config) {
-		$this->ip = MCProtectUtils_V556::getIP($ip_header);
+		$this->ip = MCProtectUtils_V568::getIP($ip_header);
 		$this->timestamp = time();
 		$this->get_params = $_GET;
 		$this->cookies = $_COOKIE;
@@ -118,7 +118,7 @@ class MCProtectRequest_V556 {
 
 		if ($this->can_decode_json) {
 			if ($this->getContentType() === "application/json" && !empty($this->raw_body)) {
-				$_json_params = MCProtectUtils_V556::safeDecodeJSON($this->raw_body,
+				$_json_params = MCProtectUtils_V568::safeDecodeJSON($this->raw_body,
 						true, $this->max_json_decode_depth);
 				if (isset($_json_params)) {
 					$this->json_params['JSON'] = $_json_params;
@@ -129,15 +129,15 @@ class MCProtectRequest_V556 {
 
 	public static function blacklistedCategories() {
 		return array(
-			MCProtectRequest_V556::CATEGORY_BOT_BLOCKED,
-			MCProtectRequest_V556::CATEGORY_COUNTRY_BLOCKED,
-			MCProtectRequest_V556::CATEGORY_USER_BLACKLISTED,
-			MCProtectRequest_V556::CATEGORY_GLOBAL_BOT_BLOCKED
+			MCProtectRequest_V568::CATEGORY_BOT_BLOCKED,
+			MCProtectRequest_V568::CATEGORY_COUNTRY_BLOCKED,
+			MCProtectRequest_V568::CATEGORY_USER_BLACKLISTED,
+			MCProtectRequest_V568::CATEGORY_GLOBAL_BOT_BLOCKED
 		);
 	}
 
 	public static function whitelistedCategories() {
-		return array(MCProtectRequest_V556::CATEGORY_WHITELISTED);
+		return array(MCProtectRequest_V568::CATEGORY_WHITELISTED);
 	}
 
 	public function setRespCode($code) {

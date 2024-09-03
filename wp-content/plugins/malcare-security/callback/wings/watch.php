@@ -7,7 +7,7 @@ class BVWatchCallback extends BVCallbackBase {
 	public $db;
 	public $settings;
 
-	const WATCH_WING_VERSION = 1.3;
+	const WATCH_WING_VERSION = 1.4;
 
 	public function __construct($callback_handler) {
 		$this->db = $callback_handler->db;
@@ -80,6 +80,39 @@ class BVWatchCallback extends BVCallbackBase {
 		return $result;
 	}
 
+	public function getDomainInfo($params) {
+		$domain = $params["domain"];
+		if (empty($domain)) {
+			return array('domainData' => "DOMAIN_NOT_PRESENT");
+		}
+
+		$whoisServer = $params["host"];
+		if (empty($whoisServer)) {
+			return array('domainData' => "WHOIS_SERVER_NOT_PRESENT : $domain");
+		}
+
+		$conn = @fsockopen($whoisServer, $params["port"], $errno, $errstr, $params["timeout"]);
+		if (!$conn) {
+			return array('domainData' => "UNABLE_TO_CONNECT_TO_WHOIS_SERVER : $whoisServer : DOMAIN : $domain : ERROR : $errstr ($errno)");
+		}
+
+		try {
+			fwrite($conn, "$domain\r\n");
+
+			$response = '';
+			while (!feof($conn)) {
+				$response .= fgets($conn, 1024);
+			}
+
+			fclose($conn);
+		} catch (Exception $e) {
+			fclose($conn);
+			return array('domainData' => "ERROR_WHILE_FETCHING_DATA : " . $e->getMessage());
+		}
+
+		return array('domainData' => $response);
+	}
+
 	public function process($request) {
 		$db = $this->db;
 		$settings = $this->settings;
@@ -90,14 +123,18 @@ class BVWatchCallback extends BVCallbackBase {
 		case "getdata":
 			$resp = array();
 
+			if (isset($params['domain_params']) && is_array($params['domain_params'])) {
+				$resp = array_merge($resp, $this->getDomainInfo($params['domain_params']));
+			}
+
 			if (array_key_exists('lp', $params)) {
 				require_once dirname( __FILE__ ) . '/../../protect/lp.php';
 				$lp_params = $params['lp'];
-				if (!isset($lp_params['bv_check_table']) || $db->isTablePresent($db->getBVTable(MCProtectLP_V556::TABLE_NAME))) {
+				if (!isset($lp_params['bv_check_table']) || $db->isTablePresent($db->getBVTable(MCProtectLP_V568::TABLE_NAME))) {
 					$limit = intval($lp_params['limit']);
 					$filter = $lp_params['filter'];
-					$db->deleteBVTableContent(MCProtectLP_V556::TABLE_NAME, $lp_params['rmfilter']);
-					$table = $db->getBVTable(MCProtectLP_V556::TABLE_NAME);
+					$db->deleteBVTableContent(MCProtectLP_V568::TABLE_NAME, $lp_params['rmfilter']);
+					$table = $db->getBVTable(MCProtectLP_V568::TABLE_NAME);
 					$resp["lplogs"] = $this->getData($table, $limit, $filter);
 				} else {
 					$resp["lplogs"] = array("status" => "TABLE_NOT_PRESENT");
@@ -112,11 +149,11 @@ class BVWatchCallback extends BVCallbackBase {
 			if (array_key_exists('fw', $params)) {
 				require_once dirname( __FILE__ ) . '/../../protect/fw.php';
 				$fw_params = $params['fw'];
-				if (!isset($fw_params['bv_check_table']) || $db->isTablePresent($db->getBVTable(MCProtectFW_V556::TABLE_NAME))) {
+				if (!isset($fw_params['bv_check_table']) || $db->isTablePresent($db->getBVTable(MCProtectFW_V568::TABLE_NAME))) {
 					$limit = intval($fw_params['limit']);
 					$filter = $fw_params['filter'];
-					$db->deleteBVTableContent(MCProtectFW_V556::TABLE_NAME, $fw_params['rmfilter']);
-					$table = $db->getBVTable(MCProtectFW_V556::TABLE_NAME);
+					$db->deleteBVTableContent(MCProtectFW_V568::TABLE_NAME, $fw_params['rmfilter']);
+					$table = $db->getBVTable(MCProtectFW_V568::TABLE_NAME);
 					$resp["fwlogs"] = $this->getData($table, $limit, $filter);
 				} else {
 					$resp["fwlogs"] = array("status" => "TABLE_NOT_PRESENT");
@@ -168,6 +205,21 @@ class BVWatchCallback extends BVCallbackBase {
 					$resp["airlift_stats"] = array("status" => "TABLE_NOT_PRESENT");
 				}
 			}
+
+			if (array_key_exists('php_error_monitoring', $params)) {
+				require_once dirname( __FILE__ ) . '/../../php_error_monitoring/monitoring.php';
+				$php_error_monit_params = $params['php_error_monitoring'];
+				$table = $db->getBVTable(MCWPPHPErrorMonitoring::ERROR_TABLE);
+				if (!isset($php_error_monit_params['bv_check_table']) || $db->isTablePresent($table)) {
+					$limit = intval($php_error_monit_params['limit']);
+					$filter = $php_error_monit_params['filter'];
+					$db->deleteBVTableContent(MCWPPHPErrorMonitoring::ERROR_TABLE, $php_error_monit_params['rmfilter']);
+					$resp["php_error_monitoring"] = $this->getData($table, $limit, $filter);
+				} else {
+					$resp["php_error_monitoring"] = array("status" => "TABLE_NOT_PRESENT");
+				}
+			}
+
 			$resp["status"] = "done";
 			break;
 		case "rmdata":

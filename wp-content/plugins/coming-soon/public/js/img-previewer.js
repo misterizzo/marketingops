@@ -79,13 +79,20 @@ if (typeof ImgPreviewer === 'undefined') {
 
               var maxWidth = 300;
 
-              if (screenWidth <= 768) {
+              if (width > screenWidth || height > screenHeight) {
+                var wratio = screenWidth / width;
+                var hratio = screenHeight / height;
+                var resizeRatio = Math.min(wratio, hratio);
+                width *= resizeRatio;
+                height *= resizeRatio;
+              } else if (screenWidth <= 768) {
                 // Check if the width is greater than the maximum width
                 if (width > maxWidth) {
                   // Calculate the ratio to resize the image proportionally
-                  var wratio = maxWidth / width;
-                  width *= wratio;
-                  height *= wratio;
+                  var _wratio = maxWidth / width;
+
+                  width *= _wratio;
+                  height *= _wratio;
                 }
               }
 
@@ -237,11 +244,18 @@ if (typeof ImgPreviewer === 'undefined') {
           var screenHeight = window.innerHeight;
           var maxWidth = 300;
 
-          if (screenWidth <= 768) {
+          if (width > screenWidth || height > screenHeight) {
+            var wratio = screenWidth / width;
+            var hratio = screenHeight / height;
+            var resizeRatio = Math.min(wratio, hratio);
+            width *= resizeRatio;
+            height *= resizeRatio;
+          } else if (screenWidth <= 768) {
             if (width > maxWidth) {
-              var wratio = maxWidth / width;
-              width *= wratio;
-              height *= wratio;
+              var _wratio2 = maxWidth / width;
+
+              width *= _wratio2;
+              height *= _wratio2;
             }
           }
 
@@ -387,13 +401,20 @@ if (typeof ImgPreviewer === 'undefined') {
 
           var maxWidth = 300;
 
-          if (screenWidth <= 768) {
+          if (width > screenWidth || height > screenHeight) {
+            var wratio = screenWidth / width;
+            var hratio = screenHeight / height;
+            var resizeRatio = Math.min(wratio, hratio);
+            width *= resizeRatio;
+            height *= resizeRatio;
+          } else if (screenWidth <= 768) {
             // Check if the width is greater than the maximum width
             if (width > maxWidth) {
               // Calculate the ratio to resize the image proportionally
-              var wratio = maxWidth / width;
-              width *= wratio;
-              height *= wratio;
+              var _wratio3 = maxWidth / width;
+
+              width *= _wratio3;
+              height *= _wratio3;
             }
           }
 

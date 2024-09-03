@@ -50,7 +50,7 @@ class BVIPStoreCallback extends BVCallbackBase {
 
 	public function getIPs($table, $auto_increment_offset, $type, $category) {
 		$query = "SELECT `start_ip_range` FROM $table WHERE id < $auto_increment_offset AND `type` in (" . implode(',', $type) . ") AND ";
-		$query .= ($category == MCProtectIpstoreDB_V556::CATEGORY_FW) ? "`is_fw` = true;" : "`is_lp` = true;";
+		$query .= ($category == MCProtectIpstoreDB_V568::CATEGORY_FW) ? "`is_fw` = true;" : "`is_lp` = true;";
 		return $this->db->getCol($query);
 	}
 
@@ -64,13 +64,13 @@ class BVIPStoreCallback extends BVCallbackBase {
 		$info = array();
 
 		$info['fw_blacklisted_ips'] = $this->getIPs($table, $auto_increment_offset,
-			MCProtectIpstoreDB_V556::blacklistedTypes(), MCProtectIpstoreDB_V556::CATEGORY_FW);
+			MCProtectIpstoreDB_V568::blacklistedTypes(), MCProtectIpstoreDB_V568::CATEGORY_FW);
 		$info['lp_blacklisted_ips'] = $this->getIPs($table, $auto_increment_offset,
-			MCProtectIpstoreDB_V556::blacklistedTypes(), MCProtectIpstoreDB_V556::CATEGORY_LP);
+			MCProtectIpstoreDB_V568::blacklistedTypes(), MCProtectIpstoreDB_V568::CATEGORY_LP);
 		$info['fw_whitelisted_ips'] = $this->getIPs($table, $auto_increment_offset,
-			MCProtectIpstoreDB_V556::whitelistedTypes(), MCProtectIpstoreDB_V556::CATEGORY_FW);
+			MCProtectIpstoreDB_V568::whitelistedTypes(), MCProtectIpstoreDB_V568::CATEGORY_FW);
 		$info['lp_whitelisted_ips'] = $this->getIPs($table, $auto_increment_offset,
-			MCProtectIpstoreDB_V556::whitelistedTypes(), MCProtectIpstoreDB_V556::CATEGORY_LP);
+			MCProtectIpstoreDB_V568::whitelistedTypes(), MCProtectIpstoreDB_V568::CATEGORY_LP);
 		$info['ip_store_offset'] = $this->getIPStoreOffset($table, $auto_increment_offset);
 		$info['country_ips_size'] = intval($db->getVar("SELECT COUNT(id) FROM $table WHERE id >= $auto_increment_offset"));
 

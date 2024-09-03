@@ -994,6 +994,33 @@ function counter(blockId) {
   options.toValue = endNumber;
   jQuery("#sp-counter-number-".concat(blockId)).html(startNumber);
   jQuery("#sp-counter-number-".concat(blockId)).numerator(options);
+} // Render dynamic tags.
+
+
+function image_dynamic_tags(blockId) {
+  // Replace image src if source is dynamic tags
+  jQuery(".sp-image-block-".concat(blockId)).each(function () {
+    var _this = this;
+
+    // If data-image-src === dynamictags
+    var imageSrc = jQuery(this).attr('data-image-src');
+
+    if ('dynamictags' === imageSrc) {
+      var imageLink = jQuery(this).attr('data-dynamic-tag');
+
+      if (imageLink) {
+        // Pre-load the image
+        var img = new Image();
+
+        img.onload = function () {
+          // Set new src when the image has loaded
+          jQuery(_this).attr('src', imageLink);
+        };
+
+        img.src = imageLink;
+      }
+    }
+  });
 }
 
 function postcomments(blockId) {

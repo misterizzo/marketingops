@@ -197,6 +197,8 @@ function seedprod_lite_get_plugins_list() {
 		'easy-digital-downloads/easy-digital-downloads.php' => 'easydigitaldownloads',
 		'searchwp/index.php'                               => 'searchwp',
 		'affiliate-wp/affiliate-wp.php'                    => 'affiliatewp',
+		'insert-headers-and-footers/ihaf.php'              => 'wpcode',
+		'wpcode-premium/wpcode.php'                        => 'wpcode-pro',
 	);
 	$all_plugins = get_plugins();
 
@@ -266,6 +268,8 @@ function seedprod_lite_get_plugins_array() {
 		'easy-digital-downloads/easy-digital-downloads.php' => 'easydigitaldownloads',
 		'searchwp/index.php'                               => 'searchwp',
 		'affiliate-wp/affiliate-wp.php'                    => 'affiliatewp',
+		'insert-headers-and-footers/ihaf.php'              => 'wpcode',
+		'wpcode-premium/wpcode.php'                        => 'wpcode-pro',
 	);
 	$all_plugins = get_plugins();
 
@@ -421,8 +425,10 @@ function seedprod_lite_get_seo_plugins_list() {
  */
 function seedprod_lite_get_analytics_plugins_list() {
 	$am_plugins  = array(
-		'google-analytics-for-wordpress/googleanalytics.php' => 'monster-insights',
+		'google-analytics-for-wordpress/googleanalytics.php' => 'monsterinsights',
+		'google-analytics-premium/googleanalytics-premium.php' => 'monsterinsights-pro',
 		'google-analytics-dashboard-for-wp/gadwp.php' => 'exactmetrics',
+		'exactmetrics-premium/exactmetrics-premium.php' => 'exactmetrics-pro',
 	);
 	$all_plugins = get_plugins();
 

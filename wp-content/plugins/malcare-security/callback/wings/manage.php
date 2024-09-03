@@ -45,7 +45,6 @@ class BVManageCallback extends BVCallbackBase {
 		@include_once ABSPATH.'wp-admin/includes/class-theme-upgrader.php';
 		@include_once ABSPATH.'wp-admin/includes/class-plugin-upgrader.php';
 		@include_once ABSPATH.'wp-admin/includes/user.php';
-		@include_once ABSPATH.'wp-includes/registration.php';
 		@include_once ABSPATH.'wp-admin/includes/upgrade.php';
 		@include_once ABSPATH.'wp-admin/includes/update.php';
 		@require_once ABSPATH.'wp-admin/includes/update-core.php';

@@ -296,6 +296,7 @@ if (!class_exists('BVCallbackRequest')) :
 				"bvinfo" => $bvinfo->info(),
 				"statusmsg" => "FAILED_AUTH",
 				"api_pubkey" => substr($api_public_key, 0, 8),
+				"def_key_status" => MCRecover::getSecretStatus($this->settings),
 				"def_sigmatch" => substr(hash('sha1', $this->method.$default_secret.$this->time.$this->version), 0, 8)
 			);
 

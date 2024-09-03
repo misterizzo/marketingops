@@ -6,13 +6,13 @@
 function seedprod_lite_admin_js() {
 	// Make Admin upgrade submenu link target _blank
 	if ( defined( 'SEEDPROD_TEMPLATE_DEV_MODE' ) && SEEDPROD_TEMPLATE_DEV_MODE === true ) {
-		echo "
-        <script>
-            jQuery( document ).ready(function($) {
-                $('.toplevel_page_seedprod_lite .wp-first-item').hide();
-            });
-        </script>
-        ";
+		// echo "
+        // <script>
+        //     jQuery( document ).ready(function($) {
+        //         $('.toplevel_page_seedprod_lite .wp-first-item').hide();
+        //     });
+        // </script>
+        // ";
 	}
 	echo "
     <script>

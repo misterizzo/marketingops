@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH') && !defined('MCDATAPATH')) exit;
+if (!defined('ABSPATH') && !defined('MCDATAPATH') && !defined('PHP_ERR_MONIT_PATH')) exit;
 
 if (!class_exists('MCHelper')) :
 	class MCHelper {
@@ -48,6 +48,53 @@ if (!class_exists('MCHelper')) :
 			}
 
 			return array_key_first($array);
+		}
+
+		public static function safePregReplace($replace_regex, $replace_string, $element) {
+			if (!is_string($replace_regex) || !is_string($replace_string) || !is_string($element)) {
+				return $element;
+			}
+			$updated_element = preg_replace($replace_regex, $replace_string, $element);
+			if ($updated_element === null && preg_last_error() !== PREG_NO_ERROR) {
+				return $element;
+			}
+			return $updated_element;
+		}
+
+		public static function safeStrReplace($search, $replace, $subject) {
+			if (!is_string($search) || !is_string($replace) || !is_string($subject)) {
+				return $subject;
+			}
+			$updated_subject = str_replace($search, $replace, $subject);
+			if ($updated_subject === null) {
+				return $subject;
+			}
+			return $updated_subject;
+		}
+
+		public static function preInitWPHook($hook_name, $function_name, $priority, $accepted_args) {
+			global $wp_filter;
+
+			// Check if $wp_filter is not initialized or not an array
+			if (!isset($wp_filter) || !is_array($wp_filter)) {
+				$wp_filter = array();
+			}
+
+			// Check if the hook exists in $wp_filter
+			if (!isset($wp_filter[$hook_name])) {
+				$wp_filter[$hook_name] = array();
+			}
+
+			// Check if the priority exists for the hook
+			if (!isset($wp_filter[$hook_name][$priority])) {
+				$wp_filter[$hook_name][$priority] = array();
+			}
+
+			// Add the filter function information to the $wp_filter array
+			$wp_filter[$hook_name][$priority][] = array(
+				'function' => $function_name,
+				'accepted_args' => $accepted_args,
+			);
 		}
 	}
 endif;

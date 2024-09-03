@@ -68,7 +68,7 @@ $icon = BREEZE_PLUGIN_URL . 'assets/images/advanced-active.png';
 						_e( 'Add the URLs of the pages (one per line) you wish to exclude from the WordPress internal cache. To exclude URLs from the Varnish cache, please refer to this ', 'breeze' );
 						?>
                         <a
-                                href="https://support.cloudways.com/how-to-exclude-url-from-varnish/"
+                                href="https://support.cloudways.com/en/articles/5126470-how-to-install-and-configure-breeze-wordpress-cache-plugin#h_4be3a0ff05"
                                 target="_blank"><?php _e( 'Knowledge Base', 'breeze' ); ?></a><?php _e( ' article.', 'breeze' ); ?>
                     </p>
 					<?php if ( false === $excluded_url_list ) { ?>
@@ -106,8 +106,8 @@ $icon = BREEZE_PLUGIN_URL . 'assets/images/advanced-active.png';
 						_e( 'Pages that contain the query strings added here, will be cached. Each entry must be added in a new line. For further details please refer to this ', 'breeze' );
 						?>
                         <a
-                                href="https://support.cloudways.com/en/articles/5126470-how-to-install-and-configure-breeze-wordpress-cache-plugin"
-                                target="_blank"><?php _e( 'KB', 'breeze' ); ?></a><?php _e( ' article.', 'breeze' ); ?>
+                                href="https://support.cloudways.com/en/articles/5126470-how-to-install-and-configure-breeze-wordpress-cache-plugin#h_3f620cea69"
+                                target="_blank"><?php _e( 'Knowledge Base', 'breeze' ); ?></a><?php _e( ' article.', 'breeze' ); ?>
                     </p>
                 </div>
             </div>

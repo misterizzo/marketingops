@@ -348,7 +348,7 @@ class Breeze_PurgeCache {
 		$cache_path = breeze_get_cache_base_path( is_network_admin() );
 		$wp_filesystem->rmdir( untrailingslashit( $cache_path ), true );
 
-		if ( true === $flush_cache && ! empty( $post ) ) {
+		if ( true === $flush_cache && ! empty( $post ) && is_object( $post ) ) {
 			$post_type = get_post_type( $post->ID );
 
 			$flush_cache         = true;

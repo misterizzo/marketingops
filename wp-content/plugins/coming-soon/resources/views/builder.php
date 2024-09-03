@@ -426,6 +426,12 @@ var seedprod_analytics_install_link = <?php echo wp_json_encode( esc_url_raw( ht
 var seedprod_analytics_activate_link = <?php echo wp_json_encode( esc_url_raw( htmlspecialchars_decode( $url ) ) ); ?>;
 
 <?php
+	$url = seedprod_lite_get_plugins_activate_url( 'google-analytics-premium/googleanalytics-premium.php' );
+?>
+
+var seedprod_analytics_pro_activate_link = <?php echo wp_json_encode( esc_url_raw( htmlspecialchars_decode( $url ) ) ); ?>;
+
+<?php
 	$url = seedprod_lite_get_plugins_activate_url( 'wpforms-lite/wpforms.php' );
 ?>
 
@@ -590,6 +596,18 @@ $seedprod_data = array(
 		$seedprod_data['wc_active'] = true;
 	} else {
 		$seedprod_data['wc_active'] = false;
+	}
+
+	// Check if ACF is active
+	if ( ( in_array( 'advanced-custom-fields/acf.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) || in_array( 'advanced-custom-fields-pro/acf.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) && function_exists( 'acf_get_field_groups' ) ) {
+		$seedprod_data['acf_active'] = true;
+
+		// Get ACF options.
+		$seedprod_data['acf_groups'] = [];
+
+	} else {
+		$seedprod_data['acf_active'] = false;
+		$seedprod_data['acf_groups'] = [];
 	}
 
 	// Check if Easy Digital Downloads is active

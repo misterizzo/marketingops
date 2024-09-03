@@ -70,10 +70,10 @@ $icon = BREEZE_PLUGIN_URL . 'assets/images/varnish-active.png';
 						//                      echo '<strong>';
 						//                      _e( 'Note: ', 'breeze' );
 						//                      echo '</strong>';
-						_e( 'Seems Varnish is disabled on your Application. Please refer to ', 'breeze' );
+						_e( 'Seems Varnish is disabled on your Application. Please refer to this', 'breeze' );
 						?>
 						<a href="https://support.cloudways.com/most-common-varnish-issues-and-queries/"
-						   target="_blank"><?php _e( 'this KB', 'breeze' ); ?></a><?php _e( ' and learn how to enable it.', 'breeze' ); ?> </span>
+						   target="_blank"><?php _e( 'Knowledge Base', 'breeze' ); ?></a><?php _e( ' article and learn how to enable it.', 'breeze' ); ?> </span>
 						<?php
 						echo '</p>';
 					}

@@ -2,9 +2,9 @@
 Contributors: Cloudways
 Tags: cache,caching, performance, wp-cache, cdn
 Requires at least: 6.0
-Tested up to: 6.5.2
+Tested up to: 6.6.1
 Requires PHP: 7.4
-Stable tag: 2.1.9
+Stable tag: 2.1.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -159,6 +159,26 @@ Yes. The process of setting up CloudFlare with Breeze is easy. Check out the fol
 Using Gzip, Breeze compresses the request files, further reducing the size of the download files and speeding up the user experience.
 
 == Changelog ==
+
+= 2.1.13 =
+
+* Fix: The cache will be purged automatically when a scheduled post's status changes to 'Published'.
+* Fix: Update the reference link in the Knowledge Base article under the 'Never Cache URL(s)' option in the ADVANCED OPTIONS tab.
+
+= 2.1.12 =
+
+* Add: Shop Managers can now use Purge All Cache option to clear website cache.
+* Fix: Excluded wp-login.php from preload feature that fixes the problem with unwanted user logouts.
+
+= 2.1.11 =
+
+* Fix: The issue with the incorrect previous versions list under the Breeze Rollback Version Option has been resolved.
+
+= 2.1.10 =
+
+* Fix: The warning issue has been resolved during the product update process via WP-CRON.
+* Fix: In some browsers, pushing the back button would take the user to the same URL. The issue has been resolved and the back button will work as expected.
+* Add: The ability to clear the cache for individual WordPress default post types and custom post types has been introduced, offering users enhanced control over their caching strategy.
 
 = 2.1.9 =
 

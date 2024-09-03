@@ -5,7 +5,7 @@ Plugin URI: https://www.malcare.com
 Description: MalCare WordPress Security Plugin - Malware Scanner, Cleaner, Security Firewall
 Author: MalCare Security
 Author URI: https://www.malcare.com
-Version: 5.56
+Version: 5.68
 Network: True
  */
 
@@ -90,6 +90,9 @@ if ((array_key_exists('bvreqmerge', $_POST)) || (array_key_exists('bvreqmerge', 
 	$_REQUEST = array_merge($_GET, $_POST);
 }
 
+require_once dirname( __FILE__ ) . '/php_error_monitoring/monitoring.php';
+MCWPPHPErrorMonitoring::init();
+
 if ($bvinfo->hasValidDBVersion()) {
 	if ($bvinfo->isServiceActive('activity_log')) {
 		require_once dirname( __FILE__ ) . '/wp_actlog.php';
@@ -134,6 +137,28 @@ if ((array_key_exists('bvplugname', $_REQUEST)) && ($_REQUEST['bvplugname'] == "
 
 			#handling of WP Forms plugin
 			add_filter('wpforms_process_bypass_captcha', '__return_true', PHP_INT_MAX, 3);
+
+			#handling of Forminator plugin
+			if (defined('WP_PLUGIN_DIR')) {
+				$abstractFrontActionFilePath = WP_PLUGIN_DIR . '/forminator/library/abstracts/abstract-class-front-action.php';
+				$frontActionFilePath = WP_PLUGIN_DIR . '/forminator/library/modules/custom-forms/front/front-action.php';
+
+				if (file_exists($abstractFrontActionFilePath) && file_exists($frontActionFilePath)) {
+					require_once $abstractFrontActionFilePath;
+					require_once $frontActionFilePath;
+					if (class_exists('Forminator_CForm_Front_Action')) {
+						Forminator_CForm_Front_Action::$hidden_fields[] = "bv-stripe-";
+					}
+				}
+			}
+
+			#handling of CleanTalk Antispam plugin
+			add_action('init', function() {
+				global $apbct;
+				if (isset($apbct) && is_object($apbct)) {
+					$apbct->settings['forms__contact_forms_test'] = 0;
+				}
+			});
 		} else {
 			define('MCBASEPATH', plugin_dir_path(__FILE__));
 
@@ -162,9 +187,15 @@ if ((array_key_exists('bvplugname', $_REQUEST)) && ($_REQUEST['bvplugname'] == "
 	if ($bvinfo->hasValidDBVersion()) {
 		if ($bvinfo->isProtectModuleEnabled()) {
 			require_once dirname( __FILE__ ) . '/protect/protect.php';
-			add_action('clear_pt_config', array('MCProtect_V556', 'uninstall'));
-			if ($bvinfo->isActivePlugin() && !(defined( 'WP_CLI' ) && WP_CLI)) {
-				MCProtect_V556::init(MCProtect_V556::MODE_WP);
+			//For backward compatibility.
+			MCProtect_V568::$settings = new MCWPSettings();
+			MCProtect_V568::$db = new MCWPDb();
+			MCProtect_V568::$info = new MCInfo(MCProtect_V568::$settings);
+
+			add_action('clear_pt_config', array('MCProtect_V568', 'uninstall'));
+
+			if ($bvinfo->isActivePlugin()) {
+				MCProtect_V568::init(MCProtect_V568::MODE_WP);
 			}
 		}
 

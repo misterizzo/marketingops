@@ -611,6 +611,13 @@ function seedprod_lite_save_lpage() {
 			$has_permission = true;
 		}
 
+		// unfiltered html check
+		if (current_user_can('unfiltered_html') && !defined('DISALLOW_UNFILTERED_HTML') || (defined('DISALLOW_UNFILTERED_HTML') && !DISALLOW_UNFILTERED_HTML)) {
+			$has_permission = true;
+		} else {
+			$has_permission = false;
+		}
+
 		$sp_post         = $_POST;
 		$sp_current_user = wp_get_current_user();
 

@@ -133,7 +133,7 @@ if ( is_multisite() ) {
 				<select name="breeze_version" class="breeze-version">
 					<?php
 					$versions = breeze_org_versions();
-					foreach ( $versions as $version => $url ) {
+					foreach ( $versions as $version ) {
 						$selected = '';
 						if ( BREEZE_VERSION === $version ) {
 							$selected = 'selected';

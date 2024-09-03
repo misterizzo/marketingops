@@ -10,7 +10,7 @@ class BVInfoCallback extends BVCallbackBase {
 	public $bvinfo;
 	public $bvapi;
 	
-	const INFO_WING_VERSION = 2.2;
+	const INFO_WING_VERSION = 2.3;
 
 	public function __construct($callback_handler) {
 		$this->db = $callback_handler->db;
@@ -178,6 +178,8 @@ class BVInfoCallback extends BVCallbackBase {
 			'contentdir' => defined('WP_CONTENT_DIR') ? WP_CONTENT_DIR : null,
 			'contenturl' => defined('WP_CONTENT_URL') ? WP_CONTENT_URL : null,
 			'plugindir' => defined('WP_PLUGIN_DIR') ? WP_PLUGIN_DIR : null,
+			'themedir' => get_stylesheet_directory(),
+			'templatedir' => get_template_directory(),
 			'dbcharset' => defined('DB_CHARSET') ? DB_CHARSET : null,
 			'disallow_file_edit' => defined('DISALLOW_FILE_EDIT'),
 			'disallow_file_mods' => defined('DISALLOW_FILE_MODS'),

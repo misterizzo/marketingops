@@ -2458,6 +2458,7 @@ summary{outline:0;cursor:pointer}
 .woocommerce-additional-fields h3{margin-top:10px}
 .wc-proceed-to-checkout .checkout-button{width:100%;text-align:center}
 .woocommerce .onsale{min-width:50px !important;min-height:50px !important;font-size:13px}
+.sp-image-wrapper .sp-image-preview{display:none}
 .sp-img-block-template-1{border:1px solid #dedede}
 .sp-img-block-template-2{border:1px solid #dedede;padding:5px;background:#fff}
 .sp-img-block-template-6{border:1px solid #dedede;padding:1px;background:#fff}

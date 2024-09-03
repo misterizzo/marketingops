@@ -28,7 +28,7 @@ function seedprod_lite_create_menus() {
 	// if notification disabled than change value to 0
 	if ( isset( $seedprod_app_settings ) ) {
 		if ( isset( $seedprod_app_settings->disable_seedprod_notification ) ) {
-			if ( $seedprod_app_settings->disable_seedprod_notification === true ) {
+			if ( true === $seedprod_app_settings->disable_seedprod_notification ) {
 				$notifications_count = 0;
 			}
 		}
@@ -95,17 +95,6 @@ function seedprod_lite_create_menus() {
 		'seedprod_lite_subscribers_page'
 	);
 
-	// if ('lite' === SEEDPROD_BUILD) {
-		add_submenu_page(
-			'seedprod_lite',
-			__( 'Pop-ups', 'coming-soon' ),
-			__( 'Pop-ups', 'coming-soon' ),
-			apply_filters( 'seedprod_popup_menu_capability', 'edit_others_posts' ),
-			'seedprod_lite_popup',
-			'seedprod_lite_popup_page'
-		);
-	// }
-
 	add_submenu_page(
 		'seedprod_lite',
 		__( 'Settings', 'coming-soon' ),
@@ -113,6 +102,24 @@ function seedprod_lite_create_menus() {
 		apply_filters( 'seedprod_settings_menu_capability', 'edit_others_posts' ),
 		'seedprod_lite_settings',
 		'seedprod_lite_settings_page'
+	);
+
+	add_submenu_page(
+		'seedprod_lite',
+		__( 'Pop-ups', 'coming-soon' ),
+		__( 'Pop-ups', 'coming-soon' ),
+		apply_filters( 'seedprod_popup_menu_capability', 'edit_others_posts' ),
+		'seedprod_lite_popup',
+		'seedprod_lite_popup_page'
+	);
+
+	add_submenu_page(
+		'seedprod_lite',
+		__( 'Custom Code', 'coming-soon' ),
+		__( 'Custom Code', 'coming-soon' ),
+		apply_filters( 'seedprod_customcode_menu_capability', 'edit_others_posts' ),
+		'seedprod_lite_customcode',
+		'seedprod_lite_customcode_page'
 	);
 
 	add_submenu_page(
@@ -293,11 +300,19 @@ function seedprod_lite_update_selected_page_in_submenu() {
 				jQuery( "a[href^='admin.php?page=seedprod_<?php echo esc_attr( SEEDPROD_BUILD ); ?>']" ).parent().removeClass('current');
 				jQuery( "a[href^='admin.php?page=seedprod_<?php echo esc_attr( SEEDPROD_BUILD ); ?>_theme_templates']" ).parent().addClass('current');
 			}
+
 			// Popups
 			if(location.hash.indexOf('#/popups') >= 0){
 				jQuery( "a[href^='admin.php?page=seedprod_<?php echo esc_attr( SEEDPROD_BUILD ); ?>']" ).parent().removeClass('current');
 				jQuery( "a[href^='admin.php?page=seedprod_<?php echo esc_attr( SEEDPROD_BUILD ); ?>_popup']" ).parent().addClass('current');
 			}
+
+			// Custom Code
+			if(location.hash.indexOf('#/customcode') >= 0){
+				jQuery( "a[href^='admin.php?page=seedprod_<?php echo esc_attr( SEEDPROD_BUILD ); ?>']" ).parent().removeClass('current');
+				jQuery( "a[href^='admin.php?page=seedprod_<?php echo esc_attr( SEEDPROD_BUILD ); ?>_customcode']" ).parent().addClass('current');
+			}
+
 			// Templates
 			if(location.hash.indexOf('#/template') >= 0){
 				jQuery( "a[href^='admin.php?page=seedprod_<?php echo esc_attr( SEEDPROD_BUILD ); ?>']" ).parent().removeClass('current');
@@ -365,7 +380,7 @@ function seedprod_lite_redirect_to_site() {
 	// subscribers
 	if ( isset( $_GET['page'] ) && 'seedprod_lite_templates' === $_GET['page'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$seedprod_nonce = wp_create_nonce( 'seedprod_nonce' );
-		wp_safe_redirect( 'admin.php?page=seedprod_lite_template&_wpnonce='.$seedprod_nonce.'&id=0&from=sidebar#/template' );
+		wp_safe_redirect( 'admin.php?page=seedprod_lite_template&_wpnonce=' . $seedprod_nonce . '&id=0&from=sidebar#/template' );
 		exit();
 	}
 
@@ -403,7 +418,7 @@ function seedprod_lite_redirect_to_site() {
 	if ( isset( $_GET['page'] ) && 'seedprod_lite_setup' === $_GET['page'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( ! empty( $_GET['sp_setup_dismiss'] ) ) {
 			// check nonce
-			if ( !empty($_GET['nonce']) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['nonce'] ) ), 'seedprod_nonce' ) ) {
+			if ( ! empty( $_GET['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['nonce'] ) ), 'seedprod_nonce' ) ) {
 				update_option( 'seedprod_dismiss_setup', 1 );
 			}
 		}
@@ -427,6 +442,31 @@ function seedprod_lite_redirect_to_site() {
 			wp_safe_redirect( 'admin.php?page=seedprod_lite&sp_om=1#/popups' );
 		}
 		exit();
+	}
+
+	// custom code
+	if ( isset( $_GET['page'] ) && 'seedprod_lite_customcode' === $_GET['page'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( is_plugin_active( 'insert-headers-and-footers/ihaf.php' ) || is_plugin_active( 'wpcode-premium/wpcode.php' ) ) {
+			$seedprod_nonce = wp_create_nonce( 'seedprod_nonce' );
+			wp_safe_redirect( "admin.php?page=seedprod_lite&sp_wpc=redirect&seedprod_nonce=$seedprod_nonce#/customcode" );
+		} else {
+			wp_safe_redirect( 'admin.php?page=seedprod_lite#/customcode' );
+		}
+		exit();
+	}
+
+	add_action( 'admin_init', 'seedprod_lite_redirect_to_wpcode', 100 );
+
+	/**
+	 * Redirect to WPCode.
+	 */
+	function seedprod_lite_redirect_to_wpcode() {
+		// Check if the 'insert-headers-and-footers' or 'wpcode-premium' plugin is active
+		if ( is_plugin_active( 'insert-headers-and-footers/ihaf.php' ) || is_plugin_active( 'wpcode-premium/wpcode.php' ) ) {
+			if ( ( isset( $_GET['seedprod_nonce'] ) && wp_verify_nonce( $_GET['seedprod_nonce'], 'seedprod_nonce' ) ) && ( isset( $_GET['sp_wpc'] ) && 'redirect' === $_GET['sp_wpc'] ) ) {
+				wp_safe_redirect( 'admin.php?page=wpcode' );
+			}
+		}
 	}
 
 	// feature request page
@@ -558,7 +598,7 @@ add_filter( 'admin_body_class', 'seedprod_lite_admin_body_class' );
  * @return string          Altered body classes.
  */
 function seedprod_lite_admin_body_class( $classes ) {
-	if ( ! empty( $_GET['sp_om'] ) && $_GET['sp_om'] == 1 ) {
+	if ( ! empty( $_GET['sp_om'] ) && 1 == $_GET['sp_om'] ) {
 		return "$classes sp_om";
 	}
 	return $classes;

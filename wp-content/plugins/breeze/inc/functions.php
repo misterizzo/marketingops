@@ -892,21 +892,27 @@ function breeze_page_provided_headers() {
 }
 
 function breeze_org_versions() {
-	
-	$url      = "https://api.wordpress.org/plugins/info/1.0/breeze.json?fields=versions";
 
-	$response = wp_remote_get($url);
-	if (is_wp_error($response)) {
+	$url = 'https://api.wordpress.org/plugins/info/1.0/breeze.json?fields=versions';
+
+	$response = wp_remote_get( $url );
+	if ( is_wp_error( $response ) ) {
 		return false;
 	}
 
-	$response_body         = json_decode(wp_remote_retrieve_body($response), true);
+	$response_body = json_decode( wp_remote_retrieve_body( $response ), true );
 
-	$current_version_index = array_search( BREEZE_VERSION, array_keys( $response_body['versions'] ) ) + 1;
+	// Get all versions
+	$versions = array_keys( $response_body['versions'] );
 
-	$versions              = array_slice( $response_body['versions'], $current_version_index - 5 , 5 );
+	// Sort versions in descending order
+	usort( $versions, 'version_compare' );
 
-	$versions              = array_reverse( $versions );
+	$current_version_index = array_search( BREEZE_VERSION, $versions ) + 1;
 
-	return $versions;
+	$prev_5_versions = array_slice( $versions, $current_version_index - 5, 5 );
+
+	$prev_5_versions = array_reverse( $prev_5_versions );
+
+	return $prev_5_versions;
 }
