@@ -2,8 +2,8 @@
 Contributors: WebFactory
 Tags: 301 redirect, redirect, 404 error log, redirection, redirects
 Requires at least: 4.0
-Tested up to: 6.5
-Stable tag: 2.75
+Tested up to: 6.6
+Stable tag: 2.76
 Requires PHP: 5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -67,6 +67,10 @@ Install our free <a href="https://wordpress.org/plugins/wp-force-ssl/">WP Force 
 
 
 == Changelog ==
+
+= 2.76 =
+* 2024/06/30
+* security fixes
 
 = 2.75 =
 * 2024/03/25
@@ -203,7 +207,3 @@ The code imposes no limits on the log size and you can easily overwrite the defa
 = How can I report security bugs? =
 
 You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/eps-301-redirects)
-
-= Will it slow my site down? =
-
-No, it won't. The code is highly optimized and thoroughly tested.

@@ -134,6 +134,10 @@ class Ai1wm_Main_Controller {
 
 		// Enqueue updater scripts and styles
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_updater_scripts_and_styles' ), 5 );
+
+		// Handle export/import exceptions (errors)
+		add_action( 'ai1wm_status_export_error', array( $this, 'handle_error_cleanup' ), 5, 2 );
+		add_action( 'ai1wm_status_import_error', array( $this, 'handle_error_cleanup' ), 5, 2 );
 	}
 
 	/**
@@ -1372,5 +1376,19 @@ class Ai1wm_Main_Controller {
 		);
 
 		return $schedules;
+	}
+
+	/**
+	 * Handles ai1wm_status_export_error hook
+	 *
+	 * @param $params
+	 * @param $exception
+	 *
+	 * @return void
+	 */
+	public function handle_error_cleanup( $params, $exception = null ) {
+		if ( ! $exception instanceof Ai1wm_Import_Retry_Exception ) {
+			Ai1wm_Directory::delete( ai1wm_storage_path( $params ) );
+		}
 	}
 }

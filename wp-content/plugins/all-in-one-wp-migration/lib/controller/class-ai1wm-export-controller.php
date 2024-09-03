@@ -73,34 +73,24 @@ class Ai1wm_Export_Controller {
 							$params = call_user_func_array( $hook['function'], array( $params ) );
 
 						} catch ( Ai1wm_Database_Exception $e ) {
+							do_action( 'ai1wm_status_export_error', $params, $e );
+
 							if ( defined( 'WP_CLI' ) ) {
 								WP_CLI::error( sprintf( __( 'Unable to export. Error code: %s. %s', AI1WM_PLUGIN_NAME ), $e->getCode(), $e->getMessage() ) );
-							} else {
-								status_header( $e->getCode() );
-								ai1wm_json_response( array( 'errors' => array( array( 'code' => $e->getCode(), 'message' => $e->getMessage() ) ) ) );
 							}
-							Ai1wm_Directory::delete( ai1wm_storage_path( $params ) );
 
-							// Check if export is performed from scheduled event
-							if ( isset( $params['event_id'] ) ) {
-								$params['error_message'] = $e->getMessage();
-								do_action( 'ai1wm_status_export_fail', $params );
-							}
+							status_header( $e->getCode() );
+							ai1wm_json_response( array( 'errors' => array( array( 'code' => $e->getCode(), 'message' => $e->getMessage() ) ) ) );
 							exit;
 						} catch ( Exception $e ) {
+							do_action( 'ai1wm_status_export_error', $params, $e );
+
 							if ( defined( 'WP_CLI' ) ) {
 								WP_CLI::error( sprintf( __( 'Unable to export: %s', AI1WM_PLUGIN_NAME ), $e->getMessage() ) );
-							} else {
-								Ai1wm_Status::error( __( 'Unable to export', AI1WM_PLUGIN_NAME ), $e->getMessage() );
-								Ai1wm_Notification::error( __( 'Unable to export', AI1WM_PLUGIN_NAME ), $e->getMessage() );
 							}
-							Ai1wm_Directory::delete( ai1wm_storage_path( $params ) );
 
-							// Check if export is performed from scheduled event
-							if ( isset( $params['event_id'] ) ) {
-								$params['error_message'] = $e->getMessage();
-								do_action( 'ai1wm_status_export_fail', $params );
-							}
+							Ai1wm_Status::error( __( 'Unable to export', AI1WM_PLUGIN_NAME ), $e->getMessage() );
+							Ai1wm_Notification::error( __( 'Unable to export', AI1WM_PLUGIN_NAME ), $e->getMessage() );
 							exit;
 						}
 					}

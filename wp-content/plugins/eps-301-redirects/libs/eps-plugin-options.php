@@ -345,7 +345,7 @@ public function get_tab($tab = 'general')
       do_action($tab . '_admin_tab', $this->settings[$tab]);
     } else {
       ?>
-<form method="post" action="<?php echo admin_url('options.php'); ?>">
+<form method="post" action="<?php echo esc_url(admin_url('options.php')); ?>">
   <?php
 
     settings_fields($this->setting_slug($tab));

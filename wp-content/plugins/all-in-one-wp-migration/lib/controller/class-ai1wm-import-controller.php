@@ -73,30 +73,36 @@ class Ai1wm_Import_Controller {
 							$params = call_user_func_array( $hook['function'], array( $params ) );
 
 						} catch ( Ai1wm_Import_Retry_Exception $e ) {
+							do_action( 'ai1wm_status_import_error', $params, $e );
+
 							if ( defined( 'WP_CLI' ) ) {
 								WP_CLI::error( sprintf( __( 'Unable to import. Error code: %s. %s', AI1WM_PLUGIN_NAME ), $e->getCode(), $e->getMessage() ) );
-							} else {
-								status_header( $e->getCode() );
-								ai1wm_json_response( array( 'errors' => array( array( 'code' => $e->getCode(), 'message' => $e->getMessage() ) ) ) );
 							}
+
+							status_header( $e->getCode() );
+							ai1wm_json_response( array( 'errors' => array( array( 'code' => $e->getCode(), 'message' => $e->getMessage() ) ) ) );
 							exit;
 						} catch ( Ai1wm_Database_Exception $e ) {
+							do_action( 'ai1wm_status_import_error', $params, $e );
+
 							if ( defined( 'WP_CLI' ) ) {
 								WP_CLI::error( sprintf( __( 'Unable to import. Error code: %s. %s', AI1WM_PLUGIN_NAME ), $e->getCode(), $e->getMessage() ) );
-							} else {
-								status_header( $e->getCode() );
-								ai1wm_json_response( array( 'errors' => array( array( 'code' => $e->getCode(), 'message' => $e->getMessage() ) ) ) );
 							}
-							Ai1wm_Directory::delete( ai1wm_storage_path( $params ) );
+
+							status_header( $e->getCode() );
+							ai1wm_json_response( array( 'errors' => array( array( 'code' => $e->getCode(), 'message' => $e->getMessage() ) ) ) );
+
 							exit;
 						} catch ( Exception $e ) {
+							do_action( 'ai1wm_status_import_error', $params, $e );
+
 							if ( defined( 'WP_CLI' ) ) {
 								WP_CLI::error( sprintf( __( 'Unable to import: %s', AI1WM_PLUGIN_NAME ), $e->getMessage() ) );
-							} else {
-								Ai1wm_Status::error( __( 'Unable to import', AI1WM_PLUGIN_NAME ), $e->getMessage() );
-								Ai1wm_Notification::error( __( 'Unable to import', AI1WM_PLUGIN_NAME ), $e->getMessage() );
 							}
-							Ai1wm_Directory::delete( ai1wm_storage_path( $params ) );
+
+							Ai1wm_Status::error( __( 'Unable to import', AI1WM_PLUGIN_NAME ), $e->getMessage() );
+							Ai1wm_Notification::error( __( 'Unable to import', AI1WM_PLUGIN_NAME ), $e->getMessage() );
+
 							exit;
 						}
 					}
