@@ -28,7 +28,7 @@ $allow_templates_access = ( false === $user_membership ) ? 'no' : ( ( empty( $us
 	<div class="container">
 		<div class="mainHeading">
 			<h4><?php esc_html_e( 'Marketing Ops Templates', 'marketing-ops-core' ); ?></h4>
-			<p><?php esc_html_e( 'Ultimate collection of fail-proof MOps templates for planning, documentation, and more. Buit by the community, for the community.', 'marketing-ops-core' ); ?></p>
+			<p><?php esc_html_e( 'Ultimate collection of fail-proof MOps templates for planning, documentation, and more. Built by the community, for the community.', 'marketing-ops-core' ); ?></p>
 		</div>
 		<?php // Check if the template files are available. ?>
 		<?php if ( ! empty( $templates_query->posts ) && is_array( $templates_query->posts ) ) { ?>
