@@ -4604,7 +4604,10 @@ class Marketing_Ops_Core_Public {
 
 			// Send the email regarding the new post.
 			wp_mail(
-				$admin_email,
+				array(
+					$admin_email,
+					'audrey@marketingops.com'
+				),
 				$subject_to_text,
 				$body_content_to_text,
 				$headers
