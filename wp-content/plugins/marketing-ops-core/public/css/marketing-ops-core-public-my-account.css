@@ -2194,10 +2194,6 @@ table tbody tr:hover>th {
 	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-	background: -webkit-linear-gradient(112deg, #FD4B7A -2.36%, #4D00AE 27.05%);
-	background: -moz-linear-gradient(112deg, #FD4B7A -2.36%, #4D00AE 27.05%);
-	background: -o-linear-gradient(112deg, #FD4B7A -2.36%, #4D00AE 27.05%);
-	background: linear-gradient(112deg, #FD4B7A -2.36%, #4D00AE 27.05%);
 	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
@@ -2316,11 +2312,12 @@ table tbody tr:hover>th {
 }
 
 .arrowrightdashbord {
-	position: absolute;
-	bottom: 5px;
-	right: 15px;
-	cursor: pointer;
-	display: none;
+    position: absolute;
+    bottom: 5px;
+    right: 15px;
+    cursor: pointer;
+    display: block;
+    overflow: hidden;
 }
 
 .woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li:hover .arrowrightdashbord {
@@ -2328,10 +2325,17 @@ table tbody tr:hover>th {
 }
 
 .arrowrightdashbord span {
-	display: flex;
-	align-items: center;
-	align-content: center;
-	justify-content: center;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s ease;
+    left: -24px;
+}
+
+.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li:hover .arrowrightdashbord span {
+    left: 0;
 }
 
 .arrowsvgimg {

@@ -35,6 +35,7 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 		<h3>Hello Tony Ryzhkov! </h3><span class="hedertitlethree">Take a look:</span>
 		<ul class="dashbordlistmain">
 			<li>
+				<a href="javascript:void(1)">
 				<div class="innerdashbordlist">
 					<div class="innsersubdashbordlist">
 						<div class="iconwithtitledashbord">
@@ -66,9 +67,11 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 						</div>
 					</div>
 				</div>
+				</a>
 			</li>
 
 			<li>
+			<a href="javascript:void(1)">
 				<div class="innerdashbordlist">
 					<div class="innsersubdashbordlist">
 						<div class="iconwithtitledashbord">
@@ -103,9 +106,11 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 						</div>
 					</div>
 				</div>
+				</a>
 			</li>
 
 			<li>
+			<a href="javascript:void(1)">
 				<div class="innerdashbordlist">
 					<div class="innsersubdashbordlist">
 						<div class="iconwithtitledashbord">
@@ -140,9 +145,11 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 						</div>
 					</div>
 				</div>
+				</a>
 			</li>
 
 			<li>
+			<a href="javascript:void(1)">
 				<div class="innerdashbordlist">
 					<div class="innsersubdashbordlist">
 						<div class="iconwithtitledashbord">
@@ -177,9 +184,11 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 						</div>
 					</div>
 				</div>
+				</a>
 			</li>
 
 			<li>
+			<a href="javascript:void(1)">
 				<div class="innerdashbordlist">
 					<div class="innsersubdashbordlist">
 						<div class="iconwithtitledashbord">
@@ -212,9 +221,11 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 						</div>
 					</div>
 				</div>
+				</a>
 			</li>
 
 			<li>
+			<a href="javascript:void(1)">
 				<div class="innerdashbordlist">
 					<div class="innsersubdashbordlist">
 						<div class="iconwithtitledashbord">
@@ -249,9 +260,11 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 						</div>
 					</div>
 				</div>
+				</a>
 			</li>
 
 			<li>
+			<a href="javascript:void(1)">
 				<div class="innerdashbordlist">
 					<div class="innsersubdashbordlist">
 						<div class="iconwithtitledashbord">
@@ -286,9 +299,11 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 						</div>
 					</div>
 				</div>
+				</a>
 			</li>
 
 			<li>
+			<a href="javascript:void(1)">
 				<div class="innerdashbordlist">
 					<div class="innsersubdashbordlist">
 						<div class="iconwithtitledashbord">
@@ -335,9 +350,11 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 						</div>
 					</div>
 				</div>
+				</a>
 			</li>
 
 			<li>
+			<a href="javascript:void(1)">
 				<div class="innerdashbordlist">
 					<div class="innsersubdashbordlist">
 						<div class="iconwithtitledashbord">
@@ -372,9 +389,11 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 						</div>
 					</div>
 				</div>
+				</a>
 			</li>
 
 			<li>
+			<a href="javascript:void(1)">
 				<div class="innerdashbordlist">
 					<div class="innsersubdashbordlist">
 						<div class="iconwithtitledashbord">
@@ -409,9 +428,11 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 						</div>
 					</div>
 				</div>
+				</a>
 			</li>
 
 			<li>
+			<a href="javascript:void(1)">
 				<div class="innerdashbordlist">
 					<div class="innsersubdashbordlist">
 						<div class="iconwithtitledashbord">
@@ -446,9 +467,11 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 						</div>
 					</div>
 				</div>
+				</a>
 			</li>
 
 			<li>
+			<a href="javascript:void(1)">
 				<div class="innerdashbordlist">
 					<div class="innsersubdashbordlist">
 						<div class="iconwithtitledashbord">
@@ -484,6 +507,7 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 					</div>
 				</div>
 			</li>
+</a>
 			
 		</ul>
 
