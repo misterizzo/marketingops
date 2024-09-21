@@ -2453,3 +2453,21 @@ display: block;
 }
 
 .profiledone .roundprobilebox svg{opacity: 0.3;}
+
+.addprofilebtn
+{
+	color: var(--pure-white, #FFF);
+font-family: "Open Sans";
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 82%; /* 11.48px */
+display: flex;
+width: 61px;
+padding: 7px 10px 8px 10px;
+justify-content: center;
+align-items: center;
+gap: 5px;
+border-radius: 302px;
+background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));
+}
