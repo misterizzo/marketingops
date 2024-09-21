@@ -2482,9 +2482,9 @@ display: block;
 }
 
 .woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li:after {
-	z-index: -1;
+	z-index: 1;
 	content: '';
-	width: 25%;
+	width: 40%;
 	height: 1px;
 	background: #DEE2E2;
 	position: absolute;
@@ -2573,7 +2573,7 @@ display: block;
 	}
 
 	.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li:after {
-		z-index: -1;
+		z-index: 1;
 		content: '';
 		width: 25%;
 		height: 1px;
