@@ -85,12 +85,12 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 								</svg>
 							</i>
 							
-							<h4>Premium Content</h4>
+							<h4>Project Templates</h4>
 						</div>
 						<div class="bottomdashbordlist">
 							<ul>
 								<li>
-									162 items available
+								7 saved
 								</li>	
 							</ul>
 						</div>
@@ -117,12 +117,12 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 								</svg>
 							</i>
 							
-							<h4>Premium Content</h4>
+							<h4>Downloads</h4>
 						</div>
 						<div class="bottomdashbordlist">
 							<ul>
 								<li>
-									162 items available
+								10 saved
 								</li>	
 							</ul>
 						</div>
@@ -149,12 +149,12 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 								</svg>
 							</i>
 							
-							<h4>Premium Content</h4>
+							<h4>Course Certificates</h4>
 						</div>
 						<div class="bottomdashbordlist">
 							<ul>
 								<li>
-									162 items available
+									You don’t have any certificates yet
 								</li>	
 							</ul>
 						</div>
@@ -181,12 +181,12 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 								</svg>
 							</i>
 							
-							<h4>Premium Content</h4>
+							<h4>Orders</h4>
 						</div>
 						<div class="bottomdashbordlist">
 							<ul>
 								<li>
-									162 items available
+								last order dated August 24 2023 $125.00 for 1 item
 								</li>	
 							</ul>
 						</div>
@@ -213,12 +213,12 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 								</svg>
 							</i>
 							
-							<h4>Premium Content</h4>
+							<h4>My Articles & Content</h4>
 						</div>
 						<div class="bottomdashbordlist">
 							<ul>
 								<li>
-									162 items available
+								3 articles, 0 podcasts3 workshops, 0 courses
 								</li>	
 							</ul>
 						</div>
@@ -245,12 +245,12 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 								</svg>
 							</i>
 							
-							<h4>Premium Content</h4>
+							<h4>Agency Profile</h4>
 						</div>
 						<div class="bottomdashbordlist">
 							<ul>
 								<li>
-									162 items available
+								Add your agency to the MarketingOps
 								</li>	
 							</ul>
 						</div>
@@ -277,12 +277,12 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 								</svg>
 							</i>
 							
-							<h4>Premium Content</h4>
+							<h4>Platform Profile</h4>
 						</div>
 						<div class="bottomdashbordlist">
 							<ul>
 								<li>
-									162 items available
+								Add your Platform
 								</li>	
 							</ul>
 						</div>
@@ -309,12 +309,12 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 								</svg>
 							</i>
 							
-							<h4>Premium Content</h4>
+							<h4>Memberships</h4>
 						</div>
 						<div class="bottomdashbordlist">
 							<ul>
 								<li>
-									162 items available
+								Premium membership till July 24 2024
 								</li>	
 							</ul>
 						</div>
@@ -341,12 +341,12 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 								</svg>
 							</i>
 							
-							<h4>Premium Content</h4>
+							<h4>Payment Methods</h4>
 						</div>
 						<div class="bottomdashbordlist">
 							<ul>
 								<li>
-									162 items available
+								Visa ending in 7902 set as main method
 								</li>	
 							</ul>
 						</div>
@@ -373,12 +373,12 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 								</svg>
 							</i>
 							
-							<h4>Premium Content</h4>
+							<h4>Addresses</h4>
 						</div>
 						<div class="bottomdashbordlist">
 							<ul>
 								<li>
-									162 items available
+								Billing & Shipping addresses are set
 								</li>	
 							</ul>
 						</div>
@@ -405,12 +405,12 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 								</svg>
 							</i>
 							
-							<h4>Premium Content</h4>
+							<h4>Account & Password</h4>
 						</div>
 						<div class="bottomdashbordlist">
 							<ul>
 								<li>
-									162 items available
+								All set!
 								</li>	
 							</ul>
 						</div>
