@@ -32,7 +32,7 @@ $author_img_url     = ( empty( $author_img_id ) || false === $author_img_id ) ? 
 
 if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 	<div class="newdashbordmain">
-		<h3>Hello Tony Ryzhkov! <span class="hedertitlethree">Take a look:</span></h3>
+		<h3>Hello Tony Ryzhkov! </h3><span class="hedertitlethree">Take a look:</span>
 		<ul class="dashbordlistmain">
 			<li>
 				<div class="innerdashbordlist">
