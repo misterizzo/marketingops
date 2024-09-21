@@ -2419,3 +2419,16 @@ margin:0 0 5px;
     align-content: center;
     justify-content: center;
 }
+
+
+.profiledone .profilboxarrow
+{
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M15.9286 7.99998C15.9286 12.3794 12.3795 15.9286 8.00001 15.9286C3.62055 15.9286 0.0714417 12.3794 0.0714417 7.99998C0.0714417 3.62052 3.62055 0.0714111 8.00001 0.0714111C12.3795 0.0714111 15.9286 3.62052 15.9286 7.99998ZM7.38394 10.8125L11.6697 6.52677C11.9197 6.27454 11.9197 5.86829 11.6697 5.61605C11.4174 5.36605 11.0112 5.36605 10.7589 5.61605L6.92859 9.44864L5.24108 7.75891C4.98885 7.50891 4.5826 7.50891 4.33037 7.75891C4.08037 8.01114 4.08037 8.41739 4.33037 8.66963L6.47323 10.8125C6.60046 10.9375 6.76341 11 6.92859 11C7.09376 11 7.25671 10.9375 7.38394 10.8125Z' fill='%2333C46D'/%3E%3C/svg%3E");
+background-repeat: no-repeat no-repeat;
+background-position: center center;
+background-size: cover;
+width: 15.857px;
+height: 15.857px;
+flex-shrink: 0;
+display: block;
+}
