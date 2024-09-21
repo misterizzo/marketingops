@@ -32,7 +32,7 @@ $author_img_url     = ( empty( $author_img_id ) || false === $author_img_id ) ? 
 
 if ( '183.82.161.148' === $_SERVER['REMOTE_ADDR'] ) { ?>
 	<p class="hello-customer">
-		<?php esc_html_e( 'Hello Mopza', 'marketing-ops-core' ); ?> 
+		<?php esc_html_e( 'Hello Himanshu', 'marketing-ops-core' ); ?> 
 		<img src="<?php echo esc_url( $author_img_url ); ?>">
 		<strong><?php echo esc_html( $current_user->display_name ); ?></strong>  
 		(<?php esc_html_e( 'not', 'marketing-ops-core' ); ?> <strong><?php echo esc_html( $current_user->display_name ); ?></strong>? 
