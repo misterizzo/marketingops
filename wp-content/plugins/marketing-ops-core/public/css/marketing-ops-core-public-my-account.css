@@ -2388,8 +2388,13 @@ table tbody tr:hover>th {
 }
 
 .woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li {
-	width: calc(100% / 5);
-	flex: 0 0 calc(100% / 5);
+    width: calc(100% / 5);
+    flex: 0 0 calc(100% / 5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 }
 
 .woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li h5{
@@ -2403,10 +2408,14 @@ line-height: 25px; /* 208.333% */
 margin:0 0 5px;
 }
 
-.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li .roundprobilebox
-{
-max-width: 76px;
-max-height: 76px;
-flex-shrink: 0;
-fill: radial-gradient(50% 50% at 50% 50%, #FFF 55%, rgba(241, 243, 244, 0.80) 100%);
+.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li .roundprobilebox {
+    width: 76px;
+    height: 76px;
+    flex-shrink: 0;
+    background: radial-gradient(50% 50% at 50% 50%, #FFF 55%, rgba(241, 243, 244, 0.80) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
 }
