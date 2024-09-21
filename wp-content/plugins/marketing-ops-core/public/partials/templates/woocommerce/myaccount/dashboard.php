@@ -30,7 +30,7 @@ $default_author_img = get_field( 'moc_user_default_image', 'option' );
 $author_img_id      = ! empty( get_user_meta( $current_user->ID, 'wp_user_avatar', true ) ) ? get_user_meta( $current_user->ID, 'wp_user_avatar', true ) : '';
 $author_img_url     = ( empty( $author_img_id ) || false === $author_img_id ) ? $default_author_img : wp_get_attachment_url( $author_img_id );
 
-if ( '183.82.161.148' === $_SERVER['REMOTE_ADDR'] ) { ?>
+if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 	<p class="hello-customer">
 		<?php esc_html_e( 'Hello Himanshu', 'marketing-ops-core' ); ?> 
 		<img src="<?php echo esc_url( $author_img_url ); ?>">
