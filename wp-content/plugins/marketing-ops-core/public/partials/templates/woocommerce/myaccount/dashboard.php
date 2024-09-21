@@ -30,7 +30,7 @@ $default_author_img = get_field( 'moc_user_default_image', 'option' );
 $author_img_id      = ! empty( get_user_meta( $current_user->ID, 'wp_user_avatar', true ) ) ? get_user_meta( $current_user->ID, 'wp_user_avatar', true ) : '';
 $author_img_url     = ( empty( $author_img_id ) || false === $author_img_id ) ? $default_author_img : wp_get_attachment_url( $author_img_id );
 
-if ( '183.82.161.148' === $_SERVER['REMOTE_ADDR'] ) {
+if ( '183.82.161.148' === $_SERVER['REMOTE_ADDR'] ) { ?>
 	<p class="hello-customer">
 		<?php esc_html_e( 'Hello Mopza', 'marketing-ops-core' ); ?> 
 		<img src="<?php echo esc_url( $author_img_url ); ?>">
@@ -38,8 +38,7 @@ if ( '183.82.161.148' === $_SERVER['REMOTE_ADDR'] ) {
 		(<?php esc_html_e( 'not', 'marketing-ops-core' ); ?> <strong><?php echo esc_html( $current_user->display_name ); ?></strong>? 
 		<a href="<?php echo esc_url( wc_logout_url() ); ?>"><?php esc_html_e( 'Log out', 'marketing-ops-core' ); ?></a>)
 	</p>
-} else {
-	?>
+<?php } else { ?>
 	<p class="hello-customer">
 		<?php esc_html_e( 'Hello', 'marketing-ops-core' ); ?> 
 		<img src="<?php echo esc_url( $author_img_url ); ?>">
