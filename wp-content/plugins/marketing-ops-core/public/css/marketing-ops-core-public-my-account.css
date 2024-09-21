@@ -2219,19 +2219,20 @@ table tbody tr:hover>th {
 }
 
 .woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain {
-	margin: 0;
-	padding: 0;
-	display: flex;
-	list-style: none;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	gap: 25px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 25px;
+    flex-wrap: wrap;
 }
 
 .woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li {
     display: flex;
-    padding: 10px 33.333px 45px 10px;
+    padding: 10px 15px;
     flex-direction: column;
     align-items: center;
     gap: 15px;
