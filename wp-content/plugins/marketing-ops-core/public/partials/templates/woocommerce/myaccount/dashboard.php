@@ -29,51 +29,62 @@ $allowed_html       = array(
 $default_author_img = get_field( 'moc_user_default_image', 'option' );
 $author_img_id      = ! empty( get_user_meta( $current_user->ID, 'wp_user_avatar', true ) ) ? get_user_meta( $current_user->ID, 'wp_user_avatar', true ) : '';
 $author_img_url     = ( empty( $author_img_id ) || false === $author_img_id ) ? $default_author_img : wp_get_attachment_url( $author_img_id );
-?>
-<p class="hello-customer">
-	<?php esc_html_e( 'Hello', 'marketing-ops-core' ); ?> 
-	<img src="<?php echo esc_url( $author_img_url ); ?>">
-	<strong><?php echo esc_html( $current_user->display_name ); ?></strong>  
-	(<?php esc_html_e( 'not', 'marketing-ops-core' ); ?> <strong><?php echo esc_html( $current_user->display_name ); ?></strong>? 
-	<a href="<?php echo esc_url( wc_logout_url() ); ?>"><?php esc_html_e( 'Log out', 'marketing-ops-core' ); ?></a>)
-</p>
-<p class="customer-dashboard-links">
-	<?php
-	/* translators: 1: Orders URL 2: Address URL 3: Account URL. */
-	$dashboard_desc = __( 'From your account dashboard you can view your <a href="%1$s">recent orders</a>, manage your <a href="%2$s">billing address</a>, and <a href="%3$s">edit your password and account details</a>.', 'woocommerce' );
-	if ( wc_shipping_enabled() ) {
-		/* translators: 1: Orders URL 2: Addresses URL 3: Account URL. */
-		$dashboard_desc = __( 'From your account dashboard you can view your <a href="%1$s">recent orders</a>, manage your <a href="%2$s">shipping and billing addresses</a>, and <a href="%3$s">edit your password and account details</a>.', 'woocommerce' );
-	}
-	printf(
-		wp_kses( $dashboard_desc, $allowed_html ),
-		esc_url( wc_get_endpoint_url( 'orders' ) ),
-		esc_url( wc_get_endpoint_url( 'edit-address' ) ),
-		esc_url( wc_get_endpoint_url( 'edit-account' ) )
-	);
+
+if ( '183.82.161.148' === $_SERVER['REMOTE_ADDR'] ) {
+	<p class="hello-customer">
+		<?php esc_html_e( 'Hello Mopza', 'marketing-ops-core' ); ?> 
+		<img src="<?php echo esc_url( $author_img_url ); ?>">
+		<strong><?php echo esc_html( $current_user->display_name ); ?></strong>  
+		(<?php esc_html_e( 'not', 'marketing-ops-core' ); ?> <strong><?php echo esc_html( $current_user->display_name ); ?></strong>? 
+		<a href="<?php echo esc_url( wc_logout_url() ); ?>"><?php esc_html_e( 'Log out', 'marketing-ops-core' ); ?></a>)
+	</p>
+} else {
 	?>
-</p>
+	<p class="hello-customer">
+		<?php esc_html_e( 'Hello', 'marketing-ops-core' ); ?> 
+		<img src="<?php echo esc_url( $author_img_url ); ?>">
+		<strong><?php echo esc_html( $current_user->display_name ); ?></strong>  
+		(<?php esc_html_e( 'not', 'marketing-ops-core' ); ?> <strong><?php echo esc_html( $current_user->display_name ); ?></strong>? 
+		<a href="<?php echo esc_url( wc_logout_url() ); ?>"><?php esc_html_e( 'Log out', 'marketing-ops-core' ); ?></a>)
+	</p>
+	<p class="customer-dashboard-links">
+		<?php
+		/* translators: 1: Orders URL 2: Address URL 3: Account URL. */
+		$dashboard_desc = __( 'From your account dashboard you can view your <a href="%1$s">recent orders</a>, manage your <a href="%2$s">billing address</a>, and <a href="%3$s">edit your password and account details</a>.', 'woocommerce' );
+		if ( wc_shipping_enabled() ) {
+			/* translators: 1: Orders URL 2: Addresses URL 3: Account URL. */
+			$dashboard_desc = __( 'From your account dashboard you can view your <a href="%1$s">recent orders</a>, manage your <a href="%2$s">shipping and billing addresses</a>, and <a href="%3$s">edit your password and account details</a>.', 'woocommerce' );
+		}
+		printf(
+			wp_kses( $dashboard_desc, $allowed_html ),
+			esc_url( wc_get_endpoint_url( 'orders' ) ),
+			esc_url( wc_get_endpoint_url( 'edit-address' ) ),
+			esc_url( wc_get_endpoint_url( 'edit-account' ) )
+		);
+		?>
+	</p>
 
-<?php
-	/**
-	 * My Account dashboard.
-	 *
-	 * @since 2.6.0
-	 */
-	do_action( 'woocommerce_account_dashboard' );
+	<?php
+}
+/**
+ * My Account dashboard.
+ *
+ * @since 2.6.0
+ */
+do_action( 'woocommerce_account_dashboard' );
 
-	/**
-	 * Deprecated woocommerce_before_my_account action.
-	 *
-	 * @deprecated 2.6.0
-	 */
-	do_action( 'woocommerce_before_my_account' );
+/**
+ * Deprecated woocommerce_before_my_account action.
+ *
+ * @deprecated 2.6.0
+ */
+do_action( 'woocommerce_before_my_account' );
 
-	/**
-	 * Deprecated woocommerce_after_my_account action.
-	 *
-	 * @deprecated 2.6.0
-	 */
-	do_action( 'woocommerce_after_my_account' );
+/**
+ * Deprecated woocommerce_after_my_account action.
+ *
+ * @deprecated 2.6.0
+ */
+do_action( 'woocommerce_after_my_account' );
 
 /* Omit closing PHP tag at the end of PHP files to avoid "headers already sent" issues. */
