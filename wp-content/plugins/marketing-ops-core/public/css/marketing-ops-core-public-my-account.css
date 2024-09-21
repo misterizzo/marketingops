@@ -2231,16 +2231,17 @@ table tbody tr:hover>th {
 }
 
 .woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li {
-	display: flex;
-	padding: 10px 15px;
-	flex-direction: column;
-	align-items: center;
-	gap: 15px;
-	flex: 0 0 calc((100% / 3) - 17px);
-	align-self: stretch;
-	border-radius: 12px;
-	background: var(--Dashboard-Card-Grad, radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.50) 55%, rgba(241, 243, 244, 0.40) 100%));
-	width: calc((100% / 3) - 17px);
+    display: flex;
+    padding: 10px 15px;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    flex: 0 0 calc((100% / 3) - 17px);
+    align-self: stretch;
+    border-radius: 12px;
+    background: var(--Dashboard-Card-Grad, radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.50) 55%, rgba(241, 243, 244, 0.40) 100%));
+    width: calc((100% / 3) - 17px);
+    position: relative;
 }
 
 .woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li .iconwithtitledashbord {
@@ -2271,6 +2272,7 @@ table tbody tr:hover>th {
 .woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li .innerdashbordlist {
     width: 100%;
     display: block;
+    padding-right: 30px;
 }
 
 .woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li .iconwithtitledashbord h4 {
@@ -2302,4 +2304,32 @@ table tbody tr:hover>th {
     padding: 0 5px;
     margin: 0;
     list-style: none;
+}
+
+.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li .innerdashbordlist .bottomdashbordlist ul li{
+color: var(--Primary-text, #45474F);
+font-family: "Open Sans";
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.arrowrightdashbord {
+    position: absolute;
+    bottom: 5px;
+    right: 15px;
+    cursor: pointer;
+    display: none;
+}
+.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li:hover .arrowrightdashbord
+{
+	display: block;
+}
+
+.arrowrightdashbord span {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
 }
