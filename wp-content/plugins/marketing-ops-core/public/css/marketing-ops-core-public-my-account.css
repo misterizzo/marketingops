@@ -2347,12 +2347,13 @@ table tbody tr:hover>th {
 
 
 .woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox h4 {
-	color: var(--Primary-text, #45474F);
-	font-family: "Futura LT";
-	font-size: 19px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: normal;
+    color: var(--Primary-text, #45474F);
+    font-family: "Futura LT";
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin: 0 0 5px;
 }
 
 .woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox h4 span {
@@ -2389,4 +2390,23 @@ table tbody tr:hover>th {
 .woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li {
 	width: calc(100% / 5);
 	flex: 0 0 calc(100% / 5);
+}
+
+.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li h5{
+color: var(--Primary-text, #45474F);
+text-align: center;
+font-family: "Open Sans";
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: 25px; /* 208.333% */
+margin:0 0 5px;
+}
+
+.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li .roundprobilebox
+{
+max-width: 76px;
+max-height: 76px;
+flex-shrink: 0;
+fill: radial-gradient(50% 50% at 50% 50%, #FFF 55%, rgba(241, 243, 244, 0.80) 100%);
 }
