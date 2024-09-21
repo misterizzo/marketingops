@@ -2472,4 +2472,4 @@ display: block;
     margin: 10px 0 0;
 }
 
-.profiledone .addprofilebtn{display: none;}
+.profiledone .addprofilebtn{visibility: hidden;opacity: 0;pointer-events: none;}
