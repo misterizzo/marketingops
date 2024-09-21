@@ -2476,7 +2476,34 @@ display: block;
 }
 .profiledone .addprofilebtn{visibility: hidden;opacity: 0;pointer-events: none;}
 
+.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li {
+	width: calc(100% / 3);
+	flex: 0 0 calc(100% / 3);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	position: relative;
+}
 
+.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li:after {
+	z-index: -1;
+	content: '';
+	width: 25%;
+	height: 1px;
+	background: #DEE2E2;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	left: 0%;
+	-webkit-transform: translate(-50%,-50%);
+	-moz-transform: translate(-50%,-50%);
+	-ms-transform: translate(-50%,-50%);
+	-o-transform: translate(-50%,-50%);
+}
+.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li:first-child:after,
+.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li:nth-child(4):after{display:none;}
 
 @media only screen and (max-width:767px) 
 {
@@ -2567,4 +2594,6 @@ display: block;
 		-ms-transform: translate(-50%,-50%);
 		-o-transform: translate(-50%,-50%);
 }
+.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li:first-child:after,
+.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li:nth-child(4):after{display:none;}
 }
