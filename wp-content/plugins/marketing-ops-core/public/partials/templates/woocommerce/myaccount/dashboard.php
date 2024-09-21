@@ -62,17 +62,7 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 							</ul>
 						</div>
 						<div class="arrowrightdashbord">
-							<span>
-								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-									<path d="M2.33331 13H19.9193L16.6276 16.2943C16.237 16.6823 16.237 17.3177 16.6276 17.7057C16.8229 17.9036 17.0781 18 17.3333 18C17.5885 18 17.8437 17.9036 18.039 17.7057L23.039 12.7057C23.2265 12.5208 23.3333 12.2656 23.3333 12C23.3333 11.7344 23.2265 11.4818 23.039 11.2943L18.039 6.29427C17.651 5.90364 17.0156 5.90364 16.6276 6.29427C16.237 6.68229 16.237 7.3177 16.6276 7.70572L19.9193 11H2.33331C1.78123 11 1.33331 11.4479 1.33331 12C1.33331 12.5521 1.78123 13 2.33331 13Z" fill="url(#paint0_linear_0_228)"/>
-									<defs>
-										<linearGradient id="paint0_linear_0_228" x1="0.814364" y1="12.0296" x2="36.3253" y2="12.0296" gradientUnits="userSpaceOnUse">
-										<stop stop-color="#FD4B7A"/>
-										<stop offset="1" stop-color="#4D00AE"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</span>
+						<span class="arrowsvgimg"></span>
 						</div>
 					</div>
 				</div>
@@ -107,17 +97,7 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 							</ul>
 						</div>
 						<div class="arrowrightdashbord">
-							<span>
-								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-									<path d="M2.33331 13H19.9193L16.6276 16.2943C16.237 16.6823 16.237 17.3177 16.6276 17.7057C16.8229 17.9036 17.0781 18 17.3333 18C17.5885 18 17.8437 17.9036 18.039 17.7057L23.039 12.7057C23.2265 12.5208 23.3333 12.2656 23.3333 12C23.3333 11.7344 23.2265 11.4818 23.039 11.2943L18.039 6.29427C17.651 5.90364 17.0156 5.90364 16.6276 6.29427C16.237 6.68229 16.237 7.3177 16.6276 7.70572L19.9193 11H2.33331C1.78123 11 1.33331 11.4479 1.33331 12C1.33331 12.5521 1.78123 13 2.33331 13Z" fill="url(#paint0_linear_0_228)"/>
-									<defs>
-										<linearGradient id="paint0_linear_0_228" x1="0.814364" y1="12.0296" x2="36.3253" y2="12.0296" gradientUnits="userSpaceOnUse">
-										<stop stop-color="#FD4B7A"/>
-										<stop offset="1" stop-color="#4D00AE"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</span>
+						<span class="arrowsvgimg"></span>
 						</div>
 					</div>
 				</div>
@@ -152,17 +132,7 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 							</ul>
 						</div>
 						<div class="arrowrightdashbord">
-							<span>
-								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-									<path d="M2.33331 13H19.9193L16.6276 16.2943C16.237 16.6823 16.237 17.3177 16.6276 17.7057C16.8229 17.9036 17.0781 18 17.3333 18C17.5885 18 17.8437 17.9036 18.039 17.7057L23.039 12.7057C23.2265 12.5208 23.3333 12.2656 23.3333 12C23.3333 11.7344 23.2265 11.4818 23.039 11.2943L18.039 6.29427C17.651 5.90364 17.0156 5.90364 16.6276 6.29427C16.237 6.68229 16.237 7.3177 16.6276 7.70572L19.9193 11H2.33331C1.78123 11 1.33331 11.4479 1.33331 12C1.33331 12.5521 1.78123 13 2.33331 13Z" fill="url(#paint0_linear_0_228)"/>
-									<defs>
-										<linearGradient id="paint0_linear_0_228" x1="0.814364" y1="12.0296" x2="36.3253" y2="12.0296" gradientUnits="userSpaceOnUse">
-										<stop stop-color="#FD4B7A"/>
-										<stop offset="1" stop-color="#4D00AE"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</span>
+						<span class="arrowsvgimg"></span>
 						</div>
 					</div>
 				</div>
@@ -197,17 +167,7 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 							</ul>
 						</div>
 						<div class="arrowrightdashbord">
-							<span>
-								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-									<path d="M2.33331 13H19.9193L16.6276 16.2943C16.237 16.6823 16.237 17.3177 16.6276 17.7057C16.8229 17.9036 17.0781 18 17.3333 18C17.5885 18 17.8437 17.9036 18.039 17.7057L23.039 12.7057C23.2265 12.5208 23.3333 12.2656 23.3333 12C23.3333 11.7344 23.2265 11.4818 23.039 11.2943L18.039 6.29427C17.651 5.90364 17.0156 5.90364 16.6276 6.29427C16.237 6.68229 16.237 7.3177 16.6276 7.70572L19.9193 11H2.33331C1.78123 11 1.33331 11.4479 1.33331 12C1.33331 12.5521 1.78123 13 2.33331 13Z" fill="url(#paint0_linear_0_228)"/>
-									<defs>
-										<linearGradient id="paint0_linear_0_228" x1="0.814364" y1="12.0296" x2="36.3253" y2="12.0296" gradientUnits="userSpaceOnUse">
-										<stop stop-color="#FD4B7A"/>
-										<stop offset="1" stop-color="#4D00AE"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</span>
+						<span class="arrowsvgimg"></span>
 						</div>
 					</div>
 				</div>
@@ -242,17 +202,7 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 							</ul>
 						</div>
 						<div class="arrowrightdashbord">
-							<span>
-								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-									<path d="M2.33331 13H19.9193L16.6276 16.2943C16.237 16.6823 16.237 17.3177 16.6276 17.7057C16.8229 17.9036 17.0781 18 17.3333 18C17.5885 18 17.8437 17.9036 18.039 17.7057L23.039 12.7057C23.2265 12.5208 23.3333 12.2656 23.3333 12C23.3333 11.7344 23.2265 11.4818 23.039 11.2943L18.039 6.29427C17.651 5.90364 17.0156 5.90364 16.6276 6.29427C16.237 6.68229 16.237 7.3177 16.6276 7.70572L19.9193 11H2.33331C1.78123 11 1.33331 11.4479 1.33331 12C1.33331 12.5521 1.78123 13 2.33331 13Z" fill="url(#paint0_linear_0_228)"/>
-									<defs>
-										<linearGradient id="paint0_linear_0_228" x1="0.814364" y1="12.0296" x2="36.3253" y2="12.0296" gradientUnits="userSpaceOnUse">
-										<stop stop-color="#FD4B7A"/>
-										<stop offset="1" stop-color="#4D00AE"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</span>
+						<span class="arrowsvgimg"></span>
 						</div>
 					</div>
 				</div>
@@ -287,17 +237,7 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 							</ul>
 						</div>
 						<div class="arrowrightdashbord">
-							<span>
-								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-									<path d="M2.33331 13H19.9193L16.6276 16.2943C16.237 16.6823 16.237 17.3177 16.6276 17.7057C16.8229 17.9036 17.0781 18 17.3333 18C17.5885 18 17.8437 17.9036 18.039 17.7057L23.039 12.7057C23.2265 12.5208 23.3333 12.2656 23.3333 12C23.3333 11.7344 23.2265 11.4818 23.039 11.2943L18.039 6.29427C17.651 5.90364 17.0156 5.90364 16.6276 6.29427C16.237 6.68229 16.237 7.3177 16.6276 7.70572L19.9193 11H2.33331C1.78123 11 1.33331 11.4479 1.33331 12C1.33331 12.5521 1.78123 13 2.33331 13Z" fill="url(#paint0_linear_0_228)"/>
-									<defs>
-										<linearGradient id="paint0_linear_0_228" x1="0.814364" y1="12.0296" x2="36.3253" y2="12.0296" gradientUnits="userSpaceOnUse">
-										<stop stop-color="#FD4B7A"/>
-										<stop offset="1" stop-color="#4D00AE"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</span>
+						<span class="arrowsvgimg"></span>
 						</div>
 					</div>
 				</div>
@@ -332,17 +272,7 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 							</ul>
 						</div>
 						<div class="arrowrightdashbord">
-							<span>
-								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-									<path d="M2.33331 13H19.9193L16.6276 16.2943C16.237 16.6823 16.237 17.3177 16.6276 17.7057C16.8229 17.9036 17.0781 18 17.3333 18C17.5885 18 17.8437 17.9036 18.039 17.7057L23.039 12.7057C23.2265 12.5208 23.3333 12.2656 23.3333 12C23.3333 11.7344 23.2265 11.4818 23.039 11.2943L18.039 6.29427C17.651 5.90364 17.0156 5.90364 16.6276 6.29427C16.237 6.68229 16.237 7.3177 16.6276 7.70572L19.9193 11H2.33331C1.78123 11 1.33331 11.4479 1.33331 12C1.33331 12.5521 1.78123 13 2.33331 13Z" fill="url(#paint0_linear_0_228)"/>
-									<defs>
-										<linearGradient id="paint0_linear_0_228" x1="0.814364" y1="12.0296" x2="36.3253" y2="12.0296" gradientUnits="userSpaceOnUse">
-										<stop stop-color="#FD4B7A"/>
-										<stop offset="1" stop-color="#4D00AE"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</span>
+						<span class="arrowsvgimg"></span>
 						</div>
 					</div>
 				</div>
@@ -377,17 +307,7 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 							</ul>
 						</div>
 						<div class="arrowrightdashbord">
-							<span>
-								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-									<path d="M2.33331 13H19.9193L16.6276 16.2943C16.237 16.6823 16.237 17.3177 16.6276 17.7057C16.8229 17.9036 17.0781 18 17.3333 18C17.5885 18 17.8437 17.9036 18.039 17.7057L23.039 12.7057C23.2265 12.5208 23.3333 12.2656 23.3333 12C23.3333 11.7344 23.2265 11.4818 23.039 11.2943L18.039 6.29427C17.651 5.90364 17.0156 5.90364 16.6276 6.29427C16.237 6.68229 16.237 7.3177 16.6276 7.70572L19.9193 11H2.33331C1.78123 11 1.33331 11.4479 1.33331 12C1.33331 12.5521 1.78123 13 2.33331 13Z" fill="url(#paint0_linear_0_228)"/>
-									<defs>
-										<linearGradient id="paint0_linear_0_228" x1="0.814364" y1="12.0296" x2="36.3253" y2="12.0296" gradientUnits="userSpaceOnUse">
-										<stop stop-color="#FD4B7A"/>
-										<stop offset="1" stop-color="#4D00AE"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</span>
+						<span class="arrowsvgimg"></span>
 						</div>
 					</div>
 				</div>
@@ -422,17 +342,7 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 							</ul>
 						</div>
 						<div class="arrowrightdashbord">
-							<span>
-								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-									<path d="M2.33331 13H19.9193L16.6276 16.2943C16.237 16.6823 16.237 17.3177 16.6276 17.7057C16.8229 17.9036 17.0781 18 17.3333 18C17.5885 18 17.8437 17.9036 18.039 17.7057L23.039 12.7057C23.2265 12.5208 23.3333 12.2656 23.3333 12C23.3333 11.7344 23.2265 11.4818 23.039 11.2943L18.039 6.29427C17.651 5.90364 17.0156 5.90364 16.6276 6.29427C16.237 6.68229 16.237 7.3177 16.6276 7.70572L19.9193 11H2.33331C1.78123 11 1.33331 11.4479 1.33331 12C1.33331 12.5521 1.78123 13 2.33331 13Z" fill="url(#paint0_linear_0_228)"/>
-									<defs>
-										<linearGradient id="paint0_linear_0_228" x1="0.814364" y1="12.0296" x2="36.3253" y2="12.0296" gradientUnits="userSpaceOnUse">
-										<stop stop-color="#FD4B7A"/>
-										<stop offset="1" stop-color="#4D00AE"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</span>
+						<span class="arrowsvgimg"></span>
 						</div>
 					</div>
 				</div>
@@ -467,17 +377,7 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 							</ul>
 						</div>
 						<div class="arrowrightdashbord">
-							<span>
-								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-									<path d="M2.33331 13H19.9193L16.6276 16.2943C16.237 16.6823 16.237 17.3177 16.6276 17.7057C16.8229 17.9036 17.0781 18 17.3333 18C17.5885 18 17.8437 17.9036 18.039 17.7057L23.039 12.7057C23.2265 12.5208 23.3333 12.2656 23.3333 12C23.3333 11.7344 23.2265 11.4818 23.039 11.2943L18.039 6.29427C17.651 5.90364 17.0156 5.90364 16.6276 6.29427C16.237 6.68229 16.237 7.3177 16.6276 7.70572L19.9193 11H2.33331C1.78123 11 1.33331 11.4479 1.33331 12C1.33331 12.5521 1.78123 13 2.33331 13Z" fill="url(#paint0_linear_0_228)"/>
-									<defs>
-										<linearGradient id="paint0_linear_0_228" x1="0.814364" y1="12.0296" x2="36.3253" y2="12.0296" gradientUnits="userSpaceOnUse">
-										<stop stop-color="#FD4B7A"/>
-										<stop offset="1" stop-color="#4D00AE"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</span>
+						<span class="arrowsvgimg"></span>
 						</div>
 					</div>
 				</div>
@@ -512,17 +412,7 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 							</ul>
 						</div>
 						<div class="arrowrightdashbord">
-							<span>
-								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-									<path d="M2.33331 13H19.9193L16.6276 16.2943C16.237 16.6823 16.237 17.3177 16.6276 17.7057C16.8229 17.9036 17.0781 18 17.3333 18C17.5885 18 17.8437 17.9036 18.039 17.7057L23.039 12.7057C23.2265 12.5208 23.3333 12.2656 23.3333 12C23.3333 11.7344 23.2265 11.4818 23.039 11.2943L18.039 6.29427C17.651 5.90364 17.0156 5.90364 16.6276 6.29427C16.237 6.68229 16.237 7.3177 16.6276 7.70572L19.9193 11H2.33331C1.78123 11 1.33331 11.4479 1.33331 12C1.33331 12.5521 1.78123 13 2.33331 13Z" fill="url(#paint0_linear_0_228)"/>
-									<defs>
-										<linearGradient id="paint0_linear_0_228" x1="0.814364" y1="12.0296" x2="36.3253" y2="12.0296" gradientUnits="userSpaceOnUse">
-										<stop stop-color="#FD4B7A"/>
-										<stop offset="1" stop-color="#4D00AE"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</span>
+							<span class="arrowsvgimg"></span>
 						</div>
 					</div>
 				</div>
@@ -557,17 +447,7 @@ if ( '49.36.66.201' === $_SERVER['REMOTE_ADDR'] ) { ?>
 							</ul>
 						</div>
 						<div class="arrowrightdashbord">
-							<span>
-								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-									<path d="M2.33331 13H19.9193L16.6276 16.2943C16.237 16.6823 16.237 17.3177 16.6276 17.7057C16.8229 17.9036 17.0781 18 17.3333 18C17.5885 18 17.8437 17.9036 18.039 17.7057L23.039 12.7057C23.2265 12.5208 23.3333 12.2656 23.3333 12C23.3333 11.7344 23.2265 11.4818 23.039 11.2943L18.039 6.29427C17.651 5.90364 17.0156 5.90364 16.6276 6.29427C16.237 6.68229 16.237 7.3177 16.6276 7.70572L19.9193 11H2.33331C1.78123 11 1.33331 11.4479 1.33331 12C1.33331 12.5521 1.78123 13 2.33331 13Z" fill="url(#paint0_linear_0_228)"/>
-									<defs>
-										<linearGradient id="paint0_linear_0_228" x1="0.814364" y1="12.0296" x2="36.3253" y2="12.0296" gradientUnits="userSpaceOnUse">
-										<stop stop-color="#FD4B7A"/>
-										<stop offset="1" stop-color="#4D00AE"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</span>
+							<span class="arrowsvgimg"></span>
 						</div>
 					</div>
 				</div>
