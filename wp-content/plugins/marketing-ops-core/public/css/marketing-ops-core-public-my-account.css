@@ -2280,6 +2280,7 @@ table tbody tr:hover>th {
 	font-style: normal;
 	font-weight: 700;
 	line-height: 25px;
+	margin: 0;
 	/* 192.308% */
 }
 
