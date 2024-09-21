@@ -2549,9 +2549,10 @@ display: block;
 		justify-content: center;
 		align-items: center;
 		align-content: center;
+		position: relative;
 	}
 
-	.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li:nth-child(2):after {
+	.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li:after {
 		z-index: -1;
 		content: '';
 		width: 25%;
@@ -2561,17 +2562,9 @@ display: block;
 		top: 50%;
 		transform: translate(-50%,-50%);
 		left: 0%;
-	}
-
-	.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li:nth-child(2):before {
-		z-index: -1;
-		content: '';
-		width: 25%;
-		height: 1px;
-		background: #DEE2E2;
-		position: absolute;
-		top: 50%;
-		transform: translate(-50%,-50%);
-		right: 0%;
-	}
+		-webkit-transform: translate(-50%,-50%);
+		-moz-transform: translate(-50%,-50%);
+		-ms-transform: translate(-50%,-50%);
+		-o-transform: translate(-50%,-50%);
+}
 }
