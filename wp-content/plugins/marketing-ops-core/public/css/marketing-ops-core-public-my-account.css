@@ -2508,7 +2508,7 @@ display: block;
 		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='12' viewBox='0 0 22 12' fill='none'%3E%3Cpath d='M1 7H18.5859L15.2943 10.2943C14.9036 10.6823 14.9036 11.3177 15.2943 11.7057C15.4896 11.9036 15.7448 12 16 12C16.2552 12 16.5104 11.9036 16.7057 11.7057L21.7057 6.70573C21.8932 6.52084 22 6.26563 22 6C22 5.73438 21.8932 5.48177 21.7057 5.29427L16.7057 0.294273C16.3177 -0.0963515 15.6823 -0.0963515 15.2943 0.294273C14.9036 0.682294 14.9036 1.31771 15.2943 1.70573L18.5859 5H1C0.447917 5 0 5.44792 0 6C0 6.55209 0.447917 7 1 7Z' fill='%236D7B83'/%3E%3C/svg%3E");
 		background-repeat: no-repeat no-repeat;
 		background-position: center center;
-		background-size: cover;
+		background-size: contain;
 		width: 24px;
 		height: 24px;
 		flex-shrink: 0;
@@ -2529,5 +2529,49 @@ display: block;
 		width: 24px;
 		height: 24px;
 		display: block;
+	}
+
+	.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist {
+		display: flex;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		flex-wrap: wrap;
+		flex-direction: row;
+		justify-content: center;
+	}
+
+	.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li {
+		width: calc(100% / 3);
+		flex: 0 0 calc(100% / 3);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		align-content: center;
+	}
+
+	.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li:nth-child(2):after {
+		z-index: -1;
+		content: '';
+		width: 25%;
+		height: 1px;
+		background: #DEE2E2;
+		position: absolute;
+		top: 50%;
+		transform: translate(-50%,-50%);
+		left: 0%;
+	}
+
+	.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li:nth-child(2):before {
+		z-index: -1;
+		content: '';
+		width: 25%;
+		height: 1px;
+		background: #DEE2E2;
+		position: absolute;
+		top: 50%;
+		transform: translate(-50%,-50%);
+		right: 0%;
 	}
 }
