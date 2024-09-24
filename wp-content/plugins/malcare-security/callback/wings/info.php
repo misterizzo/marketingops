@@ -10,7 +10,7 @@ class BVInfoCallback extends BVCallbackBase {
 	public $bvinfo;
 	public $bvapi;
 	
-	const INFO_WING_VERSION = 2.3;
+	const INFO_WING_VERSION = 2.4;
 
 	public function __construct($callback_handler) {
 		$this->db = $callback_handler->db;
@@ -227,6 +227,12 @@ class BVInfoCallback extends BVCallbackBase {
 		}
 		if (function_exists('openssl_public_decrypt')) {
 			$info['openssl_public_decrypt'] = "1";
+		}
+		if (function_exists('openssl_encrypt')) {
+			$info['openssl_encrypt'] = "1";
+		}
+		if (function_exists('openssl_decrypt')) {
+			$info['openssl_decrypt'] = "1";
 		}
 		$info['sha1'] = "1";
 		$info['apissl'] = "1";

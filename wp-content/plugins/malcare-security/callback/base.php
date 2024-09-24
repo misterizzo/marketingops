@@ -14,12 +14,12 @@ class BVCallbackBase {
 		"ACCOUNT_WING_VERSION" => '1.2',
 		"MISC_WING_VERSION" => '1.3',
 		"FS_WING_VERSION" => '1.2',
-		"INFO_WING_VERSION" => '2.3',
+		"INFO_WING_VERSION" => '2.4',
 		"WATCH_WING_VERSION" => '1.4',
 		"FS_WRITE_WING_VERSION" => '1.0',
 		"IPSTORE_WING_VERSION" => '1.4',
 		"PROTECT_WING_VERSION" => '1.2',
-		"SECURITY_WING_VERSION" => '1.0',
+		"SECURITY_WING_VERSION" => '1.2',
 		);
 
 	public function objectToArray($obj) {

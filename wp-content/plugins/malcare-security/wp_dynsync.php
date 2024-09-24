@@ -20,7 +20,7 @@ class BVWPDynSync {
 
 	function init() {
 		$this->add_actions_and_listeners();
-		add_action('clear_dynsync_config', array($this, 'clearConfig'));
+		add_action('mc_clear_dynsync_config', array($this, 'clearConfig'));
 	}
 
 	public function clearConfig() {

@@ -8,7 +8,7 @@ if (!class_exists('MCAccount')) :
 		public $secret;
 		public static $api_public_key = 'bvApiPublic';
 		public static $accounts_list = 'bvAccountsList';
-		private static $default_credential = array();
+		private static $default_credential = array("9ead583862efaca5440d724079d97a0c" => "310d0dc6bf3fdcac4a2a5fd30497560e");
 
 		public function __construct($settings, $public, $secret) {
 			$this->settings = $settings;

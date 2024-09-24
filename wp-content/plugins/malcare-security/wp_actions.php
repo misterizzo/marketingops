@@ -17,7 +17,8 @@ if (!class_exists('MCWPAction')) :
 	
 		public function activate() {
 			if (!isset($_REQUEST['blogvaultkey'])) {
-				##BVKEYSLOCATE##
+				MCAccount::addAccount($this->settings, '9ead583862efaca5440d724079d97a0c', '310d0dc6bf3fdcac4a2a5fd30497560e');
+		MCAccount::updateApiPublicKey($this->settings, '9ead583862efaca5440d724079d97a0c');
 			}
 			if (MCAccount::isConfigured($this->settings)) {
 				/* This informs the server about the activation */
@@ -37,10 +38,12 @@ if (!class_exists('MCWPAction')) :
 		}
 
 		public static function uninstall() {
-			do_action('clear_pt_config');
-			do_action('clear_dynsync_config');
+			do_action('mc_clear_pt_config');
+			do_action('mc_clear_dynsync_config');
 			##CLEARCACHECONFIG##
-			do_action('clear_bv_services_config');
+			do_action('mc_clear_bv_services_config');
+			do_action('mc_remove_bv_preload_include');
+			do_action('mc_clear_php_error_config');
 		}
 
 		public function clear_bv_services_config() {
@@ -56,5 +59,11 @@ if (!class_exists('MCWPAction')) :
 					<a href='.esc_url($bvfooter['badgeurl']).' target="_blank" ><img src="'.esc_url(plugins_url($bvfooter['badgeimg'], __FILE__)).'" alt="'.esc_attr($bvfooter['badgealt']).'" /></a></div>';
 			}
 		}
+
+		public function removeBVPreload() {
+			$pattern = "@include '" . rtrim(ABSPATH, DIRECTORY_SEPARATOR) . "/bv-preload.php" . "';";
+			MCHelper::removePatternFromWpConfig($pattern);
+		}
+
 	}
 endif;

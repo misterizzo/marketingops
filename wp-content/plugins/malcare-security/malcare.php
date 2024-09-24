@@ -5,7 +5,7 @@ Plugin URI: https://www.malcare.com
 Description: MalCare WordPress Security Plugin - Malware Scanner, Cleaner, Security Firewall
 Author: MalCare Security
 Author URI: https://www.malcare.com
-Version: 5.68
+Version: 5.73
 Network: True
  */
 
@@ -38,6 +38,8 @@ require_once dirname( __FILE__ ) . '/wp_actions.php';
 require_once dirname( __FILE__ ) . '/info.php';
 require_once dirname( __FILE__ ) . '/account.php';
 require_once dirname( __FILE__ ) . '/helper.php';
+require_once dirname( __FILE__ ) . '/wp_2fa/wp_2fa.php';
+
 ##WPCACHEMODULE##
 
 
@@ -55,7 +57,7 @@ register_activation_hook(__FILE__, array($wp_action, 'activate'));
 register_deactivation_hook(__FILE__, array($wp_action, 'deactivate'));
 
 add_action('wp_footer', array($wp_action, 'footerHandler'), 100);
-add_action('clear_bv_services_config', array($wp_action, 'clear_bv_services_config'));
+add_action('mc_clear_bv_services_config', array($wp_action, 'clear_bv_services_config'));
 ##SOADDUNINSTALLACTION##
 
 ##DISABLE_OTHER_OPTIMIZATION_PLUGINS##
@@ -88,6 +90,11 @@ if (is_admin()) {
 
 if ((array_key_exists('bvreqmerge', $_POST)) || (array_key_exists('bvreqmerge', $_GET))) {
 	$_REQUEST = array_merge($_GET, $_POST);
+}
+
+#Service active check
+if ($bvinfo->config != false) {
+	add_action('mc_remove_bv_preload_include', array($wp_action, 'removeBVPreload'));
 }
 
 require_once dirname( __FILE__ ) . '/php_error_monitoring/monitoring.php';
@@ -188,14 +195,14 @@ if ((array_key_exists('bvplugname', $_REQUEST)) && ($_REQUEST['bvplugname'] == "
 		if ($bvinfo->isProtectModuleEnabled()) {
 			require_once dirname( __FILE__ ) . '/protect/protect.php';
 			//For backward compatibility.
-			MCProtect_V568::$settings = new MCWPSettings();
-			MCProtect_V568::$db = new MCWPDb();
-			MCProtect_V568::$info = new MCInfo(MCProtect_V568::$settings);
+			MCProtect_V573::$settings = new MCWPSettings();
+			MCProtect_V573::$db = new MCWPDb();
+			MCProtect_V573::$info = new MCInfo(MCProtect_V573::$settings);
 
-			add_action('clear_pt_config', array('MCProtect_V568', 'uninstall'));
+			add_action('mc_clear_pt_config', array('MCProtect_V573', 'uninstall'));
 
 			if ($bvinfo->isActivePlugin()) {
-				MCProtect_V568::init(MCProtect_V568::MODE_WP);
+				MCProtect_V573::init(MCProtect_V573::MODE_WP);
 			}
 		}
 

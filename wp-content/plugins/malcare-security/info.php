@@ -10,7 +10,7 @@ if (!class_exists('MCInfo')) :
 		public $badgeinfo = 'mcbadge';
 		public $ip_header_option = 'mcipheader';
 		public $brand_option = 'bv_whitelabel_infos';
-		public $version = '5.68';
+		public $version = '5.73';
 		public $webpage = 'https://www.malcare.com';
 		public $appurl = 'https://app.malcare.com';
 		public $slug = 'malcare-security/malcare.php';
