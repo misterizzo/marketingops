@@ -904,9 +904,8 @@ class Marketing_Ops_Core_Admin {
 	 * @return array
 	 */
 	public function moc_manage_users_sortable_columns_callback( $columns ) {
-		$columns["memeber_since"] = __( 'Member Since', 'marketing-ops-core' );
 
-		return $columns;
+		return wp_parse_args( array( 'memeber_since' => 'registered' ), $columns );
 	}
 
 	/**
