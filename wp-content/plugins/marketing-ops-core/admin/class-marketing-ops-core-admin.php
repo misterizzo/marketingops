@@ -905,7 +905,7 @@ class Marketing_Ops_Core_Admin {
 	 */
 	public function moc_manage_users_sortable_columns_callback( $columns ) {
 
-		return wp_parse_args( array( 'memeber_since' => 'registered' ), $columns );
+		return wp_parse_args( array( 'memeber-since' => 'registered' ), $columns );
 	}
 
 	/**
