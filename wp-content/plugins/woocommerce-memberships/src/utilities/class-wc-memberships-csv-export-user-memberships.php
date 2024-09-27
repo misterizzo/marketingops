@@ -580,7 +580,18 @@ class WC_Memberships_CSV_Export_User_Memberships extends \WC_Memberships_Job_Han
 						break;
 
 						case 'has_access' :
-							$value = $user_membership->is_active() ? strtolower( __( 'Yes', 'woocommerce-memberships' ) ) : strtolower( __( 'No', 'woocommerce-memberships' ) );
+							/**
+							 * Calling {@see WC_Memberships_User_Membership::is_active()} can actually change the status
+							 * on the fly. We don't want that to happen here, which is why we're only checking the
+							 * status directly instead of calling the `is_active()` helper method.
+							 */
+							$is_active = in_array(
+								$user_membership->get_status(),
+								wc_memberships()->get_user_memberships_instance()->get_active_access_membership_statuses(),
+								true
+							);
+
+							$value = $is_active ? strtolower( __( 'Yes', 'woocommerce-memberships' ) ) : strtolower( __( 'No', 'woocommerce-memberships' ) );
 						break;
 
 						case 'product_id' :

@@ -21,6 +21,7 @@
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
+use SkyVerge\WooCommerce\Memberships\Cache\MembershipNotesCountCache;
 use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
 
 defined( 'ABSPATH' ) or exit;
@@ -74,6 +75,7 @@ class WC_Memberships_User_Memberships {
 		add_action( 'comment_feed_join',  [ $this, 'exclude_membership_notes_from_feed_join' ] );
 		add_action( 'comment_feed_where', [ $this, 'exclude_membership_notes_from_feed_where' ] );
 		add_filter( 'wp_count_comments',  [ $this, 'exclude_membership_notes_from_comments_count' ], 999, 2 );
+		add_action( 'wc_memberships_new_user_membership_note', [ $this, 'maybe_clear_membership_notes_count_cache' ] );
 
 		// expiration events handling
 		add_action( 'wc_memberships_user_membership_expiry',           array( $this, 'trigger_expiration_events' ), 10, 1 );
@@ -691,29 +693,56 @@ class WC_Memberships_User_Memberships {
 	 * @param null|int|\WC_Memberships_User_Membership optional user membership to return count for, otherwise returns a global count
 	 * @return int
 	 */
-	public function get_user_membership_notes_count( $user_membership = null ) {
+	public function get_user_membership_notes_count($user_membership = null)
+	{
 		global $wpdb;
 
-		$user_membership = is_numeric( $user_membership ) ? $this->get_user_membership( $user_membership ) : $user_membership;
+		$user_membership = is_numeric($user_membership) ? $this->get_user_membership($user_membership) : $user_membership;
 
-		if ( $user_membership instanceof \WC_Memberships_User_Membership ) {
+		if ($user_membership instanceof \WC_Memberships_User_Membership) {
 
-			$count = count( $user_membership->get_notes() );
+			$count = count($user_membership->get_notes());
 
 		} else {
+			$cache = MembershipNotesCountCache::getInstance();
+			$count = $cache->get();
 
-			$count = $wpdb->get_var( "
-				SELECT COUNT(comment_ID)
-    			FROM $wpdb->comments
-    			WHERE comment_post_ID in (
-      				SELECT ID
-      				FROM $wpdb->posts
-      				WHERE post_type = 'wc_user_membership'
-      			)
-  			" );
+			if ($count === null) {
+				$count = $wpdb->get_var("
+					SELECT COUNT(comment_ID)
+					FROM {$wpdb->comments}
+					INNER JOIN {$wpdb->posts} ON ( {$wpdb->posts}.ID = {$wpdb->comments}.comment_post_ID )
+					WHERE post_type = 'wc_user_membership'
+  				");
+
+				$cache->set((int) $count);
+			}
 		}
 
-		return is_numeric( $count ) ? max( 0, (int) $count ) : 0;
+		return is_numeric($count) ? max(0, (int) $count) : 0;
+	}
+
+
+	/**
+	 * Clears the cache containing the number of membership notes.
+	 * This runs after a new note has been added {@see WC_Memberships_User_Membership::add_note()}.
+	 *
+	 * @internal
+	 *
+	 * @since 1.26.7
+	 * @return void
+	 */
+	public function maybe_clear_membership_notes_count_cache(): void
+	{
+		/**
+		 * Filters whether the cache should be cleared. Larger sites may wish to disable this, which will allow
+		 * the cache to persist until naturally expired {@see MembershipNotesCountCache::$ttl}.
+		 *
+		 * @since 1.26.7
+		 */
+		if (apply_filters('wc_memberships_should_clear_notes_cache_after_new_note', true)) {
+			MembershipNotesCountCache::getInstance()->clear();
+		}
 	}
 
 
@@ -1048,15 +1077,11 @@ class WC_Memberships_User_Memberships {
 				case 'paused':
 
 					$user_membership->pause_membership();
+					$user_membership->unschedule_expiration_events();
 
 					// delayed memberships should disregard intervals at all
 					if ( 'delayed' !== $old_status ) {
 						$user_membership->set_paused_interval( 'start', current_time( 'mysql', true ) );
-					}
-
-					// restore expiration events if the Membership was cancelled
-					if ( 'cancelled' === $old_status ) {
-						$user_membership->schedule_expiration_events( $user_membership->get_end_date( 'timestamp' ) );
 					}
 
 				break;
@@ -1083,6 +1108,11 @@ class WC_Memberships_User_Memberships {
 						$user_membership->set_end_date( $user_membership->get_end_date() );
 						$user_membership->set_paused_interval( 'end', current_time( 'timestamp', true ) );
 						$user_membership->delete_paused_date();
+
+					} elseif ( 'paused' === $old_status ) {
+
+						// restore expiration events if previously paused
+						$user_membership->schedule_expiration_events( $user_membership->get_end_date( 'timestamp' ) );
 
 					} elseif ( 'cancelled' === $old_status ) {
 

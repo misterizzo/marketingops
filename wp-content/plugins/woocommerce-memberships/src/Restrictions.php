@@ -25,6 +25,9 @@ namespace SkyVerge\WooCommerce\Memberships;
 
 use SkyVerge\WooCommerce\Memberships\Helpers\Strings_Helper;
 use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
+use WC_Product;
+use WP_Post;
+use WP_Term;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -257,12 +260,12 @@ class Restrictions {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @param \WP_Post|int|string $page_id page object, ID or slug
+	 * @param WP_Post|int|string $page_id page object, ID or slug
 	 * @return bool
 	 */
 	public function is_restricted_content_redirect_page( $page_id ) {
 
-		if ( $page_id instanceof \WP_Post ) {
+		if ( $page_id instanceof WP_Post ) {
 			$page_id  = (int) $page_id->ID;
 		} elseif( is_numeric( $page_id ) ) {
 			$page_id  = (int) $page_id;
@@ -280,7 +283,8 @@ class Restrictions {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @param int|string|\WP_Post $page_id page object, slug or ID
+	 * @param int|string|WP_Post $page_id page object, slug or ID
+	 *
 	 * @return bool success
 	 */
 	public function set_restricted_content_redirect_page_id( $page_id ) {
@@ -290,7 +294,7 @@ class Restrictions {
 		if ( is_string( $page_id ) && ! is_numeric( $page_id ) ) {
 			$page    = get_post( $page_id );
 			$page_id = $page ? $page->ID : 0;
-		} elseif ( $page_id instanceof \WP_Post ) {
+		} elseif ( $page_id instanceof WP_Post ) {
 			$page_id = $page_id->ID;
 		}
 
@@ -608,15 +612,16 @@ class Restrictions {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param int|\WP_Post $post ID or post object
+	 * @param int|WP_Post $post ID or post object
 	 * @param null|string $post_type optional post type
+	 *
 	 * @return bool
 	 */
 	public function is_post_public( $post, $post_type = null ) {
 
 		$is_post_public = false;
 
-		if ( $post instanceof \WP_Post ) {
+		if ( $post instanceof WP_Post ) {
 			$post_id = $post->ID;
 		} else {
 			$post_id = $post;
@@ -668,14 +673,15 @@ class Restrictions {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param int|\WC_Product|\WP_Post $product product object, ID or associated post
+	 * @param int|WC_Product|WP_Post $product product object, ID or associated post
+	 *
 	 * @return bool
 	 */
 	public function is_product_public( $product ) {
 
-		if ( $product instanceof \WP_Post ) {
+		if ( $product instanceof WP_Post ) {
 			$product_id = $product->ID;
-		} elseif ( $product instanceof \WC_Product ) {
+		} elseif ( $product instanceof WC_Product ) {
 			$product_id = $product->get_id();
 		} else {
 			$product_id = $product;
@@ -690,8 +696,9 @@ class Restrictions {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param array|\WC_Product|\WP_Post|int $object post, product or ID, or array of (used in bulk actions)
+	 * @param array|WC_Product|WP_Post|int $object post, product or ID, or array of (used in bulk actions)
 	 * @param string $force_public either 'yes' or 'no'
+	 *
 	 * @return int number of items set (0 for failure)
 	 */
 	private function set_content_forced_public( $object, $force_public ) {
@@ -722,7 +729,8 @@ class Restrictions {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param array|\WP_Post|int $post ID or object, or array of
+	 * @param array|WP_Post|int $post ID or object, or array of
+	 *
 	 * @return int number of items set (0 for failure)
 	 */
 	public function set_content_public( $post ) {
@@ -736,7 +744,8 @@ class Restrictions {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param array|\WC_Product|\WP_Post|int $product ID or object, or array of
+	 * @param array|WC_Product|WP_Post|int $product ID or object, or array of
+	 *
 	 * @return int number of items set (0 for failure)
 	 */
 	public function set_product_public( $product ) {
@@ -750,7 +759,8 @@ class Restrictions {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param array|\WP_Post|int $post ID or object, or array of
+	 * @param array|WP_Post|int $post ID or object, or array of
+	 *
 	 * @return int number of items set (0 for failure)
 	 */
 	public function unset_content_public( $post ) {
@@ -764,7 +774,8 @@ class Restrictions {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param array|\WC_Product|\WP_Post|int $product ID or object
+	 * @param array|WC_Product|WP_Post|int $product ID or object
+	 *
 	 * @return int number of items set (0 for failure)
 	 */
 	public function unset_product_public( $product ) {
@@ -1185,8 +1196,9 @@ class Restrictions {
 	 *
 	 * @since 1.11.1
 	 *
-	 * @param \WP_Post|\WC_Product|\WP_Term|int $restricted_content a product, post or term
 	 * @param array $args optional arguments used in filters
+	 * @param WP_Post|WC_Product|WP_Term|int $restricted_content a product, post or term
+	 *
 	 * @return int[] array of product IDs
 	 */
 	public function get_products_that_grant_access( $restricted_content, $args = [] ) {
@@ -1194,18 +1206,18 @@ class Restrictions {
 		$access_products = [];
 
 		// ensures the correct type when passing a post object or ID for a product
-		if ( ( $restricted_content instanceof \WP_Post || is_numeric( $restricted_content ) ) && 'product' === get_post_type( $restricted_content ) ) {
+		if ( ( $restricted_content instanceof WP_Post || is_numeric( $restricted_content ) ) && 'product' === get_post_type( $restricted_content ) ) {
 			$restricted_content = wc_get_product( $restricted_content );
 		}
 
-		if ( $restricted_content instanceof \WC_Product ) {
+		if ( $restricted_content instanceof WC_Product ) {
 			$object_id   = (int) $restricted_content->get_id();
 			$object_type = 'product';
 		} elseif ( is_numeric( $restricted_content ) ) {
 			// the ID in this case is assumed to be a post ID
 			$object_id   = (int) $restricted_content;
 			$object_type = 'post';
-		} elseif ( $restricted_content instanceof \WP_Term ) {
+		} elseif ( $restricted_content instanceof WP_Term ) {
 			$object_id   = (int) $restricted_content->term_id;
 			$object_type = $restricted_content->taxonomy;
 		} else {
@@ -1239,46 +1251,76 @@ class Restrictions {
 
 				$access_products = $rules_handler->get_products_to_purchase_from_rules( $rules, $object_id, $rule_type, $args );
 
-			} elseif ( $restricted_content instanceof \WP_Term ) {
+			} elseif ( $restricted_content instanceof WP_Term ) {
 
-				$terms = array_unique( array_merge( [ $object_id ], get_ancestors( $object_id, $object_type, 'taxonomy' ) ) );
-				$args  = [
-					'fields'    => 'ids',
-					'nopaging'  => true,
-					'tax_query' => [],
-				];
-
-				foreach ( $terms as $term_id ) {
-
-					$args['tax_query'][] = [
-						'taxonomy' => $object_type,
-						'field'    => 'id',
-						'terms'    => $term_id,
-					];
-				}
-
-				if ( count( $args['tax_query'] ) > 1 ) {
-					$args['tax_query']['relation'] = 'OR';
-				}
-
-				if ( 'product_cat' === $object_type ) {
-					$args['post_type'] = 'product';
-				}
-
-				$posts       = get_posts( $args );
-				$product_ids = [ [] ];
-
-				foreach ( $posts as $post_id ) {
-					$product_ids[] = $this->get_products_that_grant_access( $post_id, $args );
-				}
-
-				$access_products = array_merge( ...$product_ids );
+				$access_products = $this->get_products_that_grant_access_to_term( $object_id, $object_type );
 			}
 
 			$this->products_that_grant_access[ $cache_key ] = array_unique( $access_products );
 		}
 
 		return $this->products_that_grant_access[ $cache_key ];
+	}
+
+	/**
+	 * Queries for product IDs that would grant access to the provided term.
+	 *
+	 * @since 1.26.6
+	 *
+	 * @param int $object_id
+	 * @param string $object_type
+	 *
+	 * @return int[]
+	 */
+	protected function get_products_that_grant_access_to_term( int $object_id, string $object_type ) : array {
+
+		$terms = array_unique(
+			array_merge(
+				[ $object_id ],
+				get_ancestors( $object_id, $object_type, 'taxonomy' )
+			)
+		);
+
+		$args = [
+			'fields'    => 'ids',
+			'nopaging'  => true,
+			'tax_query' => [],
+		];
+
+		foreach ( $terms as $term_id ) {
+
+			$args['tax_query'][] = [
+				'taxonomy'         => $object_type,
+				'field'            => 'id',
+				'terms'            => $term_id,
+				'include_children' => false,
+			];
+		}
+
+		if ( count( $args['tax_query'] ) > 1 ) {
+			$args['tax_query']['relation'] = 'OR';
+		}
+
+		if ( 'product_cat' === $object_type ) {
+			$args['post_type'] = 'product';
+		}
+
+		/**
+		 * Adjusts query arguments that query products that grant access to term.
+		 *
+		 * @param array $args
+		 *
+		 * @since 1.26.6
+		 */
+		$args = (array) apply_filters( 'wc_membership_get_products_that_grant_access_to_term_args', $args );
+
+		$product_ids = [];
+
+		foreach ( get_posts( $args ) as $post_id ) {
+			$product_ids[] = $this->get_products_that_grant_access( $post_id, $args );
+		}
+
+		return array_merge( ...$product_ids );
 	}
 
 
@@ -1289,28 +1331,30 @@ class Restrictions {
 	 *
 	 * @since 1.11.1
 	 *
-	 * @param \WP_Post|\WC_Product|\WP_Term|int $restricted_shop_content product, post object or term object
 	 * @param array $args optional arguments used in filters
+	 *
+	 * @param WP_Post|WC_Product|WP_Term|int $restricted_shop_content product, post object or term object
+	 *
 	 * @return int[] array of product IDs
 	 */
 	public function get_products_that_grant_discount( $restricted_shop_content, $args = [] ) {
 
 		$discount_access_products = [];
 
-		if ( $restricted_shop_content instanceof \WC_Product ) {
+		if ( $restricted_shop_content instanceof WC_Product ) {
 			$object = get_post( $restricted_shop_content->get_id() );
 		} else {
 			$object = $restricted_shop_content; // post or term: if it's an integer we must assume post ID
 		}
 
-		if ( is_numeric( $object ) || ( $object instanceof \WP_Post && in_array( $object->post_type, ['product', 'product_variation'], true ) ) ) {
+		if ( is_numeric( $object ) || ( $object instanceof WP_Post && in_array( $object->post_type, ['product', 'product_variation'], true ) ) ) {
 
 			$product_id               = is_numeric( $object ) ? $object : $object->ID;
 			$rules_handler            = wc_memberships()->get_rules_instance();
 			$rules                    = $rules_handler->get_product_purchasing_discount_rules( $product_id );
 			$discount_access_products = $rules_handler->get_products_to_purchase_from_rules( $rules, $object, 'purchasing_discount', $args );
 
-		} elseif ( $object instanceof \WP_Term && 'product_cat' === $object->taxonomy ) {
+		} elseif ( $object instanceof WP_Term && 'product_cat' === $object->taxonomy ) {
 
 			$taxonomy = $object->taxonomy;
 			$terms    = array_unique( array_merge( array( $object->term_id ), get_ancestors( $object->term_id, $taxonomy, 'taxonomy' ) ) );

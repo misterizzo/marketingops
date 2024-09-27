@@ -1132,40 +1132,45 @@ class Posts {
 	 */
 	public function restrict_post( $post ) {
 
-		if (    ! in_array( $post->ID, $this->content_restricted, false )
-		     &&   wc_memberships_is_post_content_restricted( $post->ID ) ) {
+		if ( in_array( $post->ID, $this->content_restricted, true ) ) {
+			return;
+		}
 
-			$message_code = null;
-
-			// current user is an admin user: remind them they might be viewing restricted content
-			if ( ! current_user_can( 'wc_memberships_view_restricted_post_content', $post->ID ) ) {
-				$message_code = 'restricted';
-			// current user has delayed access
-			} elseif ( ! current_user_can( 'wc_memberships_view_delayed_post_content', $post->ID ) ) {
-				$message_code = 'delayed';
-			}
-
-			if ( null !== $message_code ) {
-
-				$args = array(
-					'post'         => $post,
-					'message_type' => $message_code,
-				);
-
-				if ( 'delayed' === $message_code ) {
-					$args['access_time'] = wc_memberships()->get_capabilities_instance()->get_user_access_start_time_for_post( get_current_user_id(), $post->ID );
-				}
-
-				$message_code = \WC_Memberships_User_Messages::get_message_code_shorthand_by_post_type( $post, $args );
-				$content      = \WC_Memberships_User_Messages::get_message_html( $message_code, $args );
-
-				$this->restrict_post_content( $post, $content );
-				$this->restrict_post_comments( $post );
-			}
+		if ( ! wc_memberships_is_post_content_restricted( $post->ID ) ) {
+			return;
 		}
 
 		// flag post processed for restrictions
-		$this->content_restricted[] = (int) $post->ID;
+		$this->content_restricted[] = $post->ID;
+
+		$message_code = null;
+
+		// current user is an admin user: remind them they might be viewing restricted content
+		if ( ! current_user_can( 'wc_memberships_view_restricted_post_content', $post->ID ) ) {
+			$message_code = 'restricted';
+			// current user has delayed access
+		} elseif ( ! current_user_can( 'wc_memberships_view_delayed_post_content', $post->ID ) ) {
+			$message_code = 'delayed';
+		}
+
+		if ( null === $message_code ) {
+			return;
+		}
+
+		$args = [
+			'post'         => $post,
+			'message_type' => $message_code,
+		];
+
+		if ( 'delayed' === $message_code ) {
+			$args['access_time'] = wc_memberships()->get_capabilities_instance()->get_user_access_start_time_for_post( get_current_user_id(), $post->ID );
+		}
+
+		$message_code = \WC_Memberships_User_Messages::get_message_code_shorthand_by_post_type( $post, $args );
+		$content      = \WC_Memberships_User_Messages::get_message_html( $message_code, $args );
+
+		$this->restrict_post_content( $post, $content );
+		$this->restrict_post_comments( $post );
 	}
 
 

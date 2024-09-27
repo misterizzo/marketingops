@@ -1,5 +1,21 @@
 *** WooCommerce Memberships Changelog ***
 
+2024.08.01 - version 1.26.8
+ * Tweak - "Membership ending soon" emails are no longer sent for paused memberships
+ * Fix - Memberships connected to a subscription weren't inheriting the subscription's "End Date"
+
+2024.07.11 - version 1.26.7
+ * Tweak - Improve performance around membership note count queries
+ * Fix - Modals in the admin area were not working (such as CSV import and export)
+ * Fix - Persist delayed member status on export
+
+2024.07.04 - version 1.26.6
+ * Fix - Stop overriding Guest Checkout settings in this specific scenario: guest checkout is turned off, account creation during checkout is turned off
+ * Fix - Fatal error when restricting a page containing the WooCommerce Products Block (Beta)
+ * Fix - Do not use the administrator's membership discounts (if applicable) when they manually create orders via the admin
+ * Fix - Only trace immediate products that grant access to term excluding children
+ * Dev - Add filter hook to adjust arguments used when querying products that grant access to a term
+
 2024.04.02 - version 1.26.5
  * Fix - Address PHP 8.2+ notices when viewing Import/Export and Profile Fields admin screens
  * Fix - Ensure that the `{products}` merge tag is correctly replaced when using exclusively product variations for discount rules

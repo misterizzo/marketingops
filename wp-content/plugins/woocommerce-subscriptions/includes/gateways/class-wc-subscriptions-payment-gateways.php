@@ -86,6 +86,7 @@ class WC_Subscriptions_Payment_Gateways extends WC_Subscriptions_Core_Payment_Ga
 			$latest_renewal_order = $subscription->get_last_order( 'all', 'renewal' );
 
 			if ( empty( $latest_renewal_order ) ) {
+				$subscription->add_order_note( __( "Renewal order payment processing was skipped because we couldn't locate the latest renewal order.", 'woocommerce_subscriptions' ) );
 				return;
 			}
 
@@ -94,9 +95,10 @@ class WC_Subscriptions_Payment_Gateways extends WC_Subscriptions_Core_Payment_Ga
 			} elseif ( $latest_renewal_order->get_total() > 0 ) {
 				$subscription->add_order_note(
 					sprintf(
-						/* Translators: placeholder is a subscription renewal order ID as a link */
-						__( 'Payment processing of the renewal order %s was skipped because it is already paid.', 'woocommerce_subscriptions' ),
-						'<a href="' . esc_url( $latest_renewal_order->get_edit_order_url() ) . '">' . _x( '#', 'hash before order number', 'woocommerce' ) . $latest_renewal_order->get_order_number() . '</a>'
+						/* Translators: 1: placeholder is a subscription renewal order ID as a link, 2: placeholder the order's current status */
+						__( 'Payment processing of the renewal order %1$s was skipped because it is already paid (%2$s).', 'woocommerce_subscriptions' ),
+						'<a href="' . esc_url( $latest_renewal_order->get_edit_order_url() ) . '">' . _x( '#', 'hash before order number', 'woocommerce' ) . $latest_renewal_order->get_order_number() . '</a>',
+						wc_get_order_status_name( $latest_renewal_order->get_status() )
 						)
 					);
 			}
@@ -147,7 +149,7 @@ class WC_Subscriptions_Payment_Gateways extends WC_Subscriptions_Core_Payment_Ga
 	public static function add_recurring_payment_gateway_information( $settings, $option_prefix ) {
 		$settings[] = array(
 			// translators: $1-$2: opening and closing tags. Link to documents->payment gateways, 3$-4$: opening and closing tags. Link to WooCommerce extensions shop page
-			'desc' => sprintf( __( 'Find new gateways that %1$ssupport automatic subscription payments%2$s in the official %3$sWooCommerce Marketplace%4$s.', 'woocommerce-subscriptions' ), '<a href="' . esc_url( 'http://docs.woocommerce.com/document/subscriptions/payment-gateways/' ) . '">', '</a>', '<a href="' . esc_url( 'http://www.woocommerce.com/product-category/woocommerce-extensions/' ) . '">', '</a>' ),
+			'desc' => sprintf( __( 'Find new gateways that %1$ssupport automatic subscription payments%2$s in the official %3$sWooCommerce Marketplace%4$s.', 'woocommerce-subscriptions' ), '<a href="' . esc_url( 'https://woocommerce.com/document/subscriptions/payment-gateways/' ) . '">', '</a>', '<a href="' . esc_url( 'http://www.woocommerce.com/product-category/woocommerce-extensions/' ) . '">', '</a>' ),
 			'id'   => $option_prefix . '_payment_gateways_additional',
 			'type' => 'informational',
 		);

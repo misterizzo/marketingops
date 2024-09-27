@@ -1,5 +1,54 @@
 *** WooCommerce Subscriptions Changelog ***
 
+2024-09-13 - version 6.7.0
+* Fix: Resolved two issues preventing the correct display of the "Subscription items can no longer be edited." message on the Edit Subscription page.
+* Fix: Checks for the existence of `wc_get_page_screen_id` before calling it on `wcs_get_page_screen_id`, and for the admin context before calling `list_table_primary_column` to prevent fatal errors.
+* Fix: Blocks the reactivation of a subscription when the end date is in the past.
+* Fix: Ensure a subscription's modified date is updated when its related order cache is updated on non-HPOS sites.
+* Fix: Ensure trial period form data is set before use to prevent fatal errors when the data is missing.
+* Fix: Resolved an error with coupon discount calculations for manual or early renewal orders on stores with tax-inclusive pricing.
+* Fix: Add the theme-compatible button class to the switch button on the My Account > Subscription page.
+* Dev: Removing the unused method `maybe_remove_formatted_order_total_filter` hooked to `woocommerce_get_formatted_order_total` which was deprecated.
+* Dev: Update subscriptions-core to 7.5.0
+
+2024-09-05 - version 6.6.2
+* Fix: Prevent errors during checkout when a customer is switching their subscription product and does not require payment.
+* Dev: Update subscriptions-core to 7.4.3.
+
+2024-08-27 - version 6.6.1
+* Fix: Resolved an issue where simple product prices were incorrectly set to $0 when purchasing subscriptions and simple products with a coupon in WC 9.2.
+* Dev: Update subscriptions-core to 7.4.2.
+
+2024-08-22 - version 6.6.0
+* Fix: Resolve duplicate subscription creation and PHP warning when switching subscriptions with Prepaid for WooCommerce Subscriptions plugin active.
+* Fix: Switch calculations now exclude previous switch orders with a checkout-draft status.
+* Dev: Introduce new parameter to WC_Subscription::get_last_order() to enable filtering out orders with specific statuses.
+* Update: Schedule subscription-related events with a priority of 1 to allow for earlier execution within the Action Scheduler.
+* Fix: Ensure admin notices are displayed after performing bulk actions on subscriptions when HPOS is enabled.
+* Fix: Add a year to the next renewal date billing interval is 12 months or more for a synced subscription.
+* Dev: Added filter to enable overriding the total paid for current switch period.
+* Dev: Updated subscriptions-core to 7.4.1.
+
+2024-07-16 - version 6.5.0
+* Add: Include trial_period, suspension_count, and requires_manual_renewal in the REST API response for subscriptions.
+* Update: When a renewal order's payment is skipped, include the order's current status in the note to help troubleshooting.
+* Fix: Label improvements on subscription and order page templates.
+* Fix: Fixed an issue with subscriptions containing multiple renewal orders to mark a random item as processing, instead of the last order.
+* Fix: Prevent errors from invalid subscription objects during customer payment method updates.
+* Dev: Updated subscriptions-core to 7.3.0.
+
+2024-06-28 - version 6.4.1
+* Fix: Resolved errors preventing subscription-related webhooks from sending on WC 9.0 stores.
+
+2024-06-13 - version 6.4.0
+* Add: New WP CLI support to manage subscriptions via command line.
+* Add: Introduce wc/v2 subscription REST API endpoints.
+* Fix: label improvement on my subscription page template.
+* Fix: Regenerate subscriptions related order caches (renewal, resubscribe, switch) if it's stored as an invalid value to prevent fatal errors.
+* Update: Show "FREE" instead of 0 when there is no shipping cost in the recurring totals section of the Cart and Checkout blocks (requires WooCommerce 9.0+).
+* Dev: New function wcs_set_recurring_item_total() to set line item totals that have been copied from an initial order to their proper recurring totals (i.e. remove sign-up fees).
+* Dev: Updated subscriptions-core to 7.2.0.
+
 2024-05-24 - version 6.3.2
 * Fix: Prevent overriding line item totals provided in request data when creating Orders via the REST API.
 

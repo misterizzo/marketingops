@@ -1,5 +1,19 @@
 *** WooCommerce One Page Checkout Changelog ***
 
+2024-09-24 - version 2.9.0
+* Fixed removal of items via OPC product table.
+* Tweak - WC 9.4 compatibility.
+* Tweak - WP 6.6 compatibility.
+
+2024-08-15 - version 2.8.6
+* Tweak - WC 9.2 compatibility.
+
+2024-07-02 - version 2.8.5
+* Tweak - WC 9.1 compatibility.
+
+2024-06-18 - version 2.8.4
+* Tweak - WP 6.6 compatibility.
+
 2024-06-04 - version 2.8.3
 * Tweak - WC 9.0 compatibility.
 

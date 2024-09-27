@@ -166,6 +166,11 @@ class WC_Memberships_Member_Discounts {
 				return true;
 			}
 
+			// ensures we don't use discounts from the admin's account during manual order creation
+			if ( 'woocommerce_add_order_item' === ( $_REQUEST['action'] ?? '' ) ) {
+				return true;
+			}
+
 			// check if any of the enhanced search product actions are being done
 			/* @see WC_AJAX::add_ajax_events() */
 			$search_products = array(

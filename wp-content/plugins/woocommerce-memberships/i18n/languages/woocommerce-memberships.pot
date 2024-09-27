@@ -2,20 +2,20 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce Memberships 1.26.5\n"
+"Project-Id-Version: WooCommerce Memberships 1.26.8\n"
 "Report-Msgid-Bugs-To: https://woocommerce.com/my-account/marketplace-ticket-form/\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-04-02T02:10:52+00:00\n"
+"POT-Creation-Date: 2024-08-01T09:38:30+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.1\n"
+"X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: woocommerce-memberships\n"
 
 #. Plugin Name of the plugin
-#: class-wc-memberships.php:764
+#: class-wc-memberships.php:767
 msgid "WooCommerce Memberships"
 msgstr ""
 
@@ -35,57 +35,57 @@ msgstr ""
 msgid "https://www.woocommerce.com/"
 msgstr ""
 
-#: class-wc-memberships.php:811
+#: class-wc-memberships.php:814
 msgid "You've created your first membership plan!"
 msgstr ""
 
-#: class-wc-memberships.php:821
+#: class-wc-memberships.php:824
 msgid "You've created your first user membership!"
 msgstr ""
 
 #. translators: Placeholders: %1$s - opening <strong> HTML tag, %2$s - closing </strong> HTML tag
-#: class-wc-memberships.php:847
+#: class-wc-memberships.php:850
 msgid "%1$sHeads up!%2$s We've merged the Directory Shortcode add-on into Memberships, so you no longer need this add-on to display a Member Directory. This add-on has been deactivated and can be safely removed from your plugin list."
 msgstr ""
 
 #. translators: Placeholders: %1$s - opening <strong> HTML tag, %2$s - closing </strong> HTML tag
-#: class-wc-memberships.php:854
+#: class-wc-memberships.php:857
 msgid "%1$sHeads up!%2$s We've merged the Adjust Excerpt Length add-on into Memberships, so you no longer need this add-on to adjust the restricted content excerpt. This add-on has been deactivated and can be safely removed from your plugin list."
 msgstr ""
 
 #. translators: Placeholders: %1$s - opening <strong> HTML tag, %2$s - closing </strong> HTML tag
-#: class-wc-memberships.php:861
+#: class-wc-memberships.php:864
 msgid "%1$sHeads up!%2$s We've merged the Role Handler add-on into Memberships, so you no longer need this add-on to set default member roles. This add-on has been deactivated and can be safely removed from your plugin list."
 msgstr ""
 
 #. translators: Placeholders: %1$s - opening <strong> HTML tag, %2$s - closing </strong> HTML tag
-#: class-wc-memberships.php:868
+#: class-wc-memberships.php:871
 msgid "%1$sHeads up!%2$s We've merged the Sensei Member Area add-on into Memberships, so you no longer need this add-on to add the \"Courses & Lessons\" section to your plan member areas. This add-on has been deactivated and can be safely removed from your plugin list."
 msgstr ""
 
 #. translators: Placeholders: %1$s - "WooCommerce Memberships" plugin name in <strong> HTML tags, %2$s - opening <a> HTML tag, %3$s - closing </a> HTML tag
-#: class-wc-memberships.php:889
+#: class-wc-memberships.php:892
 msgid "%1$s: The Member Directory block and shortcode are enabled and ready to use. You can add the shortcode or the block to a post or a page to display members of your published plans. Make sure you have %2$sread the documentation%3$s about this feature."
 msgstr ""
 
-#: class-wc-memberships.php:918
+#: class-wc-memberships.php:921
 msgid "%1$sHeads up!%2$s We introduced a bug in version 1.16.0 of Memberships that caused issues with scheduled actions. We're so sorry for this issue! The bug should be resolved in the current version, but %3$splease contact our support team immediately%4$s if you notice any further issues."
 msgstr ""
 
-#: class-wc-memberships.php:1144
-#: class-wc-memberships.php:1222
+#: class-wc-memberships.php:1147
+#: class-wc-memberships.php:1225
 msgid "User Memberships"
 msgstr ""
 
-#: class-wc-memberships.php:1195
+#: class-wc-memberships.php:1198
 msgid "Removed User Membership for \"%s\"."
 msgstr ""
 
-#: class-wc-memberships.php:1198
+#: class-wc-memberships.php:1201
 msgid "User Membership for \"%s\" has been retained."
 msgstr ""
 
-#: class-wc-memberships.php:1258
+#: class-wc-memberships.php:1261
 #: src/admin/class-wc-memberships-admin-users.php:142
 #: src/admin/class-wc-memberships-admin.php:505
 #: src/admin/class-wc-memberships-admin.php:572
@@ -98,7 +98,7 @@ msgstr ""
 msgid "Memberships"
 msgstr ""
 
-#: class-wc-memberships.php:1282
+#: class-wc-memberships.php:1285
 #: src/admin/class-wc-memberships-admin-user-memberships.php:120
 #: src/admin/class-wc-memberships-import-export-handler.php:495
 #: src/admin/meta-boxes/views/class-wc-memberships-meta-box-view-content-restriction-rule.php:180
@@ -113,19 +113,19 @@ msgstr ""
 msgid "Plan"
 msgstr ""
 
-#: class-wc-memberships.php:1286
+#: class-wc-memberships.php:1289
 msgid "Start Date (UTC)"
 msgstr ""
 
-#: class-wc-memberships.php:1293
+#: class-wc-memberships.php:1296
 msgid "End Date (UTC)"
 msgstr ""
 
-#: class-wc-memberships.php:1300
+#: class-wc-memberships.php:1303
 msgid "Related Order"
 msgstr ""
 
-#: class-wc-memberships.php:1307
+#: class-wc-memberships.php:1310
 msgid "Related Product"
 msgstr ""
 
@@ -1326,17 +1326,17 @@ msgid "Content restriction mode"
 msgstr ""
 
 #: src/admin/class-wc-memberships-settings.php:502
-#: src/Restrictions.php:176
+#: src/Restrictions.php:179
 msgid "Hide completely"
 msgstr ""
 
 #: src/admin/class-wc-memberships-settings.php:503
-#: src/Restrictions.php:177
+#: src/Restrictions.php:180
 msgid "Hide content only"
 msgstr ""
 
 #: src/admin/class-wc-memberships-settings.php:504
-#: src/Restrictions.php:178
+#: src/Restrictions.php:181
 msgid "Redirect to page"
 msgstr ""
 
@@ -3576,7 +3576,7 @@ msgstr ""
 msgid "%s inserts a plain membership renewal URL."
 msgstr ""
 
-#: src/class-wc-memberships-member-discounts.php:1434
+#: src/class-wc-memberships-member-discounts.php:1439
 msgid "Member discount!"
 msgstr ""
 
@@ -3976,114 +3976,114 @@ msgid "Yesterday"
 msgstr ""
 
 #. translators: Placeholder: %d - membership plan ID
-#: src/class-wc-memberships-user-memberships.php:146
+#: src/class-wc-memberships-user-memberships.php:148
 msgid "Cannot create User Membership: Membership Plan with ID %d does not exist"
 msgstr ""
 
 #. translators: Placeholder: %s - error message(s)
-#: src/class-wc-memberships-user-memberships.php:164
+#: src/class-wc-memberships-user-memberships.php:166
 msgid "Cannot create User Membership: %s."
 msgstr ""
 
 #. translators: Placeholder: %d - membership plan ID
-#: src/class-wc-memberships-user-memberships.php:173
+#: src/class-wc-memberships-user-memberships.php:175
 msgid "Cannot create User Membership #%d."
 msgstr ""
 
-#: src/class-wc-memberships-user-memberships.php:787
+#: src/class-wc-memberships-user-memberships.php:816
 msgctxt "Membership Status"
 msgid "Active"
 msgstr ""
 
 #. translators: Active Membership(s)
-#: src/class-wc-memberships-user-memberships.php:789
+#: src/class-wc-memberships-user-memberships.php:818
 msgid "Active <span class=\"count\">(%s)</span>"
 msgid_plural "Active <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/class-wc-memberships-user-memberships.php:793
+#: src/class-wc-memberships-user-memberships.php:822
 msgctxt "Membership status"
 msgid "Delayed"
 msgstr ""
 
 #. translators: Delayed Membership(s)
-#: src/class-wc-memberships-user-memberships.php:795
+#: src/class-wc-memberships-user-memberships.php:824
 msgid "Delayed <span class=\"count\">(%s)</span>"
 msgid_plural "Delayed <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/class-wc-memberships-user-memberships.php:799
+#: src/class-wc-memberships-user-memberships.php:828
 msgctxt "Membership Status"
 msgid "Complimentary"
 msgstr ""
 
 #. translators: Complimentary Membership(s)
-#: src/class-wc-memberships-user-memberships.php:801
+#: src/class-wc-memberships-user-memberships.php:830
 msgid "Complimentary <span class=\"count\">(%s)</span>"
 msgid_plural "Complimentary <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/class-wc-memberships-user-memberships.php:805
+#: src/class-wc-memberships-user-memberships.php:834
 msgctxt "Membership Status"
 msgid "Pending Cancellation"
 msgstr ""
 
 #. translators: Membership(s) Pending Cancellation
-#: src/class-wc-memberships-user-memberships.php:807
+#: src/class-wc-memberships-user-memberships.php:836
 msgid "Pending Cancellation <span class=\"count\">(%s)</span>"
 msgid_plural "Pending Cancellation <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/class-wc-memberships-user-memberships.php:811
+#: src/class-wc-memberships-user-memberships.php:840
 msgctxt "Membership Status"
 msgid "Paused"
 msgstr ""
 
 #. translators: Paused Membership(s)
-#: src/class-wc-memberships-user-memberships.php:813
+#: src/class-wc-memberships-user-memberships.php:842
 msgid "Paused <span class=\"count\">(%s)</span>"
 msgid_plural "Paused <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/class-wc-memberships-user-memberships.php:817
+#: src/class-wc-memberships-user-memberships.php:846
 msgctxt "Membership Status"
 msgid "Expired"
 msgstr ""
 
 #. translators: Expired Membership(s)
-#: src/class-wc-memberships-user-memberships.php:819
+#: src/class-wc-memberships-user-memberships.php:848
 msgid "Expired <span class=\"count\">(%s)</span>"
 msgid_plural "Expired <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/class-wc-memberships-user-memberships.php:823
+#: src/class-wc-memberships-user-memberships.php:852
 msgctxt "Membership Status"
 msgid "Cancelled"
 msgstr ""
 
 #. translators: Cancelled Membership(s)
-#: src/class-wc-memberships-user-memberships.php:825
+#: src/class-wc-memberships-user-memberships.php:854
 msgid "Cancelled <span class=\"count\">(%s)</span>"
 msgid_plural "Cancelled <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: Placeholders: Membership status changed from status A (%1$s) to status B (%2$s)
-#: src/class-wc-memberships-user-memberships.php:1017
+#: src/class-wc-memberships-user-memberships.php:1046
 msgid "Membership status changed from %1$s to %2$s."
 msgstr ""
 
-#: src/class-wc-memberships-user-memberships.php:1706
+#: src/class-wc-memberships-user-memberships.php:1736
 msgid "Membership cancelled because the associated order was trashed."
 msgstr ""
 
-#: src/class-wc-memberships-user-memberships.php:1721
+#: src/class-wc-memberships-user-memberships.php:1751
 msgid "Membership cancelled because the associated order was refunded."
 msgstr ""
 
@@ -4693,14 +4693,14 @@ msgstr ""
 #: src/integrations/Elementor_Builder.php:212
 #: src/integrations/subscriptions/class-wc-memberships-integration-subscriptions-admin.php:803
 #: src/Profile_Fields/Profile_Field.php:328
-#: src/utilities/class-wc-memberships-csv-export-user-memberships.php:583
+#: src/utilities/class-wc-memberships-csv-export-user-memberships.php:594
 msgid "Yes"
 msgstr ""
 
 #: src/integrations/Elementor_Builder.php:213
 #: src/integrations/subscriptions/class-wc-memberships-integration-subscriptions-admin.php:804
 #: src/Profile_Fields/Profile_Field.php:328
-#: src/utilities/class-wc-memberships-csv-export-user-memberships.php:583
+#: src/utilities/class-wc-memberships-csv-export-user-memberships.php:594
 msgid "No"
 msgstr ""
 
@@ -5220,7 +5220,7 @@ msgstr ""
 
 #. translators: Placeholders: %s - file name
 #: src/utilities/class-wc-memberships-csv-export-user-memberships.php:313
-#: src/utilities/class-wc-memberships-csv-export-user-memberships.php:694
+#: src/utilities/class-wc-memberships-csv-export-user-memberships.php:705
 msgid "Could not open the export file %s for writing."
 msgstr ""
 
@@ -5232,44 +5232,44 @@ msgstr ""
 msgid "User memberships to export not set or invalid."
 msgstr ""
 
-#: src/utilities/class-wc-memberships-csv-export-user-memberships.php:744
+#: src/utilities/class-wc-memberships-csv-export-user-memberships.php:755
 msgid "There were no User Memberships found for export that matched the chosen export criteria."
 msgstr ""
 
 #. translators: Placeholder: %s - User Memberships to import found in uploaded file
-#: src/utilities/class-wc-memberships-csv-export-user-memberships.php:749
+#: src/utilities/class-wc-memberships-csv-export-user-memberships.php:760
 msgid "%s User Membership processed for export."
 msgid_plural "%s User Memberships processed for export."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/utilities/class-wc-memberships-csv-export-user-memberships.php:753
+#: src/utilities/class-wc-memberships-csv-export-user-memberships.php:764
 msgid "However, no User Memberships were successfully exported."
 msgstr ""
 
 #. translators: Placeholder: %s - skipped User Memberships to import from file
-#: src/utilities/class-wc-memberships-csv-export-user-memberships.php:759
+#: src/utilities/class-wc-memberships-csv-export-user-memberships.php:770
 msgid "%s User Membership successfully exported."
 msgid_plural "%s User Memberships successfully exported."
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: Placeholder: %s - skipped User Memberships to import from file
-#: src/utilities/class-wc-memberships-csv-export-user-memberships.php:764
+#: src/utilities/class-wc-memberships-csv-export-user-memberships.php:775
 msgid "%s User Membership skipped."
 msgid_plural "%s User Memberships skipped."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/utilities/class-wc-memberships-csv-export-user-memberships.php:840
+#: src/utilities/class-wc-memberships-csv-export-user-memberships.php:851
 msgid "No User Memberships selected for export."
 msgstr ""
 
-#: src/utilities/class-wc-memberships-csv-export-user-memberships.php:1025
+#: src/utilities/class-wc-memberships-csv-export-user-memberships.php:1036
 msgid "You do not have the proper permissions to download this file."
 msgstr ""
 
-#: src/utilities/class-wc-memberships-csv-export-user-memberships.php:1035
+#: src/utilities/class-wc-memberships-csv-export-user-memberships.php:1046
 msgid "Export job not found"
 msgstr ""
 

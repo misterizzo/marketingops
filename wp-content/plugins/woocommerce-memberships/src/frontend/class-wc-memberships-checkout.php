@@ -49,7 +49,7 @@ class WC_Memberships_Checkout {
 		add_filter( 'woocommerce_checkout_registration_required', [ $this, 'maybe_require_registration' ], 9999 );
 
 		// mark checkout registration fields as required
-		add_filter( 'woocommerce_checkout_fields', [ $this, 'maybe_require_registration_fields' ], 9999 );
+		add_filter( 'woocommerce_checkout_fields', [ $this, 'maybe_require_registration_fields' ], PHP_INT_MAX );
 
 		// remove guest checkout param from WC checkout JS
 		add_filter( 'woocommerce_get_script_data', [ $this, 'remove_guest_checkout_js_param' ] );
@@ -72,7 +72,7 @@ class WC_Memberships_Checkout {
 	 */
 	public function maybe_enable_registration( $enable_registration ) {
 
-		return $this->force_registration() ? true : $enable_registration;
+		return ! $enable_registration ? $this->force_registration() : $enable_registration;
 	}
 
 
@@ -89,7 +89,7 @@ class WC_Memberships_Checkout {
 	 */
 	public function maybe_require_registration( $require_registration ) {
 
-		return $this->force_registration() ? true : $require_registration;
+		return ! $require_registration ? $this->force_registration() : $require_registration;
 	}
 
 
@@ -173,6 +173,14 @@ class WC_Memberships_Checkout {
 	public function force_registration() {
 
 		if ( is_user_logged_in() || ! WC()->cart || WC()->cart->is_empty() ) {
+			return false;
+		}
+
+		/*
+		 * If "Allow customers to place orders without an account" is NOT checked, then WooCommerce will not allow
+		 * guest checkout anyway, so we don't have to force on registration.
+		 */
+		if ( 'yes' !== get_option( 'woocommerce_enable_guest_checkout' ) ) {
 			return false;
 		}
 

@@ -612,7 +612,7 @@ class WC_Memberships_Integration_Subscriptions_User_Membership extends \WC_Membe
 
 			// if there is no subscription end date, then it could mean a date has been forced on the membership instead, so ignore this
 			if ( null !== $expiry_date ) {
-				$date = wc_memberships_format_date( $date, $format );
+				$date = wc_memberships_format_date( $expiry_date, $format );
 			}
 		}
 
