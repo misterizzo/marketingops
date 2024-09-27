@@ -457,6 +457,15 @@ function wc_clear_template_cache() {
 }
 
 /**
+ * Clear the system status theme info cache.
+ *
+ * @since 9.4.0
+ */
+function wc_clear_system_status_theme_info_cache() {
+	delete_transient( 'wc_system_status_theme_info' );
+}
+
+/**
  * Get Base Currency Code.
  *
  * @return string
@@ -824,7 +833,7 @@ function get_woocommerce_currency_symbols() {
 			'XAF' => 'CFA',
 			'XCD' => '&#36;',
 			'XOF' => 'CFA',
-			'XPF' => 'Fr',
+			'XPF' => 'XPF',
 			'YER' => '&#xfdfc;',
 			'ZAR' => '&#82;',
 			'ZMW' => 'ZK',
@@ -1102,20 +1111,21 @@ function wc_setcookie( $name, $value, $expire = 0, $secure = false, $httponly = 
 }
 
 /**
- * Get the URL to the WooCommerce REST API.
+ * Get the URL to the WooCommerce Legacy REST API.
+ *
+ * Note that as of WooCommerce 9.0 the WooCommerce Legacy REST API has been moved to a dedicated extension,
+ * and the implementation of its root endpoint in WooCommerce core is now just a stub that will always return an error.
+ * See the setup_legacy_api_stub method in includes/class-woocommerce.php and:
+ * https://developer.woocommerce.com/2023/10/03/the-legacy-rest-api-will-move-to-a-dedicated-extension-in-woocommerce-9-0/
+ *
+ * @deprecated 9.0.0 The Legacy REST API has been removed from WooCommerce core.
  *
  * @since 2.1
  * @param string $path an endpoint to include in the URL.
  * @return string the URL.
  */
 function get_woocommerce_api_url( $path ) {
-	if ( Constants::is_defined( 'WC_API_REQUEST_VERSION' ) ) {
-		$version = Constants::get_constant( 'WC_API_REQUEST_VERSION' );
-	} else {
-		$version = substr( WC_API::VERSION, 0, 1 );
-	}
-
-	$url = get_home_url( null, "wc-api/v{$version}/", is_ssl() ? 'https' : 'http' );
+	$url = get_home_url( null, 'wc-api/v3/', is_ssl() ? 'https' : 'http' );
 
 	if ( ! empty( $path ) && is_string( $path ) ) {
 		$url .= ltrim( $path, '/' );
@@ -1468,12 +1478,27 @@ function wc_transaction_query( $type = 'start', $force = false ) {
 /**
  * Gets the url to the cart page.
  *
- * @since  2.5.0
+ * @since 2.5.0
+ * @since 9.3.0 To support shortcodes on other pages besides the main cart page, this returns the current URL if it is the cart page.
  *
  * @return string Url to cart page
  */
 function wc_get_cart_url() {
-	return apply_filters( 'woocommerce_get_cart_url', wc_get_page_permalink( 'cart' ) );
+	if ( is_cart() && isset( $_SERVER['HTTP_HOST'], $_SERVER['REQUEST_URI'] ) ) {
+		$protocol    = is_ssl() ? 'https' : 'http';
+		$current_url = esc_url_raw( $protocol . '://' . wp_unslash( $_SERVER['HTTP_HOST'] ) . wp_unslash( $_SERVER['REQUEST_URI'] ) );
+		$cart_url    = remove_query_arg( array( 'remove_item', 'add-to-cart', 'added-to-cart', 'order_again', '_wpnonce' ), $current_url );
+	} else {
+		$cart_url = wc_get_page_permalink( 'cart' );
+	}
+
+	/**
+	 * Filter the cart URL.
+	 *
+	 * @since 2.5.0
+	 * @param string $cart_url Cart URL.
+	 */
+	return apply_filters( 'woocommerce_get_cart_url', $cart_url );
 }
 
 /**
@@ -1579,6 +1604,8 @@ function wc_help_tip( $tip, $allow_html = false ) {
 		$sanitized_tip = esc_attr( $tip );
 	}
 
+	$aria_label = wp_strip_all_tags( $tip );
+
 	/**
 	 * Filter the help tip.
 	 *
@@ -1591,7 +1618,7 @@ function wc_help_tip( $tip, $allow_html = false ) {
 	 *
 	 * @return string
 	 */
-	return apply_filters( 'wc_help_tip', '<span class="woocommerce-help-tip" tabindex="0" aria-label="' . $sanitized_tip . '" data-tip="' . $sanitized_tip . '"></span>', $sanitized_tip, $tip, $allow_html );
+	return apply_filters( 'wc_help_tip', '<span class="woocommerce-help-tip" tabindex="0" aria-label="' . esc_attr( $aria_label ) . '" data-tip="' . $sanitized_tip . '"></span>', $sanitized_tip, $tip, $allow_html );
 }
 
 /**
@@ -1611,7 +1638,7 @@ function wc_get_wildcard_postcodes( $postcode, $country = '' ) {
 		$formatted_postcode . '*',
 	);
 
-	for ( $i = 0; $i < $length; $i ++ ) {
+	for ( $i = 0; $i < $length; $i++ ) {
 		$postcodes[] = ( function_exists( 'mb_substr' ) ? mb_substr( $formatted_postcode, 0, ( $i + 1 ) * -1 ) : substr( $formatted_postcode, 0, ( $i + 1 ) * -1 ) ) . '*';
 	}
 
@@ -1706,7 +1733,7 @@ function wc_get_shipping_method_count( $include_legacy = false, $enabled_only = 
 
 		foreach ( $methods as $method ) {
 			if ( isset( $method->enabled ) && 'yes' === $method->enabled && ! $method->supports( 'shipping-zones' ) ) {
-				$method_count++;
+				++$method_count;
 			}
 		}
 	}
@@ -2263,7 +2290,7 @@ function wc_get_var( &$var, $default = null ) {
  */
 function wc_enable_wc_plugin_headers( $headers ) {
 	if ( ! class_exists( 'WC_Plugin_Updates' ) ) {
-		include_once dirname( __FILE__ ) . '/admin/plugin-updates/class-wc-plugin-updates.php';
+		include_once __DIR__ . '/admin/plugin-updates/class-wc-plugin-updates.php';
 	}
 
 	// WC requires at least - allows developers to define which version of WooCommerce the plugin requires to run.
@@ -2298,7 +2325,7 @@ function wc_prevent_dangerous_auto_updates( $should_update, $plugin ) {
 	}
 
 	if ( ! class_exists( 'WC_Plugin_Updates' ) ) {
-		include_once dirname( __FILE__ ) . '/admin/plugin-updates/class-wc-plugin-updates.php';
+		include_once __DIR__ . '/admin/plugin-updates/class-wc-plugin-updates.php';
 	}
 
 	$new_version    = wc_clean( $plugin->new_version );
