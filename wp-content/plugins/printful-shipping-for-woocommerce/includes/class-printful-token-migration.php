@@ -1,106 +1,103 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-class Printful_Token_Migration
-{
-    private const MIGRATION_WAITING = '0';
-    private const MIGRATION_RUNNING = '1';
-    private const MIGRATION_FAILED = '-1';
+class Printful_Token_Migration {
 
-    private const OPTION_NAME_MIGRATION = 'pf-migration-in-progress';
+	const MIGRATION_WAITING = '0';
+	const MIGRATION_RUNNING = '1';
+	const MIGRATION_FAILED = '-1';
 
-    public static $_instance;
+	const OPTION_NAME_MIGRATION = 'pf-migration-in-progress';
 
-    private $integration;
+	public static $_instance;
 
-    public static function instance() {
-        if ( is_null( self::$_instance ) ) {
-            self::$_instance = new self();
-        }
+	private $integration;
 
-        return self::$_instance;
-    }
+	public static function instance() {
+		if ( is_null( self::$_instance ) ) {
+			self::$_instance = new self();
+		}
 
-    public function __construct() {
-        self::$_instance = $this;
+		return self::$_instance;
+	}
 
-        $this->integration = Printful_Integration::instance();
-    }
+	public function __construct() {
+		self::$_instance = $this;
 
-    public static function init() {
-        $instance = self::instance();
+		$this->integration = Printful_Integration::instance();
+	}
 
-        if ($instance->shouldMigrate()) {
-            try {
-                $instance->startMigration();
-                $instance->migrate();
-            } catch (PrintfulApiException $exception) {
-                if ($exception->isNotAuthorizedError()) {
-                    $instance->markMigrationFailed();
+	public static function init() {
+		$instance = self::instance();
 
-                    return;
-                }
+		if ($instance->shouldMigrate()) {
+			try {
+				$instance->startMigration();
+				$instance->migrate();
+			} catch (PrintfulApiException $exception) {
+				if ($exception->isNotAuthorizedError()) {
+					$instance->markMigrationFailed();
 
-                $instance->restartMigration();
-                // allow migration to silently fail
-            }
-        }
-    }
+					return;
+				}
 
-    public function shouldMigrate() {
-        $restKey = $this->integration->get_option( 'printful_key' );
-        $oauthKey = $this->integration->get_option( 'printful_oauth_key' );
+				$instance->restartMigration();
+				// allow migration to silently fail
+			}
+		}
+	}
 
-        return $restKey && !$oauthKey && !$this->isMigrationRunning() && !$this->hasMigrationFailed();
-    }
+	public function shouldMigrate() {
+		$restKey = $this->integration->get_option( 'printful_key' );
+		$oauthKey = $this->integration->get_option( 'printful_oauth_key' );
 
-    public function migrate() {
+		return $restKey && !$oauthKey && !$this->isMigrationRunning() && !$this->hasMigrationFailed();
+	}
 
-        $client = $this->integration->get_client();
+	public function migrate() {
 
-        $response = $client->post('integration-plugin/get-o-auth-credentials');
+		$client = $this->integration->get_client();
 
-        if (isset($response['token'])) {
-            $options = get_option( 'woocommerce_printful_settings', array() );
+		$response = $client->post('integration-plugin/get-o-auth-credentials');
 
-            $options['printful_oauth_key'] = $response['token'];
+		if (isset($response['token'])) {
+			$options = get_option( 'woocommerce_printful_settings', array() );
 
-            $this->integration->update_settings( $options );
+			$options['printful_oauth_key'] = $response['token'];
 
-            $oauth_client = $this->integration->get_client();
+			$this->integration->update_settings( $options );
 
-            $response = $oauth_client->post('integration-plugin/finalize-migration');
+			$oauth_client = $this->integration->get_client();
 
-            if (isset($response['status']) && $response['status'] === 1) {
-                unset($options['printful_key']);
-                $this->integration->update_settings( $options );
-            }
-        }
-    }
+			$response = $oauth_client->post('integration-plugin/finalize-migration');
 
-    protected function isMigrationRunning()
-    {
-        return get_option(self::OPTION_NAME_MIGRATION, 0) === self::MIGRATION_RUNNING;
-    }
+			if (isset($response['status']) && 1 === $response['status']) {
+				unset($options['printful_key']);
+				$this->integration->update_settings( $options );
+			}
+		}
+	}
 
-    protected function startMigration()
-    {
-        update_option(self::OPTION_NAME_MIGRATION, self::MIGRATION_RUNNING);
-    }
+	protected function isMigrationRunning() {
+		return get_option(self::OPTION_NAME_MIGRATION, 0) === self::MIGRATION_RUNNING;
+	}
 
-    protected function restartMigration()
-    {
-        update_option(self::OPTION_NAME_MIGRATION, self::MIGRATION_WAITING);
-    }
+	protected function startMigration() {
+		update_option(self::OPTION_NAME_MIGRATION, self::MIGRATION_RUNNING);
+	}
 
-    protected function markMigrationFailed()
-    {
-        update_option(self::OPTION_NAME_MIGRATION, self::MIGRATION_FAILED);
-    }
+	protected function restartMigration() {
+		update_option(self::OPTION_NAME_MIGRATION, self::MIGRATION_WAITING);
+	}
 
-    protected function hasMigrationFailed()
-    {
-        return get_option(self::OPTION_NAME_MIGRATION, 0) === self::MIGRATION_FAILED;
-    }
+	protected function markMigrationFailed() {
+		update_option(self::OPTION_NAME_MIGRATION, self::MIGRATION_FAILED);
+	}
+
+	protected function hasMigrationFailed() {
+		return get_option(self::OPTION_NAME_MIGRATION, 0) === self::MIGRATION_FAILED;
+	}
 }

@@ -1,5 +1,7 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Printful API client
@@ -7,23 +9,25 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 class Printful_Client {
 
 	private $key = false;
-    private $isOAuth = false;
+	private $isOAuth = false;
 	private $lastResponseRaw;
 	private $lastResponse;
 	private $userAgent = 'Printful WooCommerce Plugin';
 	private $apiUrl;
 
 	/**
+	 * Constructor function
+	 *
 	 * @param string $key Printful Store API key
 	 * @param bool|string $disable_ssl Force HTTP instead of HTTPS for API requests
-     * @param bool $is_oauth Should use OAuth header
+	 * @param bool $is_oauth Should use OAuth header
 	 *
 	 * @throws PrintfulException if the library failed to initialize
 	 */
 	public function __construct( $key = '', $disable_ssl = false, $is_oauth = false ) {
 
 		$key = (string) $key;
-        $this->isOAuth = (bool) $is_oauth;
+		$this->isOAuth = (bool) $is_oauth;
 
 		$this->userAgent .= ' ' . Printful_Base::VERSION . ' (WP ' . get_bloginfo( 'version' ) . ' + WC ' . WC()->version . ')';
 
@@ -43,90 +47,96 @@ class Printful_Client {
 		$this->apiUrl = Printful_Base::get_printful_api_host();
 	}
 
-    /**
-     * Returns total available item count from the last request if it supports paging (e.g order list) or null otherwise.
-     *
-     * @return int|null Item count
-     */
+	/**
+	 * Returns total available item count from the last request if it supports paging (e.g order list) or null otherwise.
+	 *
+	 * @return int|null Item count
+	 */
 	public function getItemCount() {
 		return isset( $this->lastResponse['paging']['total'] ) ? $this->lastResponse['paging']['total'] : null;
 	}
 
-    /**
-     * Perform a GET request to the API
-     * @param string $path Request path (e.g. 'orders' or 'orders/123')
-     * @param array $params Additional GET parameters as an associative array
-     * @return mixed API response
-     * @throws PrintfulApiException if the API call status code is not in the 2xx range
-     * @throws PrintfulException if the API call has failed or the response is invalid
-     */
+	/**
+	 * Perform a GET request to the API
+	 *
+	 * @param string $path Request path (e.g. 'orders' or 'orders/123')
+	 * @param array $params Additional GET parameters as an associative array
+	 * @return mixed API response
+	 * @throws PrintfulApiException if the API call status code is not in the 2xx range
+	 * @throws PrintfulException if the API call has failed or the response is invalid
+	 */
 	public function get( $path, $params = array() ) {
 		return $this->request( 'GET', $path, $params );
 	}
 
-    /**
-     * Perform a DELETE request to the API
-     * @param string $path Request path (e.g. 'orders' or 'orders/123')
-     * @param array $params Additional GET parameters as an associative array
-     * @return mixed API response
-     * @throws PrintfulApiException if the API call status code is not in the 2xx range
-     * @throws PrintfulException if the API call has failed or the response is invalid
-     */
+	/**
+	 * Perform a DELETE request to the API
+	 *
+	 * @param string $path Request path (e.g. 'orders' or 'orders/123')
+	 * @param array $params Additional GET parameters as an associative array
+	 * @return mixed API response
+	 * @throws PrintfulApiException if the API call status code is not in the 2xx range
+	 * @throws PrintfulException if the API call has failed or the response is invalid
+	 */
 	public function delete( $path, $params = array() ) {
 		return $this->request( 'DELETE', $path, $params );
 	}
 
-    /**
-     * Perform a POST request to the API
-     * @param string $path Request path (e.g. 'orders' or 'orders/123')
-     * @param array $data Request body data as an associative array
-     * @param array $params Additional GET parameters as an associative array
-     * @return mixed API response
-     * @throws PrintfulApiException if the API call status code is not in the 2xx range
-     * @throws PrintfulException if the API call has failed or the response is invalid
-     */
+	/**
+	 * Perform a POST request to the API
+	 *
+	 * @param string $path Request path (e.g. 'orders' or 'orders/123')
+	 * @param array $data Request body data as an associative array
+	 * @param array $params Additional GET parameters as an associative array
+	 * @return mixed API response
+	 * @throws PrintfulApiException if the API call status code is not in the 2xx range
+	 * @throws PrintfulException if the API call has failed or the response is invalid
+	 */
 	public function post( $path, $data = array(), $params = array() ) {
 		return $this->request( 'POST', $path, $params, $data );
 	}
-    /**
-     * Perform a PUT request to the API
-     * @param string $path Request path (e.g. 'orders' or 'orders/123')
-     * @param array $data Request body data as an associative array
-     * @param array $params Additional GET parameters as an associative array
-     * @return mixed API response
-     * @throws PrintfulApiException if the API call status code is not in the 2xx range
-     * @throws PrintfulException if the API call has failed or the response is invalid
-     */
+	/**
+	 * Perform a PUT request to the API
+	 *
+	 * @param string $path Request path (e.g. 'orders' or 'orders/123')
+	 * @param array $data Request body data as an associative array
+	 * @param array $params Additional GET parameters as an associative array
+	 * @return mixed API response
+	 * @throws PrintfulApiException if the API call status code is not in the 2xx range
+	 * @throws PrintfulException if the API call has failed or the response is invalid
+	 */
 	public function put( $path, $data = array(), $params = array() ) {
 		return $this->request( 'PUT', $path, $params, $data );
 	}
 
 
-    /**
-     * Perform a PATCH request to the API
-     * @param string $path Request path
-     * @param array $data Request body data as an associative array
-     * @param array $params
-     * @return mixed API response
-     * @throws PrintfulApiException if the API call status code is not in the 2xx range
-     * @throws PrintfulException if the API call has failed or the response is invalid
-     */
-    public function patch( $path, $data = array(), $params = array() )
-    {
-        return $this->request( 'PATCH', $path, $params, $data );
-    }
+	/**
+	 * Perform a PATCH request to the API
+	 *
+	 * @param string $path Request path
+	 * @param array $data Request body data as an associative array
+	 * @param array $params
+	 * @return mixed API response
+	 * @throws PrintfulApiException if the API call status code is not in the 2xx range
+	 * @throws PrintfulException if the API call has failed or the response is invalid
+	 */
+	public function patch( $path, $data = array(), $params = array() ) {
+		return $this->request( 'PATCH', $path, $params, $data );
+	}
 
-    /**
-     * Return raw response data from the last request
-     * @return string|null Response data
-     */
+	/**
+	 * Return raw response data from the last request
+	 *
+	 * @return string|null Response data
+	 */
 	public function getLastResponseRaw() {
 		return $this->lastResponseRaw;
 	}
-    /**
-     * Return decoded response data from the last request
-     * @return array|null Response data
-     */
+	/**
+	 * Return decoded response data from the last request
+	 *
+	 * @return array|null Response data
+	 */
 	public function getLastResponse() {
 		return $this->lastResponse;
 	}
@@ -154,50 +164,42 @@ class Printful_Client {
 			$url .= '?' . http_build_query( $params );
 		}
 
-        $authHeader = $this->isOAuth
-            ? 'Bearer ' . $this->key
-            : 'Basic ' . base64_encode( $this->key );
+		$authHeader = $this->isOAuth
+			? 'Bearer ' . $this->key
+			: 'Basic ' . base64_encode( $this->key );
 
 		$request = array(
 			'timeout'    => 10,
 			'user-agent' => $this->userAgent,
 			'method'     => $method,
 			'headers'    => array( 'Authorization' => $authHeader ),
-			'body'       => $data !== null ? json_encode( $data ) : null,
+			'body'       => null !== $data ? json_encode( $data ) : null,
 		);
 
 		$result = wp_remote_get( $this->apiUrl . $url, $request );
 
-		//allow other methods to hook in on the api result
+		/**
+		 * Allow other methods to hook in on the API result.
+		 *
+		 * @since 1.0.0
+		 */
 		$result = apply_filters( 'printful_api_result', $result, $method, $this->apiUrl . $url, $request );
 
 		if ( is_wp_error( $result ) ) {
-			throw new PrintfulException( "API request failed - " . $result->get_error_message() );
+			throw new PrintfulException( 'API request failed - ' . esc_html($result->get_error_message()) );
 		}
 		$this->lastResponseRaw = $result['body'];
-		$this->lastResponse    = $response = json_decode( $result['body'], true );
+		$response = json_decode( $result['body'], true );
+		$this->lastResponse    = $response;
 
 		if ( ! isset( $response['code'], $response['result'] ) ) {
 			throw new PrintfulException( 'Invalid API response' );
 		}
 		$status = (int) $response['code'];
 		if ( $status < 200 || $status >= 300 ) {
-			throw new PrintfulApiException( (string) $response['result'], $status );
+			throw new PrintfulApiException(  $response['result'], esc_html($status));
 		}
 
 		return $response['result'];
 	}
-}
-
-/**
- * Class PrintfulException Generic Printful exception
- */
-class PrintfulException extends Exception {}
-/**
- * Class PrintfulException Printful exception returned from the API
- */
-class PrintfulApiException extends PrintfulException {
-    public function isNotAuthorizedError() {
-        return $this->getCode() === 401;
-    }
 }

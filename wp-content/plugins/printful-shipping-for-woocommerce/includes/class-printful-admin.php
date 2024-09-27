@@ -1,5 +1,7 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 class Printful_Admin {
 
@@ -10,53 +12,55 @@ class Printful_Admin {
 	const CAPABILITY = 'manage_options';
 
 	public static function init() {
-		$admin = new self;
+		$admin = new self();
 		$admin->register_admin();
 	}
 
-    /**
-     * Register admin scripts
-     */
+	/**
+	 * Register admin scripts
+	 */
 	public function register_admin() {
 
 		add_action( 'admin_menu', array( $this, 'register_admin_menu_page' ) );
-        add_action( 'admin_enqueue_scripts', array( $this, 'add_admin_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'add_admin_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'add_admin_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'add_global_style' ) );
 		add_action( 'admin_bar_menu', array( $this, 'add_printful_status_toolbar' ), 999 );
-    }
+	}
 
-    /**
-     * Loads stylesheets used in printful admin pages
-     * @param $hook
-     */
-    public function add_admin_styles($hook) {
+	/**
+	 * Loads stylesheets used in printful admin pages
+	 *
+	 * @param $hook
+	 */
+	public function add_admin_styles( $hook ) {
 
-	    wp_enqueue_style( 'printful-global', plugins_url( '../assets/css/global.css', __FILE__ ) );
+		wp_enqueue_style( 'printful-global', plugins_url( '../assets/css/global.css', __FILE__ ) );
 
-	    if ( strpos( $hook, 'printful-dashboard' ) !== false ) {
-		    wp_enqueue_style( 'wp-color-picker' );
-		    wp_enqueue_style( 'printful-dashboard', plugins_url( '../assets/css/dashboard.css', __FILE__ ) );
-		    wp_enqueue_style( 'printful-status', plugins_url( '../assets/css/status.css', __FILE__ ) );
-		    wp_enqueue_style( 'printful-support', plugins_url( '../assets/css/support.css', __FILE__ ) );
-		    wp_enqueue_style( 'printful-settings', plugins_url( '../assets/css/settings.css', __FILE__ ) );
-	    }
-    }
+		if ( strpos( $hook, 'printful-dashboard' ) !== false ) {
+			wp_enqueue_style( 'wp-color-picker' );
+			wp_enqueue_style( 'printful-dashboard', plugins_url( '../assets/css/dashboard.css', __FILE__ ) );
+			wp_enqueue_style( 'printful-status', plugins_url( '../assets/css/status.css', __FILE__ ) );
+			wp_enqueue_style( 'printful-support', plugins_url( '../assets/css/support.css', __FILE__ ) );
+			wp_enqueue_style( 'printful-settings', plugins_url( '../assets/css/settings.css', __FILE__ ) );
+		}
+	}
 
 	/**
 	 * Loads stylesheet for printful toolbar element
 	 */
-    public function add_global_style() {
-	    if ( is_user_logged_in() ) {
-		    wp_enqueue_style( 'printful-global', plugins_url( '../assets/css/global.css', __FILE__ ) );
-	    }
-    }
+	public function add_global_style() {
+		if ( is_user_logged_in() ) {
+			wp_enqueue_style( 'printful-global', plugins_url( '../assets/css/global.css', __FILE__ ) );
+		}
+	}
 
 	/**
 	 * Loads scripts used in printful admin pages
+	 *
 	 * @param $hook
 	 */
-	public function add_admin_scripts($hook) {
+	public function add_admin_scripts( $hook ) {
 		if ( strpos( $hook, 'printful-dashboard' ) !== false ) {
 			wp_enqueue_script( 'wp-color-picker' );
 			wp_enqueue_script( 'printful-settings', plugins_url( '../assets/js/settings.js', __FILE__ ) );
@@ -66,9 +70,9 @@ class Printful_Admin {
 		}
 	}
 
-    /**
-     * Register admin menu pages
-     */
+	/**
+	 * Register admin menu pages
+	 */
 	public function register_admin_menu_page() {
 
 		add_menu_page(
@@ -94,17 +98,18 @@ class Printful_Admin {
 			'support'   => 'Printful_Admin_Support',
 		);
 
-		$tab = ( ! empty( $_GET['tab'] ) ? $_GET['tab'] : 'dashboard' );
+		$tab = ( ! empty( $_GET['tab'] ) ? sanitize_text_field($_GET['tab']) : 'dashboard' );
 		if ( ! empty( $tabs[ $tab ] ) ) {
 			call_user_func( array( $tabs[ $tab ], 'view' ) );
 		}
 	}
 
-    /**
-     * Get the tabs used in printful admin pages
-     * @return array
-     * @throws PrintfulException
-     */
+	/**
+	 * Get the tabs used in printful admin pages
+	 *
+	 * @return array
+	 * @throws PrintfulException
+	 */
 	public static function get_tabs() {
 
 		$tabs = array(
@@ -124,6 +129,7 @@ class Printful_Admin {
 
 	/**
 	 * Create the printful toolbar
+	 *
 	 * @param $wp_admin_bar
 	 */
 	public function add_printful_status_toolbar( $wp_admin_bar ) {
@@ -135,7 +141,7 @@ class Printful_Admin {
 			$args = array(
 				'id'    => 'printful_toolbar',
 				'title' => 'Printful Integration' . ( $issueCount > 0 ? ' <span class="printful-toolbar-issues">' . esc_attr( $issueCount ) . '</span>' : '' ),
-				'href'  => get_admin_url( null, 'admin.php?page=' . Printful_Admin::MENU_SLUG_DASHBOARD ),
+				'href'  => get_admin_url( null, 'admin.php?page=' . self::MENU_SLUG_DASHBOARD ),
 				'meta'  => array( 'class' => 'printful-toolbar' ),
 			);
 			$wp_admin_bar->add_node( $args );
@@ -145,7 +151,7 @@ class Printful_Admin {
 				'id'     => 'printful_toolbar_status',
 				'parent' => 'printful_toolbar',
 				'title'  => 'Integration status' . ( $issueCount > 0 ? ' (' . esc_attr( $issueCount ) . _n( ' issue', ' issues', $issueCount ) . ')' : '' ),
-				'href'   => get_admin_url( null, 'admin.php?page=' . Printful_Admin::MENU_SLUG_DASHBOARD . '&tab=status' ),
+				'href'   => get_admin_url( null, 'admin.php?page=' . self::MENU_SLUG_DASHBOARD . '&tab=status' ),
 				'meta'   => array( 'class' => 'printful-toolbar-status' ),
 			);
 			$wp_admin_bar->add_node( $args );
@@ -154,25 +160,26 @@ class Printful_Admin {
 
 	/**
 	 * Load a template file. Extract any variables that are passed
+	 *
 	 * @param $name
 	 * @param array $variables
 	 */
 	public static function load_template( $name, $variables = array() ) {
+        $name = sanitize_file_name( $name );
 
-		if ( ! empty( $variables ) ) {
-			extract( $variables );
-		}
+        if ( ! empty( $variables ) ) {
+            extract( $variables );
+        }
 
-		$filename = plugin_dir_path( __FILE__ ) . 'templates/' . $name . '.php';
-		if ( file_exists( $filename ) ) {
-			include( $filename );
-		}
+        $filename = plugin_dir_path( __FILE__ ) . 'templates/' . $name . '.php';
+        if ( file_exists( $filename ) ) {
+            include $filename ;
+        }
 	}
 
-    public static function validateAdminAccess() {
-        if ( !current_user_can('manage_options') ) {
-            exit;
-        }
-    }
-
+	public static function validateAdminAccess() {
+		if ( !current_user_can('manage_options') ) {
+			exit;
+		}
+	}
 }

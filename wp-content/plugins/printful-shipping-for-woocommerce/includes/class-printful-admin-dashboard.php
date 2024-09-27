@@ -1,5 +1,7 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 class Printful_Admin_Dashboard {
 
@@ -8,6 +10,8 @@ class Printful_Admin_Dashboard {
 	public static $_instance;
 
 	/**
+	 * Instance.
+	 *
 	 * @return Printful_Admin_Dashboard
 	 */
 	public static function instance() {
@@ -22,14 +26,14 @@ class Printful_Admin_Dashboard {
 	/**
 	 * Printful_Admin_Dashboard constructor.
 	 */
-	function __construct() {
-
+	public function __construct() {
 	}
 
-    /**
-     * Show the view
-     * @throws PrintfulException
-     */
+	/**
+	 * Show the view
+	 *
+	 * @throws PrintfulException
+	 */
 	public static function view() {
 
 		$dashboard = self::instance();
@@ -38,7 +42,7 @@ class Printful_Admin_Dashboard {
 
 		if ( $connect_status ) {
 			$dashboard->render_dashboard();
-		} else if(!$connect_status && strlen($api_key) > 0) {
+		} else if (!$connect_status && strlen($api_key) > 0) {
 			$dashboard->render_connect_error();
 		} else {
 			$dashboard->render_connect();
@@ -55,7 +59,7 @@ class Printful_Admin_Dashboard {
 
 		$permalinks_set = $status->run_single_test( 'check_permalinks' );
 
-		if ( $permalinks_set == Printful_Admin_Status::PF_STATUS_FAIL ) {
+		if ( Printful_Admin_Status::PF_STATUS_FAIL == $permalinks_set) {
 			$message      = 'WooCommerce API will not work unless your permalinks are set up correctly. Go to <a href="%s">Permalinks settings</a> and make sure that they are NOT set to "plain".';
 			$settings_url = admin_url( 'options-permalink.php' );
 			$issues[]     = sprintf( $message, $settings_url );
@@ -92,7 +96,7 @@ class Printful_Admin_Dashboard {
 
 		$connect_error = Printful_Integration::instance()->get_connect_error();
 		if ( $connect_error ) {
-			Printful_Admin::load_template('error', array('error' => $connect_error));
+			Printful_Admin::load_template('error', array( 'error' => $connect_error ));
 		}
 
 		Printful_Admin::load_template('footer');
@@ -117,7 +121,6 @@ class Printful_Admin_Dashboard {
 		}
 
 		if ( ! $error ) {
-
 			if ( $stats ) {
 				Printful_Admin::load_template( 'stats', array( 'stats' => $stats ) );
 			} else {
@@ -151,7 +154,7 @@ class Printful_Admin_Dashboard {
 
 		Printful_Admin::validateAdminAccess();
 
-        check_admin_referer( 'get_printful_stats' );
+		check_admin_referer( 'get_printful_stats' );
 
 		$stats = self::instance()->_get_stats();
 
@@ -171,7 +174,7 @@ class Printful_Admin_Dashboard {
 
 		Printful_Admin::validateAdminAccess();
 
-        check_admin_referer( 'get_printful_orders' );
+		check_admin_referer( 'get_printful_orders' );
 
 		$orders = self::instance()->_get_orders();
 
@@ -186,10 +189,11 @@ class Printful_Admin_Dashboard {
 
 	/**
 	 * Get store statistics from API
+	 *
 	 * @param bool $only_cached_results
 	 * @return mixed
 	 */
-	private function _get_stats($only_cached_results = false) {
+	private function _get_stats( $only_cached_results = false ) {
 
 		$stats = get_transient( 'printful_stats' );
 		if ( $only_cached_results || $stats ) {
@@ -213,10 +217,11 @@ class Printful_Admin_Dashboard {
 
 	/**
 	 * Get Printful orders from the API
+	 *
 	 * @param bool $only_cached_results
 	 * @return mixed
 	 */
-	private function _get_orders($only_cached_results = false) {
+	private function _get_orders( $only_cached_results = false ) {
 
 		$orders = get_transient( 'printful_orders' );
 
@@ -231,7 +236,7 @@ class Printful_Admin_Dashboard {
 
 				foreach ( $order_data as $key => $order ) {
 
-					if($order['status'] == 'pending') {
+					if ( 'pending' == $order['status'] ) {
 						$order_data[$key]['status'] = 'Waiting for fulfillment';
 					}
 				}
@@ -248,15 +253,15 @@ class Printful_Admin_Dashboard {
 		return $orders;
 	}
 
-	public function get_connect_url()
-	{
+	public function get_connect_url() {
 		$consumer_key = $this->_get_consumer_key();
 
-		return Printful_Base::get_printful_host() . 'integration-callback/woocommerce/connect?website=' . urlencode( trailingslashit( get_home_url() ) ) . '&key=' . urlencode( $consumer_key ) . '&returnUrl=' . urlencode( get_admin_url( null,'admin.php?page=' . Printful_Admin::MENU_SLUG_DASHBOARD ) );
+		return Printful_Base::get_printful_host() . 'integration-callback/woocommerce/connect?website=' . urlencode( trailingslashit( get_home_url() ) ) . '&key=' . urlencode( $consumer_key ) . '&returnUrl=' . urlencode( get_admin_url( null, 'admin.php?page=' . Printful_Admin::MENU_SLUG_DASHBOARD ) );
 	}
 
 	/**
 	 * Get the last used consumer key fragment and use it for validating the address
+	 *
 	 * @return null|string
 	 */
 	private function _get_consumer_key() {
@@ -264,22 +269,21 @@ class Printful_Admin_Dashboard {
 		global $wpdb;
 
 		// Get the API key
-        $printfulKey = '%' . esc_sql( $wpdb->esc_like( wc_clean( self::API_KEY_SEARCH_STRING ) ) ) . '%';
-        $consumer_key = $wpdb->get_var(
-            $wpdb->prepare(
-                "SELECT truncated_key FROM {$wpdb->prefix}woocommerce_api_keys WHERE description LIKE %s ORDER BY key_id DESC LIMIT 1",
-                $printfulKey
-            )
-        );
+		$printfulKey = '%' . esc_sql( $wpdb->esc_like( wc_clean( self::API_KEY_SEARCH_STRING ) ) ) . '%';
+		$consumer_key = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT truncated_key FROM {$wpdb->prefix}woocommerce_api_keys WHERE description LIKE %s ORDER BY key_id DESC LIMIT 1",
+				$printfulKey
+			)
+		);
 
 		//if not found by description, it was probably manually created. try the last used key instead
 		if ( ! $consumer_key ) {
 			$consumer_key = $wpdb->get_var(
-			    "SELECT truncated_key FROM {$wpdb->prefix}woocommerce_api_keys ORDER BY key_id DESC LIMIT 1"
-            );
+				"SELECT truncated_key FROM {$wpdb->prefix}woocommerce_api_keys ORDER BY key_id DESC LIMIT 1"
+			);
 		}
 
 		return $consumer_key;
 	}
-
 }

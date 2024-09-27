@@ -23,32 +23,32 @@
 	</thead>
 	<tbody>
 	<?php
-	foreach ( $checklist['items'] as $item ) : ?>
+	foreach ( $checklist['items'] as $item ) :
+		?>
 		<tr>
 			<td><?php echo esc_html( $item['name'] ); ?></td>
 			<td><?php echo esc_html( $item['description'] ); ?></td>
 			<td>
 				<?php
-				$status = 'OK';
-				if ( $item['status'] == 1 ) {
-					echo '<span class="pass">' . esc_html__('OK', 'printful') .'</span>';
-				} else if ( $item['status'] == 0 ) {
-					echo '<span class="warning">' . esc_html__('WARNING', 'printful') .'&#42;</span>';
-				} else if ( $item['status'] == 2 ) {
-                    echo '<span class="fail">' . esc_html__('NOT CONNECTED', 'printful') .'</span>';
-                } else {
-					echo '<span class="fail">' . esc_html__('FAIL', 'printful') .'</span>';
+				if ( 1 == $item['status'] ) {
+					echo '<span class="pass">' . esc_html__('OK', 'printful') . '</span>';
+				} else if ( 0 == $item['status']) {
+					echo '<span class="warning">' . esc_html__('WARNING', 'printful') . '&#42;</span>';
+				} else if ( 2 == $item['status'] ) {
+					echo '<span class="fail">' . esc_html__('NOT CONNECTED', 'printful') . '</span>';
+				} else {
+					echo '<span class="fail">' . esc_html__('FAIL', 'printful') . '</span>';
 				}
 				?>
-            </td>
+			</td>
 		</tr>
 	<?php endforeach; ?>
 	</tbody>
 	<tfoot>
 	<tr>
-        <td class="col-name"><?php esc_html_e('Name', 'printful'); ?></td>
-        <td class="col-desc"><?php esc_html_e('Description', 'printful'); ?></td>
-        <td class="col-status"><?php esc_html_e('Status', 'printful'); ?></td>
+		<td class="col-name"><?php esc_html_e('Name', 'printful'); ?></td>
+		<td class="col-desc"><?php esc_html_e('Description', 'printful'); ?></td>
+		<td class="col-status"><?php esc_html_e('Status', 'printful'); ?></td>
 	</tr>
 	</tfoot>
 </table>

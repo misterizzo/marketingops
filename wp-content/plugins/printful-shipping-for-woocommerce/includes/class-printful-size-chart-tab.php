@@ -1,5 +1,7 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 class Printful_Size_Chart_Tab {
 
@@ -14,7 +16,7 @@ class Printful_Size_Chart_Tab {
 	 * Printful_Size_Chart_Tab constructor.
 	 */
 	public static function init() {
-		$size_chart = new self;
+		$size_chart = new self();
 		add_filter( 'woocommerce_product_tabs', array( $size_chart, 'init_size_chart_tab' ) );
 		add_action( 'add_meta_boxes', array( $size_chart, 'init_metabox' ) );
 		add_action( 'save_post', array( $size_chart, 'save_size_chart' ), 1, 2 );
@@ -33,6 +35,8 @@ class Printful_Size_Chart_Tab {
 	}
 
 	/**
+	 * Initialize size chart tab.
+	 *
 	 * @param $tabs
 	 *
 	 * @return mixed
@@ -54,19 +58,23 @@ class Printful_Size_Chart_Tab {
 	 */
 	public function size_chart_tab_content() {
 		echo '<h2>' . esc_html__( 'Size Chart', 'printful' ) . '</h2>';
-		echo $this->get_size_chart_content();
+		echo esc_html($this->get_size_chart_content());
 	}
 
 	/**
+	 * Get size chart content.
+	 *
 	 * @return mixed
 	 */
 	public function get_size_chart_content() {
 		global $post;
 
-		return htmlspecialchars_decode(get_post_meta( $post->ID, 'pf_size_chart', true ));
-	}
+        return htmlspecialchars_decode(get_post_meta( $post->ID, 'pf_size_chart', true ), ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401);
+    }
 
 	/**
+	 * Get size chart metabox.
+	 *
 	 * @param $meta_id
 	 */
 	public function size_chart_metabox( $meta_id ) {
@@ -80,12 +88,21 @@ class Printful_Size_Chart_Tab {
 		);
 
 		$content = get_post_meta( $meta_id->ID, 'pf_size_chart', true );
-
-		wp_editor( htmlspecialchars_decode( $content ), 'pf_size_chart_editor', apply_filters( 'woocommerce_product_short_description_editor_settings', $settings ) );
+		/**
+		 * Filters the editor settings for the WooCommerce product short description editor.
+		 *
+		 * @since 2.2.8 Introduced.
+		 *
+		 * @param array $settings The editor settings.
+		 */
+        wp_editor( htmlspecialchars_decode( $content,ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401  ), 'pf_size_chart_editor', apply_filters( 'woocommerce_product_short_description_editor_settings', $settings ) );
 	}
 
 	/**
+	 * Save size chart.
+	 *
 	 * @param $post_id
+	 *
 	 * @param $post
 	 */
 	public function save_size_chart( $post_id, $post ) {
@@ -101,9 +118,12 @@ class Printful_Size_Chart_Tab {
 		}
 
 		// Check the nonce
-		if ( empty( $_POST['woocommerce_meta_nonce'] ) || ! wp_verify_nonce( $_POST['woocommerce_meta_nonce'], 'woocommerce_save_data' ) ) {
+		$woocommerce_meta_nonce = isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( $_POST['woocommerce_meta_nonce'] ) : '';
+
+		if ( empty( $woocommerce_meta_nonce ) || ! wp_verify_nonce( $woocommerce_meta_nonce, 'woocommerce_save_data' ) ) {
 			return;
 		}
+
 
 		// Check the post being saved == the $post_id to prevent triggering this call for other save_post events
 		if ( empty( $_POST['post_ID'] ) || $_POST['post_ID'] != $post_id ) {
@@ -116,7 +136,7 @@ class Printful_Size_Chart_Tab {
 		}
 
 		// Check the post type
-		if ( $post->post_type != 'product' ) {
+		if ( 'product' != $post->post_type ) {
 			return;
 		}
 
@@ -124,8 +144,9 @@ class Printful_Size_Chart_Tab {
 		self::$saved_meta_boxes = true;
 
 		//save
-        if (!empty($_POST['pf_size_chart'])) {
-            update_post_meta($post_id, 'pf_size_chart', htmlspecialchars($_POST['pf_size_chart']));
-        }
+		if (!empty($_POST['pf_size_chart'])) {
+			$pf_size_chart = sanitize_textarea_field($_POST['pf_size_chart']);
+            update_post_meta($post_id, 'pf_size_chart', htmlspecialchars($pf_size_chart, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401));
+		}
 	}
 }

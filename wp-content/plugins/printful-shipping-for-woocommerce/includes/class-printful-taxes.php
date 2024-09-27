@@ -1,5 +1,7 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 class Printful_Taxes {
 
@@ -17,12 +19,14 @@ class Printful_Taxes {
 			}
 
 			//Override tax rates calculated by Woocommerce
-			$taxes = new self;
+			$taxes = new self();
 			add_filter( 'woocommerce_matched_tax_rates', array( $taxes, 'calculate_tax' ), 10, 6 );
 		}
 	}
 
 	/**
+	 * Calculae tax.
+	 *
 	 * @param $matched_tax_rates
 	 * @param $country
 	 * @param $state
@@ -44,7 +48,7 @@ class Printful_Taxes {
 			$rate = get_transient( $key );
 			$response = null;
 
-			if ( $rate === false ) {
+			if ( false === $rate ) {
 				try {
 					$client   = Printful_Integration::instance()->get_client();
 					$response = $client->post( 'tax/rates', array(
@@ -56,6 +60,7 @@ class Printful_Taxes {
 						),
 					) );
 				} catch ( Exception $e ) {
+					return false;
 				}
 
 				if ( isset( $response['rate'] ) ) {
@@ -112,6 +117,7 @@ class Printful_Taxes {
 
 	/**
 	 * Gets list of countries and states where Printful needs to calculate sales tax
+	 *
 	 * @return array|mixed
 	 */
 	private function get_tax_countries() {
@@ -167,7 +173,7 @@ class Printful_Taxes {
 			) );
 		if ( empty( $id ) ) {
 			$wpdb->insert(
-				$wpdb->prefix . "woocommerce_tax_rates",
+				$wpdb->prefix . 'woocommerce_tax_rates',
 				array(
 					'tax_rate_country'  => $cc,
 					'tax_rate_state'    => $state,
@@ -184,6 +190,4 @@ class Printful_Taxes {
 
 		return $id;
 	}
-
-
 }

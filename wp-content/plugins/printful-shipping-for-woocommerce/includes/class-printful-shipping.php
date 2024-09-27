@@ -1,26 +1,28 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-class Printful_Shipping extends WC_Shipping_Method
-{
-    public $show_warnings = false;
-    public $calculate_tax = false;
-    public $override_defaults = true;
-    private $last_error = false;
+class Printful_Shipping extends WC_Shipping_Method {
 
-    const PRINTFUL_SHIPPING = 'printful_shipping';
+	public $show_warnings = false;
+	public $calculate_tax = false;
+	public $override_defaults = true;
+	private $last_error = false;
 
-    //Store whether currently processed package contains Printful products (for WC<2.6)
-    private $printful_package = true;
+	const PRINTFUL_SHIPPING = 'printful_shipping';
 
-    public static function init() {
-    	new self;
-    }
+	//Store whether currently processed package contains Printful products (for WC<2.6)
+	private $printful_package = true;
+
+	public static function init() {
+		new self();
+	}
 
 	public function __construct() {
-
+		$this->title = 'Printful Shipping';
+		$this->method_title       = 'Printful Shipping';
 		$this->id                 = 'printful_shipping';
-		$this->method_title       = $this->title = 'Printful Shipping';
 		$this->method_description = 'Calculate live shipping rates based on actual Printful shipping costs.';
 
 		$this->init_form_fields();
@@ -79,6 +81,7 @@ class Printful_Shipping extends WC_Shipping_Method
 
 	/**
 	 * Enable only Printful shipping method for Printful packages
+	 *
 	 * @param array $package
 	 */
 	public function woocommerce_load_shipping_methods( $package = array() ) {
@@ -86,7 +89,7 @@ class Printful_Shipping extends WC_Shipping_Method
 		$this->printful_package = false;
 
 		if ( $package && ! empty( $package['printful'] ) ) {
-			if ( $this->enabled == 'yes' ) {
+			if ( 'yes' === $this->enabled ) {
 				$this->printful_package = true;
 				if ( $this->override_defaults ) {
 					//Remove default methods if we process Printful package
@@ -102,6 +105,7 @@ class Printful_Shipping extends WC_Shipping_Method
 
 	/**
 	 * Remove non-Printful methods for Printful packages on WC < 2.6
+	 *
 	 * @param $methods
 	 *
 	 * @return array
@@ -119,13 +123,14 @@ class Printful_Shipping extends WC_Shipping_Method
 
 	/**
 	 * Split Printul products to a separate package if there are any
+	 *
 	 * @param array $packages
 	 *
 	 * @return array
 	 */
 	public function woocommerce_cart_shipping_packages( $packages = array() ) {
 		//Printful rates are turned off, do not split products
-		if ( $this->enabled !== 'yes' ) {
+		if ( 'yes' !== $this->enabled ) {
 			return $packages;
 		}
 
@@ -205,7 +210,7 @@ class Printful_Shipping extends WC_Shipping_Method
 							}
 						}
 					}
-					if ( $key == 'printful' ) {
+					if ( 'printful' == $key ) {
 						$new_package['printful'] = true;
 					}
 					$return_packages[] = $new_package;
@@ -217,6 +222,8 @@ class Printful_Shipping extends WC_Shipping_Method
 	}
 
 	/**
+	 * Calculate shipping.
+	 *
 	 * @param array $package
 	 *
 	 * @return bool
@@ -233,16 +240,16 @@ class Printful_Shipping extends WC_Shipping_Method
 			),
 			'items'     => array(),
 			'currency'  => get_woocommerce_currency(),
-            'locale'    => get_locale()
+			'locale'    => get_locale(),
 		);
 
-        if (class_exists('WOOCS')) {
-            global $WOOCS;
-            $request['currency'] = $WOOCS->default_currency;
-        }
+		if (class_exists('WOOCS')) {
+			global $WOOCS;
+			$request['currency'] = $WOOCS->default_currency;
+		}
 
-		if ( $request['recipient']['country_code'] == 'US' &&
-		     ( empty( $request['recipient']['state_code'] ) )
+		if ( 'US' == $request['recipient']['country_code'] &&
+			( empty( $request['recipient']['state_code'] ) )
 		) {
 			return false;
 		}
@@ -273,10 +280,10 @@ class Printful_Shipping extends WC_Shipping_Method
 		try {
 			$key      = 'printful_rates_' . md5( json_encode( $request ) );
 			$response = get_transient( $key );
-			if ( $response === false ) {
+			if ( false === $response ) {
 				$response = $client->post( 'shipping/rates', $request, array(
 					'expedited' => true,
-                    'is_billing_phone_number_mandatory' => $this->isBillingPhoneNumberRequired(),
+					'is_billing_phone_number_mandatory' => $this->isBillingPhoneNumberRequired(),
 				) );
 				//Cache locally, since WC < 2.6 had problems with caching rates form multiple packages internally
 				set_transient( $key, $response, 1800 );
@@ -284,20 +291,20 @@ class Printful_Shipping extends WC_Shipping_Method
 
 			foreach ( $response as $rate ) {
 				$rateData = array(
-                    'id'       => $this->id . '_' . $rate['id'],
+					'id'       => $this->id . '_' . $rate['id'],
 					'label'    => $rate['name'],
 					'cost'     => $rate['rate'],
 					'calc_tax' => 'per_order',
 				);
 
 				// Before 3.4.0 rate could be passed as ID, after it's set as method_id which refers to class ID
-                if ( version_compare( WC()->version, '3.4.0', '>=' ) ) {
-				    $this->id = self::PRINTFUL_SHIPPING . '_' . $rate['id'];
-                }
+				if ( version_compare( WC()->version, '3.4.0', '>=' ) ) {
+					$this->id = self::PRINTFUL_SHIPPING . '_' . $rate['id'];
+				}
 
 				$this->add_rate( $rateData );
-                // Reset class ID after adding rate so ID name does not stack as huge string in foreach
-                $this->id = self::PRINTFUL_SHIPPING;
+				// Reset class ID after adding rate so ID name does not stack as huge string in foreach
+				$this->id = self::PRINTFUL_SHIPPING;
 			}
 		} catch ( PrintfulException $e ) {
 			$this->set_error( $e );
@@ -308,6 +315,8 @@ class Printful_Shipping extends WC_Shipping_Method
 	}
 
 	/**
+	 * Set error.
+	 *
 	 * @param $error
 	 */
 	private function set_error( $error ) {
@@ -319,6 +328,8 @@ class Printful_Shipping extends WC_Shipping_Method
 	}
 
 	/**
+	 * Show error.
+	 *
 	 * @param $data
 	 *
 	 * @return string
@@ -331,11 +342,10 @@ class Printful_Shipping extends WC_Shipping_Method
 			$message = 'Invalid API key';
 		}
 
-		return '<p>ERROR: ' . htmlspecialchars( $message ) . '</p>';
-	}
-
-    private function isBillingPhoneNumberRequired()
-    {
-        return get_option('woocommerce_checkout_phone_field', 'required') === 'required';
+        return '<p>ERROR: ' . htmlspecialchars($message, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401) . '</p>';
     }
+
+	private function isBillingPhoneNumberRequired() {
+		return get_option('woocommerce_checkout_phone_field', 'required') === 'required';
+	}
 }

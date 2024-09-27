@@ -1,5 +1,7 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 class Printful_Carriers {
 
@@ -22,6 +24,7 @@ class Printful_Carriers {
 
 	/**
 	 * Get carrier data
+	 *
 	 * @return mixed
 	 */
 	public function get_carriers() {
@@ -35,12 +38,13 @@ class Printful_Carriers {
 
 	/**
 	 * Refresh carrier data from Printful
+	 *
 	 * @return mixed
 	 */
 	public function refresh_carriers() {
 
 		try {
-            $carriers = Printful_Integration::instance()->get_client()->get( 'store/get-shipping-methods' );
+			$carriers = Printful_Integration::instance()->get_client()->get( 'store/get-shipping-methods' );
 			$this->update_carrier_cache( $carriers );
 		} catch (PrintfulApiException $e) {
 			$carriers = array();
@@ -53,25 +57,27 @@ class Printful_Carriers {
 
 	/**
 	 * Update carrier transient
+	 *
 	 * @param $carriers
 	 */
-	public function update_carrier_cache($carriers) {
+	public function update_carrier_cache( $carriers ) {
 
-		set_transient( 'printful_carriers', $carriers,  MINUTE_IN_SECONDS * 5);    //5mins
+		set_transient( 'printful_carriers', $carriers, MINUTE_IN_SECONDS * 5);    //5mins
 	}
 
 	/**
 	 * Post carrier settings to printful
+	 *
 	 * @param $data
 	 * @return mixed
 	 */
 	public function post_carriers( $data ) {
 
-        if ( empty( $data ) ) {
-            return false;
-        }
+		if ( empty( $data ) ) {
+			return false;
+		}
 
-		$shipping = new self;
+		$shipping = new self();
 		try {
 			$carriers = Printful_Integration::instance()->get_client()->patch( 'store/update-shipping-methods', $data );
 
@@ -86,5 +92,4 @@ class Printful_Carriers {
 
 		return $carriers;
 	}
-
 }

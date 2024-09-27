@@ -1,7 +1,9 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-class Printful_Request_log {
+class Printful_Request_Log {
 
 	const PF_USER_AGENT = 'Printful WooCommerce Integration';
 	const PF_OPTION_LAST_API_RESPONSE = 'printful_last_api_response';
@@ -11,13 +13,14 @@ class Printful_Request_log {
 	const PF_OUTGOING_API_ERRORS = 'printful-outgoing-api-errors';
 
 	public static function init() {
-		$printful_log = new self;
+		$printful_log = new self();
 		add_filter( 'woocommerce_api_serve_request', array( $printful_log, 'log_incoming_printful_api_requests' ), 10, 3 );
-		add_filter( 'printful_api_result', array( $printful_log, 'log_outgoing_printful_api_requests'), 10, 4 );
+		add_filter( 'printful_api_result', array( $printful_log, 'log_outgoing_printful_api_requests' ), 10, 4 );
 	}
 
 	/**
 	 * Log printful API errors and save the last 20 API responses
+	 *
 	 * @param $served
 	 * @param $result
 	 * @param $request
@@ -50,18 +53,20 @@ class Printful_Request_log {
 
 
 	/**
+	 * Log outgoing printful api requests.
+	 *
 	 * @param $result
 	 * @param $method
 	 * @param $url
 	 * @param $request
 	 * @return array|mixed|object
 	 */
-	public function log_outgoing_printful_api_requests($result, $method, $url, $request) {
+	public function log_outgoing_printful_api_requests( $result, $method, $url, $request ) {
 
 		$original_result = $result;
 		$request['path'] = $url;
-        $params_set = null;
-        $code_success = null;
+		$params_set = null;
+		$code_success = null;
 
 		if ( ! is_wp_error( $result ) ) {
 			$result       = json_decode( $result['body'], true );
@@ -78,7 +83,7 @@ class Printful_Request_log {
 		$response_hash = md5( serialize( array( 'request' => $request, 'results' => $result ) ) );
 
 		//save summary in database to be easily accessible for status page
-		$this->save_to_printful_log( $method . ' ' . $url, $result, $response_hash,  self::PF_OPTION_OUTGOING_API_REQUEST_LOG );
+		$this->save_to_printful_log( $method . ' ' . $url, $result, $response_hash, self::PF_OPTION_OUTGOING_API_REQUEST_LOG );
 
 		return $original_result; //don't change the result
 	}
@@ -126,7 +131,7 @@ class Printful_Request_log {
 		$is_error = is_wp_error($result) || !empty( $result['errors'] );
 
 		$request_log[] = array(
-			'date'    => date( 'Y-m-d H:i:s' ),
+			'date'    => gmdate( 'Y-m-d H:i:s' ),
 			'request' => $request_title,
 			'result'  => ( $is_error ? 'ERROR' : 'OK' ),
 		);
@@ -137,12 +142,13 @@ class Printful_Request_log {
 
 	/**
 	 * Check requests header for indications that this is a printful api request
+	 *
 	 * @param $request
 	 * @return bool
 	 */
 	private function isPrintfulApiRequest( $request ) {
 
-		if ( ! empty( $request->headers ) && ! empty( $request->headers['USER_AGENT'] ) && $request->headers['USER_AGENT'] == self::PF_USER_AGENT ) {
+		if ( ! empty( $request->headers ) && ! empty( $request->headers['USER_AGENT'] ) && self::PF_USER_AGENT == $request->headers['USER_AGENT'] ) {
 			return true;
 		}
 

@@ -1,13 +1,17 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 class Printful_Admin_Support {
 
-    public static $_instance;
+	public static $_instance;
 
-    /**
-     * @return Printful_Admin_Support
-     */
+	/**
+	 * Instance initialization.
+	 *
+	 * @return Printful_Admin_Support
+	 */
 	public static function instance() {
 
 		if ( is_null( self::$_instance ) ) {
@@ -26,9 +30,9 @@ class Printful_Admin_Support {
 		$support->render();
 	}
 
-    /**
-     * Display support report
-     */
+	/**
+	 * Display support report
+	 */
 	public function render() {
 
 		Printful_Admin::load_template( 'header', array( 'tabs' => Printful_Admin::get_tabs() ) );
@@ -47,7 +51,7 @@ class Printful_Admin_Support {
 
 		Printful_Admin::validateAdminAccess();
 
-        check_admin_referer( 'get_printful_status_report' );
+		check_admin_referer( 'get_printful_status_report' );
 
 		$status_report = self::instance()->generate_report();
 		Printful_Admin::load_template( 'status-report', array( 'status_report' => $status_report ) );
@@ -55,33 +59,34 @@ class Printful_Admin_Support {
 		exit;
 	}
 
-    /**
-     * Create system status report
-     * @return string
-     * @throws PrintfulException
-     */
+	/**
+	 * Create system status report
+	 *
+	 * @return string
+	 * @throws PrintfulException
+	 */
 	public function generate_report() {
 
 		if ( ! class_exists( 'WC_REST_System_Status_Controller' ) ) {
 			return false;
 		}
 
-		$system_status = new WC_REST_System_Status_Controller; //make use of the woocommerce system status report
+		$system_status = new WC_REST_System_Status_Controller(); //make use of the woocommerce system status report
 
 		ob_start();
 
-		echo __( "##### Printful Checklist #####\n", 'printful' );
+		echo esc_html( __( "##### Printful Checklist #####\n", 'printful' ) );
 		$checklist = Printful_Admin_Status::get_checklist();
 		foreach ( $checklist['items'] as $item ) {
 			$status = 'OK';
-			if($item['status'] == Printful_Admin_Status::PF_STATUS_WARNING) {
+			if ( Printful_Admin_Status::PF_STATUS_WARNING == $item['status'] ) {
 				$status = 'WARNING';
-			} else if($item['status'] == Printful_Admin_Status::PF_STATUS_FAIL) {
+			} else if ( Printful_Admin_Status::PF_STATUS_FAIL == $item['status']) {
 				$status = 'FAIL';
-			} else if ($item['status'] == Printful_Admin_Status::PF_STATUS_NOT_CONNECTED) {
-			    $status = 'NOT CONNECTED';
-            }
-			echo "* ";
+			} else if ( Printful_Admin_Status::PF_STATUS_NOT_CONNECTED == $item['status'] ) {
+				$status = 'NOT CONNECTED';
+			}
+			echo '* ';
 			echo esc_html( str_pad( esc_html( $item['name'] ), 30 ) ) . '=> ' . esc_html( $status ) . "\n";
 		}
 
@@ -94,7 +99,7 @@ class Printful_Admin_Support {
 			echo "\n";
 
 			foreach ( $syncReport as $sr ) {
-				echo "* ";
+				echo '* ';
 				echo esc_html( str_pad( $sr['date'] . ';', 30 ) );
 				echo esc_html( str_pad( $sr['path'] . ';', 30 ) );
 				echo esc_html( str_pad( $sr['message'] . ';', 30 ) );
@@ -111,8 +116,8 @@ class Printful_Admin_Support {
 		echo "\n\n##### Active Plugins #####\n";
 		foreach ( $system_status->get_active_plugins() as $plugin ) {
 			if ( ! empty( $plugin['name'] ) ) {
-				echo "* ";
-				echo esc_html( $plugin['name'] ) . " (" . esc_html( $plugin['version'] ) . ")\n";
+				echo '* ';
+				echo esc_html( $plugin['name'] ) . ' (' . esc_html( $plugin['version'] ) . ")\n";
 			}
 		}
 
@@ -141,7 +146,8 @@ class Printful_Admin_Support {
 	}
 
 	/**
-     * Get last 50 lines of error log
+	 * Get last 50 lines of error log
+	 *
 	 * @return bool|string
 	 */
 	public function get_error_log_contents() {
@@ -154,17 +160,18 @@ class Printful_Admin_Support {
 	}
 
 	/**
-     * source: https://gist.github.com/lorenzos/1711e81a9162320fde20
+	 * Source: https://gist.github.com/lorenzos/1711e81a9162320fde20
+	 *
 	 * @param $filepath
 	 * @param int $lines
 	 * @param bool $adaptive
 	 *
 	 * @return bool|string
 	 */
-	function file_tail( $filepath, $lines = 1, $adaptive = true ) {
+	public function file_tail( $filepath, $lines = 1, $adaptive = true ) {
 
-		$f = @fopen( $filepath, "rb" );
-		if ( $f === false ) {
+		$f = @fopen( $filepath, 'rb' );
+		if ( false  === $f ) {
 			return false;
 		}
 
@@ -178,7 +185,7 @@ class Printful_Admin_Support {
 		// Jump to last character
 		fseek( $f, - 1, SEEK_END );
 		if ( fread( $f, 1 ) != "\n" ) {
-			$lines -= 1;
+			--$lines;
 		}
 
 		$output = '';
@@ -188,11 +195,12 @@ class Printful_Admin_Support {
 			$seek = min( ftell( $f ), $buffer );
 			// Do the jump (backwards, relative to where we are)
 			fseek( $f, - $seek, SEEK_CUR );
-			$output = ( $chunk = fread( $f, $seek ) ) . $output;
+			$chunk = fread( $f, $seek );
+			$output = $chunk . $output;
 			fseek( $f, - mb_strlen( $chunk, '8bit' ), SEEK_CUR );
 			$lines -= substr_count( $chunk, "\n" );
 		}
-		while ( $lines ++ < 0 ) {
+		while ( $lines++ < 0 ) {
 			$output = substr( $output, strpos( $output, "\n" ) + 1 );
 		}
 		fclose( $f );
@@ -203,20 +211,22 @@ class Printful_Admin_Support {
 
 	/**
 	 * Displays the data
+	 *
 	 * @param $data
 	 */
 	public function output_report_block( $data ) {
 
 		foreach ( $data as $key => $item ) {
 			if ( is_string( $item ) ) {
-				echo "* ";
-				echo esc_html( str_pad($key, 30) ) . "=> " . esc_html($item) . "\n";
+				echo '* ';
+				echo esc_html( str_pad($key, 30) ) . '=> ' . esc_html($item) . "\n";
 			}
 		}
 	}
 
 	/**
 	 * Returns log of last incoming API requests from Printful
+	 *
 	 * @return array
 	 */
 	public function get_sync_report() {

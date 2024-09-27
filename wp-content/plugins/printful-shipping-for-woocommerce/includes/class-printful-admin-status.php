@@ -1,5 +1,7 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 class Printful_Admin_Status {
 
@@ -14,110 +16,112 @@ class Printful_Admin_Status {
 	const PF_REMOTE_REQUEST_TOPIC = 'woo.plugin.test';
 	const PF_STATUS_ISSUE_COUNT = 'printful_status_issue_count';
 	const PF_CACHED_CHECKLIST = 'printful_cached_checklist';
-    const STATUS_CONNECTED_DISPLAYABLE_METHODS = array(
-        'check_PF_webhooks',
-        'check_PF_sync_errors',
-        'check_PF_API_key',
-        'check_WC_API_access'
-    );
+	const STATUS_CONNECTED_DISPLAYABLE_METHODS = array(
+		'check_PF_webhooks',
+		'check_PF_sync_errors',
+		'check_PF_API_key',
+		'check_WC_API_access',
+	);
 
-    public static $_instance;
-    
+	public static $_instance;
+
 	public static function getChecklistItems() {
-	    return array(
-            array(
-                'name'        => __( 'Connection to Printful API', 'printful' ),
-                'description' => __( 'Is your store successfully connected to Printful API?', 'printful' ),
-                'method'      => 'check_PF_API_connect',
-            ),
-            array(
-                'name'        => __( 'Printful API key is set', 'printful' ),
-                'description' => __( 'Your store needs access to Printful API to use most of it\'s features like shipping rates, tax rates and other settings.', 'printful' ),
-                'method'      => 'check_PF_API_key',
-            ),
-            array(
-                'name'        => __( 'WordPress Permalinks', 'printful' ),
-                'description' => __( 'WooCommerce API will not work unless your permalinks in Settings > Permalinks are set up correctly. Make sure you that they are NOT set to "plain".', 'printful' ),
-                'method'      => 'check_permalinks',
-            ),
-            array(
-                'name'        => __( 'WordPress version', 'printful' ),
-                'description' => __( 'WordPress should always be updated to the latest version. Updates can be installed from your WordPress admin dashboard.', 'printful' ),
-                'method'      => 'check_WP_version',
-            ),
-            array(
-                'name'        => __( 'WooCommerce Webhooks', 'printful' ),
-                'description' => __( 'Printful requires WooCommerce webhooks to be set up to quickly capture you incoming orders, products updates etc.', 'printful' ),
-                'method'      => 'check_PF_webhooks',
-            ),
-            array(
-                'name'        => __( 'WooCommerce API keys are set', 'printful' ),
-                'description' => __( 'Printful needs access to your WooCommerce API for the integration to work - otherwise we can\'t sync your store, push or pull your products etc.', 'printful' ),
-                'method'      => 'check_WC_API_access',
-            ),
-            array(
-                'name'        => __( 'WooCommerce authentication URL access', 'printful' ),
-                'description' => __( 'Printful needs access to WooCommerce API authorize page. This sometimes may get blocked due to hosts having unnecessarily intrusive security checks in place that prevent WooCommerce API authentication from working (for example mod_security rule #1234234). If this check fails, you will not be able authorize Printful app.', 'printful' ),
-                'method'      => 'check_WC_auth_url_access',
-            ),
-            array(
-                'name'        => __( 'WordPress remote requests', 'printful' ),
-                'description' => __( 'WordPress needs to be able to connect to Printful server to call webhooks. If this check fails, contact your hosting support.', 'printful' ),
-                'method'      => 'check_remote_requests',
-            ),
-            array(
-                'name'        => __( 'WordPress Site URL', 'printful' ),
-                'description' => __( 'If your currently setup WordPress site URL is redirected to another URL the integration might not work correctly. Typically this happens with incorrect http to https redirects. Go to Settings > General to fix this.' , 'printful' ),
-                'method'      => 'check_site_url_redirect',
-            ),
-            array(
-                'name'        => __( 'Recent store sync errors', 'printful' ),
-                'description' => __( 'Printful will connect to your store\'s API regularly and sync your latest products, orders etc. If there have been any recent issues with sync, this check will fail.', 'printful' ),
-                'method'      => 'check_PF_sync_errors',
-            ),
-            array(
-                'name'        => __( 'Write permissions', 'printful' ),
-                'description' => __( 'Make the uploads directory writable. This is required for mockup generator product push to work correctly. Contact your hosting provider if you need help with this.', 'printful' ),
-                'method'      => 'check_uploads_write',
-            ),
-            array(
-                'name'        => __( 'PHP memory limit', 'printful' ),
-                'description' => __( 'Set PHP allocated memory limit to at least 128mb. Contact your hosting provider if you need help with this.', 'printful' ),
-                'method'      => 'check_PHP_memory_limit',
-            ),
-            array(
-                'name'        => __( 'PHP script time limit', 'printful' ),
-                'description' => __( 'Set PHP script execution time limit to at least 30 seconds. This is required to successfully push products with many variants. Contact your hosting provider if you need help with this.', 'printful' ),
-                'method'      => 'check_PHP_time_limit',
-            ),
-            array(
-                'name'        => __( 'W3 Total Cache DB Cache', 'printful' ),
-                'description' => __( 'If you are using W3 Total Cache, the database caching feature needs to be disabled since it can cause issues with product push to store.', 'printful' ),
-                'method'      => 'check_W3_db_cache',
-                'silent'      => true,
-            ),
-            array(
-                'name'        => __( 'WP SpamShield', 'printful' ),
-                'description' => __( 'If you are using WP SpamShield, you might experience problems connecting to Printful and pushing products.', 'printful' ),
-                'method'      => 'check_wp_spamshield',
-                'silent'      => true,
-            ),
-            array(
-                'name'        => __( 'Remove Print Aura plugin', 'printful' ),
-                'description' => __( 'Print Aura plugin is known to cause issues so it needs to be removed.', 'printful' ),
-                'method'      => 'check_printaura_plugin',
-                'silent'      => true,
-            ),
-        );
-    }
+		return array(
+			array(
+				'name'        => __( 'Connection to Printful API', 'printful' ),
+				'description' => __( 'Is your store successfully connected to Printful API?', 'printful' ),
+				'method'      => 'check_PF_API_connect',
+			),
+			array(
+				'name'        => __( 'Printful API key is set', 'printful' ),
+				'description' => __( 'Your store needs access to Printful API to use most of it\'s features like shipping rates, tax rates and other settings.', 'printful' ),
+				'method'      => 'check_PF_API_key',
+			),
+			array(
+				'name'        => __( 'WordPress Permalinks', 'printful' ),
+				'description' => __( 'WooCommerce API will not work unless your permalinks in Settings > Permalinks are set up correctly. Make sure you that they are NOT set to "plain".', 'printful' ),
+				'method'      => 'check_permalinks',
+			),
+			array(
+				'name'        => __( 'WordPress version', 'printful' ),
+				'description' => __( 'WordPress should always be updated to the latest version. Updates can be installed from your WordPress admin dashboard.', 'printful' ),
+				'method'      => 'check_WP_version',
+			),
+			array(
+				'name'        => __( 'WooCommerce Webhooks', 'printful' ),
+				'description' => __( 'Printful requires WooCommerce webhooks to be set up to quickly capture you incoming orders, products updates etc.', 'printful' ),
+				'method'      => 'check_PF_webhooks',
+			),
+			array(
+				'name'        => __( 'WooCommerce API keys are set', 'printful' ),
+				'description' => __( 'Printful needs access to your WooCommerce API for the integration to work - otherwise we can\'t sync your store, push or pull your products etc.', 'printful' ),
+				'method'      => 'check_WC_API_access',
+			),
+			array(
+				'name'        => __( 'WooCommerce authentication URL access', 'printful' ),
+				'description' => __( 'Printful needs access to WooCommerce API authorize page. This sometimes may get blocked due to hosts having unnecessarily intrusive security checks in place that prevent WooCommerce API authentication from working (for example mod_security rule #1234234). If this check fails, you will not be able authorize Printful app.', 'printful' ),
+				'method'      => 'check_WC_auth_url_access',
+			),
+			array(
+				'name'        => __( 'WordPress remote requests', 'printful' ),
+				'description' => __( 'WordPress needs to be able to connect to Printful server to call webhooks. If this check fails, contact your hosting support.', 'printful' ),
+				'method'      => 'check_remote_requests',
+			),
+			array(
+				'name'        => __( 'WordPress Site URL', 'printful' ),
+				'description' => __( 'If your currently setup WordPress site URL is redirected to another URL the integration might not work correctly. Typically this happens with incorrect http to https redirects. Go to Settings > General to fix this.' , 'printful' ),
+				'method'      => 'check_site_url_redirect',
+			),
+			array(
+				'name'        => __( 'Recent store sync errors', 'printful' ),
+				'description' => __( 'Printful will connect to your store\'s API regularly and sync your latest products, orders etc. If there have been any recent issues with sync, this check will fail.', 'printful' ),
+				'method'      => 'check_PF_sync_errors',
+			),
+			array(
+				'name'        => __( 'Write permissions', 'printful' ),
+				'description' => __( 'Make the uploads directory writable. This is required for mockup generator product push to work correctly. Contact your hosting provider if you need help with this.', 'printful' ),
+				'method'      => 'check_uploads_write',
+			),
+			array(
+				'name'        => __( 'PHP memory limit', 'printful' ),
+				'description' => __( 'Set PHP allocated memory limit to at least 128mb. Contact your hosting provider if you need help with this.', 'printful' ),
+				'method'      => 'check_PHP_memory_limit',
+			),
+			array(
+				'name'        => __( 'PHP script time limit', 'printful' ),
+				'description' => __( 'Set PHP script execution time limit to at least 30 seconds. This is required to successfully push products with many variants. Contact your hosting provider if you need help with this.', 'printful' ),
+				'method'      => 'check_PHP_time_limit',
+			),
+			array(
+				'name'        => __( 'W3 Total Cache DB Cache', 'printful' ),
+				'description' => __( 'If you are using W3 Total Cache, the database caching feature needs to be disabled since it can cause issues with product push to store.', 'printful' ),
+				'method'      => 'check_W3_db_cache',
+				'silent'      => true,
+			),
+			array(
+				'name'        => __( 'WP SpamShield', 'printful' ),
+				'description' => __( 'If you are using WP SpamShield, you might experience problems connecting to Printful and pushing products.', 'printful' ),
+				'method'      => 'check_wp_spamshield',
+				'silent'      => true,
+			),
+			array(
+				'name'        => __( 'Remove Print Aura plugin', 'printful' ),
+				'description' => __( 'Print Aura plugin is known to cause issues so it needs to be removed.', 'printful' ),
+				'method'      => 'check_printaura_plugin',
+				'silent'      => true,
+			),
+		);
+	}
 
-    /**
-     * @return Printful_Admin_Status
-     */
+	/**
+	 * Instance setup.
+	 *
+	 * @return Printful_Admin_Status
+	 */
 	public static function instance() {
-        if ( ! function_exists( 'get_plugins' ) ) {
-            include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-        }
+		if ( ! function_exists( 'get_plugins' ) ) {
+			include_once ABSPATH . 'wp-admin/includes/plugin.php' ;
+		}
 
 		if ( is_null( self::$_instance ) ) {
 			self::$_instance = new self();
@@ -139,7 +143,7 @@ class Printful_Admin_Status {
 	 * Render the view
 	 */
 	public function render() {
-        Printful_Admin::load_template( 'header', array( 'tabs' => Printful_Admin::get_tabs() ) );
+		Printful_Admin::load_template( 'header', array( 'tabs' => Printful_Admin::get_tabs() ) );
 
 		$checklist = self::get_checklist( true );
 		if ( $checklist ) {
@@ -158,7 +162,7 @@ class Printful_Admin_Status {
 
 		Printful_Admin::validateAdminAccess();
 
-        check_admin_referer( 'get_printful_status_checklist' );
+		check_admin_referer( 'get_printful_status_checklist' );
 
 		$checklist = self::get_checklist();
 		Printful_Admin::load_template( 'status-table', array( 'checklist' => $checklist ) );
@@ -166,17 +170,18 @@ class Printful_Admin_Status {
 		exit;
 	}
 
-    /**
-     * Run the tests
-     * @param bool $only_cached_results
-     * @return array
-     * @throws PrintfulException
-     */
+	/**
+	 * Run the tests
+	 *
+	 * @param bool $only_cached_results
+	 * @return array
+	 * @throws PrintfulException
+	 */
 	public static function get_checklist( $only_cached_results = false ) {
 
 		$status = self::instance();
 
-		$list = get_transient( Printful_Admin_Status::PF_CACHED_CHECKLIST );
+		$list = get_transient( self::PF_CACHED_CHECKLIST );
 
 		if ( $only_cached_results || $list ) {
 			return $list;
@@ -196,28 +201,29 @@ class Printful_Admin_Status {
 
 				// Do not display status for methods that are depending on connection status to Printful
 				if ( ! Printful_Integration::instance()->is_connected(true) && in_array( $item['method'], self::STATUS_CONNECTED_DISPLAYABLE_METHODS ) ) {
-				    continue;
-                }
+					continue;
+				}
 
 				if ( $status->should_result_be_visible( $list_item['status'], $item ) ) {
 					$list['items'][] = $list_item;
 				}
 
-				if ( $list_item['status'] == self::PF_STATUS_FAIL || $list_item['status'] == self::PF_STATUS_NOT_CONNECTED ) {
+				if ( self::PF_STATUS_FAIL == $list_item['status'] || self::PF_STATUS_NOT_CONNECTED == $list_item['status'] ) {
 					$list['overall_status'] = false;
-					$issueCount ++;
+					$issueCount++;
 				}
 			}
 		}
 
-		set_transient( Printful_Admin_Status::PF_CACHED_CHECKLIST, $list, MINUTE_IN_SECONDS );
-		set_transient( Printful_Admin_Status::PF_STATUS_ISSUE_COUNT, $issueCount, HOUR_IN_SECONDS );
+		set_transient( self::PF_CACHED_CHECKLIST, $list, MINUTE_IN_SECONDS );
+		set_transient( self::PF_STATUS_ISSUE_COUNT, $issueCount, HOUR_IN_SECONDS );
 
 		return $list;
 	}
 
 	/**
 	 * Execute only one test
+	 *
 	 * @param $method
 	 * @return mixed
 	 */
@@ -229,6 +235,8 @@ class Printful_Admin_Status {
 	}
 
 	/**
+	 * Should result be visible.
+	 *
 	 * @param $status
 	 * @param bool $item
 	 *
@@ -236,16 +244,16 @@ class Printful_Admin_Status {
 	 */
 	private function should_result_be_visible( $status, $item = false ) {
 
-		if ( ! isset( $item['silent'] ) || ( $item['silent'] === true && $status === self::PF_STATUS_FAIL ) ) {   //silent items are only shown on FAIL
+		if ( ! isset( $item['silent'] ) || ( true === $item['silent'] && self::PF_STATUS_FAIL === $status ) ) {   //silent items are only shown on FAIL
 			return true;
 		}
 
 		return false;
 	}
 
-    /**
-     * Function for checking if thumbnails are resized
-     */
+	/**
+	 * Function for checking if thumbnails are resized
+	 */
 	private function check_uploads_write() {
 
 		$upload_dir = wp_upload_dir();
@@ -257,6 +265,8 @@ class Printful_Admin_Status {
 	}
 
 	/**
+	 * Check php memory limit.
+	 *
 	 * @return int
 	 */
 	private function check_PHP_memory_limit() {
@@ -264,9 +274,9 @@ class Printful_Admin_Status {
 		$memory_limit = ini_get( 'memory_limit' );
 
 		if ( preg_match( '/^(\d+)(.)$/', $memory_limit, $matches ) ) {
-			if ( $matches[2] == 'M' ) {
+			if ( 'M' == $matches[2] ) {
 				$memory_limit = $matches[1] * 1024 * 1024; // nnnM -> nnn MB
-			} else if ( $matches[2] == 'K' ) {
+			} else if ( 'K' == $matches[2] ) {
 				$memory_limit = $matches[1] * 1024; // nnnK -> nnn KB
 			}
 		}
@@ -281,6 +291,8 @@ class Printful_Admin_Status {
 	}
 
 	/**
+	 * Check WP version.
+	 *
 	 * @return int
 	 */
 	private function check_WP_version() {
@@ -311,18 +323,20 @@ class Printful_Admin_Status {
 			return self::PF_STATUS_FAIL;
 		}
 
-        if ( version_compare( $current, $latest, '>=' ) ) {
-            return self::PF_STATUS_OK;
-        }
+		if ( version_compare( $current, $latest, '>=' ) ) {
+			return self::PF_STATUS_OK;
+		}
 
 		return self::PF_STATUS_FAIL;
 	}
 
 	/**
+	 * Check pf webhooks.
+	 *
 	 * @return int
 	 */
 	private function check_PF_webhooks() {
-	    global $wpdb;
+		global $wpdb;
 
 		// Get the webhooks
 		// In version 3.3 the webhooks are stored in separate table, before that they were stored in posts table
@@ -351,10 +365,12 @@ class Printful_Admin_Status {
 			return self::PF_STATUS_OK;
 		}
 
-        return self::PF_STATUS_FAIL;
+		return self::PF_STATUS_FAIL;
 	}
 
 	/**
+	 * Check WC API access.
+	 *
 	 * @return int
 	 */
 	private function check_WC_API_access() {
@@ -363,16 +379,18 @@ class Printful_Admin_Status {
 
 		//if any keys are set
 		$count    = $wpdb->get_var(
-		    "SELECT COUNT(*) as key_count FROM {$wpdb->prefix}woocommerce_api_keys"
-        );
+			"SELECT COUNT(*) as key_count FROM {$wpdb->prefix}woocommerce_api_keys"
+		);
 
-		if ( $count == 0 ) {
+		if ( 0 == $count ) {
 			return self::PF_STATUS_FAIL;
 		}
 
 		// Get the API key with matching description
-        $printfulKey = esc_sql( $wpdb->esc_like( wc_clean( self::API_KEY_SEARCH_STRING ) ) );
-		$queryArg = '%'. $wpdb->esc_like( $printfulKey ) . '%';
+        $printfulKey = wc_clean( self::API_KEY_SEARCH_STRING );
+        $likeKey = $wpdb->esc_like( $printfulKey );
+        $printfulKey = esc_sql( $likeKey );
+        $queryArg = '%' . $wpdb->esc_like( $printfulKey ) . '%';
 
         $key = $wpdb->get_row(
             $wpdb->prepare(
@@ -381,7 +399,7 @@ class Printful_Admin_Status {
             )
         );
 
-		if ( ! empty( $key ) && $key->permissions == 'read_write' ) {
+		if ( ! empty( $key ) && 'read_write' == $key->permissions ) {
 			return self::PF_STATUS_OK;
 		}
 
@@ -389,6 +407,8 @@ class Printful_Admin_Status {
 	}
 
 	/**
+	 * CHECK PF API KEY.
+	 *
 	 * @return int
 	 */
 	private function check_PF_API_key() {
@@ -401,10 +421,12 @@ class Printful_Admin_Status {
 		return self::PF_STATUS_FAIL;
 	}
 
-    /**
-     * @return int
-     * @throws PrintfulException
-     */
+	/**
+	 * CHECK PF API connect.
+	 *
+	 * @return int
+	 * @throws PrintfulException
+	 */
 	private function check_PF_API_connect() {
 
 		if ( Printful_Integration::instance()->is_connected(true) ) {
@@ -415,6 +437,8 @@ class Printful_Admin_Status {
 	}
 
 	/**
+	 * Check PHP time limit.
+	 *
 	 * @return int
 	 */
 	private function check_PHP_time_limit() {
@@ -428,6 +452,8 @@ class Printful_Admin_Status {
 	}
 
 	/**
+	 * Check pf sync errors.
+	 *
 	 * @return int
 	 */
 	private function check_PF_sync_errors() {
@@ -441,7 +467,7 @@ class Printful_Admin_Status {
 		$sync_log = array_slice( $sync_log, 0, 6 );   //we only care about last to syncs
 
 		foreach ( $sync_log as $sl ) {
-			if ( ! empty( $sl['result'] ) && $sl['result'] == 'ERROR' ) {
+			if ( ! empty( $sl['result'] ) && 'ERROR' == $sl['result'] ) {
 				return self::PF_STATUS_FAIL;
 			}
 		}
@@ -450,6 +476,8 @@ class Printful_Admin_Status {
 	}
 
 	/**
+	 * Check W3 db cache.
+	 *
 	 * @return int
 	 */
 	private function check_W3_db_cache() {
@@ -472,6 +500,8 @@ class Printful_Admin_Status {
 	}
 
 	/**
+	 * Check permalinks.
+	 *
 	 * @return int
 	 */
 	private function check_permalinks() {
@@ -486,6 +516,8 @@ class Printful_Admin_Status {
 	}
 
 	/**
+	 * Check pintaura plugin.
+	 *
 	 * @return int
 	 */
 	private function check_printaura_plugin() {
@@ -498,6 +530,8 @@ class Printful_Admin_Status {
 	}
 
 	/**
+	 * Check wp spamshield.
+	 *
 	 * @return int
 	 */
 	private function check_wp_spamshield() {
@@ -510,6 +544,8 @@ class Printful_Admin_Status {
 	}
 
 	/**
+	 * Check remote requests.
+	 *
 	 * @return int
 	 */
 	private function check_remote_requests() {
@@ -542,6 +578,8 @@ class Printful_Admin_Status {
 	}
 
 	/**
+	 * Check WC auth url access.
+	 *
 	 * @return int
 	 */
 	private function check_WC_auth_url_access() {
@@ -549,7 +587,7 @@ class Printful_Admin_Status {
 		$http_args = array(
 			'timeout'    => 60,
 			'method'     => 'GET',
-			'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.82 Safari/537.36',
+			'user-agent' => 'Printful WooCommerce Plugin',
 		);
 
 		$response = wp_safe_remote_get( $url, $http_args );
@@ -560,42 +598,51 @@ class Printful_Admin_Status {
 
 		$code = $response['response']['code'];
 
-		if ( $code == 200 ) {
+		if ( 200 == $code) {
 			return self::PF_STATUS_OK;
 		}
 
 		return self::PF_STATUS_FAIL;
 	}
 
-    /**
-     * @return int
-     */
-	private function check_site_url_redirect()
-    {
+	/**
+	 * Check site url redirect.
+	 *
+	 * @return int
+	 */
+	private function check_site_url_redirect() {
 
-        $regular_site_url_req = wp_remote_head( get_option( 'siteurl' ) . '/wp-json/', array('redirection' => 0));
+		$regular_site_url_req = wp_remote_head( get_option( 'siteurl' ) . '/wp-json/', array( 'redirection' => 0 ));
 
-        //need to not trigger issues for subfolder wordpress setups
-        $slashed_site_url_req = wp_remote_head( trailingslashit(get_option( 'siteurl' )), array('redirection' => 0));
+		//need to not trigger issues for subfolder wordpress setups
+		$slashed_site_url_req = wp_remote_head( trailingslashit(get_option( 'siteurl' )), array( 'redirection' => 0 ));
 
-        if (is_wp_error($regular_site_url_req) || is_wp_error($slashed_site_url_req)) {
-            return self::PF_STATUS_FAIL;
-        }
+		if (is_wp_error($regular_site_url_req) || is_wp_error($slashed_site_url_req)) {
+			return self::PF_STATUS_FAIL;
+		}
 
-        /** @var WP_HTTP_Requests_Response $response */
-        $regular_response = $regular_site_url_req['http_response'];
+		/**
+		 * Response.
+		 *
+		 * @var WP_HTTP_Requests_Response $response
+		 */
+		$regular_response = $regular_site_url_req['http_response'];
 
-        /** @var WP_HTTP_Requests_Response $slashed_response */
-        $slashed_response = $slashed_site_url_req['http_response'];
+		/**
+		 * Http response.
+		 *
+		 * @var WP_HTTP_Requests_Response $slashed_response
+		 */
+		$slashed_response = $slashed_site_url_req['http_response'];
 
-        if ($regular_response->get_status() == 200 || $slashed_response->get_status() == 200) {
-            return self::PF_STATUS_OK;
-        }
+		if ($regular_response->get_status() == 200 || $slashed_response->get_status() == 200) {
+			return self::PF_STATUS_OK;
+		}
 
-        if (in_array($regular_response->get_status(), array(301, 302, 303, 307))) {
-            return self::PF_STATUS_FAIL;
-        }
+		if (in_array($regular_response->get_status(), array( 301, 302, 303, 307 ))) {
+			return self::PF_STATUS_FAIL;
+		}
 
-        return self::PF_STATUS_WARNING;
-    }
+		return self::PF_STATUS_WARNING;
+	}
 }

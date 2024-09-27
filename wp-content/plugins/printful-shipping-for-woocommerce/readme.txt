@@ -2,9 +2,9 @@
 Contributors: girts_u, kievins, kberzins
 Tags: woocommerce, printful, drop shipping, shipping, shipping rates, fulfillment, printing, fedex, carriers, checkout, t-shirts
 Requires at least: 5.3
-Tested up to: 6.4.1
+Tested up to: 6.5.4
 Requires PHP: 5.6
-Stable tag: 2.2.7
+Stable tag: 2.2.10
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -62,6 +62,17 @@ Go to https://www.printful.com/dashboard/store , select your WooCommerce store, 
 5. Support page
 
 == Upgrade Notice ==
+= 2.2.10 =
+QIT changes V2
+
+= 2.2.9 =
+QIT changes
+
+= 2.2.8 =
+UserAgent change when validating access to auth URL
+WordPress compatibility raised to 6.5.4
+Woocommerce compatibility raised to 8.9.3
+Increased code quality
 
 = 2.2.7 =
 Bugfixes
@@ -274,241 +285,3 @@ Minor improvements
 = 1.0 =
 First release
 
-== Changelog ==
-
-= 2.2.7 =
-* Bugfixes
-
-= 2.2.6 =
-* WordPress compatibility raised to 6.4.1
-* Woocommerce compatibility raised to 8.2.2
-
-= 2.2.5 =
-* OAuth migration updates
-* Added HPOS compatibility
-
-= 2.2.4 =
-* Security fixes
-
-= 2.2.3 =
-* Security fixes
-
-= 2.2.2 =
-* OAuth migration process update
-
-= 2.2.1 =
-* Bugfixes
-
-= 2.2.0 =
-* OAuth support for Printful API
-
-= 2.1.36 =
-* WordPress compatibility raised to 6.1.1
-* Woocommerce compatibility raised to 7.5.1
-
-= 2.1.35 =
-* License.txt update
-
-= 2.1.34 =
-* Woocommerce compatibility raised to 6.7
-
-= 2.1.33 =
-* Plugin version fix
-
-= 2.1.32 =
-* Woocommerce compatibility raised to 6.5.1
-* WordPress compatibility raised to 6.0
-
-= 2.1.31 =
-* Licence updated to GPLv3
-* WordPress compatibility raised to 5.9
-* Woocommerce compatibility raised to 6.4
-
-= 2.1.30 =
-Additional billing setting check
-
-= 2.1.29 =
-* WordPress compatibility raised to 5.8. Size guide bugfix
-
-= 2.1.28 =
-* Woocommerce compatibility raised to 6.1
-
-= 2.1.27 =
-* Woocommerce compatibility raised to 6.0
-* Size guide bug fix
-
-= 2.1.26 =
-* Woocommerce compatibility raised to 5.9
-
-= 2.1.25 =
-* Woocommerce compatibility raised to 5.5
-
-= 2.1.24 =
-* Woocommerce compatibility raised to 5.4
-
-= 2.1.23 =
-* Woocommerce compatibility raised to 5.3
-* Minor bug fixes
-
-= 2.1.22 =
-* Woocommerce compatibility raised to 5.2
-
-= 2.1.21 =
-* Advanced size guide translations fix
-
-= 2.1.20 =
-* Woocommerce compatibility raised to 5.0
-
-= 2.1.19 =
-* Woocommerce compatibility raised to 4.9
-
-= 2.1.18 =
-* Woocommerce compatibility raised to 4.8
-
-= 2.1.17 =
-* Woocommerce compatibility raised to 4.7
-
-= 2.1.16 =
-* Woocommerce compatibility raised to 4.6
-
-= 2.1.15 =
-* Fix translations
-
-= 2.1.14 =
-* Advanced size guide feature
-
-= 2.1.13 =
-* Improved support for WooCommerce 4.3
-
-= 2.1.12 =
-* Improved support for WooCommerce 4.2
-
-= 2.1.11 =
-* Improved support for WooCommerce 4.1
-
-= 2.1.10 =
-* Improved support for WooCommerce 4.0 and other minor bug fixes
-
-= 2.1.9 =
-* Improved support for WooCommerce 3.9 and other minor bug fixes
-
-= 2.1.8 =
-* Improved support for WooCommerce 3.8 and other minor bug fixes
-
-= 2.1.7 =
-* Updated labels in plugin settings
-
-= 2.1.6 =
-* Added the ability to change personalization popup title
-
-= 2.1.5 =
-* Fixed issues with personalization tool and other minor improvements
-
-= 2.1.4 =
-* Fixed an issue with personalized order submit
-
-= 2.1.3 =
-* Fixed minor issue with site URL verification in plugin status page
-
-= 2.1.2 =
-* Improved theme support for personalized products and other minor bug fixes
-
-= 2.1.1 =
-* Improved support for WooCommerce 3.6 and other minor bug fixes
-
-= 2.1 =
-* Personalization feature
-
-= 2.0.8 =
-* Shipping & Tax information improvements
-
-= 2.0.7 =
-* Bug fixes, security improvements and improved i18n support
-
-= 2.0.6 =
-* Improvement support for WordPress 5.0 and fixed various minor issues
-
-= 2.0.5 =
-* Improvements to Printful shipping carrier settings
-
-= 2.0.4 =
-* Improved support for older PHP versions
-* Other minor bug fixes
-
-= 2.0.3 =
-* Improved compatibility with WC 3.4.3
-* Wordpress localization support
-* Minor bug fixes
-
-= 2.0.2 =
-* Fixed incorrect webhook status indication since WC 3.3.0
-
-= 2.0.1 =
-* Improved Printful connection status detection
-* Improvements for system report
-* Show warning if attempting to connect from localhost
-
-= 2.0 =
-* New major plugin version
-* All new Printful dashboard
-* Connect to Printful with a single click
-* View your Printful profits and latest Printful product orders in WordPress admin
-* Edit your shipping carriers from Printful dashboard
-* Improved sales tax compatibility with existing tax rates
-* New status page - see if your integration is running smoothly
-* New support page - all info about finding help in one place
-* Size chart tab - when pushing products from Printful, the size chart will be placed in a separate tab
-* Improved logging of API requests coming to and from Printful
-
-= 1.2.8 =
-* Fixed bug that caused tax rates to become invisible on checkout since WC 3.0
-
-= 1.2.7 =
-* Do not calculate shipping rates for US addresses while ZIP or state is not entered
-
-= 1.2.6 =
-* Include shipping rates in tax calculation for states that require that
-
-= 1.2.5 =
-* Added option to allow Woocommerce default rates together with Printful rates for Printful products
-
-= 1.2.4 =
-* Prevent virtual products from requiring shipping rate when bought together with Printful products
-
-= 1.2.3 =
-* Fixed issue introduced in 1.2.2
-
-= 1.2.2 =
-* Fixed PHP warning on Woocommerce 2.6 due to changed method signature
-* Fixed conflict with "Multiple Packages for WooCommerce" plugin
-
-= 1.2.1 =
-* Fixed bug that could have show error message when calculating shipping rates
-
-= 1.2 =
-* Support calculating shipping rates for both Printful and non-Printful products at the same time (non-Printful
-products will get default rates provided by Woocommerce)
-* Added caching to tax rates
-* Improved compatibility with Woocommerce 2.6
-
-= 1.1.2 =
-* Removed check for Curl extension (since we already used wp_remote_get and it is no longer necessary)
-
-= 1.1.1 =
-* Ignore virtual and downloadable products when calculating shipping rates
-
-= 1.1 =
-* Added option to calculate sales tax rates for locations where it is required for Printful orders
-* Added automatic conversion of shipping rates to the currency used by Woocommerce
-* Printful API client library updated to use Wordpress internal wp_remote_get method instead of CURL directly
-* Changed plugin code structure for easier implementation of new features in the future
-
-= 1.0.2 =
-* Added option to disable SSL for users that do not have a valid CA certificates in their PHP installation
-
-= 1.0.1 =
-* Removed CURLOPT_FOLLOWLOCATION that caused problems on some hosting environments
-* Added option to display reason status messages if the rate API request has failed
-
-= 1.0 =
-* First release

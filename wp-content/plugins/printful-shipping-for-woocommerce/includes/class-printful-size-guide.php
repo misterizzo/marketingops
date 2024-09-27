@@ -2,10 +2,10 @@
 
 
 class Printful_Size_Guide {
-    /**
-     * Bump this everytime you make changes to size guide CSS file
-     */
-    const CSS_VERSION = '1';
+	/**
+	 * Bump this everytime you make changes to size guide CSS file
+	 */
+	const CSS_VERSION = '1';
 
 	public static function init() {
 		$sizeGuide = new self();
@@ -32,41 +32,43 @@ class Printful_Size_Guide {
 			'pfGlobal',
 			array(
 				'sg_modal_title'                 => Printful_Integration::instance()
-				                                                        ->get_option( 'pfsg_modal_title', Printful_Admin_Settings::DEFAULT_SIZE_GUIDE_MODAL_TITLE ),
+					->get_option( 'pfsg_modal_title', Printful_Admin_Settings::DEFAULT_SIZE_GUIDE_MODAL_TITLE ),
 				'sg_modal_text_color'            => Printful_Integration::instance()
-				                                                        ->get_option( 'pfsg_modal_text_color', Printful_Admin_Settings::DEFAULT_SIZE_GUIDE_MODAL_TEXT_COLOR ),
+					->get_option( 'pfsg_modal_text_color', Printful_Admin_Settings::DEFAULT_SIZE_GUIDE_MODAL_TEXT_COLOR ),
 				'sg_modal_background_color'      => Printful_Integration::instance()
-				                                                        ->get_option(
-					                                                        'pfsg_modal_background_color',
-					                                                        Printful_Admin_Settings::DEFAULT_SIZE_GUIDE_MODAL_BACKGROUND_COLOR
-				                                                        ),
+					->get_option(
+						'pfsg_modal_background_color',
+						Printful_Admin_Settings::DEFAULT_SIZE_GUIDE_MODAL_BACKGROUND_COLOR
+					),
 				'sg_tab_background_color'        => Printful_Integration::instance()
-				                                                        ->get_option(
-					                                                        'pfsg_tab_background_color',
-					                                                        Printful_Admin_Settings::DEFAULT_SIZE_GUIDE_TAB_BACKGROUND_COLOR
-				                                                        ),
+					->get_option(
+						'pfsg_tab_background_color',
+						Printful_Admin_Settings::DEFAULT_SIZE_GUIDE_TAB_BACKGROUND_COLOR
+					),
 				'sg_active_tab_background_color' => Printful_Integration::instance()
-				                                                        ->get_option(
-					                                                        'pfsg_active_tab_background_color',
-					                                                        Printful_Admin_Settings::DEFAULT_SIZE_GUIDE_ACTIVE_TAB_BACKGROUND_COLOR
-				                                                        ),
+					->get_option(
+						'pfsg_active_tab_background_color',
+						Printful_Admin_Settings::DEFAULT_SIZE_GUIDE_ACTIVE_TAB_BACKGROUND_COLOR
+					),
 				'sg_primary_unit'                => Printful_Integration::instance()
-				                                                        ->get_option( 'pfsg_primary_unit', Printful_Admin_Settings::DEFAULT_SIZE_GUIDE_UNIT ),
+					->get_option( 'pfsg_primary_unit', Printful_Admin_Settings::DEFAULT_SIZE_GUIDE_UNIT ),
 				'sg_data_raw'                    => json_encode( $sizeGuideData ),
 				'sg_tab_title_person'            => __( 'Measure yourself', 'printful' ),
 				'sg_tab_title_product'           => __( 'Product measurements', 'printful' ),
 				'sg_table_header_size'           => __( 'Size', 'printful' ),
-				'sg_unit_translations'           => json_encode( [
+				'sg_unit_translations'           => json_encode( array(
 					'inch'       => __( 'Inches', 'printful' ),
 					'centimeter' => __( 'Centimeters', 'printful' ),
-				] )
+				) ),
 			)
 		);
-		wp_register_style( $handle, plugins_url( '../assets/css/size-guide.css', __FILE__ ), [], self::CSS_VERSION );
+		wp_register_style( $handle, plugins_url( '../assets/css/size-guide.css', __FILE__ ), array(), self::CSS_VERSION );
 		wp_enqueue_style( $handle );
 	}
 
 	/**
+	 * Get size guide for product.
+	 *
 	 * @param WP_Post $product
 	 *
 	 * @return array|null
@@ -96,6 +98,8 @@ class Printful_Size_Guide {
 	}
 
 	/**
+	 * Is size guide valid.
+	 *
 	 * @param array $size_guide
 	 *
 	 * @return bool
@@ -107,12 +111,12 @@ class Printful_Size_Guide {
 
 		// Size guide should have at least model or product measurement data
 		if ( ( empty( $size_guide['modelMeasurements'] ) && empty( $size_guide['productMeasurements'] ) )
-		     || empty( $size_guide['availableSizes'] ) ) {
+			|| empty( $size_guide['availableSizes'] ) ) {
 			return false;
 		}
 
 		// Validate size guide rows
-		$rows = [];
+		$rows = array();
 		if ( ! empty( $size_guide['modelMeasurements']['sizeTableRows'] ) ) {
 			$rows += $size_guide['modelMeasurements']['sizeTableRows'];
 		}
@@ -131,6 +135,8 @@ class Printful_Size_Guide {
 	}
 
 	/**
+	 * Get attached image src.
+	 *
 	 * @param int $attachment_id
 	 *
 	 * @return string|null
@@ -193,6 +199,8 @@ class Printful_Size_Guide {
 	}
 
 	/**
+	 * Get size guide for storage.
+	 *
 	 * @param array $size_guide_data
 	 * @param int $product_id
 	 *

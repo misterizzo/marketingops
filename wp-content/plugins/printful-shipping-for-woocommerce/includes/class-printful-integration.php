@@ -1,10 +1,12 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-class Printful_Integration
-{
-    const PF_API_CONNECT_STATUS = 'printful_api_connect_status';
-    const PF_CONNECT_ERROR = 'printful_connect_error';
+class Printful_Integration {
+
+	const PF_API_CONNECT_STATUS = 'printful_api_connect_status';
+	const PF_CONNECT_ERROR = 'printful_connect_error';
 
 	public static $_instance;
 
@@ -20,10 +22,12 @@ class Printful_Integration
 		self::$_instance = $this;
 	}
 
-    /**
-     * @return Printful_Client
-     * @throws PrintfulException
-     */
+	/**
+	 * Get client.
+	 *
+	 * @return Printful_Client
+	 * @throws PrintfulException
+	 */
 	public function get_client() {
 		$isOauth = true;
 		$key = $this->get_option( 'printful_oauth_key' );
@@ -38,25 +42,26 @@ class Printful_Integration
 		return $client;
 	}
 
-    /**
-     * Check if the connection to Printful is working
-     * @param bool $force
-     * @return bool
-     * @throws PrintfulException
-     */
+	/**
+	 * Check if the connection to Printful is working
+	 *
+	 * @param bool $force
+	 * @return bool
+	 * @throws PrintfulException
+	 */
 	public function is_connected( $force = false ) {
 		$api_key = $this->get_option( 'printful_key' );
 		$api_oauth_key = $this->get_option( 'printful_oauth_key' );
-        
+
 		//dont need to show error - the plugin is simply not setup
 		if ( empty( $api_key ) && empty( $api_oauth_key ) ) {
 			return false;
 		}
 
 		$invalid_api_key_error_message = sprintf(
-            'Invalid API key. Please reconnect your store in <a href="%s">Printful plugin settings</a>',
-            admin_url( 'admin.php?page=printful-dashboard&tab=settings' )
-        );
+			'Invalid API key. Please reconnect your store in <a href="%s">Printful plugin settings</a>',
+			admin_url( 'admin.php?page=printful-dashboard&tab=settings' )
+		);
 
 		//validate length, show error
 		if ( $api_key && strlen( $api_key ) != 36 ) {
@@ -68,11 +73,11 @@ class Printful_Integration
 		//show connect status from cache
 		if ( ! $force ) {
 			$connected = get_transient( self::PF_API_CONNECT_STATUS );
-			if ( $connected && $connected['status'] == 1 ) {
+			if ( $connected && 1 == $connected['status']) {
 				$this->clear_connect_error();
 
 				return true;
-			} else if ( $connected && $connected['status'] == 0 ) {    //try again in a minute
+			} else if ( $connected && 0 == $connected['status'] ) {    //try again in a minute
 				return false;
 			}
 		}
@@ -83,7 +88,7 @@ class Printful_Integration
 		//attempt to connect to printful to verify the API key
 		try {
 			$storeData = $client->get( 'store' );
-			if ( ! empty( $storeData ) && $storeData['type'] == 'woocommerce') {
+			if ( ! empty( $storeData ) && 'woocommerce' == $storeData['type']) {
 				$response = true;
 				$this->clear_connect_error();
 				set_transient( self::PF_API_CONNECT_STATUS, array( 'status' => 1 ) );  //no expiry
@@ -107,9 +112,10 @@ class Printful_Integration
 
 	/**
 	 * Update connect error message
+	 *
 	 * @param string $error
 	 */
-	public function set_connect_error($error = '') {
+	public function set_connect_error( $error = '' ) {
 		update_option( self::PF_CONNECT_ERROR, $error );
 	}
 
@@ -127,17 +133,18 @@ class Printful_Integration
 		delete_option( self::PF_CONNECT_ERROR );
 	}
 
-    /**
-     * AJAX call endpoint for connect status check
-     * @throws PrintfulException
-     */
+	/**
+	 * AJAX call endpoint for connect status check
+	 *
+	 * @throws PrintfulException
+	 */
 	public static function ajax_force_check_connect_status() {
 
 		Printful_Admin::validateAdminAccess();
 
-        check_admin_referer( 'check_connect_status' );
+		check_admin_referer( 'check_connect_status' );
 
-		if ( Printful_Integration::instance()->is_connected( true ) ) {
+		if ( self::instance()->is_connected( true ) ) {
 			die( 'OK' );
 		}
 
@@ -146,12 +153,13 @@ class Printful_Integration
 
 	/**
 	 * Wrapper method for getting an option
+	 *
 	 * @param $name
 	 * @param array $default
 	 * @return bool
 	 */
 	public function get_option( $name, $default = array() ) {
-        $options = $this->get_settings( $default );
+		$options = $this->get_settings( $default );
 		if ( ! empty( $options[ $name ] ) ) {
 			return $options[ $name ];
 		}
@@ -159,17 +167,19 @@ class Printful_Integration
 		return false;
 	}
 
-    /**
-     * Wrapper method for getting all the settings
-     * @param array $default
-     * @return array
-     */
-    public function get_settings( $default = array() ) {
-        return get_option( 'woocommerce_printful_settings', $default );
-    }
+	/**
+	 * Wrapper method for getting all the settings
+	 *
+	 * @param array $default
+	 * @return array
+	 */
+	public function get_settings( $default = array() ) {
+		return get_option( 'woocommerce_printful_settings', $default );
+	}
 
 	/**
 	 * Save the setting
+	 *
 	 * @param $settings
 	 */
 	public function update_settings( $settings ) {
