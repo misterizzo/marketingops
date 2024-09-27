@@ -338,7 +338,6 @@ if ( ! class_exists( 'WC_Connect_Service_Settings_Store' ) ) {
 			}
 
 			return ( $a->instance_id > $b->instance_id ) ? 1 : -1;
-
 		}
 
 		/**
@@ -615,6 +614,31 @@ if ( ! class_exists( 'WC_Connect_Service_Settings_Store' ) ) {
 			}
 
 			return $lookup;
+		}
+
+		public function is_eligible_for_migration() {
+			$migration_state = intval( get_option( 'wcshipping_migration_state', 0 ) );
+
+			// If the migration state is greater than "COMPLETED", then we can assume that the next part of the migration
+			// state is being handled by WooCommerce Shipping.
+			if ( $migration_state > WC_Connect_WCST_To_WCShipping_Migration_State_Enum::COMPLETED ) {
+				return false;
+			}
+
+			// Hide the migration notification if the site has any active shipping methods defined by WCS&T.
+			if ( ! empty( $this->get_enabled_services() ) ) {
+				return false;
+			}
+
+			$migration_dismissed = false;
+			if ( isset( $_COOKIE[ WC_Connect_Loader::MIGRATION_DISMISSAL_COOKIE_KEY ] ) && (int) $_COOKIE[ WC_Connect_Loader::MIGRATION_DISMISSAL_COOKIE_KEY ] === 1 ) {
+				$migration_dismissed = true;
+			}
+
+			$migration_pending = ! $migration_state || WC_Connect_WCST_To_WCShipping_Migration_State_Enum::COMPLETED !== $migration_state;
+			$migration_enabled = $this->service_schemas_store->is_wcship_wctax_migration_enabled();
+
+			return $migration_pending && $migration_enabled && ! $migration_dismissed;
 		}
 
 		private function translate_unit( $value ) {

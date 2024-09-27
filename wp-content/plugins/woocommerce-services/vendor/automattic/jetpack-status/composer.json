@@ -5,13 +5,15 @@
 	"license": "GPL-2.0-or-later",
 	"require": {
 		"php": ">=7.0",
-		"automattic/jetpack-constants": "^2.0.0"
+		"automattic/jetpack-constants": "^2.0.3"
 	},
 	"require-dev": {
 		"brain/monkey": "2.6.1",
 		"yoast/phpunit-polyfills": "1.1.0",
-		"automattic/jetpack-changelogger": "^4.0.5",
-		"automattic/jetpack-ip": "^0.2.1"
+		"automattic/jetpack-changelogger": "^4.2.4",
+		"automattic/jetpack-connection": "@dev",
+		"automattic/jetpack-plans": "@dev",
+		"automattic/jetpack-ip": "^0.2.2"
 	},
 	"suggest": {
 		"automattic/jetpack-autoloader": "Allow for better interoperability with other plugins that use this package."
@@ -38,7 +40,13 @@
 			"link-template": "https://github.com/Automattic/jetpack-status/compare/v${old}...v${new}"
 		},
 		"branch-alias": {
-			"dev-trunk": "2.1.x-dev"
+			"dev-trunk": "3.3.x-dev"
+		},
+		"dependencies": {
+			"test-only": [
+				"packages/connection",
+				"packages/plans"
+			]
 		}
 	}
 }
