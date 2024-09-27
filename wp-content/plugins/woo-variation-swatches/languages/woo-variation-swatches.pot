@@ -7,7 +7,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language-Team: Emran Ahmed <emran.bd.08@gmail.com>\n"
-"POT-Creation-Date: 2024-06-06 10:31+0000\n"
+"POT-Creation-Date: 2024-08-29 12:38+0000\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -15,111 +15,111 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../includes/class-woo-variation-swatches-backend.php:90
+#: ../includes/class-woo-variation-swatches-backend.php:117
 msgid "View documentation"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:90, ../includes/html-settings-sidebar.php:7
+#: ../includes/class-woo-variation-swatches-backend.php:117, ../includes/html-settings-sidebar.php:7
 msgid "Documentation"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:91, ../includes/class-woo-variation-swatches-backend.php:91
+#: ../includes/class-woo-variation-swatches-backend.php:118, ../includes/class-woo-variation-swatches-backend.php:118
 msgid "Video Tutorials"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:92, ../includes/class-woo-variation-swatches-backend.php:92
+#: ../includes/class-woo-variation-swatches-backend.php:119, ../includes/class-woo-variation-swatches-backend.php:119
 msgid "Help & Support"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:100
+#: ../includes/class-woo-variation-swatches-backend.php:127
 msgid "View Swatches settings"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:100
+#: ../includes/class-woo-variation-swatches-backend.php:127
 msgid "Settings"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:105, ../includes/class-woo-variation-swatches-backend.php:105
+#: ../includes/class-woo-variation-swatches-backend.php:132, ../includes/class-woo-variation-swatches-backend.php:132
 msgid "Go Pro"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:134
+#: ../includes/class-woo-variation-swatches-backend.php:161
 msgid "Select values"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:155
+#: ../includes/class-woo-variation-swatches-backend.php:182
 msgid "Select all"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:156
+#: ../includes/class-woo-variation-swatches-backend.php:183
 msgid "Select none"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:157
+#: ../includes/class-woo-variation-swatches-backend.php:184
 msgid "Create value"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:194, ../includes/class-woo-variation-swatches-backend.php:283
+#: ../includes/class-woo-variation-swatches-backend.php:221, ../includes/class-woo-variation-swatches-backend.php:310
 msgid "Choose an Image"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:195
+#: ../includes/class-woo-variation-swatches-backend.php:222
 msgid "Add Attribute"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:196
+#: ../includes/class-woo-variation-swatches-backend.php:223
 msgid "Add"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:197
+#: ../includes/class-woo-variation-swatches-backend.php:224
 msgid "Cancel"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:198
+#: ../includes/class-woo-variation-swatches-backend.php:225
 msgid "Use Image"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:199
+#: ../includes/class-woo-variation-swatches-backend.php:226
 msgid "Add Media"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:203
+#: ../includes/class-woo-variation-swatches-backend.php:230
 msgid "Variation Swatches Settings"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:205
+#: ../includes/class-woo-variation-swatches-backend.php:232
 msgid "Are you sure you want to reset it to default setting?"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:206
+#: ../includes/class-woo-variation-swatches-backend.php:233
 msgid "Please save changed first."
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:213
+#: ../includes/class-woo-variation-swatches-backend.php:240
 msgid "Select"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:214, ../includes/class-woo-variation-swatches-backend.php:273
+#: ../includes/class-woo-variation-swatches-backend.php:241, ../includes/class-woo-variation-swatches-backend.php:300
 msgid "Color"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:215, ../includes/class-woo-variation-swatches-backend.php:282
+#: ../includes/class-woo-variation-swatches-backend.php:242, ../includes/class-woo-variation-swatches-backend.php:309
 msgid "Image"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:216
+#: ../includes/class-woo-variation-swatches-backend.php:243
 msgid "Button"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:217
+#: ../includes/class-woo-variation-swatches-backend.php:244
 msgid "Radio"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:225
+#: ../includes/class-woo-variation-swatches-backend.php:252
 msgid "Mixed"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-backend.php:274
+#: ../includes/class-woo-variation-swatches-backend.php:301
 msgid "Choose a color"
 msgstr ""
 
@@ -201,6 +201,10 @@ msgstr ""
 msgid "Unable to use image \"%s\"."
 msgstr ""
 
+#: ../includes/class-woo-variation-swatches-manage-cache.php:83
+msgid "Clear swatches transient"
+msgstr ""
+
 #: ../includes/class-woo-variation-swatches-product-edit-panel.php:31, ../includes/class-woo-variation-swatches-settings.php:29
 msgid "Swatches Settings"
 msgstr ""
@@ -210,7 +214,7 @@ msgstr ""
 msgid "%s left"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-product-page.php:819, ../includes/class-woo-variation-swatches-product-page.php:845
+#: ../includes/class-woo-variation-swatches-product-page.php:821, ../includes/class-woo-variation-swatches-product-page.php:847
 msgid "Choose an option"
 msgstr ""
 
@@ -726,11 +730,11 @@ msgstr ""
 msgid "Show Attribute taxonomies in large size."
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-term-meta.php:401
+#: ../includes/class-woo-variation-swatches-term-meta.php:405
 msgid "Upload / Add image"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-term-meta.php:407
+#: ../includes/class-woo-variation-swatches-term-meta.php:411
 msgid "Remove image"
 msgstr ""
 
@@ -936,15 +940,15 @@ msgstr ""
 msgid "The changes you made will be lost if you navigate away from this page."
 msgstr ""
 
-#: ../includes/getwooplugins/class-getwooplugins-admin-menus.php:156, ../includes/getwooplugins/class-getwooplugins-admin-menus.php:184
+#: ../includes/getwooplugins/class-getwooplugins-admin-menus.php:145, ../includes/getwooplugins/class-getwooplugins-admin-menus.php:171
 msgid "GetWooPlugins Settings"
 msgstr ""
 
-#: ../includes/getwooplugins/class-getwooplugins-admin-menus.php:156
+#: ../includes/getwooplugins/class-getwooplugins-admin-menus.php:145
 msgid "GetWooPlugins"
 msgstr ""
 
-#: ../includes/getwooplugins/class-getwooplugins-admin-menus.php:184
+#: ../includes/getwooplugins/class-getwooplugins-admin-menus.php:171
 msgid "Home"
 msgstr ""
 
@@ -996,15 +1000,20 @@ msgstr ""
 msgid "Reset all"
 msgstr ""
 
-#: ../woo-variation-swatches.php:60
+#: ../woo-variation-swatches.php:65
 msgid "<strong>Variation Swatches for WooCommerce</strong> is an add-on of "
 msgstr ""
 
-#: ../woo-variation-swatches.php:62
+#: ../woo-variation-swatches.php:67
 msgid "WooCommerce"
 msgstr ""
 
 #. translators: %s: Pro Plugin Version
-#: ../woo-variation-swatches.php:128
+#: ../woo-variation-swatches.php:140
 msgid "You are running older version of \"Variation Swatches for WooCommerce - Pro\". Please upgrade to %s or upper and continue."
+msgstr ""
+
+#. translators: %s: Pro Plugin Version
+#: ../woo-variation-swatches.php:158
+msgid "You are running older version of \"Variation Swatches for WooCommerce - Pro\". Please upgrade to %s or upper."
 msgstr ""

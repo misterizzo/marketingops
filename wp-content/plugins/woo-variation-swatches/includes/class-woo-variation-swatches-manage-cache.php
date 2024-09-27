@@ -61,6 +61,31 @@ if ( ! class_exists( 'Woo_Variation_Swatches_Manage_Cache' ) ) {
 				$this,
 				'clear_cache_on_product_settings_modify'
 			) );
+
+			add_action( 'admin_bar_menu', array( $this, 'add_admin_menu' ), 999 );
+		}
+
+		public function add_admin_menu( $wp_admin_bar ) {
+
+			if ( ! is_admin() && current_user_can( 'manage_woocommerce' ) && ( is_singular( 'product' ) || is_shop() ) ) {
+
+				$create_nonce = wp_create_nonce('woo_variation_swatches_clear_transient');
+
+				$url = remove_query_arg( array(
+					'variation_id',
+					'remove_item',
+					'add-to-cart',
+					'added-to-cart',
+				), add_query_arg( 'woo_variation_swatches_clear_transient', $create_nonce ) );
+
+				$node =  array(
+					'id'     => 'woo-variation-swatches-clear-transient',
+					'title'  => esc_html__( 'Clear swatches transient', 'woo-variation-swatches' ),
+					'href'   => esc_url( $url),
+
+				);
+				$wp_admin_bar->add_menu($node);
+			}
 		}
 
 		protected function init() {
@@ -102,7 +127,18 @@ if ( ! class_exists( 'Woo_Variation_Swatches_Manage_Cache' ) ) {
 				$suffix .= sprintf( '_%s', $current_currency );
 			}
 
-			return apply_filters( 'woo_variation_swatches_get_cache_key', $key . $suffix, $key, $suffix );
+			$generated_cache_key = sprintf( '%s%s', $key, $suffix);
+
+			if ( ! is_admin() && current_user_can( 'manage_options' ) && isset($_GET['woo_variation_swatches_clear_transient']) ) {
+
+				check_admin_referer('woo_variation_swatches_clear_transient', 'woo_variation_swatches_clear_transient');
+				$cache_group = 'woo_variation_swatches';
+				delete_transient( $generated_cache_key);
+				wp_cache_delete( $generated_cache_key, $cache_group );
+				do_action( 'woo_variation_swatches_clear_transient', $generated_cache_key, $cache_group);
+			}
+
+			return apply_filters( 'woo_variation_swatches_get_cache_key', $generated_cache_key, $key, $suffix );
 		}
 
 		// Clear Settings Cache
@@ -171,7 +207,7 @@ if ( ! class_exists( 'Woo_Variation_Swatches_Manage_Cache' ) ) {
 
 		public function clear_cache_on_attribute_deleted( $id, $name, $taxonomy ) {
 
-			$transient_key       = woo_variation_swatches()->get_cache()->get_cache_key( sprintf( 'woo_variation_swatches_cache_attribute_taxonomy__%s', wc_attribute_taxonomy_name( $name ) ) );
+			$transient_key       = woo_variation_swatches()->get_cache()->get_cache_key( sprintf( 'woo_variation_swatches_cache_attribute_taxonomy__%s', $taxonomy ) );
 			$transient_key_by_id = woo_variation_swatches()->get_cache()->get_cache_key( sprintf( 'woo_variation_swatches_cache_attribute_taxonomy_id__%s', $id ) );
 
 			delete_transient( $transient_key );

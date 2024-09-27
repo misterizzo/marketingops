@@ -4,14 +4,14 @@
 	 * Plugin URI: https://wordpress.org/plugins/woo-variation-swatches/
 	 * Description: Beautiful colors, images and buttons variation swatches for woocommerce product attributes. Requires WooCommerce 7.5+
 	 * Author: Emran Ahmed
-	 * Version: 2.1.0
-	 * Domain Path: /languages
+	 * Version: 2.1.2
 	 * Requires PHP: 7.4
 	 * Requires at least: 5.9
-	 * Tested up to: 6.5
+	 * Tested up to: 6.6
 	 * WC requires at least: 7.5
-	 * WC tested up to: 8.9
+	 * WC tested up to: 9.2
 	 * Text Domain: woo-variation-swatches
+	 * Domain Path: /languages
 	 * Author URI: https://getwooplugins.com/
 	 * Requires Plugins: woocommerce
 	 */
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'WOO_VARIATION_SWATCHES_PLUGIN_VERSION' ) ) {
-	define( 'WOO_VARIATION_SWATCHES_PLUGIN_VERSION', '2.1.0' );
+	define( 'WOO_VARIATION_SWATCHES_PLUGIN_VERSION', '2.1.2' );
 }
 
 if ( ! defined( 'WOO_VARIATION_SWATCHES_MINIMUM_COMPATIBLE_PRO_PLUGIN_VERSION' ) ) {
@@ -30,6 +30,11 @@ if ( ! defined( 'WOO_VARIATION_SWATCHES_MINIMUM_COMPATIBLE_PRO_PLUGIN_VERSION' )
 
 if ( ! defined( 'WOO_VARIATION_SWATCHES_PLUGIN_FILE' ) ) {
 	define( 'WOO_VARIATION_SWATCHES_PLUGIN_FILE', __FILE__ );
+}
+
+if ( ! defined( 'WOO_VARIATION_SWATCHES_MAYBE_PRO_PLUGIN_FILE' ) ) {
+	$woo_variation_swatches_maybe_pro_plugin_file = sprintf('%s/woo-variation-swatches-pro/woo-variation-swatches-pro.php', wp_normalize_path( WP_PLUGIN_DIR ));
+	define( 'WOO_VARIATION_SWATCHES_MAYBE_PRO_PLUGIN_FILE', $woo_variation_swatches_maybe_pro_plugin_file );
 }
 
 	// Include the main class.
@@ -75,7 +80,7 @@ function woo_variation_swatches() {
 		return false;
 	}
 
-	if ( function_exists( 'woo_variation_swatches_pro' ) ) {
+	if ( function_exists( 'woo_variation_swatches_pro' ) && woo_variation_swatches_using_correct_pro_version() ) {
 		return woo_variation_swatches_pro();
 	}
 
@@ -89,7 +94,7 @@ function woo_variation_swatches() {
  *
  * @return bool
  */
-function woo_variation_swatches_using_correct_pro_version() {
+function woo_variation_swatches_using_correct_pro_version(): bool {
 	return defined( 'WOO_VARIATION_SWATCHES_PRO_PLUGIN_VERSION' ) && ( version_compare( constant('WOO_VARIATION_SWATCHES_PRO_PLUGIN_VERSION'), constant( 'WOO_VARIATION_SWATCHES_MINIMUM_COMPATIBLE_PRO_PLUGIN_VERSION' ) ) >= 0 );
 }
 
@@ -109,6 +114,12 @@ function woo_variation_swatches_deactivate_pro() {
 	}
 
 	if ( is_plugin_active( 'woo-variation-swatches-pro/woo-variation-swatches-pro.php' ) ) {
+
+		// Suppress "Plugin activated." notice.
+		unset($_GET['activate']); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		// Display notice why pro version cannot activate.
+		add_action('admin_notices', 'woo_variation_swatches_deactivate_notice_pro');
 		// Deactivate the plugin silently, Prevent deactivation hooks from running.
 		deactivate_plugins( 'woo-variation-swatches-pro/woo-variation-swatches-pro.php', true );
 	}
@@ -119,14 +130,36 @@ function woo_variation_swatches_deactivate_pro() {
  *
  * @return void
  */
-function woo_variation_swatches_prevent_pro_active() {
+function woo_variation_swatches_deactivate_notice_pro() {
 
 	if ( woo_variation_swatches_using_correct_pro_version() ) {
 		return;
 	}
+
 	/* translators: %s: Pro Plugin Version */
-	printf(esc_html__('You are running older version of "Variation Swatches for WooCommerce - Pro". Please upgrade to %s or upper and continue.', 'woo-variation-swatches'), esc_html(constant( 'WOO_VARIATION_SWATCHES_MINIMUM_COMPATIBLE_PRO_PLUGIN_VERSION' )));
-	exit();
+	$notice_text =  sprintf(esc_html__('You are running older version of "Variation Swatches for WooCommerce - Pro". Please upgrade to %s or upper and continue.', 'woo-variation-swatches'), esc_html(constant( 'WOO_VARIATION_SWATCHES_MINIMUM_COMPATIBLE_PRO_PLUGIN_VERSION' )));
+
+	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error', esc_html($notice_text) );
+}
+
+/**
+ * Show notice on plugin row.
+ *
+ * @param string $plugin_file Refer to {@see 'plugin_row_meta'} filter.
+ * @param array  $plugin_data Refer to {@see 'plugin_row_meta'} filter.
+ *
+ * @return void
+ */
+function woo_variation_swatches_row_meta_notice_pro( string $plugin_file, array $plugin_data) {
+	if ( plugin_basename( WOO_VARIATION_SWATCHES_MAYBE_PRO_PLUGIN_FILE ) === $plugin_file ) {
+		$current_version = $plugin_data['Version'];
+		if (  version_compare( $current_version, constant( 'WOO_VARIATION_SWATCHES_MINIMUM_COMPATIBLE_PRO_PLUGIN_VERSION' ), '<' )  ) {
+			/* translators: %s: Pro Plugin Version */
+			$notice_text = 	 sprintf(esc_html__('You are running older version of "Variation Swatches for WooCommerce - Pro". Please upgrade to %s or upper.', 'woo-variation-swatches'), esc_html(constant( 'WOO_VARIATION_SWATCHES_MINIMUM_COMPATIBLE_PRO_PLUGIN_VERSION' )));
+
+			printf( '<p style="color: darkred"><span class="dashicons dashicons-warning"></span> <strong>%s</strong></p>', esc_html($notice_text) );
+		}
+	}
 }
 
 /**
@@ -142,5 +175,5 @@ function woo_variation_swatches_hpos_compatibility() {
 
 	add_action( 'before_woocommerce_init', 'woo_variation_swatches_hpos_compatibility' );
 	add_action( 'plugins_loaded', 'woo_variation_swatches_deactivate_pro', 9 );
-	add_action( 'activate_woo-variation-swatches-pro/woo-variation-swatches-pro.php', 'woo_variation_swatches_prevent_pro_active' );
+	add_action( 'after_plugin_row_meta', 'woo_variation_swatches_row_meta_notice_pro', 10, 2 );
 

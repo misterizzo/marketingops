@@ -17,7 +17,7 @@ if ( ! class_exists( 'Woo_Variation_Swatches_Term_Meta' ) ) :
 			// Category/term ordering
 			// add_action( 'create_term', array( $this, 'create_term' ), 5, 3 );
 
-			add_action( 'delete_term', array( $this, 'delete_term' ), 5, 4 );
+			add_action( 'delete_term', array( $this, 'delete_term' ), 5, 3 );
 
 			// Add form
 			add_action( "{$this->taxonomy}_add_form_fields", array( $this, 'add' ) );
@@ -211,7 +211,7 @@ if ( ! class_exists( 'Woo_Variation_Swatches_Term_Meta' ) ) :
 			return $columns;
 		}
 
-		public function delete_term( $term_id, $tt_id, $taxonomy, $deleted_term ) {
+		public function delete_term( $term_id, $tt_id, $taxonomy ) {
 			global $wpdb;
 
 			$term_id = absint( $term_id );
@@ -228,6 +228,10 @@ if ( ! class_exists( 'Woo_Variation_Swatches_Term_Meta' ) ) :
 
 		public function save( $term_id, $tt_id = '', $taxonomy = '' ) {
 			if ( $taxonomy === $this->taxonomy ) {
+
+				if ( !isset( $_POST['woo_variation_swatches_term_meta_nonce'] ) ) {
+					return;
+				}
 
 				check_admin_referer('woo_variation_swatches_term_meta', 'woo_variation_swatches_term_meta_nonce');
 

@@ -36,7 +36,7 @@ if ( ! class_exists( 'Woo_Variation_Swatches' ) ) {
 		public function includes() {
 
 			// Deprecated file: class-woo-variation-swatches-cache.php
-			require_once __DIR__ . '/class-woo-variation-swatches-cache.php';
+			// require_once __DIR__ . '/class-woo-variation-swatches-cache.php';
 			require_once __DIR__ . '/class-woo-variation-swatches-manage-cache.php';
 			require_once __DIR__ . '/class-woo-variation-swatches-frontend.php';
 			require_once __DIR__ . '/class-woo-variation-swatches-backend.php';

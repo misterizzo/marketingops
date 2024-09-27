@@ -135,22 +135,11 @@ if ( ! class_exists( 'GetWooPlugins_Admin_Menus', false ) ) :
 		 * Add menu items.
 		 */
 		public function admin_menu() {
-			global $menu;
 
 			$pages = $this->get_settings_pages();
 
 			if ( empty( $pages ) ) {
 				return;
-			}
-
-			if ( current_user_can( 'edit_theme_options' ) ) {
-				$menu[ '45.4' ] = array( // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-					'',
-					'read',
-					'separator-getwooplugins',
-					'',
-					'wp-menu-separator getwooplugins'
-				);
 			}
 
 			add_menu_page( esc_html__( 'GetWooPlugins Settings', 'woo-variation-swatches' ), esc_html__( 'GetWooPlugins', 'woo-variation-swatches' ), 'edit_theme_options', 'getwooplugins', null, 'dashicons-admin-settings', '45.5' );
@@ -178,8 +167,6 @@ if ( ! class_exists( 'GetWooPlugins_Admin_Menus', false ) ) :
 		 * Add menu item.
 		 */
 		public function settings_menu() {
-
-			global $submenu, $menu;
 
 			$settings_page = add_submenu_page( 'getwooplugins', esc_html__( 'GetWooPlugins Settings', 'woo-variation-swatches' ), esc_html__( 'Home', 'woo-variation-swatches' ), 'manage_options', 'getwooplugins-settings', array(
 				$this,

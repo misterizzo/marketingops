@@ -430,11 +430,13 @@ if ( ! class_exists( 'Woo_Variation_Swatches_Product_Page' ) ) {
 		}
 
 		public function item_end() {
+
 			$html            = '';
 			$show_stock_info =  woo_variation_swatches()->is_pro() && wc_string_to_bool( woo_variation_swatches()->get_option( 'show_variation_stock_info', 'no' ) );
 			if ($show_stock_info) {
-				$html .= '<div class="wvs-stock-left-info" data-wvs-stock-info=""></div>';
+				$html .= '<span class="wvs-stock-left-info" data-wvs-stock-info=""></span>';
 			}
+
 			$html .= '</div></li>';
 
 			return $html;
