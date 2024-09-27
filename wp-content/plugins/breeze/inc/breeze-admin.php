@@ -1226,6 +1226,7 @@ INLINEJS;
 				delete_site_option( 'breeze_ecommerce_detect' );
 				delete_site_option( 'breeze_exclude_url_pages' );
 				delete_site_option( 'breeze_hide_notice' );
+				delete_site_option( 'breeze_version' );
 
 				// Delete options for each sub-blog.
 				foreach ( $sites as $blog_id ) {
@@ -1245,6 +1246,7 @@ INLINEJS;
 					delete_option( 'breeze_ecommerce_detect' );
 					delete_option( 'breeze_exclude_url_pages' );
 					delete_option( 'breeze_hide_notice' );
+					delete_option( 'breeze_version' );
 					restore_current_blog();
 				}
 			} else {
@@ -1264,6 +1266,7 @@ INLINEJS;
 				delete_option( 'breeze_ecommerce_detect' );
 				delete_option( 'breeze_exclude_url_pages' );
 				delete_option( 'breeze_hide_notice' );
+				delete_option( 'breeze_version' );
 			}
 		}
 	}

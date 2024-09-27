@@ -85,7 +85,7 @@ class Breeze_ConfigCache {
 			               "\n\r" . 'if ( ! @file_exists( \'' . BREEZE_PLUGIN_DIR . 'breeze.php\' ) ) { return; }';
 		}
 
-		if ( 1 === count( $cache_configs ) ) {
+		if ( !is_multisite() && 1 === count( $cache_configs ) ) {
 			// Only 1 config file available.
 			$blog_file   = trailingslashit( WP_CONTENT_DIR ) . 'breeze-config/breeze-config.php';
 			$file_string .= "\n\$config['config_path'] = '$blog_file';";

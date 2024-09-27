@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Breeze
  * Description: Breeze is a WordPress cache plugin with extensive options to speed up your website. All the options including Varnish Cache are compatible with Cloudways hosting.
- * Version: 2.1.13
+ * Version: 2.1.14
  * Text Domain: breeze
  * Domain Path: /languages
  * Author: Cloudways
@@ -37,7 +37,7 @@ if ( ! defined( 'BREEZE_PLUGIN_DIR' ) ) {
 	define( 'BREEZE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 }
 if ( ! defined( 'BREEZE_VERSION' ) ) {
-	define( 'BREEZE_VERSION', '2.1.13' );
+	define( 'BREEZE_VERSION', '2.1.14' );
 }
 if ( ! defined( 'BREEZE_SITEURL' ) ) {
 	define( 'BREEZE_SITEURL', get_site_url() );
@@ -142,13 +142,13 @@ if ( is_admin() || 'cli' === php_sapi_name() ) {
 
 } else {
 	if ( ! empty( Breeze_Options_Reader::get_option_value( 'cdn-active' ) )
-	     || ! empty( Breeze_Options_Reader::get_option_value( 'breeze-minify-js' ) )
-	     || ! empty( Breeze_Options_Reader::get_option_value( 'breeze-minify-css' ) )
-	     || ! empty( Breeze_Options_Reader::get_option_value( 'breeze-minify-html' ) )
-	     || ! empty( Breeze_Options_Reader::get_option_value( 'breeze-defer-js' ) )
-	     || ! empty( Breeze_Options_Reader::get_option_value( 'breeze-move-to-footer-js' ) )
-	     || ! empty( Breeze_Options_Reader::get_option_value( 'breeze-delay-all-js' ) )
-	     || ! empty( Breeze_Options_Reader::get_option_value( 'breeze-enable-js-delay' ) )
+		 || ! empty( Breeze_Options_Reader::get_option_value( 'breeze-minify-js' ) )
+		 || ! empty( Breeze_Options_Reader::get_option_value( 'breeze-minify-css' ) )
+		 || ! empty( Breeze_Options_Reader::get_option_value( 'breeze-minify-html' ) )
+		 || ! empty( Breeze_Options_Reader::get_option_value( 'breeze-defer-js' ) )
+		 || ! empty( Breeze_Options_Reader::get_option_value( 'breeze-move-to-footer-js' ) )
+		 || ! empty( Breeze_Options_Reader::get_option_value( 'breeze-delay-all-js' ) )
+		 || ! empty( Breeze_Options_Reader::get_option_value( 'breeze-enable-js-delay' ) )
 	) {
 		// Call back ob start
 		ob_start( 'breeze_ob_start_callback' );
@@ -169,9 +169,13 @@ if ( $api_enabled ) {
 /**
  * Store files locally, First buffer controller to occur in this plugin
  */
-add_action( 'init', function () {
-	ob_start( 'breeze_ob_start_localfiles_callback' );
-}, 5 );
+add_action(
+	'init',
+	function () {
+		ob_start( 'breeze_ob_start_localfiles_callback' );
+	},
+	5
+);
 
 
 /**
@@ -183,16 +187,14 @@ add_action( 'init', function () {
 function breeze_check_versions() {
 	// Get Breeze version in DB
 	if (
-		false === is_network_admin() &&
-		(
 			( function_exists( 'is_ajax' ) && false === is_ajax() ) ||
 			( function_exists( 'wp_doing_ajax' ) && false === wp_doing_ajax() )
-		)
 	) {
 		$db_breeze_version = get_option( 'breeze_version' ); // breeze_version
 
 		if ( ! $db_breeze_version || version_compare( BREEZE_VERSION, $db_breeze_version, '!=' ) ) {
 			update_option( 'breeze_version', BREEZE_VERSION, 'no' );
+			Breeze_ConfigCache::factory()->write();
 			do_action( 'breeze_clear_all_cache' );
 		}
 	}
@@ -769,9 +771,9 @@ function breeze_cc_process_match( $match ) {
 
 	// Check if this is an external link
 	if ( ! empty( $href_attr ) &&
-	     filter_var( $href_attr, FILTER_VALIDATE_URL ) &&
-	     strpos( $href_attr, $home_url ) === false &&
-	     strpos( $target_attr, '_blank' ) !== false ) {
+		 filter_var( $href_attr, FILTER_VALIDATE_URL ) &&
+		 strpos( $href_attr, $home_url ) === false &&
+		 strpos( $target_attr, '_blank' ) !== false ) {
 
 		// Extract the rel attribute, if present
 		$rel_attr = '';
