@@ -1,11 +1,11 @@
-=== Rank Math SEO with AI SEO Tools ===
+=== Rank Math SEO – AI SEO Tools to Dominate SEO Rankings ===
 Contributors: rankmath
 Plugin link: https://rankmath.com/?utm_source=LP&utm_campaign=WP
 Tags: seo, sitemap, google search console, schema, redirection, WordPress SEO
-Tested up to: 6.5
+Tested up to: 6.6
 Requires at least: 6.3
 Requires PHP: 7.4
-Stable tag: 1.0.220
+Stable tag: 1.0.228
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -583,13 +583,11 @@ Please drop us an email at support@rankmath.com and we would be more than happy 
 
 == Changelog ==
 
-= 1.0.220 [May 30, 2024] =
-- Added: [Power words](https://rankmath.com/blog/power-words/#power-words-list) support for French, Japanese, Spanish, Italian, Finnish, and Hungarian languages
-- Added: Turkish language support in [Content AI](https://rankmath.com/kb/configure-content-ai-global-settings/#languages)
-- Fixed: Update button state in the [Elementor editor](https://rankmath.com/blog/elementor-seo/) remained active without changing any content
-- Fixed: Content generated using [Write with Content AI](https://rankmath.com/kb/how-to-use-content-ai/#write-with-content-ai) was inserted in the wrong position on WordPress 6.5
-- Fixed: PHP warning related to the [Table of Contents block](https://rankmath.com/kb/table-of-contents-block/) on some setups
-- Fixed: Author Sitemap was not displaying on some setups due to an incorrect format of the [Exclude User Roles setting](https://rankmath.com/kb/configure-sitemaps/#authors-exclude-user-roles)
+= 1.0.228 [Sept 18, 2024] =
+- Fixed: Missing option to [Generate Alt Texts](https://rankmath.com/kb/generate-alt-text-with-content-ai/#generate-alt-text-for-images-from-media-library) when the Elementor editor is active
+- Fixed: [Focus Keyword in the URL test](https://rankmath.com/kb/score-100-in-tests/#focus-keyword-in-the-url-primary-focus-keyword-only) was not working correctly when a period(`.`) was added to the post title
+- Fixed: [Capitalize Titles](https://rankmath.com/kb/titles-and-meta/#capitalize-titles) feature was incorrectly capitalizing the character after a period(`.`) in the [SERP Preview](https://rankmath.com/kb/general-tab/#previewing-your-metadata)
+- Fixed: PHP warnings on Elementor landing pages
 
 
 Full changelog can be found here - **[Rank Math changelog](https://rankmath.com/changelog/?utm_source=Plugin&utm_medium=Changelog&utm_campaign=WP)**
