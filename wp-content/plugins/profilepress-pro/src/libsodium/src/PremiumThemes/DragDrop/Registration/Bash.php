@@ -108,7 +108,7 @@ class Bash extends AbstractTheme
                 'type'     => 'select2',
                 'options'  => [
                     'facebook' => esc_html__('Facebook', 'profilepress-pro'),
-                    'twitter'  => esc_html__('Twitter', 'profilepress-pro'),
+                    'twitter'  => esc_html__('X/Twitter', 'profilepress-pro'),
                     'google'   => esc_html__('Google', 'profilepress-pro'),
                 ],
                 'label'    => esc_html__('Social Login Buttons', 'profilepress-pro'),
@@ -282,7 +282,7 @@ HTML;
 	}
 
 	div#pp-$form_type-$form_id.bash .bash-twitter {
-		background-image: url($asset_url/bash-twitter.png);
+		background-image: url($asset_url/x.svg);
 	}
 
 	div#pp-$form_type-$form_id.bash .bash-google {

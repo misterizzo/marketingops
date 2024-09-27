@@ -184,7 +184,11 @@ $customer_state     = ppress_get_country_state_title($order->billing_state, $ord
             <?php if (Calculator::init($order->tax)->isGreaterThanZero()) : ?>
                 <tr class="summary-amount">
                     <td></td>
-                    <td colspan="3"><?php printf('%s (%s%%):', $tax_label, $order->tax_rate); ?></td>
+                    <td colspan="3"><?php printf(
+                            '%s %s', $tax_label,
+                            Calculator::init($order->tax_rate)->isGreaterThanZero() ? sprintf('(%s%%)', $order->tax_rate) : ''
+                        ); ?>
+                    </td>
                     <td class="align-right"><?php echo ppress_display_amount($order->tax, $order->currency); ?></td>
                 </tr>
             <?php endif; ?>

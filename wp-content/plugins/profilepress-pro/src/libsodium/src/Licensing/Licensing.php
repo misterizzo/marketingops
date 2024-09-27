@@ -162,7 +162,7 @@ class Licensing
                 field = $('input#pp_license_key');
                 var initial_value = field.val();
                 var cache = $('tr#license_Activate_th');
-                field.change(function () {
+                field.on('change', function () {
                     $(this).val() !== initial_value ? cache.hide() : cache.show();
                 });
             })(jQuery);

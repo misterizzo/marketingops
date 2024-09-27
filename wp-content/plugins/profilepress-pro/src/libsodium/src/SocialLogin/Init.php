@@ -27,6 +27,7 @@ class Init
 
         add_shortcode('facebook-login-url', array(__CLASS__, 'facebook_login_url'));
         add_shortcode('twitter-login-url', array(__CLASS__, 'twitter_login_url'));
+        add_shortcode('x-login-url', array(__CLASS__, 'twitter_login_url'));
         add_shortcode('linkedin-login-url', array(__CLASS__, 'linkedin_login_url'));
         add_shortcode('github-login-url', array(__CLASS__, 'github_login_url'));
         add_shortcode('microsoft-login-url', array(__CLASS__, 'microsoft_login_url'));
@@ -69,7 +70,7 @@ class Init
     }
 
     /**
-     * Twitter social login url
+     * X/Twitter social login url
      *
      * @param bool $current_url
      *
@@ -189,9 +190,12 @@ class Init
     {
         $sc   = shortcode_atts(['type' => 'facebook', 'redirect' => ''], $att);
         $type = strtolower($sc['type']);
-        $val  = ppress_get_setting($type . '_button_label');
 
         $type = ! empty($type) ? $type : 'facebook';
+
+        if ($type == 'x') $type = 'twitter';
+
+        $val = ppress_get_setting($type . '_button_label');
 
         $network_label = ppress_var(ppress_social_login_networks(), $type);
 
@@ -372,7 +376,7 @@ class Init
 
             $config = $this->config($provider);
 
-            if($provider == 'linkedin' && ppress_get_setting('linkedin_api_version') == 'openid') {
+            if ($provider == 'linkedin' && ppress_get_setting('linkedin_api_version') == 'openid') {
 
                 $provider = 'linkedinopenid';
 
@@ -505,7 +509,7 @@ class Init
                         ],
                     ],
                     [
-                        'section_title'           => esc_html__('Twitter Settings', 'profilepress-pro'),
+                        'section_title'           => esc_html__('X/Twitter Settings', 'profilepress-pro'),
                         'twitter_consumer_key'    => [
                             'type'  => 'text',
                             'label' => esc_html__('API Key', 'profilepress-pro')

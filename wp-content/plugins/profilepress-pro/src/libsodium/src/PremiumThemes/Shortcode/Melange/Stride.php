@@ -34,7 +34,7 @@ class Stride implements MelangeThemeInterface
   <fieldset>
     <h2 class="fs-title">Social Profiles</h2>
     <h3 class="fs-subtitle">Your presence on social networks</h3>
-    [reg-cpf key="twitter" type="text" placeholder="Twitter"]
+    [reg-cpf key="twitter" type="text" placeholder="X/Twitter"]
     [reg-cpf key="facebook" type="text" placeholder="Facebook"]
     [reg-cpf key="google" type="text" placeholder="Google Plus"]
     <input type="button" name="previous" class="previous action-button" value="Previous" />

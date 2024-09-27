@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitc6828cfdf1839676c8a462ef999ce17f
+class ComposerStaticInite66aba1e19a824a9772176b9beedf560
 {
     public static $prefixLengthsPsr4 = array (
         'R' => 
@@ -502,6 +502,7 @@ class ComposerStaticInitc6828cfdf1839676c8a462ef999ce17f
         'ProfilePress\\Libsodium\\UserModeration\\UserModeration' => __DIR__ . '/../..' . '/src/libsodium/src/UserModeration/UserModeration.php',
         'ProfilePress\\Libsodium\\UserModeration\\UserModerationNotification' => __DIR__ . '/../..' . '/src/libsodium/src/UserModeration/UserModerationNotification.php',
         'ProfilePress\\Libsodium\\WooCommerceIntegration\\Init' => __DIR__ . '/../..' . '/src/libsodium/src/WooCommerceIntegration/Init.php',
+        'ProfilePress\\Libsodium\\WooCommerceIntegration\\WooMemberships' => __DIR__ . '/../..' . '/src/libsodium/src/WooCommerceIntegration/WooMemberships.php',
         'RobThree\\Auth\\Providers\\Qr\\BaconQrCodeProvider' => __DIR__ . '/..' . '/robthree/twofactorauth/lib/Providers/Qr/BaconQrCodeProvider.php',
         'RobThree\\Auth\\Providers\\Qr\\BaseHTTPQRCodeProvider' => __DIR__ . '/..' . '/robthree/twofactorauth/lib/Providers/Qr/BaseHTTPQRCodeProvider.php',
         'RobThree\\Auth\\Providers\\Qr\\EndroidQrCodeProvider' => __DIR__ . '/..' . '/robthree/twofactorauth/lib/Providers/Qr/EndroidQrCodeProvider.php',
@@ -531,9 +532,9 @@ class ComposerStaticInitc6828cfdf1839676c8a462ef999ce17f
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitc6828cfdf1839676c8a462ef999ce17f::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitc6828cfdf1839676c8a462ef999ce17f::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitc6828cfdf1839676c8a462ef999ce17f::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInite66aba1e19a824a9772176b9beedf560::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInite66aba1e19a824a9772176b9beedf560::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInite66aba1e19a824a9772176b9beedf560::$classMap;
 
         }, null, ClassLoader::class);
     }

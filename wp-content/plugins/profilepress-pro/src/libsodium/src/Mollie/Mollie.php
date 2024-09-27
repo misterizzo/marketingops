@@ -21,8 +21,6 @@ use WP_Error;
 
 class Mollie extends AbstractPaymentMethod
 {
-    static $MOLLIE_CUSTOMER_ID = 'mollie_customer_id';
-
     public function __construct()
     {
         parent::__construct();
@@ -36,14 +34,19 @@ class Mollie extends AbstractPaymentMethod
 
         $this->icon = PPRESS_ASSETS_URL . '/images/mollie-icon.svg';
 
-        if ( ! ppress_is_test_mode()) {
-            self::$MOLLIE_CUSTOMER_ID .= '_live';
-        }
-
         $this->supports = [
             self::SUBSCRIPTIONS,
             self::REFUNDS,
         ];
+    }
+
+    protected function get_mollie_customer_db_key()
+    {
+        $customer_id = 'mollie_customer_id';
+
+        if ( ! ppress_is_test_mode()) $customer_id .= '_live';
+
+        return $customer_id;
     }
 
     public function admin_settings()
@@ -166,7 +169,7 @@ class Mollie extends AbstractPaymentMethod
 
             if ($subscription->is_cancelled()) return true;
 
-            $mollie_customer_id = $subscription->get_customer()->get_meta(self::$MOLLIE_CUSTOMER_ID);
+            $mollie_customer_id = $subscription->get_customer()->get_meta($this->get_mollie_customer_db_key());
 
             $api = $this->getHttpclient();
 
@@ -218,7 +221,7 @@ class Mollie extends AbstractPaymentMethod
      */
     private function get_mollie_customer_id($customer)
     {
-        $customer_id = $customer->get_meta(self::$MOLLIE_CUSTOMER_ID);
+        $customer_id = $customer->get_meta($this->get_mollie_customer_db_key());
 
         if ( ! empty($customer_id)) return $customer_id;
 
@@ -232,7 +235,8 @@ class Mollie extends AbstractPaymentMethod
         $response = $api->make_request('customers', $customer_data);
 
         if (isset($response->id)) {
-            $customer->update_meta(self::$MOLLIE_CUSTOMER_ID, $response->id);
+
+            $customer->update_meta($this->get_mollie_customer_db_key(), $response->id);
 
             return $response->id;
         }
@@ -396,9 +400,7 @@ class Mollie extends AbstractPaymentMethod
 
         if ($total_payments > 0) { // is total payments defined? 0 means disabled hence this check
 
-            if ($total_payments <= 1 || ($total_payments - 1) <= 0) {
-                return false;
-            }
+            if ($total_payments <= 1 || ($total_payments - 1) <= 0) return false;
         }
 
         switch ($subscription->billing_frequency) {
@@ -521,22 +523,22 @@ class Mollie extends AbstractPaymentMethod
 
             $transaction_id = $this->get_webhook_transaction_id();
 
-            $payment = $this->get_mollie_payment($transaction_id);
+            if ($transaction_id !== false) {
 
-            if (isset($payment->status)) {
+                $payment = $this->get_mollie_payment($transaction_id);
 
-                // detect refunded payment webhook
-                if ( ! empty($payment->_links->refunds)) {
+                if (isset($payment->status)) {
 
-                    $this->refund_payment_action($payment);
+                    // detect refunded payment webhook
+                    if ( ! empty($payment->_links->refunds)) {
 
-                } elseif (isset($_GET['sub_id']) && ! empty($_GET['sub_id'])) {
+                        $this->refund_payment_action($payment);
 
-                    $this->renew_subscription_action($payment);
+                    } elseif (isset($_GET['sub_id']) && ! empty($_GET['sub_id'])) {
 
-                } else {
+                        $this->renew_subscription_action($payment);
 
-                    if (isset($payment->metadata->order_key)) {
+                    } elseif (isset($payment->metadata->order_key)) {
 
                         $order = OrderFactory::fromOrderKey($payment->metadata->order_key);
 
@@ -559,7 +561,7 @@ class Mollie extends AbstractPaymentMethod
 
                                 if ($sub->get_plan()->is_auto_renew()) {
 
-                                    $mollie_customer_id = $sub->get_customer()->get_meta(self::$MOLLIE_CUSTOMER_ID);
+                                    $mollie_customer_id = $sub->get_customer()->get_meta($this->get_mollie_customer_db_key());
 
                                     if ($this->has_valid_customer_mandate($mollie_customer_id)) {
 

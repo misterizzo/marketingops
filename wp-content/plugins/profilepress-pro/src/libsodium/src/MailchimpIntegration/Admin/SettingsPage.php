@@ -415,7 +415,7 @@ class SettingsPage
                 'type'       => 'select',
                 'options'    => $list_options,
                 'label'      => esc_html__('Select Audience', 'profilepress-pro'),
-                'attributes' => ['onchange' => "jQuery(this).parents('form').find('.button-primary').click();"]
+                'attributes' => ['onchange' => "jQuery(this).parents('form').find('.button-primary').trigger('click');"]
             ],
             'mc_audience_automatic_add_user' => [
                 'type'           => 'checkbox',

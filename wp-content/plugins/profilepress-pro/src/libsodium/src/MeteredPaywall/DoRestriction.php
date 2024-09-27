@@ -264,6 +264,10 @@ class DoRestriction
     {
         $id = 'ppress_mv';
 
+        if(isset($_ENV['PANTHEON_ENVIRONMENT'])) {
+            $id = 'STYXKEY_' . $id;
+        }
+
         if (is_multisite() && ! is_main_site()) $id = '_' . get_current_blog_id();
 
         return apply_filters('ppress_metered_paywall_cookie_name', $id);

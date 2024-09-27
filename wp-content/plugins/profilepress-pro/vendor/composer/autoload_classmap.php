@@ -442,6 +442,7 @@ return array(
     'ProfilePress\\Libsodium\\UserModeration\\UserModeration' => $baseDir . '/src/libsodium/src/UserModeration/UserModeration.php',
     'ProfilePress\\Libsodium\\UserModeration\\UserModerationNotification' => $baseDir . '/src/libsodium/src/UserModeration/UserModerationNotification.php',
     'ProfilePress\\Libsodium\\WooCommerceIntegration\\Init' => $baseDir . '/src/libsodium/src/WooCommerceIntegration/Init.php',
+    'ProfilePress\\Libsodium\\WooCommerceIntegration\\WooMemberships' => $baseDir . '/src/libsodium/src/WooCommerceIntegration/WooMemberships.php',
     'RobThree\\Auth\\Providers\\Qr\\BaconQrCodeProvider' => $vendorDir . '/robthree/twofactorauth/lib/Providers/Qr/BaconQrCodeProvider.php',
     'RobThree\\Auth\\Providers\\Qr\\BaseHTTPQRCodeProvider' => $vendorDir . '/robthree/twofactorauth/lib/Providers/Qr/BaseHTTPQRCodeProvider.php',
     'RobThree\\Auth\\Providers\\Qr\\EndroidQrCodeProvider' => $vendorDir . '/robthree/twofactorauth/lib/Providers/Qr/EndroidQrCodeProvider.php',

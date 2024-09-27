@@ -174,9 +174,10 @@ MESSAGE;
                 // the result is how long (in seconds) the confirmation has been left dormant.
                 $difference = time() - absint($last_sent_confirmation_date);
 
-                do_action('ppress_ec_before_delete_unconfirmed_users', $user_id);
-
                 if ( ! self::is_user_confirm($user_id) && $difference > $expiration_day_in_seconds) {
+
+                    do_action('ppress_ec_before_delete_unconfirmed_users', $user_id);
+
                     if ( ! function_exists('wp_delete_user')) {
                         require_once(ABSPATH . 'wp-admin/includes/user.php');
                     }

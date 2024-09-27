@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the ProfilePress Pro - Standard plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: ProfilePress Pro - Standard 4.10.5\n"
+"Project-Id-Version: ProfilePress Pro - Standard 4.11.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/profilepress-pro\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-05-15T10:29:23+00:00\n"
+"POT-Creation-Date: 2024-09-18T15:56:39+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: profilepress-pro\n"
@@ -43,8 +43,8 @@ msgstr ""
 #: src/libsodium/src/CampaignMonitorIntegration/Admin/SettingsPage.php:201
 #: src/libsodium/src/CampaignMonitorIntegration/Admin/SettingsPage.php:264
 #: src/libsodium/src/MailchimpIntegration/Admin/SettingsPage.php:262
-#: src/libsodium/src/Mollie/Mollie.php:54
-#: src/libsodium/src/SocialLogin/Init.php:511
+#: src/libsodium/src/Mollie/Mollie.php:57
+#: src/libsodium/src/SocialLogin/Init.php:515
 msgid "API Key"
 msgstr ""
 
@@ -207,8 +207,8 @@ msgstr ""
 #: src/libsodium/src/MailchimpIntegration/Admin/SettingsPage.php:321
 #: src/libsodium/src/MultisiteIntegration/Init.php:378
 #: src/libsodium/src/ShortcodeBuilder/ShortcodeInserterTrait.php:218
-#: src/libsodium/src/WooCommerceIntegration/Init.php:482
-#: src/libsodium/src/WooCommerceIntegration/Init.php:513
+#: src/libsodium/src/WooCommerceIntegration/Init.php:484
+#: src/libsodium/src/WooCommerceIntegration/Init.php:515
 msgid "Select..."
 msgstr ""
 
@@ -219,12 +219,12 @@ msgstr ""
 #: src/libsodium/src/CampaignMonitorIntegration/Admin/SettingsPage.php:201
 #: src/libsodium/src/CampaignMonitorIntegration/Admin/SettingsPage.php:270
 #: src/libsodium/src/PayPal/PayPal.php:61
-#: src/libsodium/src/SocialLogin/Init.php:523
-#: src/libsodium/src/SocialLogin/Init.php:535
-#: src/libsodium/src/SocialLogin/Init.php:555
-#: src/libsodium/src/SocialLogin/Init.php:609
-#: src/libsodium/src/SocialLogin/Init.php:621
-#: src/libsodium/src/SocialLogin/Init.php:633
+#: src/libsodium/src/SocialLogin/Init.php:527
+#: src/libsodium/src/SocialLogin/Init.php:539
+#: src/libsodium/src/SocialLogin/Init.php:559
+#: src/libsodium/src/SocialLogin/Init.php:613
+#: src/libsodium/src/SocialLogin/Init.php:625
+#: src/libsodium/src/SocialLogin/Init.php:637
 msgid "Client ID"
 msgstr ""
 
@@ -714,8 +714,8 @@ msgid "Email Address Confirmation"
 msgstr ""
 
 #: src/libsodium/src/EmailConfirmation.php:61
-#: src/libsodium/src/EmailConfirmation.php:249
-#: src/libsodium/src/Libsodium.php:145
+#: src/libsodium/src/EmailConfirmation.php:250
+#: src/libsodium/src/Libsodium.php:143
 msgid "Confirm Your Email Address to Activate Your Account"
 msgstr ""
 
@@ -749,149 +749,149 @@ msgstr ""
 msgid "Do that now!"
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:486
+#: src/libsodium/src/EmailConfirmation.php:487
 msgid "Email Confirmation"
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:487
+#: src/libsodium/src/EmailConfirmation.php:488
 msgid "Email Confirmation Settings"
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:493
+#: src/libsodium/src/EmailConfirmation.php:494
 msgid "To customize the email that is sent to users for them to confirm or verify their email addresses, go to the %semail settings%s."
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:499
+#: src/libsodium/src/EmailConfirmation.php:500
 msgid "Link Expiration"
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:500
+#: src/libsodium/src/EmailConfirmation.php:501
 msgid "Time in minutes the email confirmation URL will expire if unused. Default to 30mins if this field is left empty."
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:505
+#: src/libsodium/src/EmailConfirmation.php:506
 msgid "Error Message I"
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:506
-msgid "Error message displayed when users that haven't verified their email try to log in."
-msgstr ""
-
 #: src/libsodium/src/EmailConfirmation.php:507
-#: src/libsodium/src/EmailConfirmation.php:515
-msgid "The following placeholder is available for use"
+msgid "Error message displayed when users that haven't verified their email try to log in."
 msgstr ""
 
 #: src/libsodium/src/EmailConfirmation.php:508
 #: src/libsodium/src/EmailConfirmation.php:516
+msgid "The following placeholder is available for use"
+msgstr ""
+
+#: src/libsodium/src/EmailConfirmation.php:509
+#: src/libsodium/src/EmailConfirmation.php:517
 msgid "URL to resend email confirmation link."
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:513
+#: src/libsodium/src/EmailConfirmation.php:514
 msgid "Error Message II"
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:514
+#: src/libsodium/src/EmailConfirmation.php:515
 msgid "Error message displayed when an email confirmation link is invalid or has expired."
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:520
+#: src/libsodium/src/EmailConfirmation.php:521
 msgid "Autologin After Confirmation"
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:521
+#: src/libsodium/src/EmailConfirmation.php:522
 msgid "Check this for users to automatically be logged in after successful email confirmation."
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:526
+#: src/libsodium/src/EmailConfirmation.php:527
 msgid "Confirmation Successful"
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:527
+#: src/libsodium/src/EmailConfirmation.php:528
 msgid "Message displayed when a user successfully verify their email addresses."
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:532
+#: src/libsodium/src/EmailConfirmation.php:533
 msgid "Email Confirmation Resent"
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:533
+#: src/libsodium/src/EmailConfirmation.php:534
 msgid "Message displayed when an account activation or email confirmation message is resent to a user."
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:538
+#: src/libsodium/src/EmailConfirmation.php:539
 msgid "Email Already Confirmed"
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:539
+#: src/libsodium/src/EmailConfirmation.php:540
 msgid "Message displayed when an attempt to resend an confirmation email to users that have previously confirmed their email."
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:543
+#: src/libsodium/src/EmailConfirmation.php:544
 msgid "Delete Unconfirmed Users"
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:544
+#: src/libsodium/src/EmailConfirmation.php:545
 msgid "Check to delete users who haven't confirmed their email for a period of time."
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:548
+#: src/libsodium/src/EmailConfirmation.php:549
 msgid "Age of Unconfirmed Account"
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:549
+#: src/libsodium/src/EmailConfirmation.php:550
 msgid "The age of unconfirmed user accounts before they are deleted. Defaults to 10 days if field is empty."
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:567
-#: src/libsodium/src/Libsodium.php:143
+#: src/libsodium/src/EmailConfirmation.php:568
+#: src/libsodium/src/Libsodium.php:141
 msgid "Account is pending email confirmation."
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:567
-#: src/libsodium/src/Libsodium.php:143
+#: src/libsodium/src/EmailConfirmation.php:568
+#: src/libsodium/src/Libsodium.php:141
 msgid "Click to resend"
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:583
-#: src/libsodium/src/Libsodium.php:141
+#: src/libsodium/src/EmailConfirmation.php:584
+#: src/libsodium/src/Libsodium.php:139
 msgid "Confirmation link is invalid or has expired."
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:583
-#: src/libsodium/src/Libsodium.php:141
+#: src/libsodium/src/EmailConfirmation.php:584
+#: src/libsodium/src/Libsodium.php:139
 msgid "Click to resend."
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:597
-#: src/libsodium/src/Libsodium.php:139
+#: src/libsodium/src/EmailConfirmation.php:598
+#: src/libsodium/src/Libsodium.php:137
 msgid "Email successfully verified. You can now log in."
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:610
-#: src/libsodium/src/Libsodium.php:142
+#: src/libsodium/src/EmailConfirmation.php:611
+#: src/libsodium/src/Libsodium.php:140
 msgid "Confirmation email successfully resent"
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:622
-#: src/libsodium/src/Libsodium.php:140
+#: src/libsodium/src/EmailConfirmation.php:623
+#: src/libsodium/src/Libsodium.php:138
 msgid "Email address for this user is already verified."
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:639
+#: src/libsodium/src/EmailConfirmation.php:640
 msgid "Verified"
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:697
+#: src/libsodium/src/EmailConfirmation.php:698
 msgid "Confirm Email"
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:711
+#: src/libsodium/src/EmailConfirmation.php:712
 msgid "Resend Email Confirmation"
 msgstr ""
 
-#: src/libsodium/src/EmailConfirmation.php:745
-#: src/libsodium/src/EmailConfirmation.php:754
+#: src/libsodium/src/EmailConfirmation.php:746
+#: src/libsodium/src/EmailConfirmation.php:755
 msgid "Email successfully confirmed."
 msgstr ""
 
@@ -1158,117 +1158,117 @@ msgstr ""
 msgid "Select the LearnDash courses to enroll users in after registration through this form"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:128
+#: src/libsodium/src/Libsodium.php:126
 msgid "Spam registration detected. Please try again"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:130
+#: src/libsodium/src/Libsodium.php:128
 msgid "One-time login has expired or is invalid"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:131
+#: src/libsodium/src/Libsodium.php:129
 #: src/libsodium/src/PasswordlessLogin.php:275
 msgid "One-time login URL sent successfully to your email"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:133
+#: src/libsodium/src/Libsodium.php:131
 #: src/libsodium/src/PasswordlessLogin.php:91
 #: src/libsodium/src/PasswordlessLogin.php:243
 msgid "One-time login to %s"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:148
+#: src/libsodium/src/Libsodium.php:146
 msgid "%sERROR%s: This account is blocked"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:149
+#: src/libsodium/src/Libsodium.php:147
 msgid "%sERROR%s: This account is pending approval"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:150
+#: src/libsodium/src/Libsodium.php:148
 msgid "%sERROR%s: This account has been rejected"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:152
+#: src/libsodium/src/Libsodium.php:150
 #: src/libsodium/src/UserModeration/UserModerationNotification.php:162
 msgid "Account Awaiting Review"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:155
+#: src/libsodium/src/Libsodium.php:153
 #: src/libsodium/src/UserModeration/UserModeration.php:105
 #: src/libsodium/src/UserModeration/UserModerationNotification.php:73
 msgid "Your Account is Approved"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:158
+#: src/libsodium/src/Libsodium.php:156
 #: src/libsodium/src/UserModeration/UserModeration.php:120
 #: src/libsodium/src/UserModeration/UserModerationNotification.php:95
 msgid "Your Account Has Been Rejected"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:161
+#: src/libsodium/src/Libsodium.php:159
 #: src/libsodium/src/UserModeration/UserModeration.php:135
 #: src/libsodium/src/UserModeration/UserModerationNotification.php:117
 msgid "Your Account is Blocked"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:164
+#: src/libsodium/src/Libsodium.php:162
 #: src/libsodium/src/UserModeration/UserModeration.php:150
 #: src/libsodium/src/UserModeration/UserModerationNotification.php:140
 msgid "Your Account is Unblocked"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:167
+#: src/libsodium/src/Libsodium.php:165
 #: src/libsodium/src/UserModeration/UserModeration.php:89
 #: src/libsodium/src/UserModeration/UserModerationNotification.php:220
 msgid "Account Awaiting Approval"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:170
+#: src/libsodium/src/Libsodium.php:168
 msgid "Sign in with Facebook"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:171
-msgid "Sign in with Twitter"
+#: src/libsodium/src/Libsodium.php:169
+msgid "Sign in with X"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:172
+#: src/libsodium/src/Libsodium.php:170
 msgid "Sign in with Google"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:173
+#: src/libsodium/src/Libsodium.php:171
 msgid "Sign in with LinkedIn"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:174
+#: src/libsodium/src/Libsodium.php:172
 msgid "Sign in with GitHub"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:175
+#: src/libsodium/src/Libsodium.php:173
 msgid "Sign in with VK"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:177
+#: src/libsodium/src/Libsodium.php:175
 msgid "ERROR: Please retry CAPTCHA"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:198
+#: src/libsodium/src/Libsodium.php:196
 msgid "Gender"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:200
+#: src/libsodium/src/Libsodium.php:198
 msgid "Gender of a user."
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:209
+#: src/libsodium/src/Libsodium.php:207
 msgid "Country"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:211
+#: src/libsodium/src/Libsodium.php:209
 msgid "The country users are from."
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:281
+#: src/libsodium/src/Libsodium.php:279
 msgid "Required by %s"
 msgstr ""
 
@@ -1331,8 +1331,8 @@ msgstr ""
 
 #: src/libsodium/src/LifterLMS.php:250
 #: src/libsodium/src/LifterLMS.php:354
-#: src/libsodium/src/WooCommerceIntegration/Init.php:130
-#: src/libsodium/src/WooCommerceIntegration/Init.php:472
+#: src/libsodium/src/WooCommerceIntegration/Init.php:132
+#: src/libsodium/src/WooCommerceIntegration/Init.php:474
 msgid "Memberships"
 msgstr ""
 
@@ -1455,7 +1455,7 @@ msgid "No Mailchimp audience has been added. %sClick here%s to add one."
 msgstr ""
 
 #: src/libsodium/src/MailchimpIntegration/Admin/WPListTable.php:37
-#: src/libsodium/src/SocialLogin/Init.php:576
+#: src/libsodium/src/SocialLogin/Init.php:580
 msgid "Audience"
 msgstr ""
 
@@ -1467,17 +1467,17 @@ msgstr ""
 msgid "Select the audience to add users that purchase or subscribe to this plan."
 msgstr ""
 
-#: src/libsodium/src/MeteredPaywall/DoRestriction.php:378
+#: src/libsodium/src/MeteredPaywall/DoRestriction.php:382
 #: src/libsodium/src/MeteredPaywall/SettingsPage.php:157
 msgid "posts remaining"
 msgstr ""
 
-#: src/libsodium/src/MeteredPaywall/DoRestriction.php:379
+#: src/libsodium/src/MeteredPaywall/DoRestriction.php:383
 #: src/libsodium/src/MeteredPaywall/SettingsPage.php:162
 msgid "Subscribe Now"
 msgstr ""
 
-#: src/libsodium/src/MeteredPaywall/DoRestriction.php:381
+#: src/libsodium/src/MeteredPaywall/DoRestriction.php:385
 #: src/libsodium/src/MeteredPaywall/SettingsPage.php:172
 msgid "Have an account? Login"
 msgstr ""
@@ -1600,58 +1600,58 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-#: src/libsodium/src/Mollie/Mollie.php:32
+#: src/libsodium/src/Mollie/Mollie.php:30
 msgid "Pay via Mollie"
 msgstr ""
 
-#: src/libsodium/src/Mollie/Mollie.php:35
+#: src/libsodium/src/Mollie/Mollie.php:33
 msgid "Accept payments via iDEAL, Credit Card, Apple Pay, PayPal, SEPA Direct Debit, Bancontact, Bank transfer and more with Mollie."
 msgstr ""
 
-#: src/libsodium/src/Mollie/Mollie.php:59
+#: src/libsodium/src/Mollie/Mollie.php:62
 #: src/libsodium/src/PayPal/PayPal.php:87
 #: src/libsodium/src/Paystack/Paystack.php:70
 #: src/libsodium/src/Razorpay/Razorpay.php:88
 msgid "Remove Billing Address"
 msgstr ""
 
-#: src/libsodium/src/Mollie/Mollie.php:61
+#: src/libsodium/src/Mollie/Mollie.php:64
 #: src/libsodium/src/PayPal/PayPal.php:89
 #: src/libsodium/src/Paystack/Paystack.php:72
 #: src/libsodium/src/Razorpay/Razorpay.php:90
 msgid "Check to remove billing address fields from the checkout page."
 msgstr ""
 
-#: src/libsodium/src/Mollie/Mollie.php:62
+#: src/libsodium/src/Mollie/Mollie.php:65
 #: src/libsodium/src/PayPal/PayPal.php:90
 #: src/libsodium/src/Paystack/Paystack.php:73
 #: src/libsodium/src/Razorpay/Razorpay.php:91
 msgid "If you do not want the billing address fields displayed on the checkout page, use this setting to remove it."
 msgstr ""
 
-#: src/libsodium/src/Mollie/Mollie.php:164
+#: src/libsodium/src/Mollie/Mollie.php:167
 #: src/libsodium/src/PayPal/PayPal.php:255
 #: src/libsodium/src/PayPal/PayPal.php:762
 msgid "Missing profile ID."
 msgstr ""
 
-#: src/libsodium/src/Mollie/Mollie.php:184
+#: src/libsodium/src/Mollie/Mollie.php:187
 msgid "Failed to cancel subscription in Mollie. Message: %s"
 msgstr ""
 
-#: src/libsodium/src/Mollie/Mollie.php:298
+#: src/libsodium/src/Mollie/Mollie.php:302
 msgid "An error occurred while communicating with Mollie. Please try again."
 msgstr ""
 
-#: src/libsodium/src/Mollie/Mollie.php:456
+#: src/libsodium/src/Mollie/Mollie.php:458
 msgid "Subscription is missing."
 msgstr ""
 
-#: src/libsodium/src/Mollie/Mollie.php:498
+#: src/libsodium/src/Mollie/Mollie.php:500
 msgid "Amount: %1$s; Order transaction ID: %2$s"
 msgstr ""
 
-#: src/libsodium/src/Mollie/Mollie.php:505
+#: src/libsodium/src/Mollie/Mollie.php:507
 msgid "Partial refund processed in Mollie."
 msgstr ""
 
@@ -2069,7 +2069,7 @@ msgstr ""
 
 #: src/libsodium/src/PremiumThemes/DragDrop/Login/Bash.php:106
 #: src/libsodium/src/PremiumThemes/DragDrop/Registration/Bash.php:111
-msgid "Twitter"
+msgid "X/Twitter"
 msgstr ""
 
 #: src/libsodium/src/PremiumThemes/DragDrop/Login/Bash.php:107
@@ -2734,15 +2734,15 @@ msgstr ""
 msgid "Discount %s"
 msgstr ""
 
-#: src/libsodium/src/Receipt/template/main.php:198
+#: src/libsodium/src/Receipt/template/main.php:202
 msgid "Total"
 msgstr ""
 
-#: src/libsodium/src/Receipt/template/main.php:211
+#: src/libsodium/src/Receipt/template/main.php:215
 msgid "Amount paid"
 msgstr ""
 
-#: src/libsodium/src/Receipt/template/main.php:231
+#: src/libsodium/src/Receipt/template/main.php:235
 msgid "%s %s %s paid on %s"
 msgstr ""
 
@@ -2914,7 +2914,7 @@ msgstr ""
 #: src/libsodium/src/ShortcodeBuilder/EditShortcodeMelange/edit_screen.php:45
 #: src/libsodium/src/ShortcodeBuilder/EditShortcodePasswordReset/edit_screen.php:43
 #: src/libsodium/src/ShortcodeBuilder/EditShortcodeRegistration/edit_screen.php:50
-#: src/libsodium/src/SocialLogin/Init.php:469
+#: src/libsodium/src/SocialLogin/Init.php:473
 msgid "Settings"
 msgstr ""
 
@@ -3303,7 +3303,7 @@ msgid "Link to login with Facebook"
 msgstr ""
 
 #: src/libsodium/src/ShortcodeBuilder/ShortcodeInserterTrait.php:190
-msgid "Link to login with Twitter"
+msgid "Link to login with X/Twitter"
 msgstr ""
 
 #: src/libsodium/src/ShortcodeBuilder/ShortcodeInserterTrait.php:194
@@ -3323,8 +3323,8 @@ msgid "Link to login with VK"
 msgstr ""
 
 #: src/libsodium/src/ShortcodeBuilder/ShortcodeInserterTrait.php:221
-#: src/libsodium/src/WooCommerceIntegration/Init.php:146
-#: src/libsodium/src/WooCommerceIntegration/Init.php:441
+#: src/libsodium/src/WooCommerceIntegration/Init.php:148
+#: src/libsodium/src/WooCommerceIntegration/Init.php:443
 msgid "Billing Address"
 msgstr ""
 
@@ -3408,163 +3408,163 @@ msgstr ""
 msgid "Copy to clipboard"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:198
+#: src/libsodium/src/SocialLogin/Init.php:202
 msgid "Sign in with %s"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:474
+#: src/libsodium/src/SocialLogin/Init.php:478
 msgid "Buttons"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:479
-#: src/libsodium/src/SocialLogin/Init.php:691
+#: src/libsodium/src/SocialLogin/Init.php:483
+#: src/libsodium/src/SocialLogin/Init.php:695
 msgid "Integrations"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:493
-#: src/libsodium/src/SocialLogin/Init.php:659
-#: src/libsodium/src/SocialLogin/Init.php:690
+#: src/libsodium/src/SocialLogin/Init.php:497
+#: src/libsodium/src/SocialLogin/Init.php:663
+#: src/libsodium/src/SocialLogin/Init.php:694
 msgid "Social Login"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:496
+#: src/libsodium/src/SocialLogin/Init.php:500
 msgid "Facebook Settings"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:499
+#: src/libsodium/src/SocialLogin/Init.php:503
 msgid "Facebook App ID"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:504
+#: src/libsodium/src/SocialLogin/Init.php:508
 msgid "Facebook App Secret"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:508
-msgid "Twitter Settings"
-msgstr ""
-
-#: src/libsodium/src/SocialLogin/Init.php:516
-msgid "API Secret Key"
+#: src/libsodium/src/SocialLogin/Init.php:512
+msgid "X/Twitter Settings"
 msgstr ""
 
 #: src/libsodium/src/SocialLogin/Init.php:520
+msgid "API Secret Key"
+msgstr ""
+
+#: src/libsodium/src/SocialLogin/Init.php:524
 msgid "Google Settings"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:528
-#: src/libsodium/src/SocialLogin/Init.php:626
-#: src/libsodium/src/SocialLogin/Init.php:638
+#: src/libsodium/src/SocialLogin/Init.php:532
+#: src/libsodium/src/SocialLogin/Init.php:630
+#: src/libsodium/src/SocialLogin/Init.php:642
 msgid "Client secret"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:532
+#: src/libsodium/src/SocialLogin/Init.php:536
 msgid "LinkedIn Settings"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:540
-#: src/libsodium/src/SocialLogin/Init.php:560
-#: src/libsodium/src/SocialLogin/Init.php:572
-#: src/libsodium/src/SocialLogin/Init.php:614
+#: src/libsodium/src/SocialLogin/Init.php:544
+#: src/libsodium/src/SocialLogin/Init.php:564
+#: src/libsodium/src/SocialLogin/Init.php:576
+#: src/libsodium/src/SocialLogin/Init.php:618
 msgid "Client Secret"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:545
+#: src/libsodium/src/SocialLogin/Init.php:549
 msgid "(New) Using OpenID"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:546
+#: src/libsodium/src/SocialLogin/Init.php:550
 msgid "Deprecated Version"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:548
+#: src/libsodium/src/SocialLogin/Init.php:552
 msgid "API Version"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:552
+#: src/libsodium/src/SocialLogin/Init.php:556
 msgid "Yahoo Settings"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:564
+#: src/libsodium/src/SocialLogin/Init.php:568
 msgid "Microsoft Settings"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:567
+#: src/libsodium/src/SocialLogin/Init.php:571
 msgid "Application (client) ID"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:587
+#: src/libsodium/src/SocialLogin/Init.php:591
 msgid "Accounts in any organizational directory (any work and school accounts)"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:590
+#: src/libsodium/src/SocialLogin/Init.php:594
 msgid "Accounts in any organizational directory (any work and school accounts) or personal Microsoft accounts."
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:593
+#: src/libsodium/src/SocialLogin/Init.php:597
 msgid "Personal Microsoft accounts only"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:596
+#: src/libsodium/src/SocialLogin/Init.php:600
 msgid "Only users in an organizational directory from a particular Azure AD tenant. Enter the tenant ID or domain here."
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:606
+#: src/libsodium/src/SocialLogin/Init.php:610
 msgid "Amazon Settings"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:618
+#: src/libsodium/src/SocialLogin/Init.php:622
 msgid "GitHub Settings"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:630
+#: src/libsodium/src/SocialLogin/Init.php:634
 msgid "WordPress.com Settings"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:642
+#: src/libsodium/src/SocialLogin/Init.php:646
 msgid "VK Settings"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:645
+#: src/libsodium/src/SocialLogin/Init.php:649
 msgid "Application ID"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:650
+#: src/libsodium/src/SocialLogin/Init.php:654
 msgid "Secure key"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:660
+#: src/libsodium/src/SocialLogin/Init.php:664
 msgid "Button Texts"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:697
+#: src/libsodium/src/SocialLogin/Init.php:701
 msgid "Shortcode"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:698
+#: src/libsodium/src/SocialLogin/Init.php:702
 msgid "Use the \"redirect\" attribute to specify a url to redirect users to after social login."
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:704
+#: src/libsodium/src/SocialLogin/Init.php:708
 msgid "Advanced Shortcode"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:705
+#: src/libsodium/src/SocialLogin/Init.php:709
 msgid "This is typically useful if you want to change the button text."
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:711
+#: src/libsodium/src/SocialLogin/Init.php:715
 msgid "HTML Link"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:712
+#: src/libsodium/src/SocialLogin/Init.php:716
 msgid "This is typically used if you want to change the button text."
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:727
+#: src/libsodium/src/SocialLogin/Init.php:731
 msgid "Social Login Error Log"
 msgstr ""
 
-#: src/libsodium/src/SocialLogin/Init.php:737
+#: src/libsodium/src/SocialLogin/Init.php:741
 msgid "Delete Log"
 msgstr ""
 
@@ -3997,120 +3997,121 @@ msgstr ""
 msgid "%s ERROR %s: This account has been rejected"
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:100
-#: src/libsodium/src/WooCommerceIntegration/Init.php:443
+#: src/libsodium/src/WooCommerceIntegration/Init.php:102
+#: src/libsodium/src/WooCommerceIntegration/Init.php:445
 msgid "Orders"
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:110
-#: src/libsodium/src/WooCommerceIntegration/Init.php:444
+#: src/libsodium/src/WooCommerceIntegration/Init.php:112
+#: src/libsodium/src/WooCommerceIntegration/Init.php:446
 msgid "Downloads"
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:120
-#: src/libsodium/src/WooCommerceIntegration/Init.php:464
-#: src/libsodium/src/WooCommerceIntegration/Init.php:468
+#: src/libsodium/src/WooCommerceIntegration/Init.php:122
+#: src/libsodium/src/WooCommerceIntegration/Init.php:466
+#: src/libsodium/src/WooCommerceIntegration/Init.php:470
 msgid "Subscriptions"
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:150
-#: src/libsodium/src/WooCommerceIntegration/Init.php:442
+#: src/libsodium/src/WooCommerceIntegration/Init.php:152
+#: src/libsodium/src/WooCommerceIntegration/Init.php:444
 msgid "Shipping Address"
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:162
+#: src/libsodium/src/WooCommerceIntegration/Init.php:164
 msgid "required"
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:164
+#: src/libsodium/src/WooCommerceIntegration/Init.php:166
 msgid "optional"
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:350
+#: src/libsodium/src/WooCommerceIntegration/Init.php:352
 msgid "Please complete all required fields."
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:411
+#: src/libsodium/src/WooCommerceIntegration/Init.php:413
+#: src/libsodium/src/WooCommerceIntegration/WooMemberships.php:230
 msgid "WooCommerce"
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:412
+#: src/libsodium/src/WooCommerceIntegration/Init.php:414
 msgid "WooCommerce Settings"
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:417
+#: src/libsodium/src/WooCommerceIntegration/Init.php:419
 msgid "Checkout Login Form"
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:418
+#: src/libsodium/src/WooCommerceIntegration/Init.php:420
 msgid "Select the form that will replace the login form on WooCommerce checkout page."
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:423
+#: src/libsodium/src/WooCommerceIntegration/Init.php:425
 msgid "My Account Login Form"
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:424
+#: src/libsodium/src/WooCommerceIntegration/Init.php:426
 msgid "Select the form that will replace login form in WooCommerce My Account page."
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:429
+#: src/libsodium/src/WooCommerceIntegration/Init.php:431
 msgid "My Account Registration Form"
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:430
+#: src/libsodium/src/WooCommerceIntegration/Init.php:432
 msgid "Select the form that will replace the registration form in WooCommerce My Account page."
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:435
+#: src/libsodium/src/WooCommerceIntegration/Init.php:437
 msgid "WooCommerce Edit Account"
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:436
+#: src/libsodium/src/WooCommerceIntegration/Init.php:438
 msgid "Select the form that will replace the Edit Account form in WooCommerce My Account page."
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:446
+#: src/libsodium/src/WooCommerceIntegration/Init.php:448
 msgid "My Account Tabs"
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:447
+#: src/libsodium/src/WooCommerceIntegration/Init.php:449
 msgid "Select the tabs to show on My Account page. Note that billing and shipping addresses are shown in the \"Account Details\" section."
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:452
+#: src/libsodium/src/WooCommerceIntegration/Init.php:454
 msgid "Checkout Registration Fields"
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:453
+#: src/libsodium/src/WooCommerceIntegration/Init.php:455
 msgid "Select custom fields to add to WooCommerce checkout registration. Note that \"File Upload\" field is not supported."
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:458
+#: src/libsodium/src/WooCommerceIntegration/Init.php:460
 msgid "Required Registration Fields"
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:459
+#: src/libsodium/src/WooCommerceIntegration/Init.php:461
 msgid "Select custom fields that must be filled before the checkout is processed."
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:509
+#: src/libsodium/src/WooCommerceIntegration/Init.php:511
 msgid "Registration Forms"
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:509
+#: src/libsodium/src/WooCommerceIntegration/Init.php:511
 msgid "Login Forms"
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:511
+#: src/libsodium/src/WooCommerceIntegration/Init.php:513
 msgid "Melange Forms"
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:546
+#: src/libsodium/src/WooCommerceIntegration/Init.php:548
 msgid "Import WooCommerce Fields"
 msgstr ""
 
-#: src/libsodium/src/WooCommerceIntegration/Init.php:582
+#: src/libsodium/src/WooCommerceIntegration/Init.php:584
 msgid "WooCommerce %s field"
 msgstr ""
 
@@ -4155,4 +4156,28 @@ msgstr ""
 
 #: src/libsodium/src/WooCommerceIntegration/templates/ppmyaccount/billing.tmpl.php:25
 msgid "Email Address"
+msgstr ""
+
+#: src/libsodium/src/WooCommerceIntegration/WooMemberships.php:119
+msgid "Membership discount"
+msgstr ""
+
+#: src/libsodium/src/WooCommerceIntegration/WooMemberships.php:137
+msgid "Membership coupon applied"
+msgstr ""
+
+#: src/libsodium/src/WooCommerceIntegration/WooMemberships.php:235
+msgid "Select Products"
+msgstr ""
+
+#: src/libsodium/src/WooCommerceIntegration/WooMemberships.php:236
+msgid "Select the WooCommerce products that will subscribe users to this plan when purchased."
+msgstr ""
+
+#: src/libsodium/src/WooCommerceIntegration/WooMemberships.php:243
+msgid "Select Coupon"
+msgstr ""
+
+#: src/libsodium/src/WooCommerceIntegration/WooMemberships.php:244
+msgid "Select the WooCommerce coupon to automatically apply to orders of users with active subscription to this plan."
 msgstr ""

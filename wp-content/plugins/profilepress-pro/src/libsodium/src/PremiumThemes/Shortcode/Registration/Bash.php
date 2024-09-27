@@ -162,7 +162,7 @@ CODE;
 	}
 
 	.bash .bash-twitter {
-		background-image: url($asset_url/bash-twitter.png);
+		background-image: url($asset_url/x.svg);
 	}
 
 	.bash .bash-google {

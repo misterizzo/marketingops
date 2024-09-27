@@ -50,7 +50,7 @@ class Smiley implements EditProfileThemeInterface
 
 			<div class="heading">Social Media Profile URLs</div>
 			[edit-profile-cpf key="facebook" type="text" class="pp-top" title="Facebook profile URL" placeholder="Facebook profile"]
-			<br/> [edit-profile-cpf key="twitter" type="text" title="Twitter Profile URL" placeholder="Twitter URL"]
+			<br/> [edit-profile-cpf key="twitter" type="text" title="X/Twitter Profile URL" placeholder="X/Twitter URL"]
 			<br/> [edit-profile-cpf key="linkedin" class="pp-bottom" type="text" title="LinkedIn Profile URL" placeholder="LinkedIn Profile"]
 			<br style="clear:both"/> <br/> <br/>
 		</div>
@@ -62,7 +62,7 @@ class Smiley implements EditProfileThemeInterface
 
 <script type="text/javascript">
 	(function ($) {
-		$("input:file[id=pp-file-upload]").change(function () {
+		$("input:file[id=pp-file-upload]").on('change', function () {
 			$("#pp-file-upload-value").html($(this).val());
 		});
 	})(jQuery);

@@ -342,7 +342,8 @@ div#pp-$form_type-$form_id.monochrome-profile a.monochrome-soundcloud {
 }
 
 div#pp-$form_type-$form_id.monochrome-profile a.monochrome-twitter {
-    background-image: url($asset_url/twitter.png);
+    background-image: url($asset_url/../bash/x.svg);
+    opacity: 0.6;
 }
 
 div#pp-$form_type-$form_id.monochrome-profile a.monochrome-youtube {

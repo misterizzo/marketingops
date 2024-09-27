@@ -17,6 +17,8 @@ class Init
     {
         add_action('woocommerce_loaded', function () {
 
+            WooMemberships::get_instance();
+
             add_action('admin_enqueue_scripts', array($this, 'import_js'));
             add_filter('ppress_custom_fields_extra_tablenav', array($this, 'add_import_button'));
 
@@ -763,7 +765,7 @@ class Init
         static $instance;
 
         if ( ! isset($instance)) {
-            $instance = new self;
+            $instance = new self();
         }
 
         return $instance;

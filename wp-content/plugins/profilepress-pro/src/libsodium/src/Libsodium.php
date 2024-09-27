@@ -15,8 +15,6 @@ define('PROFILEPRESS_PRO_ROOT', wp_normalize_path(plugin_dir_path(PROFILEPRESS_P
 /** internally uses wp_normalize_path */
 define('PROFILEPRESS_PRO_URL', plugin_dir_url(PROFILEPRESS_PRO_SYSTEM_FILE_PATH));
 
-define('PROFILEPRESS_PRO_ASSETS_DIR', wp_normalize_path(dirname(__FILE__) . '/assets/'));
-
 if (strpos(__FILE__, 'profilepress-pro' . DIRECTORY_SEPARATOR . 'src') !== false) {
     // production url path to assets folder.
     define('PROFILEPRESS_PRO_LIBSODIUM_ASSETS_URL', PROFILEPRESS_PRO_URL . 'src/libsodium/src/assets/');
@@ -168,7 +166,7 @@ class Libsodium
         ppress_update_settings('account_approval_admin_email_content', ppress_user_moderation_msg_default('admin_notification'));
 
         ppress_update_settings('facebook_button_label', esc_html__('Sign in with Facebook', 'profilepress-pro'));
-        ppress_update_settings('twitter_button_label', esc_html__('Sign in with Twitter', 'profilepress-pro'));
+        ppress_update_settings('twitter_button_label', esc_html__('Sign in with X', 'profilepress-pro'));
         ppress_update_settings('google_button_label', esc_html__('Sign in with Google', 'profilepress-pro'));
         ppress_update_settings('linkedin_button_label', esc_html__('Sign in with LinkedIn', 'profilepress-pro'));
         ppress_update_settings('github_button_label', esc_html__('Sign in with GitHub', 'profilepress-pro'));

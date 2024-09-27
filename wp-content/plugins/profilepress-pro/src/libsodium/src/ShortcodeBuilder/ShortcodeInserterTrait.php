@@ -187,7 +187,7 @@ trait ShortcodeInserterTrait
                 'shortcode'   => 'facebook-login-url'
             ],
             'twitter-login-url'   => [
-                'description' => esc_html__('Link to login with Twitter', 'profilepress-pro'),
+                'description' => esc_html__('Link to login with X/Twitter', 'profilepress-pro'),
                 'shortcode'   => 'twitter-login-url'
             ],
             'linkedin-login-url'  => [
@@ -478,7 +478,7 @@ trait ShortcodeInserterTrait
                                 .setTitle('<span class="dashicons dashicons-arrow-left-alt ppress-shortcode-inserter-back" title="Back"></span>' + shortcode);
 
                             // trigger change to add defaults attribute and their values. looking at you select dropdown.
-                            $('#ppress-available-shortcodes-jbox .ppress-shortcode-inserter-builder-field').change();
+                            $('#ppress-available-shortcodes-jbox .ppress-shortcode-inserter-builder-field').trigger('change');
 
                             window.ppressShortcodeBuilderMModal.position(); // recalculate placement in DOM
                         });

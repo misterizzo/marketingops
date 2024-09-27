@@ -4,7 +4,7 @@
  * Plugin Name: ProfilePress Pro - Standard
  * Plugin URI: https://profilepress.com
  * Description: Extend and customize the functionality of your ProfilePress powered membership site and online business.
- * Version: 4.10.5
+ * Version: 4.11.1
  * Author: ProfilePress Team
  * Author URI: https://profilepress.com
  * Text Domain: profilepress-pro
@@ -17,7 +17,7 @@ use ProfilePress\Libsodium\RequirementChecker;
 require __DIR__ . '/vendor/autoload.php';
 
 define('PROFILEPRESS_PRO_SYSTEM_FILE_PATH', __FILE__);
-define('PROFILEPRESS_PRO_VERSION_NUMBER', '4.10.5');
+define('PROFILEPRESS_PRO_VERSION_NUMBER', '4.11.1');
 
 add_action('init', function () {
     load_plugin_textdomain('profilepress-pro', false, dirname(plugin_basename(__FILE__)) . '/languages');

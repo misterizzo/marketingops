@@ -426,7 +426,7 @@ class SettingsPage
                 'type'       => 'select',
                 'options'    => $list_options,
                 'label'      => esc_html__('Select List', 'profilepress-pro'),
-                'attributes' => ['onchange' => "jQuery(this).parents('form').find('.button-primary').click();"]
+                'attributes' => ['onchange' => "jQuery(this).parents('form').find('.button-primary').trigger('click');"]
             ],
             'cm_email_list_automatic_add_user' => [
                 'type'           => 'checkbox',

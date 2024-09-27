@@ -182,7 +182,7 @@ $("input.pp-recaptcha-type").on("change", function() {
        $("#recaptcha_theme_row").show();
        $("#recaptcha_language_row").show();
    }
-}).change();
+}).trigger("change");
 });
 </script>';
 

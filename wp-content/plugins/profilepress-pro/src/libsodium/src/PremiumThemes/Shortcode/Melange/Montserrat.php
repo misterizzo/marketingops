@@ -141,7 +141,7 @@ class Montserrat implements MelangeThemeInterface
                 }
                 /**  Hash setup ends **/
 
-                $('input[type=radio]').change(function () {
+                $('input[type=radio]').on('change', function () {
                     if ($('input#montse-existing-user').is(':checked')) {
                         montse_existing_user();
                     }
