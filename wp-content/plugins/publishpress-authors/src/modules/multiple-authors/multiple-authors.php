@@ -308,6 +308,9 @@ if (!class_exists('MA_Multiple_Authors')) {
             add_filter('wp_send_new_user_notification_to_admin', [$this, 'prevent_guest_author_emails'], 10, 2);
             add_filter('wp_send_new_user_notification_to_user', [$this, 'prevent_guest_author_emails'], 10, 2);
             add_filter('send_email_change_email', [$this, 'prevent_guest_author_emails'], 10, 2);
+
+            // Redirect on plugin activation
+            add_action('admin_init', [$this, 'redirect_on_activate'], 2000);
         }
 
         /**
@@ -409,10 +412,12 @@ if (!class_exists('MA_Multiple_Authors')) {
                 // Get the index for the menus, removing the first submenu which was automatically created by WP.
                 $itemsToSort = [
                     'ppma-author-categories'            => null,
-                    'edit.php?post_type=ppma_boxes'    => null,
-                    'edit-tags.php?taxonomy=author'    => null,
-                    'edit.php?post_type=ppmacf_field'  => null,
-                    'ppma-modules-settings'            => null,
+                    'edit.php?post_type=ppma_boxes'     => null,
+                    'edit-tags.php?taxonomy=author'     => null,
+                    'edit.php?post_type=ppmacf_field'   => null,
+                    'ppma-author-list'                  => null,
+                    'ppma-author-pages'                 => null,
+                    'ppma-modules-settings'             => null,
                 ];
 
                 if (!defined('PUBLISHPRESS_AUTHORS_SKIP_VERSION_NOTICES')) {
@@ -456,6 +461,20 @@ if (!class_exists('MA_Multiple_Authors')) {
                     $newSubmenu[] = $currentSubmenu[$itemsToSort['edit.php?post_type=ppmacf_field']];
 
                     unset($currentSubmenu[$itemsToSort['edit.php?post_type=ppmacf_field']]);
+                }
+
+                // Author List
+                if (isset($itemsToSort['ppma-author-list'])) {
+                    $newSubmenu[] = $currentSubmenu[$itemsToSort['ppma-author-list']];
+
+                    unset($currentSubmenu[$itemsToSort['ppma-author-list']]);
+                }
+
+                // Author Pages
+                if (isset($itemsToSort['ppma-author-pages'])) {
+                    $newSubmenu[] = $currentSubmenu[$itemsToSort['ppma-author-pages']];
+
+                    unset($currentSubmenu[$itemsToSort['ppma-author-pages']]);
                 }
 
                 // Check if we have other menu items, except settings. They will be added to the end.
@@ -1746,6 +1765,17 @@ if (!class_exists('MA_Multiple_Authors')) {
 
 
             echo '</label>';
+            if ($value === 'yes') {
+                $current_author = Author::get_by_user_id(get_current_user_id());
+                if (
+                    $current_author &&
+                    is_object($current_author) &&
+                    isset($current_author->link)
+                ) {
+                    $author_url = $current_author->link;
+                    echo '<div style="margin-top: 15px;"><a class="button" target="_blank" href="'. $author_url .'">'. esc_html__('View sample Author Page', 'publishpress-authors') .'</a></div>';
+                }
+            }
         }
 
 
@@ -3723,7 +3753,7 @@ echo '<span class="ppma_settings_field_description">'
 
         public function admin_enqueue_scripts()
         {
-            if (isset($_GET['page']) && $_GET['page'] === 'ppma-modules-settings') {
+            if (isset($_GET['page']) && in_array($_GET['page'], ['ppma-modules-settings', 'ppma-author-pages'])) {
                 wp_enqueue_script(
                     'multiple-authors-settings',
                     PP_AUTHORS_ASSETS_URL . 'js/settings.js',
@@ -4772,6 +4802,20 @@ echo '<span class="ppma_settings_field_description">'
                 return false;
             }
             return $notify;
+        }
+
+        /**
+         * Redirect user on plugin activation
+         *
+         * @return void
+         */
+        public function redirect_on_activate()
+        {
+            if (get_option('ppma_activated')) {
+                delete_option('ppma_activated');
+                wp_redirect(admin_url("edit-tags.php?taxonomy=author&welcome"));
+                exit;
+              }
         }
     }
 }

@@ -13,6 +13,7 @@ return array(
     'MultipleAuthorBoxes\\AuthorBoxesStyles' => $baseDir . '/../src/modules/author-boxes/classes/AuthorBoxesStyles.php',
     'MultipleAuthorCategories\\AuthorCategoriesSchema' => $baseDir . '/../src/modules/author-categories/classes/AuthorCategoriesSchema.php',
     'MultipleAuthorCategories\\AuthorCategoriesTable' => $baseDir . '/../src/modules/author-categories/classes/AuthorCategoriesTable.php',
+    'MultipleAuthorList\\AuthorListTable' => $baseDir . '/../src/modules/author-list/classes/AuthorListTable.php',
     'MultipleAuthors\\Authors_Widget' => $baseDir . '/../src/core/Authors_Widget.php',
     'MultipleAuthors\\Capability' => $baseDir . '/../src/core/Capability.php',
     'MultipleAuthors\\Classes\\Admin_Ajax' => $baseDir . '/../src/core/Classes/Admin_Ajax.php',

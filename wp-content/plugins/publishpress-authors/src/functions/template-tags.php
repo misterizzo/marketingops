@@ -183,6 +183,7 @@ if (!function_exists('ppma_post_authors_categorized')) {
             return [];
         }
 
+        // TODO: Cache the result
         $authors = get_post_authors($postId, true);
         $categorized_authors = [];
         $author_relations = get_ppma_author_relations(['post_id' => $postId, 'slug' => $category_slugs]);
@@ -316,14 +317,65 @@ if (!function_exists('publishpress_authors_get_all_authors')) {
         $offset      = false;
         $guests_only = false;
         $users_only  = false;
+        $exclude_guest_user = false;
+        $exclude_real_user = false;
         $per_page    = 0;
         $term_counts = 0;
 
+        // limit to term ids
+        if (isset($instance['term_id']) && !empty($instance['term_id'])) {
+            $term_ids  = explode(',', $instance['term_id']);
+        } else {
+            $term_ids = [];
+        }
+
+        // limit to roles
+        if (isset($instance['roles']) && !empty($instance['roles'])) {
+            $user_roles  = explode(',', $instance['roles']);
+        } else {
+            $user_roles = [];
+        }
+
         //check if result is set to be guest only or user only
-        if (isset($instance['authors']) && $instance['authors'] === 'users') {
-            $users_only  = true;
-        } elseif (isset($instance['authors']) && $instance['authors'] === 'guests') {
-            $guests_only = true;
+        /**
+         * $guests_only: Term without user_id meta
+         * $users_only : All users except guest author role (!=ppma_guest_author)
+         * $exclude_real_user: User in ppma_guest_author AND authors without user_id meta
+         * $exclude_guest_user: Users in all roles except guest author role (!=ppma_guest_author) AND authors without user_id meta
+         */
+        if (isset($instance['authors']) && !empty($instance['authors'])) {
+            $author_types = explode(',', $instance['authors']);
+            // we want to make sure all the 3 options are not selected otherwise the filter is not neccessary
+            if (count($author_types) < 3) {
+                // check all possible combination between  users,guests_users,guests
+                if (in_array('users', $author_types) && in_array('guests_users', $author_types)) {
+                    $user_roles = array_keys(get_ppma_get_all_user_roles());
+                } else if (in_array('users', $author_types) && in_array('guests', $author_types)) {
+                    // Real users and Guest authors?
+                    $exclude_guest_user = true;
+                } else if (in_array('guests_users', $author_types) && in_array('guests', $author_types)) {
+                    // Guest Users and Guests?
+                    $exclude_real_user = true;
+                } elseif (in_array('users', $author_types)) {
+                    // maybe it's only users
+                    $users_only  = true;
+                } elseif (in_array('guests_users', $author_types)) {
+                    // maybe it's only guests_users
+                    $user_roles[] = 'ppma_guest_author';
+                } elseif (in_array('guests', $author_types)) {
+                    // maybe it's only guests
+                    $guests_only = true;
+                }
+
+            }
+        }
+
+        // roles without guest author roles
+        $other_roles  = array_keys(get_ppma_get_all_user_roles());
+        $other_roles  = array_diff($other_roles, ["ppma_guest_author"]);
+
+        if ($users_only) {
+            $user_roles = $other_roles;
         }
 
         //add sort option
@@ -334,8 +386,8 @@ if (!function_exists('publishpress_authors_get_all_authors')) {
             $args['orderby'] = $instance['orderby'];
         }
 
-        //check if result limit is set (only work when request is not guest or user only)
-        if (isset($instance['limit_per_page']) && (int)$instance['limit_per_page'] > 0 && !$users_only && !$guests_only) {
+        //check if result limit is set
+        if (isset($instance['limit_per_page']) && (int)$instance['limit_per_page'] > 0) {
             $paged          = (int)$instance['page'];
             $per_page       = (int)$instance['limit_per_page'];
             $offset         = ($paged-1) * $per_page;
@@ -364,6 +416,10 @@ if (!function_exists('publishpress_authors_get_all_authors')) {
 
         $args = wp_parse_args($args, $defaults);
 
+        if (!empty($term_ids)) {
+            $args['include'] = array_values($term_ids);
+        }
+
         /**
          * Filter author query args
          *
@@ -378,7 +434,7 @@ if (!function_exists('publishpress_authors_get_all_authors')) {
             $meta_order = false;
         }
 
-        if (true === $args['hide_empty'] || $search_text || $meta_order || $last_article_date) {
+        if (true === $args['hide_empty'] || $search_text || $meta_order || $last_article_date || !empty($user_roles) || $guests_only || $exclude_real_user || $exclude_guest_user) {
             $postTypes = Utils::get_enabled_post_types();
             $postTypes = array_map(function($item) {
                 return '"' . $item . '"';
@@ -388,14 +444,76 @@ if (!function_exists('publishpress_authors_get_all_authors')) {
             $term_query = "SELECT t.term_id as `term_id` ";
             $term_query .= "FROM {$wpdb->terms} AS t ";
             $term_query .= "INNER JOIN {$wpdb->term_taxonomy} AS tt ON (tt.term_id = t.term_id) ";
-            if (true === $args['hide_empty']) {
+            if (true === $args['hide_empty'] || $last_article_date) {
                 $term_query .= "INNER JOIN {$wpdb->term_relationships} AS tr ON (tt.term_taxonomy_id = tr.term_taxonomy_id) ";
                 $term_query .= "INNER JOIN {$wpdb->posts} AS p ON (tr.object_id = p.ID) ";
             }
-            if (($search_text && $search_field) || $meta_order) {
-                $term_query .= "INNER JOIN {$wpdb->termmeta} AS tm ON (tm.term_id = t.term_id) ";
+            if (($search_text && $search_field) || $meta_order || !empty($user_roles) || $exclude_real_user || $exclude_guest_user) {
+                $term_query .= "LEFT JOIN {$wpdb->termmeta} AS tm ON (tm.term_id = t.term_id) ";
             }
+            if ($guests_only || $exclude_real_user || $exclude_guest_user) {
+                $term_query .= "LEFT JOIN {$wpdb->termmeta} tm2 ON t.term_id = tm2.term_id AND tm2.meta_key = 'user_id'";
+            }
+
+            if (!empty($user_roles) || $exclude_real_user || $exclude_guest_user) {
+                $term_query .= "LEFT JOIN {$wpdb->users} u ON u.ID = tm.meta_value ";
+                $term_query .= "LEFT JOIN {$wpdb->usermeta} um ON u.ID = um.user_id ";
+            }
+            
             $term_query .= "WHERE tt.taxonomy = 'author' ";
+
+            if (!empty($term_ids)) {
+                $term_ids_string = implode(',', array_map('intval', $term_ids));
+                $term_query .= "AND t.term_id IN ({$term_ids_string}) ";
+            }
+
+            if ($guests_only) {
+                $term_query .= "AND (tm2.meta_value IS NULL OR tm2.meta_value = '' OR tm2.meta_value = 0) ";
+            }
+
+            if ($exclude_real_user) {
+                $role_condition = '%"ppma_guest_author"%';
+                $term_query .= "AND (
+                    tm2.meta_key IS NULL
+                    OR tm2.meta_value IS NULL
+                    OR tm2.meta_value = ''
+                    OR tm2.meta_value = '0'
+                    OR (
+                        tm.meta_key = 'user_id'
+                        AND um.meta_value LIKE '{$role_condition}'
+                    )
+                ) ";
+            }
+
+            if ($exclude_guest_user) {
+                $role_conditions = [];
+                foreach ($other_roles as $role) {
+                    $role_conditions[] = $wpdb->prepare("um.meta_value LIKE %s", '%"' . $wpdb->esc_like($role) . '"%');
+                }
+                $role_conditions_string = implode(' OR ', $role_conditions);
+                $term_query .= "AND (
+                    tm2.meta_key IS NULL
+                    OR tm2.meta_value IS NULL
+                    OR tm2.meta_value = ''
+                    OR tm2.meta_value = '0'
+                    OR (
+                        tm.meta_key = 'user_id'
+                        AND ($role_conditions_string)
+                    )
+                ) ";
+            }
+
+            if (!empty($user_roles)) {
+                $role_conditions = [];
+                foreach ($user_roles as $role) {
+                    $role_conditions[] = $wpdb->prepare("um.meta_value LIKE %s", '%"' . $wpdb->esc_like($role) . '"%');
+                }
+                $role_conditions_string = implode(' OR ', $role_conditions);
+                $term_query .= "AND tm.meta_key = 'user_id' ";
+                $term_query .= "AND um.meta_key = '{$wpdb->prefix}capabilities' ";
+                $term_query .= "AND ($role_conditions_string) ";
+            }
+
             if (true === $args['hide_empty'] || $last_article_date) {
                 $term_query .= "AND p.post_status IN ('publish') ";
                 $term_query .= "AND p.post_type IN ({$postTypes}) ";
@@ -481,11 +599,6 @@ if (!function_exists('publishpress_authors_get_all_authors')) {
         $authors      = [];
         foreach ($terms as $term) {
             $author    = Author::get_by_term_id($term->term_id);
-            if ($users_only && $author->is_guest()) {
-                continue;
-            } elseif ($guests_only && !$author->is_guest()) {
-                continue;
-            }
 
             if ($result_type === 'grouped') {
                 //group authors by first letter of their name
@@ -1477,6 +1590,54 @@ if (!function_exists('get_ppma_author_categories')) {
 }
 
 
+if (!function_exists('ppma_get_grouped_post_authors')) {
+    function ppma_get_grouped_post_authors($post = 0, $authors = false, $author_categories = false) {
+
+        if (is_object($post)) {
+            $post = $post->ID;
+        } elseif (empty($post)) {
+            $post = get_post();
+            if (is_object($post) && !is_wp_error($post)) {
+                $post = $post->ID;
+            }
+        }
+
+        $post_id = (int)$post;
+
+        if (empty($post_id) ) {
+            return [];
+        }
+        
+        if (!$authors) {
+            $authors = get_post_authors($post_id);
+        }
+
+        // make sure there's a default grouping
+        $author_categories_data = [];
+        $author_categories_data[] = [
+            'title'       => '',
+            'singular_title' => '',
+            'description' => '',
+            'slug'        => '',
+            'id'          => '',
+            'authors'     => $authors
+        ];
+
+        if (!$author_categories) {
+            $author_categories = get_ppma_author_categories(['category_status' => 1]);
+        }
+        // group authors to categories
+        if (!empty($author_categories)) {
+            $author_relations       = get_ppma_author_relations(['post_id' => $post_id]);
+            $author_categories_data = Post_Editor::group_category_authors($author_categories, $author_relations, $authors);
+        }
+        
+        // TODO: Cache this data
+        return $author_categories_data;
+    }
+}
+
+
 if (!function_exists('get_ppma_author_relations')) {
     function get_ppma_author_relations($args = []) {
         global $wpdb;
@@ -1496,16 +1657,19 @@ if (!function_exists('get_ppma_author_relations')) {
         $results = wp_cache_get($cache_key, 'author_categories_relation_cache');
 
         if ($results === false) {
-            $table_name = $wpdb->prefix . 'ppma_author_relationships';
+            $relationships_table    = $wpdb->prefix . 'ppma_author_relationships';
+            $categories_table       = $wpdb->prefix . 'ppma_author_categories';
 
-            $sql = "SELECT * FROM $table_name WHERE 1=1";
+            $sql = "SELECT * FROM $relationships_table WHERE 1=1";
+
+            $sql = "SELECT r.*, c.category_name, c.plural_name FROM $relationships_table r LEFT JOIN $categories_table c ON r.category_id = c.id  WHERE 1=1";
 
             if ($post_id !== '') {
-                $sql .= $wpdb->prepare(" AND post_id = %d", $post_id);
+                $sql .= $wpdb->prepare(" AND r.post_id = %d", $post_id);
             }
 
             if (!empty($author_term_id)) {
-                $sql .= $wpdb->prepare(" AND author_term_id = %d", $author_term_id);
+                $sql .= $wpdb->prepare(" AND r.author_term_id = %d", $author_term_id);
             }
 
             $results = $wpdb->get_results($sql, ARRAY_A);
@@ -1516,8 +1680,6 @@ if (!function_exists('get_ppma_author_relations')) {
         return $results;
     }
 }
-
-
 
 if (!function_exists('get_ppma_author_category')) {
     /**
@@ -1545,6 +1707,43 @@ if (!function_exists('get_ppma_author_category')) {
         return $author_category;
     }
 
+}
+
+if (!function_exists('get_ppma_section_content')) {
+    /**
+     * Return section content
+     *
+     * @param string $page
+     * 
+     * @return string
+     */
+    function get_ppma_section_content($page) {
+        ob_start();
+        
+        do_settings_sections($page);
+
+        return ob_get_clean();
+    }
+
+}
+
+
+if (!function_exists('get_ppma_get_all_user_roles')) {
+    /**
+     * Return WordPress role object
+     *
+     * @return object
+     */
+    function get_ppma_get_all_user_roles()
+    {
+        global $wp_roles;
+
+        if (!isset($wp_roles)) {
+            $wp_roles = new \WP_Roles();
+        }
+
+        return $wp_roles->roles;
+    }
 }
 
 // Keep backward compatibility with Bylines, legacy versions of PublishPress Authors and CoAuthors
