@@ -17,7 +17,6 @@ class Portal_Options {
 	const LAST_AUTHORIZE_TIME       = LEADIN_PREFIX . '_last_authorize_time';
 	const LAST_DEAUTHORIZE_TIME     = LEADIN_PREFIX . '_last_deauthorize_time';
 	const LAST_DISCONNECT_TIME      = LEADIN_PREFIX . '_last_disconnect_time';
-	const REFRESH_TOKEN_ERROR       = LEADIN_PREFIX . '_refresh_token_error';
 	/**
 	 * Return portal id.
 	 */
@@ -230,15 +229,6 @@ class Portal_Options {
 	}
 
 	/**
-	 * Set if the refresh token failed to be retrieved.
-	 *
-	 * @param string $error the error message.
-	 */
-	public static function set_refresh_token_error( $error = 'unknown' ) {
-		return update_option( self::REFRESH_TOKEN_ERROR, $error );
-	}
-
-	/**
 	 * Get the last time authorization was performed.
 	 *
 	 * @return mixed The last authorization time, or false if not set.
@@ -263,14 +253,5 @@ class Portal_Options {
 	 */
 	public static function get_last_disconnect_time() {
 		return get_option( self::LAST_DISCONNECT_TIME, false );
-	}
-
-	/**
-	 * Get the last error message for when retrieving the refresh token failed.
-	 *
-	 * @return string The error message, or 'unknown' if not set.
-	 */
-	public static function get_refresh_token_error() {
-		return get_option( self::REFRESH_TOKEN_ERROR, 'unknown' );
 	}
 }

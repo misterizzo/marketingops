@@ -134,9 +134,11 @@ class AssetsManager {
 	public static function localize_gutenberg() {
 		$embed_domain = Filters::apply_js_base_url_filters();
 		wp_enqueue_script( self::APP_EMBEDDER, "$embed_domain/integrated-app-embedder/v1.js", array(), LEADIN_PLUGIN_VERSION, true );
+		self::enqueue_forms_script();
+		self::enqueue_meetings_script();
 		wp_register_style( self::GUTENBERG, LEADIN_JS_BASE_PATH . '/gutenberg.css', array(), LEADIN_PLUGIN_VERSION );
 		wp_enqueue_style( self::GUTENBERG );
-		wp_register_script( self::GUTENBERG, LEADIN_JS_BASE_PATH . '/gutenberg.js', array( 'wp-blocks', 'wp-element', 'wp-i18n', self::APP_EMBEDDER ), LEADIN_PLUGIN_VERSION, true );
+		wp_register_script( self::GUTENBERG, LEADIN_JS_BASE_PATH . '/gutenberg.js', array( 'wp-blocks', 'wp-element', 'wp-i18n', self::APP_EMBEDDER, self::MEETINGS_SCRIPT, self::FORMS_SCRIPT ), LEADIN_PLUGIN_VERSION, true );
 		wp_localize_script( self::GUTENBERG, self::LEADIN_CONFIG, AdminConstants::get_background_leadin_config() );
 		wp_set_script_translations( self::GUTENBERG, 'leadin', __DIR__ . '/../languages' );
 	}

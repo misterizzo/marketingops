@@ -107,7 +107,7 @@ class ElementorForm extends Widget_Base {
 		if ( Plugin::$instance->editor->is_edit_mode() ) {
 
 			?>
-				<div class="hubspot-form-edit-mode" data-attributes="<?php echo esc_attr( json_encode( $content ) ); ?>">
+				<div class="hubspot-form-edit-mode" data-attributes="<?php echo esc_attr( wp_json_encode( $content ) ); ?>">
 				&nbsp;
 				</div>
 				<?php

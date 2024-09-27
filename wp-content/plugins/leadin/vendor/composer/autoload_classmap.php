@@ -36,6 +36,7 @@ return array(
     'Leadin\\api\\Healthcheck_Api_Controller' => $baseDir . '/public/modules/api/class-healthcheck-api-controller.php',
     'Leadin\\auth\\OAuth' => $baseDir . '/public/auth/class-oauth.php',
     'Leadin\\auth\\OAuthCrypto' => $baseDir . '/public/auth/class-oauthcrypto.php',
+    'Leadin\\auth\\OAuthCryptoError' => $baseDir . '/public/auth/class-oauthcryptoerror.php',
     'Leadin\\data\\Filters' => $baseDir . '/public/data/class-filters.php',
     'Leadin\\data\\Portal_Options' => $baseDir . '/public/data/class-portal-options.php',
     'Leadin\\data\\User' => $baseDir . '/public/data/class-user.php',

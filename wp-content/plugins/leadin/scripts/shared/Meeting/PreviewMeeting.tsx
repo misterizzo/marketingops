@@ -1,31 +1,36 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import UIOverlay from '../UIComponents/UIOverlay';
-import useMeetingsScript from './hooks/useMeetingsScript';
+import PreviewDisabled from '../Common/PreviewDisabled';
 
 interface IPreviewForm {
   url: string;
+  fullSiteEditor?: boolean;
 }
 
-export default function PreviewForm({ url }: IPreviewForm) {
-  const ready = useMeetingsScript();
+export default function PreviewForm({ url, fullSiteEditor }: IPreviewForm) {
   const inputEl = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!ready) {
-      return;
-    }
     if (inputEl.current) {
-      inputEl.current.innerHTML = '';
-      const container = document.createElement('div');
-      container.dataset.src = `${url}?embed=true`;
-      container.classList.add('meetings-iframe-container');
-      inputEl.current.appendChild(container);
-      const embedScript = document.createElement('script');
-      embedScript.innerHTML =
-        'hbspt.meetings.create(".meetings-iframe-container");';
-      inputEl.current.appendChild(embedScript);
+      //@ts-expect-error Hubspot global
+      const hbspt = window.parent.hbspt || window.hbspt;
+      hbspt.meetings.create('.meetings-iframe-container');
     }
-  }, [url, ready, inputEl]);
+  }, [url, inputEl]);
 
-  return <Fragment>{url && <UIOverlay ref={inputEl}></UIOverlay>}</Fragment>;
+  if (fullSiteEditor) {
+    return <PreviewDisabled />;
+  }
+
+  return (
+    <Fragment>
+      {url && (
+        <UIOverlay
+          ref={inputEl}
+          className="meetings-iframe-container"
+          data-src={`${url}?embed=true`}
+        ></UIOverlay>
+      )}
+    </Fragment>
+  );
 }

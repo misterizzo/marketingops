@@ -5,7 +5,7 @@ export const isFullSiteEditor = () => {
   return select && !!select('core/edit-site');
 };
 
-const applyWithSelect = withSelect((select: Function, props: any): any => {
+const applyWithSelect: any = withSelect((select: Function, props: any): any => {
   return {
     metaValue: select('core/editor').getEditedPostAttribute('meta')[
       props.metaKey
@@ -13,7 +13,7 @@ const applyWithSelect = withSelect((select: Function, props: any): any => {
   };
 });
 
-const applyWithDispatch = withDispatch(
+const applyWithDispatch: any = withDispatch(
   (dispatch: Function, props: any): any => {
     return {
       setMetaValue(value: string) {

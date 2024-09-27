@@ -10,6 +10,7 @@ import { __ } from '@wordpress/i18n';
 import { BackgroudAppContext } from '../../iframe/useBackgroundApp';
 import { refreshToken } from '../../constants/leadinConfig';
 import { getOrCreateBackgroundApp } from '../../utils/backgroundAppUtils';
+import { isFullSiteEditor } from '../../utils/withMetaData';
 
 export function registerHubspotSidebar() {
   const ContentTypeLabelStyle = styled.div`
@@ -27,7 +28,7 @@ export function registerHubspotSidebar() {
   );
 
   const LeadinPluginSidebar = ({ postType }: { postType: string }) =>
-    postType ? (
+    postType && !isFullSiteEditor() ? (
       <PluginSidebar
         name="leadin"
         title="HubSpot"

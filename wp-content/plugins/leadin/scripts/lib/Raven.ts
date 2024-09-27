@@ -19,6 +19,11 @@ export function configureRaven() {
       instrument: {
         tryCatch: false,
       },
+      shouldSendCallback(data) {
+        return (
+          !!data && !!data.culprit && /plugins\/leadin\//.test(data.culprit)
+        );
+      },
       release: leadinPluginVersion,
     }
   ).install();

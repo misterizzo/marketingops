@@ -15,6 +15,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "adminUrl": () => (/* binding */ adminUrl),
 /* harmony export */   "connectionStatus": () => (/* binding */ connectionStatus),
 /* harmony export */   "contentEmbed": () => (/* binding */ contentEmbed),
+/* harmony export */   "decryptError": () => (/* binding */ decryptError),
 /* harmony export */   "deviceId": () => (/* binding */ deviceId),
 /* harmony export */   "didDisconnect": () => (/* binding */ didDisconnect),
 /* harmony export */   "env": () => (/* binding */ env),
@@ -41,7 +42,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "portalId": () => (/* binding */ portalId),
 /* harmony export */   "redirectNonce": () => (/* binding */ redirectNonce),
 /* harmony export */   "refreshToken": () => (/* binding */ refreshToken),
-/* harmony export */   "refreshTokenError": () => (/* binding */ refreshTokenError),
 /* harmony export */   "requiresContentEmbedScope": () => (/* binding */ requiresContentEmbedScope),
 /* harmony export */   "restNonce": () => (/* binding */ restNonce),
 /* harmony export */   "restUrl": () => (/* binding */ restUrl),
@@ -51,45 +51,45 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "wpVersion": () => (/* binding */ wpVersion)
 /* harmony export */ });
 var _window$leadinConfig = window.leadinConfig,
-    accountName = _window$leadinConfig.accountName,
-    adminUrl = _window$leadinConfig.adminUrl,
-    activationTime = _window$leadinConfig.activationTime,
-    connectionStatus = _window$leadinConfig.connectionStatus,
-    deviceId = _window$leadinConfig.deviceId,
-    didDisconnect = _window$leadinConfig.didDisconnect,
-    env = _window$leadinConfig.env,
-    formsScript = _window$leadinConfig.formsScript,
-    meetingsScript = _window$leadinConfig.meetingsScript,
-    formsScriptPayload = _window$leadinConfig.formsScriptPayload,
-    hublet = _window$leadinConfig.hublet,
-    hubspotBaseUrl = _window$leadinConfig.hubspotBaseUrl,
-    hubspotNonce = _window$leadinConfig.hubspotNonce,
-    iframeUrl = _window$leadinConfig.iframeUrl,
-    impactLink = _window$leadinConfig.impactLink,
-    lastAuthorizeTime = _window$leadinConfig.lastAuthorizeTime,
-    lastDeauthorizeTime = _window$leadinConfig.lastDeauthorizeTime,
-    lastDisconnectTime = _window$leadinConfig.lastDisconnectTime,
-    leadinPluginVersion = _window$leadinConfig.leadinPluginVersion,
-    leadinQueryParams = _window$leadinConfig.leadinQueryParams,
-    locale = _window$leadinConfig.locale,
-    loginUrl = _window$leadinConfig.loginUrl,
-    phpVersion = _window$leadinConfig.phpVersion,
-    pluginPath = _window$leadinConfig.pluginPath,
-    plugins = _window$leadinConfig.plugins,
-    portalDomain = _window$leadinConfig.portalDomain,
-    portalEmail = _window$leadinConfig.portalEmail,
-    portalId = _window$leadinConfig.portalId,
-    redirectNonce = _window$leadinConfig.redirectNonce,
-    restNonce = _window$leadinConfig.restNonce,
-    restUrl = _window$leadinConfig.restUrl,
-    refreshToken = _window$leadinConfig.refreshToken,
-    reviewSkippedDate = _window$leadinConfig.reviewSkippedDate,
-    theme = _window$leadinConfig.theme,
-    trackConsent = _window$leadinConfig.trackConsent,
-    wpVersion = _window$leadinConfig.wpVersion,
-    contentEmbed = _window$leadinConfig.contentEmbed,
-    requiresContentEmbedScope = _window$leadinConfig.requiresContentEmbedScope,
-    refreshTokenError = _window$leadinConfig.refreshTokenError;
+  accountName = _window$leadinConfig.accountName,
+  adminUrl = _window$leadinConfig.adminUrl,
+  activationTime = _window$leadinConfig.activationTime,
+  connectionStatus = _window$leadinConfig.connectionStatus,
+  deviceId = _window$leadinConfig.deviceId,
+  didDisconnect = _window$leadinConfig.didDisconnect,
+  env = _window$leadinConfig.env,
+  formsScript = _window$leadinConfig.formsScript,
+  meetingsScript = _window$leadinConfig.meetingsScript,
+  formsScriptPayload = _window$leadinConfig.formsScriptPayload,
+  hublet = _window$leadinConfig.hublet,
+  hubspotBaseUrl = _window$leadinConfig.hubspotBaseUrl,
+  hubspotNonce = _window$leadinConfig.hubspotNonce,
+  iframeUrl = _window$leadinConfig.iframeUrl,
+  impactLink = _window$leadinConfig.impactLink,
+  lastAuthorizeTime = _window$leadinConfig.lastAuthorizeTime,
+  lastDeauthorizeTime = _window$leadinConfig.lastDeauthorizeTime,
+  lastDisconnectTime = _window$leadinConfig.lastDisconnectTime,
+  leadinPluginVersion = _window$leadinConfig.leadinPluginVersion,
+  leadinQueryParams = _window$leadinConfig.leadinQueryParams,
+  locale = _window$leadinConfig.locale,
+  loginUrl = _window$leadinConfig.loginUrl,
+  phpVersion = _window$leadinConfig.phpVersion,
+  pluginPath = _window$leadinConfig.pluginPath,
+  plugins = _window$leadinConfig.plugins,
+  portalDomain = _window$leadinConfig.portalDomain,
+  portalEmail = _window$leadinConfig.portalEmail,
+  portalId = _window$leadinConfig.portalId,
+  redirectNonce = _window$leadinConfig.redirectNonce,
+  restNonce = _window$leadinConfig.restNonce,
+  restUrl = _window$leadinConfig.restUrl,
+  refreshToken = _window$leadinConfig.refreshToken,
+  reviewSkippedDate = _window$leadinConfig.reviewSkippedDate,
+  theme = _window$leadinConfig.theme,
+  trackConsent = _window$leadinConfig.trackConsent,
+  wpVersion = _window$leadinConfig.wpVersion,
+  contentEmbed = _window$leadinConfig.contentEmbed,
+  requiresContentEmbedScope = _window$leadinConfig.requiresContentEmbedScope,
+  decryptError = _window$leadinConfig.decryptError;
 
 
 /***/ }),
@@ -141,37 +141,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _constants_selectors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/selectors */ "./scripts/constants/selectors.ts");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
 var ThickBoxModal = /*#__PURE__*/function () {
   function ThickBoxModal(openTriggerSelector, inlineContentId, windowCssClass, contentCssClass) {
     _classCallCheck(this, ThickBoxModal);
-
     _defineProperty(this, "openTriggerSelector", void 0);
-
     _defineProperty(this, "inlineContentId", void 0);
-
     _defineProperty(this, "windowCssClass", void 0);
-
     _defineProperty(this, "contentCssClass", void 0);
-
     this.openTriggerSelector = openTriggerSelector;
     this.inlineContentId = inlineContentId;
     this.windowCssClass = windowCssClass;
     this.contentCssClass = contentCssClass;
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(openTriggerSelector).on('click', this.init.bind(this));
   }
-
-  _createClass(ThickBoxModal, [{
+  return _createClass(ThickBoxModal, [{
     key: "close",
     value: function close() {
       //@ts-expect-error global
@@ -181,22 +173,19 @@ var ThickBoxModal = /*#__PURE__*/function () {
     key: "init",
     value: function init(e) {
       //@ts-expect-error global
-      window.tb_show('', "#TB_inline?inlineId=".concat(this.inlineContentId, "&modal=true")); // thickbox doesn't respect the width and height url parameters https://core.trac.wordpress.org/ticket/17249
+      window.tb_show('', "#TB_inline?inlineId=".concat(this.inlineContentId, "&modal=true"));
+      // thickbox doesn't respect the width and height url parameters https://core.trac.wordpress.org/ticket/17249
       // We override thickboxes css with !important in the css
-
-      jquery__WEBPACK_IMPORTED_MODULE_0___default()(_constants_selectors__WEBPACK_IMPORTED_MODULE_1__.domElements.thickboxModalWindow).addClass(this.windowCssClass); // have to modify the css of the thickbox content container as well
-
-      jquery__WEBPACK_IMPORTED_MODULE_0___default()(_constants_selectors__WEBPACK_IMPORTED_MODULE_1__.domElements.thickboxModalContent).addClass(this.contentCssClass); // we unbind previous handlers because a thickbox modal is a single global object.
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(_constants_selectors__WEBPACK_IMPORTED_MODULE_1__.domElements.thickboxModalWindow).addClass(this.windowCssClass);
+      // have to modify the css of the thickbox content container as well
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(_constants_selectors__WEBPACK_IMPORTED_MODULE_1__.domElements.thickboxModalContent).addClass(this.contentCssClass);
+      // we unbind previous handlers because a thickbox modal is a single global object.
       // Everytime it is re-opened, it still has old handlers bound
-
       jquery__WEBPACK_IMPORTED_MODULE_0___default()(_constants_selectors__WEBPACK_IMPORTED_MODULE_1__.domElements.thickboxModalClose).off('click').on('click', this.close);
       e.preventDefault();
     }
   }]);
-
-  return ThickBoxModal;
 }();
-
 
 
 /***/ }),
@@ -415,10 +404,12 @@ function configureRaven() {
   if (_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_1__.hubspotBaseUrl.indexOf('app.hubspot.com') === -1) {
     return;
   }
-
   raven_js__WEBPACK_IMPORTED_MODULE_0___default().config('https://e9b8f382cdd130c0d415cd977d2be56f@exceptions.hubspot.com/1', {
     instrument: {
       tryCatch: false
+    },
+    shouldSendCallback: function shouldSendCallback(data) {
+      return !!data && !!data.culprit && /plugins\/leadin\//.test(data.culprit);
     },
     release: _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_1__.leadinPluginVersion
   }).install();
@@ -463,7 +454,6 @@ function initAppOnReady(initFn) {
   function main() {
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(initFn);
   }
-
   initApp(main);
 }
 
@@ -495,22 +485,20 @@ function initBackgroundApp(initFn) {
       initFn();
     }
   }
-
   (0,_appUtils__WEBPACK_IMPORTED_MODULE_1__.initApp)(main);
 }
-var getOrCreateBackgroundApp = function getOrCreateBackgroundApp(refreshToken) {
+var getOrCreateBackgroundApp = function getOrCreateBackgroundApp() {
+  var refreshToken = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
   if (window.LeadinBackgroundApp) {
     return window.LeadinBackgroundApp;
   }
-
   var _window = window,
-      IntegratedAppEmbedder = _window.IntegratedAppEmbedder,
-      IntegratedAppOptions = _window.IntegratedAppOptions;
+    IntegratedAppEmbedder = _window.IntegratedAppEmbedder,
+    IntegratedAppOptions = _window.IntegratedAppOptions;
   var options = new IntegratedAppOptions().setLocale(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.locale).setDeviceId(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.deviceId).setRefreshToken(refreshToken);
   var embedder = new IntegratedAppEmbedder('integrated-plugin-proxy', _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.portalId, _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.hubspotBaseUrl, function () {}).setOptions(options);
   embedder.attachTo(document.body, false);
   embedder.postStartAppMessage(); // lets the app know all all data has been passed to it
-
   window.LeadinBackgroundApp = embedder;
   return window.LeadinBackgroundApp;
 };
@@ -3779,8 +3767,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _feedback_ThickBoxModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../feedback/ThickBoxModal */ "./scripts/feedback/ThickBoxModal.ts");
 /* harmony import */ var _feedback_feedbackFormApi__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../feedback/feedbackFormApi */ "./scripts/feedback/feedbackFormApi.ts");
 /* harmony import */ var _utils_backgroundAppUtils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/backgroundAppUtils */ "./scripts/utils/backgroundAppUtils.ts");
-/* harmony import */ var _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../constants/leadinConfig */ "./scripts/constants/leadinConfig.ts");
-/* harmony import */ var _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../iframe/integratedMessages */ "./scripts/iframe/integratedMessages/index.ts");
+/* harmony import */ var _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../iframe/integratedMessages */ "./scripts/iframe/integratedMessages/index.ts");
 
 
 
@@ -3788,20 +3775,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
+var embedder;
 function deactivatePlugin() {
   var href = jquery__WEBPACK_IMPORTED_MODULE_0___default()(_constants_selectors__WEBPACK_IMPORTED_MODULE_2__.domElements.deactivatePluginButton).attr('href');
-
   if (href) {
     window.location.href = href;
   }
 }
-
 function setLoadingState() {
   jquery__WEBPACK_IMPORTED_MODULE_0___default()(_constants_selectors__WEBPACK_IMPORTED_MODULE_2__.domElements.deactivateFeedbackSubmit).addClass('loading');
 }
-
 function submitAndDeactivate(e) {
   e.preventDefault();
   setLoadingState();
@@ -3809,10 +3792,9 @@ function submitAndDeactivate(e) {
     return field.name === 'feedback';
   });
   (0,_feedback_feedbackFormApi__WEBPACK_IMPORTED_MODULE_4__.submitFeedbackForm)(_constants_selectors__WEBPACK_IMPORTED_MODULE_2__.domElements.deactivateFeedbackForm).then(function () {
-    if (feedback && _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_6__.refreshToken) {
-      var embedder = (0,_utils_backgroundAppUtils__WEBPACK_IMPORTED_MODULE_5__.getOrCreateBackgroundApp)(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_6__.refreshToken);
+    if (feedback) {
       embedder.postMessage({
-        key: _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_7__.ProxyMessages.TrackPluginDeactivation,
+        key: _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_6__.ProxyMessages.TrackPluginDeactivation,
         payload: {
           type: feedback.value.trim().replace(/[\s']+/g, '_')
         }
@@ -3824,14 +3806,13 @@ function submitAndDeactivate(e) {
     deactivatePlugin();
   });
 }
-
 function init() {
+  embedder = (0,_utils_backgroundAppUtils__WEBPACK_IMPORTED_MODULE_5__.getOrCreateBackgroundApp)();
   // eslint-disable-next-line no-new
   new _feedback_ThickBoxModal__WEBPACK_IMPORTED_MODULE_3__["default"](_constants_selectors__WEBPACK_IMPORTED_MODULE_2__.domElements.deactivatePluginButton, 'leadin-feedback-container', 'leadin-feedback-window', 'leadin-feedback-content');
   jquery__WEBPACK_IMPORTED_MODULE_0___default()(_constants_selectors__WEBPACK_IMPORTED_MODULE_2__.domElements.deactivateFeedbackForm).off('submit').on('submit', submitAndDeactivate);
   jquery__WEBPACK_IMPORTED_MODULE_0___default()(_constants_selectors__WEBPACK_IMPORTED_MODULE_2__.domElements.deactivateFeedbackSkip).off('click').on('click', deactivatePlugin);
 }
-
 (0,_utils_backgroundAppUtils__WEBPACK_IMPORTED_MODULE_5__.initBackgroundApp)(init);
 })();
 

@@ -7,10 +7,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-04T16:12:14+00:00\n"
+"POT-Creation-Date: 2024-09-23T15:57:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Language: \n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: leadin\n"
 
 #. Plugin Name of the plugin
@@ -156,12 +156,18 @@ msgstr "設定"
 msgid "Upgrade"
 msgstr "升級"
 
-#: public/admin/class-leadinadmin.php:258
-#: public/admin/class-leadinadmin.php:264
+#. translators: %1$s: Plugin current version %2$s: PHP required version
+#: public/admin/class-leadinadmin.php:259
 msgid "HubSpot All-In-One Marketing %1$s requires PHP %2$s or higher Please upgrade WordPress first"
 msgstr "HubSpot 一站式行銷%1$s需要 PHP %2$s 或更新版本。請先升級 WordPress。"
 
-#: public/admin/class-noticemanager.php:35
+#. translators: %1$s: Plugin current version %2$s: WordPress required version
+#: public/admin/class-leadinadmin.php:266
+msgid "HubSpot All-In-One Marketing %1$s requires WordPress %2$s or higher Please upgrade WordPress first"
+msgstr "HubSpot 一站式行銷%1$s需要 WordPress %2$s 或更新版本。請先升級 WordPress。"
+
+#. translators: %1$s: HTML anchor opening tag %2$s: HTML anchor closing tag
+#: public/admin/class-noticemanager.php:36
 msgid "The HubSpot plugin is not connected right now To use HubSpot tools on your WordPress site, %1$sconnect the plugin now%2$s"
 msgstr "目前並未連結 HubSpot 外掛程式。若要在你的 WordPress 網站上使用 HubSpot 工具，請%1$s立即連結外掛程式%2$s。"
 
@@ -169,27 +175,29 @@ msgstr "目前並未連結 HubSpot 外掛程式。若要在你的 WordPress 網�
 msgid "Dismiss this notice"
 msgstr "關閉這則通知。"
 
-#: public/admin/class-reviewbanner.php:29
+#. translators: %1$s: Current user name or nickname
+#: public/admin/class-reviewbanner.php:31
 msgid "Hey %1$s,"
 msgstr "%1$s 你好，"
 
-#: public/admin/class-reviewbanner.php:32
+#. translators: %1$s: HTML anchor opening tag %2$s: HTML anchor closing tag
+#: public/admin/class-reviewbanner.php:36
 msgid "Have you got 2 minutes to complete %1$sthis survey%2$s about the HubSpot for WordPress plugin?"
 msgstr "你有 2 分鐘時間來完成關於 HubSpot for WordPress 外掛程式的%1$s這份問卷%2$s嗎？"
 
-#: public/admin/class-reviewbanner.php:33
+#: public/admin/class-reviewbanner.php:37
 msgid "We read every response Your feedback helps our team make the improvements that you need the most"
 msgstr "我們詳閱了每一則回應。你的意見回饋有助於我們的團隊做出最需要的改進。"
 
-#: public/admin/class-reviewbanner.php:34
+#: public/admin/class-reviewbanner.php:38
 msgid "HubSpot for WordPress Team"
 msgstr "WordPress 團隊版 HubSpot"
 
-#: public/admin/class-reviewbanner.php:35
+#: public/admin/class-reviewbanner.php:39
 msgid "Thanks,"
 msgstr "謝謝，"
 
-#: public/admin/class-reviewbanner.php:59
+#: public/admin/class-reviewbanner.php:63
 msgid "Leave us a review | link opens in a new tab"
 msgstr "幫我們留下評論 | 連結將在新分頁中開啟"
 

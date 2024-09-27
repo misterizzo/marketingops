@@ -32,6 +32,7 @@ class NoticeManager {
 					&nbsp;
 					<?php
 					echo sprintf(
+						/* translators: %1$s: HTML anchor opening tag %2$s: HTML anchor closing tag */
 						esc_html( __( 'The HubSpot plugin is not connected right now To use HubSpot tools on your WordPress site, %1$sconnect the plugin now%2$s', 'leadin' ) ),
 						'<a class="leadin-banner__link" href="admin.php?page=leadin&bannerClick=true">',
 						'</a>'

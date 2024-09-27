@@ -8,6 +8,7 @@ import MeetingEdit from '../../shared/Meeting/MeetingEdit';
 import ErrorHandler from '../../shared/Common/ErrorHandler';
 import { __ } from '@wordpress/i18n';
 import { isFullSiteEditor } from '../../utils/withMetaData';
+import StylesheetErrorBondary from '../Common/StylesheetErrorBondary';
 
 const ConnectionStatus = {
   Connected: 'Connected',
@@ -28,17 +29,28 @@ export interface IMeetingBlockProps extends IMeetingBlockAttributes {
 
 export default function registerMeetingBlock() {
   const editComponent = (props: IMeetingBlockProps) => {
-    if (props.attributes.preview) {
-      return <MeetingGutenbergPreview />;
-    } else if (connectionStatus === ConnectionStatus.Connected) {
-      return <MeetingEdit {...props} preview={true} origin="gutenberg" />;
-    } else {
-      return <ErrorHandler status={401} />;
-    }
+    const isPreview = props.attributes.preview;
+    const isConnected = connectionStatus === ConnectionStatus.Connected;
+    return (
+      <StylesheetErrorBondary>
+        {isPreview ? (
+          <MeetingGutenbergPreview />
+        ) : isConnected ? (
+          <MeetingEdit
+            {...props}
+            preview={true}
+            origin="gutenberg"
+            fullSiteEditor={isFullSiteEditor()}
+          />
+        ) : (
+          <ErrorHandler status={401} />
+        )}
+      </StylesheetErrorBondary>
+    );
   };
 
   // We do not support the full site editor: https://issues.hubspotcentral.com/browse/WP-1033
-  if (!WpBlocksApi || isFullSiteEditor()) {
+  if (!WpBlocksApi) {
     return null;
   }
 

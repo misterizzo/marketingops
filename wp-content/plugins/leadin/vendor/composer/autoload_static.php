@@ -37,6 +37,7 @@ class ComposerStaticInit2c7a3473c61a1b3f879a569918ce92c4
         'Leadin\\api\\Healthcheck_Api_Controller' => __DIR__ . '/../..' . '/public/modules/api/class-healthcheck-api-controller.php',
         'Leadin\\auth\\OAuth' => __DIR__ . '/../..' . '/public/auth/class-oauth.php',
         'Leadin\\auth\\OAuthCrypto' => __DIR__ . '/../..' . '/public/auth/class-oauthcrypto.php',
+        'Leadin\\auth\\OAuthCryptoError' => __DIR__ . '/../..' . '/public/auth/class-oauthcryptoerror.php',
         'Leadin\\data\\Filters' => __DIR__ . '/../..' . '/public/data/class-filters.php',
         'Leadin\\data\\Portal_Options' => __DIR__ . '/../..' . '/public/data/class-portal-options.php',
         'Leadin\\data\\User' => __DIR__ . '/../..' . '/public/data/class-user.php',

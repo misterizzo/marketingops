@@ -31,8 +31,6 @@ class Connection {
 		return ! empty( Portal_Options::get_portal_id() ) && ! empty( OAuth::get_refresh_token() );
 	}
 
-
-
 	/**
 	 * Returns true if the current request is for the plugin to connect to a portal
 	 */

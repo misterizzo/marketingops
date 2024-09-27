@@ -7,10 +7,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-04T16:12:14+00:00\n"
+"POT-Creation-Date: 2024-09-23T15:57:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Language: \n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: leadin\n"
 
 #. Plugin Name of the plugin
@@ -43,7 +43,7 @@ msgstr ""
 
 #: public/admin/class-deactivationform.php:29
 msgid "We're sorry to see you go"
-msgstr "Es ist schade, dass Sie uns verlassen."
+msgstr "Schade, dass Sie uns verlassen!"
 
 #: public/admin/class-deactivationform.php:39
 msgid "If you have a moment, please let us know why you're deactivating the plugin"
@@ -59,11 +59,11 @@ msgstr "Das Plugin wirkt sich auf die Performance der Website aus"
 
 #: public/admin/class-deactivationform.php:56
 msgid "The plugin isn't working"
-msgstr "Das Plugin funktioniert nicht."
+msgstr "Das Plugin funktioniert nicht"
 
 #: public/admin/class-deactivationform.php:57
 msgid "The plugin isn't useful"
-msgstr "Das Plugin ist nicht praktisch."
+msgstr "Das Plugin ist nicht praktisch"
 
 #: public/admin/class-deactivationform.php:58
 msgid "Temporarily disabling or troubleshooting"
@@ -71,7 +71,7 @@ msgstr "Vorübergehende Deaktivierung oder Fehlerbehebung"
 
 #: public/admin/class-deactivationform.php:59
 msgid "Other"
-msgstr "Sonstige"
+msgstr "Sonstiges"
 
 #: public/admin/class-deactivationform.php:81
 msgid "Feedback"
@@ -100,7 +100,7 @@ msgstr "Automatisch erkennen"
 
 #: public/admin/class-leadinadmin.php:85
 msgid "Blog Post"
-msgstr "Blog-Beitrag"
+msgstr "Blogbeitrag"
 
 #: public/admin/class-leadinadmin.php:86
 msgid "Knowledge Article"
@@ -132,7 +132,7 @@ msgstr "Livechat"
 
 #: public/admin/class-leadinadmin.php:206
 msgid "Contacts"
-msgstr "Kontaktdatensätze"
+msgstr "Kontakte"
 
 #: public/admin/class-leadinadmin.php:207
 msgid "Email"
@@ -154,14 +154,20 @@ msgstr "Einstellungen"
 #: public/admin/class-leadinadmin.php:213
 #: public/admin/class-pluginactionsmanager.php:50
 msgid "Upgrade"
-msgstr "Upgraden"
+msgstr "Jetzt upgraden"
 
-#: public/admin/class-leadinadmin.php:258
-#: public/admin/class-leadinadmin.php:264
+#. translators: %1$s: Plugin current version %2$s: PHP required version
+#: public/admin/class-leadinadmin.php:259
 msgid "HubSpot All-In-One Marketing %1$s requires PHP %2$s or higher Please upgrade WordPress first"
-msgstr "Das All-in-one-Marketing-Plug-in %1$s erfordert PHP %2$s oder höher. Bitte aktualisieren Sie zuerst WordPress."
+msgstr "Das All-in-one-Marketing-Plug-in %1$s erfordert PHP %2$s oder höher. Bitte upgraden Sie zuerst WordPress."
 
-#: public/admin/class-noticemanager.php:35
+#. translators: %1$s: Plugin current version %2$s: WordPress required version
+#: public/admin/class-leadinadmin.php:266
+msgid "HubSpot All-In-One Marketing %1$s requires WordPress %2$s or higher Please upgrade WordPress first"
+msgstr "Das All-in-one-Marketing-Plug-in %1$s erfordert WordPress %2$s oder höher. Bitte upgraden Sie zuerst WordPress."
+
+#. translators: %1$s: HTML anchor opening tag %2$s: HTML anchor closing tag
+#: public/admin/class-noticemanager.php:36
 msgid "The HubSpot plugin is not connected right now To use HubSpot tools on your WordPress site, %1$sconnect the plugin now%2$s"
 msgstr "Das HubSpot-Plug-in ist momentan nicht verknüpft. %1$sVerknüpfen Sie jetzt das Plug-in%2$s, um HubSpot-Tools auf Ihrer WordPress-Website zu verwenden."
 
@@ -169,27 +175,29 @@ msgstr "Das HubSpot-Plug-in ist momentan nicht verknüpft. %1$sVerknüpfen Sie j
 msgid "Dismiss this notice"
 msgstr "Ignorieren Sie diesen Hinweis."
 
-#: public/admin/class-reviewbanner.php:29
+#. translators: %1$s: Current user name or nickname
+#: public/admin/class-reviewbanner.php:31
 msgid "Hey %1$s,"
 msgstr "Hallo %1$s,"
 
-#: public/admin/class-reviewbanner.php:32
+#. translators: %1$s: HTML anchor opening tag %2$s: HTML anchor closing tag
+#: public/admin/class-reviewbanner.php:36
 msgid "Have you got 2 minutes to complete %1$sthis survey%2$s about the HubSpot for WordPress plugin?"
 msgstr "Haben Sie 2 Minuten Zeit, um an %1$sdieser Umfrage%2$s zum HubSpot Plugin für WordPress teilzunehmen?"
 
-#: public/admin/class-reviewbanner.php:33
+#: public/admin/class-reviewbanner.php:37
 msgid "We read every response Your feedback helps our team make the improvements that you need the most"
 msgstr "Wir lesen jede Antwort. Ihr Feedback hilft unserem Team, die Verbesserungen vorzunehmen, die Sie am meisten benötigen."
 
-#: public/admin/class-reviewbanner.php:34
+#: public/admin/class-reviewbanner.php:38
 msgid "HubSpot for WordPress Team"
 msgstr "HubSpot für WordPress-Team"
 
-#: public/admin/class-reviewbanner.php:35
+#: public/admin/class-reviewbanner.php:39
 msgid "Thanks,"
 msgstr "Danke,"
 
-#: public/admin/class-reviewbanner.php:59
+#: public/admin/class-reviewbanner.php:63
 msgid "Leave us a review | link opens in a new tab"
 msgstr "Hinterlassen Sie uns eine Bewertung | Link wird in einem neuen Tab geöffnet"
 

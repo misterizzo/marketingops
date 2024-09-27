@@ -1,4 +1,4 @@
-import { MessageType, PluginMessages } from '../iframe/integratedMessages';
+import { MessageType, PluginMessages } from './integratedMessages';
 import {
   fetchDisableInternalTracking,
   trackConsent,

@@ -1,3 +1,21 @@
+= 11.1.34 (2024-07-18) =
+* Fix XSS injection issue with Elementor meetings widget
+
+= 11.1.33 (2024-07-18) =
+* Filter exceptions captured from external files
+
+= 11.1.30 (2024-07-10) =
+* Bump tested up to WordPress version
+
+= 11.1.27 (2024-06-25) =
+* Remove need for refresh token when submitting deactivation feedback
+
+= 11.1.26 (2024-06-24) =
+* Add stylesheet loader bondary for gutenberg blocks
+
+= 11.1.22 (2024-06-17) =
+* Add error labels to help diagnose connection issues
+
 = 11.1.21 (2024-06-04) =
 * Improve load performance by removing redundant retry logic
 
@@ -282,24 +300,4 @@
 
 = 8.8.15 (2022-04-07) =
 * Fix security issue related to proxy URL
-
-= 8.8.13 (2022-04-07) =
-* Whitelist proxy paths
-
-= 8.8.0 (2022-04-06) =
-* Add api that updates hublet
-* Add api to track user consent
-
-= 8.7.5 (2022-03-14) =
-* Always add utm params to iframe
-
-= 8.7.0 (2022-03-11) =
-* Validations to when show the review banner
-* Add banner to ask the user to leave a review
-
-= 8.6.0 (2022-03-09) =
-* Add banner to ask the user to leave a review
-
-= 8.5.50 (2022-02-22) =
-* Increase WP tested up to version
 

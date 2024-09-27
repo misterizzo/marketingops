@@ -10,7 +10,7 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "default": () => (/* binding */ memoize)
 /* harmony export */ });
 function memoize(fn) {
   var cache = Object.create(null);
@@ -20,7 +20,7 @@ function memoize(fn) {
   };
 }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (memoize);
+
 
 
 /***/ }),
@@ -34,12 +34,13 @@ function memoize(fn) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "default": () => (/* binding */ isPropValid)
 /* harmony export */ });
 /* harmony import */ var _emotion_memoize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @emotion/memoize */ "./node_modules/@emotion/memoize/dist/emotion-memoize.esm.js");
 
 
-var reactPropsRegex = /^((children|dangerouslySetInnerHTML|key|ref|autoFocus|defaultValue|defaultChecked|innerHTML|suppressContentEditableWarning|suppressHydrationWarning|valueLink|abbr|accept|acceptCharset|accessKey|action|allow|allowUserMedia|allowPaymentRequest|allowFullScreen|allowTransparency|alt|async|autoComplete|autoPlay|capture|cellPadding|cellSpacing|challenge|charSet|checked|cite|classID|className|cols|colSpan|content|contentEditable|contextMenu|controls|controlsList|coords|crossOrigin|data|dateTime|decoding|default|defer|dir|disabled|disablePictureInPicture|download|draggable|encType|enterKeyHint|form|formAction|formEncType|formMethod|formNoValidate|formTarget|frameBorder|headers|height|hidden|high|href|hrefLang|htmlFor|httpEquiv|id|inputMode|integrity|is|keyParams|keyType|kind|label|lang|list|loading|loop|low|marginHeight|marginWidth|max|maxLength|media|mediaGroup|method|min|minLength|multiple|muted|name|nonce|noValidate|open|optimum|pattern|placeholder|playsInline|poster|preload|profile|radioGroup|readOnly|referrerPolicy|rel|required|reversed|role|rows|rowSpan|sandbox|scope|scoped|scrolling|seamless|selected|shape|size|sizes|slot|span|spellCheck|src|srcDoc|srcLang|srcSet|start|step|style|summary|tabIndex|target|title|translate|type|useMap|value|width|wmode|wrap|about|datatype|inlist|prefix|property|resource|typeof|vocab|autoCapitalize|autoCorrect|autoSave|color|incremental|fallback|inert|itemProp|itemScope|itemType|itemID|itemRef|on|option|results|security|unselectable|accentHeight|accumulate|additive|alignmentBaseline|allowReorder|alphabetic|amplitude|arabicForm|ascent|attributeName|attributeType|autoReverse|azimuth|baseFrequency|baselineShift|baseProfile|bbox|begin|bias|by|calcMode|capHeight|clip|clipPathUnits|clipPath|clipRule|colorInterpolation|colorInterpolationFilters|colorProfile|colorRendering|contentScriptType|contentStyleType|cursor|cx|cy|d|decelerate|descent|diffuseConstant|direction|display|divisor|dominantBaseline|dur|dx|dy|edgeMode|elevation|enableBackground|end|exponent|externalResourcesRequired|fill|fillOpacity|fillRule|filter|filterRes|filterUnits|floodColor|floodOpacity|focusable|fontFamily|fontSize|fontSizeAdjust|fontStretch|fontStyle|fontVariant|fontWeight|format|from|fr|fx|fy|g1|g2|glyphName|glyphOrientationHorizontal|glyphOrientationVertical|glyphRef|gradientTransform|gradientUnits|hanging|horizAdvX|horizOriginX|ideographic|imageRendering|in|in2|intercept|k|k1|k2|k3|k4|kernelMatrix|kernelUnitLength|kerning|keyPoints|keySplines|keyTimes|lengthAdjust|letterSpacing|lightingColor|limitingConeAngle|local|markerEnd|markerMid|markerStart|markerHeight|markerUnits|markerWidth|mask|maskContentUnits|maskUnits|mathematical|mode|numOctaves|offset|opacity|operator|order|orient|orientation|origin|overflow|overlinePosition|overlineThickness|panose1|paintOrder|pathLength|patternContentUnits|patternTransform|patternUnits|pointerEvents|points|pointsAtX|pointsAtY|pointsAtZ|preserveAlpha|preserveAspectRatio|primitiveUnits|r|radius|refX|refY|renderingIntent|repeatCount|repeatDur|requiredExtensions|requiredFeatures|restart|result|rotate|rx|ry|scale|seed|shapeRendering|slope|spacing|specularConstant|specularExponent|speed|spreadMethod|startOffset|stdDeviation|stemh|stemv|stitchTiles|stopColor|stopOpacity|strikethroughPosition|strikethroughThickness|string|stroke|strokeDasharray|strokeDashoffset|strokeLinecap|strokeLinejoin|strokeMiterlimit|strokeOpacity|strokeWidth|surfaceScale|systemLanguage|tableValues|targetX|targetY|textAnchor|textDecoration|textRendering|textLength|to|transform|u1|u2|underlinePosition|underlineThickness|unicode|unicodeBidi|unicodeRange|unitsPerEm|vAlphabetic|vHanging|vIdeographic|vMathematical|values|vectorEffect|version|vertAdvY|vertOriginX|vertOriginY|viewBox|viewTarget|visibility|widths|wordSpacing|writingMode|x|xHeight|x1|x2|xChannelSelector|xlinkActuate|xlinkArcrole|xlinkHref|xlinkRole|xlinkShow|xlinkTitle|xlinkType|xmlBase|xmlns|xmlnsXlink|xmlLang|xmlSpace|y|y1|y2|yChannelSelector|z|zoomAndPan|for|class|autofocus)|(([Dd][Aa][Tt][Aa]|[Aa][Rr][Ii][Aa]|x)-.*))$/; // https://esbench.com/bench/5bfee68a4cd7e6009ef61d23
+// eslint-disable-next-line no-undef
+var reactPropsRegex = /^((children|dangerouslySetInnerHTML|key|ref|autoFocus|defaultValue|defaultChecked|innerHTML|suppressContentEditableWarning|suppressHydrationWarning|valueLink|abbr|accept|acceptCharset|accessKey|action|allow|allowUserMedia|allowPaymentRequest|allowFullScreen|allowTransparency|alt|async|autoComplete|autoPlay|capture|cellPadding|cellSpacing|challenge|charSet|checked|cite|classID|className|cols|colSpan|content|contentEditable|contextMenu|controls|controlsList|coords|crossOrigin|data|dateTime|decoding|default|defer|dir|disabled|disablePictureInPicture|disableRemotePlayback|download|draggable|encType|enterKeyHint|form|formAction|formEncType|formMethod|formNoValidate|formTarget|frameBorder|headers|height|hidden|high|href|hrefLang|htmlFor|httpEquiv|id|inputMode|integrity|is|keyParams|keyType|kind|label|lang|list|loading|loop|low|marginHeight|marginWidth|max|maxLength|media|mediaGroup|method|min|minLength|multiple|muted|name|nonce|noValidate|open|optimum|pattern|placeholder|playsInline|poster|preload|profile|radioGroup|readOnly|referrerPolicy|rel|required|reversed|role|rows|rowSpan|sandbox|scope|scoped|scrolling|seamless|selected|shape|size|sizes|slot|span|spellCheck|src|srcDoc|srcLang|srcSet|start|step|style|summary|tabIndex|target|title|translate|type|useMap|value|width|wmode|wrap|about|datatype|inlist|prefix|property|resource|typeof|vocab|autoCapitalize|autoCorrect|autoSave|color|incremental|fallback|inert|itemProp|itemScope|itemType|itemID|itemRef|on|option|results|security|unselectable|accentHeight|accumulate|additive|alignmentBaseline|allowReorder|alphabetic|amplitude|arabicForm|ascent|attributeName|attributeType|autoReverse|azimuth|baseFrequency|baselineShift|baseProfile|bbox|begin|bias|by|calcMode|capHeight|clip|clipPathUnits|clipPath|clipRule|colorInterpolation|colorInterpolationFilters|colorProfile|colorRendering|contentScriptType|contentStyleType|cursor|cx|cy|d|decelerate|descent|diffuseConstant|direction|display|divisor|dominantBaseline|dur|dx|dy|edgeMode|elevation|enableBackground|end|exponent|externalResourcesRequired|fill|fillOpacity|fillRule|filter|filterRes|filterUnits|floodColor|floodOpacity|focusable|fontFamily|fontSize|fontSizeAdjust|fontStretch|fontStyle|fontVariant|fontWeight|format|from|fr|fx|fy|g1|g2|glyphName|glyphOrientationHorizontal|glyphOrientationVertical|glyphRef|gradientTransform|gradientUnits|hanging|horizAdvX|horizOriginX|ideographic|imageRendering|in|in2|intercept|k|k1|k2|k3|k4|kernelMatrix|kernelUnitLength|kerning|keyPoints|keySplines|keyTimes|lengthAdjust|letterSpacing|lightingColor|limitingConeAngle|local|markerEnd|markerMid|markerStart|markerHeight|markerUnits|markerWidth|mask|maskContentUnits|maskUnits|mathematical|mode|numOctaves|offset|opacity|operator|order|orient|orientation|origin|overflow|overlinePosition|overlineThickness|panose1|paintOrder|pathLength|patternContentUnits|patternTransform|patternUnits|pointerEvents|points|pointsAtX|pointsAtY|pointsAtZ|preserveAlpha|preserveAspectRatio|primitiveUnits|r|radius|refX|refY|renderingIntent|repeatCount|repeatDur|requiredExtensions|requiredFeatures|restart|result|rotate|rx|ry|scale|seed|shapeRendering|slope|spacing|specularConstant|specularExponent|speed|spreadMethod|startOffset|stdDeviation|stemh|stemv|stitchTiles|stopColor|stopOpacity|strikethroughPosition|strikethroughThickness|string|stroke|strokeDasharray|strokeDashoffset|strokeLinecap|strokeLinejoin|strokeMiterlimit|strokeOpacity|strokeWidth|surfaceScale|systemLanguage|tableValues|targetX|targetY|textAnchor|textDecoration|textRendering|textLength|to|transform|u1|u2|underlinePosition|underlineThickness|unicode|unicodeBidi|unicodeRange|unitsPerEm|vAlphabetic|vHanging|vIdeographic|vMathematical|values|vectorEffect|version|vertAdvY|vertOriginX|vertOriginY|viewBox|viewTarget|visibility|widths|wordSpacing|writingMode|x|xHeight|x1|x2|xChannelSelector|xlinkActuate|xlinkArcrole|xlinkHref|xlinkRole|xlinkShow|xlinkTitle|xlinkType|xmlBase|xmlns|xmlnsXlink|xmlLang|xmlSpace|y|y1|y2|yChannelSelector|z|zoomAndPan|for|class|autofocus)|(([Dd][Aa][Tt][Aa]|[Aa][Rr][Ii][Aa]|x)-.*))$/; // https://esbench.com/bench/5bfee68a4cd7e6009ef61d23
 
 var isPropValid = /* #__PURE__ */(0,_emotion_memoize__WEBPACK_IMPORTED_MODULE_0__["default"])(function (prop) {
   return reactPropsRegex.test(prop) || prop.charCodeAt(0) === 111
@@ -51,7 +52,7 @@ var isPropValid = /* #__PURE__ */(0,_emotion_memoize__WEBPACK_IMPORTED_MODULE_0_
 /* Z+1 */
 );
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (isPropValid);
+
 
 
 /***/ }),
@@ -83,7 +84,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function makeRequest(method, path) {
   var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
   var queryParams = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
@@ -106,15 +106,12 @@ function makeRequest(method, path) {
         reject(response);
       }
     };
-
     if (method !== 'get') {
       payload.data = JSON.stringify(data);
     }
-
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax(payload);
   });
 }
-
 function healthcheckRestApi() {
   return makeRequest('get', '/healthcheck');
 }
@@ -170,6 +167,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "adminUrl": () => (/* binding */ adminUrl),
 /* harmony export */   "connectionStatus": () => (/* binding */ connectionStatus),
 /* harmony export */   "contentEmbed": () => (/* binding */ contentEmbed),
+/* harmony export */   "decryptError": () => (/* binding */ decryptError),
 /* harmony export */   "deviceId": () => (/* binding */ deviceId),
 /* harmony export */   "didDisconnect": () => (/* binding */ didDisconnect),
 /* harmony export */   "env": () => (/* binding */ env),
@@ -196,7 +194,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "portalId": () => (/* binding */ portalId),
 /* harmony export */   "redirectNonce": () => (/* binding */ redirectNonce),
 /* harmony export */   "refreshToken": () => (/* binding */ refreshToken),
-/* harmony export */   "refreshTokenError": () => (/* binding */ refreshTokenError),
 /* harmony export */   "requiresContentEmbedScope": () => (/* binding */ requiresContentEmbedScope),
 /* harmony export */   "restNonce": () => (/* binding */ restNonce),
 /* harmony export */   "restUrl": () => (/* binding */ restUrl),
@@ -206,45 +203,45 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "wpVersion": () => (/* binding */ wpVersion)
 /* harmony export */ });
 var _window$leadinConfig = window.leadinConfig,
-    accountName = _window$leadinConfig.accountName,
-    adminUrl = _window$leadinConfig.adminUrl,
-    activationTime = _window$leadinConfig.activationTime,
-    connectionStatus = _window$leadinConfig.connectionStatus,
-    deviceId = _window$leadinConfig.deviceId,
-    didDisconnect = _window$leadinConfig.didDisconnect,
-    env = _window$leadinConfig.env,
-    formsScript = _window$leadinConfig.formsScript,
-    meetingsScript = _window$leadinConfig.meetingsScript,
-    formsScriptPayload = _window$leadinConfig.formsScriptPayload,
-    hublet = _window$leadinConfig.hublet,
-    hubspotBaseUrl = _window$leadinConfig.hubspotBaseUrl,
-    hubspotNonce = _window$leadinConfig.hubspotNonce,
-    iframeUrl = _window$leadinConfig.iframeUrl,
-    impactLink = _window$leadinConfig.impactLink,
-    lastAuthorizeTime = _window$leadinConfig.lastAuthorizeTime,
-    lastDeauthorizeTime = _window$leadinConfig.lastDeauthorizeTime,
-    lastDisconnectTime = _window$leadinConfig.lastDisconnectTime,
-    leadinPluginVersion = _window$leadinConfig.leadinPluginVersion,
-    leadinQueryParams = _window$leadinConfig.leadinQueryParams,
-    locale = _window$leadinConfig.locale,
-    loginUrl = _window$leadinConfig.loginUrl,
-    phpVersion = _window$leadinConfig.phpVersion,
-    pluginPath = _window$leadinConfig.pluginPath,
-    plugins = _window$leadinConfig.plugins,
-    portalDomain = _window$leadinConfig.portalDomain,
-    portalEmail = _window$leadinConfig.portalEmail,
-    portalId = _window$leadinConfig.portalId,
-    redirectNonce = _window$leadinConfig.redirectNonce,
-    restNonce = _window$leadinConfig.restNonce,
-    restUrl = _window$leadinConfig.restUrl,
-    refreshToken = _window$leadinConfig.refreshToken,
-    reviewSkippedDate = _window$leadinConfig.reviewSkippedDate,
-    theme = _window$leadinConfig.theme,
-    trackConsent = _window$leadinConfig.trackConsent,
-    wpVersion = _window$leadinConfig.wpVersion,
-    contentEmbed = _window$leadinConfig.contentEmbed,
-    requiresContentEmbedScope = _window$leadinConfig.requiresContentEmbedScope,
-    refreshTokenError = _window$leadinConfig.refreshTokenError;
+  accountName = _window$leadinConfig.accountName,
+  adminUrl = _window$leadinConfig.adminUrl,
+  activationTime = _window$leadinConfig.activationTime,
+  connectionStatus = _window$leadinConfig.connectionStatus,
+  deviceId = _window$leadinConfig.deviceId,
+  didDisconnect = _window$leadinConfig.didDisconnect,
+  env = _window$leadinConfig.env,
+  formsScript = _window$leadinConfig.formsScript,
+  meetingsScript = _window$leadinConfig.meetingsScript,
+  formsScriptPayload = _window$leadinConfig.formsScriptPayload,
+  hublet = _window$leadinConfig.hublet,
+  hubspotBaseUrl = _window$leadinConfig.hubspotBaseUrl,
+  hubspotNonce = _window$leadinConfig.hubspotNonce,
+  iframeUrl = _window$leadinConfig.iframeUrl,
+  impactLink = _window$leadinConfig.impactLink,
+  lastAuthorizeTime = _window$leadinConfig.lastAuthorizeTime,
+  lastDeauthorizeTime = _window$leadinConfig.lastDeauthorizeTime,
+  lastDisconnectTime = _window$leadinConfig.lastDisconnectTime,
+  leadinPluginVersion = _window$leadinConfig.leadinPluginVersion,
+  leadinQueryParams = _window$leadinConfig.leadinQueryParams,
+  locale = _window$leadinConfig.locale,
+  loginUrl = _window$leadinConfig.loginUrl,
+  phpVersion = _window$leadinConfig.phpVersion,
+  pluginPath = _window$leadinConfig.pluginPath,
+  plugins = _window$leadinConfig.plugins,
+  portalDomain = _window$leadinConfig.portalDomain,
+  portalEmail = _window$leadinConfig.portalEmail,
+  portalId = _window$leadinConfig.portalId,
+  redirectNonce = _window$leadinConfig.redirectNonce,
+  restNonce = _window$leadinConfig.restNonce,
+  restUrl = _window$leadinConfig.restUrl,
+  refreshToken = _window$leadinConfig.refreshToken,
+  reviewSkippedDate = _window$leadinConfig.reviewSkippedDate,
+  theme = _window$leadinConfig.theme,
+  trackConsent = _window$leadinConfig.trackConsent,
+  wpVersion = _window$leadinConfig.wpVersion,
+  contentEmbed = _window$leadinConfig.contentEmbed,
+  requiresContentEmbedScope = _window$leadinConfig.requiresContentEmbedScope,
+  decryptError = _window$leadinConfig.decryptError;
 
 
 /***/ }),
@@ -325,7 +322,6 @@ var IframeErrorPage = function IframeErrorPage() {
     })]
   });
 };
-
 __webpack_require__(/*! ./IframeErrorPage.linaria.css!=!../../node_modules/@linaria/webpack5-loader/lib/outputCssLoader.js?cacheProvider=!./IframeErrorPage.tsx */ "./scripts/iframe/IframeErrorPage.linaria.css!=!./node_modules/@linaria/webpack5-loader/lib/outputCssLoader.js?cacheProvider=!./scripts/iframe/IframeErrorPage.tsx");
 
 /***/ }),
@@ -342,12 +338,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "App": () => (/* binding */ App),
 /* harmony export */   "AppIframe": () => (/* binding */ AppIframe)
 /* harmony export */ });
-var _AppIframe;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 var App;
-
 (function (App) {
   App[App["Forms"] = 0] = "Forms";
   App[App["LiveChat"] = 1] = "LiveChat";
@@ -355,8 +350,7 @@ var App;
   App[App["PluginSettings"] = 3] = "PluginSettings";
   App[App["Background"] = 4] = "Background";
 })(App || (App = {}));
-
-var AppIframe = (_AppIframe = {}, _defineProperty(_AppIframe, App.Forms, 'integrated-form-app'), _defineProperty(_AppIframe, App.LiveChat, 'integrated-livechat-app'), _defineProperty(_AppIframe, App.Plugin, 'integrated-plugin-app'), _defineProperty(_AppIframe, App.PluginSettings, 'integrated-plugin-app'), _defineProperty(_AppIframe, App.Background, 'integrated-plugin-proxy'), _AppIframe);
+var AppIframe = _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty({}, App.Forms, 'integrated-form-app'), App.LiveChat, 'integrated-livechat-app'), App.Plugin, 'integrated-plugin-app'), App.PluginSettings, 'integrated-plugin-app'), App.Background, 'integrated-plugin-proxy');
 
 /***/ }),
 
@@ -528,7 +522,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "messageMiddleware": () => (/* binding */ messageMiddleware)
 /* harmony export */ });
-/* harmony import */ var _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../iframe/integratedMessages */ "./scripts/iframe/integratedMessages/index.ts");
+/* harmony import */ var _integratedMessages__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./integratedMessages */ "./scripts/iframe/integratedMessages/index.ts");
 /* harmony import */ var _api_wordpressApiClient__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/wordpressApiClient */ "./scripts/api/wordpressApiClient.ts");
 /* harmony import */ var _utils_queryParams__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/queryParams */ "./scripts/utils/queryParams.ts");
 /* harmony import */ var _utils_contentEmbedInstaller__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/contentEmbedInstaller */ "./scripts/utils/contentEmbedInstaller.ts");
@@ -536,92 +530,92 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var messageMapper = new Map([[_iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.TrackConsent, function (message) {
+var messageMapper = new Map([[_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.TrackConsent, function (message) {
   (0,_api_wordpressApiClient__WEBPACK_IMPORTED_MODULE_1__.trackConsent)(message.payload);
-}], [_iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.InternalTrackingChangeRequest, function (message, embedder) {
+}], [_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.InternalTrackingChangeRequest, function (message, embedder) {
   (0,_api_wordpressApiClient__WEBPACK_IMPORTED_MODULE_1__.disableInternalTracking)(message.payload).then(function () {
     embedder.postMessage({
-      key: _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.InternalTrackingFetchResponse,
+      key: _integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.InternalTrackingFetchResponse,
       payload: message.payload
     });
   })["catch"](function (payload) {
     embedder.postMessage({
-      key: _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.InternalTrackingChangeError,
+      key: _integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.InternalTrackingChangeError,
       payload: payload
     });
   });
-}], [_iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.InternalTrackingFetchRequest, function (__message, embedder) {
+}], [_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.InternalTrackingFetchRequest, function (__message, embedder) {
   (0,_api_wordpressApiClient__WEBPACK_IMPORTED_MODULE_1__.fetchDisableInternalTracking)().then(function (_ref) {
     var payload = _ref.message;
     embedder.postMessage({
-      key: _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.InternalTrackingFetchResponse,
+      key: _integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.InternalTrackingFetchResponse,
       payload: payload
     });
   })["catch"](function (payload) {
     embedder.postMessage({
-      key: _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.InternalTrackingFetchError,
+      key: _integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.InternalTrackingFetchError,
       payload: payload
     });
   });
-}], [_iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.BusinessUnitFetchRequest, function (__message, embedder) {
+}], [_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.BusinessUnitFetchRequest, function (__message, embedder) {
   (0,_api_wordpressApiClient__WEBPACK_IMPORTED_MODULE_1__.getBusinessUnitId)().then(function (payload) {
     embedder.postMessage({
-      key: _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.BusinessUnitFetchResponse,
+      key: _integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.BusinessUnitFetchResponse,
       payload: payload
     });
   })["catch"](function (payload) {
     embedder.postMessage({
-      key: _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.BusinessUnitFetchError,
+      key: _integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.BusinessUnitFetchError,
       payload: payload
     });
   });
-}], [_iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.BusinessUnitChangeRequest, function (message, embedder) {
+}], [_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.BusinessUnitChangeRequest, function (message, embedder) {
   (0,_api_wordpressApiClient__WEBPACK_IMPORTED_MODULE_1__.setBusinessUnitId)(message.payload).then(function (payload) {
     embedder.postMessage({
-      key: _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.BusinessUnitFetchResponse,
+      key: _integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.BusinessUnitFetchResponse,
       payload: payload
     });
   })["catch"](function (payload) {
     embedder.postMessage({
-      key: _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.BusinessUnitChangeError,
+      key: _integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.BusinessUnitChangeError,
       payload: payload
     });
   });
-}], [_iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.SkipReviewRequest, function (__message, embedder) {
+}], [_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.SkipReviewRequest, function (__message, embedder) {
   (0,_api_wordpressApiClient__WEBPACK_IMPORTED_MODULE_1__.skipReview)().then(function (payload) {
     embedder.postMessage({
-      key: _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.SkipReviewResponse,
+      key: _integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.SkipReviewResponse,
       payload: payload
     });
   })["catch"](function (payload) {
     embedder.postMessage({
-      key: _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.SkipReviewError,
+      key: _integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.SkipReviewError,
       payload: payload
     });
   });
-}], [_iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.RemoveParentQueryParam, function (message) {
+}], [_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.RemoveParentQueryParam, function (message) {
   (0,_utils_queryParams__WEBPACK_IMPORTED_MODULE_2__.removeQueryParamFromLocation)(message.payload);
-}], [_iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.ContentEmbedInstallRequest, function (message, embedder) {
+}], [_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.ContentEmbedInstallRequest, function (message, embedder) {
   (0,_utils_contentEmbedInstaller__WEBPACK_IMPORTED_MODULE_3__.startInstall)(message.payload.nonce).then(function (payload) {
     embedder.postMessage({
-      key: _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.ContentEmbedInstallResponse,
+      key: _integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.ContentEmbedInstallResponse,
       payload: payload
     });
   })["catch"](function (payload) {
     embedder.postMessage({
-      key: _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.ContentEmbedInstallError,
+      key: _integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.ContentEmbedInstallError,
       payload: payload
     });
   });
-}], [_iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.ContentEmbedActivationRequest, function (message, embedder) {
+}], [_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.ContentEmbedActivationRequest, function (message, embedder) {
   (0,_utils_contentEmbedInstaller__WEBPACK_IMPORTED_MODULE_3__.startActivation)(message.payload.activateAjaxUrl).then(function (payload) {
     embedder.postMessage({
-      key: _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.ContentEmbedActivationResponse,
+      key: _integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.ContentEmbedActivationResponse,
       payload: payload
     });
   })["catch"](function (payload) {
     embedder.postMessage({
-      key: _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.ContentEmbedActivationError,
+      key: _integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.ContentEmbedActivationError,
       payload: payload
     });
   });
@@ -629,7 +623,6 @@ var messageMapper = new Map([[_iframe_integratedMessages__WEBPACK_IMPORTED_MODUL
 var messageMiddleware = function messageMiddleware(embedder) {
   return function (message) {
     var next = messageMapper.get(message.key);
-
     if (next) {
       next(message, embedder);
     }
@@ -665,52 +658,42 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var IntegratedIframePortal = function IntegratedIframePortal(props) {
   var container = document.getElementById(_constants_selectors__WEBPACK_IMPORTED_MODULE_3__.domElements.leadinIframeContainer);
   var iframeNotRendered = (0,_useAppEmbedder__WEBPACK_IMPORTED_MODULE_4__["default"])(props.app, props.createRoute, container);
-
   if (container && !iframeNotRendered) {
     return /*#__PURE__*/react_dom__WEBPACK_IMPORTED_MODULE_2___default().createPortal(props.children, container);
   }
-
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
     children: (!container || iframeNotRendered) && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_IframeErrorPage__WEBPACK_IMPORTED_MODULE_6__.IframeErrorPage, {})
   });
 };
-
 var renderIframeApp = function renderIframeApp() {
   var iframeFallbackContainer = document.getElementById(_constants_selectors__WEBPACK_IMPORTED_MODULE_3__.domElements.leadinIframeContainer);
   var app;
   var queryParams = new URLSearchParams(location.search);
   var page = queryParams.get('page');
   var createRoute = queryParams.get('leadin_route[0]') === 'create';
-
   switch (page) {
     case 'leadin_forms':
       app = _constants__WEBPACK_IMPORTED_MODULE_5__.App.Forms;
       break;
-
     case 'leadin_chatflows':
       app = _constants__WEBPACK_IMPORTED_MODULE_5__.App.LiveChat;
       break;
-
     case 'leadin_settings':
       app = _constants__WEBPACK_IMPORTED_MODULE_5__.App.PluginSettings;
       break;
-
     case 'leadin_user_guide':
     default:
       app = _constants__WEBPACK_IMPORTED_MODULE_5__.App.Plugin;
       break;
   }
-
   react_dom__WEBPACK_IMPORTED_MODULE_2___default().render((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(IntegratedIframePortal, {
     app: app,
     createRoute: createRoute
   }), iframeFallbackContainer);
 };
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (renderIframeApp);
 
 /***/ }),
@@ -733,13 +716,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./constants */ "./scripts/iframe/constants.ts");
 /* harmony import */ var _messageMiddleware__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./messageMiddleware */ "./scripts/iframe/messageMiddleware.ts");
 /* harmony import */ var _utils_iframe__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/iframe */ "./scripts/utils/iframe.ts");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
 
@@ -751,7 +733,6 @@ var getIntegrationConfig = function getIntegrationConfig() {
     adminUrl: _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.leadinQueryParams.adminUrl
   };
 };
-
 var getLeadinConfig = function getLeadinConfig() {
   var utm_query_params = Object.keys(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.leadinQueryParams).filter(function (x) {
     return /^utm/.test(x);
@@ -788,71 +769,56 @@ var getLeadinConfig = function getLeadinConfig() {
     wpVersion: _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.wpVersion,
     contentEmbed: _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.contentEmbed,
     requiresContentEmbedScope: _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.requiresContentEmbedScope,
-    refreshTokenError: _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.refreshTokenError
+    decryptError: _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.decryptError
   }, utm_query_params);
 };
-
 var getAppOptions = function getAppOptions(app) {
   var createRoute = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
   var _window = window,
-      IntegratedAppOptions = _window.IntegratedAppOptions,
-      FormsAppOptions = _window.FormsAppOptions,
-      LiveChatAppOptions = _window.LiveChatAppOptions,
-      PluginAppOptions = _window.PluginAppOptions;
+    IntegratedAppOptions = _window.IntegratedAppOptions,
+    FormsAppOptions = _window.FormsAppOptions,
+    LiveChatAppOptions = _window.LiveChatAppOptions,
+    PluginAppOptions = _window.PluginAppOptions;
   var options;
-
   switch (app) {
     case _constants__WEBPACK_IMPORTED_MODULE_3__.App.Plugin:
-      options = new PluginAppOptions().setLeadinConfig(getLeadinConfig());
+      options = new PluginAppOptions();
       break;
-
     case _constants__WEBPACK_IMPORTED_MODULE_3__.App.PluginSettings:
-      options = new PluginAppOptions().setLeadinConfig(getLeadinConfig()).setPluginSettingsInit();
+      options = new PluginAppOptions().setPluginSettingsInit();
       break;
-
     case _constants__WEBPACK_IMPORTED_MODULE_3__.App.Forms:
       options = new FormsAppOptions().setIntegratedAppConfig(getIntegrationConfig());
-
       if (createRoute) {
         options = options.setCreateFormAppInit();
       }
-
       break;
-
     case _constants__WEBPACK_IMPORTED_MODULE_3__.App.LiveChat:
       options = new LiveChatAppOptions();
-
       if (createRoute) {
         options = options.setCreateLiveChatAppInit();
       }
-
       break;
-
     default:
       options = new IntegratedAppOptions();
   }
-
   return options;
 };
-
 function useAppEmbedder(app, createRoute, container) {
   console.info('HubSpot plugin - starting app embedder for:', _constants__WEBPACK_IMPORTED_MODULE_3__.AppIframe[app], container);
   var iframeNotRendered = (0,_utils_iframe__WEBPACK_IMPORTED_MODULE_5__.useIframeNotRendered)(_constants__WEBPACK_IMPORTED_MODULE_3__.AppIframe[app]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     var _window2 = window,
-        IntegratedAppEmbedder = _window2.IntegratedAppEmbedder;
-
+      IntegratedAppEmbedder = _window2.IntegratedAppEmbedder;
     if (IntegratedAppEmbedder) {
-      var options = getAppOptions(app, createRoute).setLocale(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.locale).setDeviceId(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.deviceId).setRefreshToken(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.refreshToken);
+      var options = getAppOptions(app, createRoute).setLocale(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.locale).setDeviceId(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.deviceId).setRefreshToken(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.refreshToken).setLeadinConfig(getLeadinConfig());
       var embedder = new IntegratedAppEmbedder(_constants__WEBPACK_IMPORTED_MODULE_3__.AppIframe[app], _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.portalId, _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.hubspotBaseUrl, _utils_iframe__WEBPACK_IMPORTED_MODULE_5__.resizeWindow, _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.refreshToken ? '' : _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.impactLink).setOptions(options);
       embedder.subscribe((0,_messageMiddleware__WEBPACK_IMPORTED_MODULE_4__.messageMiddleware)(embedder));
       embedder.attachTo(container, true);
       embedder.postStartAppMessage(); // lets the app know all all data has been passed to it
-
       window.embedder = embedder;
     }
   }, []);
-
   if (iframeNotRendered) {
     console.error('HubSpot plugin Iframe not rendered', {
       portalId: _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.portalId,
@@ -873,7 +839,6 @@ function useAppEmbedder(app, createRoute, container) {
       }
     });
   }
-
   return iframeNotRendered;
 }
 
@@ -900,10 +865,12 @@ function configureRaven() {
   if (_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_1__.hubspotBaseUrl.indexOf('app.hubspot.com') === -1) {
     return;
   }
-
   raven_js__WEBPACK_IMPORTED_MODULE_0___default().config('https://e9b8f382cdd130c0d415cd977d2be56f@exceptions.hubspot.com/1', {
     instrument: {
       tryCatch: false
+    },
+    shouldSendCallback: function shouldSendCallback(data) {
+      return !!data && !!data.culprit && /plugins\/leadin\//.test(data.culprit);
     },
     release: _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_1__.leadinPluginVersion
   }).install();
@@ -948,7 +915,6 @@ function initAppOnReady(initFn) {
   function main() {
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(initFn);
   }
-
   initApp(main);
 }
 
@@ -1004,30 +970,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 var IFRAME_DISPLAY_TIMEOUT = 5000;
 function useIframeNotRendered(app) {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-      _useState2 = _slicedToArray(_useState, 2),
-      iframeNotRendered = _useState2[0],
-      setIframeNotRendered = _useState2[1];
-
+    _useState2 = _slicedToArray(_useState, 2),
+    iframeNotRendered = _useState2[0],
+    setIframeNotRendered = _useState2[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     var timer = setTimeout(function () {
       var iframe = document.getElementById(app);
-
       if (!iframe) {
         setIframeNotRendered(true);
       }
@@ -1046,7 +1004,6 @@ var resizeWindow = function resizeWindow() {
   var adminBar = document.getElementById('wpadminbar');
   var adminBarHeight = adminBar && adminBar.offsetHeight || 0;
   var offset = 4;
-
   if (window.innerHeight < sideMenuHeight) {
     return sideMenuHeight - offset;
   } else {
@@ -1090,107 +1047,6 @@ function removeQueryParamFromLocation(key) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./node_modules/object-assign/index.js":
-/*!*********************************************!*\
-  !*** ./node_modules/object-assign/index.js ***!
-  \*********************************************/
-/***/ ((module) => {
-
-"use strict";
-/*
-object-assign
-(c) Sindre Sorhus
-@license MIT
-*/
-
-
-/* eslint-disable no-unused-vars */
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-
-function toObject(val) {
-	if (val === null || val === undefined) {
-		throw new TypeError('Object.assign cannot be called with null or undefined');
-	}
-
-	return Object(val);
-}
-
-function shouldUseNative() {
-	try {
-		if (!Object.assign) {
-			return false;
-		}
-
-		// Detect buggy property enumeration order in older V8 versions.
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
-		test1[5] = 'de';
-		if (Object.getOwnPropertyNames(test1)[0] === '5') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test2 = {};
-		for (var i = 0; i < 10; i++) {
-			test2['_' + String.fromCharCode(i)] = i;
-		}
-		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-			return test2[n];
-		});
-		if (order2.join('') !== '0123456789') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test3 = {};
-		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-			test3[letter] = letter;
-		});
-		if (Object.keys(Object.assign({}, test3)).join('') !==
-				'abcdefghijklmnopqrst') {
-			return false;
-		}
-
-		return true;
-	} catch (err) {
-		// We don't expect any of the above to throw, but better to be safe.
-		return false;
-	}
-}
-
-module.exports = shouldUseNative() ? Object.assign : function (target, source) {
-	var from;
-	var to = toObject(target);
-	var symbols;
-
-	for (var s = 1; s < arguments.length; s++) {
-		from = Object(arguments[s]);
-
-		for (var key in from) {
-			if (hasOwnProperty.call(from, key)) {
-				to[key] = from[key];
-			}
-		}
-
-		if (getOwnPropertySymbols) {
-			symbols = getOwnPropertySymbols(from);
-			for (var i = 0; i < symbols.length; i++) {
-				if (propIsEnumerable.call(from, symbols[i])) {
-					to[symbols[i]] = from[symbols[i]];
-				}
-			}
-		}
-	}
-
-	return to;
-};
 
 
 /***/ }),
@@ -4358,7 +4214,8 @@ function serializer(replacer, cycleReplacer) {
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
-/** @license React v17.0.2
+/**
+ * @license React
  * react-jsx-runtime.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -4374,59 +4231,25 @@ if (true) {
 'use strict';
 
 var React = __webpack_require__(/*! react */ "react");
-var _assign = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
 
 // ATTENTION
 // When adding new symbols to this file,
 // Please consider also adding to 'react-devtools-shared/src/backend/ReactSymbols'
-// The Symbol used to tag the ReactElement-like types. If there is no native Symbol
-// nor polyfill, then a plain number is used for performance.
-var REACT_ELEMENT_TYPE = 0xeac7;
-var REACT_PORTAL_TYPE = 0xeaca;
-exports.Fragment = 0xeacb;
-var REACT_STRICT_MODE_TYPE = 0xeacc;
-var REACT_PROFILER_TYPE = 0xead2;
-var REACT_PROVIDER_TYPE = 0xeacd;
-var REACT_CONTEXT_TYPE = 0xeace;
-var REACT_FORWARD_REF_TYPE = 0xead0;
-var REACT_SUSPENSE_TYPE = 0xead1;
-var REACT_SUSPENSE_LIST_TYPE = 0xead8;
-var REACT_MEMO_TYPE = 0xead3;
-var REACT_LAZY_TYPE = 0xead4;
-var REACT_BLOCK_TYPE = 0xead9;
-var REACT_SERVER_BLOCK_TYPE = 0xeada;
-var REACT_FUNDAMENTAL_TYPE = 0xead5;
-var REACT_SCOPE_TYPE = 0xead7;
-var REACT_OPAQUE_ID_TYPE = 0xeae0;
-var REACT_DEBUG_TRACING_MODE_TYPE = 0xeae1;
-var REACT_OFFSCREEN_TYPE = 0xeae2;
-var REACT_LEGACY_HIDDEN_TYPE = 0xeae3;
-
-if (typeof Symbol === 'function' && Symbol.for) {
-  var symbolFor = Symbol.for;
-  REACT_ELEMENT_TYPE = symbolFor('react.element');
-  REACT_PORTAL_TYPE = symbolFor('react.portal');
-  exports.Fragment = symbolFor('react.fragment');
-  REACT_STRICT_MODE_TYPE = symbolFor('react.strict_mode');
-  REACT_PROFILER_TYPE = symbolFor('react.profiler');
-  REACT_PROVIDER_TYPE = symbolFor('react.provider');
-  REACT_CONTEXT_TYPE = symbolFor('react.context');
-  REACT_FORWARD_REF_TYPE = symbolFor('react.forward_ref');
-  REACT_SUSPENSE_TYPE = symbolFor('react.suspense');
-  REACT_SUSPENSE_LIST_TYPE = symbolFor('react.suspense_list');
-  REACT_MEMO_TYPE = symbolFor('react.memo');
-  REACT_LAZY_TYPE = symbolFor('react.lazy');
-  REACT_BLOCK_TYPE = symbolFor('react.block');
-  REACT_SERVER_BLOCK_TYPE = symbolFor('react.server.block');
-  REACT_FUNDAMENTAL_TYPE = symbolFor('react.fundamental');
-  REACT_SCOPE_TYPE = symbolFor('react.scope');
-  REACT_OPAQUE_ID_TYPE = symbolFor('react.opaque.id');
-  REACT_DEBUG_TRACING_MODE_TYPE = symbolFor('react.debug_trace_mode');
-  REACT_OFFSCREEN_TYPE = symbolFor('react.offscreen');
-  REACT_LEGACY_HIDDEN_TYPE = symbolFor('react.legacy_hidden');
-}
-
-var MAYBE_ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
+// The Symbol used to tag the ReactElement-like types.
+var REACT_ELEMENT_TYPE = Symbol.for('react.element');
+var REACT_PORTAL_TYPE = Symbol.for('react.portal');
+var REACT_FRAGMENT_TYPE = Symbol.for('react.fragment');
+var REACT_STRICT_MODE_TYPE = Symbol.for('react.strict_mode');
+var REACT_PROFILER_TYPE = Symbol.for('react.profiler');
+var REACT_PROVIDER_TYPE = Symbol.for('react.provider');
+var REACT_CONTEXT_TYPE = Symbol.for('react.context');
+var REACT_FORWARD_REF_TYPE = Symbol.for('react.forward_ref');
+var REACT_SUSPENSE_TYPE = Symbol.for('react.suspense');
+var REACT_SUSPENSE_LIST_TYPE = Symbol.for('react.suspense_list');
+var REACT_MEMO_TYPE = Symbol.for('react.memo');
+var REACT_LAZY_TYPE = Symbol.for('react.lazy');
+var REACT_OFFSCREEN_TYPE = Symbol.for('react.offscreen');
+var MAYBE_ITERATOR_SYMBOL = Symbol.iterator;
 var FAUX_ITERATOR_SYMBOL = '@@iterator';
 function getIteratorFn(maybeIterable) {
   if (maybeIterable === null || typeof maybeIterable !== 'object') {
@@ -4446,11 +4269,13 @@ var ReactSharedInternals = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FI
 
 function error(format) {
   {
-    for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-      args[_key2 - 1] = arguments[_key2];
-    }
+    {
+      for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+        args[_key2 - 1] = arguments[_key2];
+      }
 
-    printWarning('error', format, args);
+      printWarning('error', format, args);
+    }
   }
 }
 
@@ -4464,10 +4289,11 @@ function printWarning(level, format, args) {
     if (stack !== '') {
       format += '%s';
       args = args.concat([stack]);
-    }
+    } // eslint-disable-next-line react-internal/safe-string-coercion
+
 
     var argsWithFormat = args.map(function (item) {
-      return '' + item;
+      return String(item);
     }); // Careful: RN currently depends on this prefix
 
     argsWithFormat.unshift('Warning: ' + format); // We intentionally don't use spread (or .apply) directly because it
@@ -4478,9 +4304,23 @@ function printWarning(level, format, args) {
   }
 }
 
-// Filter certain DOM attributes (e.g. src, href) if their values are empty strings.
+// -----------------------------------------------------------------------------
 
 var enableScopeAPI = false; // Experimental Create Event Handle API.
+var enableCacheElement = false;
+var enableTransitionTracing = false; // No known bugs, but needs performance testing
+
+var enableLegacyHidden = false; // Enables unstable_avoidThisFallback feature in Fiber
+// stuff. Intended to enable React core members to more easily debug scheduling
+// issues in DEV builds.
+
+var enableDebugTracing = false; // Track which Fiber(s) schedule render work.
+
+var REACT_MODULE_REFERENCE;
+
+{
+  REACT_MODULE_REFERENCE = Symbol.for('react.module.reference');
+}
 
 function isValidElementType(type) {
   if (typeof type === 'string' || typeof type === 'function') {
@@ -4488,12 +4328,16 @@ function isValidElementType(type) {
   } // Note: typeof might be other than 'symbol' or 'number' (e.g. if it's a polyfill).
 
 
-  if (type === exports.Fragment || type === REACT_PROFILER_TYPE || type === REACT_DEBUG_TRACING_MODE_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || type === REACT_LEGACY_HIDDEN_TYPE || enableScopeAPI ) {
+  if (type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || enableDebugTracing  || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || enableLegacyHidden  || type === REACT_OFFSCREEN_TYPE || enableScopeAPI  || enableCacheElement  || enableTransitionTracing ) {
     return true;
   }
 
   if (typeof type === 'object' && type !== null) {
-    if (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_BLOCK_TYPE || type[0] === REACT_SERVER_BLOCK_TYPE) {
+    if (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || // This needs to include all possible module reference object
+    // types supported by any Flight configuration anywhere since
+    // we don't know which Flight build this will end up being used
+    // with.
+    type.$$typeof === REACT_MODULE_REFERENCE || type.getModuleId !== undefined) {
       return true;
     }
   }
@@ -4502,15 +4346,23 @@ function isValidElementType(type) {
 }
 
 function getWrappedName(outerType, innerType, wrapperName) {
+  var displayName = outerType.displayName;
+
+  if (displayName) {
+    return displayName;
+  }
+
   var functionName = innerType.displayName || innerType.name || '';
-  return outerType.displayName || (functionName !== '' ? wrapperName + "(" + functionName + ")" : wrapperName);
-}
+  return functionName !== '' ? wrapperName + "(" + functionName + ")" : wrapperName;
+} // Keep in sync with react-reconciler/getComponentNameFromFiber
+
 
 function getContextName(type) {
   return type.displayName || 'Context';
-}
+} // Note that the reconciler package should generally prefer to use getComponentNameFromFiber() instead.
 
-function getComponentName(type) {
+
+function getComponentNameFromType(type) {
   if (type == null) {
     // Host root, text node or just invalid type.
     return null;
@@ -4518,7 +4370,7 @@ function getComponentName(type) {
 
   {
     if (typeof type.tag === 'number') {
-      error('Received an unexpected object in getComponentName(). ' + 'This is likely a bug in React. Please file an issue.');
+      error('Received an unexpected object in getComponentNameFromType(). ' + 'This is likely a bug in React. Please file an issue.');
     }
   }
 
@@ -4531,7 +4383,7 @@ function getComponentName(type) {
   }
 
   switch (type) {
-    case exports.Fragment:
+    case REACT_FRAGMENT_TYPE:
       return 'Fragment';
 
     case REACT_PORTAL_TYPE:
@@ -4548,6 +4400,7 @@ function getComponentName(type) {
 
     case REACT_SUSPENSE_LIST_TYPE:
       return 'SuspenseList';
+
   }
 
   if (typeof type === 'object') {
@@ -4564,10 +4417,13 @@ function getComponentName(type) {
         return getWrappedName(type, type.render, 'ForwardRef');
 
       case REACT_MEMO_TYPE:
-        return getComponentName(type.type);
+        var outerName = type.displayName || null;
 
-      case REACT_BLOCK_TYPE:
-        return getComponentName(type._render);
+        if (outerName !== null) {
+          return outerName;
+        }
+
+        return getComponentNameFromType(type.type) || 'Memo';
 
       case REACT_LAZY_TYPE:
         {
@@ -4576,16 +4432,20 @@ function getComponentName(type) {
           var init = lazyComponent._init;
 
           try {
-            return getComponentName(init(payload));
+            return getComponentNameFromType(init(payload));
           } catch (x) {
             return null;
           }
         }
+
+      // eslint-disable-next-line no-fallthrough
     }
   }
 
   return null;
 }
+
+var assign = Object.assign;
 
 // Helpers to patch console.logs to avoid logging during side-effect free
 // replaying on render function. This currently only patches the object
@@ -4650,25 +4510,25 @@ function reenableLogs() {
       }; // $FlowFixMe Flow thinks console is immutable.
 
       Object.defineProperties(console, {
-        log: _assign({}, props, {
+        log: assign({}, props, {
           value: prevLog
         }),
-        info: _assign({}, props, {
+        info: assign({}, props, {
           value: prevInfo
         }),
-        warn: _assign({}, props, {
+        warn: assign({}, props, {
           value: prevWarn
         }),
-        error: _assign({}, props, {
+        error: assign({}, props, {
           value: prevError
         }),
-        group: _assign({}, props, {
+        group: assign({}, props, {
           value: prevGroup
         }),
-        groupCollapsed: _assign({}, props, {
+        groupCollapsed: assign({}, props, {
           value: prevGroupCollapsed
         }),
-        groupEnd: _assign({}, props, {
+        groupEnd: assign({}, props, {
           value: prevGroupEnd
         })
       });
@@ -4709,7 +4569,7 @@ var componentFrameCache;
 
 function describeNativeComponentFrame(fn, construct) {
   // If something asked for a stack inside a fake render, it should get ignored.
-  if (!fn || reentry) {
+  if ( !fn || reentry) {
     return '';
   }
 
@@ -4818,7 +4678,14 @@ function describeNativeComponentFrame(fn, construct) {
 
               if (c < 0 || sampleLines[s] !== controlLines[c]) {
                 // V8 adds a "new" prefix for native classes. Let's remove it to make it prettier.
-                var _frame = '\n' + sampleLines[s].replace(' at new ', ' at ');
+                var _frame = '\n' + sampleLines[s].replace(' at new ', ' at '); // If our component frame is labeled "<anonymous>"
+                // but we have a user-provided "displayName"
+                // splice it in to make the stack more readable.
+
+
+                if (fn.displayName && _frame.includes('<anonymous>')) {
+                  _frame = _frame.replace('<anonymous>', fn.displayName);
+                }
 
                 {
                   if (typeof fn === 'function') {
@@ -4903,9 +4770,6 @@ function describeUnknownElementTypeFrameInDEV(type, source, ownerFn) {
         // Memo may contain any component type so we recursively resolve it.
         return describeUnknownElementTypeFrameInDEV(type.type, source, ownerFn);
 
-      case REACT_BLOCK_TYPE:
-        return describeFunctionComponentFrame(type._render);
-
       case REACT_LAZY_TYPE:
         {
           var lazyComponent = type;
@@ -4922,6 +4786,8 @@ function describeUnknownElementTypeFrameInDEV(type, source, ownerFn) {
 
   return '';
 }
+
+var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 var loggedTypeFailures = {};
 var ReactDebugCurrentFrame = ReactSharedInternals.ReactDebugCurrentFrame;
@@ -4941,7 +4807,7 @@ function setCurrentlyValidatingElement(element) {
 function checkPropTypes(typeSpecs, values, location, componentName, element) {
   {
     // $FlowFixMe This is okay but Flow doesn't know it.
-    var has = Function.call.bind(Object.prototype.hasOwnProperty);
+    var has = Function.call.bind(hasOwnProperty);
 
     for (var typeSpecName in typeSpecs) {
       if (has(typeSpecs, typeSpecName)) {
@@ -4953,6 +4819,7 @@ function checkPropTypes(typeSpecs, values, location, componentName, element) {
           // This is intentionally an invariant that gets caught. It's the same
           // behavior as without this statement except with a better message.
           if (typeof typeSpecs[typeSpecName] !== 'function') {
+            // eslint-disable-next-line react-internal/prod-error-codes
             var err = Error((componentName || 'React class') + ': ' + location + ' type `' + typeSpecName + '` is invalid; ' + 'it must be a function, usually from the `prop-types` package, but received `' + typeof typeSpecs[typeSpecName] + '`.' + 'This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.');
             err.name = 'Invariant Violation';
             throw err;
@@ -4986,8 +4853,80 @@ function checkPropTypes(typeSpecs, values, location, componentName, element) {
   }
 }
 
+var isArrayImpl = Array.isArray; // eslint-disable-next-line no-redeclare
+
+function isArray(a) {
+  return isArrayImpl(a);
+}
+
+/*
+ * The `'' + value` pattern (used in in perf-sensitive code) throws for Symbol
+ * and Temporal.* types. See https://github.com/facebook/react/pull/22064.
+ *
+ * The functions in this module will throw an easier-to-understand,
+ * easier-to-debug exception with a clear errors message message explaining the
+ * problem. (Instead of a confusing exception thrown inside the implementation
+ * of the `value` object).
+ */
+// $FlowFixMe only called in DEV, so void return is not possible.
+function typeName(value) {
+  {
+    // toStringTag is needed for namespaced types like Temporal.Instant
+    var hasToStringTag = typeof Symbol === 'function' && Symbol.toStringTag;
+    var type = hasToStringTag && value[Symbol.toStringTag] || value.constructor.name || 'Object';
+    return type;
+  }
+} // $FlowFixMe only called in DEV, so void return is not possible.
+
+
+function willCoercionThrow(value) {
+  {
+    try {
+      testStringCoercion(value);
+      return false;
+    } catch (e) {
+      return true;
+    }
+  }
+}
+
+function testStringCoercion(value) {
+  // If you ended up here by following an exception call stack, here's what's
+  // happened: you supplied an object or symbol value to React (as a prop, key,
+  // DOM attribute, CSS property, string ref, etc.) and when React tried to
+  // coerce it to a string using `'' + value`, an exception was thrown.
+  //
+  // The most common types that will cause this exception are `Symbol` instances
+  // and Temporal objects like `Temporal.Instant`. But any object that has a
+  // `valueOf` or `[Symbol.toPrimitive]` method that throws will also cause this
+  // exception. (Library authors do this to prevent users from using built-in
+  // numeric operators like `+` or comparison operators like `>=` because custom
+  // methods are needed to perform accurate arithmetic or comparison.)
+  //
+  // To fix the problem, coerce this object or symbol value to a string before
+  // passing it to React. The most reliable way is usually `String(value)`.
+  //
+  // To find which value is throwing, check the browser or debugger console.
+  // Before this exception was thrown, there should be `console.error` output
+  // that shows the type (Symbol, Temporal.PlainDate, etc.) that caused the
+  // problem and how that type was used: key, atrribute, input value prop, etc.
+  // In most cases, this console output also shows the component and its
+  // ancestor components where the exception happened.
+  //
+  // eslint-disable-next-line react-internal/safe-string-coercion
+  return '' + value;
+}
+function checkKeyStringCoercion(value) {
+  {
+    if (willCoercionThrow(value)) {
+      error('The provided key is an unsupported type %s.' + ' This value must be coerced to a string before before using it here.', typeName(value));
+
+      return testStringCoercion(value); // throw (to help callers find troubleshooting comments)
+    }
+  }
+}
+
 var ReactCurrentOwner = ReactSharedInternals.ReactCurrentOwner;
-var hasOwnProperty = Object.prototype.hasOwnProperty;
 var RESERVED_PROPS = {
   key: true,
   ref: true,
@@ -5033,10 +4972,10 @@ function hasValidKey(config) {
 function warnIfStringRefCannotBeAutoConverted(config, self) {
   {
     if (typeof config.ref === 'string' && ReactCurrentOwner.current && self && ReactCurrentOwner.current.stateNode !== self) {
-      var componentName = getComponentName(ReactCurrentOwner.current.type);
+      var componentName = getComponentNameFromType(ReactCurrentOwner.current.type);
 
       if (!didWarnAboutStringRefs[componentName]) {
-        error('Component "%s" contains the string ref "%s". ' + 'Support for string refs will be removed in a future major release. ' + 'This case cannot be automatically converted to an arrow function. ' + 'We ask you to manually fix this case by using useRef() or createRef() instead. ' + 'Learn more about using refs safely here: ' + 'https://reactjs.org/link/strict-mode-string-ref', getComponentName(ReactCurrentOwner.current.type), config.ref);
+        error('Component "%s" contains the string ref "%s". ' + 'Support for string refs will be removed in a future major release. ' + 'This case cannot be automatically converted to an arrow function. ' + 'We ask you to manually fix this case by using useRef() or createRef() instead. ' + 'Learn more about using refs safely here: ' + 'https://reactjs.org/link/strict-mode-string-ref', getComponentNameFromType(ReactCurrentOwner.current.type), config.ref);
 
         didWarnAboutStringRefs[componentName] = true;
       }
@@ -5175,10 +5114,18 @@ function jsxDEV(type, config, maybeKey, source, self) {
     // key is explicitly declared to be undefined or not.
 
     if (maybeKey !== undefined) {
+      {
+        checkKeyStringCoercion(maybeKey);
+      }
+
       key = '' + maybeKey;
     }
 
     if (hasValidKey(config)) {
+      {
+        checkKeyStringCoercion(config.key);
+      }
+
       key = '' + config.key;
     }
 
@@ -5249,6 +5196,7 @@ var propTypesMisspellWarningShown;
  * @final
  */
 
+
 function isValidElement(object) {
   {
     return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
@@ -5258,7 +5206,7 @@ function isValidElement(object) {
 function getDeclarationErrorAddendum() {
   {
     if (ReactCurrentOwner$1.current) {
-      var name = getComponentName(ReactCurrentOwner$1.current.type);
+      var name = getComponentNameFromType(ReactCurrentOwner$1.current.type);
 
       if (name) {
         return '\n\nCheck the render method of `' + name + '`.';
@@ -5338,7 +5286,7 @@ function validateExplicitKey(element, parentType) {
 
     if (element && element._owner && element._owner !== ReactCurrentOwner$1.current) {
       // Give the component that originally created this child.
-      childOwner = " It was passed a child from " + getComponentName(element._owner.type) + ".";
+      childOwner = " It was passed a child from " + getComponentNameFromType(element._owner.type) + ".";
     }
 
     setCurrentlyValidatingElement$1(element);
@@ -5365,7 +5313,7 @@ function validateChildKeys(node, parentType) {
       return;
     }
 
-    if (Array.isArray(node)) {
+    if (isArray(node)) {
       for (var i = 0; i < node.length; i++) {
         var child = node[i];
 
@@ -5428,12 +5376,12 @@ function validatePropTypes(element) {
 
     if (propTypes) {
       // Intentionally inside to avoid triggering lazy initializers:
-      var name = getComponentName(type);
+      var name = getComponentNameFromType(type);
       checkPropTypes(propTypes, element.props, 'prop', name, element);
     } else if (type.PropTypes !== undefined && !propTypesMisspellWarningShown) {
       propTypesMisspellWarningShown = true; // Intentionally inside to avoid triggering lazy initializers:
 
-      var _name = getComponentName(type);
+      var _name = getComponentNameFromType(type);
 
       error('Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?', _name || 'Unknown');
     }
@@ -5476,6 +5424,7 @@ function validateFragmentProps(fragment) {
   }
 }
 
+var didWarnAboutKeySpread = {};
 function jsxWithValidation(type, props, key, isStaticChildren, source, self) {
   {
     var validType = isValidElementType(type); // We warn in this case but don't throw. We expect the element creation to
@@ -5500,10 +5449,10 @@ function jsxWithValidation(type, props, key, isStaticChildren, source, self) {
 
       if (type === null) {
         typeString = 'null';
-      } else if (Array.isArray(type)) {
+      } else if (isArray(type)) {
         typeString = 'array';
       } else if (type !== undefined && type.$$typeof === REACT_ELEMENT_TYPE) {
-        typeString = "<" + (getComponentName(type.type) || 'Unknown') + " />";
+        typeString = "<" + (getComponentNameFromType(type.type) || 'Unknown') + " />";
         info = ' Did you accidentally export a JSX literal instead of a component?';
       } else {
         typeString = typeof type;
@@ -5529,7 +5478,7 @@ function jsxWithValidation(type, props, key, isStaticChildren, source, self) {
 
       if (children !== undefined) {
         if (isStaticChildren) {
-          if (Array.isArray(children)) {
+          if (isArray(children)) {
             for (var i = 0; i < children.length; i++) {
               validateChildKeys(children[i], type);
             }
@@ -5546,7 +5495,25 @@ function jsxWithValidation(type, props, key, isStaticChildren, source, self) {
       }
     }
 
-    if (type === exports.Fragment) {
+    {
+      if (hasOwnProperty.call(props, 'key')) {
+        var componentName = getComponentNameFromType(type);
+        var keys = Object.keys(props).filter(function (k) {
+          return k !== 'key';
+        });
+        var beforeExample = keys.length > 0 ? '{key: someKey, ' + keys.join(': ..., ') + ': ...}' : '{key: someKey}';
+
+        if (!didWarnAboutKeySpread[componentName + beforeExample]) {
+          var afterExample = keys.length > 0 ? '{' + keys.join(': ..., ') + ': ...}' : '{}';
+
+          error('A props object containing a "key" prop is being spread into JSX:\n' + '  let props = %s;\n' + '  <%s {...props} />\n' + 'React keys must be passed directly to JSX without using spread:\n' + '  let props = %s;\n' + '  <%s key={someKey} {...props} />', beforeExample, componentName, afterExample, componentName);
+
+          didWarnAboutKeySpread[componentName + beforeExample] = true;
+        }
+      }
+    }
+
+    if (type === REACT_FRAGMENT_TYPE) {
       validateFragmentProps(element);
     } else {
       validatePropTypes(element);
@@ -5575,6 +5542,7 @@ var jsx =  jsxWithValidationDynamic ; // we may want to special case jsxs intern
 
 var jsxs =  jsxWithValidationStatic ;
 
+exports.Fragment = REACT_FRAGMENT_TYPE;
 exports.jsx = jsx;
 exports.jsxs = jsxs;
   })();
@@ -5693,7 +5661,11 @@ var warnIfInvalid = (value, componentName) => {
     );
   }
 };
+var idx = 0;
 function styled(tag) {
+  var _a;
+  let mockedClass = "";
+  if (false) {}
   return (options) => {
     if (true) {
       if (Array.isArray(options)) {
@@ -5703,7 +5675,7 @@ function styled(tag) {
       }
     }
     const render = (props, ref) => {
-      const { as: component = tag, class: className } = props;
+      const { as: component = tag, class: className = mockedClass } = props;
       const shouldKeepProps = options.propsAsIs === void 0 ? !(typeof component === "string" && component.indexOf("-") === -1 && !isCapital(component[0])) : options.propsAsIs;
       const filteredProps = filterProps(shouldKeepProps, props, [
         "as",
@@ -5743,7 +5715,7 @@ function styled(tag) {
     };
     Result.displayName = options.name;
     Result.__linaria = {
-      className: options.class,
+      className: options.class || mockedClass,
       extends: tag
     };
     return Result;
@@ -5772,7 +5744,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "cx": () => (/* binding */ cx_default)
 /* harmony export */ });
 // src/css.ts
+var idx = 0;
 var css = () => {
+  if (false) {}
   throw new Error(
     'Using the "css" tag in runtime is not supported. Make sure you have set up the Babel plugin correctly.'
   );

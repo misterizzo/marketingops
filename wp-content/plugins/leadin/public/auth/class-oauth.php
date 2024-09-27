@@ -47,15 +47,13 @@ class OAuth {
 		$encrypted_refresh_token = Portal_Options::get_refresh_token();
 
 		if ( ! self::is_valid_value( $encrypted_refresh_token ) ) {
-			Portal_Options::set_refresh_token_error( 'Token is invalid or missing' );
 			return '';
 		}
 
 		$refresh_token = OAuthCrypto::decrypt( $encrypted_refresh_token );
 
 		if ( ! self::is_valid_value( $refresh_token ) ) {
-			Portal_Options::set_refresh_token_error( 'Decryption failed' );
-			return '';
+			return false;
 		}
 
 		return $refresh_token;
@@ -69,12 +67,5 @@ class OAuth {
 	 */
 	private static function is_valid_value( $value ) {
 		return false !== $value && null !== $value && '' !== $value;
-	}
-
-	/**
-	 * Delays the execution to handle transient issues before retrying.
-	 */
-	private static function retry_delay() {
-		usleep( self::RETRY_DELAY_MICROSECONDS );
 	}
 }

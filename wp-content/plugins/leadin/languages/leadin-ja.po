@@ -7,10 +7,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-04T16:12:14+00:00\n"
+"POT-Creation-Date: 2024-09-23T15:57:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Language: \n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: leadin\n"
 
 #. Plugin Name of the plugin
@@ -156,12 +156,18 @@ msgstr "設定"
 msgid "Upgrade"
 msgstr "アップグレード"
 
-#: public/admin/class-leadinadmin.php:258
-#: public/admin/class-leadinadmin.php:264
+#. translators: %1$s: Plugin current version %2$s: PHP required version
+#: public/admin/class-leadinadmin.php:259
 msgid "HubSpot All-In-One Marketing %1$s requires PHP %2$s or higher Please upgrade WordPress first"
 msgstr "HubSpot All-In-One Marketing%1$sにはPHP %2$s以上が必要です。まずWordPressをアップグレードしてください。"
 
-#: public/admin/class-noticemanager.php:35
+#. translators: %1$s: Plugin current version %2$s: WordPress required version
+#: public/admin/class-leadinadmin.php:266
+msgid "HubSpot All-In-One Marketing %1$s requires WordPress %2$s or higher Please upgrade WordPress first"
+msgstr "HubSpot All-In-One Marketing%1$sにはWordPress %2$s以上が必要です。まずWordPressをアップグレードしてください。"
+
+#. translators: %1$s: HTML anchor opening tag %2$s: HTML anchor closing tag
+#: public/admin/class-noticemanager.php:36
 msgid "The HubSpot plugin is not connected right now To use HubSpot tools on your WordPress site, %1$sconnect the plugin now%2$s"
 msgstr "HubSpotプラグインは現在接続されていません。WordPressサイトでHubSpotツールを使用するには、%1$s今すぐプラグインを接続%2$sしてください。"
 
@@ -169,27 +175,29 @@ msgstr "HubSpotプラグインは現在接続されていません。WordPress�
 msgid "Dismiss this notice"
 msgstr "この通知を無視してください。"
 
-#: public/admin/class-reviewbanner.php:29
+#. translators: %1$s: Current user name or nickname
+#: public/admin/class-reviewbanner.php:31
 msgid "Hey %1$s,"
 msgstr "%1$sさん、こんにちは。"
 
-#: public/admin/class-reviewbanner.php:32
+#. translators: %1$s: HTML anchor opening tag %2$s: HTML anchor closing tag
+#: public/admin/class-reviewbanner.php:36
 msgid "Have you got 2 minutes to complete %1$sthis survey%2$s about the HubSpot for WordPress plugin?"
 msgstr "HubSpot for WordPressプラグインに関する%1$sこのアンケート%2$sにご回答いただくため、2分ほどお時間をいただいてよろしいですか？"
 
-#: public/admin/class-reviewbanner.php:33
+#: public/admin/class-reviewbanner.php:37
 msgid "We read every response Your feedback helps our team make the improvements that you need the most"
 msgstr "回答は全て目を通させていただきます。いただいたご意見は、最もご要望の多い機能強化に役立たせていただきます。"
 
-#: public/admin/class-reviewbanner.php:34
+#: public/admin/class-reviewbanner.php:38
 msgid "HubSpot for WordPress Team"
 msgstr "HubSpot for WordPressチーム"
 
-#: public/admin/class-reviewbanner.php:35
+#: public/admin/class-reviewbanner.php:39
 msgid "Thanks,"
 msgstr "どうぞよろしくお願いいたします。"
 
-#: public/admin/class-reviewbanner.php:59
+#: public/admin/class-reviewbanner.php:63
 msgid "Leave us a review | link opens in a new tab"
 msgstr "レビューをお書きください | リンクが新しいタブで開きます"
 

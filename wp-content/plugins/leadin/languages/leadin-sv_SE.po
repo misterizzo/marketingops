@@ -7,10 +7,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-04T16:12:14+00:00\n"
+"POT-Creation-Date: 2024-09-23T15:57:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Language: \n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: leadin\n"
 
 #. Plugin Name of the plugin
@@ -156,12 +156,18 @@ msgstr "Inställningar"
 msgid "Upgrade"
 msgstr "Uppgradera"
 
-#: public/admin/class-leadinadmin.php:258
-#: public/admin/class-leadinadmin.php:264
+#. translators: %1$s: Plugin current version %2$s: PHP required version
+#: public/admin/class-leadinadmin.php:259
 msgid "HubSpot All-In-One Marketing %1$s requires PHP %2$s or higher Please upgrade WordPress first"
 msgstr "HubSpot All-In-One Marketing %1$s kräver PHP %2$s eller högre. Uppgradera WordPress först."
 
-#: public/admin/class-noticemanager.php:35
+#. translators: %1$s: Plugin current version %2$s: WordPress required version
+#: public/admin/class-leadinadmin.php:266
+msgid "HubSpot All-In-One Marketing %1$s requires WordPress %2$s or higher Please upgrade WordPress first"
+msgstr "Marketing All-In-One di HubSpot %1$s richiede WordPress %2$s o versione superiore. Per prima cosa, esegui l'upgrade di WordPress."
+
+#. translators: %1$s: HTML anchor opening tag %2$s: HTML anchor closing tag
+#: public/admin/class-noticemanager.php:36
 msgid "The HubSpot plugin is not connected right now To use HubSpot tools on your WordPress site, %1$sconnect the plugin now%2$s"
 msgstr "Denna HubSpot-plugin är inte ansluten för tillfället. För att använda HubSpot-verktyg på din WordPress-webbplats ska du %1$sansluta plugin nu%2$s."
 
@@ -169,27 +175,29 @@ msgstr "Denna HubSpot-plugin är inte ansluten för tillfället. För att använ
 msgid "Dismiss this notice"
 msgstr "Avvisa detta meddelande."
 
-#: public/admin/class-reviewbanner.php:29
+#. translators: %1$s: Current user name or nickname
+#: public/admin/class-reviewbanner.php:31
 msgid "Hey %1$s,"
 msgstr "Hallå där %1$s,"
 
-#: public/admin/class-reviewbanner.php:32
+#. translators: %1$s: HTML anchor opening tag %2$s: HTML anchor closing tag
+#: public/admin/class-reviewbanner.php:36
 msgid "Have you got 2 minutes to complete %1$sthis survey%2$s about the HubSpot for WordPress plugin?"
 msgstr "Har du lite tid att fylla i %1$s denna undersökning%2$s om HubSpot för WordPress plugin?"
 
-#: public/admin/class-reviewbanner.php:33
+#: public/admin/class-reviewbanner.php:37
 msgid "We read every response Your feedback helps our team make the improvements that you need the most"
 msgstr "Vi läser alla svar. Din feedback hjälper vårt team att göra de förbättringar du behöver mest."
 
-#: public/admin/class-reviewbanner.php:34
+#: public/admin/class-reviewbanner.php:38
 msgid "HubSpot for WordPress Team"
 msgstr "HubSpot för WordPress Team"
 
-#: public/admin/class-reviewbanner.php:35
+#: public/admin/class-reviewbanner.php:39
 msgid "Thanks,"
 msgstr "Tack,"
 
-#: public/admin/class-reviewbanner.php:59
+#: public/admin/class-reviewbanner.php:63
 msgid "Leave us a review | link opens in a new tab"
 msgstr "Skriv ett omdöme | länk öppnas i en ny flik"
 

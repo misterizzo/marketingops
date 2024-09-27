@@ -1,6 +1,7 @@
 import React from 'react';
 import * as WpBlocksApi from '@wordpress/blocks';
 import SprocketIcon from '../Common/SprocketIcon';
+import StylesheetErrorBondary from '../Common/StylesheetErrorBondary';
 import FormBlockSave from './FormBlockSave';
 import { connectionStatus } from '../../constants/leadinConfig';
 import FormGutenbergPreview from './FormGutenbergPreview';
@@ -27,17 +28,28 @@ export interface IFormBlockProps extends IFormBlockAttributes {
 
 export default function registerFormBlock() {
   const editComponent = (props: IFormBlockProps) => {
-    if (props.attributes.preview) {
-      return <FormGutenbergPreview />;
-    } else if (connectionStatus === ConnectionStatus.Connected) {
-      return <FormEdit {...props} origin="gutenberg" preview={true} />;
-    } else {
-      return <ErrorHandler status={401} />;
-    }
+    const isPreview = props.attributes.preview;
+    const isConnected = connectionStatus === ConnectionStatus.Connected;
+    return (
+      <StylesheetErrorBondary>
+        {isPreview ? (
+          <FormGutenbergPreview />
+        ) : isConnected ? (
+          <FormEdit
+            {...props}
+            origin="gutenberg"
+            preview={true}
+            fullSiteEditor={isFullSiteEditor()}
+          />
+        ) : (
+          <ErrorHandler status={401} />
+        )}
+      </StylesheetErrorBondary>
+    );
   };
 
   // We do not support the full site editor: https://issues.hubspotcentral.com/browse/WP-1033
-  if (!WpBlocksApi || isFullSiteEditor()) {
+  if (!WpBlocksApi) {
     return null;
   }
 

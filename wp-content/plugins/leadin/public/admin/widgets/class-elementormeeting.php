@@ -100,17 +100,21 @@ class ElementorMeeting extends Widget_Base {
 	 * Render the widget
 	 */
 	protected function render() {
-		$settings = $this->get_settings_for_display();
-		$content  = $settings['content'];
+		$settings          = $this->get_settings_for_display();
+		$content           = $settings['content'];
+		$parsed_parameters = array(
+			'url' => isset( $content['url'] ) && filter_var( $content['url'], FILTER_VALIDATE_URL ) ? esc_url_raw( $content['url'] ) : '',
+		);
 
 		if ( Plugin::$instance->editor->is_edit_mode() ) {
+
 			?>
-				<div class="hubspot-meeting-edit-mode" data-attributes=<?php echo json_encode( $content ); ?>>
+				<div class="hubspot-meeting-edit-mode" data-attributes=<?php echo esc_attr( json_encode( $parsed_parameters ) ); ?>>
 				&nbsp;
 				</div>
 
 			<?php
-			if ( empty( $content ) ) {
+			if ( empty( $parsed_parameters['url'] ) ) {
 				?>
 						<div class="hubspot-widget-empty">
 
@@ -119,9 +123,8 @@ class ElementorMeeting extends Widget_Base {
 			}
 		}
 
-		if ( ! empty( $content ) ) {
-				$url = $content['url'];
-				echo do_shortcode( '[hubspot url="' . $url . '" type="meeting"]' );
+		if ( ! empty( $parsed_parameters['url'] ) ) {
+				echo do_shortcode( '[hubspot url="' . $parsed_parameters['url'] . '" type="meeting"]' );
 		}
 	}
 }

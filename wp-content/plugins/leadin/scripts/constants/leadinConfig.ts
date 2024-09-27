@@ -49,7 +49,7 @@ export interface LeadinConfig {
   wpVersion: string;
   contentEmbed: ContentEmbedDetails;
   requiresContentEmbedScope?: boolean;
-  refreshTokenError?: string;
+  decryptError?: string;
 }
 
 const {
@@ -91,7 +91,7 @@ const {
   wpVersion,
   contentEmbed,
   requiresContentEmbedScope,
-  refreshTokenError,
+  decryptError,
 }: //@ts-expect-error global
 LeadinConfig = window.leadinConfig;
 
@@ -134,5 +134,5 @@ export {
   wpVersion,
   contentEmbed,
   requiresContentEmbedScope,
-  refreshTokenError,
+  decryptError,
 };

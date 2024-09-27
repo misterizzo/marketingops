@@ -255,13 +255,15 @@ class LeadinAdmin {
 
 		if ( Versions::is_php_version_not_supported() ) {
 			$error_message = sprintf(
+				/* translators: %1$s: Plugin current version %2$s: PHP required version */
 				__( 'HubSpot All-In-One Marketing %1$s requires PHP %2$s or higher Please upgrade WordPress first', 'leadin' ),
 				LEADIN_PLUGIN_VERSION,
 				LEADIN_REQUIRED_PHP_VERSION
 			);
 		} elseif ( Versions::is_wp_version_not_supported() ) {
 			$error_message = sprintf(
-				__( 'HubSpot All-In-One Marketing %1$s requires PHP %2$s or higher Please upgrade WordPress first', 'leadin' ),
+				/* translators: %1$s: Plugin current version %2$s: WordPress required version */
+				__( 'HubSpot All-In-One Marketing %1$s requires WordPress %2$s or higher Please upgrade WordPress first', 'leadin' ),
 				LEADIN_PLUGIN_VERSION,
 				LEADIN_REQUIRED_WP_VERSION
 			);

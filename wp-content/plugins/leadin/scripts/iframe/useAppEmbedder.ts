@@ -25,7 +25,7 @@ import {
   wpVersion,
   contentEmbed,
   requiresContentEmbedScope,
-  refreshTokenError,
+  decryptError,
   LeadinConfig,
 } from '../constants/leadinConfig';
 import { App, AppIframe } from './constants';
@@ -55,7 +55,7 @@ type PartialLeadinConfig = Pick<
   | 'wpVersion'
   | 'contentEmbed'
   | 'requiresContentEmbedScope'
-  | 'refreshTokenError'
+  | 'decryptError'
 >;
 
 type AppIntegrationConfig = Pick<LeadinConfig, 'adminUrl'>;
@@ -128,7 +128,7 @@ const getLeadinConfig = (): AppLeadinConfig => {
     wpVersion,
     contentEmbed,
     requiresContentEmbedScope,
-    refreshTokenError,
+    decryptError,
     ...utm_query_params,
   };
 };
@@ -143,12 +143,10 @@ const getAppOptions = (app: App, createRoute = false) => {
   let options;
   switch (app) {
     case App.Plugin:
-      options = new PluginAppOptions().setLeadinConfig(getLeadinConfig());
+      options = new PluginAppOptions();
       break;
     case App.PluginSettings:
-      options = new PluginAppOptions()
-        .setLeadinConfig(getLeadinConfig())
-        .setPluginSettingsInit();
+      options = new PluginAppOptions().setPluginSettingsInit();
       break;
     case App.Forms:
       options = new FormsAppOptions().setIntegratedAppConfig(
@@ -190,7 +188,8 @@ export default function useAppEmbedder(
       const options = getAppOptions(app, createRoute)
         .setLocale(locale)
         .setDeviceId(deviceId)
-        .setRefreshToken(refreshToken);
+        .setRefreshToken(refreshToken)
+        .setLeadinConfig(getLeadinConfig());
 
       const embedder = new IntegratedAppEmbedder(
         AppIframe[app],

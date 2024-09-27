@@ -16,6 +16,7 @@ import { getOrCreateBackgroundApp } from '../../utils/backgroundAppUtils';
 interface IFormEditProps extends IFormBlockProps {
   preview: boolean;
   origin: 'gutenberg' | 'elementor';
+  fullSiteEditor?: boolean;
 }
 
 function FormEdit({
@@ -24,6 +25,7 @@ function FormEdit({
   setAttributes,
   preview = true,
   origin = 'gutenberg',
+  fullSiteEditor,
 }: IFormEditProps) {
   const { formId, formName } = attributes;
   const formSelected = portalId && formId;
@@ -63,7 +65,13 @@ function FormEdit({
       {formSelected && (
         <Fragment>
           {isSelected && <UISpacer />}
-          {preview && <PreviewForm portalId={portalId} formId={formId} />}
+          {preview && (
+            <PreviewForm
+              portalId={portalId}
+              formId={formId}
+              fullSiteEditor={fullSiteEditor}
+            />
+          )}
         </Fragment>
       )}
     </Fragment>

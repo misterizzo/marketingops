@@ -15,6 +15,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "adminUrl": () => (/* binding */ adminUrl),
 /* harmony export */   "connectionStatus": () => (/* binding */ connectionStatus),
 /* harmony export */   "contentEmbed": () => (/* binding */ contentEmbed),
+/* harmony export */   "decryptError": () => (/* binding */ decryptError),
 /* harmony export */   "deviceId": () => (/* binding */ deviceId),
 /* harmony export */   "didDisconnect": () => (/* binding */ didDisconnect),
 /* harmony export */   "env": () => (/* binding */ env),
@@ -41,7 +42,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "portalId": () => (/* binding */ portalId),
 /* harmony export */   "redirectNonce": () => (/* binding */ redirectNonce),
 /* harmony export */   "refreshToken": () => (/* binding */ refreshToken),
-/* harmony export */   "refreshTokenError": () => (/* binding */ refreshTokenError),
 /* harmony export */   "requiresContentEmbedScope": () => (/* binding */ requiresContentEmbedScope),
 /* harmony export */   "restNonce": () => (/* binding */ restNonce),
 /* harmony export */   "restUrl": () => (/* binding */ restUrl),
@@ -51,45 +51,45 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "wpVersion": () => (/* binding */ wpVersion)
 /* harmony export */ });
 var _window$leadinConfig = window.leadinConfig,
-    accountName = _window$leadinConfig.accountName,
-    adminUrl = _window$leadinConfig.adminUrl,
-    activationTime = _window$leadinConfig.activationTime,
-    connectionStatus = _window$leadinConfig.connectionStatus,
-    deviceId = _window$leadinConfig.deviceId,
-    didDisconnect = _window$leadinConfig.didDisconnect,
-    env = _window$leadinConfig.env,
-    formsScript = _window$leadinConfig.formsScript,
-    meetingsScript = _window$leadinConfig.meetingsScript,
-    formsScriptPayload = _window$leadinConfig.formsScriptPayload,
-    hublet = _window$leadinConfig.hublet,
-    hubspotBaseUrl = _window$leadinConfig.hubspotBaseUrl,
-    hubspotNonce = _window$leadinConfig.hubspotNonce,
-    iframeUrl = _window$leadinConfig.iframeUrl,
-    impactLink = _window$leadinConfig.impactLink,
-    lastAuthorizeTime = _window$leadinConfig.lastAuthorizeTime,
-    lastDeauthorizeTime = _window$leadinConfig.lastDeauthorizeTime,
-    lastDisconnectTime = _window$leadinConfig.lastDisconnectTime,
-    leadinPluginVersion = _window$leadinConfig.leadinPluginVersion,
-    leadinQueryParams = _window$leadinConfig.leadinQueryParams,
-    locale = _window$leadinConfig.locale,
-    loginUrl = _window$leadinConfig.loginUrl,
-    phpVersion = _window$leadinConfig.phpVersion,
-    pluginPath = _window$leadinConfig.pluginPath,
-    plugins = _window$leadinConfig.plugins,
-    portalDomain = _window$leadinConfig.portalDomain,
-    portalEmail = _window$leadinConfig.portalEmail,
-    portalId = _window$leadinConfig.portalId,
-    redirectNonce = _window$leadinConfig.redirectNonce,
-    restNonce = _window$leadinConfig.restNonce,
-    restUrl = _window$leadinConfig.restUrl,
-    refreshToken = _window$leadinConfig.refreshToken,
-    reviewSkippedDate = _window$leadinConfig.reviewSkippedDate,
-    theme = _window$leadinConfig.theme,
-    trackConsent = _window$leadinConfig.trackConsent,
-    wpVersion = _window$leadinConfig.wpVersion,
-    contentEmbed = _window$leadinConfig.contentEmbed,
-    requiresContentEmbedScope = _window$leadinConfig.requiresContentEmbedScope,
-    refreshTokenError = _window$leadinConfig.refreshTokenError;
+  accountName = _window$leadinConfig.accountName,
+  adminUrl = _window$leadinConfig.adminUrl,
+  activationTime = _window$leadinConfig.activationTime,
+  connectionStatus = _window$leadinConfig.connectionStatus,
+  deviceId = _window$leadinConfig.deviceId,
+  didDisconnect = _window$leadinConfig.didDisconnect,
+  env = _window$leadinConfig.env,
+  formsScript = _window$leadinConfig.formsScript,
+  meetingsScript = _window$leadinConfig.meetingsScript,
+  formsScriptPayload = _window$leadinConfig.formsScriptPayload,
+  hublet = _window$leadinConfig.hublet,
+  hubspotBaseUrl = _window$leadinConfig.hubspotBaseUrl,
+  hubspotNonce = _window$leadinConfig.hubspotNonce,
+  iframeUrl = _window$leadinConfig.iframeUrl,
+  impactLink = _window$leadinConfig.impactLink,
+  lastAuthorizeTime = _window$leadinConfig.lastAuthorizeTime,
+  lastDeauthorizeTime = _window$leadinConfig.lastDeauthorizeTime,
+  lastDisconnectTime = _window$leadinConfig.lastDisconnectTime,
+  leadinPluginVersion = _window$leadinConfig.leadinPluginVersion,
+  leadinQueryParams = _window$leadinConfig.leadinQueryParams,
+  locale = _window$leadinConfig.locale,
+  loginUrl = _window$leadinConfig.loginUrl,
+  phpVersion = _window$leadinConfig.phpVersion,
+  pluginPath = _window$leadinConfig.pluginPath,
+  plugins = _window$leadinConfig.plugins,
+  portalDomain = _window$leadinConfig.portalDomain,
+  portalEmail = _window$leadinConfig.portalEmail,
+  portalId = _window$leadinConfig.portalId,
+  redirectNonce = _window$leadinConfig.redirectNonce,
+  restNonce = _window$leadinConfig.restNonce,
+  restUrl = _window$leadinConfig.restUrl,
+  refreshToken = _window$leadinConfig.refreshToken,
+  reviewSkippedDate = _window$leadinConfig.reviewSkippedDate,
+  theme = _window$leadinConfig.theme,
+  trackConsent = _window$leadinConfig.trackConsent,
+  wpVersion = _window$leadinConfig.wpVersion,
+  contentEmbed = _window$leadinConfig.contentEmbed,
+  requiresContentEmbedScope = _window$leadinConfig.requiresContentEmbedScope,
+  decryptError = _window$leadinConfig.decryptError;
 
 
 /***/ }),
@@ -305,10 +305,12 @@ function configureRaven() {
   if (_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_1__.hubspotBaseUrl.indexOf('app.hubspot.com') === -1) {
     return;
   }
-
   raven_js__WEBPACK_IMPORTED_MODULE_0___default().config('https://e9b8f382cdd130c0d415cd977d2be56f@exceptions.hubspot.com/1', {
     instrument: {
       tryCatch: false
+    },
+    shouldSendCallback: function shouldSendCallback(data) {
+      return !!data && !!data.culprit && /plugins\/leadin\//.test(data.culprit);
     },
     release: _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_1__.leadinPluginVersion
   }).install();
@@ -353,7 +355,6 @@ function initAppOnReady(initFn) {
   function main() {
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(initFn);
   }
-
   initApp(main);
 }
 
@@ -385,22 +386,20 @@ function initBackgroundApp(initFn) {
       initFn();
     }
   }
-
   (0,_appUtils__WEBPACK_IMPORTED_MODULE_1__.initApp)(main);
 }
-var getOrCreateBackgroundApp = function getOrCreateBackgroundApp(refreshToken) {
+var getOrCreateBackgroundApp = function getOrCreateBackgroundApp() {
+  var refreshToken = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
   if (window.LeadinBackgroundApp) {
     return window.LeadinBackgroundApp;
   }
-
   var _window = window,
-      IntegratedAppEmbedder = _window.IntegratedAppEmbedder,
-      IntegratedAppOptions = _window.IntegratedAppOptions;
+    IntegratedAppEmbedder = _window.IntegratedAppEmbedder,
+    IntegratedAppOptions = _window.IntegratedAppOptions;
   var options = new IntegratedAppOptions().setLocale(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.locale).setDeviceId(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.deviceId).setRefreshToken(refreshToken);
   var embedder = new IntegratedAppEmbedder('integrated-plugin-proxy', _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.portalId, _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.hubspotBaseUrl, function () {}).setOptions(options);
   embedder.attachTo(document.body, false);
   embedder.postStartAppMessage(); // lets the app know all all data has been passed to it
-
   window.LeadinBackgroundApp = embedder;
   return window.LeadinBackgroundApp;
 };
@@ -3677,7 +3676,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var REVIEW_BANNER_INTRO_PERIOD_DAYS = 15;
-
 var userIsAfterIntroductoryPeriod = function userIsAfterIntroductoryPeriod() {
   var activationDate = new Date(+_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_3__.activationTime * 1000);
   var currentDate = new Date();
@@ -3688,13 +3686,10 @@ var userIsAfterIntroductoryPeriod = function userIsAfterIntroductoryPeriod() {
  * Adds some methods to window when review banner is
  * displayed to monitor events
  */
-
-
 function initMonitorReviewBanner() {
   if (_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_3__.refreshToken) {
     var embedder = (0,_utils_backgroundAppUtils__WEBPACK_IMPORTED_MODULE_1__.getOrCreateBackgroundApp)(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_3__.refreshToken);
     var container = jquery__WEBPACK_IMPORTED_MODULE_0___default()(_constants_selectors__WEBPACK_IMPORTED_MODULE_2__.domElements.reviewBannerContainer);
-
     if (container && userIsAfterIntroductoryPeriod()) {
       jquery__WEBPACK_IMPORTED_MODULE_0___default()(_constants_selectors__WEBPACK_IMPORTED_MODULE_2__.domElements.reviewBannerLeaveReviewLink).off('click').on('click', function () {
         embedder.postMessage({
@@ -3711,7 +3706,6 @@ function initMonitorReviewBanner() {
         payload: +_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_3__.activationTime * 1000
       }).then(function (_ref) {
         var total = _ref.total;
-
         if (total >= 5) {
           container.removeClass('leadin-review-banner--hide');
           embedder.postMessage({

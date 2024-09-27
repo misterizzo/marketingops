@@ -7,10 +7,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-04T16:12:14+00:00\n"
+"POT-Creation-Date: 2024-09-23T15:57:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Language: \n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: leadin\n"
 
 #. Plugin Name of the plugin
@@ -136,7 +136,7 @@ msgstr "Kontakty"
 
 #: public/admin/class-leadinadmin.php:207
 msgid "Email"
-msgstr "E-mail"
+msgstr "Wiadomość e-mail"
 
 #: public/admin/class-leadinadmin.php:208
 msgid "Lists"
@@ -154,14 +154,20 @@ msgstr "Ustawienia"
 #: public/admin/class-leadinadmin.php:213
 #: public/admin/class-pluginactionsmanager.php:50
 msgid "Upgrade"
-msgstr "Uaktualnij"
+msgstr "Uaktualnienie"
 
-#: public/admin/class-leadinadmin.php:258
-#: public/admin/class-leadinadmin.php:264
+#. translators: %1$s: Plugin current version %2$s: PHP required version
+#: public/admin/class-leadinadmin.php:259
 msgid "HubSpot All-In-One Marketing %1$s requires PHP %2$s or higher Please upgrade WordPress first"
 msgstr "Uniwersalny marketing HubSpot %1$s wymaga wersji PHP %2$s lub wyższej. Najpierw uaktualnij WordPress."
 
-#: public/admin/class-noticemanager.php:35
+#. translators: %1$s: Plugin current version %2$s: WordPress required version
+#: public/admin/class-leadinadmin.php:266
+msgid "HubSpot All-In-One Marketing %1$s requires WordPress %2$s or higher Please upgrade WordPress first"
+msgstr "Uniwersalny marketing HubSpot %1$s wymaga wersji WordPress %2$s lub wyższej. Najpierw uaktualnij WordPress."
+
+#. translators: %1$s: HTML anchor opening tag %2$s: HTML anchor closing tag
+#: public/admin/class-noticemanager.php:36
 msgid "The HubSpot plugin is not connected right now To use HubSpot tools on your WordPress site, %1$sconnect the plugin now%2$s"
 msgstr "Wtyczka HubSpot nie jest obecnie połączona. Aby korzystać z narzędzi HubSpot w witrynie WordPress, %1$społącz teraz wtyczkę%2$s."
 
@@ -169,27 +175,29 @@ msgstr "Wtyczka HubSpot nie jest obecnie połączona. Aby korzystać z narzędzi
 msgid "Dismiss this notice"
 msgstr "Odrzuć tę notatkę."
 
-#: public/admin/class-reviewbanner.php:29
+#. translators: %1$s: Current user name or nickname
+#: public/admin/class-reviewbanner.php:31
 msgid "Hey %1$s,"
 msgstr "Cześć, %1$s,"
 
-#: public/admin/class-reviewbanner.php:32
+#. translators: %1$s: HTML anchor opening tag %2$s: HTML anchor closing tag
+#: public/admin/class-reviewbanner.php:36
 msgid "Have you got 2 minutes to complete %1$sthis survey%2$s about the HubSpot for WordPress plugin?"
 msgstr "Czy masz 2 minuty na wypełnienie %1$stej ankiety%2$s na temat wtyczki HubSpot for WordPress?"
 
-#: public/admin/class-reviewbanner.php:33
+#: public/admin/class-reviewbanner.php:37
 msgid "We read every response Your feedback helps our team make the improvements that you need the most"
 msgstr "Czytamy wszystkie odpowiedzi. Twoja opinia pomaga naszemu zespołowi wprowadzić ulepszenia, których najbardziej potrzebujesz."
 
-#: public/admin/class-reviewbanner.php:34
+#: public/admin/class-reviewbanner.php:38
 msgid "HubSpot for WordPress Team"
 msgstr "HubSpot dla zespołu WordPress"
 
-#: public/admin/class-reviewbanner.php:35
+#: public/admin/class-reviewbanner.php:39
 msgid "Thanks,"
 msgstr "Dziękujemy,"
 
-#: public/admin/class-reviewbanner.php:59
+#: public/admin/class-reviewbanner.php:63
 msgid "Leave us a review | link opens in a new tab"
 msgstr "Napisz recenzję | Łącze otwiera się w nowej karcie"
 

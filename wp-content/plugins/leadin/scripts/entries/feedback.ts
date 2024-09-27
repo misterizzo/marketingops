@@ -7,8 +7,9 @@ import {
   getOrCreateBackgroundApp,
   initBackgroundApp,
 } from '../utils/backgroundAppUtils';
-import { refreshToken } from '../constants/leadinConfig';
 import { ProxyMessages } from '../iframe/integratedMessages';
+
+let embedder: any;
 
 function deactivatePlugin() {
   const href = $(domElements.deactivatePluginButton).attr('href');
@@ -30,8 +31,7 @@ function submitAndDeactivate(e: Event) {
 
   submitFeedbackForm(domElements.deactivateFeedbackForm)
     .then(() => {
-      if (feedback && refreshToken) {
-        const embedder = getOrCreateBackgroundApp(refreshToken);
+      if (feedback) {
         embedder.postMessage({
           key: ProxyMessages.TrackPluginDeactivation,
           payload: {
@@ -49,6 +49,7 @@ function submitAndDeactivate(e: Event) {
 }
 
 function init() {
+  embedder = getOrCreateBackgroundApp();
   // eslint-disable-next-line no-new
   new ThickBoxModal(
     domElements.deactivatePluginButton,

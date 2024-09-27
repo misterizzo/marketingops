@@ -19,7 +19,7 @@ export function initBackgroundApp(initFn: CallbackFn | CallbackFn[]) {
   initApp(main);
 }
 
-export const getOrCreateBackgroundApp = (refreshToken: string) => {
+export const getOrCreateBackgroundApp = (refreshToken = '') => {
   if ((window as any).LeadinBackgroundApp) {
     return (window as any).LeadinBackgroundApp;
   }
