@@ -70,27 +70,12 @@ class WC_Stripe_UPE_Payment_Method_Afterpay_Clearpay extends WC_Stripe_UPE_Payme
 	 */
 	public function get_title( $payment_details = false ) {
 		if ( $this->is_gb_country() ) {
-			return __( 'Clearpay', 'woocommerce-gateway-stripe' );
+			$this->title = __( 'Clearpay', 'woocommerce-gateway-stripe' );
+		} else {
+			$this->title = __( 'Afterpay', 'woocommerce-gateway-stripe' );
 		}
-		return __( 'Afterpay', 'woocommerce-gateway-stripe' );
-	}
 
-	/**
-	 * Return the gateway's description.
-	 *
-	 * @return string
-	 */
-	public function get_description( $payment_details = false ) {
-		if ( $this->is_gb_country() ) {
-			return __(
-				'Allow customers to pay over time with Clearpay.',
-				'woocommerce-gateway-stripe'
-			);
-		}
-		return __(
-			'Allow customers to pay over time with Afterpay.',
-			'woocommerce-gateway-stripe'
-		);
+		return parent::get_title( $payment_details );
 	}
 
 	/**
@@ -112,6 +97,15 @@ class WC_Stripe_UPE_Payment_Method_Afterpay_Clearpay extends WC_Stripe_UPE_Payme
 	}
 
 	/**
+	 * Returns whether the payment method requires automatic capture.
+	 *
+	 * @inheritDoc
+	 */
+	public function requires_automatic_capture() {
+		return false;
+	}
+
+	/**
 	 * Returns true if the Stripe account country is GB
 	 *
 	 * @return boolean
@@ -120,5 +114,16 @@ class WC_Stripe_UPE_Payment_Method_Afterpay_Clearpay extends WC_Stripe_UPE_Payme
 		$cached_account_data = WC_Stripe::get_instance()->account->get_cached_account_data();
 		$account_country     = $cached_account_data['country'] ?? null;
 		return 'GB' === $account_country;
+	}
+
+	/**
+	 * Returns whether the payment method is available for the Stripe account's country.
+	 *
+	 * Afterpay / Clearpay is available for the following countries: AU, CA, GB, NZ, US.
+	 *
+	 * @return bool True if the payment method is available for the account's country, false otherwise.
+	 */
+	public function is_available_for_account_country() {
+		return in_array( WC_Stripe::get_instance()->account->get_account_country(), $this->supported_countries, true );
 	}
 }

@@ -25,6 +25,31 @@ jQuery( document ).ready( function() {
 		});
 	});
 
+	jQuery( document ).on( 'click', '.wsal-notice .wsal-plugin-notice-close', function(event) {
+		var noticeElm = jQuery(this).parent();
+		var action = noticeElm.attr('data-dismiss-action');
+		if ( !action ){
+			return;
+		}
+
+		event.preventDefault();
+		jQuery.ajax({
+			type: 'POST',
+			url: wsalCommonData.ajaxURL,
+			async: true,
+			data: {
+				action: jQuery(this).parent().attr('data-dismiss-action'),
+				nonce: jQuery(this).parent().attr('data-nonce')
+			}
+		});
+
+		noticeElm.fadeTo(100, 0, function () {
+			noticeElm.slideUp(100, function () {
+				noticeElm.remove()
+			})
+		  })
+	});
+
 	/**
 	 * Check & Load New Alerts on WP-Admin bar.
 	 *
@@ -163,7 +188,7 @@ jQuery( document ).ready( function() {
 		var linkItem = jQuery( '.fs-submenu-item.wp-security-audit-log.pricing' ).parent();
 		jQuery( linkItem ).attr( {
 			target: '_blank', 
-			href: 'https://melapress.com/wordpress-activity-log/pricing/?utm_source=plugins&utm_medium=link&utm_campaign=wsal',
+			href: 'https://melapress.com/wordpress-activity-log/pricing/?utm_source=plugin&utm_medium=link&utm_campaign=wsal',
 		} );
 	}
 });

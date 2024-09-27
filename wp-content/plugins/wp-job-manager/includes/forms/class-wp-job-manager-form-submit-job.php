@@ -824,9 +824,6 @@ class WP_Job_Manager_Form_Submit_Job extends WP_Job_Manager_Form {
 				$this->step++;
 			}
 		} catch ( Exception $e ) {
-			if ( '106.214.243.30' === $_SERVER['REMOTE_ADDR'] ) {
-				die("in the catch section");
-			}
 			$this->add_error( $e->getMessage() );
 			return;
 		}

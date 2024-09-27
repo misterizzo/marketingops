@@ -5,6 +5,8 @@
  * User Sessions class.
  *
  * @package wsal
+ *
+ * @since 4.5.0
  */
 
 declare(strict_types=1);
@@ -33,6 +35,8 @@ if ( ! class_exists( '\WSAL\Entities\Occurrences_Entity' ) ) {
 		 * Contains the table name.
 		 *
 		 * @var string
+		 *
+		 * @since 4.5.0
 		 */
 		protected static $table = 'wsal_occurrences';
 
@@ -40,6 +44,8 @@ if ( ! class_exists( '\WSAL\Entities\Occurrences_Entity' ) ) {
 		 * List of migrated metadata fields.
 		 *
 		 * @var string[]
+		 *
+		 * @since 4.5.0
 		 */
 		public static $migrated_meta = array(
 			'ClientIP'         => 'client_ip',
@@ -112,6 +118,8 @@ if ( ! class_exists( '\WSAL\Entities\Occurrences_Entity' ) ) {
 		 * Builds an upgrade query for the occurrence table.
 		 *
 		 * @return string
+		 *
+		 * @since 4.5.0
 		 */
 		public static function get_upgrade_query() {
 			return 'ALTER TABLE `' . self::get_table_name() . '`'
@@ -324,6 +332,8 @@ if ( ! class_exists( '\WSAL\Entities\Occurrences_Entity' ) ) {
 		 *
 		 * @return string Full-formatted message.
 		 * @see WSAL_Alert::get_message()
+		 *
+		 * @since 4.6.0
 		 */
 		public static function get_alert_message( $item = null, $context = 'default' ) {
 			// $alert          = Alert_Manager::get_alert(
@@ -357,6 +367,35 @@ if ( ! class_exists( '\WSAL\Entities\Occurrences_Entity' ) ) {
 					'<a href="https://melapress.com/support/kb/create-custom-events-wordpress-activity-log/" rel="noopener noreferrer" target="_blank">',
 					'</a>'
 				);
+			}
+
+			return $cached_message;
+		}
+
+		/**
+		 * Gets alert meta.
+		 *
+		 * @param array $item    - Occurrence meta array.
+		 *
+		 * @return string Raw meta stored.
+		 *
+		 * @since 5.1.0
+		 */
+		public static function get_alert_meta( $item = \null ) {
+
+			if ( ! isset( $item['meta_values'] ) ) {
+				return '';
+			}
+
+			// Fill variables in message.
+			$meta_array     = $item['meta_values'];
+			$cached_message = '';
+
+			foreach ( $meta_array as $name => $value ) {
+				if ( \is_array( $value ) || is_object( $value ) ) {
+					$value = \print_r( (array) $value, \true );
+				}
+				$cached_message .= $name . ' : ' . $value . '<br>';
 			}
 
 			return $cached_message;

@@ -12,6 +12,8 @@
 namespace WSAL\Utils;
 
 use WSAL\Helpers\WP_Helper;
+use WSAL\Helpers\Settings_Helper;
+use WSAL\Helpers\Plugin_Settings_Helper;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
@@ -50,7 +52,12 @@ if ( ! class_exists( '\WSAL\Utils\Abstract_Migration' ) ) {
 		/**
 		 * That is a global constant used for marking the migration process as in progress.
 		 */
-		const STARTED_MIGRATION_PROCESS = 'migration-process-started';
+		public const STARTED_MIGRATION_PROCESS = 'migration-process-started';
+
+		/**
+		 * That is a global constant used for showing the upgrade notice.
+		 */
+		public const UPGRADE_NOTICE = 'upgrade-notice-show';
 
 		/**
 		 * Extracted version from the DB (WP option)
@@ -125,9 +132,27 @@ if ( ! class_exists( '\WSAL\Utils\Abstract_Migration' ) ) {
 
 					$disabled_alerts = WP_Helper::get_global_option( 'disabled-alerts', false );
 
-					$always_disabled_alerts = implode( ',', \WSAL\Helpers\Settings_Helper::get_default_always_disabled_alerts() );
+					if ( ! \is_array( $disabled_alerts ) ) {
+						$disabled_alerts = \explode( ',', $disabled_alerts );
 
-					$disabled_alerts = implode( ',', \array_merge( \explode( ',', $disabled_alerts ), \explode( ',', $always_disabled_alerts ) ) );
+						\array_walk( $disabled_alerts, 'trim' );
+					}
+
+					$always_disabled_alerts = Settings_Helper::get_default_always_disabled_alerts();
+
+					if ( ! \is_array( $always_disabled_alerts ) ) {
+						$always_disabled_alerts = \explode( ',', $always_disabled_alerts );
+
+						\array_walk( $always_disabled_alerts, 'trim' );
+					}
+
+					$disabled_alerts = \array_merge( $disabled_alerts, $always_disabled_alerts );
+
+					Settings_Helper::set_boolean_option_value( 'pruning-limit-e', true );
+					$pruning_date = '3';
+					$pruning_unit = 'months';
+					Settings_Helper::set_pruning_date_settings( true, $pruning_date . ' ' . $pruning_unit, $pruning_unit );
+					Plugin_Settings_Helper::set_pruning_limit_enabled( false );
 
 					/**
 					 * That is split only for clarity
@@ -139,7 +164,7 @@ if ( ! class_exists( '\WSAL\Utils\Abstract_Migration' ) ) {
 					}
 				} elseif ( false === $migration_started ) {
 
-						WP_Helper::set_global_option( self::STARTED_MIGRATION_PROCESS, true );
+					WP_Helper::set_global_option( self::STARTED_MIGRATION_PROCESS, true );
 					try {
 						// set transient for the updating status - would that help ?!?
 						$method_as_version_numbers = static::get_all_migration_methods_as_numbers();
@@ -149,7 +174,7 @@ if ( ! class_exists( '\WSAL\Utils\Abstract_Migration' ) ) {
 							function ( $method, $key ) use ( &$stored_version_as_number, &$target_version_as_number ) {
 
 								if ( ( ( (int) $target_version_as_number ) / 1000 ) > ( ( (int) $stored_version_as_number ) / 1000 ) ) {
-									return ( in_array( $key, range( $stored_version_as_number, $target_version_as_number ), true ) );
+									return ( in_array( $key, range( $stored_version_as_number + 1, $target_version_as_number ), true ) );
 								}
 
 								return false;
@@ -228,7 +253,13 @@ if ( ! class_exists( '\WSAL\Utils\Abstract_Migration' ) ) {
 		 * @since 4.4.0
 		 */
 		private static function store_updated_version() {
-			WP_Helper::update_global_option( static::$version_option_name, \constant( static::$const_name_of_plugin_version ) );
+			if ( version_compare( static::get_stored_version(), \constant( static::$const_name_of_plugin_version ), '<' ) ) {
+				WP_Helper::update_global_option( static::$version_option_name, \constant( static::$const_name_of_plugin_version ) );
+
+				if ( '0.0.0' !== (string) static::$stored_version ) {
+					WP_Helper::set_global_option( self::UPGRADE_NOTICE, true );
+				}
+			}
 		}
 
 		/**

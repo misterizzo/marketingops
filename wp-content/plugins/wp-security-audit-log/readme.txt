@@ -5,8 +5,8 @@ License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl.html
 Tags:  activity log, security audit log, user tracking, security event log, audit trail, user activity, changelog, history, log, website changes
 Requires at least: 5.0
-Tested up to: 6.5.3
-Stable tag: 5.0
+Tested up to: 6.6.2
+Stable tag: 5.2.1
 Requires PHP: 7.2
 
 Keep a comprehensive log of user and system changes that take place on your WordPress website with the the #1 user-rated activity log plugin.
@@ -192,98 +192,100 @@ We update the plugin fairly regularly to ensure the plugin continues to run in t
 = Support and Documentation =
 Please refer to our [support pages](https://melapress.com/support/?utm_source=wp+repo&utm_medium=repo+link&utm_campaign=wordpress_org&utm_content=wsal) for all the technical and product documentation.
 
+= How can I report security bugs? =
+Please refer to our [Melapress plugins security program](https://melapress.com/plugins-security-program/).
+
 == Screenshots ==
 
 1. The WordPress activity logs from where the site administrator can see all the user and site changes.
-2. See who is logged in to your WordPress and manage users sessions with Users Sessions Management.
+2. See who is logged in to your WordPress and manage users sessions with Users Sessions Management in the Premium edition.
 3. The plugin settings from where site administrator can configure generic plugin settings such as [reverse proxy support](https://melapress.com/support/kb/wp-activity-log-support-reverse-proxies-web-application-firewalls/?utm_source=wp+repo&utm_medium=repo+link&utm_campaign=wordpress_org&utm_content=wsal), who can manage the plugin etc.
-4. The WordPress audit trail settings from where you can configure automatic pruning of alerts, which timestamp should be used and more.
-5. Configuring WordPress email and SMS alerts with the Email & SMS Notifications module.
+4. Use the event Inspector to see more technical details about each event in the activity log, such as the session ID and UserAgent string.
+5. Configuring WordPress email and instant SMS alerts with the Email & SMS Notifications module in the Premium edition.
 6. Search in the WordPress activity log with the use filters to fine tune the search results.
 7. The Enable/Disable events section from where Administrators can disable or enable activity log events.
-8. The Log Viewer of a Super Admin in a WordPress multisite network installation with the Site selection drop down menu.
+8. The Activity Log Viewer of a Super Admin in a WordPress multisite network installation alllows the admin to view the logs from all the network, or filter the logs of a specific site.
 9. WP Activity Log is integrated with the built-in revision system of WordPress, thus allowing you to see what content changes users make on your WordPress posts, pages and custom post types. For more information read [Keep Record of All WordPress Content Changes](https://melapress.com/support/kb/wp-activity-log-how-keep-record-of-content-changes/?utm_source=wp+repo&utm_medium=repo+link&utm_campaign=wordpress_org&utm_content=wsal)
-10. Mirror the WordPress activity log to an external solution such as Syslog or Papertrail to centralize logging, ensure logs are always available and cannot be tampered with in the unfortunate case of a hack attack.
+10. Mirror the WordPress activity log to an external solution such as Syslog or Papertrail to centralize logging in the Premium edition, to ensure logs are always available and cannot be tampered with in the unfortunate case of a hack attack.
+11. Use the plugin settings to exclude objects from the logs, configure automatic pruning of events, which timestamp to be shonw in the logs and much more. The plugin is fully confirable.
+12. Generate any type of statistics reports from the actiivty log with the Premium edition. You can see statistics such as number of newly registered users, number of user profile changes, number of logins, different IP addresses per user, and much more.
+13. Use the Premium edition to also export any activity log data to an HTML report or CSV file. CSV files are the most widely supported format and can easily be read, parsed and imported in third party systems.
 
 == Changelog ==
 
-= 5.0.0 (2024-05-22) =
+= 5.2.1 (2024-09-12) =
 
- * **New Activity Log event IDs**
- 
-The below event IDs are to keep log of changes in the Advanced Custom Field (ACF) plugin activity:
-	* Event ID 10000 - A post type was created
-	* Event ID 10001 - A post type was activated/deactivated
-	* Event ID 10002 - A post type was renamed
-	* Event ID 10003 - A post-type singular name was renamed
-	* Event ID 10004 - A post-type key was modified
-	* Event ID 10005 - A post types Taxonomies was modified
-	* Event ID 10007 - A post type was moved to trash
-	* Event ID 10008 - A post type was restored from trash
-	* Event ID 10010 - A Taxonomy was created
-	* Event ID 10011 - A Taxonomy was activated / deactivated
-	* Event ID 10012 - A Taxonomy was renamed
-	* Event ID 10013 - A Taxonomy singular label was renamed
-	* Event ID 10014 - A Taxonomy key was modified
-	* Event ID 10015 - A Taxonomies post type was modified
-	* Event ID 10017 - A Taxonomy was moved to trash
-	* Event ID 10018 - A Taxonomy was restored from trash
-	* Event ID 10019 - A Taxonomy was deleted
-	* Event ID 10020 - A Taxonomy term was created
-	* Event ID 10021 - A Taxonomy term was renamed
-	* Event ID 10022 - A Taxonomy term was deleted
-	* Event ID 10023 - A Taxonomy terms slug was modified
-	* Event ID 10024 - A posts taxonomy terms were modified 
- 
-Also in this update, we have added a number of event IDs to keep a log of changes in the WP 2FA plugin and changes in the users' 2FA setup:
-	* Event ID 7800 - WP 2FA Enforcement policy updated
-	* Event ID 7801 - WP 2FA enforcement policies have been disabled
-	* Event ID 7802 - WP 2FA enforcement list was modified
-	* Event ID 7803 - WP 2FA exclusion list was modified
-	* Event ID 7804 - WP 2FA Enforcement policy updated
-	* Event ID 7805 - WP 2FA Trusted device was enabled / disabled
-	* Event ID 7806 - WP 2FA trusted device remember length modified
-	* Event ID 7807 - WP 2FA require password resets on unblock was enabled / disabled
-	* Event ID 7808 - A user configured 2FA
-	* Event ID 7809 - A WP 2FA user policy was enabled / disabled a method
-	* Event ID 7810 - A user removed the 2FA setup
-	* Event ID 7811 - A user has been locked for not configuring 2FA
-	* Event ID 7812	- A blocked user has been unblocked
+ * **Bug fixes**
+	 * Fixed a crash in the WooCommerce sensor which happens when a new WooCommerce user is registered.
+	 * Addressed problem with Redirection sensor when Rest API endpoint is checked.
+	 * Fixed a crash and a number of PHP notices which are triggered when the Redirects plugin and Elementor are installed on the website.
+	 * Addressed problem with system sensor when cron job is checked.
 
-* **New features**
-	* Added bulk action options in the Activity Log viewer, allowing admins to disable specific event IDs, or exclude users and IP addresses from the logs using bulk actions.
-	* Setting to exclude posts by Post Status in the activity log.
+= 5.2.0 (2024-09-12) =
 
-* **Improvements**
-	* Integrated the Activity Log extension for MainWP into the core plugin.
-	* Resolved multiple MainWP-related issues, improved log extraction, report generation, and overall performance.
-	* Improved metadata layout for Event ID 2016, which is reported when a user changes categories on a post.
-	* The plugin now stores both user_id and username in the database for all alerts.
-	* Every failed login attempt is logged as an individual event in the activity log.
-	* Default 'From' email address matches the user's site domain to improve email deliverability.
-	* The version of both the previous and new plugin version is now logged in event ID 5004, which is used to keep a log of plugin updates.
-	* Fixed a number broken URLs in the free edition of the plugin.
-	* Updated and optimized imagery in the free edition for better size and quality.
-	* Replaced outdated branding references throughout the plugin.
-	* Updated the logo for the Melapress File Monitor plugin in the Settings page.
-	* Applied several minor UI and UX tweaks inside the activity log viewer - adjusted width / hight and alignment of some elements.
-	* Improved the logic of retrieving user's data from database for better performance.
-	* Implemented various minor code tweaks to improve overall plugin speed, performance, and stability.
+* **New event IDs to report changes in Redirections plugin**
+In this update we are introducing out-of-the-box activity logging for changes done in the configuration of the Redirections plugin.
+	* Event ID 10501: A new redirection was created.
+	* Event ID 10502: Activated a redirection.
+	* Event ID 10503: Deactivated a redirection.
+	* Event ID 10504: Changed the source URL of a redirection.
+	* Event ID 10505: Changed the query parameter of a redirection.
+	* Event ID 10506: Changed the target URL of a redirection. 
+	* Event ID 10507: Changed the redirection group of a redirection.
+	* Event ID 10508: Deleted a redirection.
+	* Event ID 10509: Created a new redirection group.
+	* Event ID 10510: Activated a redirection group.
+	* Event ID 10511: Deactivated a redirection group.
+	* Event ID 10512: Renamed a redirection group.
+	* Event ID 10513: Changed the module type of a redirection group.
+	* Event ID 10514: Deleted a redirection group.
 
-* **Bug fixes**
-	* Corrected the logic and info messages when disabling Event IDs directly from the Activity Log viewer.
-	* Resolved an edge case where WP Engine Smart Plugin Manager was returning random usernames as actors when updating plugins on the site.
-	* Addressed missing metadata for 'username' in the Custom Email Notification template triggered by failed login attempts.
-	* Fixed a bug causing the system info file to display the same title for both Free and Premium editions when both were installed.
-	* Resolved an issue where WooCommerce Event ID 9105 was not captured if the user placing the order was not logged in.
-	* Corrected class references within the plugin's core (widget sensor).
-	* Fixed the built-in notification for failed login attempts to properly show the user's IP address (there were edge cases in which it wasn't).
-	* Resolved a bug with the 'hide plugin from other admins' setting that allowed some users to still see the plugin as installed.
-	* Fixed numerous PHP warnings generated by the WooCommerce sensor.
-	* Resolved an issue causing some Event IDs not to trigger custom notifications if the activity occurred on the site frontend.
-	* Corrected the year not being replaced correctly in the main plugin PHP file.
-	* Fixed a number of PHP warnings that could be generated by the plugin when WooCommerce orders were placed.
-	* Addressed PHP warnings generated by the GravityForms built-in sensor.
-	* Fixed a bug which was causing wsal_cleanup cron to not be fired correctly therefore old logs and expired sessions could not have been removed properly.
+* **New event IDs to report WordPress Cron changes etc**
+In this update we are introducing coverage of changes in the WordPress cron and the cron jobs / tasks.
+	 * Event ID 6066: A new one-time task has been scheduled in the cron.
+	 * Event ID 6067: A new recurring task has been scheduled in the cron.
+	 * Event ID 6068: The schedule of a recurring cron task has changed.
+	 * Event ID 6069: A one-time task has been executed by cron.
+	 * Event ID 6070: A recurring task has been executed by cron.
+	 * Event ID 6071: A one-time task has been deleted from the cron.
+	 * Event ID 6072:  A recurring task has been deleted from the cron.
+
+* **Other generic new event IDs**
+	 * Event ID 6063: A new website site icon (favicon) has been added.
+	 * Event ID 6064: The website site icon (favicon) was removed.
+	 * Event ID 7013: Updated WordPress on the network subsites.
+	 * Event ID 5720: Activated or deactivated a GravityForms form.
+	 * Event ID 9155: A comment was added to a WooCommerce order.
+	 * Event ID 9156: A comment was deleted from a WooCommerce order.
+
+ * **Plugin & functionality improvements**
+	 * Plugin checks for existing session cookie when user navigates directly to the login page so new users sessions are not created unnecessarily and no users are locked out when session management features are enabled.
+	 * Set the default activity log retention policy to 3 months if not configured by the user.
+	 * User is redirected to the activity log viewer page upon installing the plugin.
+	 * Added some padding / improved plugin's activity log view in MainWP.
+	 * Added new top floating menu and a banner + footer links in the Free edition of the plugin.
+	 * Improved the text of event ID 6063.
+	 * Removed redundant code that was used to count the number of failed login attempts from an IP address. Now plugin reports every failed login attempt as an individual event in the log.
+	 * Removed redundant code that was used to enable early plugin loading (was typically used on websites that use admin blocking plugins).
+	 * Optimized the WooCommerce sensor to properly report the changes that take place when an order is place in WooCommerce - previously reported too many events which might be confusing.
+	 * Improved support for custom WooCommerce order names (YITH).
+	 * Event ID 1005 (user logged in from a different device) now counts towards the total number of logins when generating user login / activity reports.
+	 * Added the "Settings" node in the MainWP menu (previously only available on the WordPress native dashboard, even when installed on MainWP).
+	 * Applied several recognition updates to the detection of reverse proxy and WAF IP addresses feature.
+	 * Added some minor UI tweaks to the HTML reports.
+
+ * **Bug fixes**
+	 * Fixed a number of fatal errors in the WooCommerce sensor which were caused in some edge cases.
+	 * Fixed: Redirect group is now reported in event ID 10501. Previously "null" was reported.
+	 * Fixed: Incorrect time was being reported in the Retention policies settings for the purging of old data in the activity log.
+	 * Fixed: plugin settings not removed when option to delete settings upon uninstall is enabled on a multisite network.
+	 * Fixed: event ID 9156 (changed note in WooCommerce order) reported instead of event ID 9155 (added note to a WooCommerce order).
+	 * Form URL was not reported in some event IDs which report changes in Gravity Forms form changes.
+	 * Fixed: Fatal error when editing WooCommerce products prices in bulk with Advanced Bulk Edit plugin.
+	 * Fixed: Event ID 6064 reported instead of ID 6065 when switching the favicon.
+	 * Fixed: Event ID 9156 was reported twice in the activity log when a WooCommerce order was placed by a non-logged in user.
+	 * Fixed a number of PHP Notices, warnings and deprecated code messages by improving the code for better support of more recent PHP versions.
+	 * Fixed: Plugin was not reporting the change when when the price of a WooCommerce product is changed to NULL via the REST API.
+	 * Fixed a warning about an undefined array key "zapier_integration_active" when saving changes in the Yoast SEO plugin.
 
 Refer to the complete [plugin changelog](https://melapress.com/support/kb/wp-activity-log-plugin-changelog/?utm_source=wp+repo&utm_medium=repo+link&utm_campaign=wordpress_org&utm_content=wsal) for more detailed information about what was new, improved and fixed in previous version updates of WP Activity Log.

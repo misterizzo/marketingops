@@ -4,7 +4,7 @@
  *
  * Class file for alert manager.
  *
- * @since   latest
+ * @since 5.1.0
  *
  * @package wsal
  * @subpackage wsal-gravity-forms
@@ -43,8 +43,8 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\MainWP_Server_Custom_Alerts' ) ) {
 			// phpcs:disable WordPress.WP.I18n.MissingTranslatorsComment
 			if ( MainWP_Addon::check_mainwp_plugin_active() || \WpSecurityAuditLog::is_mainwp_active() ) {
 				return array(
-					esc_html__( 'MainWP Dashboard', 'wp-security-audit-log' ) => array(
-						esc_html__( 'Monitor MainWP Dashboard', 'wp-security-audit-log' ) =>
+					\esc_html__( 'MainWP Dashboard', 'wp-security-audit-log' ) => array(
+						\esc_html__( 'Monitor MainWP Dashboard', 'wp-security-audit-log' ) =>
 						self::get_alerts_array(),
 					),
 				);

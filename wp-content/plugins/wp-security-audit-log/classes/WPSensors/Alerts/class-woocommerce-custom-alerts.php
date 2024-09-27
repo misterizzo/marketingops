@@ -1962,7 +1962,7 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 				9123 => array(
 					9123,
 					WSAL_HIGH,
-					esc_html__( 'Moved the coupon %CouponName% to trash.', 'wp-security-audit-log' ),
+					esc_html__( 'Moved a coupon to trash.', 'wp-security-audit-log' ),
 					esc_html__( 'Moved coupon to trash: %CouponName%.', 'wp-security-audit-log' ),
 					array(
 						esc_html__( 'Coupon ID', 'wp-security-audit-log' ) => '%CouponID%',
@@ -2019,7 +2019,7 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 				9127 => array(
 					9127,
 					WSAL_LOW,
-					esc_html__( 'User moved a WooCommerce coupon out of trash', 'wp-security-audit-log' ),
+					esc_html__( 'Restored a coupon from trash', 'wp-security-audit-log' ),
 					esc_html__( 'Restored the coupon %CouponCode% out of the trash.', 'wp-security-audit-log' ),
 					array(
 						esc_html__( 'Coupon status', 'wp-security-audit-log' ) => '%CouponStatus%',
@@ -2255,6 +2255,34 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 					),
 					'woocommerce-order',
 					'opened',
+				),
+				9155 => array(
+					9155,
+					WSAL_LOW,
+					esc_html__( 'Order note is added', 'wp-security-audit-log' ),
+					esc_html__( 'Added a comment in order %OrderTitle%.', 'wp-security-audit-log' ),
+					array(
+						esc_html__( 'Note Type', 'wp-security-audit-log' ) => '%NoteType%',
+					),
+					array(
+						esc_html__( 'View order', 'wp-security-audit-log' ) => '%EditorLinkOrder%',
+					),
+					'woocommerce-order',
+					'added',
+				),
+				9156 => array(
+					9156,
+					WSAL_LOW,
+					esc_html__( 'Order note is deleted', 'wp-security-audit-log' ),
+					esc_html__( 'Removed a note in order %OrderTitle%.', 'wp-security-audit-log' ),
+					array(
+						esc_html__( 'Note Type', 'wp-security-audit-log' ) => '%NoteType%',
+					),
+					array(
+						esc_html__( 'View order', 'wp-security-audit-log' ) => '%EditorLinkOrder%',
+					),
+					'woocommerce-order',
+					'removed',
 				),
 			);
 		}

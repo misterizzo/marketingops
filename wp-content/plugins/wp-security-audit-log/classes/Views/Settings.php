@@ -10,6 +10,7 @@
  */
 
 use WSAL\Helpers\WP_Helper;
+use WSAL\Helpers\User_Helper;
 use WSAL\Controllers\Constants;
 use WSAL\Controllers\Connection;
 use WSAL\Helpers\Settings_Helper;
@@ -230,12 +231,10 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 			die();
 		}
 
-		//@codingStandardsIgnoreStart
-		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( $_POST['nonce'] ) : false;
-		$token = isset( $_POST['token'] ) ? sanitize_text_field( $_POST['token'] ) : false;
-		//@codingStandardsIgnoreEnd
+		$nonce = isset( $_POST['nonce'] ) ? \sanitize_text_field( \wp_unslash( $_POST['nonce'] ) ) : false;
+		$token = isset( $_POST['token'] ) ? \sanitize_text_field( \wp_unslash( $_POST['token'] ) ) : false;
 
-		if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'wsal-exclude-nonce' ) ) {
+		if ( empty( $nonce ) || ! \wp_verify_nonce( $nonce, 'wsal-exclude-nonce' ) ) {
 			echo wp_json_encode(
 				array(
 					'success' => false,
@@ -408,9 +407,9 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 			</div>
 			<?php
 			if ( 'sms-provider' === $this->current_tab && $section && 'test' === $section ) {
-				submit_button( esc_html__( 'Send Message', 'wp-security-audit-log' ) );
-			} else {
-				submit_button();
+				\submit_button( esc_html__( 'Send Message', 'wp-security-audit-log' ) );
+			} elseif ( 'settings-export-import' !== $this->current_tab ) {
+					\submit_button();
 			}
 			?>
 		</form>
@@ -586,7 +585,7 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 						// Get login page notification text.
 						$wsal_lpn_text = WSAL\Helpers\Settings_Helper::get_option_value( 'login_page_notification_text', false );
 						if ( ! $wsal_lpn_text ) {
-							$wsal_lpn_text = __( 'For security and auditing purposes, a record of all of your logged-in actions and changes within the WordPress dashboard will be recorded in an activity log with the <a href="https://melapress.com/?utm_source=plugins&utm_medium=referral&utm_campaign=wsal&utm_content=settings+pages" target="_blank">WP Activity Log plugin</a>. The audit log also includes the IP address where you accessed this site from.', 'wp-security-audit-log' );
+							$wsal_lpn_text = __( 'For security and auditing purposes, a record of all of your logged-in actions and changes within the WordPress dashboard will be recorded in an activity log with the <a href="https://melapress.com/?utm_source=plugin&utm_medium=referral&utm_campaign=wsal&utm_content=settings+pages" target="_blank">WP Activity Log plugin</a>. The audit log also includes the IP address where you accessed this site from.', 'wp-security-audit-log' );
 						}
 						// Allowed HTML tags for this setting.
 						$allowed_tags = array(
@@ -627,7 +626,7 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 			echo sprintf(
 				/* translators: Learn more link. */
 				esc_html__( 'If your website is running behind a firewall set this option to yes so the plugin retrieves the end user’s IP address from the proxy header - %s.', 'wp-security-audit-log' ),
-				'<a href="https://melapress.com/support/kb/wp-activity-log-support-reverse-proxies-web-application-firewalls/?utm_source=plugins&utm_medium=link&utm_campaign=wsal" target="_blank">' . esc_html__( 'learn more', 'wp-security-audit-log' ) . '</a>'
+				'<a href="https://melapress.com/support/kb/wp-activity-log-support-reverse-proxies-web-application-firewalls/?utm_source=plugin&utm_medium=link&utm_campaign=wsal" target="_blank">' . esc_html__( 'learn more', 'wp-security-audit-log' ) . '</a>'
 			);
 			?>
 		</p>
@@ -673,7 +672,7 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 				sprintf(
 					/* translators: Learn more link. */
 					esc_html__( 'By default only users with administrator role (single site) and super administrator role (multisite) can change the settings of the plugin. Though you can restrict the privileges to just your user - %s.', 'wp-security-audit-log' ),
-					'<a href="https://melapress.com/support/kb/wp-activity-log-managing-plugin-privileges/?utm_source=plugins&utm_medium=link&utm_campaign=wsal" target="_blank">' . __( 'learn more', 'wp-security-audit-log' ) . '</a>'
+					'<a href="https://melapress.com/support/kb/wp-activity-log-managing-plugin-privileges/?utm_source=plugin&utm_medium=link&utm_campaign=wsal" target="_blank">' . __( 'learn more', 'wp-security-audit-log' ) . '</a>'
 				),
 				$allowed_tags
 			);
@@ -721,7 +720,7 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 			}
 
 			echo wp_kses(
-				$section_label . ' - <a href="https://melapress.com/support/kb/wp-activity-log-allow-users-read-access-activity-log/?utm_source=plugins&utm_medium=link&utm_campaign=wsal" target="_blank">' . __( 'learn more', 'wp-security-audit-log' ) . '</a>',
+				$section_label . ' - <a href="https://melapress.com/support/kb/wp-activity-log-allow-users-read-access-activity-log/?utm_source=plugin&utm_medium=link&utm_campaign=wsal" target="_blank">' . __( 'learn more', 'wp-security-audit-log' ) . '</a>',
 				$allowed_tags
 			);
 			?>
@@ -775,7 +774,7 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 							<div id="ViewerList">
 								<?php
 								foreach ( Plugin_Settings_Helper::get_allowed_plugin_viewers() as $item ) :
-									if ( wp_get_current_user()->user_login === $item ) {
+									if ( User_Helper::get_current_user()->user_login === $item ) {
 										continue;
 									}
 									?>
@@ -916,7 +915,7 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 		<p class="description">
 			<?php
 			esc_html_e( 'The plugin uses an efficient way to store the activity log data in the WordPress database, though the more data you keep the more disk space will be required. ', 'wp-security-audit-log' );
-			$retention_help_text = __( '<a href="https://melapress.com/wordpress-activity-log/pricing/?utm_source=plugins&utm_medium=link&utm_campaign=wsal" target="_blank">Upgrade to Premium</a> to store the activity log data in an external database.', 'wp-security-audit-log' );
+			$retention_help_text = __( '<a href="https://melapress.com/wordpress-activity-log/pricing/?utm_source=plugin&utm_medium=link&utm_campaign=wsal" target="_blank">Upgrade to Premium</a> to store the activity log data in an external database.', 'wp-security-audit-log' );
 
 			// phpcs:disable
 			// phpcs:enable
@@ -1089,7 +1088,7 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 							<img src="<?php echo esc_html( trailingslashit( WSAL_BASE_URL ) . 'img/help/website-file-changes-monitor.jpg' ); ?>">
 							<h4><?php echo esc_html__( 'Melapress File Monitor', 'wp-security-audit-log' ); ?></h4>
 							<p><?php echo esc_html__( 'To keep a log of file changes please install Melapress File Monitor, a plugin which is also developed by us.', 'wp-security-audit-log' ); ?></p><br>
-							<p><button class="install-addon button button-primary" data-nonce="<?php echo esc_attr( wp_create_nonce( 'wsal-install-addon' ) ); ?>" data-plugin-slug="website-file-changes-monitor/website-file-changes-monitor.php" data-plugin-download-url="https://downloads.wordpress.org/plugin/website-file-changes-monitor.latest-stable.zip"><?php esc_html_e( 'Install plugin now', 'wp-security-audit-log' ); ?></button><span class="spinner" style="display: none; visibility: visible; float: none; margin: 0 0 0 8px;"></span> <a href="https://melapress.com/support/kb/wp-activity-log-wordpress-files-changes-warning-activity-logs/?utm_source=plugins&utm_medium=link&utm_campaign=wsal" rel="noopener noreferrer" target="_blank" style="margin-left: 15px;"><?php esc_html_e( 'Learn More', 'wp-security-audit-log' ); ?></a></p>
+							<p><button class="install-addon button button-primary" data-nonce="<?php echo esc_attr( wp_create_nonce( 'wsal-install-addon' ) ); ?>" data-plugin-slug="website-file-changes-monitor/website-file-changes-monitor.php" data-plugin-download-url="https://downloads.wordpress.org/plugin/website-file-changes-monitor.latest-stable.zip"><?php esc_html_e( 'Install plugin now', 'wp-security-audit-log' ); ?></button><span class="spinner" style="display: none; visibility: visible; float: none; margin: 0 0 0 8px;"></span> <a href="https://melapress.com/support/kb/wp-activity-log-wordpress-files-changes-warning-activity-logs/?utm_source=plugin&utm_medium=link&utm_campaign=wsal" rel="noopener noreferrer" target="_blank" style="margin-left: 15px;"><?php esc_html_e( 'Learn More', 'wp-security-audit-log' ); ?></a></p>
 						</div>
 					<?php else : ?>
 						<?php
@@ -1224,7 +1223,7 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 							<?php endforeach; ?>
 						</div>
 					</fieldset>
-					<p class="description"><?php esc_html_e( 'WordPress has the post and page post types by default though your website might use more post types (custom post types). You can exclude all post types, including the default WordPress ones.', 'wp-security-audit-log' ); ?></p>
+					<p class="description"><?php esc_html_e( 'You can exclude posts which have a specific Post Status from the activity logs by specifying the Post Status in this setting.', 'wp-security-audit-log' ); ?></p>
 				</td>
 			</tr>
 			<!-- Exclude Custom Post Status -->
@@ -1310,7 +1309,7 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 		?>
 		<p class="description">
 			<?php esc_html_e( 'These settings are for advanced users.', 'wp-security-audit-log' ); ?>
-			<?php echo sprintf( __( 'If you have any questions <a href="https://melapress.com/contact/?utm_source=plugins&utm_medium=referral&utm_source=plugins&utm_medium=link&utm_campaign=wsal" target="_blank">contact us</a>.', 'wp-security-audit-log' ), Plugin_Settings_Helper::get_allowed_html_tags() ); // phpcs:ignore ?>
+			<?php echo sprintf( __( 'If you have any questions <a href="https://melapress.com/contact/?utm_source=plugin&utm_medium=referral&utm_source=plugin&utm_medium=link&utm_campaign=wsal" target="_blank">contact us</a>.', 'wp-security-audit-log' ), Plugin_Settings_Helper::get_allowed_html_tags() ); // phpcs:ignore ?>
 		</p>
 
 		<h3><?php esc_html_e( 'Reset plugin settings to default', 'wp-security-audit-log' ); ?></h3>
@@ -1363,23 +1362,6 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 						</fieldset>
 					</td>
 				</tr>
-				<!-- / MainWP Child Site Stealth Mode -->
-				<?php $admin_blocking_plugins_support = Plugin_Settings_Helper::get_admin_blocking_plugin_support(); ?>
-				<tr>
-					<th>
-						<label for="mwp_admin_blocking_support"><?php esc_html_e( 'Admin blocking plugins support', 'wp-security-audit-log' ); ?></label>
-					</th>
-					<td>
-						<fieldset>
-							<label for="mwp_admin_blocking_support">
-								<input type="checkbox" name="mwp_admin_blocking_support" value="yes"
-										id="mwp_admin_blocking_support" <?php checked( $admin_blocking_plugins_support ); ?> <?php disabled( ! WpSecurityAuditLog::is_mainwp_active() || ! $stealth_mode ); ?>/>
-								<?php esc_html_e( 'Enable early plugin loading on sites that use admin blocking plugins', 'wp-security-audit-log' ); ?>
-							</label>
-						</fieldset>
-					</td>
-				</tr>
-				<!-- /  Admin blocking plugins support -->
 			</tbody>
 		</table>
 
@@ -1454,10 +1436,6 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 			}
 			Plugin_Settings_Helper::set_mainwp_child_stealth_mode();
 
-			$admin_blocking_plugins_support = isset( $post_array['mwp_admin_blocking_support'] ) ? $post_array['mwp_admin_blocking_support'] : false;
-			if ( 'yes' === $admin_blocking_plugins_support ) {
-				Plugin_Settings_Helper::set_admin_blocking_plugin_support( true );
-			}
 		} else {
 			Plugin_Settings_Helper::deactivate_mainwp_child_stealth_mode();
 		}
@@ -1887,7 +1865,7 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 					<?php if ( \WSAL\Helpers\Settings_Helper::get_boolean_option_value( 'pruning-date-e' ) ) : ?>
 						<p class="description">
 							<?php
-							$next = wp_next_scheduled( 'wsal_cleanup' );
+							$next = (int) wp_next_scheduled( 'wsal_cleanup_hook' );
 							echo esc_html__( 'The next scheduled purging of activity log data that is older than ', 'wp-security-audit-log' );
 							echo esc_html( $pruning_date . ' ' . $pruning_unit );
 							echo sprintf(
