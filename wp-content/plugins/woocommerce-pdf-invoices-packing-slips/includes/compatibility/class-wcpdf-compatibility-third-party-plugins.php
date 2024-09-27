@@ -41,6 +41,9 @@ class Third_Party_Plugins {
 		// WPC Bundles compatibility (add row classes)
 		add_filter( 'wpo_wcpdf_item_row_class', array( $this, 'add_wpc_product_bundles_classes' ), 10, 4 );
 
+		// YITH WooCommerce Product Bundles compatibility (add row classes)
+		add_filter( 'wpo_wcpdf_item_row_class', array( $this, 'add_yith_product_bundles_classes' ), 10, 4 );
+
 		// WooCommerce Chained Products compatibility (add row classes)
 		add_filter( 'wpo_wcpdf_item_row_class', array( $this, 'add_chained_product_class' ), 10, 4 );
 
@@ -63,6 +66,9 @@ class Third_Party_Plugins {
 			add_action( 'wpo_wcpdf_before_html', array( $this, 'remove_wgm_thumbnails' ), 10, 2 );
 			add_action( 'wpo_wcpdf_after_html', array( $this, 'restore_wgm_thumbnails' ), 10, 2 );
 		}
+
+		add_filter( 'woocommerce_hpos_admin_search_filters', array( $this, 'hpos_admin_search_filters' ) );
+		add_filter( 'woocommerce_shop_order_list_table_prepare_items_query_args', array( $this, 'invoice_number_query_args' ) );
 	}
 
 	/**
@@ -193,6 +199,59 @@ class Third_Party_Plugins {
 	}
 
 	/**
+	 * YITH WooCommerce Product Bundles compatibility
+	 *
+	 * @param string $classes CSS classes for item row (tr)
+	 * @param ?string $document_type PDF Document type
+	 * @param ?object $order order
+	 * @param int|string $item_id WooCommerce Item ID
+	 *
+	 * @return string
+	 */
+	public function add_yith_product_bundles_classes( string $classes, ?string $document_type, ?object $order, $item_id = 0 ): string {
+		if ( empty( $order ) ) {
+			return $classes;
+		}
+		
+		if ( ! $order instanceof \WC_Abstract_Order ) {
+			return $classes;
+		}
+		
+		if ( empty( $item_id ) && ! empty( $classes ) ) {
+			$item_id = $this->get_item_id_from_classes( $classes );
+		}
+
+		if ( ! empty( $item_id ) && is_numeric( $item_id ) ) {
+			$item_id = absint( $item_id );
+		} else {
+			return $classes;
+		}
+		
+		$product    = null;
+		$bundled_by = null;
+
+		foreach ( $order->get_items() as $order_item_id => $order_item ) {
+			if ( absint( $order_item_id ) === $item_id ) {
+				$product    = $order_item->get_product();
+				$bundled_by = $order_item->get_meta( '_bundled_by', true );
+				break;
+			}
+		}
+
+		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) ) {
+			return $classes;
+		}
+
+		if ( 'yith_bundle' === $product->get_type() ) {
+			$classes .= ' product-bundle';
+		} elseif ( ! empty( $bundled_by ) ) {
+			$classes .= ' bundled-item';
+		}
+
+		return $classes;
+	}
+
+	/**
 	 * WooCommerce Chained Products
 	 * @param string $classes       CSS classes for item row (tr)
 	 * @param string $document_type PDF Document type
@@ -316,6 +375,42 @@ class Third_Party_Plugins {
 		if ( is_callable( array( 'WGM_Product', 'add_thumbnail_to_order' ) ) && get_option( 'german_market_product_images_in_order', 'off' ) == 'on' ) {
 			add_filter( 'woocommerce_order_item_name', array( 'WGM_Product', 'add_thumbnail_to_order' ), 100, 3 );
 		}
+	}
+
+	/**
+	 * Adds invoice number filter to the search filters available in the admin order search.
+	 *
+	 * @param array $options List of available filters.
+	 *
+	 * @return array
+	 */
+	function hpos_admin_search_filters( array $options ): array {
+		if ( WPO_WCPDF()->admin->invoice_number_search_enabled() ) {
+			$all = $options['all'];
+			unset( $options['all'] );
+			$options['invoice_number'] = __( 'Invoice number', 'woocommerce-pdf-invoices-packing-slips' );
+			$options['all'] = $all;
+		}
+
+		return $options;
+	}
+
+	/**
+	 * Modifies the arguments passed to `wc_get_orders()` to support 'invoice_number' order search filter.
+	 *
+	 * @param array $order_query_args Arguments to be passed to `wc_get_orders()`.
+	 *
+	 * @return array
+	 */
+	function invoice_number_query_args( array $order_query_args ): array {
+		if ( isset( $order_query_args['search_filter'] ) && 'invoice_number' === $order_query_args['search_filter'] && isset( $order_query_args['s'] ) ) {
+			$order_query_args['meta_key']      = '_wcpdf_invoice_number';
+			$order_query_args['meta_value']    = $order_query_args['s'];
+			$order_query_args['search_filter'] = 'all';
+			unset( $order_query_args['s'] );
+		}
+
+		return $order_query_args;
 	}
 }
 

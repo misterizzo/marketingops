@@ -3,9 +3,9 @@ Contributors: pomegranate, alexmigf, yordansoares, kluver, dpeyou, dwpriv, moham
 Donate link: https://wpovernight.com/downloads/woocommerce-pdf-invoices-packing-slips-bundle/
 Tags: woocommerce, pdf, ubl, invoices, packing slips
 Requires at least: 4.4
-Tested up to: 6.5
+Tested up to: 6.6
 Requires PHP: 7.2
-Stable tag: 3.8.3
+Stable tag: 3.8.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,6 +101,32 @@ There's a setting on the Advanced tab of the settings page that allows you to to
 6. Set shop name, address, header logo, etc.
 
 == Changelog ==
+
+= 3.8.6 (2024-07-18) =
+* Fix: function `add_yith_product_bundles_classes()` errors
+* Fix: `get_header_logo_id()` return type fatal error
+
+= 3.8.5 (2024-07-16) =
+* New: PDFJS v4.3.136 upgrade
+* New: advanced embed images setting
+* New: includes ImageMagick library in the Advanced Status
+* New: adds Invoice number to search type selector in HPOS setups
+* New: adds row classes for "YITH WooCommerce Product Bundles"
+* New: register a log for document deletion in the Order Notes
+* Tweak: improves header logo loading
+* Fix: make Simple template total labels translatable
+* Fix: wraps document addresses around `<p>` tags
+* Translations: Updated translation template (POT)
+* Tested up to WooCommerce 9.1 & WordPress 6.6
+
+= 3.8.4 (2024-06-19) =
+* New: filter hook `wpo_wcpdf_multilingual_languages`
+* New: `wpo_wcpdf_get_multilingual_languages()` function has been introduced, derived from the deprecated `get_languages()` function
+* Tweak: Added new strings to the `strings.php` file to improve translations
+* Tweak: enhanced notes functions for improved translations when using the Professional extension.
+* Fix: `normalize_settings_args()` function bug on multilingual setups
+* Fix: settings language tab issue when adding new language in multilingual setups
+* Translations: Updated translation template (POT)
 
 = 3.8.3 (2024-06-06) =
 * New: adds language attribute to PDF HTML
