@@ -30,25 +30,25 @@ class Reader
         $this->source = $source;
         $this->length = \strlen($source);
     }
-    public function isEOF() : bool
+    public function isEOF(): bool
     {
         return $this->position >= $this->length;
     }
-    public function getPosition() : int
+    public function getPosition(): int
     {
         return $this->position;
     }
-    public function getRemainingLength() : int
+    public function getRemainingLength(): int
     {
         return $this->length - $this->position;
     }
-    public function getSubstring(int $length, int $offset = 0) : string
+    public function getSubstring(int $length, int $offset = 0): string
     {
-        return \substr($this->source, $this->position + $offset, $length);
+        return substr($this->source, $this->position + $offset, $length);
     }
     public function getOffset(string $string)
     {
-        $position = \strpos($this->source, $string, $this->position);
+        $position = strpos($this->source, $string, $this->position);
         return \false === $position ? \false : $position - $this->position;
     }
     /**
@@ -56,8 +56,8 @@ class Reader
      */
     public function findPattern(string $pattern)
     {
-        $source = \substr($this->source, $this->position);
-        if (\preg_match($pattern, $source, $matches)) {
+        $source = substr($this->source, $this->position);
+        if (preg_match($pattern, $source, $matches)) {
             return $matches;
         }
         return \false;

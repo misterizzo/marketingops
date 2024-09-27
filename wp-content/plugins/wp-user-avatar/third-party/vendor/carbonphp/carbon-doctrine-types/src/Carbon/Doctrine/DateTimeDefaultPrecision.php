@@ -10,7 +10,7 @@ class DateTimeDefaultPrecision
      *
      * @param int $precision
      */
-    public static function set(int $precision) : void
+    public static function set(int $precision): void
     {
         self::$precision = $precision;
     }
@@ -19,7 +19,7 @@ class DateTimeDefaultPrecision
      *
      * @return int
      */
-    public static function get() : int
+    public static function get(): int
     {
         return self::$precision;
     }

@@ -28,7 +28,7 @@ abstract class ValueList extends Value
     public function __construct($aComponents = [], $sSeparator = ',', $iLineNo = 0)
     {
         parent::__construct($iLineNo);
-        if (!\is_array($aComponents)) {
+        if (!is_array($aComponents)) {
             $aComponents = [$aComponents];
         }
         $this->aComponents = $aComponents;

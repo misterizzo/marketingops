@@ -267,11 +267,11 @@ class CurlClient implements ClientInterface, StreamingClientInterface
     private function useHeadersToDetermineWriteCallback($opts, $determineWriteCallback)
     {
         $rheaders = new Util\CaseInsensitiveArray();
-        $headerCallback = function ($curl, $header_line) use(&$rheaders) {
+        $headerCallback = function ($curl, $header_line) use (&$rheaders) {
             return self::parseLineIntoHeaderArray($header_line, $rheaders);
         };
         $writeCallback = null;
-        $writeCallbackWrapper = function ($curl, $data) use(&$writeCallback, &$rheaders, &$determineWriteCallback) {
+        $writeCallbackWrapper = function ($curl, $data) use (&$writeCallback, &$rheaders, &$determineWriteCallback) {
             if (null === $writeCallback) {
                 $writeCallback = \call_user_func_array($determineWriteCallback, [$rheaders]);
             }
@@ -320,14 +320,14 @@ class CurlClient implements ClientInterface, StreamingClientInterface
         $lastRHeaders = null;
         $errno = null;
         $message = null;
-        $determineWriteCallback = function ($rheaders) use(&$readBodyChunk, &$shouldRetry, &$rbody, &$numRetries, &$rcode, &$lastRHeaders, &$errno) {
+        $determineWriteCallback = function ($rheaders) use (&$readBodyChunk, &$shouldRetry, &$rbody, &$numRetries, &$rcode, &$lastRHeaders, &$errno) {
             $lastRHeaders = $rheaders;
             $errno = \curl_errno($this->curlHandle);
             $rcode = \curl_getinfo($this->curlHandle, \CURLINFO_HTTP_CODE);
             // Send the bytes from the body of a successful request to the caller-provided $readBodyChunk.
             if ($rcode < 300) {
                 $rbody = null;
-                return function ($curl, $data) use(&$readBodyChunk) {
+                return function ($curl, $data) use (&$readBodyChunk) {
                     // Don't expose the $curl handle to the user, and don't require them to
                     // return the length of $data.
                     \call_user_func_array($readBodyChunk, [$data]);
@@ -344,7 +344,7 @@ class CurlClient implements ClientInterface, StreamingClientInterface
                 // Otherwise, buffer the body into $rbody. It will need to be parsed to determine
                 // which exception to throw to the user.
                 $rbody = '';
-                return function ($curl, $data) use(&$rbody) {
+                return function ($curl, $data) use (&$rbody) {
                     $rbody .= $data;
                     return \strlen($data);
                 };
@@ -395,7 +395,7 @@ class CurlClient implements ClientInterface, StreamingClientInterface
             $message = null;
             // Create a callback to capture HTTP headers for the response
             $rheaders = new Util\CaseInsensitiveArray();
-            $headerCallback = function ($curl, $header_line) use(&$rheaders) {
+            $headerCallback = function ($curl, $header_line) use (&$rheaders) {
                 return CurlClient::parseLineIntoHeaderArray($header_line, $rheaders);
             };
             $opts[\CURLOPT_HEADERFUNCTION] = $headerCallback;

@@ -39,7 +39,7 @@ class Tokenizer
     /**
      * Tokenize selector source code.
      */
-    public function tokenize(Reader $reader) : TokenStream
+    public function tokenize(Reader $reader): TokenStream
     {
         $stream = new TokenStream();
         while (!$reader->isEOF()) {

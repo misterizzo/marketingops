@@ -84,11 +84,11 @@ abstract class AbstractMemberDirectoryTheme extends AbstractTheme
             (function ($) {
 
                 var run = function () {
-                    $('#ppress_md_enable_custom_sort').change(function () {
+                    $('#ppress_md_enable_custom_sort').on('change', function () {
                         $('.ppress_md_sort_method_fields_wrap').toggle(this.checked);
                     }).trigger('change');
 
-                    $('#ppress_md_enable_search').change(function () {
+                    $('#ppress_md_enable_search').on('change', function () {
                         $('.ppress_md_search_fields_wrap').toggle(this.checked);
                         $('.ppress_md_enable_filters_wrap').toggle(this.checked);
                         $('.ppress_md_filter_fields_wrap').toggle(this.checked);

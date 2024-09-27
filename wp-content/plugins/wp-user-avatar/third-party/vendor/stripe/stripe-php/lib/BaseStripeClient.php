@@ -220,7 +220,7 @@ class BaseStripeClient implements StripeClientInterface, StripeStreamingClientIn
             $msg = 'api_key cannot be the empty string';
             throw new \ProfilePressVendor\Stripe\Exception\InvalidArgumentException($msg);
         }
-        if (null !== $config['api_key'] && \preg_match('/\\s/', $config['api_key'])) {
+        if (null !== $config['api_key'] && \preg_match('/\s/', $config['api_key'])) {
             $msg = 'api_key cannot contain whitespace';
             throw new \ProfilePressVendor\Stripe\Exception\InvalidArgumentException($msg);
         }

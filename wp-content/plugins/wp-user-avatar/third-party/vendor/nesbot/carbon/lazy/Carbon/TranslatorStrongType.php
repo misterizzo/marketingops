@@ -11,10 +11,10 @@
 namespace ProfilePressVendor\Carbon;
 
 use ProfilePressVendor\Symfony\Component\Translation\MessageCatalogueInterface;
-if (!\class_exists(LazyTranslator::class, \false)) {
+if (!class_exists(LazyTranslator::class, \false)) {
     class LazyTranslator extends AbstractTranslator implements TranslatorStrongTypeInterface
     {
-        public function trans(?string $id, array $parameters = [], ?string $domain = null, ?string $locale = null) : string
+        public function trans(?string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
         {
             return $this->translate($id, $parameters, $domain, $locale);
         }

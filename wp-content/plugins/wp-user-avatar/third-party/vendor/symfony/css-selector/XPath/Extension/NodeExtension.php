@@ -36,7 +36,7 @@ class NodeExtension extends AbstractExtension
     /**
      * @return $this
      */
-    public function setFlag(int $flag, bool $on) : self
+    public function setFlag(int $flag, bool $on): self
     {
         if ($on && !$this->hasFlag($flag)) {
             $this->flags += $flag;
@@ -46,79 +46,79 @@ class NodeExtension extends AbstractExtension
         }
         return $this;
     }
-    public function hasFlag(int $flag) : bool
+    public function hasFlag(int $flag): bool
     {
         return (bool) ($this->flags & $flag);
     }
     /**
      * {@inheritdoc}
      */
-    public function getNodeTranslators() : array
+    public function getNodeTranslators(): array
     {
         return ['Selector' => [$this, 'translateSelector'], 'CombinedSelector' => [$this, 'translateCombinedSelector'], 'Negation' => [$this, 'translateNegation'], 'Function' => [$this, 'translateFunction'], 'Pseudo' => [$this, 'translatePseudo'], 'Attribute' => [$this, 'translateAttribute'], 'Class' => [$this, 'translateClass'], 'Hash' => [$this, 'translateHash'], 'Element' => [$this, 'translateElement']];
     }
-    public function translateSelector(Node\SelectorNode $node, Translator $translator) : XPathExpr
+    public function translateSelector(Node\SelectorNode $node, Translator $translator): XPathExpr
     {
         return $translator->nodeToXPath($node->getTree());
     }
-    public function translateCombinedSelector(Node\CombinedSelectorNode $node, Translator $translator) : XPathExpr
+    public function translateCombinedSelector(Node\CombinedSelectorNode $node, Translator $translator): XPathExpr
     {
         return $translator->addCombination($node->getCombinator(), $node->getSelector(), $node->getSubSelector());
     }
-    public function translateNegation(Node\NegationNode $node, Translator $translator) : XPathExpr
+    public function translateNegation(Node\NegationNode $node, Translator $translator): XPathExpr
     {
         $xpath = $translator->nodeToXPath($node->getSelector());
         $subXpath = $translator->nodeToXPath($node->getSubSelector());
         $subXpath->addNameTest();
         if ($subXpath->getCondition()) {
-            return $xpath->addCondition(\sprintf('not(%s)', $subXpath->getCondition()));
+            return $xpath->addCondition(sprintf('not(%s)', $subXpath->getCondition()));
         }
         return $xpath->addCondition('0');
     }
-    public function translateFunction(Node\FunctionNode $node, Translator $translator) : XPathExpr
+    public function translateFunction(Node\FunctionNode $node, Translator $translator): XPathExpr
     {
         $xpath = $translator->nodeToXPath($node->getSelector());
         return $translator->addFunction($xpath, $node);
     }
-    public function translatePseudo(Node\PseudoNode $node, Translator $translator) : XPathExpr
+    public function translatePseudo(Node\PseudoNode $node, Translator $translator): XPathExpr
     {
         $xpath = $translator->nodeToXPath($node->getSelector());
         return $translator->addPseudoClass($xpath, $node->getIdentifier());
     }
-    public function translateAttribute(Node\AttributeNode $node, Translator $translator) : XPathExpr
+    public function translateAttribute(Node\AttributeNode $node, Translator $translator): XPathExpr
     {
         $name = $node->getAttribute();
         $safe = $this->isSafeName($name);
         if ($this->hasFlag(self::ATTRIBUTE_NAME_IN_LOWER_CASE)) {
-            $name = \strtolower($name);
+            $name = strtolower($name);
         }
         if ($node->getNamespace()) {
-            $name = \sprintf('%s:%s', $node->getNamespace(), $name);
+            $name = sprintf('%s:%s', $node->getNamespace(), $name);
             $safe = $safe && $this->isSafeName($node->getNamespace());
         }
-        $attribute = $safe ? '@' . $name : \sprintf('attribute::*[name() = %s]', Translator::getXpathLiteral($name));
+        $attribute = $safe ? '@' . $name : sprintf('attribute::*[name() = %s]', Translator::getXpathLiteral($name));
         $value = $node->getValue();
         $xpath = $translator->nodeToXPath($node->getSelector());
         if ($this->hasFlag(self::ATTRIBUTE_VALUE_IN_LOWER_CASE)) {
-            $value = \strtolower($value);
+            $value = strtolower($value);
         }
         return $translator->addAttributeMatching($xpath, $node->getOperator(), $attribute, $value);
     }
-    public function translateClass(Node\ClassNode $node, Translator $translator) : XPathExpr
+    public function translateClass(Node\ClassNode $node, Translator $translator): XPathExpr
     {
         $xpath = $translator->nodeToXPath($node->getSelector());
         return $translator->addAttributeMatching($xpath, '~=', '@class', $node->getName());
     }
-    public function translateHash(Node\HashNode $node, Translator $translator) : XPathExpr
+    public function translateHash(Node\HashNode $node, Translator $translator): XPathExpr
     {
         $xpath = $translator->nodeToXPath($node->getSelector());
         return $translator->addAttributeMatching($xpath, '=', '@id', $node->getId());
     }
-    public function translateElement(Node\ElementNode $node) : XPathExpr
+    public function translateElement(Node\ElementNode $node): XPathExpr
     {
         $element = $node->getElement();
         if ($element && $this->hasFlag(self::ELEMENT_NAME_IN_LOWER_CASE)) {
-            $element = \strtolower($element);
+            $element = strtolower($element);
         }
         if ($element) {
             $safe = $this->isSafeName($element);
@@ -127,7 +127,7 @@ class NodeExtension extends AbstractExtension
             $safe = \true;
         }
         if ($node->getNamespace()) {
-            $element = \sprintf('%s:%s', $node->getNamespace(), $element);
+            $element = sprintf('%s:%s', $node->getNamespace(), $element);
             $safe = $safe && $this->isSafeName($node->getNamespace());
         }
         $xpath = new XPathExpr('', $element);
@@ -139,12 +139,12 @@ class NodeExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getName() : string
+    public function getName(): string
     {
         return 'node';
     }
-    private function isSafeName(string $name) : bool
+    private function isSafeName(string $name): bool
     {
-        return 0 < \preg_match('~^[a-zA-Z_][a-zA-Z0-9_.-]*$~', $name);
+        return 0 < preg_match('~^[a-zA-Z_][a-zA-Z0-9_.-]*$~', $name);
     }
 }

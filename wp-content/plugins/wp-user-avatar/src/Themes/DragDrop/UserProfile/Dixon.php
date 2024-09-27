@@ -154,7 +154,7 @@ class Dixon extends AbstractTheme
                 <?php endif;
                 if ( ! empty($twitter_field)) : ?>
                     <li>
-                        <a href="<?= $twitter_field ?>"><img src="<?= $asset_url ?>/twitter.png"/></a>
+                        <a href="<?= $twitter_field ?>"><img style="width: 65px;height: 65px;" src="<?= $asset_url ?>/../bash/x.svg"/></a>
                     </li>
                 <?php endif; ?>
                 <?php if ( ! empty($linkedin_field)) : ?>

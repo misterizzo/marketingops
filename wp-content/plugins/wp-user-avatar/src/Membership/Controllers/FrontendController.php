@@ -85,6 +85,7 @@ class FrontendController extends BaseController
             ppress_maybe_define_constant('DONOTCACHEDB', true);
             nocache_headers();
             $this->exclude_page_from_wpe_server_cache();
+            $this->exclude_page_from_pantheon_server_cache();
             remove_filter('nocache_headers', [$this, 'additional_nocache_headers'], 99);
         }
     }
@@ -96,7 +97,7 @@ class FrontendController extends BaseController
      *     Header names and field values.
      *
      * @type string $Expires Expires header.
-     * @type string $Cache-Control Cache-Control header.
+     * @type string $Cache -Control Cache-Control header.
      * }
      * @return array
      * @see wp_get_nocache_headers()
@@ -149,6 +150,22 @@ class FrontendController extends BaseController
             $path          = wp_parse_url(get_permalink(), PHP_URL_PATH);
             $cookie_domain = ! defined('COOKIE_DOMAIN') ? false : COOKIE_DOMAIN;
             setcookie('wordpress_wpe_no_cache', '1', 0, $path, $cookie_domain, is_ssl(), true);
+        }
+    }
+
+    /**
+     * Sets a browser cookie that tells Pantheon to exclude a page from server caching.
+     *
+     * @see https://docs.pantheon.io/cookies#disable-caching-for-specific-pages
+     *
+     * @return void
+     */
+    public function exclude_page_from_pantheon_server_cache()
+    {
+        if (apply_filters('ppress_enable_pantheon_caching_exclusion', true) && isset($_ENV['PANTHEON_ENVIRONMENT'])) {
+            $domain = $_SERVER['HTTP_HOST'];
+            $path   = wp_parse_url(get_permalink(), PHP_URL_PATH);
+            setcookie('NO_CACHE', '1', time() + 0, $path, $domain);
         }
     }
 }

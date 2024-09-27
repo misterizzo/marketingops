@@ -426,7 +426,6 @@ function ppress_get_current_url_query_string()
     return esc_url_raw($url);
 }
 
-
 /**
  * @return string blog URL without scheme
  */
@@ -1570,7 +1569,7 @@ function ppress_social_login_networks()
 {
     return apply_filters('ppress_social_login_networks', [
         'facebook'     => 'Facebook',
-        'twitter'      => 'Twitter',
+        'twitter'      => 'X/Twitter',
         'google'       => 'Google',
         'linkedin'     => 'LinkedIn',
         'microsoft'    => 'Microsoft',

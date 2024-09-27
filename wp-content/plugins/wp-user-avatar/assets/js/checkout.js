@@ -83,11 +83,15 @@ export default function () {
     };
 
     this.scroll_to_notices = function (scrollElement) {
-        scrollElement = scrollElement || $('.ppress-checkout-alert');
-        if (scrollElement.length) {
-            $('html, body').animate({
-                scrollTop: (scrollElement.offset().top - 100)
-            }, 1000);
+
+        if (pp_ajax_form.is_checkout_autoscroll_enabled === 'true') {
+
+            scrollElement = scrollElement || $('.ppress-checkout-alert');
+            if (scrollElement.length) {
+                $('html, body').animate({
+                    scrollTop: (scrollElement.offset().top - 100)
+                }, 1000);
+            }
         }
     };
 

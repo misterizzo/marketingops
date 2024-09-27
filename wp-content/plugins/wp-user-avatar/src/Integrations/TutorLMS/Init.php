@@ -59,8 +59,10 @@ class Init
         return $arr;
     }
 
-    private function get_course_plan_id($course_id)
+    private function get_course_plan_ids($course_id)
     {
+        $ids = [];
+
         $plans = PlanRepository::init()->retrieveAll();
 
         $course_id = (int)$course_id;
@@ -74,12 +76,36 @@ class Init
                 $courses = is_array($courses) ? array_map('absint', $plan->get_plan_extras('tutorlms_courses')) : [];
 
                 if (is_array($courses) && in_array($course_id, $courses, true)) {
-                    return $plan->get_id();
+                    $ids[] = $plan->get_id();
                 }
             }
         }
 
-        return false;
+        return ! empty($ids) ? $ids : false;
+    }
+
+    /**
+     * Check if any of the customer active subscriptions can grant course access.
+     *
+     * @param $course_id
+     *
+     * @return bool
+     */
+    private function is_customer_plans_has_course_access($course_id)
+    {
+        $customer = CustomerFactory::fromUserId(get_current_user_id());
+
+        $plan_ids = $this->get_course_plan_ids($course_id);
+
+        $plan_checks = array_map(function ($plan_id) use ($customer) {
+
+            if ( ! $customer->exists()) return false;
+
+            return $customer->has_active_subscription($plan_id);
+
+        }, $plan_ids);
+
+        return in_array(true, $plan_checks, true);
     }
 
     public function loop_course_checkout_link($output)
@@ -95,15 +121,15 @@ class Init
 
             if ( ! $is_enrolled && ( ! $is_enabled || ! $can_user_edit_course)) {
 
-                $plan_id = $this->get_course_plan_id($course_id);
+                $plan_ids = $this->get_course_plan_ids($course_id);
 
-                if ( ! empty($plan_id)) {
+                if ( ! empty($plan_ids)) {
 
                     $customer = CustomerFactory::fromUserId(get_current_user_id());
 
-                    if ( ! $customer->exists() || ! $customer->has_active_subscription($plan_id)) {
+                    if ( ! $customer->exists() || ! $this->is_customer_plans_has_course_access($course_id)) {
 
-                        $plan              = ppress_get_plan($plan_id);
+                        $plan              = ppress_get_plan($plan_ids[0]);
                         $billing_frequency = $plan->is_recurring() ? ' ' . SubscriptionBillingFrequency::get_label($plan->billing_frequency) : '';
 
                         ob_start();
@@ -117,7 +143,7 @@ class Init
                         </div>
                         <div class="tutor-profilepress-message-wrapper tutor-justify-center tutor-align-center tutor-flex-column">
                             <a class="tutor-btn tutor-btn-outline-primary tutor-btn-md tutor-btn-block" href="<?php echo esc_url($plan->get_checkout_url()); ?>">
-                                <?php esc_html_e( apply_filters( 'ppress_tutorlms_checkout_button_text', 'Subscribe Now' ), 'wp-user-avatar' ); ?>
+                                <?php esc_html_e(apply_filters('ppress_tutorlms_checkout_button_text', 'Subscribe Now'), 'wp-user-avatar'); ?>
                             </a>
                         </div>
                         <?php
@@ -134,15 +160,15 @@ class Init
     {
         if (get_tutor_option('monetize_by') == 'profilepress') {
 
-            $plan_id = $this->get_course_plan_id($course_id);
+            $plan_ids = $this->get_course_plan_ids($course_id);
 
-            if ( ! empty($plan_id)) {
+            if ( ! empty($plan_ids)) {
 
                 $customer = CustomerFactory::fromUserId(get_current_user_id());
 
-                if ( ! $customer->exists() || ! $customer->has_active_subscription($plan_id)) {
+                if ( ! $customer->exists() || ! $this->is_customer_plans_has_course_access($course_id)) {
 
-                    $plan              = ppress_get_plan($plan_id);
+                    $plan              = ppress_get_plan($plan_ids[0]);
                     $billing_frequency = $plan->is_recurring() ? ' ' . SubscriptionBillingFrequency::get_label($plan->billing_frequency) : '';
 
                     ob_start();
@@ -156,7 +182,7 @@ class Init
 
                     <div class="tutor-course-single-btn-group">
                         <form class="tutor-enrol-course-form" method="get" action="<?php echo esc_url($plan->get_checkout_url()); ?>">
-                            <input type="hidden" name="plan" value="<?php esc_html_e($plan_id); ?>">
+                            <input type="hidden" name="plan" value="<?php esc_html_e($plan_ids[0]); ?>">
                             <button type="submit" class="tutor-btn tutor-btn-primary tutor-btn-lg tutor-btn-block tutor-mt-24 tutor-enroll-course-button">
                                 <?php esc_html_e('Subscribe Now', 'tutor'); ?>
                             </button>

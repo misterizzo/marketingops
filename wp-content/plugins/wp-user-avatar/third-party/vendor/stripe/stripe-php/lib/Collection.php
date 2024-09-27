@@ -144,12 +144,12 @@ class Collection extends StripeObject implements \Countable, \IteratorAggregate
             $filters = $this->filters ?: [];
             if (\array_key_exists('ending_before', $filters) && !\array_key_exists('starting_after', $filters)) {
                 foreach ($page->getReverseIterator() as $item) {
-                    (yield $item);
+                    yield $item;
                 }
                 $page = $page->previousPage();
             } else {
                 foreach ($page as $item) {
-                    (yield $item);
+                    yield $item;
                 }
                 $page = $page->nextPage();
             }

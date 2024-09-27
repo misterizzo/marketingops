@@ -33,7 +33,7 @@ class MergeOperation extends AbstractOperation
             $this->messages[$domain]['all'][$id] = $message;
             $d = $this->source->defines($id, $intlDomain) ? $intlDomain : $domain;
             $this->result->add([$id => $message], $d);
-            if (null !== ($keyMetadata = $this->source->getMetadata($id, $d))) {
+            if (null !== $keyMetadata = $this->source->getMetadata($id, $d)) {
                 $this->result->setMetadata($id, $keyMetadata, $d);
             }
         }
@@ -43,7 +43,7 @@ class MergeOperation extends AbstractOperation
                 $this->messages[$domain]['new'][$id] = $message;
                 $d = $this->target->defines($id, $intlDomain) ? $intlDomain : $domain;
                 $this->result->add([$id => $message], $d);
-                if (null !== ($keyMetadata = $this->target->getMetadata($id, $d))) {
+                if (null !== $keyMetadata = $this->target->getMetadata($id, $d)) {
                     $this->result->setMetadata($id, $keyMetadata, $d);
                 }
             }

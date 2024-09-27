@@ -38,14 +38,14 @@ class EncloseField extends php_user_filter
     /**
      * Static method to return the stream filter filtername.
      */
-    public static function getFiltername() : string
+    public static function getFiltername(): string
     {
         return self::FILTERNAME;
     }
     /**
      * Static method to register the class as a stream filter.
      */
-    public static function register() : void
+    public static function register(): void
     {
         if (!in_array(self::FILTERNAME, stream_get_filters(), \true)) {
             stream_filter_register(self::FILTERNAME, self::class);
@@ -57,7 +57,7 @@ class EncloseField extends php_user_filter
      * @throws InvalidArgumentException if the sequence is malformed
      * @throws Exception
      */
-    public static function addTo(Writer $csv, string $sequence) : Writer
+    public static function addTo(Writer $csv, string $sequence): Writer
     {
         self::register();
         if (!self::isValidSequence($sequence)) {
@@ -70,11 +70,11 @@ class EncloseField extends php_user_filter
      *
      * The sequence to force enclosure MUST contains one of the following character ("\n\r\t ")
      */
-    protected static function isValidSequence(string $sequence) : bool
+    protected static function isValidSequence(string $sequence): bool
     {
         return strlen($sequence) != strcspn($sequence, self::$force_enclosure);
     }
-    public function onCreate() : bool
+    public function onCreate(): bool
     {
         return isset($this->params['sequence']) && self::isValidSequence($this->params['sequence']);
     }
@@ -84,9 +84,9 @@ class EncloseField extends php_user_filter
      * @param int      $consumed
      * @param bool     $closing
      */
-    public function filter($in, $out, &$consumed, $closing) : int
+    public function filter($in, $out, &$consumed, $closing): int
     {
-        while (null !== ($bucket = stream_bucket_make_writeable($in))) {
+        while (null !== $bucket = stream_bucket_make_writeable($in)) {
             $bucket->data = str_replace($this->params['sequence'], '', $bucket->data);
             $consumed += $bucket->datalen;
             stream_bucket_append($out, $bucket);

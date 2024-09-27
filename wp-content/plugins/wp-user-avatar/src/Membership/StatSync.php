@@ -53,10 +53,8 @@ class StatSync
 
         if ($customer_id) {
             CustomerFactory::fromId($customer_id)->recalculate_stats();
-        } else {
-            if ($user_id) {
-                CustomerFactory::fromUserId($user_id)->recalculate_stats();
-            }
+        } elseif ($user_id) {
+            CustomerFactory::fromUserId($user_id)->recalculate_stats();
         }
     }
 

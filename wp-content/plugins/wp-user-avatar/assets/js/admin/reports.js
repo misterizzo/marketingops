@@ -10,7 +10,7 @@
 
             $('#ppress-mode-filter select').on('change', function () {
                 $('#ppress-date-filters').toggle(this.value === 'custom');
-            }).change();
+            }).trigger('change');
 
             const revenueConfig = {
                 type: 'line',

@@ -11,28 +11,28 @@ declare (strict_types=1);
  */
 namespace ProfilePressVendor\Carbon\PHPStan;
 
-if (!\class_exists(LazyMacro::class, \false)) {
+if (!class_exists(LazyMacro::class, \false)) {
     abstract class LazyMacro extends AbstractReflectionMacro
     {
         /**
          * {@inheritdoc}
          */
-        public function getFileName() : ?string
+        public function getFileName(): ?string
         {
             $file = $this->reflectionFunction->getFileName();
-            return (($file ? \realpath($file) : null) ?: $file) ?: null;
+            return (($file ? realpath($file) : null) ?: $file) ?: null;
         }
         /**
          * {@inheritdoc}
          */
-        public function getStartLine() : ?int
+        public function getStartLine(): ?int
         {
             return $this->reflectionFunction->getStartLine();
         }
         /**
          * {@inheritdoc}
          */
-        public function getEndLine() : ?int
+        public function getEndLine(): ?int
         {
             return $this->reflectionFunction->getEndLine();
         }

@@ -18,16 +18,16 @@ let App = {
 
             prompt.on('click', function () {
                 $(this).addClass('screen-reader-text');
-                input.focus();
+                input.trigger('focus');
             });
 
-            input.blur(function () {
+            input.on('blur', function () {
                 if ('' === this.value) {
                     prompt.removeClass('screen-reader-text');
                 }
             });
 
-            input.focus(function () {
+            input.on('focus', function () {
                 prompt.addClass('screen-reader-text');
             });
         });
@@ -55,12 +55,12 @@ let App = {
             }
         });
 
-        $('#pp-form-builder-standard-fields .pp-metabox-handle').click();
+        $('#pp-form-builder-standard-fields .pp-metabox-handle').trigger('click');
     },
 
     init() {
 
-        if(typeof pp_form_builder_fields_settings === 'undefined') return;
+        if (typeof pp_form_builder_fields_settings === 'undefined') return;
 
         let formSettings = new FormSettings(pp_form_builder_fields_settings);
         window.ppFormSettings = formSettings;
@@ -99,7 +99,7 @@ let App = {
                 $(this).parent().addClass('active');
                 $($(this).attr('href')).show();
 
-            }).get(0).click();
+            }).eq(0).trigger('click');
         }
     }
 };

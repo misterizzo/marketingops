@@ -62,9 +62,9 @@ class PhpStringTokenParser
             $bLength = 1;
         }
         if ('\'' === $str[$bLength]) {
-            return \str_replace(['\\\\', '\\\''], ['\\', '\''], \substr($str, $bLength + 1, -1));
+            return str_replace(['\\\\', '\\\''], ['\\', '\''], substr($str, $bLength + 1, -1));
         } else {
-            return self::parseEscapeSequences(\substr($str, $bLength + 1, -1), '"');
+            return self::parseEscapeSequences(substr($str, $bLength + 1, -1), '"');
         }
     }
     /**
@@ -78,19 +78,19 @@ class PhpStringTokenParser
     public static function parseEscapeSequences(string $str, ?string $quote = null)
     {
         if (null !== $quote) {
-            $str = \str_replace('\\' . $quote, $quote, $str);
+            $str = str_replace('\\' . $quote, $quote, $str);
         }
-        return \preg_replace_callback('~\\\\([\\\\$nrtfve]|[xX][0-9a-fA-F]{1,2}|[0-7]{1,3})~', [__CLASS__, 'parseCallback'], $str);
+        return preg_replace_callback('~\\\\([\\\\$nrtfve]|[xX][0-9a-fA-F]{1,2}|[0-7]{1,3})~', [__CLASS__, 'parseCallback'], $str);
     }
-    private static function parseCallback(array $matches) : string
+    private static function parseCallback(array $matches): string
     {
         $str = $matches[1];
         if (isset(self::$replacements[$str])) {
             return self::$replacements[$str];
         } elseif ('x' === $str[0] || 'X' === $str[0]) {
-            return \chr(\hexdec($str));
+            return \chr(hexdec($str));
         } else {
-            return \chr(\octdec($str));
+            return \chr(octdec($str));
         }
     }
     /**
@@ -104,9 +104,9 @@ class PhpStringTokenParser
     public static function parseDocString(string $startToken, string $str)
     {
         // strip last newline (thanks tokenizer for sticking it into the string!)
-        $str = \preg_replace('~(\\r\\n|\\n|\\r)$~', '', $str);
+        $str = preg_replace('~(\r\n|\n|\r)$~', '', $str);
         // nowdoc string
-        if (\str_contains($startToken, '\'')) {
+        if (str_contains($startToken, '\'')) {
             return $str;
         }
         return self::parseEscapeSequences($str, null);

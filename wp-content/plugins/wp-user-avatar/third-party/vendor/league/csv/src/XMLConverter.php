@@ -40,7 +40,7 @@ class XMLConverter
      * XML offset attribute name.
      */
     protected string $offset_attr = '';
-    public static function create() : self
+    public static function create(): self
     {
         return new self();
     }
@@ -56,7 +56,7 @@ class XMLConverter
     /**
      * Convert a Record collection into a DOMDocument.
      */
-    public function convert(iterable $records) : DOMDocument
+    public function convert(iterable $records): DOMDocument
     {
         $doc = new DOMDocument('1.0');
         $node = $this->import($records, $doc);
@@ -68,7 +68,7 @@ class XMLConverter
      *
      * **DOES NOT** attach to the DOMDocument
      */
-    public function import(iterable $records, DOMDocument $doc) : DOMElement
+    public function import(iterable $records, DOMDocument $doc): DOMElement
     {
         $root = $doc->createElement($this->root_name);
         foreach ($records as $offset => $record) {
@@ -81,7 +81,7 @@ class XMLConverter
      * Convert a CSV record into a DOMElement and
      * adds its offset as DOMElement attribute.
      */
-    protected function recordToElement(DOMDocument $doc, array $record, int $offset) : DOMElement
+    protected function recordToElement(DOMDocument $doc, array $record, int $offset): DOMElement
     {
         $node = $doc->createElement($this->record_name);
         foreach ($record as $node_name => $value) {
@@ -101,7 +101,7 @@ class XMLConverter
      *
      * @param int|string $node_name
      */
-    protected function fieldToElement(DOMDocument $doc, string $value, $node_name) : DOMElement
+    protected function fieldToElement(DOMDocument $doc, string $value, $node_name): DOMElement
     {
         $item = $doc->createElement($this->field_name);
         $item->appendChild($doc->createTextNode($value));
@@ -113,7 +113,7 @@ class XMLConverter
     /**
      * XML root element setter.
      */
-    public function rootElement(string $node_name) : self
+    public function rootElement(string $node_name): self
     {
         $clone = clone $this;
         $clone->root_name = $this->filterElementName($node_name);
@@ -124,14 +124,14 @@ class XMLConverter
      *
      * @throws DOMException If the Element name is invalid
      */
-    protected function filterElementName(string $value) : string
+    protected function filterElementName(string $value): string
     {
         return (new DOMElement($value))->tagName;
     }
     /**
      * XML Record element setter.
      */
-    public function recordElement(string $node_name, string $record_offset_attribute_name = '') : self
+    public function recordElement(string $node_name, string $record_offset_attribute_name = ''): self
     {
         $clone = clone $this;
         $clone->record_name = $this->filterElementName($node_name);
@@ -145,7 +145,7 @@ class XMLConverter
      *
      * @throws DOMException If the Element attribute name is invalid
      */
-    protected function filterAttributeName(string $value) : string
+    protected function filterAttributeName(string $value): string
     {
         if ('' === $value) {
             return $value;
@@ -155,7 +155,7 @@ class XMLConverter
     /**
      * XML Field element setter.
      */
-    public function fieldElement(string $node_name, string $fieldname_attribute_name = '') : self
+    public function fieldElement(string $node_name, string $fieldname_attribute_name = ''): self
     {
         $clone = clone $this;
         $clone->field_name = $this->filterElementName($node_name);

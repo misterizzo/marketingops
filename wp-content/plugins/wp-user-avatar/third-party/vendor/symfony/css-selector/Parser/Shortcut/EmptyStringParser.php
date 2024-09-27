@@ -32,7 +32,7 @@ class EmptyStringParser implements ParserInterface
     /**
      * {@inheritdoc}
      */
-    public function parse(string $source) : array
+    public function parse(string $source): array
     {
         // Matches an empty string
         if ('' == $source) {

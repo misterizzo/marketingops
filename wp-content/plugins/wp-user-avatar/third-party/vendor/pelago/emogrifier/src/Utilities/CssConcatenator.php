@@ -67,7 +67,7 @@ class CssConcatenator
      * @param string $media
      *        the media query for the rule, e.g. "@media screen and (max-width:639px)", or an empty string if none
      */
-    public function append(array $selectors, string $declarationsBlock, string $media = '') : void
+    public function append(array $selectors, string $declarationsBlock, string $media = ''): void
     {
         $selectorsAsKeys = \array_flip($selectors);
         $mediaRule = $this->getOrCreateMediaRuleToAppendTo($media);
@@ -90,7 +90,7 @@ class CssConcatenator
     /**
      * @return string
      */
-    public function getCss() : string
+    public function getCss(): string
     {
         return \implode('', \array_map([self::class, 'getMediaRuleCss'], $this->mediaRules));
     }
@@ -106,7 +106,7 @@ class CssConcatenator
      *           }>
      *         }
      */
-    private function getOrCreateMediaRuleToAppendTo(string $media) : object
+    private function getOrCreateMediaRuleToAppendTo(string $media): object
     {
         $lastMediaRule = \end($this->mediaRules);
         if (\is_object($lastMediaRule) && $media === $lastMediaRule->media) {
@@ -125,7 +125,7 @@ class CssConcatenator
      *
      * @return bool
      */
-    private static function hasEquivalentSelectors(array $selectorsAsKeys1, array $selectorsAsKeys2) : bool
+    private static function hasEquivalentSelectors(array $selectorsAsKeys1, array $selectorsAsKeys2): bool
     {
         return \count($selectorsAsKeys1) === \count($selectorsAsKeys2) && \count($selectorsAsKeys1) === \count($selectorsAsKeys1 + $selectorsAsKeys2);
     }
@@ -140,7 +140,7 @@ class CssConcatenator
      *
      * @return string CSS for the media rule.
      */
-    private static function getMediaRuleCss(object $mediaRule) : string
+    private static function getMediaRuleCss(object $mediaRule): string
     {
         $ruleBlocks = $mediaRule->ruleBlocks;
         $css = \implode('', \array_map([self::class, 'getRuleBlockCss'], $ruleBlocks));
@@ -155,7 +155,7 @@ class CssConcatenator
      *
      * @return string CSS for the rule block.
      */
-    private static function getRuleBlockCss(object $ruleBlock) : string
+    private static function getRuleBlockCss(object $ruleBlock): string
     {
         $selectorsAsKeys = $ruleBlock->selectorsAsKeys;
         $selectors = \array_keys($selectorsAsKeys);

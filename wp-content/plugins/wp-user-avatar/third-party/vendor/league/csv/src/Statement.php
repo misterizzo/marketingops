@@ -32,7 +32,7 @@ class Statement
     /**
      * @throws Exception
      */
-    public static function create(callable $where = null, int $offset = 0, int $limit = -1) : self
+    public static function create(callable $where = null, int $offset = 0, int $limit = -1): self
     {
         $stmt = new self();
         if (null !== $where) {
@@ -43,7 +43,7 @@ class Statement
     /**
      * Set the Iterator filter method.
      */
-    public function where(callable $where) : self
+    public function where(callable $where): self
     {
         $clone = clone $this;
         $clone->where[] = $where;
@@ -52,7 +52,7 @@ class Statement
     /**
      * Set an Iterator sorting callable function.
      */
-    public function orderBy(callable $order_by) : self
+    public function orderBy(callable $order_by): self
     {
         $clone = clone $this;
         $clone->order_by[] = $order_by;
@@ -63,7 +63,7 @@ class Statement
      *
      * @throws Exception if the offset is lesser than 0
      */
-    public function offset(int $offset) : self
+    public function offset(int $offset): self
     {
         if (0 > $offset) {
             throw InvalidArgument::dueToInvalidRecordOffset($offset, __METHOD__);
@@ -80,7 +80,7 @@ class Statement
      *
      * @throws Exception if the limit is lesser than -1
      */
-    public function limit(int $limit) : self
+    public function limit(int $limit): self
     {
         if (-1 > $limit) {
             throw InvalidArgument::dueToInvalidLimit($limit, __METHOD__);
@@ -97,7 +97,7 @@ class Statement
      *
      * @param array<string> $header an optional header to use instead of the CSV document header
      */
-    public function process(TabularDataReader $tabular_data, array $header = []) : TabularDataReader
+    public function process(TabularDataReader $tabular_data, array $header = []): TabularDataReader
     {
         if ([] === $header) {
             $header = $tabular_data->getHeader();
@@ -110,21 +110,21 @@ class Statement
     /**
      * Filters elements of an Iterator using a callback function.
      */
-    protected function filter(Iterator $iterator, callable $callable) : CallbackFilterIterator
+    protected function filter(Iterator $iterator, callable $callable): CallbackFilterIterator
     {
         return new CallbackFilterIterator($iterator, $callable);
     }
     /**
      * Sort the Iterator.
      */
-    protected function buildOrderBy(Iterator $iterator) : Iterator
+    protected function buildOrderBy(Iterator $iterator): Iterator
     {
         if ([] === $this->order_by) {
             return $iterator;
         }
-        $compare = function (array $record_a, array $record_b) : int {
+        $compare = function (array $record_a, array $record_b): int {
             foreach ($this->order_by as $callable) {
-                if (0 !== ($cmp = $callable($record_a, $record_b))) {
+                if (0 !== $cmp = $callable($record_a, $record_b)) {
                     return $cmp;
                 }
             }

@@ -101,7 +101,7 @@ class MemberDirectoryTag
         static $instance = false;
 
         if ( ! $instance) {
-            $instance = new self;
+            $instance = new self();
         }
 
         return $instance;

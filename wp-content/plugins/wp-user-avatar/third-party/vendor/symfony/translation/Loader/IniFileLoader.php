@@ -22,6 +22,6 @@ class IniFileLoader extends FileLoader
      */
     protected function loadResource(string $resource)
     {
-        return \parse_ini_file($resource, \true);
+        return parse_ini_file($resource, \true);
     }
 }

@@ -1,5 +1,34 @@
 ﻿== Changelog ==
 
+= 4.15.14 =
+* Added WooCommerce compatibility to content protection where add-to-cart button is hidden for restricted product.
+* Added ppress_is_checkout_autoscroll_enabled filter to disable checkout autoscroll feature.
+* Updated Twitter social login to X.
+* Remove deprecated jQuery codes.
+
+= 4.15.13 =
+* Pro: [WooCommerce Memberships feature](https://profilepress.com/article/create-woocommerce-membership-website/?ref=changelog)
+* Added setting for disabling My Account tabs.
+* Fixed date_created time bug with manual order.
+* Fixed bug where expired coupons could be used via URL.
+
+= 4.15.12 =
+* Added uncode theme compatibility to content protection feature.
+* Fixed bugs with Stripe tax update after order.
+* Fixed bug where manual order didn't include subtotal.
+
+= 4.15.11 =
+* Enhancement: Update order tax amount in if Stripe charges tax.
+* Added filter to remove cover photo uploader field from default profile page.
+* Fixed: Undefined array key 'exempt' warning.
+
+= 4.15.10 =
+* Added exemption to content protection.
+* Fixed bug where Tutor course in multiple plans didn't exactly work correctly
+* Fixed bug where subscription was not revoked when unpaid in Stripe.
+* Enhancement: Stopped ucwords-ing displayname profile information.
+* Improved checkout compatibility with Pantheon hosting.
+
 = 4.15.9 =
 * Fixed bug where zero amount checkout didn't work when autorenewal is enabled.
 

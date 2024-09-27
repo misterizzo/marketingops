@@ -43,7 +43,7 @@ class ArrayIntersector
      *         with which this object was constructed.  Note that keys are preserved, order is maintained, but
      *         duplicates are removed.
      */
-    public function intersectWith(array $array) : array
+    public function intersectWith(array $array): array
     {
         $invertedArray = \array_flip($array);
         $invertedIntersection = \array_intersect_key($invertedArray, $this->invertedArray);

@@ -27,21 +27,21 @@ class TokenizerEscaping
     {
         $this->patterns = $patterns;
     }
-    public function escapeUnicode(string $value) : string
+    public function escapeUnicode(string $value): string
     {
         $value = $this->replaceUnicodeSequences($value);
-        return \preg_replace($this->patterns->getSimpleEscapePattern(), '$1', $value);
+        return preg_replace($this->patterns->getSimpleEscapePattern(), '$1', $value);
     }
-    public function escapeUnicodeAndNewLine(string $value) : string
+    public function escapeUnicodeAndNewLine(string $value): string
     {
-        $value = \preg_replace($this->patterns->getNewLineEscapePattern(), '', $value);
+        $value = preg_replace($this->patterns->getNewLineEscapePattern(), '', $value);
         return $this->escapeUnicode($value);
     }
-    private function replaceUnicodeSequences(string $value) : string
+    private function replaceUnicodeSequences(string $value): string
     {
-        return \preg_replace_callback($this->patterns->getUnicodeEscapePattern(), function ($match) {
-            $c = \hexdec($match[1]);
-            if (0x80 > ($c %= 0x200000)) {
+        return preg_replace_callback($this->patterns->getUnicodeEscapePattern(), function ($match) {
+            $c = hexdec($match[1]);
+            if (0x80 > $c %= 0x200000) {
                 return \chr($c);
             }
             if (0x800 > $c) {

@@ -71,6 +71,8 @@ class Gerbera extends AbstractMemberDirectoryTheme
      */
     public function directory_structure()
     {
+        global $ppress_frontend_profile_user_obj;
+
         $wp_user_query = $this->wp_user_query();
 
         $profile_picture_enabled = $this->get_meta('ppress_md_gerbera_profile_picture') == 'true';
@@ -78,7 +80,11 @@ class Gerbera extends AbstractMemberDirectoryTheme
         echo '<div class="pppress_md_gerbera_members">';
 
         /** @var \WP_User $user */
-        foreach ($wp_user_query['users'] as $user) : new FrontendProfileBuilder($user);
+        foreach ($wp_user_query['users'] as $user) :
+
+            $ppress_frontend_profile_user_obj = $user;
+
+            new FrontendProfileBuilder($user);
 
             $profile_url = ppress_get_frontend_profile_url($user->ID);
 

@@ -21,7 +21,7 @@ namespace ProfilePressVendor\League\Csv;
  *
  * If no valid BOM sequence is found an empty string is returned
  */
-function bom_match(string $str) : string
+function bom_match(string $str): string
 {
     return Info::fetchBOMSequence($str) ?? '';
 }
@@ -39,7 +39,7 @@ function bom_match(string $str) : string
  * when processing at most $limit CSV records with the given delimiter
  *
  */
-function delimiter_detect(Reader $csv, array $delimiters, int $limit = 1) : array
+function delimiter_detect(Reader $csv, array $delimiters, int $limit = 1): array
 {
     return Info::getDelimiterStats($csv, $delimiters, $limit);
 }

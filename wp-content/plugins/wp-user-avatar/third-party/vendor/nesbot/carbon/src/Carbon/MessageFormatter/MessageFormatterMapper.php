@@ -29,8 +29,8 @@ final class MessageFormatterMapper extends LazyMessageFormatter
     {
         $this->formatter = $formatter ?? new MessageFormatter();
     }
-    protected function transformLocale(?string $locale) : ?string
+    protected function transformLocale(?string $locale): ?string
     {
-        return $locale ? \preg_replace('/[_@][A-Za-z][a-z]{2,}/', '', $locale) : $locale;
+        return $locale ? preg_replace('/[_@][A-Za-z][a-z]{2,}/', '', $locale) : $locale;
     }
 }

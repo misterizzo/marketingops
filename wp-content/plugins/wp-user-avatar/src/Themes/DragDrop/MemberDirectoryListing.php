@@ -112,10 +112,8 @@ class MemberDirectoryListing
                         $parsed_shortcode,
                         ! empty($field_title) ? $field_title : esc_html__('Website', 'wp-user-avatar')
                     );
-                }
-
-                if ($raw_field_type == 'profile-website') {
                     $parsed_shortcode = make_clickable($parsed_shortcode);
+                    $parsed_shortcode = apply_filters('ppress_md_profile_website', $parsed_shortcode, $this->user_id);
                 }
 
                 $output .= sprintf('<div class="ppress-md-profile-item-wrap %s">', $raw_field_type);

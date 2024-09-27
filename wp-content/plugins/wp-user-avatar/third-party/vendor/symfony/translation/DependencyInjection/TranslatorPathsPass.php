@@ -54,7 +54,7 @@ class TranslatorPathsPass extends AbstractRecursivePass
             return;
         }
         foreach ($this->findControllerArguments($container) as $controller => $argument) {
-            $id = \substr($controller, 0, \strpos($controller, ':') ?: \strlen($controller));
+            $id = substr($controller, 0, strpos($controller, ':') ?: \strlen($controller));
             if ($container->hasDefinition($id)) {
                 [$locatorRef] = $argument->getValues();
                 $this->controllers[(string) $locatorRef][$container->getDefinition($id)->getClass()] = \true;
@@ -74,11 +74,11 @@ class TranslatorPathsPass extends AbstractRecursivePass
             if ($paths) {
                 if ($container->hasDefinition($this->debugCommandServiceId)) {
                     $definition = $container->getDefinition($this->debugCommandServiceId);
-                    $definition->replaceArgument(6, \array_merge($definition->getArgument(6), $paths));
+                    $definition->replaceArgument(6, array_merge($definition->getArgument(6), $paths));
                 }
                 if ($container->hasDefinition($this->updateCommandServiceId)) {
                     $definition = $container->getDefinition($this->updateCommandServiceId);
-                    $definition->replaceArgument(7, \array_merge($definition->getArgument(7), $paths));
+                    $definition->replaceArgument(7, array_merge($definition->getArgument(7), $paths));
                 }
             }
         } finally {
@@ -116,7 +116,7 @@ class TranslatorPathsPass extends AbstractRecursivePass
         }
         return parent::processValue($value, $isRoot);
     }
-    private function findControllerArguments(ContainerBuilder $container) : array
+    private function findControllerArguments(ContainerBuilder $container): array
     {
         if (!$container->has($this->resolverServiceId)) {
             return [];

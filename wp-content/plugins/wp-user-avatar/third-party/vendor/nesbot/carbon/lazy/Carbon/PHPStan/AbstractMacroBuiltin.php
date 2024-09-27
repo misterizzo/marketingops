@@ -13,13 +13,13 @@ namespace ProfilePressVendor\Carbon\PHPStan;
 
 use ProfilePressVendor\PHPStan\BetterReflection\Reflection;
 use ReflectionMethod;
-if (!\class_exists(AbstractReflectionMacro::class, \false)) {
+if (!class_exists(AbstractReflectionMacro::class, \false)) {
     abstract class AbstractReflectionMacro extends AbstractMacro
     {
         /**
          * {@inheritdoc}
          */
-        public function getReflection() : ?ReflectionMethod
+        public function getReflection(): ?ReflectionMethod
         {
             if ($this->reflectionFunction instanceof Reflection\ReflectionMethod) {
                 return new Reflection\Adapter\ReflectionMethod($this->reflectionFunction);

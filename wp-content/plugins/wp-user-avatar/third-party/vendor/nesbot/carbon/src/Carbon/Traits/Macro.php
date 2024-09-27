@@ -74,7 +74,7 @@ trait Macro
     {
         if (!isset(static::$globalGenericMacros[$priority])) {
             static::$globalGenericMacros[$priority] = [];
-            \krsort(static::$globalGenericMacros, \SORT_NUMERIC);
+            krsort(static::$globalGenericMacros, \SORT_NUMERIC);
         }
         static::$globalGenericMacros[$priority][] = $macro;
     }

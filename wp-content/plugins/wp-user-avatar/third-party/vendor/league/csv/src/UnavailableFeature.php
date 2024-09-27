@@ -26,11 +26,11 @@ class UnavailableFeature extends Exception
     {
         parent::__construct($message, $code, $previous);
     }
-    public static function dueToUnsupportedStreamFilterApi(string $className) : self
+    public static function dueToUnsupportedStreamFilterApi(string $className): self
     {
         return new self('The stream filter API can not be used with a ' . $className . ' instance.');
     }
-    public static function dueToMissingStreamSeekability() : self
+    public static function dueToMissingStreamSeekability(): self
     {
         return new self('stream does not support seeking');
     }

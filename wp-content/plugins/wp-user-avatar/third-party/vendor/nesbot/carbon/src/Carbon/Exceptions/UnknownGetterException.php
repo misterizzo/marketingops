@@ -37,7 +37,7 @@ class UnknownGetterException extends BaseInvalidArgumentException implements Inv
      *
      * @return string
      */
-    public function getGetter() : string
+    public function getGetter(): string
     {
         return $this->getter;
     }

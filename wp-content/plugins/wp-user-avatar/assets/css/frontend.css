@@ -409,8 +409,8 @@ a.pp-button-social-login.pp-button-social-login-facebook {
 }
 
 a.pp-button-social-login.pp-button-social-login-twitter {
-    background: #55acee;
-    border-color: #55acee;
+    background: #000000;
+    border-color: #000000;
 }
 
 a.pp-button-social-login.pp-button-social-login-linkedin {
@@ -474,7 +474,7 @@ a.pp-button-social-login .ppsc-facebook {
 }
 
 a.pp-button-social-login .ppsc-twitter {
-    background-image: url(../images/social-login/twitter.svg)
+    background-image: url(../images/social-login/x.svg)
 }
 
 a.pp-button-social-login .ppsc-linkedin {

@@ -40,7 +40,7 @@
 
         $(document).on('click', '#ppress-login-redirect-submit-btn', function (e) {
             e.preventDefault();
-            $('#ppress-login-redirect-form').submit();
+            $('#ppress-login-redirect-form').trigger('submit');
         });
     });
 })(jQuery);

@@ -26,7 +26,7 @@ interface TabularDataReader extends Countable, IteratorAggregate
      * Returns the number of records contained in the tabular data structure
      * excluding the header record.
      */
-    public function count() : int;
+    public function count(): int;
     /**
      * Returns the tabular data records as an iterator object.
      *
@@ -39,7 +39,7 @@ interface TabularDataReader extends Countable, IteratorAggregate
      * filled with null values while extra record fields are strip from
      * the returned object.
      */
-    public function getIterator() : Iterator;
+    public function getIterator(): Iterator;
     /**
      * Returns the header associated with the tabular data.
      *
@@ -48,7 +48,7 @@ interface TabularDataReader extends Countable, IteratorAggregate
      *
      * @return array<string>
      */
-    public function getHeader() : array;
+    public function getHeader(): array;
     /**
      * Returns the tabular data records as an iterator object.
      *
@@ -63,7 +63,7 @@ interface TabularDataReader extends Countable, IteratorAggregate
      *
      * @param array<string> $header an optional header to use instead of the CSV document header
      */
-    public function getRecords(array $header = []) : Iterator;
+    public function getRecords(array $header = []): Iterator;
     /**
      * Returns the nth record from the tabular data.
      *
@@ -73,7 +73,7 @@ interface TabularDataReader extends Countable, IteratorAggregate
      *
      * @throws UnableToProcessCsv if argument is lesser than 0
      */
-    public function fetchOne(int $nth_record = 0) : array;
+    public function fetchOne(int $nth_record = 0): array;
     /**
      * DEPRECATION WARNING! This class will be removed in the next major point release.
      *
@@ -90,7 +90,7 @@ interface TabularDataReader extends Countable, IteratorAggregate
      *
      * @throws UnableToProcessCsv if the column index is invalid or not found
      */
-    public function fetchColumn($index = 0) : Iterator;
+    public function fetchColumn($index = 0): Iterator;
     /**
      * Returns the next key-value pairs from the tabular data (first
      * column is the key, second column is the value).
@@ -104,5 +104,5 @@ interface TabularDataReader extends Countable, IteratorAggregate
      *
      * @throws UnableToProcessCsv if the column index is invalid or not found
      */
-    public function fetchPairs($offset_index = 0, $value_index = 1) : Iterator;
+    public function fetchPairs($offset_index = 0, $value_index = 1): Iterator;
 }

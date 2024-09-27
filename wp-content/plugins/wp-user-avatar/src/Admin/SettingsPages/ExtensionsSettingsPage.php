@@ -82,10 +82,10 @@ class ExtensionsSettingsPage extends AbstractSettingsPage
                 <div class="ppress-extensions-header">
                     <div class="ppress-extensions-header-buttons">
                         <div class="button-content">
-                            <button type="button" class="button-primary ppress-extensions-button" onclick="jQuery('.ppress-extension-manager-checkbox').prop('checked', true);jQuery('#ppress-extension-manager-form').submit();">
+                            <button type="button" class="button-primary ppress-extensions-button" onclick="jQuery('.ppress-extension-manager-checkbox').prop('checked', true);jQuery('#ppress-extension-manager-form').trigger('submit');">
                                 <?= esc_html__('Activate All', 'wp-user-avatar') ?>
                             </button>
-                            <button type="button" class="button-secondary ppress-extensions-button" onclick="jQuery('.ppress-extension-manager-checkbox').prop('checked', false);jQuery('#ppress-extension-manager-form').submit();">
+                            <button type="button" class="button-secondary ppress-extensions-button" onclick="jQuery('.ppress-extension-manager-checkbox').prop('checked', false);jQuery('#ppress-extension-manager-form').trigger('submit');">
                                 <?= esc_html__('Deactivate All', 'wp-user-avatar') ?>
                             </button>
                         </div>
@@ -159,7 +159,7 @@ class ExtensionsSettingsPage extends AbstractSettingsPage
                                     </span>
                                             <label for="ppress-<?= $id ?>">
                                                 <input type="hidden" name="<?= $name ?>" value="false">
-                                                <input class="ppress-extension-manager-checkbox" type="checkbox" name="<?= $name ?>" id="ppress-<?= $id ?>" value="true" onchange="jQuery('#ppress-extension-manager-form').submit();" <?php checked(EM::is_enabled($id)) ?>>
+                                                <input class="ppress-extension-manager-checkbox" type="checkbox" name="<?= $name ?>" id="ppress-<?= $id ?>" value="true" onchange="jQuery('#ppress-extension-manager-form').trigger('submit');" <?php checked(EM::is_enabled($id)) ?>>
                                                 <span class="ppress-extension-use-switch"></span>
                                             </label>
                                         </div>

@@ -80,7 +80,7 @@ class OAuthService extends \ProfilePressVendor\Stripe\Service\AbstractService
             $clientId = $this->client->getClientId();
         }
         if (null === $clientId) {
-            $msg = 'No client_id provided. (HINT: set your client_id using ' . '`new \\Stripe\\StripeClient([clientId => <CLIENT-ID>
+            $msg = 'No client_id provided. (HINT: set your client_id using ' . '`new \Stripe\StripeClient([clientId => <CLIENT-ID>
                 ])`)".  You can find your client_ids ' . 'in your Stripe dashboard at ' . 'https://dashboard.stripe.com/account/applications/settings, ' . 'after registering your account as a platform. See ' . 'https://stripe.com/docs/connect/standard-accounts for details, ' . 'or email support@stripe.com if you have any questions.';
             throw new \ProfilePressVendor\Stripe\Exception\AuthenticationException($msg);
         }

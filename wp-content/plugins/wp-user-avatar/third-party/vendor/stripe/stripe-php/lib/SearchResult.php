@@ -113,7 +113,7 @@ class SearchResult extends StripeObject implements \Countable, \IteratorAggregat
         $page = $this;
         while (\true) {
             foreach ($page as $item) {
-                (yield $item);
+                yield $item;
             }
             $page = $page->nextPage();
             if ($page->isEmpty()) {

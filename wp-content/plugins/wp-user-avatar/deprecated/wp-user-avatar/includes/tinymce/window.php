@@ -81,11 +81,11 @@ if(!defined('ABSPATH')) {
 
     jQuery(function($) {
       // Show link input
-      $('#wp_user_avatar_link').change(function() {
+      $('#wp_user_avatar_link').on('change',function() {
         $('#wp_user_avatar_link_external_section').toggle($('#wp_user_avatar_link').val() == 'custom-url');
       });
       // Show size input
-      $('#wp_user_avatar_size').change(function() {
+      $('#wp_user_avatar_size').on('change',function() {
         $('#wp_user_avatar_size_number_section').toggle($('#wp_user_avatar_size').val() == 'custom');
       });
 	  

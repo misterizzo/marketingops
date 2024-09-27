@@ -50,7 +50,7 @@ trait Converter
         if (!$function) {
             return $this->rawFormat($format);
         }
-        if (\is_string($function) && \method_exists($this, $function)) {
+        if (\is_string($function) && method_exists($this, $function)) {
             $function = [$this, $function];
         }
         return $function(...\func_get_args());
@@ -119,7 +119,7 @@ trait Converter
      *
      * @return string
      */
-    public function toFormattedDayDateString() : string
+    public function toFormattedDayDateString(): string
     {
         return $this->rawFormat('D, M j, Y');
     }
@@ -194,7 +194,7 @@ trait Converter
      */
     public function toDateTimeLocalString($unitPrecision = 'second')
     {
-        return $this->rawFormat('Y-m-d\\T' . static::getTimeFormatByPrecision($unitPrecision));
+        return $this->rawFormat('Y-m-d\T' . static::getTimeFormatByPrecision($unitPrecision));
     }
     /**
      * Format the instance with day, date and time
@@ -280,7 +280,7 @@ trait Converter
      */
     public function toIso8601ZuluString($unitPrecision = 'second')
     {
-        return $this->avoidMutation()->utc()->rawFormat('Y-m-d\\T' . static::getTimeFormatByPrecision($unitPrecision) . '\\Z');
+        return $this->avoidMutation()->utc()->rawFormat('Y-m-d\T' . static::getTimeFormatByPrecision($unitPrecision) . '\Z');
     }
     /**
      * Format the instance as RFC850
@@ -543,7 +543,7 @@ trait Converter
         if ($interval) {
             $period = $period->setDateInterval($interval);
         }
-        if (\is_int($end) || \is_string($end) && \ctype_digit($end)) {
+        if (\is_int($end) || \is_string($end) && ctype_digit($end)) {
             $period = $period->setRecurrences($end);
         } elseif ($end) {
             $period = $period->setEndDate($end);

@@ -99,18 +99,31 @@ class RegisterScripts
         wp_enqueue_script('ppress-frontend-script', PPRESS_ASSETS_URL . "/js/frontend.min.js", $frontend_dependencies, PPRESS_VERSION_NUMBER, true);
 
         wp_localize_script('ppress-frontend-script', 'pp_ajax_form', [
-            'ajaxurl'                 => admin_url('admin-ajax.php'),
-            'confirm_delete'          => esc_html__('Are you sure?', 'wp-user-avatar'),
-            'deleting_text'           => esc_html__('Deleting...', 'wp-user-avatar'),
-            'deleting_error'          => esc_html__('An error occurred. Please try again.', 'wp-user-avatar'),
-            'nonce'                   => wp_create_nonce('ppress-frontend-nonce'),
-            'disable_ajax_form'       => apply_filters('ppress_disable_ajax_form', (string)$is_ajax_mode_disabled),
-            'is_checkout'             => ppress_is_checkout() ? '1' : '0',
-            'is_checkout_tax_enabled' => $this->is_tax_enabled_in_checkout() ? '1' : '0'
+            'ajaxurl'                        => admin_url('admin-ajax.php'),
+            'confirm_delete'                 => esc_html__('Are you sure?', 'wp-user-avatar'),
+            'deleting_text'                  => esc_html__('Deleting...', 'wp-user-avatar'),
+            'deleting_error'                 => esc_html__('An error occurred. Please try again.', 'wp-user-avatar'),
+            'nonce'                          => wp_create_nonce('ppress-frontend-nonce'),
+            'disable_ajax_form'              => apply_filters('ppress_disable_ajax_form', (string)$is_ajax_mode_disabled),
+            'is_checkout'                    => ppress_is_checkout() ? '1' : '0',
+            'is_checkout_tax_enabled'        => $this->is_tax_enabled_in_checkout() ? '1' : '0',
+            'is_checkout_autoscroll_enabled' => apply_filters('ppress_is_checkout_autoscroll_enabled', 'true')
         ]);
 
         if (isset($_GET['pp_preview_form']) || ppress_post_content_has_shortcode('profilepress-member-directory')) {
-            wp_enqueue_script('ppress-member-directory', PPRESS_ASSETS_URL . "/js/member-directory{$suffix}.js", ['jquery', 'jquery-masonry', 'ppress-select2', 'ppress-flatpickr'], PPRESS_VERSION_NUMBER, true);
+
+            wp_enqueue_script(
+                'ppress-member-directory',
+                PPRESS_ASSETS_URL . "/js/member-directory{$suffix}.js",
+                [
+                    'jquery',
+                    'jquery-masonry',
+                    'ppress-select2',
+                    'ppress-flatpickr'
+                ],
+                PPRESS_VERSION_NUMBER,
+                true
+            );
         }
 
         do_action('ppress_enqueue_public_js');

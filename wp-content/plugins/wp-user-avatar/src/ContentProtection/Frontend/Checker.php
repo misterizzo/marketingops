@@ -91,7 +91,7 @@ class Checker
                 }
             }
 
-            // If any group of conditions doesn't pass, popup is not loadable.
+            // If any group of conditions doesn't pass, not loadable.
             if ( ! $group_check) {
                 $content_match = false;
                 break;

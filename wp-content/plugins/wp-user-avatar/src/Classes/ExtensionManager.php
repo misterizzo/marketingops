@@ -201,7 +201,7 @@ class ExtensionManager
                 'title'        => esc_html__('WooCommerce', 'wp-user-avatar'),
                 'url'          => 'https://profilepress.com/addons/woocommerce/?utm_source=liteplugin&utm_medium=extension-page&utm_campaign=learn-more',
                 'setting_url'  => PPRESS_SETTINGS_SETTING_GENERAL_PAGE . '#pp_wi_settings',
-                'description'  => esc_html__('It allows you to manage WooCommerce billing and shipping fields, replaces WooCommerce login and edit account forms in checkout and “My Account” pages with that of ProfilePress.', 'wp-user-avatar'),
+                'description'  => esc_html__('Create WooCommerce membership sites, members-only discounts and stores, manage WooCommerce billing and shipping fields, replaces WooCommerce login and edit account forms in checkout and “My Account” pages with that of ProfilePress.', 'wp-user-avatar'),
                 'icon'         => '<span class="dashicons dashicons-cart"></span>',
                 'is_available' => function () {
                     return class_exists('WooCommerce') ? true : esc_html__('WooCommerce is not active', 'wp-user-avatar');

@@ -4,8 +4,8 @@ Donate link: https://profilepress.com/pricing/
 Tags: membership, ecommerce, user registration, user profile, stripe
 Requires at least: 5.3
 Requires PHP: 7.4
-Tested up to: 6.5
-Stable tag: 4.15.9
+Tested up to: 6.6
+Stable tag: 4.15.14
 License: GPLv2 or later
 
 Setup paid membership, accept payment, sell subscription & digital product, paywall, create login & registration form, user profile & member directory
@@ -16,7 +16,7 @@ Setup paid membership, accept payment, sell subscription & digital product, payw
 
 [ProfilePress](https://profilepress.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion) is a powerful ecommerce and paid membership plugin for accepting one-time and recurring payments, selling subscriptions and digital products or digital downloads (downloadable files) via Bank Transfer, Stripe, PayPal, RazorPay, Mollie & Paystack, paywall & restrict content and control user access.
 
-ProfilePress is the best Stripe (Credit Card), PayPal, RazorPay, Paystack & Mollie payment forms plugin for WordPress to quickly accept payments, sell memberships and provide your users the ultimate member experience.
+ProfilePress is the best Stripe (Credit Card), PayPal, RazorPay, Paystack & Mollie payment forms and WooCommerce membership plugin for to quickly accept payments, sell memberships and provide your users the ultimate member experience.
 
 ProfilePress lets you create beautiful user profiles, member directories, frontend login, and user registration forms, member password reset and edit profile forms.
 
@@ -113,7 +113,7 @@ Extend the capabilities of ProfilePress with our powerful addons and remove the 
 * [Social Login](https://profilepress.com/addons/social-login/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion) – Let users checkout, register & login to your site with social login via Facebook, Twitter, Google, LinkedIn, Yahoo, Microsoft, Amazon, GitHub, VK and WordPress.com.
 * [Two-Factor Authentication (2FA)](https://profilepress.com/addons/2fa/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion) – Adds an additional layer of security to users accounts by requiring more than just a password to log in.
 * [Passwordless Login](https://profilepress.com/addons/passwordless-login/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion) – Let users log in to your site via a one-time URL sent to their email addresses.
-* [WooCommerce](https://profilepress.com/addons/woocommerce/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion) – Manage WooCommerce billing and shipping fields, replace WooCommerce login and edit account forms in checkout and "My Account" pages with that of ProfilePress.
+* [WooCommerce Memberships & Integration](https://profilepress.com/addons/woocommerce/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion) – Create WooCommerce membership sites, members-only discounts and stores, manage WooCommerce billing and shipping fields, replace WooCommerce login and edit account forms in checkout and "My Account" pages with that of ProfilePress.
 * [LearnDash](https://profilepress.com/addons/learndash/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion) – Sell access to LearnDash courses and groups, enroll users after signup via a custom LearnDash registration form, and let users view their enrolled courses on the My Account page.
 * [LifterLMS](https://profilepress.com/addons/lifterlms/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion) – Sell access to LifterLMS courses and memberships, enroll users after signup via a custom LifterLMS registration form, and let users view their enrolled courses on the My Account page.
 * [Sensei LMS](https://profilepress.com/addons/sensei-lms/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion) – Sell access to Sensei LMS courses and groups, enroll users after registration, and let users view their enrolled courses on the My Account page.
@@ -126,7 +126,7 @@ Extend the capabilities of ProfilePress with our powerful addons and remove the 
 * [Akismet](https://profilepress.com/addons/akismet/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion) –  Block spam and bot user registrations with Akismet and keep your membership site safe and secured.
 * [Polylang](https://profilepress.com/addons/polylang/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion) –  Build multilingual login, registration, password reset, and edit profile forms.
 
-ProfilePress is the Ecommerce platform of your dreams. It delivers a complete Ecommerce experience with everything needed for selling online.
+ProfilePress is the Ecommerce platform and WooCommerce memberships plugin of your dreams. It delivers a complete experience with everything needed for selling digital products online.
 
 If you're looking to build a business out of your membership site by creating paid memberships, there's no better way than to use ProfilePress membership plugin which provide the ultimate member experience and will help you start and profit from your WordPress membership sites.
 
@@ -181,11 +181,16 @@ Any file type can be sold using ProfilePress ecommerce and membership plugin, in
 
 == Changelog ==
 
-= Paid Membership, Ecommerce & User Registration 4.15.9 =
-* Fixed bug where zero amount checkout didn't work when autorenewal is enabled.
-* Fixed XSS on user panel widget.
+= Paid Membership, Ecommerce & User Registration 4.15.14 =
+* Added WooCommerce compatibility to content protection where add-to-cart button is hidden for restricted product.
+* Added ppress_is_checkout_autoscroll_enabled filter to disable checkout autoscroll feature.
+* Updated Twitter social login to X.
+* Remove deprecated jQuery codes.
 
-= Paid Membership, Ecommerce & User Registration 4.15.8 =
-* Fixed Stripe bug where payment method not saving for zero amount orders.
+= Paid Membership, Ecommerce & User Registration 4.15.13 =
+* Pro: [WooCommerce Memberships feature](https://profilepress.com/article/create-woocommerce-membership-website/?ref=changelog)
+* Added setting for disabling My Account tabs.
+* Fixed date_created time bug with manual order.
+* Fixed bug where expired coupons could be used via URL.
 
 See the [changelog file](https://plugins.svn.wordpress.org/wp-user-avatar/trunk/changelog.txt) for full change log information.

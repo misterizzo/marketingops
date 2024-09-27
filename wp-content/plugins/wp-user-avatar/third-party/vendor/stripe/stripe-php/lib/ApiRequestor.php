@@ -307,7 +307,7 @@ class ApiRequestor
             $clientUAInfo = $this->httpClient()->getUserAgentInfo();
         }
         if ($params && \is_array($params)) {
-            $optionKeysInParams = \array_filter(static::$OPTIONS_KEYS, function ($key) use($params) {
+            $optionKeysInParams = \array_filter(static::$OPTIONS_KEYS, function ($key) use ($params) {
                 return \array_key_exists($key, $params);
             });
             if (\count($optionKeysInParams) > 0) {

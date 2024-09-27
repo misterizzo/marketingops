@@ -25,7 +25,7 @@ class HTMLConverter
     /** table id attribute value. */
     protected string $id_value = '';
     protected XMLConverter $xml_converter;
-    public static function create() : self
+    public static function create(): self
     {
         return new self();
     }
@@ -45,7 +45,7 @@ class HTMLConverter
      * @param string[] $header_record An optional array of headers outputted using the`<thead>` section
      * @param string[] $footer_record An optional array of footers to output to the table using `<tfoot>` and `<th>` elements
      */
-    public function convert(iterable $records, array $header_record = [], array $footer_record = []) : string
+    public function convert(iterable $records, array $header_record = [], array $footer_record = []): string
     {
         $doc = new DOMDocument('1.0');
         if ([] === $header_record && [] === $footer_record) {
@@ -69,7 +69,7 @@ class HTMLConverter
     /**
      * Creates a DOMElement representing a HTML table heading section.
      */
-    protected function appendHeaderSection(string $node_name, array $record, DOMElement $table) : void
+    protected function appendHeaderSection(string $node_name, array $record, DOMElement $table): void
     {
         if ([] === $record) {
             return;
@@ -86,7 +86,7 @@ class HTMLConverter
     /**
      * Adds class and id attributes to an HTML tag.
      */
-    protected function addHTMLAttributes(DOMElement $node) : void
+    protected function addHTMLAttributes(DOMElement $node): void
     {
         $node->setAttribute('class', $this->class_name);
         $node->setAttribute('id', $this->id_value);
@@ -96,7 +96,7 @@ class HTMLConverter
      *
      * @throws DOMException if the id_value contains any type of whitespace
      */
-    public function table(string $class_name, string $id_value = '') : self
+    public function table(string $class_name, string $id_value = ''): self
     {
         if (1 === preg_match(",\\s,", $id_value)) {
             throw new DOMException("the id attribute's value must not contain whitespace (spaces, tabs etc.)");
@@ -109,7 +109,7 @@ class HTMLConverter
     /**
      * HTML tr record offset attribute setter.
      */
-    public function tr(string $record_offset_attribute_name) : self
+    public function tr(string $record_offset_attribute_name): self
     {
         $clone = clone $this;
         $clone->xml_converter = $this->xml_converter->recordElement('tr', $record_offset_attribute_name);
@@ -118,7 +118,7 @@ class HTMLConverter
     /**
      * HTML td field name attribute setter.
      */
-    public function td(string $fieldname_attribute_name) : self
+    public function td(string $fieldname_attribute_name): self
     {
         $clone = clone $this;
         $clone->xml_converter = $this->xml_converter->fieldElement('td', $fieldname_attribute_name);

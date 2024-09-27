@@ -29,20 +29,20 @@ class Writer extends AbstractCsv
     protected string $newline = "\n";
     protected int $flush_counter = 0;
     protected ?int $flush_threshold = null;
-    protected function resetProperties() : void
+    protected function resetProperties(): void
     {
     }
     /**
      * Returns the current newline sequence characters.
      */
-    public function getNewline() : string
+    public function getNewline(): string
     {
         return $this->newline;
     }
     /**
      * Get the flush threshold.
      */
-    public function getFlushThreshold() : ?int
+    public function getFlushThreshold(): ?int
     {
         return $this->flush_threshold;
     }
@@ -51,7 +51,7 @@ class Writer extends AbstractCsv
      *
      * @see Writer::insertOne
      */
-    public function insertAll(iterable $records) : int
+    public function insertAll(iterable $records): int
     {
         $bytes = 0;
         foreach ($records as $record) {
@@ -69,7 +69,7 @@ class Writer extends AbstractCsv
      *
      * @throws CannotInsertRecord If the record can not be inserted
      */
-    public function insertOne(array $record) : int
+    public function insertOne(array $record): int
     {
         $record = array_reduce($this->formatters, fn(array $record, callable $formatter): array => $formatter($record), $record);
         $this->validateRecord($record);
@@ -106,7 +106,7 @@ class Writer extends AbstractCsv
      *   - NULL values,
      *   - or objects implementing the __toString() method.
      */
-    protected function formatRecord(array $record, callable $formatter) : array
+    protected function formatRecord(array $record, callable $formatter): array
     {
         return $formatter($record);
     }
@@ -115,7 +115,7 @@ class Writer extends AbstractCsv
      *
      * @throws CannotInsertRecord If the validation failed
      */
-    protected function validateRecord(array $record) : void
+    protected function validateRecord(array $record): void
     {
         foreach ($this->validators as $name => $validator) {
             if (\true !== $validator($record)) {
@@ -126,7 +126,7 @@ class Writer extends AbstractCsv
     /**
      * Apply post insertion actions.
      */
-    protected function consolidate() : int
+    protected function consolidate(): int
     {
         $bytes = 0;
         if (80100 > PHP_VERSION_ID && "\n" !== $this->newline) {
@@ -148,7 +148,7 @@ class Writer extends AbstractCsv
     /**
      * Adds a record formatter.
      */
-    public function addFormatter(callable $formatter) : self
+    public function addFormatter(callable $formatter): self
     {
         $this->formatters[] = $formatter;
         return $this;
@@ -156,7 +156,7 @@ class Writer extends AbstractCsv
     /**
      * Adds a record validator.
      */
-    public function addValidator(callable $validator, string $validator_name) : self
+    public function addValidator(callable $validator, string $validator_name): self
     {
         $this->validators[$validator_name] = $validator;
         return $this;
@@ -164,7 +164,7 @@ class Writer extends AbstractCsv
     /**
      * Sets the newline sequence.
      */
-    public function setNewline(string $newline) : self
+    public function setNewline(string $newline): self
     {
         $this->newline = $newline;
         return $this;
@@ -176,7 +176,7 @@ class Writer extends AbstractCsv
      *
      * @throws InvalidArgument if the threshold is a integer lesser than 1
      */
-    public function setFlushThreshold(?int $threshold) : self
+    public function setFlushThreshold(?int $threshold): self
     {
         if ($threshold === $this->flush_threshold) {
             return $this;

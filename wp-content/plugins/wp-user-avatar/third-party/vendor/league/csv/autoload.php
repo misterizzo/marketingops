@@ -4,7 +4,7 @@ namespace ProfilePressVendor;
 
 require __DIR__ . '/src/functions_include.php';
 \spl_autoload_register(function ($class) {
-    $prefix = 'League\\Csv\\';
+    $prefix = 'League\Csv\\';
     if (0 !== \strpos($class, $prefix)) {
         return;
     }

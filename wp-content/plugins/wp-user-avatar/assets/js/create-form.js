@@ -75,7 +75,7 @@
             e.preventDefault();
             var form_title_obj = $('#pp-add-form-title');
             // remove input field error on change.
-            form_title_obj.change(function () {
+            form_title_obj.on('change', function () {
                 form_title_obj.removeClass('pp-input-error');
             });
 

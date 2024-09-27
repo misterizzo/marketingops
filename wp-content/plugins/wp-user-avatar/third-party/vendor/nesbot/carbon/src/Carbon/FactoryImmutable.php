@@ -247,7 +247,7 @@ class FactoryImmutable extends Factory implements ClockInterface
      *
      * @return CarbonImmutable
      */
-    public function now($tz = null) : DateTimeImmutable
+    public function now($tz = null): DateTimeImmutable
     {
         $className = $this->className;
         return new $className(null, $tz);

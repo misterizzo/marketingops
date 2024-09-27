@@ -55,10 +55,10 @@ class EscapeFormula
      *
      * @return array<string>
      */
-    protected function filterSpecialCharacters(string ...$characters) : array
+    protected function filterSpecialCharacters(string ...$characters): array
     {
         foreach ($characters as $str) {
-            if (1 != \strlen($str)) {
+            if (1 != strlen($str)) {
                 throw new InvalidArgumentException('The submitted string ' . $str . ' must be a single character');
             }
         }
@@ -69,14 +69,14 @@ class EscapeFormula
      *
      * @return array<string>
      */
-    public function getSpecialCharacters() : array
+    public function getSpecialCharacters(): array
     {
         return array_keys($this->special_chars);
     }
     /**
      * Returns the escape character.
      */
-    public function getEscape() : string
+    public function getEscape(): string
     {
         return $this->escape;
     }
@@ -85,14 +85,14 @@ class EscapeFormula
      *
      * @see escapeRecord
      */
-    public function __invoke(array $record) : array
+    public function __invoke(array $record): array
     {
         return $this->escapeRecord($record);
     }
     /**
      * Escape a CSV record.
      */
-    public function escapeRecord(array $record) : array
+    public function escapeRecord(array $record): array
     {
         return array_map([$this, 'escapeField'], $record);
     }
@@ -122,7 +122,7 @@ class EscapeFormula
      *
      * @param mixed $value value to check if it is stringable
      */
-    protected function isStringable($value) : bool
+    protected function isStringable($value): bool
     {
         return is_string($value) || is_object($value) && method_exists($value, '__toString');
     }

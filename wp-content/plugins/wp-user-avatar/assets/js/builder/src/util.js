@@ -13,6 +13,6 @@ export default {
 
     save_changes(collection) {
         $('#pp-form-builder-fields-settings').val(JSON.stringify(collection.toJSON()));
-        $('.pp_edit_form form').submit();
+        $('.pp_edit_form form').trigger('submit');
     },
 }

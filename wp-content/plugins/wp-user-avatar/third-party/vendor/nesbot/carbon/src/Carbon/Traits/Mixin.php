@@ -65,7 +65,7 @@ trait Mixin
      */
     public static function mixin($mixin)
     {
-        \is_string($mixin) && \trait_exists($mixin) ? self::loadMixinTrait($mixin) : self::loadMixinClass($mixin);
+        \is_string($mixin) && trait_exists($mixin) ? self::loadMixinTrait($mixin) : self::loadMixinClass($mixin);
     }
     /**
      * @param object|string $mixin
@@ -93,7 +93,7 @@ trait Mixin
         $baseClass = static::class;
         foreach (self::getMixableMethods($context) as $name) {
             $closureBase = Closure::fromCallable([$context, $name]);
-            static::macro($name, function (...$parameters) use($closureBase, $className, $baseClass) {
+            static::macro($name, function (...$parameters) use ($closureBase, $className, $baseClass) {
                 $downContext = isset($this) ? $this : new $baseClass();
                 $context = isset($this) ? $this->cast($className) : new $className();
                 try {
@@ -139,13 +139,13 @@ trait Mixin
     {
         return 'return new class() extends ' . static::class . ' {use ' . $trait . ';};';
     }
-    private static function getMixableMethods(self $context) : Generator
+    private static function getMixableMethods(self $context): Generator
     {
-        foreach (\get_class_methods($context) as $name) {
-            if (\method_exists(static::class, $name)) {
+        foreach (get_class_methods($context) as $name) {
+            if (method_exists(static::class, $name)) {
                 continue;
             }
-            (yield $name);
+            yield $name;
         }
     }
     /**
@@ -164,7 +164,7 @@ trait Mixin
         try {
             return $callable();
         } finally {
-            \array_pop(static::$macroContextStack);
+            array_pop(static::$macroContextStack);
         }
     }
     /**
@@ -174,7 +174,7 @@ trait Mixin
      */
     protected static function context()
     {
-        return \end(static::$macroContextStack) ?: null;
+        return end(static::$macroContextStack) ?: null;
     }
     /**
      * Return the current context from inside a macro callee or a new one if static.
@@ -183,6 +183,6 @@ trait Mixin
      */
     protected static function this()
     {
-        return \end(static::$macroContextStack) ?: new static();
+        return end(static::$macroContextStack) ?: new static();
     }
 }

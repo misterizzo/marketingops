@@ -31,7 +31,7 @@ abstract class AbstractServiceFactory
      *
      * @return null|string
      */
-    protected abstract function getServiceClass($name);
+    abstract protected function getServiceClass($name);
     /**
      * @param string $name
      *

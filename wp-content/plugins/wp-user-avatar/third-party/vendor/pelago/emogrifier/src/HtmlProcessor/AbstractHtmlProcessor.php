@@ -46,7 +46,7 @@ abstract class AbstractHtmlProcessor
      *
      * @var string
      */
-    protected const HTML_TEMPLATE_ELEMENT_PATTERN = '%<template[\\s>][^<]*+(?:<(?!/template>)[^<]*+)*+(?:</template>|$)%i';
+    protected const HTML_TEMPLATE_ELEMENT_PATTERN = '%<template[\s>][^<]*+(?:<(?!/template>)[^<]*+)*+(?:</template>|$)%i';
     /**
      * @var ?\DOMDocument
      */
@@ -72,7 +72,7 @@ abstract class AbstractHtmlProcessor
      *
      * @throws \InvalidArgumentException if $unprocessedHtml is anything other than a non-empty string
      */
-    public static function fromHtml(string $unprocessedHtml) : self
+    public static function fromHtml(string $unprocessedHtml): self
     {
         if ($unprocessedHtml === '') {
             throw new \InvalidArgumentException('The provided HTML must not be empty.', 1515763647);
@@ -88,7 +88,7 @@ abstract class AbstractHtmlProcessor
      *
      * @return static
      */
-    public static function fromDomDocument(\DOMDocument $document) : self
+    public static function fromDomDocument(\DOMDocument $document): self
     {
         $instance = new static();
         $instance->setDomDocument($document);
@@ -99,7 +99,7 @@ abstract class AbstractHtmlProcessor
      *
      * @param string $html the HTML to process, must be UTF-8-encoded
      */
-    private function setHtml(string $html) : void
+    private function setHtml(string $html): void
     {
         $this->createUnifiedDomDocument($html);
     }
@@ -110,7 +110,7 @@ abstract class AbstractHtmlProcessor
      *
      * @throws \UnexpectedValueException
      */
-    public function getDomDocument() : \DOMDocument
+    public function getDomDocument(): \DOMDocument
     {
         if (!$this->domDocument instanceof \DOMDocument) {
             $message = self::class . '::setDomDocument() has not yet been called on ' . static::class;
@@ -121,7 +121,7 @@ abstract class AbstractHtmlProcessor
     /**
      * @param \DOMDocument $domDocument
      */
-    private function setDomDocument(\DOMDocument $domDocument) : void
+    private function setDomDocument(\DOMDocument $domDocument): void
     {
         $this->domDocument = $domDocument;
         $this->xPath = new \DOMXPath($this->domDocument);
@@ -131,7 +131,7 @@ abstract class AbstractHtmlProcessor
      *
      * @throws \UnexpectedValueException
      */
-    protected function getXPath() : \DOMXPath
+    protected function getXPath(): \DOMXPath
     {
         if (!$this->xPath instanceof \DOMXPath) {
             $message = self::class . '::setDomDocument() has not yet been called on ' . static::class;
@@ -144,7 +144,7 @@ abstract class AbstractHtmlProcessor
      *
      * @return string
      */
-    public function render() : string
+    public function render(): string
     {
         $htmlWithPossibleErroneousClosingTags = $this->getDomDocument()->saveHTML();
         return $this->removeSelfClosingTagsClosingTags($htmlWithPossibleErroneousClosingTags);
@@ -154,11 +154,11 @@ abstract class AbstractHtmlProcessor
      *
      * @return string
      */
-    public function renderBodyContent() : string
+    public function renderBodyContent(): string
     {
         $htmlWithPossibleErroneousClosingTags = $this->getDomDocument()->saveHTML($this->getBodyElement());
         $bodyNodeHtml = $this->removeSelfClosingTagsClosingTags($htmlWithPossibleErroneousClosingTags);
-        return \preg_replace('%</?+body(?:\\s[^>]*+)?+>%', '', $bodyNodeHtml);
+        return \preg_replace('%</?+body(?:\s[^>]*+)?+>%', '', $bodyNodeHtml);
     }
     /**
      * Eliminates any invalid closing tags for void elements from the given HTML.
@@ -167,7 +167,7 @@ abstract class AbstractHtmlProcessor
      *
      * @return string
      */
-    private function removeSelfClosingTagsClosingTags(string $html) : string
+    private function removeSelfClosingTagsClosingTags(string $html): string
     {
         return \preg_replace('%</' . self::PHP_UNRECOGNIZED_VOID_TAGNAME_MATCHER . '>%', '', $html);
     }
@@ -180,7 +180,7 @@ abstract class AbstractHtmlProcessor
      *
      * @throws \RuntimeException
      */
-    private function getBodyElement() : \DOMElement
+    private function getBodyElement(): \DOMElement
     {
         $node = $this->getDomDocument()->getElementsByTagName('body')->item(0);
         if (!$node instanceof \DOMElement) {
@@ -195,7 +195,7 @@ abstract class AbstractHtmlProcessor
      *
      * @param string $html
      */
-    private function createUnifiedDomDocument(string $html) : void
+    private function createUnifiedDomDocument(string $html): void
     {
         $this->createRawDomDocument($html);
         $this->ensureExistenceOfBodyElement();
@@ -205,7 +205,7 @@ abstract class AbstractHtmlProcessor
      *
      * @param string $html
      */
-    private function createRawDomDocument(string $html) : void
+    private function createRawDomDocument(string $html): void
     {
         $domDocument = new \DOMDocument();
         $domDocument->strictErrorChecking = \false;
@@ -224,7 +224,7 @@ abstract class AbstractHtmlProcessor
      *
      * @return string the unified HTML
      */
-    private function prepareHtmlForDomConversion(string $html) : string
+    private function prepareHtmlForDomConversion(string $html): string
     {
         $htmlWithSelfClosingSlashes = $this->ensurePhpUnrecognizedSelfClosingTagsAreXml($html);
         $htmlWithDocumentType = $this->ensureDocumentType($htmlWithSelfClosingSlashes);
@@ -237,7 +237,7 @@ abstract class AbstractHtmlProcessor
      *
      * @return string HTML with document type
      */
-    private function ensureDocumentType(string $html) : string
+    private function ensureDocumentType(string $html): string
     {
         $hasDocumentType = \stripos($html, '<!DOCTYPE') !== \false;
         if ($hasDocumentType) {
@@ -252,10 +252,10 @@ abstract class AbstractHtmlProcessor
      *
      * @return string HTML with normalized document type
      */
-    private function normalizeDocumentType(string $html) : string
+    private function normalizeDocumentType(string $html): string
     {
         // Limit to replacing the first occurrence: as an optimization; and in case an example exists as unescaped text.
-        return \preg_replace('/<!DOCTYPE\\s++html(?=[\\s>])/i', '<!DOCTYPE html', $html, 1);
+        return \preg_replace('/<!DOCTYPE\s++html(?=[\s>])/i', '<!DOCTYPE html', $html, 1);
     }
     /**
      * Adds a Content-Type meta tag for the charset.
@@ -266,17 +266,17 @@ abstract class AbstractHtmlProcessor
      *
      * @return string the HTML with the meta tag added
      */
-    private function addContentTypeMetaTag(string $html) : string
+    private function addContentTypeMetaTag(string $html): string
     {
         if ($this->hasContentTypeMetaTagInHead($html)) {
             return $html;
         }
         // We are trying to insert the meta tag to the right spot in the DOM.
         // If we just prepended it to the HTML, we would lose attributes set to the HTML tag.
-        $hasHeadTag = \preg_match('/<head[\\s>]/i', $html);
+        $hasHeadTag = \preg_match('/<head[\s>]/i', $html);
         $hasHtmlTag = \stripos($html, '<html') !== \false;
         if ($hasHeadTag) {
-            $reworkedHtml = \preg_replace('/<head(?=[\\s>])([^>]*+)>/i', '<head$1>' . self::CONTENT_TYPE_META_TAG, $html);
+            $reworkedHtml = \preg_replace('/<head(?=[\s>])([^>]*+)>/i', '<head$1>' . self::CONTENT_TYPE_META_TAG, $html);
         } elseif ($hasHtmlTag) {
             $reworkedHtml = \preg_replace('/<html(.*?)>/is', '<html$1><head>' . self::CONTENT_TYPE_META_TAG . '</head>', $html);
         } else {
@@ -293,9 +293,9 @@ abstract class AbstractHtmlProcessor
      *
      * @return bool
      */
-    private function hasContentTypeMetaTagInHead(string $html) : bool
+    private function hasContentTypeMetaTagInHead(string $html): bool
     {
-        \preg_match('%^.*?(?=<meta(?=\\s)[^>]*\\shttp-equiv=(["\']?+)Content-Type\\g{-1}[\\s/>])%is', $html, $matches);
+        \preg_match('%^.*?(?=<meta(?=\s)[^>]*\shttp-equiv=(["\']?+)Content-Type\g{-1}[\s/>])%is', $html, $matches);
         if (isset($matches[0])) {
             $htmlBefore = $matches[0];
             try {
@@ -321,9 +321,9 @@ abstract class AbstractHtmlProcessor
      *
      * @throws \RuntimeException
      */
-    private function hasEndOfHeadElement(string $html) : bool
+    private function hasEndOfHeadElement(string $html): bool
     {
-        $headEndTagMatchCount = \preg_match('%<(?!' . self::TAGNAME_ALLOWED_BEFORE_BODY_MATCHER . '[\\s/>])\\w|</head>%i', $html);
+        $headEndTagMatchCount = \preg_match('%<(?!' . self::TAGNAME_ALLOWED_BEFORE_BODY_MATCHER . '[\s/>])\w|</head>%i', $html);
         if (\is_int($headEndTagMatchCount) && $headEndTagMatchCount > 0) {
             // An exception to the implicit end of the `<head>` is any content within a `<template>` element, as well in
             // comments.  As an optimization, this is only checked for if a potential `<head>` end tag is found.
@@ -344,7 +344,7 @@ abstract class AbstractHtmlProcessor
      *
      * @throws \RuntimeException
      */
-    private function removeHtmlComments(string $html) : string
+    private function removeHtmlComments(string $html): string
     {
         $result = \preg_replace(self::HTML_COMMENT_PATTERN, '', $html);
         if (!\is_string($result)) {
@@ -362,7 +362,7 @@ abstract class AbstractHtmlProcessor
      *
      * @throws \RuntimeException
      */
-    private function removeHtmlTemplateElements(string $html) : string
+    private function removeHtmlTemplateElements(string $html): string
     {
         $result = \preg_replace(self::HTML_TEMPLATE_ELEMENT_PATTERN, '', $html);
         if (!\is_string($result)) {
@@ -378,16 +378,16 @@ abstract class AbstractHtmlProcessor
      *
      * @return string HTML with problematic tags converted.
      */
-    private function ensurePhpUnrecognizedSelfClosingTagsAreXml(string $html) : string
+    private function ensurePhpUnrecognizedSelfClosingTagsAreXml(string $html): string
     {
-        return \preg_replace('%<' . self::PHP_UNRECOGNIZED_VOID_TAGNAME_MATCHER . '\\b[^>]*+(?<!/)(?=>)%', '$0/', $html);
+        return \preg_replace('%<' . self::PHP_UNRECOGNIZED_VOID_TAGNAME_MATCHER . '\b[^>]*+(?<!/)(?=>)%', '$0/', $html);
     }
     /**
      * Checks that $this->domDocument has a BODY element and adds it if it is missing.
      *
      * @throws \UnexpectedValueException
      */
-    private function ensureExistenceOfBodyElement() : void
+    private function ensureExistenceOfBodyElement(): void
     {
         if ($this->getDomDocument()->getElementsByTagName('body')->item(0) instanceof \DOMElement) {
             return;

@@ -18,5 +18,5 @@ interface ProviderExceptionInterface extends ExceptionInterface
     /*
      * Returns debug info coming from the Symfony\Contracts\HttpClient\ResponseInterface
      */
-    public function getDebug() : string;
+    public function getDebug(): string;
 }

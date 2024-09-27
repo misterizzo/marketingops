@@ -40,8 +40,11 @@ class WP_User_Avatar
                 ob_start();
                 echo '<style>.user-profile-picture > td > .avatar {display: none;}</style>';
                 self::wpua_core_show_user_profile($profileuser);
-                printf('</p></td></tr><tr class="ppress-user-cover-image"><th>%s</th><td>', esc_html__('Cover Photo', 'wp-user-avatar'));
-                self::wpua_core_show_cover_photo($profileuser);
+
+                if ( ! apply_filters('ppress_wp_user_profile_disable_cover_photo_upload', false)) {
+                    printf('</p></td></tr><tr class="ppress-user-cover-image"><th>%s</th><td>', esc_html__('Cover Photo', 'wp-user-avatar'));
+                    self::wpua_core_show_cover_photo($profileuser);
+                }
 
                 return ob_get_clean();
 

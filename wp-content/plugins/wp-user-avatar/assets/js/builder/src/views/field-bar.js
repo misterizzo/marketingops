@@ -18,7 +18,7 @@ export default Backbone.View.extend({
     reveal_settings(e) {
         e.preventDefault();
 
-        $(e.target).parent('a').blur();
+        $(e.target).parent('a').trigger('blur');
         const fieldType = this.model.get('fieldType');
         let activeSettingsView = new FieldSettingsView({fieldType, model: this.model});
         activeSettingsView.render();
@@ -40,7 +40,7 @@ export default Backbone.View.extend({
     delete_field(e) {
         e.preventDefault();
         if (confirm(pp_form_builder.confirm_delete)) {
-            $(e.target).parent('a').blur();
+            $(e.target).parent('a').trigger('blur');
             this.remove();
             this.collection.remove(this.model);
         }
@@ -48,7 +48,7 @@ export default Backbone.View.extend({
 
     clone_field(e) {
         e.preventDefault();
-        $(e.target).parent('a').blur();
+        $(e.target).parent('a').trigger('blur');
         this.collection.add(
             this.model.clone(),
             {

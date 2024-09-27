@@ -83,6 +83,8 @@ class FrontendProfileTag
      */
     public function user_profile_parser($atts)
     {
+        global $ppress_frontend_profile_user_obj;
+
         if ( ! is_user_logged_in() && ppress_get_setting('disable_guests_can_view_profiles') == 'on') {
             return wpautop(sprintf(
                 __('This content is available to members only. Please <a href="%1$s">login</a> or <a href="%2$s">register</a> to view this area.', 'wp-user-avatar'),
@@ -102,6 +104,8 @@ class FrontendProfileTag
         if ( ! empty($atts['user-id'])) {
 
             $user = apply_filters('ppress_frontend_profile_wp_user_object', get_user_by('ID', absint($atts['user-id'])));
+
+            $ppress_frontend_profile_user_obj = $user;
 
             // we are instantiating the class directly because it has already been called by set_up_detected_profile hooked into wp
             // action. If we had used the singleton instance method, it would have returned the previous instance.

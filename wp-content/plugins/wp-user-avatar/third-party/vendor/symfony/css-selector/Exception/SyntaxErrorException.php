@@ -26,21 +26,21 @@ class SyntaxErrorException extends ParseException
      */
     public static function unexpectedToken(string $expectedValue, Token $foundToken)
     {
-        return new self(\sprintf('Expected %s, but %s found.', $expectedValue, $foundToken));
+        return new self(sprintf('Expected %s, but %s found.', $expectedValue, $foundToken));
     }
     /**
      * @return self
      */
     public static function pseudoElementFound(string $pseudoElement, string $unexpectedLocation)
     {
-        return new self(\sprintf('Unexpected pseudo-element "::%s" found %s.', $pseudoElement, $unexpectedLocation));
+        return new self(sprintf('Unexpected pseudo-element "::%s" found %s.', $pseudoElement, $unexpectedLocation));
     }
     /**
      * @return self
      */
     public static function unclosedString(int $position)
     {
-        return new self(\sprintf('Unclosed/invalid string at %s.', $position));
+        return new self(sprintf('Unclosed/invalid string at %s.', $position));
     }
     /**
      * @return self

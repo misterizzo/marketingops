@@ -59,13 +59,15 @@ class Redirect
                 if ($current_url == $password_reset_url) continue;
                 if ($current_url == $edit_profile_url) continue;
 
-                $who_can_access = ppress_var($access_condition, 'who_can_access', 'everyone');
-
-                $access_roles            = ppress_var($access_condition, 'access_roles', []);
-                $access_wp_users         = ppress_var($access_condition, 'access_wp_users', []);
-                $access_membership_plans = ppress_var($access_condition, 'access_membership_plans', []);
+                if (isset($meta['exempt']) && is_array($meta['exempt']) && Checker::content_match($meta['exempt'])) continue;
 
                 if (Checker::content_match($meta['content'], true)) {
+
+                    $who_can_access = ppress_var($access_condition, 'who_can_access', 'everyone');
+
+                    $access_roles            = ppress_var($access_condition, 'access_roles', []);
+                    $access_wp_users         = ppress_var($access_condition, 'access_wp_users', []);
+                    $access_membership_plans = ppress_var($access_condition, 'access_membership_plans', []);
 
                     if (Checker::is_blocked($who_can_access, $access_roles, $access_wp_users, $access_membership_plans)) {
                         nocache_headers();

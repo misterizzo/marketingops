@@ -179,7 +179,7 @@ jQuery.fn.pp_wp_editor = function (options) {
 
             event.preventDefault();
 
-            elem.blur();
+            elem.trigger('blur');
 
             if (elem.hasClass('gallery')) {
                 options.state = 'gallery';

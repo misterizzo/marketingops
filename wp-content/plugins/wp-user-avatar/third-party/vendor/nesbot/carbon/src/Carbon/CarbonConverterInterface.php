@@ -13,5 +13,5 @@ namespace ProfilePressVendor\Carbon;
 use DateTimeInterface;
 interface CarbonConverterInterface
 {
-    public function convertDate(DateTimeInterface $dateTime, bool $negated = \false) : CarbonInterface;
+    public function convertDate(DateTimeInterface $dateTime, bool $negated = \false): CarbonInterface;
 }

@@ -36,7 +36,7 @@ class UnknownUnitException extends UnitException
      *
      * @return string
      */
-    public function getUnit() : string
+    public function getUnit(): string
     {
         return $this->unit;
     }

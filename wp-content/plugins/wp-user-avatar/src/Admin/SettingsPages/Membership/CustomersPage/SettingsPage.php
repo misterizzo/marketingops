@@ -427,7 +427,7 @@ class SettingsPage extends AbstractSettingsPage
                         $("#username_row").hide();
                         $("#password_row").hide();
                     }
-                }).change();
+                }).trigger('change');
             });
         </script>
         <?php

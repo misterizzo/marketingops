@@ -48,7 +48,7 @@ class CssDocument
      *
      * @return array<int, StyleRule>
      */
-    public function getStyleRulesData(array $allowedMediaTypes) : array
+    public function getStyleRulesData(array $allowedMediaTypes): array
     {
         $ruleMatches = [];
         /** @var CssRenderable $rule */
@@ -76,7 +76,7 @@ class CssDocument
      *
      * @return string
      */
-    public function renderNonConditionalAtRules() : string
+    public function renderNonConditionalAtRules(): string
     {
         $this->isImportRuleAllowed = \true;
         /** @var array<int, CssRenderable> $cssContents */
@@ -99,7 +99,7 @@ class CssDocument
      *         If the nested at-rule is supported, it's opening declaration (e.g. "@media (max-width: 768px)") is
      *         returned; otherwise the return value is null.
      */
-    private function getFilteredAtIdentifierAndRule(CssAtRuleBlockList $rule, array $allowedMediaTypes) : ?string
+    private function getFilteredAtIdentifierAndRule(CssAtRuleBlockList $rule, array $allowedMediaTypes): ?string
     {
         $result = null;
         if ($rule->atRuleName() === 'media') {
@@ -107,11 +107,11 @@ class CssDocument
             $mediaQueryList = $rule->atRuleArgs();
             [$mediaType] = \explode('(', $mediaQueryList, 2);
             if (\trim($mediaType) !== '') {
-                $escapedAllowedMediaTypes = \array_map(static function (string $allowedMediaType) : string {
+                $escapedAllowedMediaTypes = \array_map(static function (string $allowedMediaType): string {
                     return \preg_quote($allowedMediaType, '/');
                 }, $allowedMediaTypes);
                 $mediaTypesMatcher = \implode('|', $escapedAllowedMediaTypes);
-                $isAllowed = \preg_match('/^\\s*+(?:only\\s++)?+(?:' . $mediaTypesMatcher . ')/i', $mediaType) > 0;
+                $isAllowed = \preg_match('/^\s*+(?:only\s++)?+(?:' . $mediaTypesMatcher . ')/i', $mediaType) > 0;
             } else {
                 $isAllowed = \true;
             }
@@ -135,7 +135,7 @@ class CssDocument
      *
      * @return bool
      */
-    private function isValidAtRuleToRender(CssRenderable $rule) : bool
+    private function isValidAtRuleToRender(CssRenderable $rule): bool
     {
         if ($rule instanceof CssCharset) {
             return \false;

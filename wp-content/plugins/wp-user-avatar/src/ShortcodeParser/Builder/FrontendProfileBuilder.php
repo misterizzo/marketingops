@@ -9,7 +9,7 @@ use ProfilePress\Core\Classes\UserAvatar;
 class FrontendProfileBuilder
 {
     /** @var \WP_User user_data */
-    static private $user_data;
+    private static $user_data;
 
     /**
      * Define all front-end profile sub-shortcode.
@@ -293,7 +293,7 @@ class FrontendProfileBuilder
             }
         }
 
-        return apply_filters('ppress_profile_display_name', ucwords($display_name), self::$user_data);
+        return apply_filters('ppress_profile_display_name', $display_name, self::$user_data);
     }
 
     /**

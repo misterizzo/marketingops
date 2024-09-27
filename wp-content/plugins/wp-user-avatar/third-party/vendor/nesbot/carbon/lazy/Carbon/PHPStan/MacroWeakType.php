@@ -11,7 +11,7 @@ declare (strict_types=1);
  */
 namespace ProfilePressVendor\Carbon\PHPStan;
 
-if (!\class_exists(LazyMacro::class, \false)) {
+if (!class_exists(LazyMacro::class, \false)) {
     abstract class LazyMacro extends AbstractReflectionMacro
     {
         /**
@@ -22,7 +22,7 @@ if (!\class_exists(LazyMacro::class, \false)) {
         public function getFileName()
         {
             $file = $this->reflectionFunction->getFileName();
-            return (($file ? \realpath($file) : null) ?: $file) ?: null;
+            return (($file ? realpath($file) : null) ?: $file) ?: null;
         }
         /**
          * {@inheritdoc}

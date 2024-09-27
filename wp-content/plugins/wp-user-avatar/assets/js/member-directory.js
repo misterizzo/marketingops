@@ -6,7 +6,7 @@
 
             e.preventDefault();
 
-            $(this).blur().next().toggle()
+            $(this).trigger('blur').next().toggle()
         });
 
         // close dropdown menu when outside is clicked.
@@ -28,7 +28,7 @@
 
             filterStateVar = !filterStateVar;
 
-            $('a', _this).blur();
+            $('a', _this).trigger('blur');
 
             if (filterStateVar) {
                 $('.ppressmd-member-directory-filters-bar', parent).removeClass('.ppressmd-header-row-invisible')

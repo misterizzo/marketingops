@@ -45,14 +45,14 @@ class NativeCalculator extends Calculator
     /**
      * {@inheritdoc}
      */
-    public function add(string $a, string $b) : string
+    public function add(string $a, string $b): string
     {
         /**
          * @psalm-var numeric-string $a
          * @psalm-var numeric-string $b
          */
         $result = $a + $b;
-        if (\is_int($result)) {
+        if (is_int($result)) {
             return (string) $result;
         }
         if ($a === '0') {
@@ -71,21 +71,21 @@ class NativeCalculator extends Calculator
     /**
      * {@inheritdoc}
      */
-    public function sub(string $a, string $b) : string
+    public function sub(string $a, string $b): string
     {
         return $this->add($a, $this->neg($b));
     }
     /**
      * {@inheritdoc}
      */
-    public function mul(string $a, string $b) : string
+    public function mul(string $a, string $b): string
     {
         /**
          * @psalm-var numeric-string $a
          * @psalm-var numeric-string $b
          */
         $result = $a * $b;
-        if (\is_int($result)) {
+        if (is_int($result)) {
             return (string) $result;
         }
         if ($a === '0' || $b === '0') {
@@ -113,21 +113,21 @@ class NativeCalculator extends Calculator
     /**
      * {@inheritdoc}
      */
-    public function divQ(string $a, string $b) : string
+    public function divQ(string $a, string $b): string
     {
         return $this->divQR($a, $b)[0];
     }
     /**
      * {@inheritdoc}
      */
-    public function divR(string $a, string $b) : string
+    public function divR(string $a, string $b): string
     {
         return $this->divQR($a, $b)[1];
     }
     /**
      * {@inheritdoc}
      */
-    public function divQR(string $a, string $b) : array
+    public function divQR(string $a, string $b): array
     {
         if ($a === '0') {
             return ['0', '0'];
@@ -144,15 +144,15 @@ class NativeCalculator extends Calculator
         /** @psalm-var numeric-string $a */
         $na = $a * 1;
         // cast to number
-        if (\is_int($na)) {
+        if (is_int($na)) {
             /** @psalm-var numeric-string $b */
             $nb = $b * 1;
-            if (\is_int($nb)) {
+            if (is_int($nb)) {
                 // the only division that may overflow is PHP_INT_MIN / -1,
                 // which cannot happen here as we've already handled a divisor of -1 above.
                 $r = $na % $nb;
                 $q = ($na - $r) / $nb;
-                \assert(\is_int($q));
+                assert(is_int($q));
                 return [(string) $q, (string) $r];
             }
         }
@@ -169,7 +169,7 @@ class NativeCalculator extends Calculator
     /**
      * {@inheritdoc}
      */
-    public function pow(string $a, int $e) : string
+    public function pow(string $a, int $e): string
     {
         if ($e === 0) {
             return '1';
@@ -192,7 +192,7 @@ class NativeCalculator extends Calculator
      *
      * {@inheritdoc}
      */
-    public function modPow(string $base, string $exp, string $mod) : string
+    public function modPow(string $base, string $exp, string $mod): string
     {
         // special case: the algorithm below fails with 0 power 0 mod 1 (returns 1 instead of 0)
         if ($base === '0' && $exp === '0' && $mod === '1') {
@@ -207,7 +207,7 @@ class NativeCalculator extends Calculator
         // numbers are positive, so we can use remainder instead of modulo
         $x = $this->divR($x, $mod);
         while ($exp !== '0') {
-            if (\in_array($exp[-1], ['1', '3', '5', '7', '9'])) {
+            if (in_array($exp[-1], ['1', '3', '5', '7', '9'])) {
                 // odd
                 $res = $this->divR($this->mul($res, $x), $mod);
             }
@@ -221,7 +221,7 @@ class NativeCalculator extends Calculator
      *
      * {@inheritDoc}
      */
-    public function sqrt(string $n) : string
+    public function sqrt(string $n): string
     {
         if ($n === '0') {
             return '0';
@@ -247,7 +247,7 @@ class NativeCalculator extends Calculator
      *
      * @return string
      */
-    private function doAdd(string $a, string $b) : string
+    private function doAdd(string $a, string $b): string
     {
         [$a, $b, $length] = $this->pad($a, $b);
         $carry = 0;
@@ -292,7 +292,7 @@ class NativeCalculator extends Calculator
      *
      * @return string
      */
-    private function doSub(string $a, string $b) : string
+    private function doSub(string $a, string $b): string
     {
         if ($a === $b) {
             return '0';
@@ -338,7 +338,7 @@ class NativeCalculator extends Calculator
             }
         }
         // Carry cannot be 1 when the loop ends, as a > b
-        \assert($carry === 0);
+        assert($carry === 0);
         $result = \ltrim($result, '0');
         if ($invert) {
             $result = $this->neg($result);
@@ -353,7 +353,7 @@ class NativeCalculator extends Calculator
      *
      * @return string
      */
-    private function doMul(string $a, string $b) : string
+    private function doMul(string $a, string $b): string
     {
         $x = \strlen($a);
         $y = \strlen($b);
@@ -410,7 +410,7 @@ class NativeCalculator extends Calculator
      *
      * @return string[] The quotient and remainder.
      */
-    private function doDiv(string $a, string $b) : array
+    private function doDiv(string $a, string $b): array
     {
         $cmp = $this->doCmp($a, $b);
         if ($cmp === -1) {
@@ -460,7 +460,7 @@ class NativeCalculator extends Calculator
      *
      * @return int [-1, 0, 1]
      */
-    private function doCmp(string $a, string $b) : int
+    private function doCmp(string $a, string $b): int
     {
         $x = \strlen($a);
         $y = \strlen($b);
@@ -481,7 +481,7 @@ class NativeCalculator extends Calculator
      *
      * @return array{string, string, int}
      */
-    private function pad(string $a, string $b) : array
+    private function pad(string $a, string $b): array
     {
         $x = \strlen($a);
         $y = \strlen($b);

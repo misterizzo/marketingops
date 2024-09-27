@@ -10,6 +10,7 @@ class Init
 {
     public function __construct()
     {
+        add_action('wp_ajax_ppress_exempt_content_condition_field', [$this, 'get_exempt_content_condition_field']);
         add_action('wp_ajax_ppress_content_condition_field', [$this, 'get_content_condition_field']);
         add_action('wp_ajax_ppress_cr_object_search', [$this, 'get_content_condition_search']);
 
@@ -44,6 +45,28 @@ class Init
 
         wp_send_json_error();
     }
+
+	public function get_exempt_content_condition_field()
+	{
+		check_ajax_referer('ppress_cr_nonce', 'nonce');
+
+		$instance = ContentConditions::get_instance();
+
+		if ( ! empty($_POST['field_type']) && ! empty($_POST['facetId']) && ! empty($_POST['facetListId'])) {
+
+			$condition_id = sanitize_text_field($_POST['condition_id']);
+
+			$field = $instance->exempt_rule_value_field(
+				$condition_id,
+				sanitize_text_field($_POST['facetListId']),
+				sanitize_text_field($_POST['facetId'])
+			);
+
+			if (false !== $field) wp_send_json_success($field);
+		}
+
+		wp_send_json_error();
+	}
 
     public function get_content_condition_search()
     {

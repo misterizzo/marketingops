@@ -36,7 +36,7 @@ class ArrayLoader implements LoaderInterface
      * Becomes:
      *   'key.key2.key3' => 'value'
      */
-    private function flatten(array $messages) : array
+    private function flatten(array $messages): array
     {
         $result = [];
         foreach ($messages as $key => $value) {

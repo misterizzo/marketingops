@@ -109,16 +109,16 @@ class CleanupPlugin implements PluginInterface, EventSubscriberInterface
         if (!$rules) {
             return;
         }
-        $dir = $this->filesystem->normalizePath(\realpath($vendorDir . '/' . $packageDir));
-        if (!\is_dir($dir)) {
+        $dir = $this->filesystem->normalizePath(realpath($vendorDir . '/' . $packageDir));
+        if (!is_dir($dir)) {
             return \false;
         }
         foreach ((array) $rules as $part) {
             // Split patterns for single globs (should be max 260 chars)
-            $patterns = \explode(' ', \trim($part));
+            $patterns = explode(' ', trim($part));
             foreach ($patterns as $pattern) {
                 try {
-                    foreach (\glob($dir . '/' . $pattern) as $file) {
+                    foreach (glob($dir . '/' . $pattern) as $file) {
                         $this->filesystem->remove($file);
                     }
                 } catch (\Exception $e) {

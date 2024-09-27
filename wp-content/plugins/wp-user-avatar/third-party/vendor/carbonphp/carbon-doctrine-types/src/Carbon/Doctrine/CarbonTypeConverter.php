@@ -27,22 +27,22 @@ trait CarbonTypeConverter
     /**
      * @return class-string<T>
      */
-    protected function getCarbonClassName() : string
+    protected function getCarbonClassName(): string
     {
         return Carbon::class;
     }
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform) : string
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
-        $precision = \min($fieldDeclaration['precision'] ?? DateTimeDefaultPrecision::get(), $this->getMaximumPrecision($platform));
+        $precision = min($fieldDeclaration['precision'] ?? DateTimeDefaultPrecision::get(), $this->getMaximumPrecision($platform));
         $type = parent::getSQLDeclaration($fieldDeclaration, $platform);
         if (!$precision) {
             return $type;
         }
-        if (\str_contains($type, '(')) {
-            return \preg_replace('/\\(\\d+\\)/', "({$precision})", $type);
+        if (str_contains($type, '(')) {
+            return preg_replace('/\(\d+\)/', "({$precision})", $type);
         }
-        [$before, $after] = \explode(' ', "{$type} ");
-        return \trim("{$before}({$precision}) {$after}");
+        [$before, $after] = explode(' ', "{$type} ");
+        return trim("{$before}({$precision}) {$after}");
     }
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
@@ -52,7 +52,7 @@ trait CarbonTypeConverter
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
         $class = $this->getCarbonClassName();
-        if ($value === null || \is_a($value, $class)) {
+        if ($value === null || is_a($value, $class)) {
             return $value;
         }
         if ($value instanceof DateTimeInterface) {
@@ -73,7 +73,7 @@ trait CarbonTypeConverter
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function convertToDatabaseValue($value, AbstractPlatform $platform) : ?string
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
         if ($value === null) {
             return $value;
@@ -83,13 +83,13 @@ trait CarbonTypeConverter
         }
         throw ConversionException::conversionFailedInvalidType($value, $this->getTypeName(), ['null', 'DateTime', 'Carbon']);
     }
-    private function getTypeName() : string
+    private function getTypeName(): string
     {
-        $chunks = \explode('\\', static::class);
-        $type = \preg_replace('/Type$/', '', \end($chunks));
-        return \strtolower(\preg_replace('/([a-z])([A-Z])/', '$1_$2', $type));
+        $chunks = explode('\\', static::class);
+        $type = preg_replace('/Type$/', '', end($chunks));
+        return strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $type));
     }
-    private function getMaximumPrecision(AbstractPlatform $platform) : int
+    private function getMaximumPrecision(AbstractPlatform $platform): int
     {
         if ($platform instanceof DB2Platform) {
             return 12;

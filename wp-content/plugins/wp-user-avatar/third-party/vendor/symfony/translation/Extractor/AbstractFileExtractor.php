@@ -25,21 +25,21 @@ abstract class AbstractFileExtractor
      */
     protected function extractFiles($resource)
     {
-        if (\is_iterable($resource)) {
+        if (is_iterable($resource)) {
             $files = [];
             foreach ($resource as $file) {
                 if ($this->canBeExtracted($file)) {
                     $files[] = $this->toSplFileInfo($file);
                 }
             }
-        } elseif (\is_file($resource)) {
+        } elseif (is_file($resource)) {
             $files = $this->canBeExtracted($resource) ? [$this->toSplFileInfo($resource)] : [];
         } else {
             $files = $this->extractFromDirectory($resource);
         }
         return $files;
     }
-    private function toSplFileInfo(string $file) : \SplFileInfo
+    private function toSplFileInfo(string $file): \SplFileInfo
     {
         return new \SplFileInfo($file);
     }
@@ -50,19 +50,19 @@ abstract class AbstractFileExtractor
      */
     protected function isFile(string $file)
     {
-        if (!\is_file($file)) {
-            throw new InvalidArgumentException(\sprintf('The "%s" file does not exist.', $file));
+        if (!is_file($file)) {
+            throw new InvalidArgumentException(sprintf('The "%s" file does not exist.', $file));
         }
         return \true;
     }
     /**
      * @return bool
      */
-    protected abstract function canBeExtracted(string $file);
+    abstract protected function canBeExtracted(string $file);
     /**
      * @param string|array $resource Files, a file or a directory
      *
      * @return iterable
      */
-    protected abstract function extractFromDirectory($resource);
+    abstract protected function extractFromDirectory($resource);
 }

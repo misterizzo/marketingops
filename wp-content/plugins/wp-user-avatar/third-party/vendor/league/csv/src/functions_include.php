@@ -10,6 +10,6 @@ namespace ProfilePressVendor;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-if (!\function_exists('ProfilePressVendor\\League\\Csv\\bom_match')) {
+if (!\function_exists('ProfilePressVendor\League\Csv\bom_match')) {
     require __DIR__ . '/functions.php';
 }

@@ -28,9 +28,9 @@ class WhitespaceHandler implements HandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function handle(Reader $reader, TokenStream $stream) : bool
+    public function handle(Reader $reader, TokenStream $stream): bool
     {
-        $match = $reader->findPattern('~^[ \\t\\r\\n\\f]+~');
+        $match = $reader->findPattern('~^[ \t\r\n\f]+~');
         if (\false === $match) {
             return \false;
         }

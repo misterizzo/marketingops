@@ -7,6 +7,7 @@ use ProfilePress\Core\Membership\Models\Coupon\CouponFactory;
 use ProfilePress\Core\Membership\Models\Customer\CustomerFactory;
 use ProfilePress\Core\Membership\Models\Group\GroupFactory;
 use ProfilePress\Core\Membership\Models\Order\OrderFactory;
+use ProfilePress\Core\Membership\Models\Order\OrderType;
 use ProfilePress\Core\Membership\Models\Subscription\SubscriptionFactory;
 
 class MembershipShortcodes
@@ -158,7 +159,11 @@ class MembershipShortcodes
 
             $coupon = CouponFactory::fromCode(sanitize_text_field($_GET['coupon']));
 
-            if ($coupon->exists()) {
+            $order_type = CheckoutSessionData::get_order_type($planObj->get_id());
+
+            if ( ! $order_type) $order_type = OrderType::NEW_ORDER;
+
+            if ($coupon->exists() && $coupon->is_valid($planObj->get_id(), $order_type)) {
 
                 ppress_session()->set(CheckoutSessionData::COUPON_CODE, [
                     'plan_id'     => $planObj->id,

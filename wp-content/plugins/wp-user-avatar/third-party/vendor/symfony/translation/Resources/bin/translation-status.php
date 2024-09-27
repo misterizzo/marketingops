@@ -113,7 +113,7 @@ function calculateTranslationStatus($originalFilePath, $translationFilePaths)
     }
     return $translationStatus;
 }
-function isTranslationCompleted(array $translationStatus) : bool
+function isTranslationCompleted(array $translationStatus): bool
 {
     return $translationStatus['total'] === $translationStatus['translated'] && 0 === \count($translationStatus['mismatches']);
 }
@@ -142,7 +142,7 @@ function extractTranslationKeys($filePath)
 /**
  * Check whether the trans-unit id and source match with the base translation.
  */
-function findTransUnitMismatches(array $baseTranslationKeys, array $translatedKeys) : array
+function findTransUnitMismatches(array $baseTranslationKeys, array $translatedKeys): array
 {
     $mismatches = [];
     foreach ($baseTranslationKeys as $translationId => $translationKey) {

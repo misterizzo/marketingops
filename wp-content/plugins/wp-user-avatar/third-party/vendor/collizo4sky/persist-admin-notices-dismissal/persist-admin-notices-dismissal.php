@@ -30,7 +30,7 @@ namespace ProfilePressVendor;
 if (!\defined('ABSPATH')) {
     die;
 }
-if (!\class_exists('ProfilePressVendor\\PAnD')) {
+if (!\class_exists('ProfilePressVendor\PAnD')) {
     /**
      * Class PAnD
      */
@@ -155,4 +155,8 @@ if (!\class_exists('ProfilePressVendor\\PAnD')) {
             return \true;
         }
     }
+    /**
+     * Class PAnD
+     */
+    \class_alias('ProfilePressVendor\PAnD', 'PAnD', \false);
 }

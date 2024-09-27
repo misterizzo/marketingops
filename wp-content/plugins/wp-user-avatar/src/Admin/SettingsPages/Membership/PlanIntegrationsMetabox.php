@@ -140,7 +140,10 @@ class PlanIntegrationsMetabox
     {
         printf('<select id="%1$s" name="%1$s" class="select short">', esc_attr($name));
 
-        if (is_array($options['options']) && ! empty($options['options'])) {
+        if (
+            isset($options['options']) &&
+            ($options['options'] instanceof \Generator || (is_array($options['options']) && ! empty($options['options'])))
+        ) {
             foreach ($options['options'] as $id => $val) {
                 if (is_array($val)) {
                     echo "<optgroup label='$id'>";
@@ -174,7 +177,10 @@ class PlanIntegrationsMetabox
         printf('<input name="%1$s[]" type="hidden" value="">', esc_attr($name));
         printf('<select data-placeholder="%2$s" id="%1$s" name="%1$s[]" class="select ppselect2 short" multiple>', esc_attr($name), esc_html__('Select...', 'wp-user-avatar'));
 
-        if (is_array($options['options']) && ! empty($options['options'])) {
+        if (
+            isset($options['options']) &&
+            ($options['options'] instanceof \Generator || (is_array($options['options']) && ! empty($options['options'])))
+        ) {
             foreach ($options['options'] as $id => $val) {
                 if (is_array($val)) {
                     echo "<optgroup label='$id'>";

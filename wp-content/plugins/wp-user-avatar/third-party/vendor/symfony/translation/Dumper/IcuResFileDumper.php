@@ -29,19 +29,19 @@ class IcuResFileDumper extends FileDumper
     {
         $data = $indexes = $resources = '';
         foreach ($messages->all($domain) as $source => $target) {
-            $indexes .= \pack('v', \strlen($data) + 28);
+            $indexes .= pack('v', \strlen($data) + 28);
             $data .= $source . "\x00";
         }
         $data .= $this->writePadding($data);
         $keyTop = $this->getPosition($data);
         foreach ($messages->all($domain) as $source => $target) {
-            $resources .= \pack('V', $this->getPosition($data));
-            $data .= \pack('V', \strlen($target)) . \mb_convert_encoding($target . "\x00", 'UTF-16LE', 'UTF-8') . $this->writePadding($data);
+            $resources .= pack('V', $this->getPosition($data));
+            $data .= pack('V', \strlen($target)) . mb_convert_encoding($target . "\x00", 'UTF-16LE', 'UTF-8') . $this->writePadding($data);
         }
         $resOffset = $this->getPosition($data);
-        $data .= \pack('v', \count($messages->all($domain))) . $indexes . $this->writePadding($data) . $resources;
+        $data .= pack('v', \count($messages->all($domain))) . $indexes . $this->writePadding($data) . $resources;
         $bundleTop = $this->getPosition($data);
-        $root = \pack(
+        $root = pack(
             'V7',
             $resOffset + (2 << 28),
             // Resource Offset + Resource Type
@@ -57,7 +57,7 @@ class IcuResFileDumper extends FileDumper
             // Index max table length
             0
         );
-        $header = \pack(
+        $header = pack(
             'vC2v4C12@32',
             32,
             // Header size
@@ -86,10 +86,10 @@ class IcuResFileDumper extends FileDumper
         );
         return $header . $root . $data;
     }
-    private function writePadding(string $data) : ?string
+    private function writePadding(string $data): ?string
     {
         $padding = \strlen($data) % 4;
-        return $padding ? \str_repeat("\xaa", 4 - $padding) : null;
+        return $padding ? str_repeat("\xaa", 4 - $padding) : null;
     }
     private function getPosition(string $data)
     {

@@ -31,14 +31,14 @@ class ColumnConsistency
     /**
      * Returns the column count.
      */
-    public function getColumnCount() : int
+    public function getColumnCount(): int
     {
         return $this->columns_count;
     }
     /**
      * Tell whether the submitted record is valid.
      */
-    public function __invoke(array $record) : bool
+    public function __invoke(array $record): bool
     {
         $count = count($record);
         if (-1 === $this->columns_count) {

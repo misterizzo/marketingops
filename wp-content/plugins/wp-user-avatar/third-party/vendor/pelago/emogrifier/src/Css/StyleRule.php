@@ -32,39 +32,39 @@ class StyleRule
     /**
      * @return array<int, string> the selectors, e.g. `["h1", "p"]`
      */
-    public function getSelectors() : array
+    public function getSelectors(): array
     {
         /** @var array<int, Selector> $selectors */
         $selectors = $this->declarationBlock->getSelectors();
-        return \array_map(static function (Selector $selector) : string {
+        return \array_map(static function (Selector $selector): string {
             return (string) $selector;
         }, $selectors);
     }
     /**
      * @return string the CSS declarations, separated and followed by a semicolon, e.g., `color: red; height: 4px;`
      */
-    public function getDeclarationAsText() : string
+    public function getDeclarationAsText(): string
     {
         return \implode(' ', $this->declarationBlock->getRules());
     }
     /**
      * Checks whether the declaration block has at least one declaration.
      */
-    public function hasAtLeastOneDeclaration() : bool
+    public function hasAtLeastOneDeclaration(): bool
     {
         return $this->declarationBlock->getRules() !== [];
     }
     /**
      * @returns string e.g. `@media screen and (max-width: 480px)`, or an empty string
      */
-    public function getContainingAtRule() : string
+    public function getContainingAtRule(): string
     {
         return $this->containingAtRule;
     }
     /**
      * Checks whether the containing at-rule is non-empty and has any non-whitespace characters.
      */
-    public function hasContainingAtRule() : bool
+    public function hasContainingAtRule(): bool
     {
         return $this->getContainingAtRule() !== '';
     }

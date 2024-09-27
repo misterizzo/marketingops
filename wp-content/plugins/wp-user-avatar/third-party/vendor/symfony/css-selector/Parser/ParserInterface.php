@@ -28,5 +28,5 @@ interface ParserInterface
      *
      * @return SelectorNode[]
      */
-    public function parse(string $source) : array;
+    public function parse(string $source): array;
 }

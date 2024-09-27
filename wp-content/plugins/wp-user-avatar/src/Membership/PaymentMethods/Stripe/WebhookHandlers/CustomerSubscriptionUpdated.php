@@ -58,6 +58,8 @@ class CustomerSubscriptionUpdated implements WebhookHandlerInterface
                 $subscription->expiration_date = CarbonImmutable::createFromTimestampUTC($event_data['trial_end'])->toDateTimeString();
                 break;
             case 'unpaid':
+                $subscription->expire();
+                break;
             case 'canceled':
                 $subscription->cancel();
                 break;

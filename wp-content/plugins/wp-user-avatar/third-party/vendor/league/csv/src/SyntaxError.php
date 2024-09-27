@@ -30,21 +30,21 @@ class SyntaxError extends Exception
     {
         parent::__construct($message, $code, $previous);
     }
-    public static function dueToHeaderNotFound(int $offset) : self
+    public static function dueToHeaderNotFound(int $offset): self
     {
         return new self('The header record does not exist or is empty at offset: `' . $offset . '`');
     }
-    public static function dueToInvalidHeaderColumnNames() : self
+    public static function dueToInvalidHeaderColumnNames(): self
     {
         return new self('The header record contains non string colum names.');
     }
-    public static function dueToDuplicateHeaderColumnNames(array $header) : self
+    public static function dueToDuplicateHeaderColumnNames(array $header): self
     {
         $instance = new self('The header record contains duplicate column names.');
-        $instance->duplicateColumnNames = \array_keys(\array_filter(\array_count_values($header), fn(int $value): bool => $value > 1));
+        $instance->duplicateColumnNames = array_keys(array_filter(array_count_values($header), fn(int $value): bool => $value > 1));
         return $instance;
     }
-    public function duplicateColumnNames() : array
+    public function duplicateColumnNames(): array
     {
         return $this->duplicateColumnNames;
     }

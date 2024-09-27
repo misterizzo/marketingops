@@ -280,7 +280,7 @@ do_action('add_meta_boxes', 'ppmembershipplan', new WP_Post(new stdClass()));
                     $('#field-role-free_trial').show();
 
                     $('#field-role-subscription_length').show()
-                        .find('.ppress-plan-control').change();
+                        .find('.ppress-plan-control').trigger('change');
                 } else {
                     $('#field-role-subscription_length').hide();
                     $('#field-role-total_payments').hide();
@@ -293,7 +293,7 @@ do_action('add_meta_boxes', 'ppmembershipplan', new WP_Post(new stdClass()));
                 $('#field-role-total_payments').toggle($(this).val() === 'fixed');
             });
 
-            $('#billing_frequency').change();
+            $('#billing_frequency').trigger('change');
 
             $(window).on('load', function () {
                 var tmpl = wp.template('ppress-plan-summary');
@@ -309,7 +309,7 @@ do_action('add_meta_boxes', 'ppmembershipplan', new WP_Post(new stdClass()));
                             'free_trial': $('.form-field #free_trial').val(),
                         })
                     );
-                }).change();
+                }).trigger('change');
 
             });
         })(jQuery);

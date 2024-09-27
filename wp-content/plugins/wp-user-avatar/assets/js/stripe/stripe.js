@@ -121,7 +121,7 @@
                     if ('error' in result && typeof result.error.message !== 'undefined') {
                         ppressCheckoutForm.createAlertMessage(result.error.message);
                     } else {
-                        _this.checkout_form.submit();
+                        _this.checkout_form.trigger('submit');
                     }
                 });
 

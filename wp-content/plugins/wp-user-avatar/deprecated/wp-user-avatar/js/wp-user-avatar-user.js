@@ -10,7 +10,7 @@ jQuery(function($) {
     e.preventDefault();
     $('#wpua-original').remove();
     $('#wpua-remove-button, #wpua-thumbnail').hide();
-    $('#wpua-preview').find('img:first').hide();
+    $('#wpua-preview').find('img').first().hide();
     $('#wpua-preview').prepend('<img id="wpua-original" />');
     $('#wpua-original').attr('src', wpua_custom.avatar_thumb);
     $('#wp-user-avatar').val("");
@@ -24,7 +24,7 @@ jQuery(function($) {
     $('#wpua-images').removeAttr('style');
     $('#wpua-undo-button').hide();
     $('#wpua-remove-button, #wpua-thumbnail').show();
-    $('#wpua-preview').find('img:first').attr('src', wpuaSrc).show();
+    $('#wpua-preview').find('img').first().attr('src', wpuaSrc).show();
     $('#wp-user-avatar').val(wpuaID);
     $('#wp_user_avatar_radio').trigger('click');
   });
@@ -39,7 +39,7 @@ jQuery(function($) {
     e.preventDefault();
     $('#wpua-original-existing').remove();
     $('#wpua-remove-button-existing, #wpua-thumbnail-existing').hide();
-    $('#wpua-preview-existing').find('img:first').hide();
+    $('#wpua-preview-existing').find('img').first().hide();
     $('#wpua-preview-existing').prepend('<img id="wpua-original-existing" />');
     $('#wpua-original-existing').attr('src', wpua_custom.avatar_thumb);
     $('#wp-user-avatar-existing').val("");
@@ -53,7 +53,7 @@ jQuery(function($) {
     $('#wpua-images-existing').removeAttr('style');
     $('#wpua-undo-button-existing').hide();
     $('#wpua-remove-button-existing, #wpua-thumbnail-existing').show();
-    $('#wpua-preview-existing').find('img:first').attr('src', wpuaSrc).show();
+    $('#wpua-preview-existing').find('img').first().attr('src', wpuaSrc).show();
     $('#wp-user-avatar-existing').val(wpuaID);
     $('#wp_user_avatar_radio-existing').trigger('click');
   });

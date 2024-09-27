@@ -442,6 +442,8 @@ class Stripe extends AbstractPaymentMethod
 
             if (false === $cancel_immediately) {
 
+                if (in_array($stripeSubObj->cancel_at_period_end, ['true', true], true)) return false;
+
                 if (in_array($stripeSubObj->status, ['active', 'trialing'], true)) {
                     APIClass::stripeClient()->subscriptions->update($subscription->profile_id, ['cancel_at_period_end' => true]);
                 } else {

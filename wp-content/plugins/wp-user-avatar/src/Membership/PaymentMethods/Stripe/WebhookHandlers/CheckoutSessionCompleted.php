@@ -5,7 +5,10 @@ namespace ProfilePress\Core\Membership\PaymentMethods\Stripe\WebhookHandlers;
 use ProfilePress\Core\Membership\Models\Order\OrderFactory;
 use ProfilePress\Core\Membership\Models\Subscription\SubscriptionFactory;
 use ProfilePress\Core\Membership\PaymentMethods\Stripe\APIClass;
+use ProfilePress\Core\Membership\PaymentMethods\Stripe\PaymentHelpers;
 use ProfilePress\Core\Membership\PaymentMethods\WebhookHandlerInterface;
+use ProfilePress\Core\Membership\Repositories\OrderRepository;
+use ProfilePress\Core\Membership\Services\Calculator;
 
 class CheckoutSessionCompleted implements WebhookHandlerInterface
 {
@@ -36,6 +39,21 @@ class CheckoutSessionCompleted implements WebhookHandlerInterface
         }
 
         if ($order->exists() && ! $order->is_completed()) {
+
+            if (isset($event_data['total_details']['amount_tax'])) {
+
+                if (Calculator::init($event_data['total_details']['amount_tax'])->isGreaterThanZero()) {
+
+                    $order->tax = PaymentHelpers::stripe_amount_to_ppress_amount($event_data['total_details']['amount_tax']);
+
+                    $order->subtotal = PaymentHelpers::stripe_amount_to_ppress_amount($event_data['amount_subtotal']);
+
+                    $order->total = PaymentHelpers::stripe_amount_to_ppress_amount($event_data['amount_total']);
+
+                    $order->save();
+                }
+            }
+
             $order->complete_order($transaction_id);
         }
 

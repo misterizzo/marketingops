@@ -87,6 +87,6 @@ abstract class AbstractService
                 throw new \ProfilePressVendor\Stripe\Exception\InvalidArgumentException($msg);
             }
         }
-        return \sprintf($basePath, ...\array_map('\\urlencode', $ids));
+        return \sprintf($basePath, ...\array_map('\urlencode', $ids));
     }
 }

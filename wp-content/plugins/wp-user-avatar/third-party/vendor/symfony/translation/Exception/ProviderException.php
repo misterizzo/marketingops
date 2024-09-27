@@ -24,11 +24,11 @@ class ProviderException extends RuntimeException implements ProviderExceptionInt
         $this->debug = $response->getInfo('debug') ?? '';
         parent::__construct($message, $code, $previous);
     }
-    public function getResponse() : ResponseInterface
+    public function getResponse(): ResponseInterface
     {
         return $this->response;
     }
-    public function getDebug() : string
+    public function getDebug(): string
     {
         return $this->debug;
     }

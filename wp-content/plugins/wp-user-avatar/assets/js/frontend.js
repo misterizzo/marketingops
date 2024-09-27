@@ -61,7 +61,7 @@ function Frontend() {
                                 name: 'g-recaptcha-response'
                             }));
 
-                            $form.submit();
+                            $form.trigger('submit');
                         });
                     });
                 });

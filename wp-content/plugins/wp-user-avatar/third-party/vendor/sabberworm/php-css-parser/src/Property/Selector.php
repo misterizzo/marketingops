@@ -12,13 +12,15 @@ class Selector
      * regexp for specificity calculations
      *
      * @var string
+     *
+     * @internal
      */
     const NON_ID_ATTRIBUTES_AND_PSEUDO_CLASSES_RX = '/
-        (\\.[\\w]+)                   # classes
+        (\.[\w]+)                   # classes
         |
-        \\[(\\w+)                     # attributes
+        \[(\w+)                     # attributes
         |
-        (\\:(                        # pseudo classes
+        (\:(                        # pseudo classes
             link|visited|active
             |hover|focus
             |lang
@@ -35,11 +37,13 @@ class Selector
      * regexp for specificity calculations
      *
      * @var string
+     *
+     * @internal
      */
     const ELEMENTS_AND_PSEUDO_ELEMENTS_RX = '/
-        ((^|[\\s\\+\\>\\~]+)[\\w]+   # elements
+        ((^|[\s\+\>\~]+)[\w]+   # elements
         |
-        \\:{1,2}(                # pseudo-elements
+        \:{1,2}(                # pseudo-elements
             after|before|first-letter|first-line|selection
         ))
         /ix';
@@ -47,13 +51,15 @@ class Selector
      * regexp for specificity calculations
      *
      * @var string
+     *
+     * @internal
      */
     const SELECTOR_VALIDATION_RX = '/
         ^(
             (?:
-                [a-zA-Z0-9\\x{00A0}-\\x{FFFF}_^$|*="\'~\\[\\]()\\-\\s\\.:#+>]* # any sequence of valid unescaped characters
+                [a-zA-Z0-9\x{00A0}-\x{FFFF}_^$|*="\'~\[\]()\-\s\.:#+>]* # any sequence of valid unescaped characters
                 (?:\\\\.)?                                              # a single escaped character
-                (?:([\'"]).*?(?<!\\\\)\\2)?                              # a quoted text like [id="example"]
+                (?:([\'"]).*?(?<!\\\\)\2)?                              # a quoted text like [id="example"]
             )*
         )$
         /ux';
@@ -72,7 +78,7 @@ class Selector
      */
     public static function isValid($sSelector)
     {
-        return \preg_match(static::SELECTOR_VALIDATION_RX, $sSelector);
+        return preg_match(static::SELECTOR_VALIDATION_RX, $sSelector);
     }
     /**
      * @param string $sSelector
@@ -99,7 +105,7 @@ class Selector
      */
     public function setSelector($sSelector)
     {
-        $this->sSelector = \trim($sSelector);
+        $this->sSelector = trim($sSelector);
         $this->iSpecificity = null;
     }
     /**
@@ -118,9 +124,9 @@ class Selector
             $a = 0;
             /// @todo should exclude \# as well as "#"
             $aMatches = null;
-            $b = \substr_count($this->sSelector, '#');
-            $c = \preg_match_all(self::NON_ID_ATTRIBUTES_AND_PSEUDO_CLASSES_RX, $this->sSelector, $aMatches);
-            $d = \preg_match_all(self::ELEMENTS_AND_PSEUDO_ELEMENTS_RX, $this->sSelector, $aMatches);
+            $b = substr_count($this->sSelector, '#');
+            $c = preg_match_all(self::NON_ID_ATTRIBUTES_AND_PSEUDO_CLASSES_RX, $this->sSelector, $aMatches);
+            $d = preg_match_all(self::ELEMENTS_AND_PSEUDO_ELEMENTS_RX, $this->sSelector, $aMatches);
             $this->iSpecificity = $a * 1000 + $b * 100 + $c * 10 + $d;
         }
         return $this->iSpecificity;

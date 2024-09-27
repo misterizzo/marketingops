@@ -13,7 +13,7 @@ namespace ProfilePressVendor\Symfony\Component\Translation\Formatter;
 use ProfilePressVendor\Symfony\Component\Translation\IdentityTranslator;
 use ProfilePressVendor\Symfony\Contracts\Translation\TranslatorInterface;
 // Help opcache.preload discover always-needed symbols
-\class_exists(IntlFormatter::class);
+class_exists(IntlFormatter::class);
 /**
  * @author Abdellatif Ait boudad <a.aitboudad@gmail.com>
  */
@@ -37,12 +37,12 @@ class MessageFormatter implements MessageFormatterInterface, IntlFormatterInterf
         if ($this->translator instanceof TranslatorInterface) {
             return $this->translator->trans($message, $parameters, null, $locale);
         }
-        return \strtr($message, $parameters);
+        return strtr($message, $parameters);
     }
     /**
      * {@inheritdoc}
      */
-    public function formatIntl(string $message, string $locale, array $parameters = []) : string
+    public function formatIntl(string $message, string $locale, array $parameters = []): string
     {
         return $this->intlFormatter->formatIntl($message, $locale, $parameters);
     }

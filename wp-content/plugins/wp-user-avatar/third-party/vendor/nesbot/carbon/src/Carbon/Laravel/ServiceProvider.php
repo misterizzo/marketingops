@@ -26,11 +26,11 @@ class ServiceProvider extends \ProfilePressVendor\Illuminate\Support\ServiceProv
     protected $appGetter = null;
     /** @var callable|null */
     protected $localeGetter = null;
-    public function setAppGetter(?callable $appGetter) : void
+    public function setAppGetter(?callable $appGetter): void
     {
         $this->appGetter = $appGetter;
     }
-    public function setLocaleGetter(?callable $localeGetter) : void
+    public function setLocaleGetter(?callable $localeGetter): void
     {
         $this->localeGetter = $localeGetter;
     }
@@ -43,7 +43,7 @@ class ServiceProvider extends \ProfilePressVendor\Illuminate\Support\ServiceProv
         $service = $this;
         $events = $this->app['events'];
         if ($this->isEventDispatcher($events)) {
-            $events->listen(\class_exists('ProfilePressVendor\\Illuminate\\Foundation\\Events\\LocaleUpdated') ? 'Illuminate\\Foundation\\Events\\LocaleUpdated' : 'locale.changed', function () use($service) {
+            $events->listen(class_exists('ProfilePressVendor\Illuminate\Foundation\Events\LocaleUpdated') ? 'Illuminate\Foundation\Events\LocaleUpdated' : 'locale.changed', function () use ($service) {
                 $service->updateLocale();
             });
         }
@@ -58,10 +58,10 @@ class ServiceProvider extends \ProfilePressVendor\Illuminate\Support\ServiceProv
         CarbonImmutable::setLocale($locale);
         CarbonPeriod::setLocale($locale);
         CarbonInterval::setLocale($locale);
-        if (\class_exists(IlluminateCarbon::class)) {
+        if (class_exists(IlluminateCarbon::class)) {
             IlluminateCarbon::setLocale($locale);
         }
-        if (\class_exists(Date::class)) {
+        if (class_exists(Date::class)) {
             try {
                 $root = Date::getFacadeRoot();
                 $root->setLocale($locale);
@@ -80,7 +80,7 @@ class ServiceProvider extends \ProfilePressVendor\Illuminate\Support\ServiceProv
             return ($this->localeGetter)();
         }
         $app = $this->getApp();
-        $app = $app && \method_exists($app, 'getLocale') ? $app : $this->getGlobalApp('translator');
+        $app = $app && method_exists($app, 'getLocale') ? $app : $this->getGlobalApp('translator');
         return $app ? $app->getLocale() : null;
     }
     protected function getApp()
@@ -92,7 +92,7 @@ class ServiceProvider extends \ProfilePressVendor\Illuminate\Support\ServiceProv
     }
     protected function getGlobalApp(...$args)
     {
-        return \function_exists('ProfilePressVendor\\app') ? \ProfilePressVendor\app(...$args) : null;
+        return \function_exists('ProfilePressVendor\app') ? \ProfilePressVendor\app(...$args) : null;
     }
     protected function isEventDispatcher($instance)
     {

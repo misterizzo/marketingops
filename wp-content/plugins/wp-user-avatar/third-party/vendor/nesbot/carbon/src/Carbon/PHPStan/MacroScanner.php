@@ -37,7 +37,7 @@ final class MacroScanner
      *
      * @return bool
      */
-    public function hasMethod(string $className, string $methodName) : bool
+    public function hasMethod(string $className, string $methodName): bool
     {
         $classReflection = $this->reflectionProvider->getClass($className);
         if ($classReflection->getName() !== CarbonInterface::class && !$classReflection->isSubclassOf(CarbonInterface::class)) {
@@ -55,7 +55,7 @@ final class MacroScanner
      *
      * @return Macro
      */
-    public function getMethod(string $className, string $methodName) : Macro
+    public function getMethod(string $className, string $methodName): Macro
     {
         $reflectionClass = new ReflectionClass($className);
         $property = $reflectionClass->getProperty('globalMacros');

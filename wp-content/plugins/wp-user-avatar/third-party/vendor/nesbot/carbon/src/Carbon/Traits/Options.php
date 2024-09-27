@@ -84,11 +84,11 @@ trait Options
         's' => '([0-5][0-9])',
         'u' => '([0-9]{1,6})',
         'v' => '([0-9]{1,3})',
-        'e' => '([a-zA-Z]{1,5})|([a-zA-Z]*\\/[a-zA-Z]*)',
+        'e' => '([a-zA-Z]{1,5})|([a-zA-Z]*\/[a-zA-Z]*)',
         'I' => '(0|1)',
-        'O' => '([+-](1[012]|0[0-9])[0134][05])',
-        'P' => '([+-](1[012]|0[0-9]):[0134][05])',
-        'p' => '(Z|[+-](1[012]|0[0-9]):[0134][05])',
+        'O' => '([+-](1[0123]|0[0-9])[0134][05])',
+        'P' => '([+-](1[0123]|0[0-9]):[0134][05])',
+        'p' => '(Z|[+-](1[0123]|0[0-9]):[0134][05])',
         'T' => '([a-zA-Z]{1,5})',
         'Z' => '(-?[1-5]?[0-9]{1,4})',
         'U' => '([0-9]*)',
@@ -102,7 +102,7 @@ trait Options
      *
      * @var array
      */
-    protected static $regexFormatModifiers = ['*' => '.+', ' ' => '[   ]', '#' => '[;:\\/.,()-]', '?' => '([^a]|[a])', '!' => '', '|' => '', '+' => ''];
+    protected static $regexFormatModifiers = ['*' => '.+', ' ' => '[   ]', '#' => '[;:\/.,()-]', '?' => '([^a]|[a])', '!' => '', '|' => '', '+' => ''];
     /**
      * Indicates if months should be calculated with overflow.
      * Global setting.
@@ -371,7 +371,7 @@ trait Options
      */
     public function __debugInfo()
     {
-        $infos = \array_filter(\get_object_vars($this), static function ($var) {
+        $infos = array_filter(get_object_vars($this), static function ($var) {
             return $var;
         });
         foreach (['dumpProperties', 'constructedObjectId', 'constructed'] as $property) {
@@ -382,7 +382,7 @@ trait Options
         $this->addExtraDebugInfos($infos);
         return $infos;
     }
-    protected function addExtraDebugInfos(&$infos) : void
+    protected function addExtraDebugInfos(&$infos): void
     {
         if ($this instanceof DateTimeInterface) {
             try {

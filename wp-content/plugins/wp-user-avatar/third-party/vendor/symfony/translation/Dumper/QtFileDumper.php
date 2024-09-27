@@ -33,7 +33,7 @@ class QtFileDumper extends FileDumper
             $metadata = $messages->getMetadata($source, $domain);
             if (isset($metadata['sources'])) {
                 foreach ((array) $metadata['sources'] as $location) {
-                    $loc = \explode(':', $location, 2);
+                    $loc = explode(':', $location, 2);
                     $location = $message->appendChild($dom->createElement('location'));
                     $location->setAttribute('filename', $loc[0]);
                     if (isset($loc[1])) {

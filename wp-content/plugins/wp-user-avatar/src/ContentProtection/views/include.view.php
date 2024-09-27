@@ -8,6 +8,8 @@ $dbData = PR::get_meta_value(absint(ppress_var($_GET, 'id')), SettingsPage::META
 
 $contentToRestrictData = ppress_var($dbData, 'content');
 
+$restrictDataToExcludes = ppress_var($dbData, 'exempt');
+
 $accessConditionData = ppress_var($dbData, 'access_condition');
 
 add_action('add_meta_boxes', function () use ($contentToRestrictData) {
@@ -19,6 +21,17 @@ add_action('add_meta_boxes', function () use ($contentToRestrictData) {
         },
         'ppcontentprotection'
     );
+});
+
+add_action('add_meta_boxes', function () use ($restrictDataToExcludes) {
+	add_meta_box(
+		'ppress-content-protection-excludes',
+		esc_html__('Content to Exclude', 'wp-user-avatar'),
+		function () use ($restrictDataToExcludes) {
+			require dirname(__FILE__) . '/view.exemptions.php';
+		},
+		'ppcontentprotection'
+	);
 });
 
 add_action('add_meta_boxes', function () use ($accessConditionData) {
@@ -118,6 +131,10 @@ do_action('add_meta_boxes', 'ppcontentprotection', new WP_Post(new stdClass()));
 
 <script type="text/html" id="tmpl-ppress-cr-and-rule">
     <?php ContentConditions::get_instance()->rules_group_row('{{data.facetListId}}', '{{data.facetId}}'); ?>
+</script>
+
+<script type="text/html" id="tmpl-ppress-cr-or-exempt">
+	<?php ContentConditions::get_instance()->exempt_rule_row('{{data.facetListId}}', '{{data.facetId}}'); ?>
 </script>
 
 <script type="text/html" id="tmpl-ppress-cr-unlinked-and-rule-badge">

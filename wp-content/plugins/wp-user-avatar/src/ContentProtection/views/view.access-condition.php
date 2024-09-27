@@ -204,7 +204,7 @@ foreach (PlanRepository::init()->retrieveAll() as $plan) {
                         $('#pp-cc-access-membership-plans-row').show();
                         $('#pp-cc-access-role-row').show();
                         $('#pp-cc-access-wp-users-row').show();
-                        $('#pp-cc-access-noaccess-action-row').show().find('select').change();
+                        $('#pp-cc-access-noaccess-action-row').show().find('select').trigger('change');
                         break;
                     case 'logout':
                         $('#pp-cc-access-membership-plans-row').hide();
@@ -215,7 +215,7 @@ foreach (PlanRepository::init()->retrieveAll() as $plan) {
                         $('#pp-cc-access-noaccess-action-redirect-custom-url-row').hide();
                         $('#pp-cc-access-noaccess-action-redirect-row').hide();
                         // all show code must be after hide()
-                        $('#pp-cc-access-noaccess-action-row').show().find('select').change();
+                        $('#pp-cc-access-noaccess-action-row').show().find('select').trigger('change');
                         break;
                 }
             });
@@ -230,7 +230,7 @@ foreach (PlanRepository::init()->retrieveAll() as $plan) {
                         $('#pp-cc-access-noaccess-action-redirect-row').hide();
                         $('#pp-cc-access-noaccess-action-redirect-custom-url-row').hide();
                         // all show code must be after hide()
-                        $('#pp-cc-access-noaccess-action-message-row').show().find('select').change();
+                        $('#pp-cc-access-noaccess-action-message-row').show().find('select').trigger('change');
                         $('#pp-cc-access-noaccess-action-message-style-row').show();
                         break;
                     case 'redirect':
@@ -239,7 +239,7 @@ foreach (PlanRepository::init()->retrieveAll() as $plan) {
                         $('#pp-cc-access-noaccess-action-message-custom-row').hide();
                         $('#pp-cc-access-noaccess-action-redirect-custom-url-row').hide();
                         // all show code must be after hide()
-                        $('#pp-cc-access-noaccess-action-redirect-row').show().find('select').change();
+                        $('#pp-cc-access-noaccess-action-redirect-row').show().find('select').trigger('change');
                         break;
                 }
             });
@@ -260,7 +260,7 @@ foreach (PlanRepository::init()->retrieveAll() as $plan) {
                     case 'post_excerpt_custom':
                         $('#pp-cc-access-noaccess-action-redirect-row').hide();
                         $('#pp-cc-access-noaccess-action-redirect-custom-url-row').hide();
-                        $('#pp-cc-access-noaccess-action-message-custom-row').show().find('select').change();
+                        $('#pp-cc-access-noaccess-action-message-custom-row').show().find('select').trigger('change');
                         break;
                 }
             });
@@ -274,12 +274,12 @@ foreach (PlanRepository::init()->retrieveAll() as $plan) {
                         $('#pp-cc-access-noaccess-action-redirect-custom-url-row').hide();
                         break;
                     case 'custom_url':
-                        $('#pp-cc-access-noaccess-action-redirect-custom-url-row').show().find('select').change();
+                        $('#pp-cc-access-noaccess-action-redirect-custom-url-row').show().find('select').trigger('change');
                         break;
                 }
             });
 
-            $('#pp-cc-accessible').change();
+            $('#pp-cc-accessible').trigger('change');
         });
     })(jQuery)
 </script>

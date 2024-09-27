@@ -32,7 +32,7 @@ class SimpleStringCache
      *
      * @throws \InvalidArgumentException
      */
-    public function has(string $key) : bool
+    public function has(string $key): bool
     {
         $this->assertNotEmptyKey($key);
         return isset($this->values[$key]);
@@ -47,7 +47,7 @@ class SimpleStringCache
      *
      * @throws \BadMethodCallException
      */
-    public function get(string $key) : string
+    public function get(string $key): string
     {
         if (!$this->has($key)) {
             throw new \BadMethodCallException('You can only call `get` with a key for an existing value.', 1625996246);
@@ -62,7 +62,7 @@ class SimpleStringCache
      *
      * @throws \BadMethodCallException
      */
-    public function set(string $key, string $value) : void
+    public function set(string $key, string $value): void
     {
         $this->assertNotEmptyKey($key);
         $this->values[$key] = $value;
@@ -70,7 +70,7 @@ class SimpleStringCache
     /**
      * @throws \InvalidArgumentException
      */
-    private function assertNotEmptyKey(string $key) : void
+    private function assertNotEmptyKey(string $key): void
     {
         if ($key === '') {
             throw new \InvalidArgumentException('Please provide a non-empty key.', 1625995840);
