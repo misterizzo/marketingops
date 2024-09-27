@@ -11,6 +11,7 @@ use ImageOptimization\Modules\Optimization\Classes\{
 };
 use Throwable;
 use WP_REST_Request;
+use ImageOptimization\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -36,7 +37,7 @@ class Optimize_Single_Image extends Route_Base {
 			self::NONCE_NAME
 		);
 
-		if ( ! Connect::is_activated() ) {
+		if ( ! Plugin::instance()->modules_manager->get_modules( 'connect-manager' )->connect_instance->is_activated() ) {
 			return $this->respond_error_json([
 				'message' => esc_html__( 'Invalid activation', 'image-optimization' ),
 				'code' => 'unauthorized',

@@ -29,6 +29,7 @@ class Module extends Module_Base {
 			'Get_Subscriptions',
 			'Activate',
 			'Deactivate',
+			'Version',
 		];
 	}
 
@@ -40,7 +41,12 @@ class Module extends Module_Base {
 		];
 	}
 
+	public static function is_active() : bool {
+		return ! empty( get_option( 'image_optimizer_client_data' ) );
+	}
+
 	public function __construct() {
+
 		$this->register_components();
 		$this->register_routes();
 	}

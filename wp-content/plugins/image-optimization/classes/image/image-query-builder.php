@@ -53,6 +53,15 @@ class Image_Query_Builder {
 		return $this;
 	}
 
+	public function return_images_with_non_empty_meta(): self {
+		$this->query['meta_query'][] = [
+			'key' => Image_Meta::IMAGE_OPTIMIZER_METADATA_KEY,
+			'compare' => 'EXISTS',
+		];
+
+		return $this;
+	}
+
 	public function set_paging_size( int $paging_size ): self {
 		$this->query['posts_per_page'] = $paging_size;
 
@@ -67,6 +76,12 @@ class Image_Query_Builder {
 
 	public function set_image_ids( array $image_ids ): self {
 		$this->query['post__in'] = $image_ids;
+
+		return $this;
+	}
+
+	public function set_mime_types( array $mime_types ): self {
+		$this->query['post_mime_type'] = $mime_types;
 
 		return $this;
 	}

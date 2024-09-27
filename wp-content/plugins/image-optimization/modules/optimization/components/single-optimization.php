@@ -11,7 +11,7 @@ use ImageOptimization\Classes\Image\{
 	Image_Status
 };
 use ImageOptimization\Classes\Logger;
-use ImageOptimization\Modules\Oauth\Classes\Exceptions\Quota_Exceeded_Error;
+use ImageOptimization\Classes\Exceptions\Quota_Exceeded_Error;
 use ImageOptimization\Modules\Optimization\Classes\Exceptions\Image_File_Already_Exists_Error;
 use ImageOptimization\Modules\Optimization\Classes\Optimize_Image;
 use Throwable;
@@ -62,6 +62,8 @@ class Single_Optimization {
 			$oi = new Optimize_Image(
 				$image_id,
 				'manual',
+				null,
+				true
 			);
 
 			$oi->optimize();

@@ -3,10 +3,10 @@
 namespace ImageOptimization\Modules\Oauth\Rest;
 
 use ImageOptimization\Modules\Oauth\{
+	Classes\Data,
 	Classes\Route_Base,
-	Components\Connect,
+	Components\Connect
 };
-
 use Throwable;
 use WP_REST_Request;
 
@@ -36,6 +36,7 @@ class Disconnect extends Route_Base {
 		try {
 			Connect::disconnect();
 		} catch ( Throwable $t ) {
+			Data::reset();
 			return $this->respond_error_json( [
 				'message' => $t->getMessage(),
 				'code' => 'internal_server_error',

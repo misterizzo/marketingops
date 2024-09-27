@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name: Image Optimizer by Elementor – Compress, Resize and Optimize Images
- * Description: Automatically compress and enhance your images, boosting your website speed, appearance, and SEO. Get Image Optimizer and optimize your images in seconds.
+ * Plugin Name: Image Optimizer - Compress, Resize and Optimize Images
+ * Description: Automatically resize, optimize, and convert images to WebP and AVIF. Compress images in bulk or on upload to boost your WordPress site performance.
  * Plugin URI: https://go.elementor.com/wp-repo-description-tab-io-product-page/
- * Version: 1.3.0
+ * Version: 1.5.3
  * Author: Elementor.com
- * Author URI: https://go.elementor.com/wp-repo-description-tab-io-author-url/
+ * Author URI: https://go.elementor.com/author-uri-io/
  * Text Domain: image-optimization
  * License: GPL-3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'IMAGE_OPTIMIZATION_VERSION', '1.3.0' );
+define( 'IMAGE_OPTIMIZATION_VERSION', '1.5.3' );
 define( 'IMAGE_OPTIMIZATION_PATH', plugin_dir_path( __FILE__ ) );
 define( 'IMAGE_OPTIMIZATION_URL', plugins_url( '/', __FILE__ ) );
 define( 'IMAGE_OPTIMIZATION_ASSETS_PATH', IMAGE_OPTIMIZATION_PATH . 'assets/' );
@@ -47,10 +47,9 @@ final class ImageOptimization {
 	}
 
 	/**
-	 * Load Textdomain
-	 *
 	 * Load plugin localization files.
-	 * Fired by `init` action hook.
+	 *
+	 * Fired by `plugins_loaded` action hook.
 	 *
 	 * @access public
 	 */
@@ -62,18 +61,21 @@ final class ImageOptimization {
 	 * Checks if all requirements met to safely start the plugin and renders admin notices
 	 * if something is not right.
 	 *
+	 * @access public
 	 * @return bool
 	 */
 	public function plugin_can_start(): bool {
 		$can_start = true;
 
 		if ( ! version_compare( PHP_VERSION, '7.4', '>=' ) ) {
-			/* translators: 1: PHP version. 2: Link opening tag, 3: Link closing tag. */
 			$this->requirements_errors[] = sprintf(
-				esc_html__( 'PHP is outdated. Update to PHP version %1$s. %2$sShow me how%3$s', 'image-optimization' ),
-				'7.4',
-				'<a href="https://go.elementor.com/wp-dash-update-php/" target="_blank">',
-				'</a>'
+				'%1$s <a href="https://go.elementor.com/wp-dash-update-php/" target="_blank">%2$s</a>',
+				sprintf(
+					/* translators: %s: PHP version. */
+					esc_html__( 'Update to PHP version %s and get back to optimizing!', 'image-optimization' ),
+					'7.4',
+				),
+				esc_html__( 'Show me how', 'image-optimization' )
 			);
 
 			$can_start = false;
@@ -92,9 +94,9 @@ final class ImageOptimization {
 
 		if ( ! $this->is_db_json_supported() ) {
 			$this->requirements_errors[] = sprintf(
-			/* translators: 1: MySQL minimum version. 2: MariaDB minimum version. */
+				/* translators: 1: MySQL minimum version. 2: MariaDB minimum version. */
 				esc_html__(
-					'The database server version is outdated. Update to MySQL version %1$s or MariaDB version %2$s',
+					'The database server version is outdated. Update to MySQL version %1$s or MariaDB version %2$s.',
 					'image-optimization'
 				),
 				'5.7',
@@ -119,9 +121,10 @@ final class ImageOptimization {
 	}
 
 	/**
-	 * Returns an array of non-loaded extensions mentioned in self::REQUIRED_EXTENSIONS.
+	 * Retrieve an array of missing extensions mentioned in self::REQUIRED_EXTENSIONS.
 	 *
-	 * @return array Missed extensions.
+	 * @access private
+	 * @return array Missing extensions.
 	 */
 	private function get_missing_extensions_list(): array {
 		$output = [];
@@ -148,14 +151,15 @@ final class ImageOptimization {
 	/**
 	 * Renders an admin notice if the setup did not meet requirements.
 	 *
+	 * Fired by `admin_notices` action hook.
+	 *
+	 * @access public
 	 * @return void
 	 */
 	public function add_requirements_error() {
 		$message = sprintf(
-		/* translators: 1: `<h3>` opening tag, 2: `</h3>` closing tag */
-			esc_html__( '%1$sImage Optimizer isn’t running because:%2$s', 'image-optimization' ),
-			'<h3>',
-			'</h3>'
+			'<h3>%s</h3>',
+			esc_html__( 'Image Optimizer isn’t running because:', 'image-optimization' )
 		);
 
 		$message .= '<ul>';
@@ -177,11 +181,10 @@ final class ImageOptimization {
 	}
 
 	/**
-	 * Initialize the plugin
+	 * Initialize the plugin.
 	 *
-	 * Validates that PHP version is sufficient.
-	 * Checks for basic plugin requirements, if one check fail don't continue,
-	 * if all check have passed include the plugin class.
+	 * Validates that PHP version is sufficient. Checks for basic plugin requirements,
+	 * if one check fail don't continue, if all check have passed include the plugin class.
 	 *
 	 * Fired by `plugins_loaded` action hook.
 	 *
@@ -197,5 +200,5 @@ final class ImageOptimization {
 	}
 }
 
-// Instantiate ImageOptimization..
+// Instantiate ImageOptimization.
 new ImageOptimization();

@@ -5,7 +5,8 @@ namespace ImageOptimization\Modules\Optimization\Classes;
 use ImageOptimization\Classes\Image\{
 	Exceptions\Invalid_Image_Exception,
 	Image,
-	WP_Image_Meta,
+	Image_Meta,
+	WP_Image_Meta
 };
 use ImageOptimization\Classes\File_System\Exceptions\File_System_Operation_Error;
 use ImageOptimization\Classes\File_System\File_System;
@@ -39,7 +40,11 @@ class Validate_Image {
 
 		if (
 			! wp_attachment_is_image( $attachment_object ) ||
-			! in_array( $attachment_object->post_mime_type, Image::get_supported_mime_types(), true )
+			! in_array( $attachment_object->post_mime_type, Image::get_supported_mime_types(), true ) ||
+			(
+				in_array( $attachment_object->post_mime_type, Image::get_mime_types_cannot_be_optimized(), true ) &&
+				! get_post_meta( $image_id, Image_Meta::IMAGE_OPTIMIZER_METADATA_KEY, true )
+			)
 		) {
 			throw new Image_Validation_Error( self::prepare_supported_formats_list_error() );
 		}
@@ -80,12 +85,16 @@ class Validate_Image {
 	 */
 	private static function prepare_supported_formats_list_error(): string {
 		$formats = Image::get_supported_formats();
+		$formats = array_filter(
+			$formats,
+			fn ( $format) => ! in_array( $format, Image::get_formats_cannot_be_optimized(), true )
+		);
 		$last_item = strtoupper( array_pop( $formats ) );
 
 		$formats_list = join( ', ', array_map( 'strtoupper', $formats ) );
 
 		return sprintf(
-			__( 'Wrong file format. Only %1$s, or %2$s are accepted', 'image-optimization' ),
+			__( 'Unsupported file format. Only %1$s, or %2$s are supported', 'image-optimization' ),
 			$formats_list,
 			$last_item
 		);

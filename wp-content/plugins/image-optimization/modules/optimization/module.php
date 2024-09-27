@@ -27,6 +27,7 @@ class Module extends Module_Base {
 
 	public static function component_list() : array {
 		return [
+			'Avif_Compatibility',
 			'Media_Control',
 			'Single_Optimization',
 			'Upload_Optimization',

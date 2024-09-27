@@ -11,10 +11,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Image {
 	public const SIZE_FULL = 'full';
-	private const SUPPORTED_MIME_TYPES = [ 'image/jpeg', 'image/png', 'image/webp', 'image/gif' ];
+	private const SUPPORTED_MIME_TYPES = [ 'image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif' ];
 
 	// Used for error messages
-	private const SUPPORTED_FORMATS = [ 'jpeg', 'png', 'webp', 'gif' ];
+	private const SUPPORTED_FORMATS = [ 'jpeg', 'png', 'webp', 'gif', 'avif' ];
+	private const MIME_TYPES_CANNOT_BE_OPTIMIZED = [ 'image/avif' ];
+	private const FORMATS_CANNOT_BE_OPTIMIZED = [ 'avif' ];
 
 	protected int $image_id;
 	protected $attachment_object;
@@ -148,6 +150,24 @@ class Image {
 	 */
 	public static function get_supported_formats(): array {
 		return self::SUPPORTED_FORMATS;
+	}
+
+	/**
+	 * Returns the list of mime types that are supported by the plugin, but cannot be optimized
+	 *
+	 * @return string[]
+	 */
+	public static function get_mime_types_cannot_be_optimized(): array {
+		return self::MIME_TYPES_CANNOT_BE_OPTIMIZED;
+	}
+
+	/**
+	 * Returns the list of formats that are supported by the plugin, but cannot be optimized
+	 *
+	 * @return string[]
+	 */
+	public static function get_formats_cannot_be_optimized(): array {
+		return self::FORMATS_CANNOT_BE_OPTIMIZED;
 	}
 
 	/**

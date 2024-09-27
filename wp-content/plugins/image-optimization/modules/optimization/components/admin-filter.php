@@ -2,10 +2,6 @@
 
 namespace ImageOptimization\Modules\Optimization\Components;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
-
 use ImageOptimization\Classes\Image\Image_Meta;
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -182,8 +182,6 @@ class Connect {
 	 * Disconnects a user and removes connection data from the DB.
 	 */
 	public static function disconnect() {
-		Data::reset();
-
 		do_action( Checkpoint::ON_DISCONNECT );
 
 		try {
@@ -200,6 +198,8 @@ class Connect {
 			Logger::log( Logger::LEVEL_ERROR, 'Error while sending disconnection request: ' . $t->getMessage() );
 
 			throw new Auth_Error( $t->getMessage() );
+		} finally {
+			Data::reset();
 		}
 	}
 
@@ -248,7 +248,6 @@ class Connect {
 	 * @throws Auth_Error
 	 */
 	public static function deactivate( string $license_key ) {
-		Data::delete_activation_state();
 
 		do_action( Checkpoint::ON_DEACTIVATE, $license_key );
 
@@ -264,6 +263,8 @@ class Connect {
 			Logger::log( Logger::LEVEL_ERROR, 'Error while sending deactivation request: ' . $t->getMessage() );
 
 			throw new Auth_Error( $t->getMessage() );
+		} finally {
+			Data::delete_activation_state();
 		}
 
 		if ( ! isset( $response->id ) ) {

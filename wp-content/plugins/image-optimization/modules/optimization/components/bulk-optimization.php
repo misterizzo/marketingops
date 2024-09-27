@@ -13,7 +13,7 @@ use ImageOptimization\Classes\Image\{
 use ImageOptimization\Classes\Async_Operation\Exceptions\Async_Operation_Exception;
 use ImageOptimization\Classes\Logger;
 use ImageOptimization\Classes\Utils;
-use ImageOptimization\Modules\Oauth\Classes\Exceptions\Quota_Exceeded_Error;
+use ImageOptimization\Classes\Exceptions\Quota_Exceeded_Error;
 use ImageOptimization\Modules\Optimization\{
 	Classes\Exceptions\Bulk_Token_Expired_Error,
 	Classes\Exceptions\Image_File_Already_Exists_Error,
@@ -22,6 +22,7 @@ use ImageOptimization\Modules\Optimization\{
 	Components\Exceptions\Bulk_Optimization_Token_Not_Found_Error,
 };
 
+use ImageOptimization\Modules\Stats\Classes\Optimization_Stats;
 use Throwable;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -89,6 +90,8 @@ class Bulk_Optimization {
 				->set_status( Image_Status::OPTIMIZATION_FAILED )
 				->set_error_type( Image_Optimization_Error_Type::GENERIC )
 				->save();
+		} finally {
+			Optimization_Stats::get_image_stats( null, true );
 		}
 	}
 
@@ -106,7 +109,8 @@ class Bulk_Optimization {
 			$oi = new Optimize_Image(
 				$image_id,
 				'bulk',
-				$bulk_token
+				$bulk_token,
+				true
 			);
 
 			$oi->optimize();
@@ -133,6 +137,8 @@ class Bulk_Optimization {
 				->set_status( Image_Status::REOPTIMIZING_FAILED )
 				->set_error_type( Image_Optimization_Error_Type::GENERIC )
 				->save();
+		} finally {
+			Optimization_Stats::get_image_stats( null, true );
 		}
 	}
 

@@ -10,6 +10,8 @@ use ImageOptimization\Classes\Image\{
 use ImageOptimization\Modules\Oauth\Classes\Data;
 use ImageOptimization\Modules\Stats\Classes\Optimization_Stats;
 
+use ImageOptimization\Plugin;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -23,7 +25,7 @@ class Optimization_Status {
 	 */
 	public static function get_images_optimization_statuses( array $image_ids ): array {
 		$output = [];
-		$images_left = Data::images_left();
+		$images_left = Plugin::instance()->modules_manager->get_modules( 'connect-manager' )->connect_instance->images_left();
 
 		foreach ( $image_ids as $image_id ) {
 			$meta = new Image_Meta( $image_id );

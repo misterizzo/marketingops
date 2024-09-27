@@ -9,8 +9,17 @@ use ImageOptimization\Classes\Image\{
 	WP_Image_Meta,
 	Exceptions\Invalid_Image_Exception
 };
-use ImageOptimization\Classes\File_System\Exceptions\File_System_Operation_Error;
-use ImageOptimization\Classes\File_System\File_System;
+use ImageOptimization\Classes\Async_Operation\{
+	Async_Operation,
+	Async_Operation_Hook,
+	Async_Operation_Queue,
+	Exceptions\Async_Operation_Exception,
+	Queries\Operation_Query,
+};
+use ImageOptimization\Classes\File_System\{
+	Exceptions\File_System_Operation_Error,
+	File_System,
+};
 use ImageOptimization\Classes\Logger;
 use ImageOptimization\Modules\Optimization\Classes\Exceptions\Image_Validation_Error;
 use ImageOptimization\Modules\Optimization\Classes\Validate_Image;
@@ -22,6 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Optimization_Stats {
 	const PAGING_SIZE = 25000;
+	const STATS_CALCULATION_DELAY = 60 * 15;
 
 	/**
 	 * Returns image stats.
@@ -30,29 +40,54 @@ class Optimization_Stats {
 	 * @return array{total_image_count: int, optimized_image_count: int, current_image_size: int, initial_image_size:
 	 *     int}
 	 */
-	public static function get_image_stats( ?int $image_id = null ): array {
+	public static function get_image_stats( ?int $image_id = null, ?bool $no_cache = false ): array {
+		// No caching needed if we check a specific image.
+		if ( $image_id ) {
+			$output = self::get_image_stats_chunk( 1, $image_id );
+
+			unset( $output['pages'] );
+
+			return $output;
+		}
+
+		// Look at the stored data first. If it's still valid -- use it.
+		$stats = self::get_stored_stats();
+
+		if ( ! $no_cache && ( time() - $stats['updated_at'] ) <= self::STATS_CALCULATION_DELAY ) {
+			unset( $stats['updated_at'] );
+
+			return $stats;
+		}
+
+		// Otherwise, recalculate the stats.
 		$output = self::get_image_stats_chunk( 1, $image_id );
 		$pages_count = $output['pages'];
 
-		if ( $pages_count > 1 ) {
-			// $i initially is 2 bc we already got the first page, so we don't have to query it again
-			for ( $i = 2; $i <= $pages_count; $i ++ ) {
-				$chunk = self::get_image_stats_chunk( $i );
+		if ( $pages_count <= 1 ) {
+			unset( $output['pages'] );
 
-				foreach ( array_keys( $chunk ) as $key ) {
-					if ( isset( $output[ $key ] ) ) {
-						$output[ $key ] += $chunk[ $key ];
-						continue;
-					}
+			return $output;
+		}
 
-					$output[ $key ] = $chunk[ $key ];
-				}
+		if ( $pages_count > 1 && Async_Operation::OPERATION_STATUS_NOT_STARTED === self::get_stats_calculation_status() ) {
+			try {
+				Async_Operation::create(
+					Async_Operation_Hook::CALCULATE_OPTIMIZATION_STATS,
+					[
+						'page' => 2,
+						'pages_count' => $pages_count,
+						'output' => $output,
+					],
+					Async_Operation_Queue::STATS
+				);
+			} catch ( Async_Operation_Exception $aoe ) {
+				Logger::log( Logger::LEVEL_ERROR, 'Error while creating a stats calculation task: ' . $aoe->getMessage() );
 			}
 		}
 
-		unset( $output['pages'] );
+		unset( $stats['updated_at'] );
 
-		return $output;
+		return $stats;
 	}
 
 	/**
@@ -78,15 +113,13 @@ class Optimization_Stats {
 
 		$query = $query->execute();
 
-		$output['pages'] = $query->max_num_pages;
+		$output['pages'] = (int) $query->max_num_pages;
 
 		foreach ( $query->posts as $attachment_id ) {
 			try {
 				Validate_Image::is_valid( $attachment_id );
 				$wp_meta = new WP_Image_Meta( $attachment_id );
 			} catch ( Invalid_Image_Exception | Image_Validation_Error $ie ) {
-				Logger::log( Logger::LEVEL_ERROR, $ie->getMessage() );
-
 				continue;
 			}
 
@@ -154,5 +187,52 @@ class Optimization_Stats {
 
 			return false;
 		});
+	}
+
+	/**
+	 * Retrieves stats data.
+	 *
+	 * @return array{total_image_count: ?int, optimized_image_count: ?int, current_image_size: ?int, initial_image_size:
+	 *      ?int, updated_at: ?int}
+	 */
+	public static function get_stored_stats(): array {
+		$default = [
+			'total_image_count' => null,
+			'optimized_image_count' => null,
+			'current_image_size' => null,
+			'initial_image_size' => null,
+			'updated_at' => null,
+		];
+
+		return json_decode( get_option( 'image_optimizer_optimization_stats', json_encode( $default ) ), ARRAY_A );
+	}
+
+	/**
+	 * Updates the optimization stats with fresh values.
+	 *
+	 * @param array $stats
+	 *
+	 * @return bool
+	 */
+	public static function set_stored_stats( array $stats ) {
+		$stats['updated_at'] = time();
+
+		return update_option( 'image_optimizer_optimization_stats', json_encode( $stats ) );
+	}
+
+	private static function get_stats_calculation_status(): string {
+		$active_query = ( new Operation_Query() )
+			->set_hook( Async_Operation_Hook::CALCULATE_OPTIMIZATION_STATS )
+			->set_status( [
+				Async_Operation::OPERATION_STATUS_PENDING,
+				Async_Operation::OPERATION_STATUS_RUNNING,
+			] )
+			->set_limit( 1 );
+
+		$active_operations = Async_Operation::get( $active_query );
+
+		return ! empty( $active_operations )
+			? Async_Operation::OPERATION_STATUS_RUNNING
+			: Async_Operation::OPERATION_STATUS_NOT_STARTED;
 	}
 }

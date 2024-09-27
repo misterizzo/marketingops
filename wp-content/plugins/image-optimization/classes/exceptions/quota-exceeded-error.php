@@ -1,6 +1,6 @@
 <?php
 
-namespace ImageOptimization\Modules\Oauth\Classes\Exceptions;
+namespace ImageOptimization\Classes\Exceptions;
 
 use Exception;
 

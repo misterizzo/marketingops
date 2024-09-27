@@ -77,6 +77,16 @@ class Utils {
 		return 'upload' === $current_screen->id && 'attachment' === $current_screen->post_type;
 	}
 
+	public static function is_media_upload_page(): bool {
+		$current_screen = get_current_screen();
+
+		if ( ! $current_screen ) {
+			return false;
+		}
+
+		return 'media' === $current_screen->id && 'add' === $current_screen->action;
+	}
+
 	public static function is_single_attachment_page(): bool {
 		$current_screen = get_current_screen();
 

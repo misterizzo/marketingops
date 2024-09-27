@@ -26,7 +26,7 @@ class Async_Operation {
 	/**
 	 * @throws Async_Operation_Exception
 	 */
-	public static function create( string $hook, array $args, string $queue, int $priority = 10 ): int {
+	public static function create( string $hook, array $args, string $queue, int $priority = 10, $unique = false ): int {
 		self::check_library_is_registered();
 
 		if ( ! in_array( $hook, Async_Operation_Hook::get_values(), true ) ) {
@@ -45,7 +45,7 @@ class Async_Operation {
 			$hook,
 			$args,
 			$queue,
-			false,
+			$unique,
 			$priority
 		);
 	}

@@ -57,13 +57,21 @@ class Image_Meta {
 	}
 
 	public function add_optimized_size( string $optimized_size ): Image_Meta {
-		$this->image_meta['sizes_optimized'][] = $optimized_size;
+		if ( ! in_array( $optimized_size, $this->image_meta['sizes_optimized'], true ) ) {
+			$this->image_meta['sizes_optimized'][] = $optimized_size;
+		}
 
 		return $this;
 	}
 
 	public function clear_optimized_sizes(): Image_Meta {
 		$this->image_meta['sizes_optimized'] = [];
+
+		return $this;
+	}
+
+	public function set_optimized_size( array $optimized_size ): Image_Meta {
+		$this->image_meta['sizes_optimized'] = $optimized_size;
 
 		return $this;
 	}

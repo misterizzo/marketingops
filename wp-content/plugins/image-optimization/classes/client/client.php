@@ -3,13 +3,12 @@
 namespace ImageOptimization\Classes\Client;
 
 use ImageOptimization\Classes\Exceptions\Client_Exception;
+use ImageOptimization\Classes\File_Utils;
 use ImageOptimization\Classes\Image\Image;
-use ImageOptimization\Modules\Oauth\{
-	Classes\Data,
-	Components\Connect
-};
 use ImageOptimization\Modules\Stats\Classes\Optimization_Stats;
 use WP_Error;
+
+use ImageOptimization\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -21,6 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Client {
 	const BASE_URL = 'https://my.elementor.com/api/v2/image-optimizer/';
 	const STATUS_CHECK = 'status/check';
+
+	private bool $refreshed = false;
 
 	public static ?Client $instance = null;
 
@@ -109,22 +110,33 @@ class Client {
 	}
 
 	protected function is_connected(): bool {
-		return Connect::is_connected();
+		return Plugin::instance()->modules_manager->get_modules( 'connect-manager' )->connect_instance->is_connected();
 	}
 
 	protected function generate_authentication_headers( $endpoint ): array {
-		$headers = [
-			'data' => base64_encode(  // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
-				wp_json_encode( [ 'app' => 'library' ] )
-			),
-			'endpoint' => $endpoint,
-			'access_token' => Data::get_access_token(),
-			'client_id' => Data::get_client_id(),
-		];
 
-		if ( Connect::is_activated() ) {
-			$headers['key'] = Data::get_activation_state();
+		$connect_instance = Plugin::instance()->modules_manager->get_modules( 'connect-manager' )->connect_instance;
+
+		if ( ! $connect_instance->get_is_connect_on_fly() ) {
+			$headers = [
+				'data' => base64_encode(  // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+					wp_json_encode( [ 'app' => 'library' ] )
+				),
+				'access_token' => $connect_instance->get_access_token() ?? '',
+				'client_id' => $connect_instance->get_client_id() ?? '',
+			];
+
+			if ( $connect_instance->is_activated() ) {
+				$headers['key'] = $connect_instance->get_activation_state() ?? '';
+			}
+		} else {
+			$headers = $this->add_bearer_token([
+				'x-elementor-apps-connect' => true,
+			]);
 		}
+
+		$headers['endpoint'] = $endpoint;
+		$headers['x-elementor-apps'] = 'image-optimizer';
 
 		return $headers;
 	}
@@ -164,6 +176,16 @@ class Client {
 			return new WP_Error( 422, 'Wrong Server Response' );
 		}
 
+		if ( Plugin::instance()->modules_manager->get_modules( 'connect-manager' )->connect_instance->get_is_connect_on_fly() ) {
+			// If the token is invalid, refresh it and try again once only.
+			if ( ! $this->refreshed && ! empty( $body->message ) && ( false !== strpos( $body->message, 'Invalid Token' ) ) ) {
+				Plugin::instance()->modules_manager->get_modules( 'connect-manager' )->connect_instance->refresh_token();
+				$this->refreshed = true;
+				$args['headers'] = $this->add_bearer_token( $args['headers'] );
+				return $this->request( $method, $endpoint, $args );
+			}
+		}
+
 		if ( 200 !== $response_code ) {
 			// In case $as_array = true.
 			$message = $body->message ?? wp_remote_retrieve_response_message( $response );
@@ -174,6 +196,13 @@ class Client {
 		}
 
 		return $body;
+	}
+
+	public function add_bearer_token( $headers ) {
+		if ( $this->is_connected() ) {
+			$headers['Authorization'] = 'Bearer ' . Plugin::instance()->modules_manager->get_modules( 'connect-manager' )->connect_instance->get_access_token();
+		}
+		return $headers;
 	}
 
 	/**
@@ -205,7 +234,10 @@ class Client {
 		} else {
 			$image_mime = image_type_to_mime_type( exif_imagetype( $file ) );
 
-			if ( ! in_array( $image_mime, Image::get_supported_mime_types(), true ) ) {
+			if (
+				! in_array( $image_mime, Image::get_supported_mime_types(), true ) &&
+				( 'application/octet-stream' === $image_mime && 'avif' !== File_Utils::get_extension( $file ) )
+			) {
 				throw new Client_Exception( "Unsupported mime type `$image_mime`" );
 			}
 

@@ -2,6 +2,8 @@
 
 namespace ImageOptimization\Modules\Settings\Classes;
 
+use ImageOptimization\Classes\Image\Image_Conversion_Option;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -9,7 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Settings {
 	public const COMPRESSION_LEVEL_OPTION_NAME = 'image_optimizer_compression_level';
 	public const OPTIMIZE_ON_UPLOAD_OPTION_NAME = 'image_optimizer_optimize_on_upload';
+	/** @deprecated Use self::CONVERT_TO_FORMAT_OPTION_NAME instead */
 	public const CONVERT_TO_WEBP_OPTION_NAME = 'image_optimizer_convert_to_webp';
+	public const CONVERT_TO_FORMAT_OPTION_NAME = 'image_optimizer_convert_to_format';
 	public const RESIZE_LARGER_IMAGES_OPTION_NAME = 'image_optimizer_resize_larger_images';
 	public const RESIZE_LARGER_IMAGES_SIZE_OPTION_NAME = 'image_optimizer_resize_larger_images_size';
 	public const STRIP_EXIF_METADATA_OPTION_NAME = 'image_optimizer_exif_metadata';
@@ -29,11 +33,20 @@ class Settings {
 			case self::RESIZE_LARGER_IMAGES_SIZE_OPTION_NAME:
 				return (int) $data;
 
-			case self::CONVERT_TO_WEBP_OPTION_NAME:
 			case self::RESIZE_LARGER_IMAGES_OPTION_NAME:
 			case self::STRIP_EXIF_METADATA_OPTION_NAME:
 			case self::BACKUP_ORIGINAL_IMAGES_OPTION_NAME:
 				return (bool) $data;
+
+			// TODO: [Stability] Remove this fallback after a few versions
+			case self::CONVERT_TO_WEBP_OPTION_NAME:
+				$new_option = get_option( self::CONVERT_TO_FORMAT_OPTION_NAME );
+
+				if ( Image_Conversion_Option::WEBP === $new_option ) {
+					return true;
+				}
+
+				return false;
 
 			case self::CUSTOM_SIZES_OPTION_NAME:
 				if ( 'all' === $data ) {

@@ -3,10 +3,10 @@
 namespace ImageOptimization\Modules\Oauth\Rest;
 
 use ImageOptimization\Modules\Oauth\{
+	Classes\Data,
 	Classes\Route_Base,
-	Components\Connect,
+	Components\Connect
 };
-
 use Throwable;
 use WP_REST_Request;
 
@@ -54,6 +54,7 @@ class Deactivate extends Route_Base {
 
 			return $this->respond_success_json();
 		} catch ( Throwable $t ) {
+			Data::delete_activation_state();
 			return $this->respond_error_json( [
 				'message' => $t->getMessage(),
 				'code' => 'internal_server_error',

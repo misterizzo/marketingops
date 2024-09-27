@@ -8,17 +8,20 @@ use ImageOptimization\Classes\Async_Operation\{
 	Async_Operation_Queue,
 };
 use ImageOptimization\Classes\Image\{
+	Image,
 	Image_Meta,
 	Image_Optimization_Error_Type,
 	Image_Status
 };
+
 use ImageOptimization\Classes\Logger;
-use ImageOptimization\Modules\Oauth\Classes\Exceptions\Quota_Exceeded_Error;
-use ImageOptimization\Modules\Oauth\Components\Connect;
+use ImageOptimization\Classes\Exceptions\Quota_Exceeded_Error;
 use ImageOptimization\Modules\Optimization\Classes\Exceptions\Image_File_Already_Exists_Error;
 use ImageOptimization\Modules\Optimization\Classes\Optimize_Image;
 use ImageOptimization\Modules\Settings\Classes\Settings;
+
 use Throwable;
+use ImageOptimization\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -30,13 +33,24 @@ class Upload_Optimization {
 			return;
 		}
 
-		if ( ! Connect::is_connected() || ! Connect::is_activated() ) {
+		// @var ImageOptimizer/Modules/ConnectManager/Module
+		$module = Plugin::instance()->modules_manager->get_modules( 'connect-manager' );
+
+		if ( ! $module->connect_instance->is_connected() || ! $module->connect_instance->is_activated() ) {
 			return;
 		}
 
-		$attachment_post = get_post( $attachment_id );
+		$attachment_object = get_post( $attachment_id );
 
-		if ( ! wp_attachment_is_image( $attachment_post ) ) {
+		// TODO: Check how we can use Validate_Image::is_valid() here
+		if (
+			! wp_attachment_is_image( $attachment_object ) ||
+			! in_array( $attachment_object->post_mime_type, Image::get_supported_mime_types(), true ) ||
+			(
+				in_array( $attachment_object->post_mime_type, Image::get_mime_types_cannot_be_optimized(), true ) &&
+				! get_post_meta( $attachment_id, Image_Meta::IMAGE_OPTIMIZER_METADATA_KEY, true )
+			)
+		) {
 			return;
 		}
 

@@ -69,12 +69,14 @@ class Image_Restore {
 					}
 				}
 
+				$file_size = $meta->get_original_file_size( $image_size ) ?? File_System::size( $original_path );
+
 				$wp_meta
 					->set_file_path( $image_size, $original_path )
 					->set_mime_type( $image_size, $meta->get_original_mime_type( $image_size ) )
 					->set_width( $image_size, $meta->get_original_width( $image_size ) )
 					->set_height( $image_size, $meta->get_original_height( $image_size ) )
-					->set_file_size( $image_size, $meta->get_original_file_size( $image_size ) );
+					->set_file_size( $image_size, $file_size );
 
 				if ( Image::SIZE_FULL === $image_size ) {
 					self::update_image_post(

@@ -32,7 +32,13 @@ use ImageOptimization\Classes\File_Utils;
 	<p class="image-optimization-control__property">
 		<?php if ( 0 === $args['saved']['absolute'] ) { ?>
 			<span class="image-optimization-control__property-value">
-				<?php esc_html_e( 'Image is fully optimized', 'image-optimization' ); ?>
+				<?php
+				if ( $args['is_losseless_and_webp'] ) {
+					echo esc_html_e( 'Requested WebP format is larger than the original file. Switch to Lossy in settings to convert this image in an optimized manner.', 'image-optimization' );
+				} else {
+					echo esc_html_e( 'Image is fully optimized', 'image-optimization' );
+				}
+				?>
 			</span>
 		<?php } else { ?>
 			<?php esc_html_e( 'Overall saving', 'image-optimization' ); ?>:

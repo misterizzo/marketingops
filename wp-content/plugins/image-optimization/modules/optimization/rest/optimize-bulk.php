@@ -8,10 +8,11 @@ use ImageOptimization\Modules\Optimization\Classes\{
 	Route_Base,
 };
 use ImageOptimization\Classes\Image\Exceptions\Invalid_Image_Exception;
-use ImageOptimization\Modules\Oauth\Classes\Exceptions\Quota_Exceeded_Error;
+use ImageOptimization\Classes\Exceptions\Quota_Exceeded_Error;
 use ImageOptimization\Modules\Oauth\Components\Connect;
 use Throwable;
 use WP_REST_Request;
+use ImageOptimization\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -36,7 +37,7 @@ class Optimize_Bulk extends Route_Base {
 			self::NONCE_NAME
 		);
 
-		if ( ! Connect::is_activated() ) {
+		if ( ! Plugin::instance()->modules_manager->get_modules( 'connect-manager' )->connect_instance->is_activated() ) {
 			return $this->respond_error_json([
 				'message' => esc_html__( 'Invalid activation', 'image-optimization' ),
 				'code' => 'unauthorized',

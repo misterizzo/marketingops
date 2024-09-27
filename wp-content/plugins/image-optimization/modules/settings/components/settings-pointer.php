@@ -13,6 +13,11 @@ class Settings_Pointer {
 	const CURRENT_POINTER_SLUG = 'image-optimizer-settings';
 
 	public function admin_print_script() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
 		if ( $this->is_dismissed() ) {
 			return;
 		}
