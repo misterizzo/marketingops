@@ -39,35 +39,48 @@ if (!class_exists('BVSecurityCallback')) :
 			return $resp;
 		}
 
-		public function setupWP2FA($user_id, $secret, $to_encrypt = true, $cipher_algo = null, $enabled = null) {
-			if ($to_encrypt === true) {
-				if (empty($cipher_algo)) {
-					$cipher_algo = MCWP2FA::$cipher_algo;
-				}
-
-				if (defined('SECURE_AUTH_KEY')) {
-					$encryption_result = MCHelper::opensslEncrypt($secret, $cipher_algo, SECURE_AUTH_KEY);
-					if ($encryption_result[0] === false) {
-						return array("status" => false, "message" => $encryption_result[1]);
-					}
-					$secret = $encryption_result[1];
-				} else {
-					return array("status" => false, "message" => "Encryption key not found.");
-				}
+		public function setupWP2FA($secrets_by_uids, $to_encrypt, $cipher_algo, $enabled) {
+			if (!is_array($secrets_by_uids)) {
+				return array("status" => false, "message" => "secrets_by_uids is not an array.");
 			}
 
-			$secret_info = array(
-				"secret" => base64_encode($secret),
-				"is_encrypted" => $to_encrypt
-			);
-			update_user_meta($user_id, MCWP2FA::SECRET_META_KEY, $secret_info);
-			update_user_meta($user_id, MCWP2FA::FLAG_META_KEY, true);
+			$result = array();
+			foreach ($secrets_by_uids as $user_id => $secret) {
+				if (empty($user_id) || !is_string($secret)) {
+					continue;
+				}
+
+				if ($to_encrypt === true) {
+					if (empty($cipher_algo)) {
+						$cipher_algo = MCWP2FA::$cipher_algo;
+					}
+
+					if (defined('SECURE_AUTH_KEY')) {
+						$encryption_result = MCHelper::opensslEncrypt($secret, $cipher_algo, SECURE_AUTH_KEY);
+						if ($encryption_result[0] === false) {
+							return array("status" => false, "message" => $encryption_result[1]);
+						}
+						$secret = $encryption_result[1];
+					} else {
+						return array("status" => false, "message" => "Encryption key not found.");
+					}
+				}
+
+				$secret_info = array(
+					"secret" => base64_encode($secret),
+					"is_encrypted" => $to_encrypt
+				);
+
+				$result[$user_id][MCWP2FA::SECRET_META_KEY] = update_user_meta($user_id, MCWP2FA::SECRET_META_KEY, $secret_info);
+				$result[$user_id][MCWP2FA::FLAG_META_KEY] = update_user_meta($user_id, MCWP2FA::FLAG_META_KEY, true);
+			}
 
 			if (is_bool($enabled)) {
 				$config = array("enabled" => $enabled);
-				$this->settings->updateOption(MCWP2FA::$wp_2fa_option, $config);
+				$result[MCWP2FA::$wp_2fa_option] = $this->settings->updateOption(MCWP2FA::$wp_2fa_option, $config);
 			}
-			return array("status" => true);
+
+			return array("status" => true, "result" => $result);
 		}
 
 		public function verifyWP2FACode($user_id, $code, $cipher_algo = null) {
@@ -109,15 +122,28 @@ if (!class_exists('BVSecurityCallback')) :
 			);
 		}
 
-		public function deleteWP2FAKeys($user_ids) {
+		public function deleteWP2FAKeys($user_ids, $is_disable = false) {
+			$result = array();
+
 			foreach ($user_ids as $user_id) {
-				delete_user_meta($user_id, MCWP2FA::FLAG_META_KEY);
-				delete_user_meta($user_id, MCWP2FA::SECRET_META_KEY);
+				$secret_deleted = delete_user_meta($user_id, MCWP2FA::SECRET_META_KEY);
+				$flag_deleted = delete_user_meta($user_id, MCWP2FA::FLAG_META_KEY);
+				$result[$user_id] = array(
+					MCWP2FA::SECRET_META_KEY => $secret_deleted,
+					MCWP2FA::FLAG_META_KEY => $flag_deleted
+				);
 			}
-			return array("status" => true);
+
+			if ($is_disable === true) {
+				$result[MCWP2FA::$wp_2fa_option] = $this->settings->deleteOption(MCWP2FA::$wp_2fa_option);
+			}
+
+			return array("status" => true, "result" => $result);
 		}
 
 		public function process($request) {
+			$params = $request->params;
+
 			switch ($request->method) {
 			case "gtcrntb":
 				$resp = $this->getCrontab();
@@ -127,16 +153,17 @@ if (!class_exists('BVSecurityCallback')) :
 				if (array_key_exists('enable_wp_2fa', $request->params)) {
 					$enable_wp_2fa = $request->params['enable_wp_2fa'];
 				}
-				$resp = $this->setupWP2FA($request->params['user_id'], $request->params['secret'], $request->params['to_encrypt'], $request->params['cipher_algo'], $enable_wp_2fa);
+
+				$resp = $this->setupWP2FA($params['secrets_by_uids'], $params['to_encrypt'], $params['cipher_algo'], $enable_wp_2fa);
 				break;
 			case "vrfywp2fa":
-				$resp = $this->verifyWP2FACode($request->params['user_id'], $request->params['code'], $request->params['cipher_algo']);
+				$resp = $this->verifyWP2FACode($params['user_id'], $params['code'], $params['cipher_algo']);
 				break;
 			case "rdwp2fa":
-				$resp = $this->readWP2FAKeys($request->params['user_id']);
+				$resp = $this->readWP2FAKeys($params['user_id']);
 				break;
 			case "dltewp2fa":
-				$resp = $this->deleteWP2FAKeys($request->params['user_ids']);
+				$resp = $this->deleteWP2FAKeys($params['user_ids'], $params['is_disable']);
 				break;
 			default:
 				$resp = false;

@@ -8,33 +8,47 @@ require_once dirname(__FILE__) . '/utils.php';
 class MCWP2FA {
 	const FLAG_META_KEY = 'mc_2fa_enabled';
 	const SECRET_META_KEY = 'mc_2fa_secret';
+	const INVALID_CODE_MESSAGE = 'The 2FA code you entered is incorrect.';
+	const TOOLTIP_MESSAGE = 'Please contact your administrator if you need assistance.';
 
 	public static $cipher_algo = 'aes-256-cbc';
 	public static $wp_2fa_option = 'mcWp2faConf';
+	
+	private $bvinfo;
 	private $settings;
-	private $config;
+	private $invalid_code_message = self::INVALID_CODE_MESSAGE;
+	private $tooltip_message = self::TOOLTIP_MESSAGE;
 
 	public function __construct() {
 		$this->settings = new MCWPSettings();
-		$this->config = $this->settings->getOption(self::$wp_2fa_option);
+		$this->bvinfo = new MCInfo($this->settings);
+
+		$whitelabel_info = $this->bvinfo->getLPWhitelabelInfo();
+
+		if (isset($whitelabel_info['2fa_error_message']) && is_string($whitelabel_info['2fa_error_message'])) {
+			$this->invalid_code_message = $whitelabel_info['2fa_error_message'];
+		}
+
+		if (isset($whitelabel_info['2fa_tooltip']) && is_string($whitelabel_info['2fa_tooltip'])) {
+			$this->tooltip_message = $whitelabel_info['2fa_tooltip'];
+		}
 	}
 
-	private function can_init() {
-		if (is_array($this->config) && array_key_exists('enabled', $this->config) &&
-				$this->config['enabled'] === true) {
+	public static function isEnabled($settings) {
+		$config = $settings->getOption(self::$wp_2fa_option);
 
-			return true;
-		}
-		return false;
+		return (is_array($config) && array_key_exists('enabled', $config) &&
+				$config['enabled'] === true);
 	}
 
 	public function init() {
-		if ($this->can_init() === false) {
-			return;
-		}
-
+		add_action('wp_enqueue_scripts', array($this, 'enqueue_dashicons'));
 		add_filter('authenticate', array($this, 'authenticate'), 25, 3);
 		add_action('login_form', array($this, 'custom_login_form'));
+	}
+
+	public function enqueue_dashicons() {
+		wp_enqueue_style('dashicons');
 	}
 
 	public function authenticate($user, $username, $password) {
@@ -78,7 +92,7 @@ class MCWP2FA {
 
 					return $user;
 				} else {
-					return new WP_Error('invalid_2fa_code', __('The 2FA code you entered is incorrect.'));
+					return new WP_Error('invalid_2fa_code', __(esc_html($this->invalid_code_message)));
 				}
 			}
 		}
@@ -87,21 +101,74 @@ class MCWP2FA {
 	}
 
 	function custom_login_form() {
+		$tooltip_message = $this->tooltip_message;
+		$is_url = filter_var($tooltip_message, FILTER_VALIDATE_URL);
+
+		$icon_css = 'font-size: 20px; color: #2271b1; cursor: pointer;';
+		$icon_html = '<span
+				id="twofa_help_icon"
+				class="dashicons dashicons-editor-help"
+				style="' . esc_attr($icon_css) . '"></span>';
+
+		if ($is_url) {
+			$tooltip_html = '<a
+					href="' . esc_url($tooltip_message) . '"
+					target="_blank"
+					style="text-decoration: none;">' . $icon_html . '</a>';
+		} else {
+			$tooltip_html = '<span
+					id="twofa_help_icon"
+					class="dashicons dashicons-editor-help"
+					title="' . esc_attr($tooltip_message) . '"
+					style="' . esc_attr($icon_css) . '"></span>';
+		}
 ?>
+		<style>
+			.wp2fa-progress-bar {
+				width: 100%;
+				background-color: #f3f3f3;
+				display: none;
+				margin-bottom: 10px;
+			}
+
+			.wp2fa-progress-bar.show {
+				display: block;
+			}
+
+			.wp2fa-progress-bar .progress-bar-inner {
+				width: 0;
+				height: 5px;
+				background-color: #2271b1;
+				animation: loader 1s ease infinite;
+			}
+
+			@keyframes loader {
+				100% {width: 100%}
+			}
+		</style>
+
+		<div class="wp2fa-progress-bar">
+			<div class="progress-bar-inner"></div>
+		</div>
+
 		<script type="text/javascript">
 			document.addEventListener('DOMContentLoaded', function() {
 				const loginForm = document.getElementById('loginform');
 				const usernameField = document.getElementById('user_login');
 				const passwordField = document.getElementById('user_pass');
+				const loginButton = document.getElementById('wp-submit');
 				let loginError = document.getElementById('login_error');
 				let isTwoFAEnabled = false;
+				const progressBar = document.getElementsByClassName('wp2fa-progress-bar')[0];
 
-				if (loginForm && usernameField && passwordField) {
+				if (loginForm && usernameField && passwordField && loginButton) {
 					loginForm.addEventListener('submit', handleSubmit);
 				}
 
 				function handleSubmit(event) {
 					event.preventDefault();
+					showProgressBar();
+					disableLoginButton();
 
 					const formData = new FormData(loginForm);
 
@@ -140,7 +207,11 @@ class MCWP2FA {
 						if (isTwoFAEnabled) {
 							showTwoFAField();
 						}
-					});
+					})
+					.finally(() => {
+						hideProgressBar();
+						enableLoginButton();
+					})
 				}
 
 				function handleHtmlResponse(html) {
@@ -159,7 +230,13 @@ class MCWP2FA {
 					if (!twofaField) {
 						twofaField = document.createElement('p');
 						twofaField.id = 'twofa_code_field';
-						twofaField.innerHTML = '<label for="twofa_code">2FA Code<br><input type="text" name="twofa_code" id="twofa_code" class="input" value="" size="20"></label>';
+						twofaField.innerHTML = `
+							<label for="twofa_code" style="position: relative; display: block;">
+								2FA Code
+								<?php echo $tooltip_html; ?>
+							</label>
+							<input type="text" required name="twofa_code" id="twofa_code" class="input" value="" maxlength="6" minlength="6">
+							`;
 						passwordField.parentNode.insertBefore(twofaField, passwordField.nextSibling);
 					}
 					twofaField.style.display = 'block';
@@ -178,7 +255,7 @@ class MCWP2FA {
 						loginError.id = 'login_error';
 						loginForm.parentNode.insertBefore(loginError, loginForm);
 					}
-					loginError.innerHTML = message;
+					loginError.textContent = message;
 					loginError.style.display = 'block';
 				}
 
@@ -186,12 +263,27 @@ class MCWP2FA {
 					loginForm.removeEventListener('submit', handleSubmit);
 					loginForm.submit();
 				}
+
+				function showProgressBar() {
+					progressBar.classList.add('show');
+				}
+
+				function hideProgressBar() {
+					progressBar.classList.remove('show');
+				}
+
+				function disableLoginButton() {
+					loginButton.disabled = true;
+					loginButton.value = 'Verifying...';
+				}
+
+				function enableLoginButton() {
+					loginButton.disabled = false;
+					loginButton.value = 'Log In';
+				}
 			});
 			</script>
 <?php
 	}
 }
 endif;
-
-$wp_2fa = new MCWP2FA();
-$wp_2fa->init();

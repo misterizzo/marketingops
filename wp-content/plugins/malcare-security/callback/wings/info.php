@@ -10,7 +10,7 @@ class BVInfoCallback extends BVCallbackBase {
 	public $bvinfo;
 	public $bvapi;
 	
-	const INFO_WING_VERSION = 2.4;
+	const INFO_WING_VERSION = 2.5;
 
 	public function __construct($callback_handler) {
 		$this->db = $callback_handler->db;
@@ -283,6 +283,11 @@ class BVInfoCallback extends BVCallbackBase {
 	public function getHostInfo() {
 		$host_info = $_SERVER;
 		$host_info['PHP_SERVER_NAME'] = php_uname('\n');
+
+		if (isset($_SERVER['SERVER_ADDR']) && function_exists('gethostbyaddr')) {
+			$host_info['HOST_FROM_IP'] = gethostbyaddr($_SERVER['SERVER_ADDR']);
+		}
+
 		if (array_key_exists('IS_PRESSABLE', get_defined_constants())) {
 			$host_info['IS_PRESSABLE'] = true;
 		}

@@ -67,14 +67,7 @@ class MCWPAdmin {
 		}
 		if ($this->bvinfo->isActivateRedirectSet()) {
 			$this->settings->updateOption($this->bvinfo->plug_redirect, 'no');
-			$apipubkey = MCAccount::getApiPublicKey($this->settings);
-			if ($apipubkey && isset($apipubkey)) {
-				$siteurl = base64_encode($this->siteinfo->siteurl());
-				$adminurl = base64_encode($this->mainUrl());
-				wp_redirect($this->bvinfo->appUrl().'/plugin/activate?bvpublic=9ead583862efaca5440d724079d97a0c&siteurl='.$siteurl.'&adminurl='.$adminurl);
-				exit();
-			}
-
+			##ACTIVATEREDIRECTCODE##
 			if (!wp_doing_ajax()) {
 				wp_redirect($this->mainUrl());
 			}

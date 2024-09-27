@@ -17,8 +17,7 @@ if (!class_exists('MCWPAction')) :
 	
 		public function activate() {
 			if (!isset($_REQUEST['blogvaultkey'])) {
-				MCAccount::addAccount($this->settings, '9ead583862efaca5440d724079d97a0c', '310d0dc6bf3fdcac4a2a5fd30497560e');
-		MCAccount::updateApiPublicKey($this->settings, '9ead583862efaca5440d724079d97a0c');
+				##BVKEYSLOCATE##
 			}
 			if (MCAccount::isConfigured($this->settings)) {
 				/* This informs the server about the activation */
@@ -34,6 +33,8 @@ if (!class_exists('MCWPAction')) :
 			$info = array();
 			$this->siteinfo->basic($info);
 			##DISABLECACHE##
+			$this->process_deactivation_feedback($info);
+
 			$this->bvapi->pingbv('/bvapi/deactivate', $info);
 		}
 
@@ -42,6 +43,7 @@ if (!class_exists('MCWPAction')) :
 			do_action('mc_clear_dynsync_config');
 			##CLEARCACHECONFIG##
 			do_action('mc_clear_bv_services_config');
+			do_action('mc_clear_wp_2fa_config');
 			do_action('mc_remove_bv_preload_include');
 			do_action('mc_clear_php_error_config');
 		}
@@ -49,6 +51,16 @@ if (!class_exists('MCWPAction')) :
 		public function clear_bv_services_config() {
 			$this->settings->deleteOption($this->bvinfo->services_option_name);
 		}
+
+		public function clear_wp_2fa_config() {
+			$meta_keys = array('mc_2fa_enabled', 'mc_2fa_secret');
+			foreach ($meta_keys as $meta_key) {
+					$this->settings->deleteMetaData('user', null, $meta_key, '', true);
+			}
+
+			$this->settings->deleteOption(MCWP2FA::$wp_2fa_option);
+		}
+
 
 		##SOUNINSTALLFUNCTION##
 
@@ -58,6 +70,15 @@ if (!class_exists('MCWPAction')) :
 				echo '<div style="max-width:150px;min-height:70px;margin:0 auto;text-align:center;position:relative;">
 					<a href='.esc_url($bvfooter['badgeurl']).' target="_blank" ><img src="'.esc_url(plugins_url($bvfooter['badgeimg'], __FILE__)).'" alt="'.esc_attr($bvfooter['badgealt']).'" /></a></div>';
 			}
+		}
+
+		private function process_deactivation_feedback(&$info) {
+			if (!isset($_GET['bv_deactivation_assets']) || !is_string($_GET['bv_deactivation_assets'])) {
+				return;
+			}
+
+			$deactivation_assets = $_GET['bv_deactivation_assets'];
+			$info['deactivation_feedback'] = base64_encode($deactivation_assets);
 		}
 
 		public function removeBVPreload() {

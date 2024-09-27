@@ -5,7 +5,7 @@ Plugin URI: https://www.malcare.com
 Description: MalCare WordPress Security Plugin - Malware Scanner, Cleaner, Security Firewall
 Author: MalCare Security
 Author URI: https://www.malcare.com
-Version: 5.73
+Version: 5.77
 Network: True
  */
 
@@ -40,6 +40,8 @@ require_once dirname( __FILE__ ) . '/account.php';
 require_once dirname( __FILE__ ) . '/helper.php';
 require_once dirname( __FILE__ ) . '/wp_2fa/wp_2fa.php';
 
+require_once dirname( __FILE__ ) . '/wp_login_whitelabel.php';
+
 ##WPCACHEMODULE##
 
 
@@ -56,8 +58,10 @@ register_uninstall_hook(__FILE__, array('MCWPAction', 'uninstall'));
 register_activation_hook(__FILE__, array($wp_action, 'activate'));
 register_deactivation_hook(__FILE__, array($wp_action, 'deactivate'));
 
+
 add_action('wp_footer', array($wp_action, 'footerHandler'), 100);
 add_action('mc_clear_bv_services_config', array($wp_action, 'clear_bv_services_config'));
+
 ##SOADDUNINSTALLACTION##
 
 ##DISABLE_OTHER_OPTIMIZATION_PLUGINS##
@@ -82,6 +86,7 @@ if (is_admin()) {
 	}
 	add_filter('plugin_action_links', array($wpadmin, 'settingsLink'), 10, 2);
 	add_action('admin_head', array($wpadmin, 'removeAdminNotices'), 3);
+	##POPUP_ON_DEACTIVATION##
 	add_action('admin_notices', array($wpadmin, 'activateWarning'));
 	add_action('admin_enqueue_scripts', array($wpadmin, 'mcsecAdminMenu'));
 	##ALPURGECACHEFUNCTION##
@@ -195,14 +200,14 @@ if ((array_key_exists('bvplugname', $_REQUEST)) && ($_REQUEST['bvplugname'] == "
 		if ($bvinfo->isProtectModuleEnabled()) {
 			require_once dirname( __FILE__ ) . '/protect/protect.php';
 			//For backward compatibility.
-			MCProtect_V573::$settings = new MCWPSettings();
-			MCProtect_V573::$db = new MCWPDb();
-			MCProtect_V573::$info = new MCInfo(MCProtect_V573::$settings);
+			MCProtect_V577::$settings = new MCWPSettings();
+			MCProtect_V577::$db = new MCWPDb();
+			MCProtect_V577::$info = new MCInfo(MCProtect_V577::$settings);
 
-			add_action('mc_clear_pt_config', array('MCProtect_V573', 'uninstall'));
+			add_action('mc_clear_pt_config', array('MCProtect_V577', 'uninstall'));
 
 			if ($bvinfo->isActivePlugin()) {
-				MCProtect_V573::init(MCProtect_V573::MODE_WP);
+				MCProtect_V577::init(MCProtect_V577::MODE_WP);
 			}
 		}
 
@@ -241,3 +246,15 @@ if ((array_key_exists('bvplugname', $_REQUEST)) && ($_REQUEST['bvplugname'] == "
 
 	##THIRDPARTYCACHINGMODULE##
 }
+
+if (MCWP2FA::isEnabled($bvsettings)) {
+	$wp_2fa = new MCWP2FA();
+	$wp_2fa->init();
+}
+
+if (!empty($bvinfo->getLPWhitelabelInfo())) {
+	$wp_login_whitelabel = new MCWPLoginWhitelabel();
+	$wp_login_whitelabel->init();
+}
+
+add_action('mc_clear_wp_2fa_config', array($wp_action, 'clear_wp_2fa_config'));
