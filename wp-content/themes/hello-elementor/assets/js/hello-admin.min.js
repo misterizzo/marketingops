@@ -267,7 +267,7 @@ const SettingsPanel = ({
     onChange: value => updateSettings(SETTINGS.PAGE_TITLE, value)
   }), /*#__PURE__*/React.createElement("code", {
     className: "code-example"
-  }, " <header class=\"page-header\"> <h1 class=\"entry-title\"> Post title </h1> </header> "), /*#__PURE__*/React.createElement(_components.ToggleControl, {
+  }, " <div class=\"page-header\"> <h1 class=\"entry-title\"> Post title </h1> </div> "), /*#__PURE__*/React.createElement(_components.ToggleControl, {
     label: (0, _i18n.__)('Unregister Hello style.css', 'hello-elementor'),
     help: (0, _i18n.__)("Disable Hello theme's style.css file which contains CSS reset rules for unified cross-browser view.", 'hello-elementor'),
     checked: !!settingsData[SETTINGS.HELLO_STYLE] || false,

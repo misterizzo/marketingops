@@ -32,13 +32,6 @@ class elementorHelloThemeHandler {
       return;
     }
     this.elements.menuToggle.addEventListener('click', () => this.handleMenuToggle());
-    this.elements.menuToggle.addEventListener('keyup', event => {
-      const ENTER_KEY = 13;
-      const SPACE_KEY = 32;
-      if (ENTER_KEY === event.keyCode || SPACE_KEY === event.keyCode) {
-        event.currentTarget.click();
-      }
-    });
     this.elements.dropdownMenu.querySelectorAll('.menu-item-has-children > a').forEach(anchorElement => anchorElement.addEventListener('click', event => this.handleMenuChildren(event)));
   }
   closeMenuItems() {
@@ -49,6 +42,7 @@ class elementorHelloThemeHandler {
     const isDropdownVisible = !this.elements.menuToggleHolder.classList.contains('elementor-active');
     this.elements.menuToggle.setAttribute('aria-expanded', isDropdownVisible);
     this.elements.dropdownMenu.setAttribute('aria-hidden', !isDropdownVisible);
+    this.elements.dropdownMenu.inert = !isDropdownVisible;
     this.elements.menuToggleHolder.classList.toggle('elementor-active', isDropdownVisible);
 
     // Always close all sub active items.
