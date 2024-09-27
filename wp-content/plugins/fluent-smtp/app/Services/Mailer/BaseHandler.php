@@ -120,6 +120,7 @@ class BaseHandler
             'to' => $recipients['to'],
             'subject' => $this->phpMailer->Subject,
             'message' => $this->phpMailer->Body,
+            'alt_body' => $this->phpMailer->AltBody,
             'attachments' => $this->phpMailer->getAttachments(),
             'custom_headers' => $customHeaders,
             'headers' => [
@@ -297,10 +298,10 @@ class BaseHandler
                 if($row) {
                     $row['response'] = (array) $row['response'];
                     if($status) {
-                        $row['response']['fallback'] = 'Sent using fallback connection '.$this->attributes['from'];
+                        $row['response']['fallback'] = __('Sent using fallback connection ', 'fluent-smtp') . $this->attributes['from'];
                         $row['response']['fallback_response'] = $response;
                     } else {
-                        $row['response']['fallback'] = 'Tried to send using fallback but failed. '.$this->attributes['from'];
+                        $row['response']['fallback'] = __('Tried to send using fallback but failed. ', 'fluent-smtp') . $this->attributes['from'];
                         $row['response']['fallback_response'] = $response;
                     }
 
@@ -399,12 +400,12 @@ class BaseHandler
 
     public function addNewSenderEmail($connection, $email)
     {
-        return new \WP_Error('not_implemented', 'Not implemented');
+        return new \WP_Error('not_implemented', __('Not implemented', 'fluent-smtp'));
     }
 
     public function removeSenderEmail($connection, $email)
     {
-        return new \WP_Error('not_implemented', 'Not implemented');
+        return new \WP_Error('not_implemented', __('Not implemented', 'fluent-smtp'));
     }
 
 }
