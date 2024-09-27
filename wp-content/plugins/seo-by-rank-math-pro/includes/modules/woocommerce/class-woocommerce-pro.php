@@ -11,6 +11,7 @@ namespace RankMathPro;
 
 use RankMath\Helper;
 use RankMath\Traits\Hooker;
+use RankMath\Schema\DB;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -257,6 +258,17 @@ class WooCommerce {
 		$product_id = get_the_ID();
 		$product    = wc_get_product( $product_id );
 		if ( ! $product->is_type( 'variable' ) ) {
+			return $entity;
+		}
+
+		$schemas = array_filter(
+			DB::get_schemas( $product_id ),
+			function( $schema ) {
+				return $schema['@type'] === 'WooCommerceProduct';
+			}
+		);
+
+		if ( empty( $schemas ) && Helper::get_default_schema_type( $product_id ) !== 'WooCommerceProduct' ) {
 			return $entity;
 		}
 

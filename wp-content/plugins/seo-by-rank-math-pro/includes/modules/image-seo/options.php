@@ -174,6 +174,7 @@ $cmb->add_group_field(
 		'id'         => 'replace',
 		'type'       => 'text',
 		'attributes' => [ 'placeholder' => esc_attr__( 'Replace', 'rank-math-pro' ) ],
+		'classes'    => 'rank-math-supports-variables dropdown-up',
 	]
 );
 

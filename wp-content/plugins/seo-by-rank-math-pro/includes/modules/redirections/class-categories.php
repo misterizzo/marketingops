@@ -24,13 +24,6 @@ class Categories {
 	use Hooker;
 
 	/**
-	 * Save categories with a delay so that we know the new redirection ID.
-	 *
-	 * @var array
-	 */
-	private $save_categories = [];
-
-	/**
 	 * Import categories from the Redirection plugin.
 	 *
 	 * @var array
@@ -48,11 +41,11 @@ class Categories {
 	 * Register hooks.
 	 */
 	public function __construct() {
-
 		// Redirection categories.
 		$this->action( 'init', 'register_categories', 20 );
-		$this->action( 'cmb2_admin_init', 'cmb_init', 99 );
-		$this->action( 'admin_post_rank_math_save_redirections', 'save_category', 8 );
+		$this->action( 'rank_math/redirection/saved', 'save_category_after_add', 10, 2 );
+		$this->filter( 'rank_math/redirections/table_item', 'add_category_in_data_attributes' );
+
 		$this->action( 'wp_loaded', 'filter_category', 5 );
 		$this->action( 'rank_math/redirection/extra_tablenav', 'category_filter', 20, 1 );
 		$this->action( 'rank_math/redirection/get_redirections_query', 'get_redirections_query', 20, 2 );
@@ -98,6 +91,8 @@ class Categories {
 			'show_admin_column' => false,
 			'query_var'         => false,
 			'hierarchical'      => true,
+			'show_in_rest'      => true,
+			'rest_base'         => 'rank_math_redirection_category',
 			'capabilities'      => [
 				'manage_terms' => 'rank_math_redirections',
 				'edit_terms'   => 'rank_math_redirections',
@@ -157,69 +152,6 @@ class Categories {
 
 		// Translators: placeholder is the number of updated redirections.
 		Helper::add_notification( sprintf( __( '%d redirections have been assigned to the category.', 'rank-math-pro' ), count( $ids ) ) );
-	}
-
-	/**
-	 * Hook CMB2 init process.
-	 */
-	public function cmb_init() {
-		$this->action( 'cmb2_init_hookup_rank-math-redirections', 'add_category_cmb_field', 110 );
-	}
-
-	/**
-	 * Add new fields to CMB form.
-	 *
-	 * @param object $cmb CMB object.
-	 * @return void
-	 */
-	public function add_category_cmb_field( $cmb ) {
-		$field_ids      = wp_list_pluck( $cmb->prop( 'fields' ), 'id' );
-		$field_position = array_search( 'header_code', array_keys( $field_ids ), true ) + 1;
-
-		$add_button  = '<span class="button button-secondary add-redirection-category-button">' . esc_html__( 'Add New', 'rank-math-pro' ) . '</span>';
-		$add_input   = '<input type="text" class="add-redirection-category-input exclude" placeholder="' . esc_attr__( 'New Category', 'rank-math-pro' ) . '" value="">';
-		$manage_link = '<a href="' . admin_url( 'edit-tags.php?taxonomy=rank_math_redirection_category' ) . '" class="manage-redirection-categories-link">' . esc_html__( 'Manage Categories', 'rank-math-pro' ) . '</a>';
-
-		$terms = get_terms(
-			[
-				'taxonomy'   => 'rank_math_redirection_category',
-				'hide_empty' => false,
-			]
-		);
-
-		$default_options = [];
-		if ( $this->is_editing() ) {
-			$default_options = $this->get_redirection_categories( Param::get( 'redirection' ), [ 'fields' => 'ids' ] );
-		}
-
-		$ids   = wp_list_pluck( $terms, 'term_id' );
-		$names = wp_list_pluck( $terms, 'name' );
-
-		$multicheck_options = array_combine( $ids, $names );
-
-		$cmb->add_field(
-			[
-				'id'                => 'redirection_category',
-				'type'              => 'multicheck_inline',
-				'name'              => esc_html__( 'Redirection Category', 'rank-math-pro' ),
-				'desc'              => esc_html__( 'Organize your redirections in categories.', 'rank-math-pro' ),
-				'options'           => $multicheck_options,
-				'select_all_button' => false,
-				'after_field'       => $add_input . $add_button . $manage_link,
-				'default'           => $default_options,
-			],
-			++$field_position
-		);
-
-		$cmb->add_field(
-			[
-				'id'      => 'set_redirection_category',
-				'type'    => 'hidden',
-				'default' => '1',
-			],
-			++$field_position
-		);
-
 	}
 
 	/**
@@ -338,51 +270,23 @@ class Categories {
 	}
 
 	/**
-	 * Save category when creating or editing a redirection.
-	 *
-	 * @return boolean
-	 */
-	public function save_category() {
-		// If no form submission, bail!
-		if ( empty( $_POST ) ) {
-			return false;
-		}
-
-		if ( ! isset( $_POST['set_redirection_category'] ) ) {
-			return false;
-		}
-
-		check_admin_referer( 'rank-math-save-redirections', 'security' );
-		if ( ! Helper::has_cap( 'redirections' ) ) {
-			return false;
-		}
-
-		$cmb    = cmb2_get_metabox( 'rank-math-redirections' );
-		$values = $cmb->get_sanitized_values( $_POST );
-
-		$values['redirection_category'] = isset( $values['redirection_category'] ) && is_array( $values['redirection_category'] ) ? $values['redirection_category'] : [];
-		unset( $_POST['redirection_category'], $_POST['set_redirection_category'] );
-
-		if ( empty( $values['id'] ) ) {
-			$this->save_categories = $values['redirection_category'];
-			$this->action( 'rank_math/redirection/saved', 'save_category_after_add' );
-			return true;
-		}
-
-		wp_set_object_terms( $values['id'], array_map( 'absint', $values['redirection_category'] ), 'rank_math_redirection_category' );
-		return true;
-	}
-
-	/**
 	 * Save categories with a delay so that we know the new redirection ID.
 	 *
 	 * @param object $redirection Redirection object passed to the hook.
-	 * @return bool
+	 * @param array  $params      Redirection parameters.
 	 */
-	public function save_category_after_add( $redirection ) {
-		wp_set_object_terms( $redirection->get_id(), array_map( 'absint', $this->save_categories ), 'rank_math_redirection_category' );
+	public function save_category_after_add( $redirection, $params ) {
+		if ( ! isset( $params['categories'] ) ) {
+			return;
+		}
 
-		return true;
+		wp_set_object_terms( $redirection->get_id(), array_map( 'absint', $params['categories'] ), 'rank_math_redirection_category' );
+	}
+
+	public function add_category_in_data_attributes( $data ) {
+		$data['categories'] = $this->get_redirection_categories( $data['id'], [ 'fields' => 'ids' ] );
+
+		return $data;
 	}
 
 	/**

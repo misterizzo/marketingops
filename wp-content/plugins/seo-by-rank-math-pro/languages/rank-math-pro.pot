@@ -8,7 +8,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language-Team: Rank Math\n"
 "Last-Translator: Rank Math\n"
-"POT-Creation-Date: 2024-05-30 13:09+0000\n"
+"POT-Creation-Date: 2024-09-18 05:24+0000\n"
 "Project-Id-Version: undefined\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
@@ -2129,21 +2129,6 @@ msgstr ""
 msgid "%d redirections have been assigned to the category."
 msgstr ""
 
-msgid "Add New"
-msgstr ""
-
-msgid "New Category"
-msgstr ""
-
-msgid "Manage Categories"
-msgstr ""
-
-msgid "Redirection Category"
-msgstr ""
-
-msgid "Organize your redirections in categories."
-msgstr ""
-
 msgid "Category"
 msgstr ""
 
@@ -2157,6 +2142,9 @@ msgid "Filter"
 msgstr ""
 
 msgid "&larr; Go Back to the Redirections"
+msgstr ""
+
+msgid "Manage Categories"
 msgstr ""
 
 msgid "Sync to .htaccess"
@@ -2175,18 +2163,6 @@ msgid "No valid redirection found."
 msgstr ""
 
 msgid "Redirections successfully synced to the .htaccess file."
-msgstr ""
-
-msgid "Scheduled Activation"
-msgstr ""
-
-msgid "Redirection will be activated on this date (optional)."
-msgstr ""
-
-msgid "Scheduled Deactivation"
-msgstr ""
-
-msgid "Redirection will be deactivated on this date (optional)."
 msgstr ""
 
 msgid "One or more of the selected redirections could not be changed because they are scheduled for future activation/deactivation."
@@ -2991,9 +2967,6 @@ msgstr ""
 msgid "Merged"
 msgstr ""
 
-msgid "Are you sure you want to import redirections from this CSV file?"
-msgstr ""
-
 msgid "Could not import redirection."
 msgstr ""
 
@@ -3040,6 +3013,9 @@ msgid "Special Coverage"
 msgstr ""
 
 msgid "Name"
+msgstr ""
+
+msgid "Creator"
 msgstr ""
 
 msgid "Data Sets"

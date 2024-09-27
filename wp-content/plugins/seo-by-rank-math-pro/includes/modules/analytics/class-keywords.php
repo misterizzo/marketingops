@@ -480,6 +480,7 @@ class Keywords {
 		$positions = Stats::get()->set_dimension_as_key( $positions, $dimension );
 		$metrics   = Stats::get()->set_dimension_as_key( $metrics, $dimension );
 		$data      = Stats::get()->get_merged_metrics( $positions, $metrics );
+		$data      = $this->sort_data( $data, $args['orderBy'], $args['order'] );
 
 		// Step9. Construct return data.
 		foreach ( $data as $keyword => $row ) {
@@ -512,6 +513,23 @@ class Keywords {
 				$data[ $keyword ]['diffCtr']
 			);
 		}
+
+		return $data;
+	}
+
+	/**
+	 * Get tracked keywords data.
+	 *
+	 * @param  array  $data     The data to sort.
+	 * @param  string $order_by The column to sort by.
+	 * @param  string $order    The order to sort by.
+	 */
+	public function sort_data( $data, $order_by, $order ) {
+		$sort_order  = 'ASC' === $order ? SORT_ASC : SORT_DESC;
+		$sort_column = in_array( $order_by, [ 'clicks', 'impressions', 'position', 'ctr' ], true ) ? $order_by : 'position';
+
+		$sort_data = array_column( $data, $sort_column );
+		array_multisort( $sort_data, $sort_order, $data );
 
 		return $data;
 	}

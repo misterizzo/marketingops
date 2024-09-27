@@ -562,6 +562,7 @@ class Image_Seo_Pro {
 				continue;
 			}
 
+			$replace             = Helper::replace_vars( $replace, $this->get_post() );
 			$attrs[ $attribute ] = str_replace( $find, $replace, $attrs[ $attribute ] );
 
 			$new     = '<img' . HTML::attributes_to_string( $attrs ) . '>';
@@ -592,8 +593,9 @@ class Image_Seo_Pro {
 				continue;
 			}
 
-			$new_caption = str_replace( $replacement['find'], $replacement['replace'], $caption );
-			$out         = str_replace( $caption, $new_caption, $out );
+			$replacement['replace'] = Helper::replace_vars( $replacement['replace'], $this->get_post() );
+			$new_caption            = str_replace( $replacement['find'], $replacement['replace'], $caption );
+			$out                    = str_replace( $caption, $new_caption, $out );
 		}
 
 		return $out;

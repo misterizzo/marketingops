@@ -534,11 +534,9 @@ class CSV_Import_Export_Redirections {
 		}
 
 		Helper::add_json( 'redirectionImportAction', add_query_arg( 'importexport', '1' ) . '#import-export-box' );
-		Helper::add_json( 'confirmRedirectionsCsvImport', __( 'Are you sure you want to import redirections from this CSV file?', 'rank-math-pro' ) );
-		Helper::add_json( 'confirmRedirectionsCsvCancel', __( 'Are you sure you want to stop the import process?', 'rank-math-pro' ) );
 		Helper::add_json( 'csvProgressNonce', wp_create_nonce( 'rank_math_csv_progress' ) );
 
-		wp_enqueue_script( 'rank-math-pro-redirections', RANK_MATH_PRO_URL . 'includes/modules/redirections/assets/js/redirections.js', [], RANK_MATH_PRO_VERSION, true );
+		wp_enqueue_script( 'rank-math-pro-redirections', RANK_MATH_PRO_URL . 'includes/modules/redirections/assets/js/redirections.js', [ 'wp-components', 'rank-math-components' ], RANK_MATH_PRO_VERSION, true );
 		wp_enqueue_style( 'rank-math-pro-redirections', RANK_MATH_PRO_URL . 'includes/modules/redirections/assets/css/redirections.css', [], RANK_MATH_PRO_VERSION );
 	}
 }

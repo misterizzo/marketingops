@@ -72,7 +72,7 @@ ob_start();
 		<p>
 			<?php if ( ! empty( $schema['datePublished'] ) ) { ?>
 				<span class="rank-math-podcast-date">
-					<?php echo esc_html( date( "j F", strtotime( $schema['datePublished'] ) ) ); ?>
+					<?php echo esc_html( date( get_option( 'date_format' ), strtotime( $schema['datePublished'] ) ) ); ?>
 				</span> &#183;
 			<?php } ?>
 			<span>

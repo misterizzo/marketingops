@@ -346,21 +346,28 @@ class Redirections {
 	/**
 	 * Enqueue styles and scripts for Redirections & Redirection Categories screens.
 	 *
-	 * @param  string $hook Page hook prefix.
-	 *
 	 * @return void
 	 */
-	public function admin_scripts( $hook ) {
+	public function admin_scripts() {
 		$screen = get_current_screen();
 
 		if ( ! in_array( $screen->id, [ 'rank-math_page_rank-math-redirections', 'edit-rank_math_redirection_category' ], true ) ) {
 			return;
 		}
 
+		$terms = get_terms(
+			[
+				'taxonomy'   => 'rank_math_redirection_category',
+				'fields'     => 'id=>name',
+				'hide_empty' => false,
+			]
+		);
+		Helper::add_json( 'redirectionCategories', $terms );
+		Helper::add_json( 'redirectionCategoryLink', admin_url( 'edit-tags.php?taxonomy=rank_math_redirection_category' ) );
+
 		$url = RANK_MATH_PRO_URL . 'includes/modules/redirections/assets/';
-		Helper::add_json( 'add_redirection_category_nonce', wp_create_nonce( 'add-rank_math_redirection_category' ) );
 		wp_enqueue_style( 'rank-math-pro-redirections', $url . 'css/redirections.css', [], RANK_MATH_PRO_VERSION );
-		wp_enqueue_script( 'rank-math-pro-redirections', $url . 'js/redirections.js', [], RANK_MATH_PRO_VERSION, true );
+		wp_enqueue_script( 'rank-math-pro-redirections', $url . 'js/redirections.js', [ 'lodash' ], RANK_MATH_PRO_VERSION, true );
 	}
 
 	/**

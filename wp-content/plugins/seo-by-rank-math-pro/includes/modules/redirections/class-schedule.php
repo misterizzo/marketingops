@@ -36,102 +36,13 @@ class Schedule {
 	 */
 	public function __construct() {
 		$this->action( 'init', 'disallow_scheduled_bulk_status_change', 5 );
-		$this->action( 'cmb2_admin_init', 'cmb_init', 99 );
-		$this->action( 'admin_post_rank_math_save_redirections', 'save_start_end', 9 );
+		$this->action( 'rank_math/redirection/saved', 'save_start_end_after_add', 10, 2 );
 		$this->action( 'rank_math/redirections/scheduled_activate', 'scheduled_activation_event', 10, 1 );
 		$this->action( 'rank_math/redirections/scheduled_deactivate', 'scheduled_deactivation_event', 10, 1 );
 		$this->action( 'rank_math/redirection/deleted', 'delete_scheduled_event', 10, 1 );
 
 		$this->filter( 'rank_math/redirection/row_classes', 'row_classes', 10, 2 );
-	}
-
-	/**
-	 * Hook CMB2 init process.
-	 */
-	public function cmb_init() {
-		$this->action( 'cmb2_init_hookup_rank-math-redirections', 'add_start_end_cmb_fields', 120 );
-	}
-
-	/**
-	 * Add new fields to CMB form.
-	 *
-	 * @param object $cmb CMB object.
-	 * @return void
-	 */
-	public function add_start_end_cmb_fields( $cmb ) {
-		$field_ids      = wp_list_pluck( $cmb->prop( 'fields' ), 'id' );
-		$field_position = array_search( 'status', array_keys( $field_ids ), true ) + 1;
-
-		$current_redirection = Param::get( 'redirection' );
-		$cmb->add_field(
-			[
-				'id'          => 'start_date',
-				'type'        => 'text_date',
-				'name'        => esc_html__( 'Scheduled Activation', 'rank-math-pro' ),
-				'desc'        => esc_html__( 'Redirection will be activated on this date (optional).', 'rank-math-pro' ),
-				'date_format' => 'Y-m-d',
-				'default' => $this->get_start_date( $current_redirection ),
-				'attributes'  => [
-					'placeholder'  => $this->get_past_date( $current_redirection, 'start' ),
-					'class'        => 'cmb2-text-small cmb2-datepicker exclude',
-					'autocomplete' => 'off',
-				],
-			],
-			++$field_position
-		);
-
-		$cmb->add_field(
-			[
-				'id'          => 'end_date',
-				'type'        => 'text_date',
-				'name'        => esc_html__( 'Scheduled Deactivation', 'rank-math-pro' ),
-				'desc'        => esc_html__( 'Redirection will be deactivated on this date (optional).', 'rank-math-pro' ),
-				'date_format' => 'Y-m-d',
-				'default' => $this->get_end_date( $current_redirection ),
-				'attributes'  => [
-					'placeholder'  => $this->get_past_date( $current_redirection, 'end' ),
-					'class'        => 'cmb2-text-small cmb2-datepicker exclude',
-					'autocomplete' => 'off',
-				],
-			],
-			++$field_position
-		);
-	}
-
-	/**
-	 * Save start and end date.
-	 */
-	public function save_start_end() {
-		// If no form submission, bail!
-		if ( empty( $_POST ) ) {
-			return false;
-		}
-
-		if ( ! isset( $_POST['start_date'] ) || ! isset( $_POST['end_date'] ) ) {
-			return false;
-		}
-
-		check_admin_referer( 'rank-math-save-redirections', 'security' );
-		if ( ! Helper::has_cap( 'redirections' ) ) {
-			return false;
-		}
-
-		$cmb    = cmb2_get_metabox( 'rank-math-redirections' );
-		$values = $cmb->get_sanitized_values( $_POST );
-
-		$this->save_start_end = [
-			'start_date' => isset( $values['start_date'] ) ? $values['start_date'] : '',
-			'end_date'   => isset( $values['end_date'] ) ? $values['end_date'] : '',
-		];
-
-		unset( $_POST['start_date'], $_POST['end_date'] );
-
-		if ( empty( $values['id'] ) ) {
-			$this->action( 'rank_math/redirection/saved', 'save_start_end_after_add' );
-			return true;
-		}
-
-		$this->save_start_end_dates( $values['id'] );
+		$this->filter( 'rank_math/redirections/table_item', 'add_schedule_time_in_data_attribute' );
 	}
 
 	/**
@@ -202,7 +113,7 @@ class Schedule {
 	 * @param int $redirection_id Redirection ID.
 	 * @return string
 	 */
-	public function get_start_date( $redirection_id ) {
+	public static function get_start_date( $redirection_id ) {
 		if ( ! $redirection_id ) {
 			return '';
 		}
@@ -221,7 +132,7 @@ class Schedule {
 	 * @param int $redirection_id Redirection ID.
 	 * @return string
 	 */
-	public function get_end_date( $redirection_id ) {
+	public static function get_end_date( $redirection_id ) {
 		if ( ! $redirection_id ) {
 			return '';
 		}
@@ -268,9 +179,13 @@ class Schedule {
 	 * Save scheduled start/end dates for newly created redirections.
 	 *
 	 * @param object $redirection Redirection object passed to the hook.
-	 * @return bool
+	 * @param array  $params      Redirection parameters.
 	 */
-	public function save_start_end_after_add( $redirection ) {
+	public function save_start_end_after_add( $redirection, $params ) {
+		$this->save_start_end = [
+			'start_date' => isset( $params['start-date'] ) ? $params['start-date'] : '',
+			'end_date'   => isset( $params['end-date'] ) ? $params['end-date'] : '',
+		];
 		$this->save_start_end_dates( $redirection->get_id() );
 
 		return true;
@@ -318,6 +233,13 @@ class Schedule {
 		}
 
 		return $classes;
+	}
+
+	public function add_schedule_time_in_data_attribute( $data ) {
+		$data['start-date'] = self::get_start_date( $data['id'] );
+		$data['end-date']   = self::get_end_date( $data['id'] );
+
+		return $data;
 	}
 
 	/**

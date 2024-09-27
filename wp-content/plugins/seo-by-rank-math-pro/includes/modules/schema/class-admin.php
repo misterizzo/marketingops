@@ -308,12 +308,13 @@ class Admin {
 			$schema_data = DB::get_schemas( $template_id );
 			$meta_id     = key( $schema_data );
 			$meta_key    = 'rank_math_schema_' . $schema_data[ $meta_id ]['@type'];
+			$object_id   = $request->get_param( 'objectID' );
 
 			$schema_data[ $meta_id ]['metadata']['displayConditions'][] = [
 				'condition' => 'exclude',
 				'category'  => 'singular',
-				'type'      => $request->get_param( 'objectType' ),
-				'value'     => $request->get_param( 'objectID' ),
+				'type'      => get_post_type( $object_id ),
+				'value'     => $object_id,
 			];
 
 			$db_id = absint( str_replace( 'schema-', '', $meta_id ) );

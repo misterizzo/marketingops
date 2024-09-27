@@ -31,9 +31,8 @@ $shortcode->get_image();
 	?>
 
 	<?php
-	$identifier = $shortcode->get_field_value( 'identifier' );
-	if ( ! empty( $identifier ) ) {
-		$identifiers = explode( PHP_EOL, $identifier );
+	$identifiers = $shortcode->get_field_value( 'identifier' );
+	if ( ! empty( $identifiers ) ) {
 		$shortcode->output_field(
 			esc_html__( 'Identifier', 'rank-math-pro' ),
 			'<ul><li>' . join( '</li><li>', $identifiers ) . '</li></ul>'
@@ -42,9 +41,8 @@ $shortcode->get_image();
 	?>
 
 	<?php
-	$keyword = $shortcode->get_field_value( 'keywords' );
-	if ( ! empty( $keyword ) ) {
-		$keywords = explode( PHP_EOL, $keyword );
+	$keywords = $shortcode->get_field_value( 'keywords' );
+	if ( ! empty( $keywords ) ) {
 		$shortcode->output_field(
 			esc_html__( 'Keywords', 'rank-math-pro' ),
 			'<ul><li>' . join( '</li><li>', $keywords ) . '</li></ul>'
@@ -86,13 +84,27 @@ $shortcode->get_image();
 		'name'        => esc_html__( 'Name', 'rank-math-pro' ),
 		'description' => esc_html__( 'Description', 'rank-math-pro' ),
 		'license'     => esc_html__( 'License', 'rank-math-pro' ),
+		'creator'     => esc_html__( 'Creator', 'rank-math-pro' ),
 	];
 	if ( ! empty( $data_sets ) ) {
 		echo '<h3>' . esc_html__( 'Data Sets', 'rank-math-pro' ) . '</h3>';
 		foreach ( $data_sets as $data_set ) {
 			echo '<div>';
 			foreach ( $labels as $key => $label ) {
-				echo "<p><strong>{$label}</strong>: {$data_set[$key]}</p>"; // phpcs:ignore
+				if ( empty( $data_set[ $key ] ) ) {
+					continue;
+				}
+
+				$value = $data_set[ $key ];
+				if ( $key === 'creator' ) {
+					if ( empty( $value['name'] ) ) {
+						$value = '';
+					} else {
+						$value = empty( $value['sameAs'] ) ? esc_html( $value['name'] ) : '<a href="' . esc_url( $value['sameAs'] ) . '" target="_blank">' . esc_html( $value['name'] ) . '</a>';
+					}
+				}
+
+				echo empty( $value ) ? '' : "<p><strong>{$label}</strong>: {$value}</p>"; // phpcs:ignore
 			}
 			echo '</div>';
 		}
