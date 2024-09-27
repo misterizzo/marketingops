@@ -708,7 +708,6 @@ class Hubwoo_Admin {
 		<?php
 		if( 'yes' == get_option('woocommerce_custom_orders_table_enabled', 'no') ) {
 		?>
-			hello
 			<div class="notice notice-warning hubwoo-hpos-notice-wrapper">
 				<div class="hubwoo-ocs-options hubwoo-pl-notice">
 					<p>
@@ -747,6 +746,25 @@ class Hubwoo_Admin {
 					$order->update_meta_data('hubwoo_pro_guest_order', 'yes');
 				}
 			}
+
+			$upsert_meta = $order->get_meta('hubwoo_ecomm_deal_upsert', 'no');
+		
+			if( $upsert_meta == 'yes'){
+				return;
+			}
+
+			$post_type = get_post_type( $order_id );
+
+			if ( 'shop_subscription' == $post_type ) {
+				return;
+			}
+			
+			if ('yes' == get_option('woocommerce_custom_orders_table_data_sync_enabled', 'no') && 'yes' == get_option('woocommerce_custom_orders_table_enabled', 'no')) {
+				return;
+			}
+			
+			$order->update_meta_data('hubwoo_ecomm_deal_upsert', 'yes');
+
 			$order->save();
 		}
 	}
@@ -959,6 +977,8 @@ class Hubwoo_Admin {
 						$single_cart['sent'] = 'yes';
 					}
 
+					$guest_user_properties = apply_filters( 'hubwoo_map_new_abncart_properties', $single_cart['email'], $guest_user_properties );
+					
 					if ( ! empty( $guest_user_properties ) ) {
 						$guest_abandoned_carts[] = array(
 							'email'      => $single_cart['email'],

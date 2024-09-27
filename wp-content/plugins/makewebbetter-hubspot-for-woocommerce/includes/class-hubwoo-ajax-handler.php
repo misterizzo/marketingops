@@ -1392,6 +1392,7 @@ if ( ! class_exists( 'HubWooAjaxHandler' ) ) {
 						} else if ( 409 == $response['status_code'] ) {
 							$contact_vid = json_decode( $response['body'] );
 							$hs_id = explode( 'ID: ', $contact_vid->message );
+							$response = HubWooConnectionMananager::get_instance()->update_object_record( 'contacts', $hs_id[1], $contact );
 							update_user_meta( $user_id, 'hubwoo_user_vid', $hs_id[1] );
 							update_user_meta( $user_id, 'hubwoo_pro_user_data_change', 'synced' );
 						} else if ( 400 == $response['status_code'] ) {
@@ -1736,6 +1737,7 @@ if ( ! class_exists( 'HubWooAjaxHandler' ) ) {
 									} else if ( 409 == $response['status_code'] ) {
 										$contact_vid = json_decode( $response['body'] );
 										$hs_id = explode( 'ID: ', $contact_vid->message );
+										$response = HubWooConnectionMananager::get_instance()->update_object_record( 'contacts', $hs_id[1], $contacts );
 										$order->update_meta_data('hubwoo_user_vid', $hs_id[1]);
 										$order->update_meta_data('hubwoo_pro_guest_order', 'synced');
 										$order->save();
@@ -1811,7 +1813,7 @@ if ( ! class_exists( 'HubWooAjaxHandler' ) ) {
 
 					if ( $flag ) {
 
-						$deal_name  = '#' . $order_id;
+						$deal_name  = '#' . $order->get_order_number();
 
 						$user_detail['first_name'] = $order->get_billing_first_name();
 						$user_detail['last_name']  = $order->get_billing_last_name();

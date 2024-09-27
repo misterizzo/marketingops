@@ -280,6 +280,8 @@ class HubwooDataSync {
 						);
 					}
 
+					$guest_user_properties = apply_filters( 'hubwoo_map_ecomm_guest_CONTACT_properties', $guest_user_properties, $order_id );
+
 					$guest_user_properties_data = array(
 						'email'      => $guest_email,
 						'properties' => $guest_user_properties,

@@ -71,7 +71,7 @@ if ( ! class_exists( 'Hubwoo' ) ) {
 				$this->version = HUBWOO_VERSION;
 			} else {
 
-				$this->version = '1.5.6';
+				$this->version = '1.5.7';
 			}
 
 			$this->plugin_name = 'makewebbetter-hubspot-for-woocommerce';
@@ -555,7 +555,7 @@ if ( ! class_exists( 'Hubwoo' ) ) {
 
 			if ( self::is_setup_completed() ) {
 
-				return get_option( 'hubwoo_pro_version', '1.5.6' );
+				return get_option( 'hubwoo_pro_version', '1.5.7' );
 			} else {
 
 				return HUBWOO_VERSION;

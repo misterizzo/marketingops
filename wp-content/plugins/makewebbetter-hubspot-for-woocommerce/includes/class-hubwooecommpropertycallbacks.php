@@ -344,6 +344,7 @@ class HubwooEcommPropertyCallbacks {
 					$deal_name .= ' ' . $value;
 				}
 			}
+			
 			$deal_stage = self::hubwoo_get_valid_deal_stage( 'wc-' . $status );
 
 			if ( ! in_array( $deal_stage, self::hubwoo_ecomm_won_stages() ) ) {

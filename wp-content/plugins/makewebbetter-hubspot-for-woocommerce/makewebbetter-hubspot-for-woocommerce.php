@@ -15,11 +15,11 @@
  * Plugin Name:          MWB HubSpot for WooCommerce
  * Plugin URI:           https://wordpress.org/plugins/makewebbetter-hubspot-for-woocommerce
  * Description:          Integrate WooCommerce with HubSpot’s free CRM, abandoned cart tracking, email marketing, marketing automation, analytics & more.
- * Version:              1.5.6
+ * Version:              1.5.7
  * Requires at least:    4.4.0
- * Tested up to:         6.5.3
+ * Tested up to:         6.6.1
  * WC requires at least: 3.5.0
- * WC tested up to:      8.9.1
+ * WC tested up to:      9.2.3
  * Author:               MakeWebBetter
  * Author URI:           http://www.makewebbetter.com/?utm_source=MWB-HubspotFree-backend&utm_medium=MWB-backend&utm_campaign=backend
  * License: GPLv3 or later
@@ -109,7 +109,7 @@ if ( $hubwoo_pro_activated && $hubwoo_pro_flag ) {
 	function hubwoo_pro_define_constants() {
 		hubwoo_pro_define( 'HUBWOO_ABSPATH', dirname( __FILE__ ) . '/' );
 		hubwoo_pro_define( 'HUBWOO_URL', plugin_dir_url( __FILE__ ) );
-		hubwoo_pro_define( 'HUBWOO_VERSION', '1.5.3' );
+		hubwoo_pro_define( 'HUBWOO_VERSION', '1.5.7' );
 		hubwoo_pro_define( 'HUBWOO_PLUGINS_PATH', plugin_dir_path( __DIR__ ) );
 		hubwoo_pro_define( 'HUBWOO_CLIENT_ID', '769fa3e6-79b1-412d-b69c-6b8242b2c62a' );
 		hubwoo_pro_define( 'HUBWOO_SECRET_ID', '2893dd41-017e-4208-962b-12f7495d16b0' );

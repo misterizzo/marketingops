@@ -102,6 +102,7 @@ class HubwooObjectProperties {
 					} else if ( 409 == $response['status_code'] ) {
 						$contact_vid = json_decode( $response['body'] );
 						$hs_id = explode( 'ID: ', $contact_vid->message );
+						$response = HubWooConnectionMananager::get_instance()->update_object_record( 'contacts', $hs_id[1], $contact );
 						update_user_meta( $user_id, 'hubwoo_user_vid', $hs_id[1] );
 						update_user_meta( $user_id, 'hubwoo_pro_user_data_change', 'synced' );
 					} else if ( 400 == $response['status_code'] ) {
@@ -195,6 +196,7 @@ class HubwooObjectProperties {
 					} else if ( 409 == $response['status_code'] ) {
 						$contact_vid = json_decode( $response['body'] );
 						$hs_id = explode( 'ID: ', $contact_vid->message );
+						$response = HubWooConnectionMananager::get_instance()->update_object_record( 'contacts', $hs_id[1], $contact );
 						$order->update_meta_data('hubwoo_user_vid', $hs_id[1]);
 						$order->update_meta_data('hubwoo_pro_guest_order', 'synced');
 						$order->save();
@@ -282,7 +284,7 @@ class HubwooObjectProperties {
 
 			if ( $flag ) {
 
-				$deal_name  = '#' . $order_id;
+				$deal_name  = '#' . $order->get_order_number();
 
 				$user_detail['first_name'] = $order->get_billing_first_name();
 				$user_detail['last_name']  = $order->get_billing_last_name();
@@ -462,37 +464,32 @@ class HubwooObjectProperties {
 
 				$deal_id = $order->get_meta('hubwoo_ecomm_deal_id', true);
 				if ( isset( $response['body'] ) && ! empty( $response['body'] ) ) {
-					$response_body = json_decode( $response['body'] );
-					foreach ( $order_items as $item_key => $single_item ) :
-
-						$product_id = $single_item->get_variation_id();
-						if ( 0 === $product_id ) {
-							$product_id = $single_item->get_product_id();
-							if ( 0 === $product_id ) {
-								$no_products_found = true;
-							}
-						}
-						if ( get_post_status( $product_id ) == 'trash' || get_post_status( $product_id ) == false ) {
-							continue;
-						}
-
-						$product         = $single_item->get_product();
-						$name            = self::get_instance()->hubwoo_ecomm_product_name( $product );
-
-						if ( isset( $response_body ) && ! empty( $response_body ) ) {
-
-							foreach ( $response_body->results as $key => $value ) {
-
-								$line_item_hs_id = $value->id;
-								$order->update_meta_data('hubwoo_order_line_item_created', 'yes');
-								$order->save();
-								$response = HubWooConnectionMananager::get_instance()->associate_object( 'deal', $deal_id, 'line_item', $line_item_hs_id, 19 );
-							}
-						}
-					endforeach;
-
+					$created_line_items = json_decode( $response['body'] )->results;
+					$inputs = array();
+					foreach($created_line_items as $line_item){
+						$input = array(
+							'types' => array(
+								array(
+									'associationCategory' => "HUBSPOT_DEFINED",
+									'associationTypeId' => 19
+								)
+							),
+							'from' => array(
+								'id' => $deal_id
+							),
+							'to' => array(
+								'id' => $line_item->id
+							)
+						);
+						$inputs[] = $input;
+					}
+					$inputs = array('inputs'=>$inputs);
+					$response = HubWooConnectionMananager::get_instance()->associate_batch_object( 'deal', 'line_item', $inputs);
+					if($response['status_code'] == 201){
+						$order->update_meta_data('hubwoo_order_line_item_created', 'yes');
+						$order->save();
+					}
 					if ( 1 == get_option( 'hubwoo_deals_sync_running', 0 ) ) {
-
 						$current_count = get_option( 'hubwoo_deals_current_sync_count', 0 );
 						update_option( 'hubwoo_deals_current_sync_count', ++$current_count );
 					}
