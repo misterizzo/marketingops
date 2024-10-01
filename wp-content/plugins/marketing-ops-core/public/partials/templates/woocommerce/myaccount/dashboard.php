@@ -42,8 +42,7 @@ $premium_available_content_count = array_sum( array_values( $premium_available_c
 
 // Project templates.
 $saved_templates = get_user_meta( $current_user->ID, 'template_likes', true );
-debug( $saved_templates );
-var_dump( $saved_templates );
+$saved_templates = ( ! empty( $saved_templates ) && is_array( $saved_templates ) ) ? count( $saved_templates ) : 0;
 
 if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
 	?>
@@ -84,7 +83,7 @@ if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
 							</div>
 							<div class="bottomdashbordlist">
 								<ul>
-									<li>7 saved</li>
+									<li><?php echo esc_html( sprintf( __( '%1$d saved', 'marketingops' ), $saved_templates ) ); ?></li>
 								</ul>
 							</div>
 							<div class="arrowrightdashbord"><span class="arrowsvgimg"></span></div>
