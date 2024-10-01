@@ -32,7 +32,7 @@ $author_img_url     = ( empty( $author_img_id ) || false === $author_img_id ) ? 
 
 if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) { ?>
 	<div class="newdashbordmain">
-		<h3>Hello Tony Ryzhkov! </h3><span class="hedertitlethree">Take a look:</span>
+		<h3>Hello <?php echo esc_html( $current_user->display_name ); ?>! </h3><span class="hedertitlethree">Take a look:</span>
 		<ul class="dashbordlistmain">
 			<li>
 				<a href="javascript:void(1)">
