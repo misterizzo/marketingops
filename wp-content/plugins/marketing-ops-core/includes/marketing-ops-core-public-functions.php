@@ -9374,15 +9374,11 @@ if ( ! function_exists( 'mops_get_premium_available_content' ) ) {
 		foreach ( $user_membership_slugs as $membership_slug ) {
 			$membership_plan    = get_page_by_path( $membership_slug, OBJECT, array( 'wc_membership_plan' ) );
 			$membership_plan_id = ( ! empty( $membership_plan->ID ) ) ? $membership_plan->ID : 0;
-
-			var_dump( 'hello' );
 	
 			// Skip, if the membership plan ID is 0.
 			if ( 0 === $membership_plan_id ) {
 				continue;
 			}
-
-			var_dump( 'world' );
 	
 			// Iterate through the wc membersip rules and collect the data.
 			if ( ! empty( $wc_memberships_rules ) && is_array( $wc_memberships_rules ) ) {
@@ -9391,6 +9387,7 @@ if ( ! function_exists( 'mops_get_premium_available_content' ) ) {
 	
 					// Skip, if the membership plan id is false.
 					if ( false === $rule_plan_id || $membership_plan_id !== $rule_plan_id ) {
+						var_dump( 'here---' );
 						continue;
 					}
 	
@@ -9401,6 +9398,7 @@ if ( ! function_exists( 'mops_get_premium_available_content' ) ) {
 	
 					// Skip, there is no available (membership restricted) content.
 					if ( empty( $object_ids ) ) {
+						var_dump( 'there---' );
 						continue;
 					}
 	
