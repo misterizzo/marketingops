@@ -36,12 +36,13 @@ $wc_memberships_rules            = get_option( 'wc_memberships_rules' );
 $premium_available_content       = ( function_exists( 'mops_get_premium_available_content' ) ) ? mops_get_premium_available_content( $user_membership_slugs, $wc_memberships_rules ) : array();
 
 if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
-	$premium_available_content_count  = 0;
 	$premium_available_content_count = array_map( function( $premium_content ) {
 
-		return $premium_available_content_count + count( $premium_content );
+		return count( $premium_content );
 	}, $premium_available_content );
 
+	debug( $premium_available_content_count );
+	$premium_available_content_count = array_values( $premium_available_content_count );
 	debug( $premium_available_content_count );
 	?>
 	<div class="newdashbordmain">
