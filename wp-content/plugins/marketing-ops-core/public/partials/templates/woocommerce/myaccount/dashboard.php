@@ -39,6 +39,7 @@ if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
 	$premium_available_content_count = 0;
 	$premium_available_content_count = array_map( function( $premium_content ) {
 		debug( $premium_content );
+		debug( count( $premium_content ) );
 		debug( '------' );
 	}, $premium_available_content );
 	debug( 'end' );
