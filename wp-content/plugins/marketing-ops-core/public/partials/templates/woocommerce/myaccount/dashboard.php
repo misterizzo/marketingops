@@ -45,6 +45,8 @@ $saved_templates = get_user_meta( $current_user->ID, 'template_likes', true );
 $saved_templates = ( ! empty( $saved_templates ) && is_array( $saved_templates ) ) ? count( $saved_templates ) : 0;
 
 // Downloads.
+$downloads = WC()->customer->get_downloadable_products();
+debug( $downloads );
 
 if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
 	?>
