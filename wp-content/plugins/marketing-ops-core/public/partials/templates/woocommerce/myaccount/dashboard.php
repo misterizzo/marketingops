@@ -26,9 +26,12 @@ $allowed_html       = array(
 		'href' => array(),
 	),
 );
-$default_author_img = get_field( 'moc_user_default_image', 'option' );
-$author_img_id      = ! empty( get_user_meta( $current_user->ID, 'wp_user_avatar', true ) ) ? get_user_meta( $current_user->ID, 'wp_user_avatar', true ) : '';
-$author_img_url     = ( empty( $author_img_id ) || false === $author_img_id ) ? $default_author_img : wp_get_attachment_url( $author_img_id );
+$default_author_img        = get_field( 'moc_user_default_image', 'option' );
+$author_img_id             = ! empty( get_user_meta( $current_user->ID, 'wp_user_avatar', true ) ) ? get_user_meta( $current_user->ID, 'wp_user_avatar', true ) : '';
+$author_img_url            = ( empty( $author_img_id ) || false === $author_img_id ) ? $default_author_img : wp_get_attachment_url( $author_img_id );
+$premium_available_content = ( function_exists( 'mops_get_premium_available_content' ) ) ? mops_get_premium_available_content( $user_membership_slugs, $wc_memberships_rules ) : array();
+
+debug( $premium_available_content );
 
 if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) { ?>
 	<div class="newdashbordmain">
