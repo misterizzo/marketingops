@@ -43,7 +43,8 @@ if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
 
 	debug( $premium_available_content_count );
 	$premium_available_content_count = array_values( $premium_available_content_count );
-	debug( $premium_available_content_count );
+	
+	var_dump( $premium_available_content_count );
 	?>
 	<div class="newdashbordmain">
 		<h3><?php echo wp_kses_post( sprintf( __( 'Hello %1$s!', 'marketing-ops-core' ), $current_user->display_name ) ); ?></h3>
