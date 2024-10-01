@@ -5,7 +5,7 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @link       https://www.cmsminds.com/
+ * @link       https://adarshverma.com/
  * @since      1.0.0
  *
  * @package    Marketing_Ops_Core
@@ -21,7 +21,7 @@
  * @since      1.0.0
  * @package    Marketing_Ops_Core
  * @subpackage Marketing_Ops_Core/includes
- * @author     cmsMinds <info@cmsminds.com>
+ * @author     Adarsh Verma <adarsh.srmcem@gmail.com>
  */
 class Marketing_Ops_Core_I18n {
 

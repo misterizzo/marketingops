@@ -7,17 +7,17 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              https://www.cmsminds.com/
+ * @link              https://adarshverma.com/
  * @since             1.0.0
  * @package           Marketing_Ops_Core
  *
  * @wordpress-plugin
  * Plugin Name:       Marketing Ops Core
- * Plugin URI:        https://github.com/cmsminds/
+ * Plugin URI:        https://github.com/vermadarsh/
  * Description:       This plugins responsible for custom codes.
  * Version:           1.0.0
- * Author:            cmsMinds
- * Author URI:        https://www.cmsminds.com/
+ * Author:            Adarsh Verma
+ * Author URI:        https://adarshverma.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       marketing-ops-core

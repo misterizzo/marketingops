@@ -4,7 +4,7 @@
  *
  * This file is used to markup the public-facing aspects of the plugin.
  *
- * @link       https://www.cmsminds.com/
+ * @link       https://adarshverma.com/
  * @since      1.0.0
  *
  * @package    Marketing_Ops_Core

@@ -2,7 +2,7 @@
 /**
  * Custom product type - training class.
  *
- * @link       https://www.cmsminds.com/
+ * @link       https://adarshverma.com/
  * @since      1.0.0
  *
  * @package    Marketing_Ops_Core
@@ -15,7 +15,7 @@
  *
  * @package    Marketing_Ops_Core
  * @subpackage Marketing_Ops_Core/public
- * @author     cmsMinds <info@cmsminds.com>
+ * @author     Adarsh Verma <adarsh.srmcem@gmail.com>
  */
 class WC_Product_Training extends WC_Product {
 	/**

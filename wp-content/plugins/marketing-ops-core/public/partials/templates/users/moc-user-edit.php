@@ -5,7 +5,7 @@
  * This template can be overridden by copying it to yourtheme/marketing-ops-core/users/moc-user-edit.php.
  *
  * @see         https://marketingops.com/
- * @author      cmsMinds
+ * @author      Adarsh Verma
  * @package     Marketing_Ops_Core
  * @category    Template
  * @since       1.0.0
