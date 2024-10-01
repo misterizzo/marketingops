@@ -36,8 +36,8 @@ $wc_memberships_rules            = get_option( 'wc_memberships_rules' );
 $premium_available_content       = ( function_exists( 'mops_get_premium_available_content' ) ) ? mops_get_premium_available_content( $user_membership_slugs, $wc_memberships_rules ) : array();
 
 if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
-	$premium_available_content_count  = 0;
-	$premium_available_content_count += array_map( function( $premium_content ) {
+	// $premium_available_content_count  = 0;
+	$premium_available_content_count = array_map( function( $premium_content ) {
 		return count( $premium_content );
 	}, $premium_available_content );
 	var_dump( $premium_available_content_count );
