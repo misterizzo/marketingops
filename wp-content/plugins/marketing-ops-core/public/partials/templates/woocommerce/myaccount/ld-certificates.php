@@ -13,25 +13,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 $user_id      = get_current_user_id();
 $courses      = get_user_meta( $user_id, '_sfwd-course_progress', true );
 $bg_img_index = 1;
-$certificates = array();
-
-// Loop through the courses to collect the associated certificate.
-if ( ! empty( $courses ) && is_array( $courses ) ) {
-	foreach ( $courses as $course_id => $course_data ) {
-		// Get the attached certificate ID.
-		$certificate_id  = get_post_meta( $course_id, '_ld_certificate', true );
-		$certficate_link = learndash_get_course_certificate_link( $course_id, $user_id );
-
-		// If the certificate link is available, put it in an array.
-		if ( ! empty( $certficate_link ) ) {
-			$certificates[] = array(
-				'course'           => $course_id,
-				'certificate'      => $certificate_id,
-				'certificate_link' => $certficate_link,
-			);
-		}
-	}
-}
+$certificates = ( function_exists( 'mops_get_user_learndash_certificates' ) ) ? mops_get_user_learndash_certificates( $courses ) : array();
 ?>
 <div class="box_about_content box_content certification_section moc_purchased_courses_section">
 	<?php if ( ! empty( $certificates ) && is_array( $certificates ) ) { ?>

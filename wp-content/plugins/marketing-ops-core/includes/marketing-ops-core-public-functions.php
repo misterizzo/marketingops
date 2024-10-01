@@ -9365,6 +9365,9 @@ if ( ! function_exists( 'mops_get_premium_available_content' ) ) {
 	/**
 	 * Return the premium available content array.
 	 *
+	 * @param array $user_membership_slugs User membership slugs.
+	 * @param array $wc_memberships_rules WooCommerce membership rules.
+	 *
 	 * @return array
 	 * @since 1.0.0
 	 */
@@ -9429,6 +9432,9 @@ if ( ! function_exists( 'mops_get_premium_unavailable_content' ) ) {
 	/**
 	 * Return the premium available content array.
 	 *
+	 * @param array $user_membership_slugs User membership slugs.
+	 * @param array $wc_memberships_rules WooCommerce membership rules.
+	 *
 	 * @return array
 	 * @since 1.0.0
 	 */
@@ -9470,5 +9476,43 @@ if ( ! function_exists( 'mops_get_premium_unavailable_content' ) ) {
 		}
 
 		return $premium_unavailable_content;
+	}
+}
+
+/**
+ * Check if the function exists.
+ */
+if ( ! function_exists( 'mops_get_user_learndash_certificates' ) ) {
+	/**
+	 * Return the customer learndash certificates.
+	 *
+	 * @param array $courses User courses.
+	 *
+	 * @return array
+	 *
+	 * @since 1.0.0
+	 */
+	function mops_get_user_learndash_certificates( $courses ) {
+		$certificates = array();
+
+		if ( ! empty( $courses ) && is_array( $courses ) ) {
+			// Loop through the courses to collect the associated certificate.
+			foreach ( $courses as $course_id => $course_data ) {
+				// Get the attached certificate ID.
+				$certificate_id  = get_post_meta( $course_id, '_ld_certificate', true );
+				$certficate_link = learndash_get_course_certificate_link( $course_id, $user_id );
+		
+				// If the certificate link is available, put it in an array.
+				if ( ! empty( $certficate_link ) ) {
+					$certificates[] = array(
+						'course'           => $course_id,
+						'certificate'      => $certificate_id,
+						'certificate_link' => $certficate_link,
+					);
+				}
+			}
+		}
+
+		return $certificates;
 	}
 }

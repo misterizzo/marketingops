@@ -45,10 +45,15 @@ $saved_templates = get_user_meta( $current_user->ID, 'template_likes', true );
 $saved_templates = ( ! empty( $saved_templates ) && is_array( $saved_templates ) ) ? count( $saved_templates ) : 0;
 
 // Downloads.
-$downloads = WC()->customer->get_downloadable_products();
-debug( $downloads );
+$downloads       = WC()->customer->get_downloadable_products();
+$downloads_count = ( ! empty( $downloads ) && is_array( $downloads ) ) ? count( $downloads ) : 0;
+
+// Learndash certificates.
+$courses      = get_user_meta( $user_id, '_sfwd-course_progress', true );
+$certificates = ( function_exists( 'mops_get_user_learndash_certificates' ) ) ? mops_get_user_learndash_certificates( $courses ) : array();
 
 if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
+	debug( $certificates );
 	?>
 	<div class="newdashbordmain">
 		<h3><?php echo wp_kses_post( sprintf( __( 'Hello %1$s!', 'marketingops' ), $current_user->display_name ) ); ?></h3>
@@ -110,7 +115,7 @@ if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
 							</div>
 							<div class="bottomdashbordlist">
 								<ul>
-									<li>10 saved</li>	
+									<li><?php echo esc_html( sprintf( __( '%1$d saved', 'marketingops' ), $downloads_count ) ); ?></li>
 								</ul>
 							</div>
 							<div class="arrowrightdashbord"><span class="arrowsvgimg"></span></div>
@@ -119,42 +124,24 @@ if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
 				</a>
 			</li>
 
+			<!-- course certificates -->
 			<li>
-			<a href="javascript:void(1)">
-				<div class="innerdashbordlist">
-					<div class="innsersubdashbordlist">
-						<div class="iconwithtitledashbord">
-							<i> 
-							<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-  <path d="M4.91602 4C3.67643 4 2.66602 5.01042 2.66602 6.25V17.75C2.66602 18.9896 3.67643 20 4.91602 20H10.666V21.75C10.666 22.0182 10.8092 22.2656 11.0384 22.3984C11.2702 22.5339 11.5566 22.5339 11.7884 22.401L12.666 21.8984L13.5436 22.401C13.6582 22.4661 13.7884 22.5 13.916 22.5C14.0462 22.5 14.1764 22.4661 14.2936 22.3984C14.5228 22.2656 14.666 22.0182 14.666 21.75V20H20.416C21.6556 20 22.666 18.9896 22.666 17.75V6.25C22.666 5.01042 21.6556 4 20.416 4H4.91602ZM6.91602 7.5H18.416C18.8301 7.5 19.166 7.83594 19.166 8.25C19.166 8.66406 18.8301 9 18.416 9H6.91602C6.50195 9 6.16602 8.66406 6.16602 8.25C6.16602 7.83594 6.50195 7.5 6.91602 7.5ZM7.91602 10.5H17.416C17.8301 10.5 18.166 10.8359 18.166 11.25C18.166 11.6641 17.8301 12 17.416 12H7.91602C7.50195 12 7.16602 11.6641 7.16602 11.25C7.16602 10.8359 7.50195 10.5 7.91602 10.5ZM12.666 14C14.0462 14 15.166 15.1198 15.166 16.5C15.166 17.8802 14.0462 19 12.666 19C11.2858 19 10.166 17.8802 10.166 16.5C10.166 15.1198 11.2858 14 12.666 14Z" fill="#6D7B83"/>
-</svg>
-							</i>
-							<i> 
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-								<path d="M4.91602 4C3.67643 4 2.66602 5.01042 2.66602 6.25V17.75C2.66602 18.9896 3.67643 20 4.91602 20H10.666V21.75C10.666 22.0182 10.8092 22.2656 11.0384 22.3984C11.2702 22.5339 11.5566 22.5339 11.7884 22.401L12.666 21.8984L13.5436 22.401C13.6582 22.4661 13.7884 22.5 13.916 22.5C14.0462 22.5 14.1764 22.4661 14.2936 22.3984C14.5228 22.2656 14.666 22.0182 14.666 21.75V20H20.416C21.6556 20 22.666 18.9896 22.666 17.75V6.25C22.666 5.01042 21.6556 4 20.416 4H4.91602ZM6.91602 7.5H18.416C18.8301 7.5 19.166 7.83594 19.166 8.25C19.166 8.66406 18.8301 9 18.416 9H6.91602C6.50195 9 6.16602 8.66406 6.16602 8.25C6.16602 7.83594 6.50195 7.5 6.91602 7.5ZM7.91602 10.5H17.416C17.8301 10.5 18.166 10.8359 18.166 11.25C18.166 11.6641 17.8301 12 17.416 12H7.91602C7.50195 12 7.16602 11.6641 7.16602 11.25C7.16602 10.8359 7.50195 10.5 7.91602 10.5ZM12.666 14C14.0462 14 15.166 15.1198 15.166 16.5C15.166 17.8802 14.0462 19 12.666 19C11.2858 19 10.166 17.8802 10.166 16.5C10.166 15.1198 11.2858 14 12.666 14Z" fill="url(#course)"/>
-									<defs>
-										<linearGradient id="course" x1="1.83093" y1="11.6415" x2="34.4163" y2="11.6415" gradientUnits="userSpaceOnUse">
-											<stop stop-color="#FD4B7A"/>	
-											<stop offset="1" stop-color="#4D00AE"/>	
-										</linearGradient>
-									</defs>
-								</svg>
-							</i>
-							
-							<h4>Course Certificates</h4>
-						</div>
-						<div class="bottomdashbordlist">
-							<ul>
-								<li>
-									You don’t have any certificates yet
-								</li>	
-							</ul>
-						</div>
-						<div class="arrowrightdashbord">
-						<span class="arrowsvgimg"></span>
+				<a href="/my-account/ld-certificates/">
+					<div class="innerdashbordlist">
+						<div class="innsersubdashbordlist">
+							<div class="iconwithtitledashbord">
+								<i><svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none"><path d="M4.91602 4C3.67643 4 2.66602 5.01042 2.66602 6.25V17.75C2.66602 18.9896 3.67643 20 4.91602 20H10.666V21.75C10.666 22.0182 10.8092 22.2656 11.0384 22.3984C11.2702 22.5339 11.5566 22.5339 11.7884 22.401L12.666 21.8984L13.5436 22.401C13.6582 22.4661 13.7884 22.5 13.916 22.5C14.0462 22.5 14.1764 22.4661 14.2936 22.3984C14.5228 22.2656 14.666 22.0182 14.666 21.75V20H20.416C21.6556 20 22.666 18.9896 22.666 17.75V6.25C22.666 5.01042 21.6556 4 20.416 4H4.91602ZM6.91602 7.5H18.416C18.8301 7.5 19.166 7.83594 19.166 8.25C19.166 8.66406 18.8301 9 18.416 9H6.91602C6.50195 9 6.16602 8.66406 6.16602 8.25C6.16602 7.83594 6.50195 7.5 6.91602 7.5ZM7.91602 10.5H17.416C17.8301 10.5 18.166 10.8359 18.166 11.25C18.166 11.6641 17.8301 12 17.416 12H7.91602C7.50195 12 7.16602 11.6641 7.16602 11.25C7.16602 10.8359 7.50195 10.5 7.91602 10.5ZM12.666 14C14.0462 14 15.166 15.1198 15.166 16.5C15.166 17.8802 14.0462 19 12.666 19C11.2858 19 10.166 17.8802 10.166 16.5C10.166 15.1198 11.2858 14 12.666 14Z" fill="#6D7B83"/></svg></i>
+								<i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4.91602 4C3.67643 4 2.66602 5.01042 2.66602 6.25V17.75C2.66602 18.9896 3.67643 20 4.91602 20H10.666V21.75C10.666 22.0182 10.8092 22.2656 11.0384 22.3984C11.2702 22.5339 11.5566 22.5339 11.7884 22.401L12.666 21.8984L13.5436 22.401C13.6582 22.4661 13.7884 22.5 13.916 22.5C14.0462 22.5 14.1764 22.4661 14.2936 22.3984C14.5228 22.2656 14.666 22.0182 14.666 21.75V20H20.416C21.6556 20 22.666 18.9896 22.666 17.75V6.25C22.666 5.01042 21.6556 4 20.416 4H4.91602ZM6.91602 7.5H18.416C18.8301 7.5 19.166 7.83594 19.166 8.25C19.166 8.66406 18.8301 9 18.416 9H6.91602C6.50195 9 6.16602 8.66406 6.16602 8.25C6.16602 7.83594 6.50195 7.5 6.91602 7.5ZM7.91602 10.5H17.416C17.8301 10.5 18.166 10.8359 18.166 11.25C18.166 11.6641 17.8301 12 17.416 12H7.91602C7.50195 12 7.16602 11.6641 7.16602 11.25C7.16602 10.8359 7.50195 10.5 7.91602 10.5ZM12.666 14C14.0462 14 15.166 15.1198 15.166 16.5C15.166 17.8802 14.0462 19 12.666 19C11.2858 19 10.166 17.8802 10.166 16.5C10.166 15.1198 11.2858 14 12.666 14Z" fill="url(#course)"/><defs><linearGradient id="course" x1="1.83093" y1="11.6415" x2="34.4163" y2="11.6415" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i>
+								<h4><?php esc_html_e( 'Course Certificates', 'marketingops' ); ?></h4>
+							</div>
+							<div class="bottomdashbordlist">
+								<ul>
+									<li>You don’t have any certificates yet</li>
+								</ul>
+							</div>
+							<div class="arrowrightdashbord"><span class="arrowsvgimg"></span></div>
 						</div>
 					</div>
-				</div>
 				</a>
 			</li>
 
