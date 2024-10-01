@@ -63,7 +63,7 @@ $customer_orders = wc_get_orders(
 	)
 );
 $customer_order  = ( ! empty( $customer_orders[0] ) ) ? $customer_orders[0] : false;
-$order_date      = ( false !== $customer_order ) ? wc_format_datetime( $order->get_date_created() ) : '';
+$order_date      = ( false !== $customer_order ) ? wc_format_datetime( $customer_order->get_date_created() ) : '';
 
 if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
 	debug( $order_date );
