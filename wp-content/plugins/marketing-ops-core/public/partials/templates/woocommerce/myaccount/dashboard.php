@@ -53,17 +53,20 @@ $courses              = get_user_meta( $user_id, '_sfwd-course_progress', true )
 $certificates         = ( function_exists( 'mops_get_user_learndash_certificates' ) ) ? mops_get_user_learndash_certificates( $courses ) : array();
 $certificates_message = ( ! empty( $certificates ) && is_array( $certificates ) ) ? sprintf( __( '%1$d earned', 'marketingops' ), count( $certificates ) ) : __( 'You don\'t have any certificates yet', 'marketngops' );
 
-if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
-	$customer_orders = wc_get_orders(
-		array(
-			'customer'       => $current_user->ID,
-			'page'           => 1,
-			'paginate'       => false,
-			'posts_per_page' => 1,
-		)
-	);
+// Customer orders.
+$customer_orders = wc_get_orders(
+	array(
+		'customer'       => $current_user->ID,
+		'page'           => 1,
+		'paginate'       => false,
+		'posts_per_page' => 1,
+	)
+);
+$customer_order  = ( ! empty( $customer_orders[0] ) ) ? $customer_orders[0] : false;
+$order_date      = ( false !== $customer_order ) ? wc_format_datetime( $order->get_date_created() ) : '';
 
-	debug( $customer_orders );
+if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
+	debug( $order_date );
 	?>
 	<div class="newdashbordmain">
 		<h3><?php echo wp_kses_post( sprintf( __( 'Hello %1$s!', 'marketingops' ), $current_user->display_name ) ); ?></h3>
