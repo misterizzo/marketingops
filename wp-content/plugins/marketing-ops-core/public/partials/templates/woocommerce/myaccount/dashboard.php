@@ -35,9 +35,9 @@ $user_membership_slugs     = moc_get_membership_plan_slug();
 $wc_memberships_rules      = get_option( 'wc_memberships_rules' );
 $premium_available_content = ( function_exists( 'mops_get_premium_available_content' ) ) ? mops_get_premium_available_content( $user_membership_slugs, $wc_memberships_rules ) : array();
 
-debug( $premium_available_content );
-
-if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) { ?>
+if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
+	debug( $premium_available_content );
+	?>
 	<div class="newdashbordmain">
 		<h3><?php echo wp_kses_post( sprintf( __( 'Hello %1$s!', 'marketing-ops-core' ), $current_user->display_name ) ); ?></h3>
 		<span class="hedertitlethree"><?php esc_html_e( 'Take a look', 'marketing-ops-core' ); ?>:</span>
