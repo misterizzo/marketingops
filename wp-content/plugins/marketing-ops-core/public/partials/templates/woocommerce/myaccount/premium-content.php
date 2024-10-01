@@ -19,7 +19,7 @@ $premium_unavailable_content  = array();
 $wc_memberships_rules         = get_option( 'wc_memberships_rules' );
 
 if ( ! empty( $user_membership_slugs ) && is_array( $user_membership_slugs ) ) {
-	$premium_available_content = mops_get_premium_available_content( $user_membership_slugs );
+	$premium_available_content = ( function_exists( 'mops_get_premium_available_content' ) ) ? mops_get_premium_available_content( $user_membership_slugs ) : array();
 }
 
 debug( $premium_available_content );
