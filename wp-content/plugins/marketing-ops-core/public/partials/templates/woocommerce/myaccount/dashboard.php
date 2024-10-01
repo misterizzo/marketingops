@@ -41,8 +41,9 @@ $premium_available_content_count = array_map( function( $premium_content ) {
 $premium_available_content_count = array_sum( array_values( $premium_available_content_count ) );
 
 // Project templates.
-// $saved_templates = get_user_meta( $user_id, 'template_likes', true );
-debug( $current_user );
+$saved_templates = get_user_meta( $current_user->ID, 'template_likes', true );
+debug( $saved_templates );
+var_dump( $saved_templates );
 
 if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
 	?>
