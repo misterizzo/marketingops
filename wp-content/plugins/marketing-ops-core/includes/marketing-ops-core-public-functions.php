@@ -9357,3 +9357,67 @@ if ( ! function_exists( 'fetch_mopza24_sessions' ) ) {
 		return false;
 	}
 }
+
+/**
+ * Check if the function exists.
+ */
+if ( ! function_exists( 'mops_get_premium_available_content' ) ) {
+	/**
+	 * Return the premium available content array.
+	 *
+	 * @return array
+	 * @since 1.0.0
+	 */
+	function mops_get_premium_available_content( $user_membership_slugs ) {
+		$premium_available_content = array();
+
+		foreach ( $user_membership_slugs as $membership_slug ) {
+			$membership_plan    = get_page_by_path( $membership_slug, OBJECT, array( 'wc_membership_plan' ) );
+			$membership_plan_id = ( ! empty( $membership_plan->ID ) ) ? $membership_plan->ID : 0;
+	
+			// Skip, if the membership plan ID is 0.
+			if ( 0 === $membership_plan_id ) {
+				continue;
+			}
+	
+			// Iterate through the wc membersip rules and collect the data.
+			if ( ! empty( $wc_memberships_rules ) && is_array( $wc_memberships_rules ) ) {
+				foreach ( $wc_memberships_rules as $wc_memberships_rule ) {
+					$rule_plan_id = ( ! empty( $wc_memberships_rule['membership_plan_id'] ) ) ? $wc_memberships_rule['membership_plan_id'] : false;
+	
+					// Skip, if the membership plan id is false.
+					if ( false === $rule_plan_id || $membership_plan_id !== $rule_plan_id ) {
+						continue;
+					}
+	
+					$content_type      = ( ! empty( $wc_memberships_rule['content_type'] ) ) ? $wc_memberships_rule['content_type'] : '';
+					$rule_type         = ( ! empty( $wc_memberships_rule['rule_type'] ) ) ? $wc_memberships_rule['rule_type'] : '';
+					$content_type_name = ( ! empty( $wc_memberships_rule['content_type_name'] ) ) ? $wc_memberships_rule['content_type_name'] : '';
+					$object_ids        = ( ! empty( $wc_memberships_rule['object_ids'] ) ) ? $wc_memberships_rule['object_ids'] : array();
+	
+					// Skip, there is no available (membership restricted) content.
+					if ( empty( $object_ids ) ) {
+						continue;
+					}
+	
+					// If the rule type is for content restriction.
+					if ( ! empty( $rule_type ) && ( 'content_restriction' === $rule_type || 'product_restriction' === $rule_type ) ) {
+						$premium_available_content_temp                  = ( ! empty( $premium_available_content[ $content_type_name ] ) && is_array( $premium_available_content[ $content_type_name ] ) ) ? $premium_available_content[ $content_type_name ] : array();
+						$premium_available_content[ $content_type_name ] = array_merge( $premium_available_content_temp, $object_ids );
+						$premium_available_content[ $content_type_name ] = array_values( array_unique( $premium_available_content[ $content_type_name ] ) );
+					} elseif ( ! empty( $rule_type ) && 'purchasing_discount' === $rule_type ) {
+						$premium_available_content['purchasing_discount'][] = array(
+							'object_ids'        => $object_ids,
+							'content_type'      => $content_type,
+							'content_type_name' => $content_type_name,
+							'discount_type'     => ( ! empty( $wc_memberships_rule['discount_type'] ) ) ? $wc_memberships_rule['discount_type'] : array(),
+							'discount_amount'   => ( ! empty( $wc_memberships_rule['discount_amount'] ) ) ? $wc_memberships_rule['discount_amount'] : array(),
+						);
+					}
+				}
+			}
+		}
+
+		return $premium_available_content;
+	}
+}
