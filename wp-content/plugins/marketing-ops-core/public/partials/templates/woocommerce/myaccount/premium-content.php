@@ -21,7 +21,7 @@ $wc_memberships_rules         = get_option( 'wc_memberships_rules' );
 var_dump( function_exists( 'mops_get_premium_available_content' ) );
 
 if ( ! empty( $user_membership_slugs ) && is_array( $user_membership_slugs ) ) {
-	$premium_available_content = ( function_exists( 'mops_get_premium_available_content' ) ) ? mops_get_premium_available_content( $user_membership_slugs ) : array();
+	$premium_available_content = ( function_exists( 'mops_get_premium_available_content' ) ) ? mops_get_premium_available_content( $user_membership_slugs, $wc_memberships_rules ) : array();
 }
 
 // Prepare the premium unavailable data.

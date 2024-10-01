@@ -9368,7 +9368,7 @@ if ( ! function_exists( 'mops_get_premium_available_content' ) ) {
 	 * @return array
 	 * @since 1.0.0
 	 */
-	function mops_get_premium_available_content( $user_membership_slugs ) {
+	function mops_get_premium_available_content( $user_membership_slugs, $wc_memberships_rules ) {
 		$premium_available_content = array();
 
 		foreach ( $user_membership_slugs as $membership_slug ) {
@@ -9387,7 +9387,6 @@ if ( ! function_exists( 'mops_get_premium_available_content' ) ) {
 	
 					// Skip, if the membership plan id is false.
 					if ( false === $rule_plan_id || $membership_plan_id !== $rule_plan_id ) {
-						var_dump( 'here---' );
 						continue;
 					}
 	
@@ -9398,7 +9397,6 @@ if ( ! function_exists( 'mops_get_premium_available_content' ) ) {
 	
 					// Skip, there is no available (membership restricted) content.
 					if ( empty( $object_ids ) ) {
-						var_dump( 'there---' );
 						continue;
 					}
 	
