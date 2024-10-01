@@ -40,10 +40,8 @@ if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
 
 		return count( $premium_content );
 	}, $premium_available_content );
+	$premium_available_content_count = array_sum( array_values( $premium_available_content_count ) );
 
-	debug( $premium_available_content_count );
-	$premium_available_content_count = array_values( $premium_available_content_count );
-	
 	var_dump( $premium_available_content_count );
 	?>
 	<div class="newdashbordmain">
