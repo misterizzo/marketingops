@@ -24,8 +24,6 @@ if ( ! empty( $user_membership_slugs ) && is_array( $user_membership_slugs ) ) {
 	$premium_available_content = ( function_exists( 'mops_get_premium_available_content' ) ) ? mops_get_premium_available_content( $user_membership_slugs ) : array();
 }
 
-debug( $premium_available_content );
-
 // Prepare the premium unavailable data.
 if ( false !== $user_max_membership_post_id ) {
 	// Iterate through the wc membersip rules and collect the data.
