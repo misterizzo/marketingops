@@ -34,12 +34,14 @@ $author_img_url            = ( empty( $author_img_id ) || false === $author_img_
 $user_membership_slugs           = moc_get_membership_plan_slug();
 $wc_memberships_rules            = get_option( 'wc_memberships_rules' );
 $premium_available_content       = ( function_exists( 'mops_get_premium_available_content' ) ) ? mops_get_premium_available_content( $user_membership_slugs, $wc_memberships_rules ) : array();
-$premium_available_content_count = 0;
-$premium_available_content_count = array_map( function( $premium_content ) {
-	debug( $premium_content ); die;
-}, $premium_available_content );
 
 if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
+	$premium_available_content_count = 0;
+	$premium_available_content_count = array_map( function( $premium_content ) {
+		debug( $premium_content );
+		debug( '------' );
+	}, $premium_available_content );
+	debug( 'end' );
 	debug( $premium_available_content );
 	?>
 	<div class="newdashbordmain">
