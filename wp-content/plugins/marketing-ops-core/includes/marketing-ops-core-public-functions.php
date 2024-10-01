@@ -9358,8 +9358,6 @@ if ( ! function_exists( 'fetch_mopza24_sessions' ) ) {
 	}
 }
 
-wp_die( 'hello world' );
-
 /**
  * Check if the function exists.
  */
