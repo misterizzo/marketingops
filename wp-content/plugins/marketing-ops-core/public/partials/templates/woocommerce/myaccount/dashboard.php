@@ -38,9 +38,11 @@ $premium_available_content       = ( function_exists( 'mops_get_premium_availabl
 if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
 	// $premium_available_content_count  = 0;
 	$premium_available_content_count = array_map( function( $premium_content ) {
+
 		return count( $premium_content );
 	}, $premium_available_content );
-	var_dump( $premium_available_content_count );
+
+	debug( $premium_available_content_count );
 	?>
 	<div class="newdashbordmain">
 		<h3><?php echo wp_kses_post( sprintf( __( 'Hello %1$s!', 'marketing-ops-core' ), $current_user->display_name ) ); ?></h3>
