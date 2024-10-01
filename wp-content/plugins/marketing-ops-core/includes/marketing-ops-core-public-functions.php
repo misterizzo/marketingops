@@ -22,26 +22,26 @@ if ( ! function_exists( 'moc_custom_taxonomy_job_listings' ) ) {
 		// Custom Taxonomy Roles in Job Postings.
 		register_taxonomy( 'jobroles', array( 'job_listing' ), array(
 			'labels'            => array(
-				'name'                       => _x( 'Roles', 'Taxonomy General Name', 'marketing-ops-core' ),
-				'singular_name'              => _x( 'Role', 'Taxonomy Singular Name', 'marketing-ops-core' ),
-				'menu_name'                  => __( 'Roles', 'marketing-ops-core' ),
-				'all_items'                  => __( 'All Roles', 'marketing-ops-core' ),
-				'parent_item'                => __( 'Parent Role', 'marketing-ops-core' ),
-				'parent_item_colon'          => __( 'Parent Role:', 'marketing-ops-core' ),
-				'new_item_name'              => __( 'New Role Name', 'marketing-ops-core' ),
-				'add_new_item'               => __( 'Add New Role', 'marketing-ops-core' ),
-				'edit_item'                  => __( 'Edit Role', 'marketing-ops-core' ),
-				'update_item'                => __( 'Update Role', 'marketing-ops-core' ),
-				'view_item'                  => __( 'View Role', 'marketing-ops-core' ),
-				'separate_items_with_commas' => __( 'Separate roles with commas', 'marketing-ops-core' ),
-				'add_or_remove_items'        => __( 'Add or remove roles', 'marketing-ops-core' ),
-				'choose_from_most_used'      => __( 'Choose from the most used', 'marketing-ops-core' ),
-				'popular_items'              => __( 'Popular Roles', 'marketing-ops-core' ),
-				'search_items'               => __( 'Search Roles', 'marketing-ops-core' ),
-				'not_found'                  => __( 'Not Found', 'marketing-ops-core' ),
-				'no_terms'                   => __( 'No roles', 'marketing-ops-core' ),
-				'items_list'                 => __( 'Roles list', 'marketing-ops-core' ),
-				'items_list_navigation'      => __( 'Roles list navigation', 'marketing-ops-core' ),
+				'name'                       => _x( 'Roles', 'Taxonomy General Name', 'marketingops' ),
+				'singular_name'              => _x( 'Role', 'Taxonomy Singular Name', 'marketingops' ),
+				'menu_name'                  => __( 'Roles', 'marketingops' ),
+				'all_items'                  => __( 'All Roles', 'marketingops' ),
+				'parent_item'                => __( 'Parent Role', 'marketingops' ),
+				'parent_item_colon'          => __( 'Parent Role:', 'marketingops' ),
+				'new_item_name'              => __( 'New Role Name', 'marketingops' ),
+				'add_new_item'               => __( 'Add New Role', 'marketingops' ),
+				'edit_item'                  => __( 'Edit Role', 'marketingops' ),
+				'update_item'                => __( 'Update Role', 'marketingops' ),
+				'view_item'                  => __( 'View Role', 'marketingops' ),
+				'separate_items_with_commas' => __( 'Separate roles with commas', 'marketingops' ),
+				'add_or_remove_items'        => __( 'Add or remove roles', 'marketingops' ),
+				'choose_from_most_used'      => __( 'Choose from the most used', 'marketingops' ),
+				'popular_items'              => __( 'Popular Roles', 'marketingops' ),
+				'search_items'               => __( 'Search Roles', 'marketingops' ),
+				'not_found'                  => __( 'Not Found', 'marketingops' ),
+				'no_terms'                   => __( 'No roles', 'marketingops' ),
+				'items_list'                 => __( 'Roles list', 'marketingops' ),
+				'items_list_navigation'      => __( 'Roles list navigation', 'marketingops' ),
 			),
 			'hierarchical'      => true,
 			'public'            => true,
@@ -54,26 +54,26 @@ if ( ! function_exists( 'moc_custom_taxonomy_job_listings' ) ) {
 		// Custom Taxonomy Experience in Job Postings.
 		register_taxonomy( 'jobexperiences', array( 'job_listing' ), array(
 			'labels'            => array(
-				'name'                       => _x( 'Experiences', 'Taxonomy General Name', 'marketing-ops-core' ),
-				'singular_name'              => _x( 'Experience', 'Taxonomy Singular Name', 'marketing-ops-core' ),
-				'menu_name'                  => __( 'Experiences', 'marketing-ops-core' ),
-				'all_items'                  => __( 'All Experiences', 'marketing-ops-core' ),
-				'parent_item'                => __( 'Parent Experience', 'marketing-ops-core' ),
-				'parent_item_colon'          => __( 'Parent Experience:', 'marketing-ops-core' ),
-				'new_item_name'              => __( 'New Experience Name', 'marketing-ops-core' ),
-				'add_new_item'               => __( 'Add New Experience', 'marketing-ops-core' ),
-				'edit_item'                  => __( 'Edit Experience', 'marketing-ops-core' ),
-				'update_item'                => __( 'Update Experience', 'marketing-ops-core' ),
-				'view_item'                  => __( 'View Experience', 'marketing-ops-core' ),
-				'separate_items_with_commas' => __( 'Separate experiences with commas', 'marketing-ops-core' ),
-				'add_or_remove_items'        => __( 'Add or remove experiences', 'marketing-ops-core' ),
-				'choose_from_most_used'      => __( 'Choose from the most used', 'marketing-ops-core' ),
-				'popular_items'              => __( 'Popular Experiences', 'marketing-ops-core' ),
-				'search_items'               => __( 'Search Experiences', 'marketing-ops-core' ),
-				'not_found'                  => __( 'Not Found', 'marketing-ops-core' ),
-				'no_terms'                   => __( 'No experiences', 'marketing-ops-core' ),
-				'items_list'                 => __( 'Experiences list', 'marketing-ops-core' ),
-				'items_list_navigation'      => __( 'Experiences list navigation', 'marketing-ops-core' ),
+				'name'                       => _x( 'Experiences', 'Taxonomy General Name', 'marketingops' ),
+				'singular_name'              => _x( 'Experience', 'Taxonomy Singular Name', 'marketingops' ),
+				'menu_name'                  => __( 'Experiences', 'marketingops' ),
+				'all_items'                  => __( 'All Experiences', 'marketingops' ),
+				'parent_item'                => __( 'Parent Experience', 'marketingops' ),
+				'parent_item_colon'          => __( 'Parent Experience:', 'marketingops' ),
+				'new_item_name'              => __( 'New Experience Name', 'marketingops' ),
+				'add_new_item'               => __( 'Add New Experience', 'marketingops' ),
+				'edit_item'                  => __( 'Edit Experience', 'marketingops' ),
+				'update_item'                => __( 'Update Experience', 'marketingops' ),
+				'view_item'                  => __( 'View Experience', 'marketingops' ),
+				'separate_items_with_commas' => __( 'Separate experiences with commas', 'marketingops' ),
+				'add_or_remove_items'        => __( 'Add or remove experiences', 'marketingops' ),
+				'choose_from_most_used'      => __( 'Choose from the most used', 'marketingops' ),
+				'popular_items'              => __( 'Popular Experiences', 'marketingops' ),
+				'search_items'               => __( 'Search Experiences', 'marketingops' ),
+				'not_found'                  => __( 'Not Found', 'marketingops' ),
+				'no_terms'                   => __( 'No experiences', 'marketingops' ),
+				'items_list'                 => __( 'Experiences list', 'marketingops' ),
+				'items_list_navigation'      => __( 'Experiences list navigation', 'marketingops' ),
 			),
 			'hierarchical'      => true,
 			'public'            => true,
@@ -641,36 +641,36 @@ if ( ! function_exists( 'moc_workshop_custom_post_type' ) ) {
 	 */
 	function moc_workshop_custom_post_type() {
 		register_post_type( 'workshop', array(
-			'label'               => __( 'Workshop', 'marketing-ops-core' ),
-			'description'         => __( 'Its custom post type of workshop', 'marketing-ops-core' ),
+			'label'               => __( 'Workshop', 'marketingops' ),
+			'description'         => __( 'Its custom post type of workshop', 'marketingops' ),
 			'labels'              => array(
-				'name'                  => _x( 'workshops', 'Workshop General Name', 'marketing-ops-core' ),
-				'singular_name'         => _x( 'Workshop', 'Workshop Singular Name', 'marketing-ops-core' ),
-				'menu_name'             => __( 'Workshops', 'marketing-ops-core' ),
-				'name_admin_bar'        => __( 'Workshops', 'marketing-ops-core' ),
-				'archives'              => __( 'Workshop Archives', 'marketing-ops-core' ),
-				'attributes'            => __( 'Workshop Attributes', 'marketing-ops-core' ),
-				'parent_item_colon'     => __( 'Parent Workshop:', 'marketing-ops-core' ),
-				'all_items'             => __( 'All Workshops', 'marketing-ops-core' ),
-				'add_new_item'          => __( 'Add New Workshop', 'marketing-ops-core' ),
-				'add_new'               => __( 'Add New', 'marketing-ops-core' ),
-				'new_item'              => __( 'New Workshop', 'marketing-ops-core' ),
-				'edit_item'             => __( 'Edit Workshop', 'marketing-ops-core' ),
-				'update_item'           => __( 'Update Workshop', 'marketing-ops-core' ),
-				'view_item'             => __( 'View Workshop', 'marketing-ops-core' ),
-				'view_items'            => __( 'View Workshops', 'marketing-ops-core' ),
-				'search_items'          => __( 'Search Workshop', 'marketing-ops-core' ),
-				'not_found'             => __( 'Not found', 'marketing-ops-core' ),
-				'not_found_in_trash'    => __( 'Not found in Trash', 'marketing-ops-core' ),
-				'featured_image'        => __( 'Featured Image', 'marketing-ops-core' ),
-				'set_featured_image'    => __( 'Set featured image', 'marketing-ops-core' ),
-				'remove_featured_image' => __( 'Remove featured image', 'marketing-ops-core' ),
-				'use_featured_image'    => __( 'Use as featured image', 'marketing-ops-core' ),
-				'insert_into_item'      => __( 'Insert into Workshop', 'marketing-ops-core' ),
-				'uploaded_to_this_item' => __( 'Uploaded to this Workshop', 'marketing-ops-core' ),
-				'items_list'            => __( 'Workshops list', 'marketing-ops-core' ),
-				'items_list_navigation' => __( 'Workshops list navigation', 'marketing-ops-core' ),
-				'filter_items_list'     => __( 'Filter Workshops list', 'marketing-ops-core' ),
+				'name'                  => _x( 'workshops', 'Workshop General Name', 'marketingops' ),
+				'singular_name'         => _x( 'Workshop', 'Workshop Singular Name', 'marketingops' ),
+				'menu_name'             => __( 'Workshops', 'marketingops' ),
+				'name_admin_bar'        => __( 'Workshops', 'marketingops' ),
+				'archives'              => __( 'Workshop Archives', 'marketingops' ),
+				'attributes'            => __( 'Workshop Attributes', 'marketingops' ),
+				'parent_item_colon'     => __( 'Parent Workshop:', 'marketingops' ),
+				'all_items'             => __( 'All Workshops', 'marketingops' ),
+				'add_new_item'          => __( 'Add New Workshop', 'marketingops' ),
+				'add_new'               => __( 'Add New', 'marketingops' ),
+				'new_item'              => __( 'New Workshop', 'marketingops' ),
+				'edit_item'             => __( 'Edit Workshop', 'marketingops' ),
+				'update_item'           => __( 'Update Workshop', 'marketingops' ),
+				'view_item'             => __( 'View Workshop', 'marketingops' ),
+				'view_items'            => __( 'View Workshops', 'marketingops' ),
+				'search_items'          => __( 'Search Workshop', 'marketingops' ),
+				'not_found'             => __( 'Not found', 'marketingops' ),
+				'not_found_in_trash'    => __( 'Not found in Trash', 'marketingops' ),
+				'featured_image'        => __( 'Featured Image', 'marketingops' ),
+				'set_featured_image'    => __( 'Set featured image', 'marketingops' ),
+				'remove_featured_image' => __( 'Remove featured image', 'marketingops' ),
+				'use_featured_image'    => __( 'Use as featured image', 'marketingops' ),
+				'insert_into_item'      => __( 'Insert into Workshop', 'marketingops' ),
+				'uploaded_to_this_item' => __( 'Uploaded to this Workshop', 'marketingops' ),
+				'items_list'            => __( 'Workshops list', 'marketingops' ),
+				'items_list_navigation' => __( 'Workshops list navigation', 'marketingops' ),
+				'filter_items_list'     => __( 'Filter Workshops list', 'marketingops' ),
 			),
 			'supports'            => array( 'title', 'editor', 'author', 'thumbnail', 'revisions', 'custom-fields', 'page-attributes', 'post-formats' ),
 			'taxonomies'          => array( 'workshop_category', ' workshop_tag' ),
@@ -693,26 +693,26 @@ if ( ! function_exists( 'moc_workshop_custom_post_type' ) ) {
 		// Register taxonomy (workshop_category) for workshop post type.
 		register_taxonomy( 'workshop_category', array( 'workshop' ), array(
 			'labels'            => array(
-				'name'                       => _x( 'Workshop Categories', 'Taxonomy General Name', 'marketing-ops-core' ),
-				'singular_name'              => _x( 'Workshop Category', 'Taxonomy Singular Name', 'marketing-ops-core' ),
-				'menu_name'                  => __( 'Workshop Categories', 'marketing-ops-core' ),
-				'all_items'                  => __( 'All Workshop Categories', 'marketing-ops-core' ),
-				'parent_item'                => __( 'Parent Workshop Category', 'marketing-ops-core' ),
-				'parent_item_colon'          => __( 'Parent Workshop Category:', 'marketing-ops-core' ),
-				'new_item_name'              => __( 'New Workshop Category Name', 'marketing-ops-core' ),
-				'add_new_item'               => __( 'Add New Workshop Category', 'marketing-ops-core' ),
-				'edit_item'                  => __( 'Edit Workshop Category', 'marketing-ops-core' ),
-				'update_item'                => __( 'Update Workshop Category', 'marketing-ops-core' ),
-				'view_item'                  => __( 'View Workshop Category', 'marketing-ops-core' ),
-				'separate_items_with_commas' => __( 'Separate Workshop Categories with commas', 'marketing-ops-core' ),
-				'add_or_remove_items'        => __( 'Add or remove Workshop Categories', 'marketing-ops-core' ),
-				'choose_from_most_used'      => __( 'Choose from the most used', 'marketing-ops-core' ),
-				'popular_items'              => __( 'Popular Workshop Categories', 'marketing-ops-core' ),
-				'search_items'               => __( 'Search Workshop Categories', 'marketing-ops-core' ),
-				'not_found'                  => __( 'Not Found', 'marketing-ops-core' ),
-				'no_terms'                   => __( 'No Workshop Categories', 'marketing-ops-core' ),
-				'items_list'                 => __( 'Workshop Categories list', 'marketing-ops-core' ),
-				'items_list_navigation'      => __( 'Workshop Categories list navigation', 'marketing-ops-core' ),
+				'name'                       => _x( 'Workshop Categories', 'Taxonomy General Name', 'marketingops' ),
+				'singular_name'              => _x( 'Workshop Category', 'Taxonomy Singular Name', 'marketingops' ),
+				'menu_name'                  => __( 'Workshop Categories', 'marketingops' ),
+				'all_items'                  => __( 'All Workshop Categories', 'marketingops' ),
+				'parent_item'                => __( 'Parent Workshop Category', 'marketingops' ),
+				'parent_item_colon'          => __( 'Parent Workshop Category:', 'marketingops' ),
+				'new_item_name'              => __( 'New Workshop Category Name', 'marketingops' ),
+				'add_new_item'               => __( 'Add New Workshop Category', 'marketingops' ),
+				'edit_item'                  => __( 'Edit Workshop Category', 'marketingops' ),
+				'update_item'                => __( 'Update Workshop Category', 'marketingops' ),
+				'view_item'                  => __( 'View Workshop Category', 'marketingops' ),
+				'separate_items_with_commas' => __( 'Separate Workshop Categories with commas', 'marketingops' ),
+				'add_or_remove_items'        => __( 'Add or remove Workshop Categories', 'marketingops' ),
+				'choose_from_most_used'      => __( 'Choose from the most used', 'marketingops' ),
+				'popular_items'              => __( 'Popular Workshop Categories', 'marketingops' ),
+				'search_items'               => __( 'Search Workshop Categories', 'marketingops' ),
+				'not_found'                  => __( 'Not Found', 'marketingops' ),
+				'no_terms'                   => __( 'No Workshop Categories', 'marketingops' ),
+				'items_list'                 => __( 'Workshop Categories list', 'marketingops' ),
+				'items_list_navigation'      => __( 'Workshop Categories list navigation', 'marketingops' ),
 			),
 			'hierarchical'      => false,
 			'public'            => true,
@@ -726,26 +726,26 @@ if ( ! function_exists( 'moc_workshop_custom_post_type' ) ) {
 		// Register taxonomy (workshop_tag) for workshop post type.
 		register_taxonomy( 'workshop_tag', array( 'workshop' ), array(
 			'labels'            => array(
-				'name'                       => _x( 'Workshop Tags', 'Taxonomy General Name', 'marketing-ops-core' ),
-				'singular_name'              => _x( 'Workshop Tag', 'Taxonomy Singular Name', 'marketing-ops-core' ),
-				'menu_name'                  => __( 'Workshop Tags', 'marketing-ops-core' ),
-				'all_items'                  => __( 'All Workshop Tags', 'marketing-ops-core' ),
-				'parent_item'                => __( 'Parent Workshop Tag', 'marketing-ops-core' ),
-				'parent_item_colon'          => __( 'Parent Workshop Tag:', 'marketing-ops-core' ),
-				'new_item_name'              => __( 'New Workshop Tag Name', 'marketing-ops-core' ),
-				'add_new_item'               => __( 'Add New Workshop Tag', 'marketing-ops-core' ),
-				'edit_item'                  => __( 'Edit Workshop Tag', 'marketing-ops-core' ),
-				'update_item'                => __( 'Update Workshop Tag', 'marketing-ops-core' ),
-				'view_item'                  => __( 'View Workshop Tag', 'marketing-ops-core' ),
-				'separate_items_with_commas' => __( 'Separate Workshop Tags with commas', 'marketing-ops-core' ),
-				'add_or_remove_items'        => __( 'Add or remove Workshop Tags', 'marketing-ops-core' ),
-				'choose_from_most_used'      => __( 'Choose from the most used', 'marketing-ops-core' ),
-				'popular_items'              => __( 'Popular Workshop Tags', 'marketing-ops-core' ),
-				'search_items'               => __( 'Search Workshop Tags', 'marketing-ops-core' ),
-				'not_found'                  => __( 'Not Found', 'marketing-ops-core' ),
-				'no_terms'                   => __( 'No Workshop Tags', 'marketing-ops-core' ),
-				'items_list'                 => __( 'Workshop Tags list', 'marketing-ops-core' ),
-				'items_list_navigation'      => __( 'Workshop Tags list navigation', 'marketing-ops-core' ),
+				'name'                       => _x( 'Workshop Tags', 'Taxonomy General Name', 'marketingops' ),
+				'singular_name'              => _x( 'Workshop Tag', 'Taxonomy Singular Name', 'marketingops' ),
+				'menu_name'                  => __( 'Workshop Tags', 'marketingops' ),
+				'all_items'                  => __( 'All Workshop Tags', 'marketingops' ),
+				'parent_item'                => __( 'Parent Workshop Tag', 'marketingops' ),
+				'parent_item_colon'          => __( 'Parent Workshop Tag:', 'marketingops' ),
+				'new_item_name'              => __( 'New Workshop Tag Name', 'marketingops' ),
+				'add_new_item'               => __( 'Add New Workshop Tag', 'marketingops' ),
+				'edit_item'                  => __( 'Edit Workshop Tag', 'marketingops' ),
+				'update_item'                => __( 'Update Workshop Tag', 'marketingops' ),
+				'view_item'                  => __( 'View Workshop Tag', 'marketingops' ),
+				'separate_items_with_commas' => __( 'Separate Workshop Tags with commas', 'marketingops' ),
+				'add_or_remove_items'        => __( 'Add or remove Workshop Tags', 'marketingops' ),
+				'choose_from_most_used'      => __( 'Choose from the most used', 'marketingops' ),
+				'popular_items'              => __( 'Popular Workshop Tags', 'marketingops' ),
+				'search_items'               => __( 'Search Workshop Tags', 'marketingops' ),
+				'not_found'                  => __( 'Not Found', 'marketingops' ),
+				'no_terms'                   => __( 'No Workshop Tags', 'marketingops' ),
+				'items_list'                 => __( 'Workshop Tags list', 'marketingops' ),
+				'items_list_navigation'      => __( 'Workshop Tags list navigation', 'marketingops' ),
 			),
 			'hierarchical'      => false,
 			'public'            => true,
@@ -769,36 +769,36 @@ if ( ! function_exists( 'moc_no_bs_demo_custom_post_type' ) ) {
 	 */
 	function moc_no_bs_demo_custom_post_type() {
 		register_post_type( 'no_bs_demo', array(
-			'label'               => __( 'No BS Demo', 'marketing-ops-core' ),
-			'description'         => __( 'Its custom post type of no_bs_demo', 'marketing-ops-core' ),
+			'label'               => __( 'No BS Demo', 'marketingops' ),
+			'description'         => __( 'Its custom post type of no_bs_demo', 'marketingops' ),
 			'labels'              => array(
-				'name'                  => _x( 'No BS Demos', 'No BS Demo General Name', 'marketing-ops-core' ),
-				'singular_name'         => _x( 'No BS Demo', 'No BS Demo Singular Name', 'marketing-ops-core' ),
-				'menu_name'             => __( 'No BS Demos', 'marketing-ops-core' ),
-				'name_admin_bar'        => __( 'No BS Demos', 'marketing-ops-core' ),
-				'archives'              => __( 'No BS Demo Archives', 'marketing-ops-core' ),
-				'attributes'            => __( 'No BS Demo Attributes', 'marketing-ops-core' ),
-				'parent_item_colon'     => __( 'Parent No BS Demo:', 'marketing-ops-core' ),
-				'all_items'             => __( 'No BS Demos', 'marketing-ops-core' ),
-				'add_new_item'          => __( 'Add No BS Demo', 'marketing-ops-core' ),
-				'add_new'               => __( 'Add No BS Demo', 'marketing-ops-core' ),
-				'new_item'              => __( 'New No BS Demo', 'marketing-ops-core' ),
-				'edit_item'             => __( 'Edit No BS Demo', 'marketing-ops-core' ),
-				'update_item'           => __( 'Update No BS Demo', 'marketing-ops-core' ),
-				'view_item'             => __( 'View No BS Demo', 'marketing-ops-core' ),
-				'view_items'            => __( 'View No BS Demos', 'marketing-ops-core' ),
-				'search_items'          => __( 'Search No BS Demo', 'marketing-ops-core' ),
-				'not_found'             => __( 'Not found', 'marketing-ops-core' ),
-				'not_found_in_trash'    => __( 'Not found in Trash', 'marketing-ops-core' ),
-				'featured_image'        => __( 'Featured Image', 'marketing-ops-core' ),
-				'set_featured_image'    => __( 'Set featured image', 'marketing-ops-core' ),
-				'remove_featured_image' => __( 'Remove featured image', 'marketing-ops-core' ),
-				'use_featured_image'    => __( 'Use as featured image', 'marketing-ops-core' ),
-				'insert_into_item'      => __( 'Insert into No BS Demo', 'marketing-ops-core' ),
-				'uploaded_to_this_item' => __( 'Uploaded to this No BS Demo', 'marketing-ops-core' ),
-				'items_list'            => __( 'No BS Demos list', 'marketing-ops-core' ),
-				'items_list_navigation' => __( 'No BS Demos list navigation', 'marketing-ops-core' ),
-				'filter_items_list'     => __( 'Filter No BS Demos list', 'marketing-ops-core' ),
+				'name'                  => _x( 'No BS Demos', 'No BS Demo General Name', 'marketingops' ),
+				'singular_name'         => _x( 'No BS Demo', 'No BS Demo Singular Name', 'marketingops' ),
+				'menu_name'             => __( 'No BS Demos', 'marketingops' ),
+				'name_admin_bar'        => __( 'No BS Demos', 'marketingops' ),
+				'archives'              => __( 'No BS Demo Archives', 'marketingops' ),
+				'attributes'            => __( 'No BS Demo Attributes', 'marketingops' ),
+				'parent_item_colon'     => __( 'Parent No BS Demo:', 'marketingops' ),
+				'all_items'             => __( 'No BS Demos', 'marketingops' ),
+				'add_new_item'          => __( 'Add No BS Demo', 'marketingops' ),
+				'add_new'               => __( 'Add No BS Demo', 'marketingops' ),
+				'new_item'              => __( 'New No BS Demo', 'marketingops' ),
+				'edit_item'             => __( 'Edit No BS Demo', 'marketingops' ),
+				'update_item'           => __( 'Update No BS Demo', 'marketingops' ),
+				'view_item'             => __( 'View No BS Demo', 'marketingops' ),
+				'view_items'            => __( 'View No BS Demos', 'marketingops' ),
+				'search_items'          => __( 'Search No BS Demo', 'marketingops' ),
+				'not_found'             => __( 'Not found', 'marketingops' ),
+				'not_found_in_trash'    => __( 'Not found in Trash', 'marketingops' ),
+				'featured_image'        => __( 'Featured Image', 'marketingops' ),
+				'set_featured_image'    => __( 'Set featured image', 'marketingops' ),
+				'remove_featured_image' => __( 'Remove featured image', 'marketingops' ),
+				'use_featured_image'    => __( 'Use as featured image', 'marketingops' ),
+				'insert_into_item'      => __( 'Insert into No BS Demo', 'marketingops' ),
+				'uploaded_to_this_item' => __( 'Uploaded to this No BS Demo', 'marketingops' ),
+				'items_list'            => __( 'No BS Demos list', 'marketingops' ),
+				'items_list_navigation' => __( 'No BS Demos list navigation', 'marketingops' ),
+				'filter_items_list'     => __( 'Filter No BS Demos list', 'marketingops' ),
 			),
 			'supports'            => array( 'title', 'editor', 'thumbnail', 'custom-fields', 'page-attributes', 'post-formats', 'excerpt' ),
 			'taxonomies'          => array( 'no_bs_demo_category', ' no_bs_demo_tag' ),
@@ -821,26 +821,26 @@ if ( ! function_exists( 'moc_no_bs_demo_custom_post_type' ) ) {
 		// Register the custom texonomy.
 		register_taxonomy( 'no_bs_demo_category', array( 'no_bs_demo' ), array(
 			'labels'            => array(
-				'name'                       => _x( 'No BS Demo Categories', 'Taxonomy General Name', 'marketing-ops-core' ),
-				'singular_name'              => _x( 'No BS Demo Category', 'Taxonomy Singular Name', 'marketing-ops-core' ),
-				'menu_name'                  => __( 'No BS Demo Categories', 'marketing-ops-core' ),
-				'all_items'                  => __( 'All No BS Demo Categories', 'marketing-ops-core' ),
-				'parent_item'                => __( 'Parent No BS Demo Category', 'marketing-ops-core' ),
-				'parent_item_colon'          => __( 'Parent No BS Demo Category:', 'marketing-ops-core' ),
-				'new_item_name'              => __( 'New No BS Demo Category Name', 'marketing-ops-core' ),
-				'add_new_item'               => __( 'Add New No BS Demo Category', 'marketing-ops-core' ),
-				'edit_item'                  => __( 'Edit No BS Demo Category', 'marketing-ops-core' ),
-				'update_item'                => __( 'Update No BS Demo Category', 'marketing-ops-core' ),
-				'view_item'                  => __( 'View No BS Demo Category', 'marketing-ops-core' ),
-				'separate_items_with_commas' => __( 'Separate No BS Demo Categories with commas', 'marketing-ops-core' ),
-				'add_or_remove_items'        => __( 'Add or remove No BS Demo Categories', 'marketing-ops-core' ),
-				'choose_from_most_used'      => __( 'Choose from the most used', 'marketing-ops-core' ),
-				'popular_items'              => __( 'Popular No BS Demo Categories', 'marketing-ops-core' ),
-				'search_items'               => __( 'Search No BS Demo Categories', 'marketing-ops-core' ),
-				'not_found'                  => __( 'Not Found', 'marketing-ops-core' ),
-				'no_terms'                   => __( 'No No BS Demo Categories', 'marketing-ops-core' ),
-				'items_list'                 => __( 'No BS Demo Categories list', 'marketing-ops-core' ),
-				'items_list_navigation'      => __( 'No BS Demo Categories list navigation', 'marketing-ops-core' ),
+				'name'                       => _x( 'No BS Demo Categories', 'Taxonomy General Name', 'marketingops' ),
+				'singular_name'              => _x( 'No BS Demo Category', 'Taxonomy Singular Name', 'marketingops' ),
+				'menu_name'                  => __( 'No BS Demo Categories', 'marketingops' ),
+				'all_items'                  => __( 'All No BS Demo Categories', 'marketingops' ),
+				'parent_item'                => __( 'Parent No BS Demo Category', 'marketingops' ),
+				'parent_item_colon'          => __( 'Parent No BS Demo Category:', 'marketingops' ),
+				'new_item_name'              => __( 'New No BS Demo Category Name', 'marketingops' ),
+				'add_new_item'               => __( 'Add New No BS Demo Category', 'marketingops' ),
+				'edit_item'                  => __( 'Edit No BS Demo Category', 'marketingops' ),
+				'update_item'                => __( 'Update No BS Demo Category', 'marketingops' ),
+				'view_item'                  => __( 'View No BS Demo Category', 'marketingops' ),
+				'separate_items_with_commas' => __( 'Separate No BS Demo Categories with commas', 'marketingops' ),
+				'add_or_remove_items'        => __( 'Add or remove No BS Demo Categories', 'marketingops' ),
+				'choose_from_most_used'      => __( 'Choose from the most used', 'marketingops' ),
+				'popular_items'              => __( 'Popular No BS Demo Categories', 'marketingops' ),
+				'search_items'               => __( 'Search No BS Demo Categories', 'marketingops' ),
+				'not_found'                  => __( 'Not Found', 'marketingops' ),
+				'no_terms'                   => __( 'No No BS Demo Categories', 'marketingops' ),
+				'items_list'                 => __( 'No BS Demo Categories list', 'marketingops' ),
+				'items_list_navigation'      => __( 'No BS Demo Categories list navigation', 'marketingops' ),
 			),
 			'hierarchical'      => false,
 			'public'            => true,
@@ -864,36 +864,36 @@ if ( ! function_exists( 'moc_no_bs_demo_offer_custom_post_type' ) ) {
 	 */
 	function moc_no_bs_demo_offer_custom_post_type() {
 		register_post_type( 'no_bs_demo_offer', array(
-			'label'               => __( 'No BS Demo Coupon', 'marketing-ops-core' ),
-			'description'         => __( 'Its custom post type of no_bs_demo_offer', 'marketing-ops-core' ),
+			'label'               => __( 'No BS Demo Coupon', 'marketingops' ),
+			'description'         => __( 'Its custom post type of no_bs_demo_offer', 'marketingops' ),
 			'labels'              => array(
-				'name'                  => _x( 'No BS Demo Coupons', 'No BS Demo Coupon General Name', 'marketing-ops-core' ),
-				'singular_name'         => _x( 'No BS Demo Coupon', 'No BS Demo Coupon Singular Name', 'marketing-ops-core' ),
-				'menu_name'             => __( 'No BS Demo Coupons', 'marketing-ops-core' ),
-				'name_admin_bar'        => __( 'No BS Demo Coupons', 'marketing-ops-core' ),
-				'archives'              => __( 'No BS Demo Coupon Archives', 'marketing-ops-core' ),
-				'attributes'            => __( 'No BS Demo Coupon Attributes', 'marketing-ops-core' ),
-				'parent_item_colon'     => __( 'Parent No BS Demo Coupon:', 'marketing-ops-core' ),
-				'all_items'             => __( 'No BS Demo Coupons', 'marketing-ops-core' ),
-				'add_new_item'          => __( 'Add New No BS Demo Coupon', 'marketing-ops-core' ),
-				'add_new'               => __( 'Add Coupon', 'marketing-ops-core' ),
-				'new_item'              => __( 'New No BS Demo Coupon', 'marketing-ops-core' ),
-				'edit_item'             => __( 'Edit No BS Demo Coupon', 'marketing-ops-core' ),
-				'update_item'           => __( 'Update No BS Demo Coupon', 'marketing-ops-core' ),
-				'view_item'             => __( 'View No BS Demo Coupon', 'marketing-ops-core' ),
-				'view_items'            => __( 'View No BS Demo Coupons', 'marketing-ops-core' ),
-				'search_items'          => __( 'Search No BS Demo Coupon', 'marketing-ops-core' ),
-				'not_found'             => __( 'Not found', 'marketing-ops-core' ),
-				'not_found_in_trash'    => __( 'Not found in Trash', 'marketing-ops-core' ),
-				'featured_image'        => __( 'Featured Image', 'marketing-ops-core' ),
-				'set_featured_image'    => __( 'Set featured image', 'marketing-ops-core' ),
-				'remove_featured_image' => __( 'Remove featured image', 'marketing-ops-core' ),
-				'use_featured_image'    => __( 'Use as featured image', 'marketing-ops-core' ),
-				'insert_into_item'      => __( 'Insert into No BS Demo Coupon', 'marketing-ops-core' ),
-				'uploaded_to_this_item' => __( 'Uploaded to this No BS Demo Coupon', 'marketing-ops-core' ),
-				'items_list'            => __( 'No BS Demo Coupons list', 'marketing-ops-core' ),
-				'items_list_navigation' => __( 'No BS Demo Coupons list navigation', 'marketing-ops-core' ),
-				'filter_items_list'     => __( 'Filter No BS Demo Coupons list', 'marketing-ops-core' ),
+				'name'                  => _x( 'No BS Demo Coupons', 'No BS Demo Coupon General Name', 'marketingops' ),
+				'singular_name'         => _x( 'No BS Demo Coupon', 'No BS Demo Coupon Singular Name', 'marketingops' ),
+				'menu_name'             => __( 'No BS Demo Coupons', 'marketingops' ),
+				'name_admin_bar'        => __( 'No BS Demo Coupons', 'marketingops' ),
+				'archives'              => __( 'No BS Demo Coupon Archives', 'marketingops' ),
+				'attributes'            => __( 'No BS Demo Coupon Attributes', 'marketingops' ),
+				'parent_item_colon'     => __( 'Parent No BS Demo Coupon:', 'marketingops' ),
+				'all_items'             => __( 'No BS Demo Coupons', 'marketingops' ),
+				'add_new_item'          => __( 'Add New No BS Demo Coupon', 'marketingops' ),
+				'add_new'               => __( 'Add Coupon', 'marketingops' ),
+				'new_item'              => __( 'New No BS Demo Coupon', 'marketingops' ),
+				'edit_item'             => __( 'Edit No BS Demo Coupon', 'marketingops' ),
+				'update_item'           => __( 'Update No BS Demo Coupon', 'marketingops' ),
+				'view_item'             => __( 'View No BS Demo Coupon', 'marketingops' ),
+				'view_items'            => __( 'View No BS Demo Coupons', 'marketingops' ),
+				'search_items'          => __( 'Search No BS Demo Coupon', 'marketingops' ),
+				'not_found'             => __( 'Not found', 'marketingops' ),
+				'not_found_in_trash'    => __( 'Not found in Trash', 'marketingops' ),
+				'featured_image'        => __( 'Featured Image', 'marketingops' ),
+				'set_featured_image'    => __( 'Set featured image', 'marketingops' ),
+				'remove_featured_image' => __( 'Remove featured image', 'marketingops' ),
+				'use_featured_image'    => __( 'Use as featured image', 'marketingops' ),
+				'insert_into_item'      => __( 'Insert into No BS Demo Coupon', 'marketingops' ),
+				'uploaded_to_this_item' => __( 'Uploaded to this No BS Demo Coupon', 'marketingops' ),
+				'items_list'            => __( 'No BS Demo Coupons list', 'marketingops' ),
+				'items_list_navigation' => __( 'No BS Demo Coupons list navigation', 'marketingops' ),
+				'filter_items_list'     => __( 'Filter No BS Demo Coupons list', 'marketingops' ),
 			),
 			'supports'            => array( 'title', 'editor', 'thumbnail', 'custom-fields' ),
 			'hierarchical'        => false,
@@ -925,36 +925,36 @@ if ( ! function_exists( 'moc_training_custom_post_type' ) ) {
 	 */
 	function moc_training_custom_post_type() {
 		register_post_type( 'training', array(
-			'label'               => __( 'Training', 'marketing-ops-core' ),
-			'description'         => __( 'Its custom post type of training', 'marketing-ops-core' ),
+			'label'               => __( 'Training', 'marketingops' ),
+			'description'         => __( 'Its custom post type of training', 'marketingops' ),
 			'labels'              => array(
-				'name'                  => _x( 'Training', 'Training General Name', 'marketing-ops-core' ),
-				'singular_name'         => _x( 'Training', 'Training Singular Name', 'marketing-ops-core' ),
-				'menu_name'             => __( 'Trainings', 'marketing-ops-core' ),
-				'name_admin_bar'        => __( 'Trainings', 'marketing-ops-core' ),
-				'archives'              => __( 'Training Archives', 'marketing-ops-core' ),
-				'attributes'            => __( 'Training Attributes', 'marketing-ops-core' ),
-				'parent_item_colon'     => __( 'Parent Training:', 'marketing-ops-core' ),
-				'all_items'             => __( 'All Trainings', 'marketing-ops-core' ),
-				'add_new_item'          => __( 'Add New Training', 'marketing-ops-core' ),
-				'add_new'               => __( 'Add New', 'marketing-ops-core' ),
-				'new_item'              => __( 'New Training', 'marketing-ops-core' ),
-				'edit_item'             => __( 'Edit Training', 'marketing-ops-core' ),
-				'update_item'           => __( 'Update Training', 'marketing-ops-core' ),
-				'view_item'             => __( 'View Training', 'marketing-ops-core' ),
-				'view_items'            => __( 'View Trainings', 'marketing-ops-core' ),
-				'search_items'          => __( 'Search Training', 'marketing-ops-core' ),
-				'not_found'             => __( 'Not found', 'marketing-ops-core' ),
-				'not_found_in_trash'    => __( 'Not found in Trash', 'marketing-ops-core' ),
-				'featured_image'        => __( 'Featured Image', 'marketing-ops-core' ),
-				'set_featured_image'    => __( 'Set featured image', 'marketing-ops-core' ),
-				'remove_featured_image' => __( 'Remove featured image', 'marketing-ops-core' ),
-				'use_featured_image'    => __( 'Use as featured image', 'marketing-ops-core' ),
-				'insert_into_item'      => __( 'Insert into Training', 'marketing-ops-core' ),
-				'uploaded_to_this_item' => __( 'Uploaded to this Training', 'marketing-ops-core' ),
-				'items_list'            => __( 'Trainings list', 'marketing-ops-core' ),
-				'items_list_navigation' => __( 'Trainings list navigation', 'marketing-ops-core' ),
-				'filter_items_list'     => __( 'Filter Trainings list', 'marketing-ops-core' ),
+				'name'                  => _x( 'Training', 'Training General Name', 'marketingops' ),
+				'singular_name'         => _x( 'Training', 'Training Singular Name', 'marketingops' ),
+				'menu_name'             => __( 'Trainings', 'marketingops' ),
+				'name_admin_bar'        => __( 'Trainings', 'marketingops' ),
+				'archives'              => __( 'Training Archives', 'marketingops' ),
+				'attributes'            => __( 'Training Attributes', 'marketingops' ),
+				'parent_item_colon'     => __( 'Parent Training:', 'marketingops' ),
+				'all_items'             => __( 'All Trainings', 'marketingops' ),
+				'add_new_item'          => __( 'Add New Training', 'marketingops' ),
+				'add_new'               => __( 'Add New', 'marketingops' ),
+				'new_item'              => __( 'New Training', 'marketingops' ),
+				'edit_item'             => __( 'Edit Training', 'marketingops' ),
+				'update_item'           => __( 'Update Training', 'marketingops' ),
+				'view_item'             => __( 'View Training', 'marketingops' ),
+				'view_items'            => __( 'View Trainings', 'marketingops' ),
+				'search_items'          => __( 'Search Training', 'marketingops' ),
+				'not_found'             => __( 'Not found', 'marketingops' ),
+				'not_found_in_trash'    => __( 'Not found in Trash', 'marketingops' ),
+				'featured_image'        => __( 'Featured Image', 'marketingops' ),
+				'set_featured_image'    => __( 'Set featured image', 'marketingops' ),
+				'remove_featured_image' => __( 'Remove featured image', 'marketingops' ),
+				'use_featured_image'    => __( 'Use as featured image', 'marketingops' ),
+				'insert_into_item'      => __( 'Insert into Training', 'marketingops' ),
+				'uploaded_to_this_item' => __( 'Uploaded to this Training', 'marketingops' ),
+				'items_list'            => __( 'Trainings list', 'marketingops' ),
+				'items_list_navigation' => __( 'Trainings list navigation', 'marketingops' ),
+				'filter_items_list'     => __( 'Filter Trainings list', 'marketingops' ),
 			),
 			'supports'            => array( 'title', 'editor', 'author', 'thumbnail', 'custom-fields', 'page-attributes', 'post-formats' ),
 			'taxonomies'          => array( 'training_platform', ' training_skill_level', 'training_strategy_type' ),
@@ -982,26 +982,26 @@ if ( ! function_exists( 'moc_training_platform' ) ) {
 	function moc_training_platform() {
 		register_taxonomy( 'training_platform', array( 'product', 'sfwd-courses' ), array(
 			'labels'                     => array(
-				'name'                       => _x( 'Platform', 'Taxonomy General Name', 'marketing-ops-core' ),
-				'singular_name'              => _x( 'Platform', 'Taxonomy Singular Name', 'marketing-ops-core' ),
-				'menu_name'                  => __( 'Platform', 'marketing-ops-core' ),
-				'all_items'                  => __( 'All Platform', 'marketing-ops-core' ),
-				'parent_item'                => __( 'Parent Platform', 'marketing-ops-core' ),
-				'parent_item_colon'          => __( 'Parent Platform:', 'marketing-ops-core' ),
-				'new_item_name'              => __( 'New Platform Name', 'marketing-ops-core' ),
-				'add_new_item'               => __( 'Add New Platform', 'marketing-ops-core' ),
-				'edit_item'                  => __( 'Edit Platform', 'marketing-ops-core' ),
-				'update_item'                => __( 'Update Platform', 'marketing-ops-core' ),
-				'view_item'                  => __( 'View Platform', 'marketing-ops-core' ),
-				'separate_items_with_commas' => __( 'Separate platform with commas', 'marketing-ops-core' ),
-				'add_or_remove_items'        => __( 'Add or remove platform', 'marketing-ops-core' ),
-				'choose_from_most_used'      => __( 'Choose from the most used', 'marketing-ops-core' ),
-				'popular_items'              => __( 'Popular Platform', 'marketing-ops-core' ),
-				'search_items'               => __( 'Search Platform', 'marketing-ops-core' ),
-				'not_found'                  => __( 'Not Found', 'marketing-ops-core' ),
-				'no_terms'                   => __( 'No Platform', 'marketing-ops-core' ),
-				'items_list'                 => __( 'Platform list', 'marketing-ops-core' ),
-				'items_list_navigation'      => __( 'Platform list navigation', 'marketing-ops-core' ),
+				'name'                       => _x( 'Platform', 'Taxonomy General Name', 'marketingops' ),
+				'singular_name'              => _x( 'Platform', 'Taxonomy Singular Name', 'marketingops' ),
+				'menu_name'                  => __( 'Platform', 'marketingops' ),
+				'all_items'                  => __( 'All Platform', 'marketingops' ),
+				'parent_item'                => __( 'Parent Platform', 'marketingops' ),
+				'parent_item_colon'          => __( 'Parent Platform:', 'marketingops' ),
+				'new_item_name'              => __( 'New Platform Name', 'marketingops' ),
+				'add_new_item'               => __( 'Add New Platform', 'marketingops' ),
+				'edit_item'                  => __( 'Edit Platform', 'marketingops' ),
+				'update_item'                => __( 'Update Platform', 'marketingops' ),
+				'view_item'                  => __( 'View Platform', 'marketingops' ),
+				'separate_items_with_commas' => __( 'Separate platform with commas', 'marketingops' ),
+				'add_or_remove_items'        => __( 'Add or remove platform', 'marketingops' ),
+				'choose_from_most_used'      => __( 'Choose from the most used', 'marketingops' ),
+				'popular_items'              => __( 'Popular Platform', 'marketingops' ),
+				'search_items'               => __( 'Search Platform', 'marketingops' ),
+				'not_found'                  => __( 'Not Found', 'marketingops' ),
+				'no_terms'                   => __( 'No Platform', 'marketingops' ),
+				'items_list'                 => __( 'Platform list', 'marketingops' ),
+				'items_list_navigation'      => __( 'Platform list navigation', 'marketingops' ),
 			),
 			'hierarchical'               => false,
 			'public'                     => true,
@@ -1021,26 +1021,26 @@ if ( ! function_exists( 'moc_training_skill_level' ) ) {
 	function moc_training_skill_level() {
 		register_taxonomy( 'training_skill_level', array( 'product', 'sfwd-courses' ), array(
 			'labels'            => array(
-				'name'                       => _x( 'Skill level', 'Taxonomy General Name', 'marketing-ops-core' ),
-				'singular_name'              => _x( 'Skill level', 'Taxonomy Singular Name', 'marketing-ops-core' ),
-				'menu_name'                  => __( 'Skill level', 'marketing-ops-core' ),
-				'all_items'                  => __( 'All Skill level', 'marketing-ops-core' ),
-				'parent_item'                => __( 'Parent Skill level', 'marketing-ops-core' ),
-				'parent_item_colon'          => __( 'Parent Skill level:', 'marketing-ops-core' ),
-				'new_item_name'              => __( 'New Skill level Name', 'marketing-ops-core' ),
-				'add_new_item'               => __( 'Add New Skill level', 'marketing-ops-core' ),
-				'edit_item'                  => __( 'Edit Skill level', 'marketing-ops-core' ),
-				'update_item'                => __( 'Update Skill level', 'marketing-ops-core' ),
-				'view_item'                  => __( 'View Skill level', 'marketing-ops-core' ),
-				'separate_items_with_commas' => __( 'Separate platform with commas', 'marketing-ops-core' ),
-				'add_or_remove_items'        => __( 'Add or remove platforms', 'marketing-ops-core' ),
-				'choose_from_most_used'      => __( 'Choose from the most used', 'marketing-ops-core' ),
-				'popular_items'              => __( 'Popular Skill level', 'marketing-ops-core' ),
-				'search_items'               => __( 'Search Skill level', 'marketing-ops-core' ),
-				'not_found'                  => __( 'Not Found', 'marketing-ops-core' ),
-				'no_terms'                   => __( 'No Skill level', 'marketing-ops-core' ),
-				'items_list'                 => __( 'Skill level list', 'marketing-ops-core' ),
-				'items_list_navigation'      => __( 'Skill level list navigation', 'marketing-ops-core' ),
+				'name'                       => _x( 'Skill level', 'Taxonomy General Name', 'marketingops' ),
+				'singular_name'              => _x( 'Skill level', 'Taxonomy Singular Name', 'marketingops' ),
+				'menu_name'                  => __( 'Skill level', 'marketingops' ),
+				'all_items'                  => __( 'All Skill level', 'marketingops' ),
+				'parent_item'                => __( 'Parent Skill level', 'marketingops' ),
+				'parent_item_colon'          => __( 'Parent Skill level:', 'marketingops' ),
+				'new_item_name'              => __( 'New Skill level Name', 'marketingops' ),
+				'add_new_item'               => __( 'Add New Skill level', 'marketingops' ),
+				'edit_item'                  => __( 'Edit Skill level', 'marketingops' ),
+				'update_item'                => __( 'Update Skill level', 'marketingops' ),
+				'view_item'                  => __( 'View Skill level', 'marketingops' ),
+				'separate_items_with_commas' => __( 'Separate platform with commas', 'marketingops' ),
+				'add_or_remove_items'        => __( 'Add or remove platforms', 'marketingops' ),
+				'choose_from_most_used'      => __( 'Choose from the most used', 'marketingops' ),
+				'popular_items'              => __( 'Popular Skill level', 'marketingops' ),
+				'search_items'               => __( 'Search Skill level', 'marketingops' ),
+				'not_found'                  => __( 'Not Found', 'marketingops' ),
+				'no_terms'                   => __( 'No Skill level', 'marketingops' ),
+				'items_list'                 => __( 'Skill level list', 'marketingops' ),
+				'items_list_navigation'      => __( 'Skill level list navigation', 'marketingops' ),
 			),
 			'hierarchical'      => false,
 			'public'            => true,
@@ -1059,26 +1059,26 @@ if ( ! function_exists( 'moc_training_strategy_type' ) ) {
 	function moc_training_strategy_type() {
 		register_taxonomy( 'training_strategy_type', array( 'product', 'sfwd-courses' ), array(
 			'labels'            => array(
-				'name'                       => _x( 'Strategy type', 'Taxonomy General Name', 'marketing-ops-core' ),
-				'singular_name'              => _x( 'Strategy type', 'Taxonomy Singular Name', 'marketing-ops-core' ),
-				'menu_name'                  => __( 'Strategy type', 'marketing-ops-core' ),
-				'all_items'                  => __( 'All Strategy type', 'marketing-ops-core' ),
-				'parent_item'                => __( 'Parent Strategy type', 'marketing-ops-core' ),
-				'parent_item_colon'          => __( 'Parent Strategy type:', 'marketing-ops-core' ),
-				'new_item_name'              => __( 'New Strategy type Name', 'marketing-ops-core' ),
-				'add_new_item'               => __( 'Add New Strategy type', 'marketing-ops-core' ),
-				'edit_item'                  => __( 'Edit Strategy type', 'marketing-ops-core' ),
-				'update_item'                => __( 'Update Strategy type', 'marketing-ops-core' ),
-				'view_item'                  => __( 'View Strategy type', 'marketing-ops-core' ),
-				'separate_items_with_commas' => __( 'Separate platform with commas', 'marketing-ops-core' ),
-				'add_or_remove_items'        => __( 'Add or remove platforms', 'marketing-ops-core' ),
-				'choose_from_most_used'      => __( 'Choose from the most used', 'marketing-ops-core' ),
-				'popular_items'              => __( 'Popular Strategy type', 'marketing-ops-core' ),
-				'search_items'               => __( 'Search Strategy type', 'marketing-ops-core' ),
-				'not_found'                  => __( 'Not Found', 'marketing-ops-core' ),
-				'no_terms'                   => __( 'No Strategy type', 'marketing-ops-core' ),
-				'items_list'                 => __( 'Strategy type list', 'marketing-ops-core' ),
-				'items_list_navigation'      => __( 'Strategy type list navigation', 'marketing-ops-core' ),
+				'name'                       => _x( 'Strategy type', 'Taxonomy General Name', 'marketingops' ),
+				'singular_name'              => _x( 'Strategy type', 'Taxonomy Singular Name', 'marketingops' ),
+				'menu_name'                  => __( 'Strategy type', 'marketingops' ),
+				'all_items'                  => __( 'All Strategy type', 'marketingops' ),
+				'parent_item'                => __( 'Parent Strategy type', 'marketingops' ),
+				'parent_item_colon'          => __( 'Parent Strategy type:', 'marketingops' ),
+				'new_item_name'              => __( 'New Strategy type Name', 'marketingops' ),
+				'add_new_item'               => __( 'Add New Strategy type', 'marketingops' ),
+				'edit_item'                  => __( 'Edit Strategy type', 'marketingops' ),
+				'update_item'                => __( 'Update Strategy type', 'marketingops' ),
+				'view_item'                  => __( 'View Strategy type', 'marketingops' ),
+				'separate_items_with_commas' => __( 'Separate platform with commas', 'marketingops' ),
+				'add_or_remove_items'        => __( 'Add or remove platforms', 'marketingops' ),
+				'choose_from_most_used'      => __( 'Choose from the most used', 'marketingops' ),
+				'popular_items'              => __( 'Popular Strategy type', 'marketingops' ),
+				'search_items'               => __( 'Search Strategy type', 'marketingops' ),
+				'not_found'                  => __( 'Not Found', 'marketingops' ),
+				'no_terms'                   => __( 'No Strategy type', 'marketingops' ),
+				'items_list'                 => __( 'Strategy type list', 'marketingops' ),
+				'items_list_navigation'      => __( 'Strategy type list navigation', 'marketingops' ),
 			),
 			'hierarchical'      => false,
 			'public'            => true,
@@ -1098,26 +1098,26 @@ if ( ! function_exists( 'moc_podcast_category' ) ) {
 	function moc_podcast_category() {
 		register_taxonomy( 'podcast_category', array( 'podcast' ), array(
 			'labels'                     => array(
-				'name'                       => _x( 'Podcasts Category', 'Taxonomy General Name', 'marketing-ops-core' ),
-				'singular_name'              => _x( 'Podcast Category', 'Taxonomy Singular Name', 'marketing-ops-core' ),
-				'menu_name'                  => __( 'Podcasts Category', 'marketing-ops-core' ),
-				'all_items'                  => __( 'All Podcasts Category', 'marketing-ops-core' ),
-				'parent_item'                => __( 'Parent Podcast Category', 'marketing-ops-core' ),
-				'parent_item_colon'          => __( 'Parent Podcast Category:', 'marketing-ops-core' ),
-				'new_item_name'              => __( 'New Podcast Category Name', 'marketing-ops-core' ),
-				'add_new_item'               => __( 'Add New Podcast Category', 'marketing-ops-core' ),
-				'edit_item'                  => __( 'Edit Podcast Category', 'marketing-ops-core' ),
-				'update_item'                => __( 'Update Podcast Category', 'marketing-ops-core' ),
-				'view_item'                  => __( 'View Podcast Category', 'marketing-ops-core' ),
-				'separate_items_with_commas' => __( 'Separate platform with commas', 'marketing-ops-core' ),
-				'add_or_remove_items'        => __( 'Add or remove platforms', 'marketing-ops-core' ),
-				'choose_from_most_used'      => __( 'Choose from the most used', 'marketing-ops-core' ),
-				'popular_items'              => __( 'Popular Podcasts Category', 'marketing-ops-core' ),
-				'search_items'               => __( 'Search Podcasts Category', 'marketing-ops-core' ),
-				'not_found'                  => __( 'Not Found', 'marketing-ops-core' ),
-				'no_terms'                   => __( 'No Podcasts Category', 'marketing-ops-core' ),
-				'items_list'                 => __( 'Podcasts Category list', 'marketing-ops-core' ),
-				'items_list_navigation'      => __( 'Podcasts Category list navigation', 'marketing-ops-core' ),
+				'name'                       => _x( 'Podcasts Category', 'Taxonomy General Name', 'marketingops' ),
+				'singular_name'              => _x( 'Podcast Category', 'Taxonomy Singular Name', 'marketingops' ),
+				'menu_name'                  => __( 'Podcasts Category', 'marketingops' ),
+				'all_items'                  => __( 'All Podcasts Category', 'marketingops' ),
+				'parent_item'                => __( 'Parent Podcast Category', 'marketingops' ),
+				'parent_item_colon'          => __( 'Parent Podcast Category:', 'marketingops' ),
+				'new_item_name'              => __( 'New Podcast Category Name', 'marketingops' ),
+				'add_new_item'               => __( 'Add New Podcast Category', 'marketingops' ),
+				'edit_item'                  => __( 'Edit Podcast Category', 'marketingops' ),
+				'update_item'                => __( 'Update Podcast Category', 'marketingops' ),
+				'view_item'                  => __( 'View Podcast Category', 'marketingops' ),
+				'separate_items_with_commas' => __( 'Separate platform with commas', 'marketingops' ),
+				'add_or_remove_items'        => __( 'Add or remove platforms', 'marketingops' ),
+				'choose_from_most_used'      => __( 'Choose from the most used', 'marketingops' ),
+				'popular_items'              => __( 'Popular Podcasts Category', 'marketingops' ),
+				'search_items'               => __( 'Search Podcasts Category', 'marketingops' ),
+				'not_found'                  => __( 'Not Found', 'marketingops' ),
+				'no_terms'                   => __( 'No Podcasts Category', 'marketingops' ),
+				'items_list'                 => __( 'Podcasts Category list', 'marketingops' ),
+				'items_list_navigation'      => __( 'Podcasts Category list navigation', 'marketingops' ),
 			),
 			'hierarchical'               => false,
 			'public'                     => true,
@@ -1333,18 +1333,18 @@ if ( ! function_exists( 'moc_user_basic_information' ) ) {
 		}
 		?>
 		<div class="title_with_btn">
-			<h3><?php esc_html_e( 'Basic Details', 'marketing-ops-core' ); ?></h3>
+			<h3><?php esc_html_e( 'Basic Details', 'marketingops' ); ?></h3>
 			<?php
 			
 			if ( is_user_logged_in() && true === $flag ) {
 				?>
 				<div class="btns">
 					<div class="moc_not_editable_data">
-						<a href="javascript:void(0);" class="gray_color btn edit_btn moc_user_basic_info_edit_btn moc_bio_info"><?php esc_html_e( 'Edit', 'marketing-ops-core' ); ?></a>
+						<a href="javascript:void(0);" class="gray_color btn edit_btn moc_user_basic_info_edit_btn moc_bio_info"><?php esc_html_e( 'Edit', 'marketingops' ); ?></a>
 					</div>
 					<div class="moc_editable_data">
-						<a href="javascript:void(0);" class="gray_color btn cancel_btn moc_user_basic_info_cancel_btn moc_cancel_general_info"><?php esc_html_e( 'Cancel', 'marketing-ops-core' ); ?></a>
-						<a href="javascript:void(0);" class="green_color btn btn_save moc_save_basic_info"><?php esc_html_e( 'Save', 'marketing-ops-core' ); ?></a>
+						<a href="javascript:void(0);" class="gray_color btn cancel_btn moc_user_basic_info_cancel_btn moc_cancel_general_info"><?php esc_html_e( 'Cancel', 'marketingops' ); ?></a>
+						<a href="javascript:void(0);" class="green_color btn btn_save moc_save_basic_info"><?php esc_html_e( 'Save', 'marketingops' ); ?></a>
 					</div>
 				</div>
 			<?php
@@ -1354,7 +1354,7 @@ if ( ! function_exists( 'moc_user_basic_information' ) ) {
 		<div class="sub_title_with_content <?php echo esc_attr( $class_hide_not_data_main_div ); ?>">
 			<div class="two_boxes">
 				<div class="content_boxes moc_required_field <?php echo esc_attr( $class_hide_not_data_first_name );?> ">
-					<h5><?php esc_html_e( 'First Name', 'marketing-ops-core' ); ?></h5>
+					<h5><?php esc_html_e( 'First Name', 'marketingops' ); ?></h5>
 					<div class="moc_editable_data">
 						<div class="content_boxed">
 							<input type="text" class="inputtext" value="<?php echo esc_html( $firstname ); ?>" name="moc_first_name" placeholder="First Name">
@@ -1376,7 +1376,7 @@ if ( ! function_exists( 'moc_user_basic_information' ) ) {
 					</div>
 				</div>
 				<div class="content_boxes moc_required_field <?php echo esc_attr( $class_hide_not_data_last_name );?>">
-					<h5><?php esc_html_e( 'Last Name', 'marketing-ops-core' ); ?></h5>
+					<h5><?php esc_html_e( 'Last Name', 'marketingops' ); ?></h5>
 					<div class="moc_editable_data">
 						<div class="content_boxed">
 							<input type="text" class="inputtext" value="<?php echo esc_html( $lastname  ); ?>" name="moc_last_name" placeholder="Last Name">
@@ -1397,7 +1397,7 @@ if ( ! function_exists( 'moc_user_basic_information' ) ) {
 				</div>
 			</div>
 			<div class="content_boxes moc_required_field <?php echo esc_attr( $class_hide_not_data_email );?>">
-				<h5><?php esc_html_e( 'Email', 'marketing-ops-core' ); ?></h5>
+				<h5><?php esc_html_e( 'Email', 'marketingops' ); ?></h5>
 				<div class="moc_editable_data">
 					<div class="content_boxed">
 						<input type="email" class="inputtext" value="<?php echo esc_html( $email); ?>" name="moc_email" placeholder="john_doe@example.com">
@@ -1417,7 +1417,7 @@ if ( ! function_exists( 'moc_user_basic_information' ) ) {
 				</div>
 			</div>
 			<div class="content_boxes moc_editable_data">
-				<h5><?php esc_html_e( 'Old Password', 'marketing-ops-core' ); ?></h5>
+				<h5><?php esc_html_e( 'Old Password', 'marketingops' ); ?></h5>
 				<div class="content_boxed">
 					<div class="moc_editable_data">
 						<input type="password" class="inputtext" value="" name="moc_old_password" placeholder="Old password" autocomplete="off">
@@ -1426,7 +1426,7 @@ if ( ! function_exists( 'moc_user_basic_information' ) ) {
 				</div>
 			</div>
 			<div class="content_boxes moc_editable_data">
-				<h5><?php esc_html_e( 'New Password', 'marketing-ops-core' ); ?></h5>
+				<h5><?php esc_html_e( 'New Password', 'marketingops' ); ?></h5>
 				<div class="content_boxed">
 					<div class="moc_editable_data">
 						<input type="password" class="inputtext" value="" name="moc_new_password" placeholder="New password">
@@ -1558,19 +1558,19 @@ if ( ! function_exists( 'moc_user_bio_html' ) ) {
 					// if ( $moc_martech['platform'] === )
 					$skill_level = (int) $moc_martech['skill_level'];
 					if ( 1 <= $skill_level && 2 > $skill_level ) {
-						$skill_level_txt .= esc_html__( 'BASIC', 'marketing-ops-core' );
+						$skill_level_txt .= esc_html__( 'BASIC', 'marketingops' );
 						$skill_class     .= 'yellow_btn';
 						$skill_html      .= '<a id="' . $skill_class . '" class="expert_btn btn ' . esc_attr( $skill_class ) . '">' .esc_html( $skill_level_txt ) .'</a>';
 					} elseif ( 2 <= $skill_level && 3 > $skill_level ) {
-						$skill_level_txt .= esc_html__( 'INTERMEDIATE', 'marketing-ops-core' );
+						$skill_level_txt .= esc_html__( 'INTERMEDIATE', 'marketingops' );
 						$skill_class     .= 'gradient_btn';
 						$skill_html      .= '<a id="' . $skill_class . '" class="expert_btn btn ' . esc_attr( $skill_class ) . '"><span>' .esc_html( $skill_level_txt ) .'</span></a>';
 					} elseif ( 3 <= $skill_level && 4 > $skill_level ) {
-						$skill_level_txt .= esc_html__( 'ADVANCED', 'marketing-ops-core' );
+						$skill_level_txt .= esc_html__( 'ADVANCED', 'marketingops' );
 						$skill_class     .= 'pink_btn';
 						$skill_html      .= '<a id="' . $skill_class . '" class="expert_btn btn ' . esc_attr( $skill_class ) . '">' .esc_html( $skill_level_txt ) .'</a>';
 					} else {
-						$skill_level_txt .= esc_html__( 'EXPERT', 'marketing-ops-core' );
+						$skill_level_txt .= esc_html__( 'EXPERT', 'marketingops' );
 						$skill_class     .= 'blue_btn';
 						$skill_html      .= '<a id="' . $skill_class . '" class="expert_btn btn ' . esc_attr( $skill_class ) . '">' .esc_html( $skill_level_txt ) .'</a>';
 					}
@@ -1584,17 +1584,17 @@ if ( ! function_exists( 'moc_user_bio_html' ) ) {
 		
 		?>
 		<div class="title_with_btn">
-			<h3><?php esc_html_e( 'About', 'marketing-ops-core' ); ?></h3>
+			<h3><?php esc_html_e( 'About', 'marketingops' ); ?></h3>
 			<?php
 			if ( is_user_logged_in() && true === $flag ) {
 				?>
 				<div class="btns">
 					<div class="moc_not_editable_data">
-						<a href="javascript:void(0);" class="gray_color btn edit_btn moc_user_basic_info_edit_btn moc_bio_info"><?php esc_html_e( 'Edit', 'marketing-ops-core' ); ?></a>
+						<a href="javascript:void(0);" class="gray_color btn edit_btn moc_user_basic_info_edit_btn moc_bio_info"><?php esc_html_e( 'Edit', 'marketingops' ); ?></a>
 					</div>
 					<div class="moc_editable_data">
-						<a href="javascript:void(0);" class="gray_color btn cancel_btn moc_user_basic_info_cancel_btn moc_user_bio_cancel_btn"><?php esc_html_e( 'Cancel', 'marketing-ops-core' ); ?></a>
-						<a href="javascript:void(0);" class="green_color btn btn_save moc_user_basic_info_save_btn"><?php esc_html_e( 'Save', 'marketing-ops-core' ); ?></a>
+						<a href="javascript:void(0);" class="gray_color btn cancel_btn moc_user_basic_info_cancel_btn moc_user_bio_cancel_btn"><?php esc_html_e( 'Cancel', 'marketingops' ); ?></a>
+						<a href="javascript:void(0);" class="green_color btn btn_save moc_user_basic_info_save_btn"><?php esc_html_e( 'Save', 'marketingops' ); ?></a>
 					</div>
 				</div>
 			<?php
@@ -1603,7 +1603,7 @@ if ( ! function_exists( 'moc_user_bio_html' ) ) {
 		</div>
 		<div class="sub_title_with_content <?php echo esc_attr( $class_hide_not_data_main_div ); ?>">
 			<div class="content_boxes moc_required_field <?php echo esc_attr( $class_hide_not_data_bio ); ?>">
-				<h5><?php esc_html_e( 'Bio', 'marketing-ops-core' ); ?></h5>
+				<h5><?php esc_html_e( 'Bio', 'marketingops' ); ?></h5>
 				<div class="content_boxed">
 					<div class="moc_not_editable_data">
 						<?php echo esc_html( $user_bio ); ?>
@@ -1619,7 +1619,7 @@ if ( ! function_exists( 'moc_user_bio_html' ) ) {
 				?>
 				<div class="moc_not_editable_data">
 					<div class="content_boxes ">
-						<h5><?php esc_html_e( 'Primary Automation Platform', 'marketing-ops-core' ); ?></h5>
+						<h5><?php esc_html_e( 'Primary Automation Platform', 'marketingops' ); ?></h5>
 						<div class="content_boxed">
 							<div class="platform_btns">
 								<?php
@@ -1642,7 +1642,7 @@ if ( ! function_exists( 'moc_user_bio_html' ) ) {
 			}
 			?>
 			<div class="content_boxes <?php echo esc_attr( $class_hide_not_data_website ); ?>">
-				<h5><?php esc_html_e( 'Website', 'marketing-ops-core' ); ?></h5>
+				<h5><?php esc_html_e( 'Website', 'marketingops' ); ?></h5>
 				<div class="content_boxed">
 					<div class="moc_not_editable_data">
 					<a href="<?php echo esc_url( $website ); ?>" target="_blank"><?php echo esc_html( $website ); ?></a>
@@ -1654,7 +1654,7 @@ if ( ! function_exists( 'moc_user_bio_html' ) ) {
 				</div>
 			</div>
 			<div class="content_boxes <?php echo esc_attr( $class_hide_not_data_social_media ); ?>">
-				<h5><?php esc_html_e( 'Social media', 'marketing-ops-core' ); ?></h5>
+				<h5><?php esc_html_e( 'Social media', 'marketingops' ); ?></h5>
 				<div class="content_boxed social_icons ">
 					<div class="profile_experience notpe">
 						<div class="moc_social_link_section">
@@ -1739,7 +1739,7 @@ if ( ! function_exists( 'moc_user_bio_html' ) ) {
 						<div class="moc_editable_data">
 							<div class="show_more_btn">
 								<input type="button" class="add_more_profile_experience add_more_social_media" value="+ Add social media">
-								<b class="btn"><?php esc_html_e( '+ Add social media', 'marketing-ops-core' ); ?></b>
+								<b class="btn"><?php esc_html_e( '+ Add social media', 'marketingops' ); ?></b>
 							</div>
 						</div>
 					</div>
@@ -1749,14 +1749,14 @@ if ( ! function_exists( 'moc_user_bio_html' ) ) {
 			if ( true === $flag ) {
 				?>
 				<div class="content_boxes moc_job_seeker_detail_section" style="<?php echo esc_attr( $style_for_js ); ?>">
-					<h5><?php echo sprintf( __( '%1$s %2$s(This information is only visible to you and %3$s)%4$s', 'marketing-ops-core' ), $job_seeker_fields[0]['label_name'], '<small>', '<a href="'.site_url().'">MarketingOps.com</a>', '</small>' ); ?></h5>
+					<h5><?php echo sprintf( __( '%1$s %2$s(This information is only visible to you and %3$s)%4$s', 'marketingops' ), $job_seeker_fields[0]['label_name'], '<small>', '<a href="'.site_url().'">MarketingOps.com</a>', '</small>' ); ?></h5>
 					<div class="content_boxed">
 						<div class="moc_not_editable_data">
 							<?php echo $job_seeker_val; ?>
 						</div>
 						<div class="moc_editable_data">
 							<select id="moc_job_seeker_details" class="<?php echo esc_attr( $jsd_selected_class ); ?>">
-								<option value=""><?php esc_html_e( 'Job Seeker Details', 'marketing-ops-core' ); ?></option>
+								<option value=""><?php esc_html_e( 'Job Seeker Details', 'marketingops' ); ?></option>
 								<?php
 								foreach ( $job_options as $job_option ) {
 									$option_selected = ( sanitize_title( $job_option ) === sanitize_title( $job_seeker_details ) ) ? 'selected' : '';
@@ -1835,17 +1835,17 @@ if ( ! function_exists( 'moc_user_martech_tools_experience_html' ) ) {
 		ob_start();
 		?>
 		<div class="title_with_btn">
-			<h3><?php esc_html_e( 'Martech tools experience', 'marketing-ops-core' ); ?></h3>
+			<h3><?php esc_html_e( 'Martech tools experience', 'marketingops' ); ?></h3>
 			<?php
 			if( is_user_logged_in() && true === $flag ) {
 				?>
 				<div class="btns">
 					<div class="moc_not_editable_data">
-						<a href="javascript:void(0);" class="gray_color btn edit_btn moc_user_basic_info_edit_btn moc_martech_edit"><?php esc_html_e( 'Edit', 'marketing-ops-core' ); ?></a>
+						<a href="javascript:void(0);" class="gray_color btn edit_btn moc_user_basic_info_edit_btn moc_martech_edit"><?php esc_html_e( 'Edit', 'marketingops' ); ?></a>
 					</div>
 					<div class="moc_editable_data">
-						<a href="javascript:void(0);" class="gray_color btn cancel_btn moc_user_basic_info_cancel_btn"><?php esc_html_e( 'Cancel', 'marketing-ops-core' ); ?></a>
-						<a href="javascript:void(0);" class="green_color btn btn_save moc_user_martech_tools_experience_save_btn"><?php esc_html_e( 'Save', 'marketing-ops-core' ); ?></a>
+						<a href="javascript:void(0);" class="gray_color btn cancel_btn moc_user_basic_info_cancel_btn"><?php esc_html_e( 'Cancel', 'marketingops' ); ?></a>
+						<a href="javascript:void(0);" class="green_color btn btn_save moc_user_martech_tools_experience_save_btn"><?php esc_html_e( 'Save', 'marketingops' ); ?></a>
 					</div>
 				</div>
 			<?php
@@ -1865,19 +1865,19 @@ if ( ! function_exists( 'moc_user_martech_tools_experience_html' ) ) {
 								$experience_string  = ( 1 >= $year_experience ) ? $year_experience . ' Year' : $year_experience . ' Years';
 								$skill_level        = $moc_martech_row['skill_level'];
 								if ( 1 <= $skill_level && 2 > $skill_level ) {
-									$skill_level_txt = esc_html__( 'BASIC', 'marketing-ops-core' );
+									$skill_level_txt = esc_html__( 'BASIC', 'marketingops' );
 									$skill_class     = 'yellow_btn';
 									$skill_html      = '<a id="' . $skill_class . '" class="expert_btn btn ' . esc_attr( $skill_class ) . '">' .esc_html( $skill_level_txt ) .'</a>';
 								} elseif ( 2 <= $skill_level && 3 > $skill_level ) {
-									$skill_level_txt = esc_html__( 'INTERMEDIATE', 'marketing-ops-core' );
+									$skill_level_txt = esc_html__( 'INTERMEDIATE', 'marketingops' );
 									$skill_class     = 'gradient_btn';
 									$skill_html      = '<a id="' . $skill_class . '" class="expert_btn btn ' . esc_attr( $skill_class ) . '"><span>' .esc_html( $skill_level_txt ) .'</span></a>';
 								} elseif ( 3 <= $skill_level && 4 > $skill_level ) {
-									$skill_level_txt = esc_html__( 'ADVANCED', 'marketing-ops-core' );
+									$skill_level_txt = esc_html__( 'ADVANCED', 'marketingops' );
 									$skill_class     = 'pink_btn';
 									$skill_html      = '<a id="' . $skill_class . '" class="expert_btn btn ' . esc_attr( $skill_class ) . '">' .esc_html( $skill_level_txt ) .'</a>';
 								} else {
-									$skill_level_txt = esc_html__( 'EXPERT', 'marketing-ops-core' );
+									$skill_level_txt = esc_html__( 'EXPERT', 'marketingops' );
 									$skill_class     = 'blue_btn';
 									$skill_html      = '<a id="' . $skill_class . '" class="expert_btn btn ' . esc_attr( $skill_class ) . '">' .esc_html( $skill_level_txt ) .'</a>';
 								}
@@ -1894,7 +1894,7 @@ if ( ! function_exists( 'moc_user_martech_tools_experience_html' ) ) {
 												<?php echo esc_html( $main_platform_name ); ?>
 											</div>
 											<div class="colum_box">
-												<h6><?php esc_html_e( 'Experience', 'marketing-ops-core' ); ?></h6>
+												<h6><?php esc_html_e( 'Experience', 'marketingops' ); ?></h6>
 												<?php echo esc_html( $experience_string ); ?>
 											</div>
 											<div class="colum_box">
@@ -1910,7 +1910,7 @@ if ( ! function_exists( 'moc_user_martech_tools_experience_html' ) ) {
 														<input type="checkbox" name="main_this_cat" id="main_this_cat" <?php echo $moc_primary; ?>>	
 														<span class="slider round"></span>
 													</label>
-													<span class="text"><?php esc_html_e( 'Make Primary', 'marketing-ops-core' ); ?></span>
+													<span class="text"><?php esc_html_e( 'Make Primary', 'marketingops' ); ?></span>
 												</span>
 											</div>
 										</div>
@@ -1921,7 +1921,7 @@ if ( ! function_exists( 'moc_user_martech_tools_experience_html' ) ) {
 												<div class="moc_error moc_user_marktech_platform_err"><span></span></div>
 											</div>
 											<div class="colum_box moc_required_field">
-												<h6><?php esc_html_e( 'Experience', 'marketing-ops-core' ); ?></h6>
+												<h6><?php esc_html_e( 'Experience', 'marketingops' ); ?></h6>
 												<input type="text" name="moc_experience" placeholder="Years" class="inputtext" value="<?php echo esc_html( $year_experience ); ?>">
 												<div class="moc_error moc_user_marktech_exp_err"><span></span></div>
 											</div>
@@ -1936,7 +1936,7 @@ if ( ! function_exists( 'moc_user_martech_tools_experience_html' ) ) {
 									<div class="moc_editable_data">
 										<div class="range_slider_box boxed_two_colum">
 											<div class="range_slider colum_box">
-												<h6><?php esc_html_e( 'Skill level', 'marketing-ops-core' ); ?></h6>
+												<h6><?php esc_html_e( 'Skill level', 'marketingops' ); ?></h6>
 												<input class="range_slider_input rangeslider" type="range" name="moc_skill_level" min="1" max="4" step="0.01" labels="1, 2, 3, 4," value="<?php echo esc_html( $skill_level ); ?>">
 											</div>
 											<div class="colum_box">
@@ -1959,9 +1959,9 @@ if ( ! function_exists( 'moc_user_martech_tools_experience_html' ) ) {
 					</div>
 					<div class="moc_editable_data">
 						<div class="show_more_btn">
-							<h6><?php esc_html_e( 'Additional platforms', 'marketing-ops-core' ); ?></h6>
+							<h6><?php esc_html_e( 'Additional platforms', 'marketingops' ); ?></h6>
 							<input type="button" class="add_more_profile_experience add_more_martech_section" value="+ Add platform">
-							<b class="btn"><?php esc_html_e( '+ Add platform', 'marketing-ops-core' ); ?></b>
+							<b class="btn"><?php esc_html_e( '+ Add platform', 'marketingops' ); ?></b>
 						</div>
 					</div>
 				</div>
@@ -2005,17 +2005,17 @@ if ( ! function_exists( 'moc_user_skill_html' ) ) {
 		}
 		?>
 			<div class="title_with_btn">
-				<h3><?php esc_html_e( 'Skills', 'marketing-ops-core' ); ?></h3>
+				<h3><?php esc_html_e( 'Skills', 'marketingops' ); ?></h3>
 				<?php
 				if( is_user_logged_in() && true === $flag ) {
 					?>
 					<div class="btns">
 						<div class="moc_not_editable_data">
-							<a href="javascript:void(0);" class="gray_color btn edit_btn moc_user_basic_info_edit_btn"><?php esc_html_e( 'Edit', 'marketing-ops-core' ); ?></a>
+							<a href="javascript:void(0);" class="gray_color btn edit_btn moc_user_basic_info_edit_btn"><?php esc_html_e( 'Edit', 'marketingops' ); ?></a>
 						</div>
 						<div class="moc_editable_data">
-							<a href="javascript:void(0);" class="gray_color btn cancel_btn moc_user_basic_info_cancel_btn"><?php esc_html_e( 'Cancel', 'marketing-ops-core' ); ?></a>
-							<a href="javascript:void(0);" class="green_color btn btn_save moc_user_skill_save_btn"><?php esc_html_e( 'Save', 'marketing-ops-core' ); ?></a>
+							<a href="javascript:void(0);" class="gray_color btn cancel_btn moc_user_basic_info_cancel_btn"><?php esc_html_e( 'Cancel', 'marketingops' ); ?></a>
+							<a href="javascript:void(0);" class="green_color btn btn_save moc_user_skill_save_btn"><?php esc_html_e( 'Save', 'marketingops' ); ?></a>
 						</div>
 					</div>
 				<?php
@@ -2035,19 +2035,19 @@ if ( ! function_exists( 'moc_user_skill_html' ) ) {
 										$experience_string       = ( 1 >= $year_experience ) ? $year_experience . ' Year' : $year_experience . ' Years';
 										$skill_level             = $moc_martech_row['cl_skill_level'];
 										if ( 1 <= $skill_level && 2 > $skill_level ) {
-											$skill_level_txt = esc_html__( 'BASIC', 'marketing-ops-core' );
+											$skill_level_txt = esc_html__( 'BASIC', 'marketingops' );
 											$skill_class     = 'yellow_btn';
 											$skill_html      = '<a id="' . $skill_class . '" class="expert_btn btn ' . esc_attr( $skill_class ) . '">' .esc_html( $skill_level_txt ) .'</a>';
 										} elseif ( 2 <= $skill_level && 3 > $skill_level ) {
-											$skill_level_txt = esc_html__( 'INTERMEDIATE', 'marketing-ops-core' );
+											$skill_level_txt = esc_html__( 'INTERMEDIATE', 'marketingops' );
 											$skill_class     = 'gradient_btn';
 											$skill_html      = '<a id="' . $skill_class . '" class="expert_btn btn ' . esc_attr( $skill_class ) . '"><span>' .esc_html( $skill_level_txt ) .'</span></a>';
 										} elseif ( 3 <= $skill_level && 4 > $skill_level ) {
-											$skill_level_txt = esc_html__( 'ADVANCED', 'marketing-ops-core' );
+											$skill_level_txt = esc_html__( 'ADVANCED', 'marketingops' );
 											$skill_class     = 'pink_btn';
 											$skill_html      = '<a id="' . $skill_class . '" class="expert_btn btn ' . esc_attr( $skill_class ) . '">' .esc_html( $skill_level_txt ) .'</a>';
 										} else {
-											$skill_level_txt = esc_html__( 'EXPERT', 'marketing-ops-core' );
+											$skill_level_txt = esc_html__( 'EXPERT', 'marketingops' );
 											$skill_class     = 'blue_btn';
 											$skill_html      = '<a id="' . $skill_class . '" class="expert_btn btn ' . esc_attr( $skill_class ) . '">' .esc_html( $skill_level_txt ) .'</a>';
 										}
@@ -2056,11 +2056,11 @@ if ( ! function_exists( 'moc_user_skill_html' ) ) {
 											<div class="moc_not_editable_data">
 												<div class="boxed_three_colum">
 													<div class="colum_box">
-														<h6><?php esc_html_e( 'Skill', 'marketing-ops-core' ); ?></h6>
+														<h6><?php esc_html_e( 'Skill', 'marketingops' ); ?></h6>
 														<?php echo esc_html( $main_platform_name ); ?>
 													</div>
 													<div class="colum_box">
-														<h6><?php esc_html_e( 'Experience', 'marketing-ops-core' ); ?></h6>
+														<h6><?php esc_html_e( 'Experience', 'marketingops' ); ?></h6>
 														<?php echo esc_html( $experience_string ); ?>
 													</div>
 													<div class="colum_box">
@@ -2071,12 +2071,12 @@ if ( ! function_exists( 'moc_user_skill_html' ) ) {
 											<div class="moc_editable_data">
 												<div class="boxed_three_colum">
 													<div class="colum_box moc_required_field">
-														<h6><?php esc_html_e( 'Skill', 'marketing-ops-core' ); ?></h6>
+														<h6><?php esc_html_e( 'Skill', 'marketingops' ); ?></h6>
 														<input type="text" name="moc_coding_language" class="inputtext" value="<?php echo esc_html( $main_platform_name ); ?>" placeholder="Name">
 														<div class="moc_error moc_user_cl_err"><span></span></div>
 													</div>
 													<div class="colum_box moc_required_field">
-														<h6><?php esc_html_e( 'Experience', 'marketing-ops-core' ); ?></h6>
+														<h6><?php esc_html_e( 'Experience', 'marketingops' ); ?></h6>
 														<input type="text" name="moc_cl_experience" class="inputtext" value="<?php echo esc_html( $year_experience ); ?>" placeholder="Years">
 														<div class="moc_error moc_user_cl_exp_err"><span></span></div>
 													</div>
@@ -2091,7 +2091,7 @@ if ( ! function_exists( 'moc_user_skill_html' ) ) {
 											<div class="moc_editable_data">
 												<div class="range_slider_box boxed_two_colum">
 													<div class="range_slider colum_box">
-														<h6><?php esc_html_e( 'Skill level', 'marketing-ops-core' ); ?></h6>
+														<h6><?php esc_html_e( 'Skill level', 'marketingops' ); ?></h6>
 														<input class="range_slider_input rangeslider" type="range" name="moc_cl_skill_level" min="1" max="4" step="0.01" labels="1, 2, 3, 4," value="<?php echo esc_html( $skill_level ); ?>">
 													</div>
 													<div class="colum_box">
@@ -2109,8 +2109,8 @@ if ( ! function_exists( 'moc_user_skill_html' ) ) {
 						</div>
 						<div class="moc_editable_data">
 							<div class="show_more_btn">
-								<input type="button" class="add_more_profile_experience add_more_skill_section" value="<?php esc_attr_e( '+ Add skill', 'marketing-ops-core' ); ?>">
-								<b class="btn"><?php esc_html_e( '+ Add skill', 'marketing-ops-core' ); ?></b>
+								<input type="button" class="add_more_profile_experience add_more_skill_section" value="<?php esc_attr_e( '+ Add skill', 'marketingops' ); ?>">
+								<b class="btn"><?php esc_html_e( '+ Add skill', 'marketingops' ); ?></b>
 							</div>
 						</div>
 					</div>
@@ -2158,17 +2158,17 @@ if ( ! function_exists( 'moc_user_work_section_html' ) ) {
 		
 		<div class="moc_inner_work_section_container">
 			<div class="title_with_btn">
-				<h3><?php esc_html_e( 'Work history', 'marketing-ops-core' ); ?></h3>
+				<h3><?php esc_html_e( 'Work history', 'marketingops' ); ?></h3>
 				<?php
 				if( is_user_logged_in() && true === $flag ) {
 					?>
 					<div class="btns">
 						<div class="moc_not_editable_data">
-							<a href="javascript:void(0);" class="gray_color btn edit_btn moc_user_basic_info_edit_btn moc_user_work_section_edit_btn"><?php esc_html_e( 'Edit', 'marketing-ops-core' ); ?></a>
+							<a href="javascript:void(0);" class="gray_color btn edit_btn moc_user_basic_info_edit_btn moc_user_work_section_edit_btn"><?php esc_html_e( 'Edit', 'marketingops' ); ?></a>
 						</div>
 						<div class="moc_editable_data">
-							<a href="javascript:void(0);" class="gray_color btn cancel_btn moc_user_basic_info_cancel_btn"><?php esc_html_e( 'Cancel', 'marketing-ops-core' ); ?></a>
-							<a href="javascript:void(0);" class="green_color btn btn_save moc_user_work_section_save_btn"><?php esc_html_e( 'Save', 'marketing-ops-core' ); ?></a>
+							<a href="javascript:void(0);" class="gray_color btn cancel_btn moc_user_basic_info_cancel_btn"><?php esc_html_e( 'Cancel', 'marketingops' ); ?></a>
+							<a href="javascript:void(0);" class="green_color btn btn_save moc_user_work_section_save_btn"><?php esc_html_e( 'Save', 'marketingops' ); ?></a>
 						</div>
 					</div>
 				<?php
@@ -2201,7 +2201,7 @@ if ( ! function_exists( 'moc_user_work_section_html' ) ) {
 											<div class="moc_repeated_work_section">
 												<div class="boxed_three_colum">
 													<div class="colum_box colum_box_1 moc_required_field">
-														<h6><?php esc_html_e( 'Company', 'marketing-ops-core' ); ?></h6>
+														<h6><?php esc_html_e( 'Company', 'marketingops' ); ?></h6>
 														<input type="text" name="moc_work_company" class="inputtext" placeholder="Company" value="<?php echo esc_html( $company_name ); ?>">
 														<div class="moc_error moc_user_work_company_err"><span></span></div>
 													</div>
@@ -2211,12 +2211,12 @@ if ( ! function_exists( 'moc_user_work_section_html' ) ) {
 														</div>
 													</div>
 													<div class="colum_box colum_box_3 moc_required_field">
-														<h6><?php esc_html_e( 'Position', 'marketing-ops-core' ); ?></h6>
+														<h6><?php esc_html_e( 'Position', 'marketingops' ); ?></h6>
 														<input type="text" name="moc_work_position" placeholder="In this company" class="inputtext" value="<?php echo esc_html( $position ); ?>">
 														<div class="moc_error moc_user_work_company_pos_err"><span></span></div>
 													</div>
 													<div class="colum_box colum_box_4 moc_required_field">
-														<h6><?php esc_html_e( 'Years', 'marketing-ops-core' ); ?></h6>
+														<h6><?php esc_html_e( 'Years', 'marketingops' ); ?></h6>
 														<!-- <div class="years_month">
 															<input type="text" name="moc_work_company_start_md" placeholder="MM/YY" class="inputtext" value="<?php echo esc_html( $start_month_year ); ?>">
 															<?php 
@@ -2232,7 +2232,7 @@ if ( ! function_exists( 'moc_user_work_section_html' ) ) {
 															  	<div class="dropbox_box start_month_div">
 																	<!-- MM Value -->
 																	<select class="moc_start_month">
-																		<option value=""><?php esc_html_e( 'MM', 'marketing-ops-core' )?></option>
+																		<option value=""><?php esc_html_e( 'MM', 'marketingops' )?></option>
 																		<?php 
 																		$month_array = moc_months_array();
 																		foreach( $month_array as $key=>$month  ) {
@@ -2243,12 +2243,12 @@ if ( ! function_exists( 'moc_user_work_section_html' ) ) {
 																		?>
 																	</select>
 															  	</div>
-																<p><?php esc_attr_e( '/', 'marketing-ops-core' ); ?></p>  
+																<p><?php esc_attr_e( '/', 'marketingops' ); ?></p>  
 															  	<!-- YY Box -->
 															  	<div class="dropbox_box start_year_div">
 																	<!-- MM Value -->
 																	<select class="moc_start_year">
-																		<option value=""><?php esc_html_e( 'YYYY', 'marketing-ops-core' )?></option>
+																		<option value=""><?php esc_html_e( 'YYYY', 'marketingops' )?></option>
 																		<?php
 																		$get_current_year = date("Y");
 																 		for( $i = 1970; $i <= 					$get_current_year; $i++ ) {
@@ -2270,7 +2270,7 @@ if ( ! function_exists( 'moc_user_work_section_html' ) ) {
 																<div class="dropbox_box end_month_div">
 																  	<!-- MM Value -->
 																  	<select class="moc_end_month">
-																  		<option value=""><?php esc_html_e( 'MM', 'marketing-ops-core' )?></option>
+																  		<option value=""><?php esc_html_e( 'MM', 'marketingops' )?></option>
 																  		<?php 
 																		$month_array = moc_months_array();
 																		foreach( $month_array as $key=>$month  ) {
@@ -2281,12 +2281,12 @@ if ( ! function_exists( 'moc_user_work_section_html' ) ) {
 																		?>
 																	</select>
 																</div>
-																<p><?php esc_attr_e( '/', 'marketing-ops-core' ); ?></p>
+																<p><?php esc_attr_e( '/', 'marketingops' ); ?></p>
 																<!-- YY Box -->
 																<div class="dropbox_box end_year_div">
 																  	<!-- MM Value -->
 																  	<select class="moc_end_year">
-																		<option value=""><?php esc_html_e( 'YYYY', 'marketing-ops-core' )?></option>
+																		<option value=""><?php esc_html_e( 'YYYY', 'marketingops' )?></option>
 																		<?php
 																		$get_current_year = date("Y");
 																		for( $i = 1970; $i <= 	$get_current_year; $i++ ) {
@@ -2304,12 +2304,12 @@ if ( ! function_exists( 'moc_user_work_section_html' ) ) {
 													<div class="colum_box colum_box_5">
 														<div class="input_checkbox">
 															<input type="checkbox" name="moc_at_present" class="moc_at_present" value="<?php echo esc_html( $moc_at_present_val ); ?>" <?php echo ( 'yes' === $moc_at_present_val ) ? 'checked': '';?> />
-															<label><?php esc_html_e( 'Present', 'marketing-ops-core' ); ?></label>
+															<label><?php esc_html_e( 'Present', 'marketingops' ); ?></label>
 														</div>
 														
 													</div>
 													<div class="colum_box colum_box_6 moc_required_field">
-														<h6><?php esc_html_e( 'Website', 'marketing-ops-core' ); ?></h6>
+														<h6><?php esc_html_e( 'Website', 'marketingops' ); ?></h6>
 														<input type="text" name="moc_work_website" placeholder="https://example.com" class="inputtext" value="<?php echo esc_html( $website ); ?>">
 														<div class="moc_error moc_user_work_company_website_err"><span></span></div>
 													</div>
@@ -2322,7 +2322,7 @@ if ( ! function_exists( 'moc_user_work_section_html' ) ) {
 									</div>
 									<div class="show_more_btn">
 										<input type="button" class="add_more_profile_experience add_more_work_section" value="+ Add another company">
-										<b class="btn"><?php esc_html_e( '+ Add another company', 'marketing-ops-core' ); ?></b>
+										<b class="btn"><?php esc_html_e( '+ Add another company', 'marketingops' ); ?></b>
 									</div>
 								</div>
 								<div class="moc_not_editable_data">
@@ -2338,7 +2338,7 @@ if ( ! function_exists( 'moc_user_work_section_html' ) ) {
 												$work_moc_end_yyyy       = ! empty( $moc_work_info['work_moc_end_yyyy'] ) ? $moc_work_info['work_moc_end_yyyy'] : '';
 												$website                 = ! empty( $moc_work_info['work_website'] ) ? $moc_work_info['work_website'] : '';
 												$moc_at_present_val      = ! empty( $moc_work_info['moc_at_present_val'] ) ? $moc_work_info['moc_at_present_val'] : '';
-												$moc_at_present_sting    = ( 'yes' === $moc_at_present_val ) ? __( 'until today', 'marketing-ops-core' ) : '';
+												$moc_at_present_sting    = ( 'yes' === $moc_at_present_val ) ? __( 'until today', 'marketingops' ) : '';
 												$start_date_obj    = DateTime::createFromFormat( '!m', $work_moc_start_mm );
 												$start_month_name  = $start_date_obj->format('M');
 												if ( 'yes' == $moc_at_present_val ) {
@@ -2354,19 +2354,19 @@ if ( ! function_exists( 'moc_user_work_section_html' ) ) {
 												
 												?>
 												<div class="colum_box">
-													<h6><?php esc_html_e( 'Company', 'marketing-ops-core' ); ?></h6>
+													<h6><?php esc_html_e( 'Company', 'marketingops' ); ?></h6>
 													<p><?php echo esc_html( $company_name ); ?></p>
 												</div>
 												<div class="colum_box">
-													<h6><?php esc_html_e( 'Website', 'marketing-ops-core' ); ?></h6>
+													<h6><?php esc_html_e( 'Website', 'marketingops' ); ?></h6>
 													<p><a href="<?php echo esc_html( $website ); ?>" target="_blank"><?php echo esc_html( $website ); ?></p></a>
 												</div>
 												<div class="colum_box">
-													<h6><?php esc_html_e( 'Position', 'marketing-ops-core' ); ?></h6>
+													<h6><?php esc_html_e( 'Position', 'marketingops' ); ?></h6>
 													<p><?php echo esc_html( $position ); ?></p>
 												</div>
 												<div class="colum_box">
-													<h6><?php esc_html_e( 'Years', 'marketing-ops-core' ); ?></h6>
+													<h6><?php esc_html_e( 'Years', 'marketingops' ); ?></h6>
 													<p><?php echo esc_html( $start_year_string ); ?> - <?php echo esc_html( $end_year_string ); ?></p>
 												</div>
 												<hr />
@@ -2472,7 +2472,7 @@ if ( ! function_exists( 'moc_user_avtar_image' ) ) {
 				<?php
 				if ( is_user_logged_in() && true === $flag ) {
 					?>
-					<h3><?php esc_html_e( 'Avatar', 'marketing-ops-core' ); ?></h3>
+					<h3><?php esc_html_e( 'Avatar', 'marketingops' ); ?></h3>
 					<div class="table_info">
 						<span class="svg">
 							<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2480,7 +2480,7 @@ if ( ! function_exists( 'moc_user_avtar_image' ) ) {
 							</svg>                            
 						</span>
 						<div class="info_box">
-							<span><?php esc_html_e( 'Please provide a picture of min. 212*212px and max. 512*512px for better profile views.', 'marketing-ops-core' ); ?></span>
+							<span><?php esc_html_e( 'Please provide a picture of min. 212*212px and max. 512*512px for better profile views.', 'marketingops' ); ?></span>
 						</div>
 					</div>
 					<?php
@@ -2517,7 +2517,7 @@ if ( ! function_exists( 'moc_user_avtar_image' ) ) {
 					if ( true === $flag ) {
 						?>
 						<!-- <div class="profile_name">
-							<h5><?php esc_html_e( 'Profile completeness: ', 'marketing-ops-core' ); ?><span><?php esc_html_e( '67%', 'marketing-ops-core' ); ?></span></h5>
+							<h5><?php esc_html_e( 'Profile completeness: ', 'marketingops' ); ?><span><?php esc_html_e( '67%', 'marketingops' ); ?></span></h5>
 						</div> -->
 					<?php
 					}
@@ -2549,7 +2549,7 @@ if ( ! function_exists( 'moc_member_directory_user_block_html' ) ) {
 
 		foreach ( $moc_martech_info as $moc_martech ) {
 			if ( 'yes' === $moc_martech['primary_value'] ) {
-				$moc_experience['years']    = sprintf( _n( '%s year', '%s years', $moc_martech['experience'], 'marketing-ops-core' ), $moc_martech['experience'] );
+				$moc_experience['years']    = sprintf( _n( '%s year', '%s years', $moc_martech['experience'], 'marketingops' ), $moc_martech['experience'] );
 				$moc_experience['platform'] = $moc_martech['platform'];
 				break;
 			}
@@ -2627,7 +2627,7 @@ if ( ! function_exists( 'moc_member_directory_user_block_html_new' ) ) {
 
 		foreach ( $moc_martech_info as $moc_martech ) {
 			if ( 'yes' === $moc_martech['primary_value'] ) {
-				$moc_experience['years']    = sprintf( _n( '%s year', '%s years', $moc_martech['experience'], 'marketing-ops-core' ), $moc_martech['experience'] );
+				$moc_experience['years']    = sprintf( _n( '%s year', '%s years', $moc_martech['experience'], 'marketingops' ), $moc_martech['experience'] );
 				$moc_experience['platform'] = $moc_martech['platform'];
 				break;
 			}
@@ -2770,16 +2770,16 @@ if ( ! function_exists( 'moc_selected_cerificate_html' ) ) {
 		?>
 		<div class="title_with_btn">
 			<!-- about title -->
-			<h3><?php esc_html_e( 'Selected Certifications', 'marketing-ops-core' ); ?></h3>
+			<h3><?php esc_html_e( 'Selected Certifications', 'marketingops' ); ?></h3>
 			<?php
 				if( is_user_logged_in() && true === $flag ) {
 					?>
 					<div class="btns">
 						<div class="moc_not_editable_data">
-							<a href="javascript:void(0);" class="gray_color btn edit_btn moc_user_basic_info_edit_btn"><?php esc_html_e( 'Edit', 'marketing-ops-core' ); ?></a>
+							<a href="javascript:void(0);" class="gray_color btn edit_btn moc_user_basic_info_edit_btn"><?php esc_html_e( 'Edit', 'marketingops' ); ?></a>
 						</div>
 						<div class="moc_editable_data">
-							<a href="javascript:void(0);" class="gray_color btn cancel_btn moc_user_basic_info_cancel_btn"><?php esc_html_e( 'Cancel', 'marketing-ops-core' ); ?></a>
+							<a href="javascript:void(0);" class="gray_color btn cancel_btn moc_user_basic_info_cancel_btn"><?php esc_html_e( 'Cancel', 'marketingops' ); ?></a>
 						</div>
 					</div>
 				<?php
@@ -2790,7 +2790,7 @@ if ( ! function_exists( 'moc_selected_cerificate_html' ) ) {
 			<!-- Certification content -->
 			<div class="moc_editable_data">
 				<div class="content_boxes">
-					<h5><?php echo esc_html( 'Certifications','marketing-ops-core' ); ?></h5>
+					<h5><?php echo esc_html( 'Certifications','marketingops' ); ?></h5>
 					<div class="content_boxed">
 						<div class="select_box">
 							<select id="moc_certificate">
@@ -2801,7 +2801,7 @@ if ( ! function_exists( 'moc_selected_cerificate_html' ) ) {
 								<?php
 								}
 								?>
-								<option value="other"><?php esc_html_e( 'My certification is not listed here', 'marketing-ops-core' ); ?></option>
+								<option value="other"><?php esc_html_e( 'My certification is not listed here', 'marketingops' ); ?></option>
 							</select>
 						</div>
 						<div class="colum_box upload_icon_here">
@@ -2817,7 +2817,7 @@ if ( ! function_exists( 'moc_selected_cerificate_html' ) ) {
 				<?php 
 				if ( ! empty( $user_certificates ) ) {
 					?>
-					<h5><?php echo esc_html( 'Selected Designations & Certifications','marketing-ops-core' ); ?></h5>	
+					<h5><?php echo esc_html( 'Selected Designations & Certifications','marketingops' ); ?></h5>	
 					<?php
 				} else {
 					?>
@@ -2825,7 +2825,7 @@ if ( ! function_exists( 'moc_selected_cerificate_html' ) ) {
 						<!-- <h5><?php echo esc_html( $non_empty_text ); ?></h5> -->
 					</div>
 					<div class="moc_editable_data">
-						<h5><?php esc_html_e( 'Selected Designations & Certifications','marketing-ops-core' ); ?></h5>	
+						<h5><?php esc_html_e( 'Selected Designations & Certifications','marketingops' ); ?></h5>	
 					</div>
 				<?php
 				}
@@ -2880,12 +2880,12 @@ if ( ! function_exists( 'moc_blog_contributions_html' ) ) {
 			$current_userid = $profile_view_user_id;
 			$flag           = false;
 		}
-		$read_btn_txt = ( false === $flag ) ? __( 'Read', 'marketing-ops-core' ) : __( 'Edit', 'marketing-ops-core' );
+		$read_btn_txt = ( false === $flag ) ? __( 'Read', 'marketingops' ) : __( 'Edit', 'marketingops' );
 		if ( ! empty( $blogs ) ) {
 			?>
 			<div class="title_with_btn">
 			<!-- about title -->
-			<h3><?php echo esc_html( 'Blog contribution','marketing-ops-core' ); ?></h3>
+			<h3><?php echo esc_html( 'Blog contribution','marketingops' ); ?></h3>
 			</div>
 			<div class="sub_title_with_content">
 				<!-- loop here -->
@@ -2953,7 +2953,7 @@ if ( ! function_exists( 'moc_podcast_contributons_html' ) ) {
 		?>
 		<div class="title_with_btn">
 			<!-- about title -->
-			<h3><?php echo esc_html( 'Podcasts','marketing-ops-core' ); ?></h3>
+			<h3><?php echo esc_html( 'Podcasts','marketingops' ); ?></h3>
 		</div>
 		<div class="sub_title_with_content">
 			<!-- loop here -->
@@ -2974,7 +2974,7 @@ if ( ! function_exists( 'moc_podcast_contributons_html' ) ) {
 						<div class="date_btn">
 							<span class="date"><?php echo esc_html( $podcast_publish_date ); ?></span>
 							<a href="<?php echo esc_url( $podcast_permalink ); ?>">
-								<span class="text"><?php esc_html_e( 'Listen', 'marketing-ops-core' ); ?></span>
+								<span class="text"><?php esc_html_e( 'Listen', 'marketingops' ); ?></span>
 								<span class="svg">
 									<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path d="M10.5262 0.494085C10.2892 0.484971 10.0693 0.620545 9.97249 0.837007C9.87452 1.05347 9.91667 1.30639 10.0807 1.47956L11.8728 3.41633H0.592831C0.382065 3.41291 0.187248 3.52342 0.0812957 3.70571C-0.0257965 3.88685 -0.0257965 4.11243 0.0812957 4.29357C0.187248 4.47586 0.382065 4.58637 0.592831 4.58295H11.8728L10.0807 6.51972C9.9349 6.67238 9.88363 6.89112 9.94515 7.09277C10.0067 7.29443 10.1719 7.44709 10.3769 7.49266C10.5831 7.53823 10.7973 7.46874 10.9375 7.31266L14.001 3.99964L10.9375 0.686623C10.8326 0.570417 10.6834 0.499781 10.5262 0.494085Z" fill="url(#paint0_linear_2170_635)"/>
@@ -3022,7 +3022,7 @@ if ( ! function_exists( 'moc_workshop_contributons_html' ) ) {
 		?>
 		<div class="title_with_btn">
 			<!-- about title -->
-			<h3><?php esc_html_e( 'Workshops & Webinars', 'marketing-ops-core' ); ?></h3>
+			<h3><?php esc_html_e( 'Workshops & Webinars', 'marketingops' ); ?></h3>
 		</div>
 		<div class="sub_title_with_content">
 			<!-- loop here -->
@@ -3043,7 +3043,7 @@ if ( ! function_exists( 'moc_workshop_contributons_html' ) ) {
 						<div class="date_btn">
 							<span class="date"><?php echo esc_html( $workshop_publish_date ); ?></span>
 							<a href="<?php echo esc_html( $workshop_permalink ); ?>">
-								<span class="text"><?php esc_html_e( 'Watch', 'marketing-ops-core' ); ?></span>
+								<span class="text"><?php esc_html_e( 'Watch', 'marketingops' ); ?></span>
 								<span class="svg">
 									<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path d="M10.5262 0.494085C10.2892 0.484971 10.0693 0.620545 9.97249 0.837007C9.87452 1.05347 9.91667 1.30639 10.0807 1.47956L11.8728 3.41633H0.592831C0.382065 3.41291 0.187248 3.52342 0.0812957 3.70571C-0.0257965 3.88685 -0.0257965 4.11243 0.0812957 4.29357C0.187248 4.47586 0.382065 4.58637 0.592831 4.58295H11.8728L10.0807 6.51972C9.9349 6.67238 9.88363 6.89112 9.94515 7.09277C10.0067 7.29443 10.1719 7.44709 10.3769 7.49266C10.5831 7.53823 10.7973 7.46874 10.9375 7.31266L14.001 3.99964L10.9375 0.686623C10.8326 0.570417 10.6834 0.499781 10.5262 0.494085Z" fill="url(#paint0_linear_2170_635)"/>
@@ -3091,7 +3091,7 @@ if ( ! function_exists( 'moc_training_contributons_html' ) ) {
 		?>
 		<div class="title_with_btn">
 			<!-- about title -->
-			<h3><?php esc_html_e( 'Training courses', 'marketing-ops-core' ); ?></h3>
+			<h3><?php esc_html_e( 'Training courses', 'marketingops' ); ?></h3>
 		</div>
 		<div class="sub_title_with_content">
 			<!-- loop here -->
@@ -3112,7 +3112,7 @@ if ( ! function_exists( 'moc_training_contributons_html' ) ) {
 						<div class="date_btn">
 							<span class="date"><?php echo esc_html( $training_publish_date ); ?></span>
 							<a href="<?php echo esc_html( $training_permalink ); ?>">
-								<span class="text"><?php esc_html_e( 'Learn more', 'marketing-ops-core' ); ?></span>
+								<span class="text"><?php esc_html_e( 'Learn more', 'marketingops' ); ?></span>
 								<span class="svg">
 									<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path d="M10.5262 0.494085C10.2892 0.484971 10.0693 0.620545 9.97249 0.837007C9.87452 1.05347 9.91667 1.30639 10.0807 1.47956L11.8728 3.41633H0.592831C0.382065 3.41291 0.187248 3.52342 0.0812957 3.70571C-0.0257965 3.88685 -0.0257965 4.11243 0.0812957 4.29357C0.187248 4.47586 0.382065 4.58637 0.592831 4.58295H11.8728L10.0807 6.51972C9.9349 6.67238 9.88363 6.89112 9.94515 7.09277C10.0067 7.29443 10.1719 7.44709 10.3769 7.49266C10.5831 7.53823 10.7973 7.46874 10.9375 7.31266L14.001 3.99964L10.9375 0.686623C10.8326 0.570417 10.6834 0.499781 10.5262 0.494085Z" fill="url(#paint0_linear_2170_635)"/>
@@ -3238,9 +3238,9 @@ if ( ! function_exists( 'moc_become_ambassador_html' ) ) {
 	function moc_become_ambassador_html() {
 		ob_start();
 		$ambassador_group   = get_field( 'ambassador', 'option' );
-		$ambassador_title   = ! empty( $ambassador_group['title'] ) ? str_replace( array( '<p>','</p>' ),'', $ambassador_group['title'] ) : sprintf( __( 'Become an %1$s ambassador', 'marketing-ops-core' ), '<br/>' );
+		$ambassador_title   = ! empty( $ambassador_group['title'] ) ? str_replace( array( '<p>','</p>' ),'', $ambassador_group['title'] ) : sprintf( __( 'Become an %1$s ambassador', 'marketingops' ), '<br/>' );
 		$ambassador_desc    = ! empty( $ambassador_group['description'] ) ? str_replace( array( '<p>','</p>' ),'', $ambassador_group['description'] ) : '';
-		$ambassador_btn_txt = ! empty( $ambassador_group['button_text'] ) ? str_replace( array( '<p>','</p>' ),'', $ambassador_group['button_text'] ) : __( 'Register as ambassador', 'marketing-ops-core' );
+		$ambassador_btn_txt = ! empty( $ambassador_group['button_text'] ) ? str_replace( array( '<p>','</p>' ),'', $ambassador_group['button_text'] ) : __( 'Register as ambassador', 'marketingops' );
 		?>
 		<div class="text_box">
 			<div class="title_and_svg">
@@ -3291,9 +3291,9 @@ if ( ! function_exists( 'moc_create_a_blog_html' ) ) {
 	function moc_create_a_blog_html( $current_userid ) {
 		$username = get_the_author_meta( 'user_nicename', $current_userid );
 		$blog_group   = get_field( 'blog', 'option' );
-		$blog_title   = ! empty( $blog_group['title'] ) ? str_replace( array( '<p>','</p>' ),'', $blog_group['title'] ) : sprintf( __( 'Write a %1$s blog post', 'marketing-ops-core' ), '<br/>' );
+		$blog_title   = ! empty( $blog_group['title'] ) ? str_replace( array( '<p>','</p>' ),'', $blog_group['title'] ) : sprintf( __( 'Write a %1$s blog post', 'marketingops' ), '<br/>' );
 		$blog_desc    = ! empty( $blog_group['description'] ) ? str_replace( array( '<p>','</p>' ),'', $blog_group['description'] ) : '';
-		$blog_btn_txt = ! empty( $blog_group['button_text'] ) ? str_replace( array( '<p>','</p>' ),'', $blog_group['button_text'] ) : __( 'Write a post', 'marketing-ops-core' );
+		$blog_btn_txt = ! empty( $blog_group['button_text'] ) ? str_replace( array( '<p>','</p>' ),'', $blog_group['button_text'] ) : __( 'Write a post', 'marketingops' );
 		ob_start();
 			?>
 			<div class="text_box">
@@ -3346,9 +3346,9 @@ if ( ! function_exists( 'moc_be_a_guest_on_ops_cast_html' ) ) {
 	function moc_be_a_guest_on_ops_cast_html() {
 		ob_start();
 		$be_a_guest_on_ops_cast_group   = get_field( 'be_a_guest_on_ops_cast', 'option' );
-		$be_a_guest_on_ops_cast_title   = ! empty( $be_a_guest_on_ops_cast_group['title'] ) ? str_replace( array( '<p>','</p>' ),'', $be_a_guest_on_ops_cast_group['title'] ) : sprintf( __( 'Be a guest %1$s on Ops Cast', 'marketing-ops-core' ), '<br/>' );
+		$be_a_guest_on_ops_cast_title   = ! empty( $be_a_guest_on_ops_cast_group['title'] ) ? str_replace( array( '<p>','</p>' ),'', $be_a_guest_on_ops_cast_group['title'] ) : sprintf( __( 'Be a guest %1$s on Ops Cast', 'marketingops' ), '<br/>' );
 		$be_a_guest_on_ops_cast_desc    = ! empty( $be_a_guest_on_ops_cast_group['description'] ) ? str_replace( array( '<p>','</p>' ),'', $be_a_guest_on_ops_cast_group['description'] ) : '';
-		$be_a_guest_on_ops_cast_btn_txt = ! empty( $be_a_guest_on_ops_cast_group['button_text'] ) ? str_replace( array( '<p>','</p>' ),'', $be_a_guest_on_ops_cast_group['button_text'] ) : __( 'Inquire Ops Cast', 'marketing-ops-core' );
+		$be_a_guest_on_ops_cast_btn_txt = ! empty( $be_a_guest_on_ops_cast_group['button_text'] ) ? str_replace( array( '<p>','</p>' ),'', $be_a_guest_on_ops_cast_group['button_text'] ) : __( 'Inquire Ops Cast', 'marketingops' );
 			?>
 			<div class="text_box">
 				<div class="title_and_svg">
@@ -3400,9 +3400,9 @@ if ( ! function_exists( 'moc_host_a_workshop_html' ) ) {
 	function moc_host_a_workshop_html() {
 		ob_start();
 		$workshop_group   = get_field( 'workshop', 'option' );
-		$workshop_title   = ! empty( $workshop_group['title'] ) ? str_replace( array( '<p>', '</p>' ), '', $workshop_group['title'] ) : sprintf( __( 'Host a workshop %1$s or speak on a panel', 'marketing-ops-core' ), '<br/>' );
+		$workshop_title   = ! empty( $workshop_group['title'] ) ? str_replace( array( '<p>', '</p>' ), '', $workshop_group['title'] ) : sprintf( __( 'Host a workshop %1$s or speak on a panel', 'marketingops' ), '<br/>' );
 		$workshop_desc    = ! empty( $workshop_group['description'] ) ? str_replace( array( '<p>', '</p>' ), '', $workshop_group['description'] ) : '';
-		$workshop_btn_txt = ! empty( $workshop_group['button_text'] ) ? str_replace( array( '<p>', '</p>' ), '', $workshop_group['button_text'] ) : __( 'Host a workshop', 'marketing-ops-core' );
+		$workshop_btn_txt = ! empty( $workshop_group['button_text'] ) ? str_replace( array( '<p>', '</p>' ), '', $workshop_group['button_text'] ) : __( 'Host a workshop', 'marketingops' );
 			?>
 			<div class="text_box">
 				<div class="title_and_svg">
@@ -3705,8 +3705,8 @@ if ( ! function_exists( 'moc_blog_category_filter_html_block' ) ) {
 			<div class="articles_box elementor-section elementor-top-section elementor-element elementor-section-boxed elementor-section-height-default elementor-section-height-default">
 				<div class="elementor-container elementor-column-gap-default">
 					<div class="categories_tags articled_container">
-						<div class="tag_box text_box"><?php esc_html_e( 'Categories', 'marketing-ops-core' ); ?></div>
-						<a href="javascript:void(0);" data-termid="0" class="tag_box moc_all_tags moc_selected_taxonomy"><?php esc_html_e( 'ALL', 'marketing-ops-core' ); ?></a>
+						<div class="tag_box text_box"><?php esc_html_e( 'Categories', 'marketingops' ); ?></div>
+						<a href="javascript:void(0);" data-termid="0" class="tag_box moc_all_tags moc_selected_taxonomy"><?php esc_html_e( 'ALL', 'marketingops' ); ?></a>
 						<?php
 						if ( ! empty( $get_all_terms ) && is_array( $get_all_terms ) ) {
 							foreach ( $get_all_terms as $get_all_term ) {
@@ -3815,9 +3815,9 @@ if ( ! function_exists( 'moc_blog_listings_html_block' ) ) {
 		} else {
 			$no_more_text = '';
 			if ( 'podcast' === $post_type ) {
-				$no_more_text = __( 'No more podcasts available.', 'marketing-ops-core' );
+				$no_more_text = __( 'No more podcasts available.', 'marketingops' );
 			} else if( 'post' === $post_type ) {
-				$no_more_text = __( 'No more blogs available.', 'marketing-ops-core' );
+				$no_more_text = __( 'No more blogs available.', 'marketingops' );
 			}
 			?>
 			<h4 class="moc_no_posts"><?php echo esc_html( $no_more_text ); ?></h4>
@@ -4179,7 +4179,7 @@ if ( ! function_exists( 'moc_training_products_listing_html' ) ) {
 			</div>
 			<?php
 		} else {
-			$no_more_text = __( 'No more courses available.', 'marketing-ops-core' );
+			$no_more_text = __( 'No more courses available.', 'marketingops' );
 			?>
 			<h4 class="moc_no_posts"><?php echo esc_html( $no_more_text ); ?></h4>
 			<?php
@@ -4315,7 +4315,7 @@ if ( ! function_exists( 'moc_training_products_featured_course' ) ) {
 																		d="M14.7859 0.74192C14.4643 0.729551 14.1659 0.913544 14.0345 1.20731C13.9015 1.50109 13.9587 1.84433 14.1814 2.07935L16.6135 4.70782H1.30494C1.0189 4.70318 0.754506 4.85316 0.610713 5.10055C0.465374 5.34639 0.465374 5.65253 0.610713 5.89837C0.754506 6.14575 1.0189 6.29573 1.30494 6.29109H16.6135L14.1814 8.91957C13.9835 9.12675 13.9139 9.42361 13.9974 9.69728C14.0809 9.97096 14.3051 10.1781 14.5834 10.24C14.8632 10.3018 15.1539 10.2075 15.3441 9.99569L19.5017 5.49946L15.3441 1.00322C15.2018 0.845513 14.9993 0.749651 14.7859 0.74192Z"
 																		fill="white"></path>
 																</svg> </span>
-															<span class="elementor-button-text"><?php esc_html_e( 'View Course', 'marketing-ops-core' ); ?></span>
+															<span class="elementor-button-text"><?php esc_html_e( 'View Course', 'marketingops' ); ?></span>
 														</span>
 													</a>
 												</div>
@@ -4336,7 +4336,7 @@ if ( ! function_exists( 'moc_training_products_featured_course' ) ) {
 										<!-- Right Content Text -->
 										<div class="elementor-elemen poster_right_text_box elementor-widget elementor-widget-text-editor">
 											<div class="elementor-widget-container">
-												<p><?php esc_html_e( 'Taught by:', 'marketing-ops-core' ); ?></p>
+												<p><?php esc_html_e( 'Taught by:', 'marketingops' ); ?></p>
 											</div>
 										</div>
 										<?php
@@ -4416,8 +4416,8 @@ if ( ! function_exists( 'moc_post_count_results' ) ) {
 		ob_start();
 		$get_jobs_count    = count( $post_ids );
 		$founded_jobs      = $get_jobs_count;
-		$singuler_text     = sprintf( __( '%1$s found', 'marketing-ops-core' ), $singuler_text );
-		$plural_text       = sprintf( __( '%1$s found', 'marketing-ops-core' ), $plural_text );
+		$singuler_text     = sprintf( __( '%1$s found', 'marketingops' ), $singuler_text );
+		$plural_text       = sprintf( __( '%1$s found', 'marketingops' ), $plural_text );
 		$fouded_posts_text = ( 1 < $founded_jobs ) ? $founded_jobs. ' '. $plural_text : $founded_jobs. ' '. $singuler_text;
 		$fouded_posts_text = ( 0 < $founded_jobs ) ? $fouded_posts_text : 'We\'re sorry the search you entered has no results';
 		?>
@@ -4455,7 +4455,7 @@ if ( ! function_exists( 'moc_get_custom_product_type_label' ) ) {
 	 * @since 1.0.0
 	 */
 	function moc_get_custom_product_type_label() {
-		$product_type_label = __( 'Training', 'marketing-ops-core' );
+		$product_type_label = __( 'Training', 'marketingops' );
 
 		/**
 		 * This hook fires in admin panel on the item settings page.
@@ -4488,19 +4488,19 @@ if ( ! function_exists( 'moc_register_form_html' ) ) {
 					</div>
 					<div class="elementor-element profileheading gradient-title elementor-widget elementor-widget-heading">
 						<div class="elementor-widget-container">
-							<h2 class="elementor-heading-title elementor-size-default"><?php esc_html_e( 'Create Your Free Profile', 'marketing-ops-core' ); ?></h2>
+							<h2 class="elementor-heading-title elementor-size-default"><?php esc_html_e( 'Create Your Free Profile', 'marketingops' ); ?></h2>
 						</div>
 					</div>
 					<div class="elementor-element profilesubheading elementor-widget elementor-widget-text-editor">
 						<div class="elementor-widget-container">
-						<?php esc_html_e( 'Already a member?', 'marketing-ops-core' ); ?> <a href="<?php echo esc_url( site_url( 'log-in' ) ); ?>"><?php esc_html_e( 'Log in', 'marketing-ops-core' ); ?></a> </div>
+						<?php esc_html_e( 'Already a member?', 'marketingops' ); ?> <a href="<?php echo esc_url( site_url( 'log-in' ) ); ?>"><?php esc_html_e( 'Log in', 'marketingops' ); ?></a> </div>
 					</div>
 					<div class="elementor-element profilfrm elementor-widget elementor-widget-shortcode moc_signup_form">
 						<div class="elementor-widget-container">
 							<div class="elementor-shortcode">
 								<div id="moc-registration-1-wrap" class="moc-form-container moc-registration-form-wrapper">
 									<div id="moc-registration-1" class="moc-form-wrapper moc-registration moc-registration-1 ppBuildScratch ppfl-flat ppsbl-pill ppsbw-full-width ppf-remove-frame ppfs-medium ppfia-right">
-										<div class="ppbs-headline"><?php esc_html_e( 'Create Your Free Profile', 'marketing-ops-core' ); ?></div>
+										<div class="ppbs-headline"><?php esc_html_e( 'Create Your Free Profile', 'marketingops' ); ?></div>
 										
 										<div class="moc-form-field-wrap reg-username fw-full fda-standard fld-above">
 											<div class="moc-form-field-input-textarea-wrap">
@@ -4525,7 +4525,7 @@ if ( ! function_exists( 'moc_register_form_html' ) ) {
 													<input name="reg_password_present" type="hidden" value="true">
 													<img src="/wp-content/plugins/marketing-ops-core/public/images/password_unhide_icon.svg" alt="password_unhide" />
 												</a>
-												<i class="moc-form-material-icons"><?php esc_html_e( 'visibility', 'marketing-ops-core' ); ?></i>
+												<i class="moc-form-material-icons"><?php esc_html_e( 'visibility', 'marketingops' ); ?></i>
 												<div class="moc_error moc_password_err">
 													<span></span>
 												</div>
@@ -4550,11 +4550,11 @@ if ( ! function_exists( 'moc_register_form_html' ) ) {
 										</div>
 										<div class="moc-form-field-wrap moc-custom-html fw-full fda-standard fld-above">
 											<div class="moc-form-field-input-textarea-wrap">
-												<p><?php esc_html_e( 'By clicking “Create Profile” you are agreeing with our', 'marketing-ops-core' ); ?> <a target="_blank" href="<?php echo esc_url( site_url( 'privacy-policy' ) ); ?>"><?php esc_html_e( 'Privacy Policy', 'marketing-ops-core' ); ?></a> <?php esc_html_e( 'and', 'marketing-ops-core' ); ?> <a href="<?php echo esc_url( site_url( 'terms-conditions' ) ); ?>" target="_blank"><?php esc_html_e( 'Terms of Use', 'marketing-ops-core' ); ?></a></p>
+												<p><?php esc_html_e( 'By clicking “Create Profile” you are agreeing with our', 'marketingops' ); ?> <a target="_blank" href="<?php echo esc_url( site_url( 'privacy-policy' ) ); ?>"><?php esc_html_e( 'Privacy Policy', 'marketingops' ); ?></a> <?php esc_html_e( 'and', 'marketingops' ); ?> <a href="<?php echo esc_url( site_url( 'terms-conditions' ) ); ?>" target="_blank"><?php esc_html_e( 'Terms of Use', 'marketingops' ); ?></a></p>
 											</div>
 										</div>
 										<div class="moc-form-submit-button-wrap">
-											<button name="reg_submit" type="submit" class="moc-submit-form ppform-submit-button"><?php esc_html_e( 'Create Profile', 'marketing-ops-core' ); ?></button>
+											<button name="reg_submit" type="submit" class="moc-submit-form ppform-submit-button"><?php esc_html_e( 'Create Profile', 'marketingops' ); ?></button>
 										</div>
 									</div>
 								</div>
@@ -4571,12 +4571,12 @@ if ( ! function_exists( 'moc_register_form_html' ) ) {
 				<div class="elementor-widget-wrap elementor-element-populated">
 					<div class="elementor-element profileheading gradient-title elementor-widget elementor-widget-heading">
 						<div class="elementor-widget-container">
-							<h2 class="elementor-heading-title elementor-size-default"><?php esc_html_e( 'You are already loggedin!', 'marketing-ops-core' ); ?></h2>
+							<h2 class="elementor-heading-title elementor-size-default"><?php esc_html_e( 'You are already loggedin!', 'marketingops' ); ?></h2>
 						</div>
 					</div>
 					<div class="elementor-element profileheading elementor-widget elementor-widget-button">
 						<div class="elementor-widget-container">
-							<a href="<?php echo esc_url( home_url( 'profile' ) ); ?>" class="elementor-button elementor-size-default"><?php esc_html_e( 'Go to my profile', 'marketing-ops-core' ); ?></a>
+							<a href="<?php echo esc_url( home_url( 'profile' ) ); ?>" class="elementor-button elementor-size-default"><?php esc_html_e( 'Go to my profile', 'marketingops' ); ?></a>
 						</div>
 					</div>
 				</div>
@@ -4608,8 +4608,8 @@ if ( ! function_exists( 'moc_otp_varification_html' ) ) {
 						<?php
 						
 						?>
-						<h3><?php echo sprintf( __( 'We just sent you e-mail with %1$s verification code %2$s', 'marketing-ops-core' ), '<span>', '</span>' ); ?></h3>
-						<p><?php esc_html_e( 'Please check it and apply to the form below', 'marketing-ops-core' ); ?></p>
+						<h3><?php echo sprintf( __( 'We just sent you e-mail with %1$s verification code %2$s', 'marketingops' ), '<span>', '</span>' ); ?></h3>
+						<p><?php esc_html_e( 'Please check it and apply to the form below', 'marketingops' ); ?></p>
 						<p><?php esc_html_e( 'If you don\'t see it in your inbox sure to look in your spam/junk folder for the code.' ); ?></p>
 					</div>
 				</div>
@@ -4665,7 +4665,7 @@ if ( ! function_exists( 'moc_otp_varification_html' ) ) {
 						<div class="colum-box colum-box-2">
 							<div class="btn_container">
 								<a href="#" class="btn email_submit_btn">
-									<span class="moc-approve"><?php esc_html_e( 'Approve', 'marketing-ops-core' ); ?></span>
+									<span class="moc-approve"><?php esc_html_e( 'Approve', 'marketingops' ); ?></span>
 									<span class="svg">
 										<svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
 											<path d="M10.5262 0.994573C10.2892 0.985459 10.0693 1.12103 9.97249 1.3375C9.87452 1.55396 9.91667 1.80688 10.0807 1.98005L11.8728 3.91682H0.592831C0.382065 3.9134 0.187248 4.02391 0.0812957 4.20619C-0.0257965 4.38734 -0.0257965 4.61292 0.0812957 4.79406C0.187248 4.97634 0.382065 5.08685 0.592831 5.08344H11.8728L10.0807 7.02021C9.9349 7.17287 9.88363 7.39161 9.94515 7.59326C10.0067 7.79492 10.1719 7.94758 10.3769 7.99315C10.5831 8.03872 10.7973 7.96922 10.9375 7.81314L14.001 4.50013L10.9375 1.18711C10.8326 1.0709 10.6834 1.00027 10.5262 0.994573Z" fill="white"/>
@@ -4684,7 +4684,7 @@ if ( ! function_exists( 'moc_otp_varification_html' ) ) {
 							<?php 
 								if( 2 >= $click_count ) {
 									?>
-									<p class="moc_resend_notification"><?php echo sprintf( __( 'Not seeing anything? %1$s Resend %2$s', 'marketing-ops-core' ), '<a class="moc_resend_btn" href="#">', '</a>' ); ?></p>
+									<p class="moc_resend_notification"><?php echo sprintf( __( 'Not seeing anything? %1$s Resend %2$s', 'marketingops' ), '<a class="moc_resend_btn" href="#">', '</a>' ); ?></p>
 									<span id="countdown2" class="circleTimer" data-size="99" data-thickness="7">
 										<span></span>
 									</span>
@@ -4694,7 +4694,7 @@ if ( ! function_exists( 'moc_otp_varification_html' ) ) {
 									<?php
 								} else {
 									?>
-									<p class="moc_resend_notification"><?php echo sprintf( __( 'Not seeing anything? %1$s Contact Us %2$s', 'marketing-ops-core' ), '<a class="moc_contact_to_admin" href="'. site_url( 'contact' ) .'">', '</a>' ); ?></p>
+									<p class="moc_resend_notification"><?php echo sprintf( __( 'Not seeing anything? %1$s Contact Us %2$s', 'marketingops' ), '<a class="moc_contact_to_admin" href="'. site_url( 'contact' ) .'">', '</a>' ); ?></p>
 									<?php
 								}
 							?>
@@ -4795,7 +4795,7 @@ if ( ! function_exists( 'moc_no_bs_demo_lists_html' ) ) {
 						<span>Quick filters</span>
 						<ul>
 							<li class="tab_box moc_tab_category_box">
-								<a href="#" class="active moc_all_no_bs_category" data-catid=""><?php esc_html_e( 'ALL', 'marketing-ops-core' ); ?></a>
+								<a href="#" class="active moc_all_no_bs_category" data-catid=""><?php esc_html_e( 'ALL', 'marketingops' ); ?></a>
 							</li>
 							<?php
 							if ( ! empty( $get_all_terms ) && is_array( $get_all_terms ) ) {
@@ -4862,7 +4862,7 @@ if ( ! function_exists( 'moc_no_bs_demo_loop_html' ) ) {
 			$post_image_id      = get_post_thumbnail_id( $no_bs_demo );
 			$post_image_array   = ! empty( $post_image_id ) ? wp_get_attachment_image_src( $post_image_id, 'single-post-thumbnail' ) : array();
 			$post_image_url     = ! empty( $post_image_array ) ? $post_image_array[0] : array( get_field( 'moc_workshop_default_image', 'option' ) );
-			$approved_text      = sprintf( __( 'approved by: %1$s 122 %2$s ', 'marketing-ops-core' ), '<b>','</b>' );
+			$approved_text      = sprintf( __( 'approved by: %1$s 122 %2$s ', 'marketingops' ), '<b>','</b>' );
 			$approved_text      = '';
 			
 			if ( ( ( $form_logic_position === $i ) && 1 === $paged ) && ( 'related' !== $mo_bs_location ) ) {
@@ -5050,7 +5050,7 @@ if ( ! function_exists( 'moc_no_bs_demo_coupons_lists_loop_html' ) ) {
 			$post_image_id                = get_post_thumbnail_id( $no_bs_demo );
 			$post_image_array             = ! empty( $post_image_id ) ? wp_get_attachment_image_src( $post_image_id, 'single-post-thumbnail' ) : array();
 			$post_image_url               = ! empty( $post_image_array ) ? $post_image_array[0] : array( get_field( 'moc_workshop_default_image', 'option' ) );
-			$approved_text                = sprintf( __( 'approved by: %1$s 122 %2$s ', 'marketing-ops-core' ), '<b>','</b>' );
+			$approved_text                = sprintf( __( 'approved by: %1$s 122 %2$s ', 'marketingops' ), '<b>','</b>' );
 			$approved_text                = '';
 			$assign_coupons_to_demo_query = moc_posts_by_meta_key_value( 'no_bs_demo', 1, -1, 'select_coupon_code', $no_bs_demo, '=' );
 			$assign_coupons_to_demo       = $assign_coupons_to_demo_query->posts;
@@ -5140,7 +5140,7 @@ if ( ! function_exists( 'moc_no_bs_demo_coupons_lists_loop_html' ) ) {
 								$non_member_class           = ( ! current_user_can( 'wc_memberships_view_restricted_post_content', $no_bs_demo ) ) ? 'moc_non_member_for_no_bs_demo' : '';
 								?>
 								<a href="<?php echo $navigate_watch_more_link; ?>" class="btn gray_btn <?php echo esc_attr( $non_member_class ); ?>">
-									<span class="text"><?php esc_html_e( 'Watch No BS demo', 'marketing-ops-core' ); ?></span>
+									<span class="text"><?php esc_html_e( 'Watch No BS demo', 'marketingops' ); ?></span>
 									<span class="svg">
 										<svg xmlns="http://www.w3.org/2000/svg" width="20" height="11" viewBox="0 0 20 11" fill="#242730">
 											<g clip-path="url(#clip0_446_965)">
@@ -5204,7 +5204,7 @@ if ( ! function_exists( 'moc_hubspt_nobs_demo' ) ) {
 			<div class="content_container form_section">
 				<div class="bs_form_content">
 					<div class="bs_form_title">
-						<h2><span><?php esc_html_e( 'Tell us who we should demo next:', 'marketing-ops-core' ); ?></span></h2>
+						<h2><span><?php esc_html_e( 'Tell us who we should demo next:', 'marketingops' ); ?></span></h2>
 					</div>
 					<div class="moc_load_no_bs_demo_form"></div>
 				</div>
@@ -5533,12 +5533,12 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 						?>
 						<div class="elementor-element profileheading gradient-title elementor-widget elementor-widget-heading">
 							<div class="elementor-widget-container">
-								<h2 class="elementor-heading-title elementor-size-default"><?php esc_html_e( 'Welcome back!', 'marketing-ops-core' ); ?></h2>
+								<h2 class="elementor-heading-title elementor-size-default"><?php esc_html_e( 'Welcome back!', 'marketingops' ); ?></h2>
 							</div>
 						</div>
 						<div class="elementor-element profilesubheading elementor-widget elementor-widget-text-editor">
 							<div class="elementor-widget-container">
-								<p><?php esc_html_e( 'Login to manage your account', 'marketing-ops-core' ); ?></p>
+								<p><?php esc_html_e( 'Login to manage your account', 'marketingops' ); ?></p>
 							</div>
 						</div>
 						<?php
@@ -5566,7 +5566,7 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 														<input name="reg_password_present" type="hidden" value="true">
 														<img src="/wp-content/plugins/marketing-ops-core/public/images/password_unhide_icon.svg" alt="password_unhide" />
 													</a>
-													<i class="moc-form-material-icons"><?php esc_html_e( 'visibility', 'marketing-ops-core' ); ?></i>
+													<i class="moc-form-material-icons"><?php esc_html_e( 'visibility', 'marketingops' ); ?></i>
 													<div class="moc_error moc_password_err">
 														<span></span>
 													</div>
@@ -5576,13 +5576,13 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 												<div class="moc-form-field-input-textarea-wrap">
 													<p>
 														<?php
-														echo  sprintf( __( 'Don’t have an account %1$s Sign Up %2$s %3$s Forgot password? %2$s', 'marketing-ops-core' ), ' <a href="' . site_url( 'subscribe' ) . '">', '</a>', '<a href="' . site_url( 'forgot-password' ) . '">'  );
+														echo  sprintf( __( 'Don’t have an account %1$s Sign Up %2$s %3$s Forgot password? %2$s', 'marketingops' ), ' <a href="' . site_url( 'subscribe' ) . '">', '</a>', '<a href="' . site_url( 'forgot-password' ) . '">'  );
 														?>
 													</p>
 												</div>
 											</div>
 											<div class="moc-form-submit-button-wrap">
-												<button name="reg_login__submit" type="submit" class="moc-login-submit-form ppform-submit-button"><?php esc_html_e( 'Log In', 'marketing-ops-core' ); ?></button>
+												<button name="reg_login__submit" type="submit" class="moc-login-submit-form ppform-submit-button"><?php esc_html_e( 'Log In', 'marketingops' ); ?></button>
 											</div>
 										</div>
 									</div>
@@ -5600,15 +5600,15 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 				<div class="elementor-widget-wrap elementor-element-populated">
 					<div class="elementor-element profileheading gradient-title elementor-widget elementor-widget-heading">
 						<div class="elementor-widget-container">
-							<h2 class="elementor-heading-title elementor-size-default"><?php esc_html_e( 'You are already loggedin!', 'marketing-ops-core' ); ?></h2>
+							<h2 class="elementor-heading-title elementor-size-default"><?php esc_html_e( 'You are already loggedin!', 'marketingops' ); ?></h2>
 						</div>
 					</div>
 					<div class="elementor-element profileheading elementor-widget elementor-widget-button">
 						<div class="elementor-widget-container">
-							<a href="<?php echo esc_url( home_url( 'profile' ) ); ?>" class="elementor-button elementor-size-default"><?php esc_html_e( 'Go to my profile', 'marketing-ops-core' ); ?></a>
+							<a href="<?php echo esc_url( home_url( 'profile' ) ); ?>" class="elementor-button elementor-size-default"><?php esc_html_e( 'Go to my profile', 'marketingops' ); ?></a>
 						</div>
 						<!-- <div class="elementor-widget-container">
-							<a href="<?php echo esc_url( home_url( 'profile' ) ); ?>" class="elementor-button elementor-size-default"><?php esc_html_e( 'Logout?', 'marketing-ops-core' ); ?></a>
+							<a href="<?php echo esc_url( home_url( 'profile' ) ); ?>" class="elementor-button elementor-size-default"><?php esc_html_e( 'Logout?', 'marketingops' ); ?></a>
 						</div> -->
 					</div>
 				</div>
@@ -5652,7 +5652,7 @@ if ( ! function_exists( 'moc_render_forgot_password_link_html' ) ) {
 											</div>
 										</div>
 										<div class="moc-form-submit-button-wrap">
-											<button name="moc_forgot_password_submit" type="submit" class="moc-forgot-password-form ppform-submit-button"><?php esc_html_e( 'Send Request', 'marketing-ops-core' ); ?></button>
+											<button name="moc_forgot_password_submit" type="submit" class="moc-forgot-password-form ppform-submit-button"><?php esc_html_e( 'Send Request', 'marketingops' ); ?></button>
 										</div>
 									</div>
 								</div>
@@ -5841,11 +5841,11 @@ if ( ! function_exists( 'moc_get_subsciption_end_date' ) ) {
 		$period      = moc_get_subsciption_period( $subscriptions );
 		$start_date  = moc_get_subsciption_start_date( $subscriptions );
 		if ( 'year' === $period ) {
-			$text        = __( 'End Date', 'marketing-ops-core' );
+			$text        = __( 'End Date', 'marketingops' );
 			$expiry_date = ( isset( $subscriptions['expiry_date'] ) ) ? $subscriptions['expiry_date'] : FALSE;
 			$expiry_date = ( false !== $start_date ) ? date( 'l jS F Y', strtotime( $expiry_date ) ) : FALSE;
 		} elseif( 'month' === $period ) {
-			$text        = __( 'Next Payment Date', 'marketing-ops-core' );
+			$text        = __( 'Next Payment Date', 'marketingops' );
 			$expiry_date = date( 'Y-m-d', strtotime( '+1 month', strtotime( $start_date ) ) );
 			$expiry_date  = ( false !== $expiry_date ) ? date( 'l jS F Y', strtotime( $expiry_date ) ) : FALSE;
 		}
@@ -6063,7 +6063,7 @@ if ( ! function_exists( 'moc_html_for_listing_post_data' ) ) {
 									if ( 'publish' === $post_status ) {
 										?>
 										<a href="<?php echo esc_url( $post_permalink ); ?>">
-											<span class="text"><?php esc_html_e( 'Read', 'marketing-ops-core' ); ?></span>
+											<span class="text"><?php esc_html_e( 'Read', 'marketingops' ); ?></span>
 											<span class="svg">
 												<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
 													<path d="M10.5262 0.494085C10.2892 0.484971 10.0693 0.620545 9.97249 0.837007C9.87452 1.05347 9.91667 1.30639 10.0807 1.47956L11.8728 3.41633H0.592831C0.382065 3.41291 0.187248 3.52342 0.0812957 3.70571C-0.0257965 3.88685 -0.0257965 4.11243 0.0812957 4.29357C0.187248 4.47586 0.382065 4.58637 0.592831 4.58295H11.8728L10.0807 6.51972C9.9349 6.67238 9.88363 6.89112 9.94515 7.09277C10.0067 7.29443 10.1719 7.44709 10.3769 7.49266C10.5831 7.53823 10.7973 7.46874 10.9375 7.31266L14.001 3.99964L10.9375 0.686623C10.8326 0.570417 10.6834 0.499781 10.5262 0.494085Z" fill="url(#paint0_linear_2170_635)"></path>
@@ -6080,7 +6080,7 @@ if ( ! function_exists( 'moc_html_for_listing_post_data' ) ) {
 										if ( 'post' === $post_type ) {
 											?>
 											<a href="javascript:void(0);" class="moc_editable_post" data-postid = "<?php echo esc_attr( $post_id ); ?>">
-												<span class="text"><?php esc_html_e( 'Edit', 'marketing-ops-core' ); ?></span>
+												<span class="text"><?php esc_html_e( 'Edit', 'marketingops' ); ?></span>
 												<span class="svg">
 													<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
 														<path d="M10.5262 0.494085C10.2892 0.484971 10.0693 0.620545 9.97249 0.837007C9.87452 1.05347 9.91667 1.30639 10.0807 1.47956L11.8728 3.41633H0.592831C0.382065 3.41291 0.187248 3.52342 0.0812957 3.70571C-0.0257965 3.88685 -0.0257965 4.11243 0.0812957 4.29357C0.187248 4.47586 0.382065 4.58637 0.592831 4.58295H11.8728L10.0807 6.51972C9.9349 6.67238 9.88363 6.89112 9.94515 7.09277C10.0067 7.29443 10.1719 7.44709 10.3769 7.49266C10.5831 7.53823 10.7973 7.46874 10.9375 7.31266L14.001 3.99964L10.9375 0.686623C10.8326 0.570417 10.6834 0.499781 10.5262 0.494085Z" fill="url(#paint0_linear_2170_635)"></path>
@@ -6099,7 +6099,7 @@ if ( ! function_exists( 'moc_html_for_listing_post_data' ) ) {
 										if ( 'post' === $post_type ) {
 										?>
 											<a href="javascript:void(0);" class="moc_editable_post" data-postid = "<?php echo esc_attr( $post_id ); ?>">
-												<span class="text"><?php esc_html_e( 'Edit', 'marketing-ops-core' ); ?></span>
+												<span class="text"><?php esc_html_e( 'Edit', 'marketingops' ); ?></span>
 												<span class="svg">
 													<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
 														<path d="M10.5262 0.494085C10.2892 0.484971 10.0693 0.620545 9.97249 0.837007C9.87452 1.05347 9.91667 1.30639 10.0807 1.47956L11.8728 3.41633H0.592831C0.382065 3.41291 0.187248 3.52342 0.0812957 3.70571C-0.0257965 3.88685 -0.0257965 4.11243 0.0812957 4.29357C0.187248 4.47586 0.382065 4.58637 0.592831 4.58295H11.8728L10.0807 6.51972C9.9349 6.67238 9.88363 6.89112 9.94515 7.09277C10.0067 7.29443 10.1719 7.44709 10.3769 7.49266C10.5831 7.53823 10.7973 7.46874 10.9375 7.31266L14.001 3.99964L10.9375 0.686623C10.8326 0.570417 10.6834 0.499781 10.5262 0.494085Z" fill="url(#paint0_linear_2170_635)"></path>
@@ -6237,10 +6237,10 @@ if ( ! function_exists( 'moc_load_write_a_post_html' ) ) {
 		<div class="tabbing_content_details">
 			<div class="tabbing_row">
 				<div class="form_column_row">
-					<h3><?php esc_html_e( 'Write new article', 'marketing-ops-core' ); ?></h3>
+					<h3><?php esc_html_e( 'Write new article', 'marketingops' ); ?></h3>
 					<form action="" method="">
 						<div class="form_row">
-							<label><?php esc_html_e( 'Title', 'marketing-ops-core' ); ?></label>
+							<label><?php esc_html_e( 'Title', 'marketingops' ); ?></label>
 							<input type="text" class="input_row moc_post_title" value="<?php echo esc_attr( $title ); ?>" placeholder="Title" />
 							<div class="moc_error moc_post_title_err">
 								<span></span>
@@ -6252,19 +6252,19 @@ if ( ! function_exists( 'moc_load_write_a_post_html' ) ) {
 									
 								} ?>
 								<div class="not_editable_data moc_not_editable_content" style="<?php echo esc_attr( $display_permalink_value ); ?>">
-									<p><?php esc_html_e( 'Permalink', 'marketing-ops-core' ); ?> <a href="<?php echo esc_html( $post_permalink ); ?>" target="_blank"><?php echo esc_html( home_url( $shortend_permalink ) ); ?></a></p>
+									<p><?php esc_html_e( 'Permalink', 'marketingops' ); ?> <a href="<?php echo esc_html( $post_permalink ); ?>" target="_blank"><?php echo esc_html( home_url( $shortend_permalink ) ); ?></a></p>
 									<button type="button" class="edit_para_link_btn btn">Edit</button>
 								</div>
 								<div class="editable_data moc_editable_content" style="<?php echo esc_attr( $display_permalink_slug ); ?>">
-									<label><?php esc_html_e( 'Permalink', 'marketing-ops-core' ); ?></label>
+									<label><?php esc_html_e( 'Permalink', 'marketingops' ); ?></label>
 									<div class="input_box">
 										<div class="input_boxes">
 											<span><?php echo esc_url( home_url( '/' ) ); ?></span>
 											<input type="text" class="input_row moc_permalink_slug" value="<?php echo esc_attr( $future_permalink );?>" placeholder="post-slug" />
 										</div>
 										<div class="input_btn_box">
-											<a href="javascript:void(0);" class="gray_color btn cancel_btn moc_cancel_info"><?php esc_html_e( 'Cancel', 'marketing-ops-core' ); ?></a>
-											<a href="javascript:void(0);" class="green_color btn btn_save moc_save_info"><?php esc_html_e( 'Save', 'marketing-ops-core' ); ?></a>
+											<a href="javascript:void(0);" class="gray_color btn cancel_btn moc_cancel_info"><?php esc_html_e( 'Cancel', 'marketingops' ); ?></a>
+											<a href="javascript:void(0);" class="green_color btn btn_save moc_save_info"><?php esc_html_e( 'Save', 'marketingops' ); ?></a>
 										</div>
 									</div>
 									<div class="moc_error moc_permalink_slug_err">
@@ -6274,14 +6274,14 @@ if ( ! function_exists( 'moc_load_write_a_post_html' ) ) {
 							</div>
 						</div>
 						<div class="form_row">
-							<label><?php esc_html_e( 'Body copy', 'marketing-ops-core' ); ?></label>
+							<label><?php esc_html_e( 'Body copy', 'marketingops' ); ?></label>
 							<div class="post-content-wp-editor-container">
 								<textarea id="ic_colmeta_editor"><?php echo $content; ?></textarea>
 							</div>
 						</div>
 						<div class="form_two_column_row">
 							<div class="form_row">
-								<label><?php esc_html_e( 'Category', 'marketing-ops-core' ); ?></label>
+								<label><?php esc_html_e( 'Category', 'marketingops' ); ?></label>
 								<div id="moc_category_box" class="form_row_select">
 									<select id="moc_post_content" class="js-example-basic-multiple" name="moc_post_content[]" multiple="multiple">
 										<?php foreach ( $categories as $category ) {
@@ -6297,7 +6297,7 @@ if ( ! function_exists( 'moc_load_write_a_post_html' ) ) {
 							<div class="form_row">
 								<div class="form_two_column_row">
 									<div class="form_row">
-										<label><?php esc_html_e( 'Status', 'marketing-ops-core' ); ?></label>
+										<label><?php esc_html_e( 'Status', 'marketingops' ); ?></label>
 										<?php 
 										$all_status = array( 
 											'pending' => 'Pending', 
@@ -6306,7 +6306,7 @@ if ( ! function_exists( 'moc_load_write_a_post_html' ) ) {
 										?>
 										<div id="status_box" class="form_row_select">
 											<select class="selected_option" id="moc_post_status">
-												<option disabled="disabled"><?php esc_html_e( 'Please select', 'marketing-ops-core' ); ?></option>
+												<option disabled="disabled"><?php esc_html_e( 'Please select', 'marketingops' ); ?></option>
 												<?php
 												foreach ( $all_status as $key => $status  ) {
 													$selected = ( $post_status === $key ) ? 'selected' : '';
@@ -6322,14 +6322,14 @@ if ( ! function_exists( 'moc_load_write_a_post_html' ) ) {
 									$date_class = ( $post_status === 'future' ) ? '' : 'moc_not_show_date_field';
 									?>
 									<div class="form_row moc_date_section <?php echo esc_attr( $date_class ); ?>">
-										<label><?php esc_html_e( 'Date', 'marketing-ops-core' ); ?></label>
+										<label><?php esc_html_e( 'Date', 'marketingops' ); ?></label>
 										<input type="text" id="moc_date_for_post" class="input_row moc_date_for_post" value="<?php echo esc_html( $date ); ?>"/>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="form_row">
-							<label><?php esc_html_e( 'Tags', 'marketing-ops-core' ); ?></label>
+							<label><?php esc_html_e( 'Tags', 'marketingops' ); ?></label>
 							<div id="tag_box" class="form_row_select">
 								<select id="moc_post_tags" class="js-example-basic-multiple" name="moc_post_tags[]" multiple="multiple">
 									<?php foreach ( $tags as $tag ) {
@@ -6343,7 +6343,7 @@ if ( ! function_exists( 'moc_load_write_a_post_html' ) ) {
 								</select>
 								<span class="input_box">
 									<div class="input_btn_box">
-										<a href="javascript:void(0);" class="green_color btn moc_add_tags"><?php esc_html_e( 'Add Tags', 'marketing-ops-core' ); ?></a>
+										<a href="javascript:void(0);" class="green_color btn moc_add_tags"><?php esc_html_e( 'Add Tags', 'marketingops' ); ?></a>
 									</div>
 								</span>
 							</div>
@@ -6352,7 +6352,7 @@ if ( ! function_exists( 'moc_load_write_a_post_html' ) ) {
 							<button type="button" class="white_btn btn moc_cancel_process"><?php esc_html_e( 'Cancel', '' ); ?></button>
 							<button type="button" class="white_btn btn moc_save_draft">Save draft</button>
 							<button type="submit" class="gradient_btn btn moc_save_for_review">
-								<span class="svg_text"><?php esc_html_e( 'Submit for review', 'marketing-ops-core' ); ?></span>
+								<span class="svg_text"><?php esc_html_e( 'Submit for review', 'marketingops' ); ?></span>
 								<span class="svg_icon">
 									<svg viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path d="M10.5252 0.994573C10.2882 0.985459 10.0684 1.12103 9.97152 1.3375C9.87354 1.55396 9.91569 1.80688 10.0797 1.98005L11.8718 3.91682H0.591854C0.381088 3.9134 0.186272 4.02391 0.0803191 4.20619C-0.026773 4.38734 -0.026773 4.61292 0.0803191 4.79406C0.186272 4.97634 0.381088 5.08685 0.591854 5.08344H11.8718L10.0797 7.02021C9.93392 7.17287 9.88265 7.39161 9.94417 7.59326C10.0057 7.79492 10.1709 7.94758 10.376 7.99315C10.5822 8.03872 10.7964 7.96922 10.9365 7.81314L14 4.50013L10.9365 1.18711C10.8317 1.0709 10.6824 1.00027 10.5252 0.994573Z" fill="white"/>
@@ -6410,7 +6410,7 @@ if ( ! function_exists( 'moc_get_course_tile_html' ) ) {
 							<div class="elementor-widget-container">
 								<h3 class="moc_title_box"><?php echo wp_kses_post( $course_title ); ?></h3>
 								<p class="moc_desc_box"><?php echo $course_excerpt; ?></p>
-								<a href="<?php echo esc_url( get_permalink( $course_id ) ); ?>" class="btn pink_btn"><?php esc_html_e( 'Enroll Now', 'marketing-ops-core' ) ?></a>
+								<a href="<?php echo esc_url( get_permalink( $course_id ) ); ?>" class="btn pink_btn"><?php esc_html_e( 'Enroll Now', 'marketingops' ) ?></a>
 							</div>
 						</div>
 					</div>
@@ -6462,7 +6462,7 @@ if ( ! function_exists( 'moc_load_post_count_html' ) ) {
 				<div class="details_content">
 					<h3><?php echo esc_html( $total_blogs_count ); ?></h3>
 				</div>
-				<span><?php esc_html_e( 'Articles', 'marketing-ops-core' ); ?></span>
+				<span><?php esc_html_e( 'Articles', 'marketingops' ); ?></span>
 			</div>
 		</div>
 		<!-- Forloop Here -->
@@ -6471,7 +6471,7 @@ if ( ! function_exists( 'moc_load_post_count_html' ) ) {
 				<div class="details_content">
 					<h3><?php echo esc_html( $total_podcasts_count ); ?></h3>
 				</div>
-				<span><?php esc_html_e( 'Podcasts', 'marketing-ops-core' ); ?></span>
+				<span><?php esc_html_e( 'Podcasts', 'marketingops' ); ?></span>
 			</div>
 		</div>
 		<!-- Forloop Here -->
@@ -6480,7 +6480,7 @@ if ( ! function_exists( 'moc_load_post_count_html' ) ) {
 				<div class="details_content">
 					<h3><?php echo esc_html( $total_workshops_count ); ?></h3>
 				</div>
-				<span><?php esc_html_e( 'Workshops & Webinars', 'marketing-ops-core' ); ?></span>
+				<span><?php esc_html_e( 'Workshops & Webinars', 'marketingops' ); ?></span>
 			</div>
 		</div> -->
 		<!-- Forloop Here -->
@@ -6489,7 +6489,7 @@ if ( ! function_exists( 'moc_load_post_count_html' ) ) {
 				<div class="details_content">
 					<h3><?php echo esc_html( $total_courses_count ); ?></h3>
 				</div>
-				<span><?php esc_html_e( 'Training Courses', 'marketing-ops-core' ); ?></span>
+				<span><?php esc_html_e( 'Training Courses', 'marketingops' ); ?></span>
 			</div>
 		</div> -->
 		<?php
@@ -6567,7 +6567,7 @@ if ( ! function_exists( 'moc_need_this_reports_html' ) ) {
 			<div class="form_container">
 				<div class="form_row">
 					<label>
-						<span><?php esc_html_e( 'First name', 'marketing-ops-core' ); ?></span>
+						<span><?php esc_html_e( 'First name', 'marketingops' ); ?></span>
 						<span class="required">*</span>
 					</label>
 					<input type="text" name="moc_ef_firstname" />
@@ -6577,7 +6577,7 @@ if ( ! function_exists( 'moc_need_this_reports_html' ) ) {
 				</div>
 				<div class="form_row">
 					<label>
-						<span><?php esc_html_e( 'Last name', 'marketing-ops-core' ); ?></span>
+						<span><?php esc_html_e( 'Last name', 'marketingops' ); ?></span>
 						<span class="required">*</span>
 					</label>
 					<input type="text" name="moc_ef_lastname" />
@@ -6587,7 +6587,7 @@ if ( ! function_exists( 'moc_need_this_reports_html' ) ) {
 				</div>
 				<div class="form_row">
 					<label>
-						<span><?php esc_html_e( 'Email', 'marketing-ops-core' ); ?></span>
+						<span><?php esc_html_e( 'Email', 'marketingops' ); ?></span>
 						<span class="required">*</span>
 					</label>
 					<input type="email" name="moc_ef_email" />
@@ -6597,7 +6597,7 @@ if ( ! function_exists( 'moc_need_this_reports_html' ) ) {
 				</div>
 				<div class="form_row">
 					<label>
-						<span><?php esc_html_e( 'Company Website', 'marketing-ops-core' ); ?></span>
+						<span><?php esc_html_e( 'Company Website', 'marketingops' ); ?></span>
 						<span class="required">*</span>
 					</label>
 					<input type="text" name="moc_ef_website" />
@@ -6606,24 +6606,24 @@ if ( ! function_exists( 'moc_need_this_reports_html' ) ) {
 					</div>
 				</div>
 				<div class="form_row full_width form_checkbox">
-					<label><span><?php esc_html_e( 'Which template(s) do you need?', 'marketing-ops-core' ); ?></span></label>
+					<label><span><?php esc_html_e( 'Which template(s) do you need?', 'marketingops' ); ?></span></label>
 					<div class="form_checkbox_row">
 						<div class="checkbox_row">
 							<span class="input_checkbox">
 								<input type="checkbox" value="checkbox_1" id="checkbox_1">
-								<label for="checkbox_1"><?php esc_html_e( 'Entry-level Marketing Ops Job Template', 'marketing-ops-core' ); ?></label>
+								<label for="checkbox_1"><?php esc_html_e( 'Entry-level Marketing Ops Job Template', 'marketingops' ); ?></label>
 							</span>
 						</div>
 						<div class="checkbox_row">
 							<span class="input_checkbox">
 								<input type="checkbox" value="checkbox_2" id="checkbox_2">
-								<label for="checkbox_2"><?php esc_html_e( 'Mid-level Marketing Ops Job Template', 'marketing-ops-core' ); ?></label>
+								<label for="checkbox_2"><?php esc_html_e( 'Mid-level Marketing Ops Job Template', 'marketingops' ); ?></label>
 							</span>
 						</div>
 						<div class="checkbox_row">
 							<span class="input_checkbox">
 								<input type="checkbox" value="checkbox_3" id="checkbox_3">
-								<label for="checkbox_3"><?php esc_html_e( 'Executive-level Marketing Ops Job Template', 'marketing-ops-core' ); ?></label>
+								<label for="checkbox_3"><?php esc_html_e( 'Executive-level Marketing Ops Job Template', 'marketingops' ); ?></label>
 							</span>
 						</div>
 					</div>
@@ -6634,7 +6634,7 @@ if ( ! function_exists( 'moc_need_this_reports_html' ) ) {
 							<span class="elementor-button-icon elementor-align-icon-right">
 								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="11" viewBox="0 0 20 11" fill="none"><path d="M14.7859 0.74192C14.4643 0.729551 14.1659 0.913544 14.0345 1.20731C13.9015 1.50109 13.9587 1.84433 14.1814 2.07935L16.6135 4.70782H1.30494C1.0189 4.70318 0.754506 4.85316 0.610713 5.10055C0.465374 5.34639 0.465374 5.65253 0.610713 5.89837C0.754506 6.14575 1.0189 6.29573 1.30494 6.29109H16.6135L14.1814 8.91957C13.9835 9.12675 13.9139 9.42361 13.9974 9.69728C14.0809 9.97096 14.3051 10.1781 14.5834 10.24C14.8632 10.3018 15.1539 10.2075 15.3441 9.99569L19.5017 5.49946L15.3441 1.00322C15.2018 0.845513 14.9993 0.749651 14.7859 0.74192Z" fill="white"></path></svg>
 							</span>
-							<span class="elementor-button-text"><?php esc_html_e( 'Download your template', 'marketing-ops-core' ); ?></span>
+							<span class="elementor-button-text"><?php esc_html_e( 'Download your template', 'marketingops' ); ?></span>
 						</span>
 					</a>
 				</div>
@@ -6803,7 +6803,7 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 															<div class="author_content">
 																<!-- Author Name -->
 																<div class="author_content_box">
-																	<p><?php esc_html_e( 'Taught by:', 'marketing-ops-core' ); ?></p>
+																	<p><?php esc_html_e( 'Taught by:', 'marketingops' ); ?></p>
 																	<h4><?php echo esc_html( $professior_name ); ?></h4>
 																</div>
 																<!-- Author Tracker -->
@@ -6811,14 +6811,14 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 																if ( ! empty( $primary_automation ) ) {
 																	?>
 																	<div class="author_content_box">
-																		<p><?php esc_html_e( 'Main MAP:', 'marketing-ops-core' ); ?></p>
+																		<p><?php esc_html_e( 'Main MAP:', 'marketingops' ); ?></p>
 																		<h4><?php echo esc_html( $primary_automation[0] ); ?></h4>
 																	</div>
 																	<?php
 																}
 																?>
 																<!-- Author BTN Link -->
-																<a href="<?php echo esc_url( $courses_link ); ?>" target="_blank"><?php echo sprintf( __( 'View other courses by %1$s', 'marketing-ops-core' ), $professior_name ); ?></a>
+																<a href="<?php echo esc_url( $courses_link ); ?>" target="_blank"><?php echo sprintf( __( 'View other courses by %1$s', 'marketingops' ), $professior_name ); ?></a>
 															</div>
 														</div>
 														<!-- Bottom Right Side Part -->
@@ -6873,7 +6873,7 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 							<div class="mobile_part mobile_product_review_price product_review_price">
 								<!-- Product Price -->
 								<div class="product_price right_side_box">
-									<label><?php esc_html_e( 'Total price', 'marketing-ops-core' ); ?></label>
+									<label><?php esc_html_e( 'Total price', 'marketingops' ); ?></label>
 									<p class="price">
 										<?php
 										if ( ! empty(  $product_sale_price ) ) {
@@ -6939,7 +6939,7 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 								<div class="icon_box">
 									<img src="/wp-content/themes/hello-elementor_child/images/course_product_page/courses_product_video.svg"
 										alt="courses_product_video" />
-									<p><?php echo esc_html( $courses_count ); ?> <?php esc_html_e( 'courses', 'marketing-ops-core' ); ?></p>
+									<p><?php echo esc_html( $courses_count ); ?> <?php esc_html_e( 'courses', 'marketingops' ); ?></p>
 								</div>
 								<!-- Icon Box -->
 								<?php
@@ -6962,7 +6962,7 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 							<div class="product_review_price">
 								<!-- Product Price -->
 								<div class="product_price right_side_box">
-									<label><?php esc_html_e( 'Total price', 'marketing-ops-core' ); ?></label>
+									<label><?php esc_html_e( 'Total price', 'marketingops' ); ?></label>
 									<p class="price">
 										<?php
 										if ( ! empty(  $product_sale_price ) ) {
@@ -7034,7 +7034,7 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 														<path d="M14.7859 0.74192C14.4643 0.729551 14.1659 0.913544 14.0345 1.20731C13.9015 1.50109 13.9587 1.84433 14.1814 2.07935L16.6135 4.70782H1.30494C1.0189 4.70318 0.754506 4.85316 0.610713 5.10055C0.465374 5.34639 0.465374 5.65253 0.610713 5.89837C0.754506 6.14575 1.0189 6.29573 1.30494 6.29109H16.6135L14.1814 8.91957C13.9835 9.12675 13.9139 9.42361 13.9974 9.69728C14.0809 9.97096 14.3051 10.1781 14.5834 10.24C14.8632 10.3018 15.1539 10.2075 15.3441 9.99569L19.5017 5.49946L15.3441 1.00322C15.2018 0.845513 14.9993 0.749651 14.7859 0.74192Z" fill="white"></path>
 													</svg>
 												</span>
-												<span class="elementor-button-text"><?php esc_html_e( 'Add to cart', 'marketing-ops-core' ); ?></span>
+												<span class="elementor-button-text"><?php esc_html_e( 'Add to cart', 'marketingops' ); ?></span>
 											</span>
 										</a>
 										<!-- Checkout Button -->
@@ -7042,7 +7042,7 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 										<?php	
 										if ( true === $flag_to_display ) {	
 											?>	
-											<button type="submit" class="single_checkout_button moc_single_checkout_button button" data-productid="<?php echo esc_attr( $wc_product_id ); ?>"><?php esc_html_e( 'Checkout', 'marketing-ops-core' ); ?></button>	
+											<button type="submit" class="single_checkout_button moc_single_checkout_button button" data-productid="<?php echo esc_attr( $wc_product_id ); ?>"><?php esc_html_e( 'Checkout', 'marketingops' ); ?></button>	
 											<?php	
 										}	
 										?>
@@ -7080,14 +7080,14 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 														<path d="M14.7859 0.74192C14.4643 0.729551 14.1659 0.913544 14.0345 1.20731C13.9015 1.50109 13.9587 1.84433 14.1814 2.07935L16.6135 4.70782H1.30494C1.0189 4.70318 0.754506 4.85316 0.610713 5.10055C0.465374 5.34639 0.465374 5.65253 0.610713 5.89837C0.754506 6.14575 1.0189 6.29573 1.30494 6.29109H16.6135L14.1814 8.91957C13.9835 9.12675 13.9139 9.42361 13.9974 9.69728C14.0809 9.97096 14.3051 10.1781 14.5834 10.24C14.8632 10.3018 15.1539 10.2075 15.3441 9.99569L19.5017 5.49946L15.3441 1.00322C15.2018 0.845513 14.9993 0.749651 14.7859 0.74192Z" fill="white"></path>
 													</svg>
 												</span>
-												<span class="elementor-button-text"><?php esc_html_e( 'Add to cart', 'marketing-ops-core' ); ?></span>
+												<span class="elementor-button-text"><?php esc_html_e( 'Add to cart', 'marketingops' ); ?></span>
 											</span>
 										</a>
 										<!-- Checkout Button -->
 										<?php	
 										if ( true === $flag_to_display ) {	
 											?>	
-											<button type="submit" class="single_checkout_button moc_single_checkout_button button" data-productid="<?php echo esc_attr( $wc_product_id ); ?>"><?php esc_html_e( 'Checkout', 'marketing-ops-core' ); ?></button>	
+											<button type="submit" class="single_checkout_button moc_single_checkout_button button" data-productid="<?php echo esc_attr( $wc_product_id ); ?>"><?php esc_html_e( 'Checkout', 'marketingops' ); ?></button>	
 											<?php	
 										}
 										?>
@@ -7113,10 +7113,10 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 												<path d="M14.7859 0.74192C14.4643 0.729551 14.1659 0.913544 14.0345 1.20731C13.9015 1.50109 13.9587 1.84433 14.1814 2.07935L16.6135 4.70782H1.30494C1.0189 4.70318 0.754506 4.85316 0.610713 5.10055C0.465374 5.34639 0.465374 5.65253 0.610713 5.89837C0.754506 6.14575 1.0189 6.29573 1.30494 6.29109H16.6135L14.1814 8.91957C13.9835 9.12675 13.9139 9.42361 13.9974 9.69728C14.0809 9.97096 14.3051 10.1781 14.5834 10.24C14.8632 10.3018 15.1539 10.2075 15.3441 9.99569L19.5017 5.49946L15.3441 1.00322C15.2018 0.845513 14.9993 0.749651 14.7859 0.74192Z" fill="white"></path>
 											</svg>
 										</span>
-										<span class="elementor-button-text"><?php esc_html_e( 'Add to cart', 'marketing-ops-core' ); ?></span>
+										<span class="elementor-button-text"><?php esc_html_e( 'Add to cart', 'marketingops' ); ?></span>
 									</span>
 								</a>
-								<button type="submit" class="single_checkout_button moc_single_checkout_button button" data-productid="<?php echo esc_attr( $wc_product_id ); ?>"><?php esc_html_e( 'Checkout', 'marketing-ops-core' ); ?></button>
+								<button type="submit" class="single_checkout_button moc_single_checkout_button button" data-productid="<?php echo esc_attr( $wc_product_id ); ?>"><?php esc_html_e( 'Checkout', 'marketingops' ); ?></button>
 							</div> -->
 						</div>
 					</div>
@@ -7156,16 +7156,16 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 										<div class="author_content">
 											<!-- Author Name -->
 											<div class="author_content_box">
-												<p><?php esc_html_e( 'Taught by:', 'marketing-ops-core' ); ?></p>
-												<h4><?php esc_html_e( 'Sarah McNamara', 'marketing-ops-core' ); ?></h4>
+												<p><?php esc_html_e( 'Taught by:', 'marketingops' ); ?></p>
+												<h4><?php esc_html_e( 'Sarah McNamara', 'marketingops' ); ?></h4>
 											</div>
 											<!-- Author Tracker -->
 											<div class="author_content_box">
-												<p><?php esc_html_e( 'Main MAP:', 'marketing-ops-core' ); ?></p>
-												<h4><?php esc_html_e( 'HubSpot', 'marketing-ops-core' ); ?></h4>
+												<p><?php esc_html_e( 'Main MAP:', 'marketingops' ); ?></p>
+												<h4><?php esc_html_e( 'HubSpot', 'marketingops' ); ?></h4>
 											</div>
 											<!-- Author BTN Link -->
-											<a href="#" target="_blank"><?php esc_html_e( 'View other courses by Sahar McNamara', 'marketing-ops-core' ); ?></a>
+											<a href="#" target="_blank"><?php esc_html_e( 'View other courses by Sahar McNamara', 'marketingops' ); ?></a>
 										</div>
 									</div>
 									<!-- Bottom Right Side Part -->
@@ -7203,25 +7203,25 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 						<div class="courses_product_right_side">
 							<!-- Product Title -->
 							<div class="product_title right_side_box">
-								<h2><?php esc_html_e( 'Some name of the video here', 'marketing-ops-core' ); ?></h2>
+								<h2><?php esc_html_e( 'Some name of the video here', 'marketingops' ); ?></h2>
 							</div>
 							<!-- Mobile Product Price & Reviews -->
 							<div class="mobile_part mobile_product_review_price product_review_price">
 								<!-- Product Price -->
 								<div class="product_price right_side_box">
-									<label><?php esc_html_e( 'Total price', 'marketing-ops-core' ); ?></label>
+									<label><?php esc_html_e( 'Total price', 'marketingops' ); ?></label>
 									<p class="price">
 										<del aria-hidden="true">
 											<span class="woocommerce-Price-amount amount">
 												<bdi>
-													<span class="woocommerce-Price-currencySymbol"><?php esc_html_e( '$', 'marketing-ops-core' ); ?></span><?php esc_html_e( '29.99', 'marketing-ops-core' ); ?>
+													<span class="woocommerce-Price-currencySymbol"><?php esc_html_e( '$', 'marketingops' ); ?></span><?php esc_html_e( '29.99', 'marketingops' ); ?>
 												</bdi>
 											</span>
 										</del>
 										<ins>
 											<span class="woocommerce-Price-amount amount">
 												<bdi>
-													<span class="woocommerce-Price-currencySymbol"><?php esc_html_e( '$', 'marketing-ops-core' ); ?></span><?php esc_html_e( '25.49', 'marketing-ops-core' ); ?>
+													<span class="woocommerce-Price-currencySymbol"><?php esc_html_e( '$', 'marketingops' ); ?></span><?php esc_html_e( '25.49', 'marketingops' ); ?>
 												</bdi>
 											</span>
 										</ins>
@@ -7247,13 +7247,13 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 								<div class="icon_box">
 									<img src="/wp-content/themes/hello-elementor_child/images/course_product_page/courses_product_video.svg"
 										alt="courses_product_video" />
-									<p><?php esc_html_e( '6 videos', 'marketing-ops-core' ); ?></p>
+									<p><?php esc_html_e( '6 videos', 'marketingops' ); ?></p>
 								</div>
 								<!-- Icon Box -->
 								<div class="icon_box">
 									<img src="/wp-content/themes/hello-elementor_child/images/course_product_page/courses_product_tv.svg"
 										alt="courses_product_tv" />
-									<p><?php esc_html_e( '4 hours', 'marketing-ops-core' ); ?></p>
+									<p><?php esc_html_e( '4 hours', 'marketingops' ); ?></p>
 								</div>
 							</div>
 							<!-- Product Content -->
@@ -7262,25 +7262,25 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 									labore et dolore magna aliqua. In hac habitasse platea
 									dictumst vestibulum rhoncus. Nunc non blandit massa enim nec dui nunc. Amet cursus sit amet
 									dictum sit amet justo. Commodo quis imperdiet massa tincidunt.
-									Nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit.', 'marketing-ops-core' ); ?></p>
+									Nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit.', 'marketingops' ); ?></p>
 							</div>
 							<!-- Product Price & Reviews -->
 							<div class="product_review_price">
 								<!-- Product Price -->
 								<div class="product_price right_side_box">
-									<label><?php esc_html_e( 'Total price', 'marketing-ops-core' ); ?></label>
+									<label><?php esc_html_e( 'Total price', 'marketingops' ); ?></label>
 									<p class="price">
 										<del aria-hidden="true">
 											<span class="woocommerce-Price-amount amount">
 												<bdi>
-													<span class="woocommerce-Price-currencySymbol"><?php esc_html_e( '$', 'marketing-ops-core' ); ?></span><?php esc_html_e( '29.99', 'marketing-ops-core' ); ?>
+													<span class="woocommerce-Price-currencySymbol"><?php esc_html_e( '$', 'marketingops' ); ?></span><?php esc_html_e( '29.99', 'marketingops' ); ?>
 												</bdi>
 											</span>
 										</del>
 										<ins>
 											<span class="woocommerce-Price-amount amount">
 												<bdi>
-													<span class="woocommerce-Price-currencySymbol"><?php esc_html_e( '$', 'marketing-ops-core' ); ?></span><?php esc_html_e( '25.49', 'marketing-ops-core' ); ?>
+													<span class="woocommerce-Price-currencySymbol"><?php esc_html_e( '$', 'marketingops' ); ?></span><?php esc_html_e( '25.49', 'marketingops' ); ?>
 												</bdi>
 											</span>
 										</ins>
@@ -7291,9 +7291,9 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 							<!-- Product Form Button -->
 							<div class="product_form">
 								<!-- Cart Button -->
-								<button type="submit" class="single_add_to_cart_button button"><?php esc_html_e( 'Add to cart', 'marketing-ops-core' ); ?></button>
+								<button type="submit" class="single_add_to_cart_button button"><?php esc_html_e( 'Add to cart', 'marketingops' ); ?></button>
 								<!-- Checkout Button -->
-								<button type="submit" class="single_checkout_button button"><?php esc_html_e( 'Checkout', 'marketing-ops-core' ); ?></button>
+								<button type="submit" class="single_checkout_button button"><?php esc_html_e( 'Checkout', 'marketingops' ); ?></button>
 							</div>
 						</div>
 					</div>
@@ -7504,7 +7504,7 @@ if ( ! function_exists( 'moc_purchaed_courses' ) ) {
 		?>
 		<div class="title_with_btn">
 			<!-- about title -->
-			<h3><?php echo esc_html( 'Purchased Courses','marketing-ops-core' ); ?></h3>
+			<h3><?php echo esc_html( 'Purchased Courses','marketingops' ); ?></h3>
 		</div>
 		<div class="sub_title_with_content moc_profile_purchased_courses">
 			<!-- Certification content -->
@@ -7651,10 +7651,10 @@ if ( ! function_exists( 'moc_load_html_view_profile_data' ) ) {
 	 */
 	function moc_load_html_view_profile_data( $post_type, $posts, $post_status ) {
 		ob_start();
-		$post_read_txt = ( 'post' === $post_type ) ? __( 'Read', 'marketing-ops-core' ) : __( 'Listen', 'marketing-ops-core' );
-		$post_edit_txt = ( 'post' === $post_type ) ? __( 'Edit', 'marketing-ops-core' ) : __( 'Listen', 'marketing-ops-core' );
+		$post_read_txt = ( 'post' === $post_type ) ? __( 'Read', 'marketingops' ) : __( 'Listen', 'marketingops' );
+		$post_edit_txt = ( 'post' === $post_type ) ? __( 'Edit', 'marketingops' ) : __( 'Listen', 'marketingops' );
 		$read_btn_txt  = ( 'publish' === $post_status ) ? $post_read_txt : $post_edit_txt;
-		$title         = ( 'post' === $post_type ) ? __( 'Blog contribution','marketing-ops-core' ) : __( 'Podcasts','marketing-ops-core' );
+		$title         = ( 'post' === $post_type ) ? __( 'Blog contribution','marketingops' ) : __( 'Podcasts','marketingops' );
 		if ( ! empty( $posts ) ) {
 			?>
 			<div class="title_with_btn">
@@ -7748,7 +7748,7 @@ if ( ! function_exists( 'moc_blogs_view_html' ) ) {
 						echo moc_load_html_view_profile_data( $post_type, $posts_data, $post_status );;
 						?>
 						<div class="show_more_btn">
-							<a href="<?php echo site_url( $posts_url ); ?>"><?php esc_html_e( 'show more', 'marketing-ops-core' ); ?></a>
+							<a href="<?php echo site_url( $posts_url ); ?>"><?php esc_html_e( 'show more', 'marketingops' ); ?></a>
 						</div>
 					</div>
 					<?php
@@ -7805,7 +7805,7 @@ if ( ! function_exists( 'moc_no_courses_found_html' ) ) {
 		?>
 		<div class="moc_no_courses_found">
 			<img src="<?php echo esc_attr( $placeholder_image ); ?>">
-			<a href="<?php echo home_url( 'courses' ); ?>"><?php esc_html_e( 'Explore Courses', 'marketing-ops-core' ); ?></a>
+			<a href="<?php echo home_url( 'courses' ); ?>"><?php esc_html_e( 'Explore Courses', 'marketingops' ); ?></a>
 		</div>
 		<?php
 		return ob_get_clean();
@@ -8046,10 +8046,10 @@ if ( ! function_exists( 'moc_add_review_form_after_course_complete' ) ) {
 					<div class="loader"></div>  
 				</div>
 				<div class="review_box">
-					<h3><?php esc_html_e( 'Please leave a review', 'marketing-ops-core' ); ?></h3>
+					<h3><?php esc_html_e( 'Please leave a review', 'marketingops' ); ?></h3>
 					<form action="" method="">
 						<div class="review_box_content woocommerce">
-							<h4><?php esc_html_e( 'How would you rate this course?', 'marketing-ops-core' ); ?></h4>
+							<h4><?php esc_html_e( 'How would you rate this course?', 'marketingops' ); ?></h4>
 							<div class="rating_star moc_course_rating_stars">
 								<div class="star-rating__wrap">
 									<?php
@@ -8148,7 +8148,7 @@ if ( ! function_exists( 'moc_html_for_course_review_listings' ) ) {
 						<div class="loader"></div>
 					</div>
 					<div class="review_box" id="comments">
-						<h3><?php esc_html_e( 'Your Reviews', 'marketing-ops-core' ); ?></h3>
+						<h3><?php esc_html_e( 'Your Reviews', 'marketingops' ); ?></h3>
 						<div class="review_box_content woocommerce moc_rating_star_default">
 							<div class="rating_star">
 								<div class="star-rating__wrap">
@@ -8196,10 +8196,10 @@ if ( ! function_exists( 'moc_html_for_course_review_listings' ) ) {
 								</li>
 							</ol>
 						</div>
-						<h3><?php esc_html_e( 'Please Add a review', 'marketing-ops-core' ); ?></h3>
+						<h3><?php esc_html_e( 'Please Add a review', 'marketingops' ); ?></h3>
 						<form action="" method="">
 							<div class="review_box_content woocommerce">
-								<h4><?php esc_html_e( 'Your Rating *', 'marketing-ops-core' ); ?></h4>
+								<h4><?php esc_html_e( 'Your Rating *', 'marketingops' ); ?></h4>
 								<div class="rating_star moc_course_rating_stars">
 									<div class="star-rating__wrap">
 										<?php
@@ -8215,7 +8215,7 @@ if ( ! function_exists( 'moc_html_for_course_review_listings' ) ) {
 								</div>
 							</div>
 							<div class="review_box_btn_textarea">
-								<h4><?php esc_html_e( 'Your Review *', 'marketing-ops-core' ); ?></h4>
+								<h4><?php esc_html_e( 'Your Review *', 'marketingops' ); ?></h4>
 								<textarea class="moc_comment_content" placeholder="Say a few words about your experience"><?php echo wp_kses_post( $comment_content )?></textarea>
 								<p class="form-submit">
 									<input name="submit" type="submit" id="submit" class="submit moc_submit_course_review" value="Submit a review">
@@ -8255,7 +8255,7 @@ if ( ! function_exists( 'moc_html_for_course_review_listings' ) ) {
 								<div class="loader"></div>
 							</div>
 							<div class="review_box" id="comments">
-								<h3><?php esc_html_e( 'Customers Reviews', 'marketing-ops-core' ); ?></h3>
+								<h3><?php esc_html_e( 'Customers Reviews', 'marketingops' ); ?></h3>
 								<div class="review_box_content woocommerce moc_rating_star_default">
 									<div class="rating_star">
 										<div class="star-rating__wrap">
@@ -8494,36 +8494,36 @@ if ( ! function_exists( 'moc_strategists_custom_post_type_and_category_taxonomy'
 	 */
 	function moc_strategists_custom_post_type_and_category_taxonomy() {
 		register_post_type( 'strategists', array(
-			'label'               => __( 'Strategists', 'marketing-ops-core' ),
-			'description'         => __( 'Its custom post type for mops strategists.', 'marketing-ops-core' ),
+			'label'               => __( 'Strategists', 'marketingops' ),
+			'description'         => __( 'Its custom post type for mops strategists.', 'marketingops' ),
 			'labels'              => array(
-				'name'                  => _x( 'Strategists', 'Strategist General Name', 'marketing-ops-core' ),
-				'singular_name'         => _x( 'Strategist', 'Strategist Singular Name', 'marketing-ops-core' ),
-				'menu_name'             => __( 'Strategists', 'marketing-ops-core' ),
-				'name_admin_bar'        => __( 'Strategists', 'marketing-ops-core' ),
-				'archives'              => __( 'Strategist Archives', 'marketing-ops-core' ),
-				'attributes'            => __( 'Strategist Attributes', 'marketing-ops-core' ),
-				'parent_item_colon'     => __( 'Parent Strategist:', 'marketing-ops-core' ),
-				'all_items'             => __( 'All Strategists', 'marketing-ops-core' ),
-				'add_new_item'          => __( 'Add New Strategist', 'marketing-ops-core' ),
-				'add_new'               => __( 'Add New', 'marketing-ops-core' ),
-				'new_item'              => __( 'New Strategist', 'marketing-ops-core' ),
-				'edit_item'             => __( 'Edit Strategist', 'marketing-ops-core' ),
-				'update_item'           => __( 'Update Strategist', 'marketing-ops-core' ),
-				'view_item'             => __( 'View Strategist', 'marketing-ops-core' ),
-				'view_items'            => __( 'View Strategists', 'marketing-ops-core' ),
-				'search_items'          => __( 'Search Strategist', 'marketing-ops-core' ),
-				'not_found'             => __( 'Not found', 'marketing-ops-core' ),
-				'not_found_in_trash'    => __( 'Not found in Trash', 'marketing-ops-core' ),
-				'featured_image'        => __( 'Featured Image', 'marketing-ops-core' ),
-				'set_featured_image'    => __( 'Set featured image', 'marketing-ops-core' ),
-				'remove_featured_image' => __( 'Remove featured image', 'marketing-ops-core' ),
-				'use_featured_image'    => __( 'Use as featured image', 'marketing-ops-core' ),
-				'insert_into_item'      => __( 'Insert into Strategist', 'marketing-ops-core' ),
-				'uploaded_to_this_item' => __( 'Uploaded to this Strategist', 'marketing-ops-core' ),
-				'items_list'            => __( 'Strategists list', 'marketing-ops-core' ),
-				'items_list_navigation' => __( 'Strategists list navigation', 'marketing-ops-core' ),
-				'filter_items_list'     => __( 'Filter Strategists list', 'marketing-ops-core' ),
+				'name'                  => _x( 'Strategists', 'Strategist General Name', 'marketingops' ),
+				'singular_name'         => _x( 'Strategist', 'Strategist Singular Name', 'marketingops' ),
+				'menu_name'             => __( 'Strategists', 'marketingops' ),
+				'name_admin_bar'        => __( 'Strategists', 'marketingops' ),
+				'archives'              => __( 'Strategist Archives', 'marketingops' ),
+				'attributes'            => __( 'Strategist Attributes', 'marketingops' ),
+				'parent_item_colon'     => __( 'Parent Strategist:', 'marketingops' ),
+				'all_items'             => __( 'All Strategists', 'marketingops' ),
+				'add_new_item'          => __( 'Add New Strategist', 'marketingops' ),
+				'add_new'               => __( 'Add New', 'marketingops' ),
+				'new_item'              => __( 'New Strategist', 'marketingops' ),
+				'edit_item'             => __( 'Edit Strategist', 'marketingops' ),
+				'update_item'           => __( 'Update Strategist', 'marketingops' ),
+				'view_item'             => __( 'View Strategist', 'marketingops' ),
+				'view_items'            => __( 'View Strategists', 'marketingops' ),
+				'search_items'          => __( 'Search Strategist', 'marketingops' ),
+				'not_found'             => __( 'Not found', 'marketingops' ),
+				'not_found_in_trash'    => __( 'Not found in Trash', 'marketingops' ),
+				'featured_image'        => __( 'Featured Image', 'marketingops' ),
+				'set_featured_image'    => __( 'Set featured image', 'marketingops' ),
+				'remove_featured_image' => __( 'Remove featured image', 'marketingops' ),
+				'use_featured_image'    => __( 'Use as featured image', 'marketingops' ),
+				'insert_into_item'      => __( 'Insert into Strategist', 'marketingops' ),
+				'uploaded_to_this_item' => __( 'Uploaded to this Strategist', 'marketingops' ),
+				'items_list'            => __( 'Strategists list', 'marketingops' ),
+				'items_list_navigation' => __( 'Strategists list navigation', 'marketingops' ),
+				'filter_items_list'     => __( 'Filter Strategists list', 'marketingops' ),
 			),
 			'supports'            => array( 'title', 'editor', 'author', 'revisions' ),
 			'hierarchical'        => false,
@@ -8545,26 +8545,26 @@ if ( ! function_exists( 'moc_strategists_custom_post_type_and_category_taxonomy'
 		// Register taxonomy, strategists_cat.
 		register_taxonomy( 'strategists_cat', array( 'strategists' ), array(
 			'labels'            => array(
-				'name'                       => _x( 'Strategist Categories', 'Taxonomy General Name', 'marketing-ops-core' ),
-				'singular_name'              => _x( 'Strategist Category', 'Taxonomy Singular Name', 'marketing-ops-core' ),
-				'menu_name'                  => __( 'Strategist Categories', 'marketing-ops-core' ),
-				'all_items'                  => __( 'All Strategist Categories', 'marketing-ops-core' ),
-				'parent_item'                => __( 'Parent Strategist Category', 'marketing-ops-core' ),
-				'parent_item_colon'          => __( 'Parent Strategist Category:', 'marketing-ops-core' ),
-				'new_item_name'              => __( 'New Strategist Category Name', 'marketing-ops-core' ),
-				'add_new_item'               => __( 'Add New Strategist Category', 'marketing-ops-core' ),
-				'edit_item'                  => __( 'Edit Strategist Category', 'marketing-ops-core' ),
-				'update_item'                => __( 'Update Strategist Category', 'marketing-ops-core' ),
-				'view_item'                  => __( 'View Strategist Category', 'marketing-ops-core' ),
-				'separate_items_with_commas' => __( 'Separate Strategist Categories with commas', 'marketing-ops-core' ),
-				'add_or_remove_items'        => __( 'Add or remove Strategist Categories', 'marketing-ops-core' ),
-				'choose_from_most_used'      => __( 'Choose from the most used', 'marketing-ops-core' ),
-				'popular_items'              => __( 'Popular Strategist Categories', 'marketing-ops-core' ),
-				'search_items'               => __( 'Search Strategist Categories', 'marketing-ops-core' ),
-				'not_found'                  => __( 'Not Found', 'marketing-ops-core' ),
-				'no_terms'                   => __( 'No Strategist Categories', 'marketing-ops-core' ),
-				'items_list'                 => __( 'Strategist Categories list', 'marketing-ops-core' ),
-				'items_list_navigation'      => __( 'Strategist Categories list navigation', 'marketing-ops-core' ),
+				'name'                       => _x( 'Strategist Categories', 'Taxonomy General Name', 'marketingops' ),
+				'singular_name'              => _x( 'Strategist Category', 'Taxonomy Singular Name', 'marketingops' ),
+				'menu_name'                  => __( 'Strategist Categories', 'marketingops' ),
+				'all_items'                  => __( 'All Strategist Categories', 'marketingops' ),
+				'parent_item'                => __( 'Parent Strategist Category', 'marketingops' ),
+				'parent_item_colon'          => __( 'Parent Strategist Category:', 'marketingops' ),
+				'new_item_name'              => __( 'New Strategist Category Name', 'marketingops' ),
+				'add_new_item'               => __( 'Add New Strategist Category', 'marketingops' ),
+				'edit_item'                  => __( 'Edit Strategist Category', 'marketingops' ),
+				'update_item'                => __( 'Update Strategist Category', 'marketingops' ),
+				'view_item'                  => __( 'View Strategist Category', 'marketingops' ),
+				'separate_items_with_commas' => __( 'Separate Strategist Categories with commas', 'marketingops' ),
+				'add_or_remove_items'        => __( 'Add or remove Strategist Categories', 'marketingops' ),
+				'choose_from_most_used'      => __( 'Choose from the most used', 'marketingops' ),
+				'popular_items'              => __( 'Popular Strategist Categories', 'marketingops' ),
+				'search_items'               => __( 'Search Strategist Categories', 'marketingops' ),
+				'not_found'                  => __( 'Not Found', 'marketingops' ),
+				'no_terms'                   => __( 'No Strategist Categories', 'marketingops' ),
+				'items_list'                 => __( 'Strategist Categories list', 'marketingops' ),
+				'items_list_navigation'      => __( 'Strategist Categories list navigation', 'marketingops' ),
 			),
 			'hierarchical'      => true,
 			'public'            => true,
@@ -8590,36 +8590,36 @@ if ( ! function_exists( 'moc_templates_custom_post_type_and_category_taxonomy' )
 		register_post_type(
 			'template',
 			array(
-				'label'               => __( 'Project Templates', 'marketing-ops-core' ),
-				'description'         => __( 'Its custom post type for marketingops project templates.', 'marketing-ops-core' ),
+				'label'               => __( 'Project Templates', 'marketingops' ),
+				'description'         => __( 'Its custom post type for marketingops project templates.', 'marketingops' ),
 				'labels'              => array(
-					'name'                  => _x( 'Marketing Ops Templates', 'Template General Name', 'marketing-ops-core' ),
-					'singular_name'         => _x( 'Project Template', 'Template Singular Name', 'marketing-ops-core' ),
-					'menu_name'             => __( 'Project Templates', 'marketing-ops-core' ),
-					'name_admin_bar'        => __( 'Project Templates', 'marketing-ops-core' ),
-					'archives'              => __( 'Project Template Archives', 'marketing-ops-core' ),
-					'attributes'            => __( 'Project Template Attributes', 'marketing-ops-core' ),
-					'parent_item_colon'     => __( 'Parent Project Template:', 'marketing-ops-core' ),
-					'all_items'             => __( 'All Project Templates', 'marketing-ops-core' ),
-					'add_new_item'          => __( 'Add New Project Template', 'marketing-ops-core' ),
-					'add_new'               => __( 'Add New', 'marketing-ops-core' ),
-					'new_item'              => __( 'New Project Template', 'marketing-ops-core' ),
-					'edit_item'             => __( 'Edit Project Template', 'marketing-ops-core' ),
-					'update_item'           => __( 'Update Project Template', 'marketing-ops-core' ),
-					'view_item'             => __( 'View Project Template', 'marketing-ops-core' ),
-					'view_items'            => __( 'View Project Templates', 'marketing-ops-core' ),
-					'search_items'          => __( 'Search Project Template', 'marketing-ops-core' ),
-					'not_found'             => __( 'No project template found', 'marketing-ops-core' ),
-					'not_found_in_trash'    => __( 'No project template found in trash', 'marketing-ops-core' ),
-					'featured_image'        => __( 'Featured Image', 'marketing-ops-core' ),
-					'set_featured_image'    => __( 'Set featured image', 'marketing-ops-core' ),
-					'remove_featured_image' => __( 'Remove featured image', 'marketing-ops-core' ),
-					'use_featured_image'    => __( 'Use as featured image', 'marketing-ops-core' ),
-					'insert_into_item'      => __( 'Insert into Project Template', 'marketing-ops-core' ),
-					'uploaded_to_this_item' => __( 'Uploaded to this Project Template', 'marketing-ops-core' ),
-					'items_list'            => __( 'Project templates list', 'marketing-ops-core' ),
-					'items_list_navigation' => __( 'Project templates list navigation', 'marketing-ops-core' ),
-					'filter_items_list'     => __( 'Filter Project Templates list', 'marketing-ops-core' ),
+					'name'                  => _x( 'Marketing Ops Templates', 'Template General Name', 'marketingops' ),
+					'singular_name'         => _x( 'Project Template', 'Template Singular Name', 'marketingops' ),
+					'menu_name'             => __( 'Project Templates', 'marketingops' ),
+					'name_admin_bar'        => __( 'Project Templates', 'marketingops' ),
+					'archives'              => __( 'Project Template Archives', 'marketingops' ),
+					'attributes'            => __( 'Project Template Attributes', 'marketingops' ),
+					'parent_item_colon'     => __( 'Parent Project Template:', 'marketingops' ),
+					'all_items'             => __( 'All Project Templates', 'marketingops' ),
+					'add_new_item'          => __( 'Add New Project Template', 'marketingops' ),
+					'add_new'               => __( 'Add New', 'marketingops' ),
+					'new_item'              => __( 'New Project Template', 'marketingops' ),
+					'edit_item'             => __( 'Edit Project Template', 'marketingops' ),
+					'update_item'           => __( 'Update Project Template', 'marketingops' ),
+					'view_item'             => __( 'View Project Template', 'marketingops' ),
+					'view_items'            => __( 'View Project Templates', 'marketingops' ),
+					'search_items'          => __( 'Search Project Template', 'marketingops' ),
+					'not_found'             => __( 'No project template found', 'marketingops' ),
+					'not_found_in_trash'    => __( 'No project template found in trash', 'marketingops' ),
+					'featured_image'        => __( 'Featured Image', 'marketingops' ),
+					'set_featured_image'    => __( 'Set featured image', 'marketingops' ),
+					'remove_featured_image' => __( 'Remove featured image', 'marketingops' ),
+					'use_featured_image'    => __( 'Use as featured image', 'marketingops' ),
+					'insert_into_item'      => __( 'Insert into Project Template', 'marketingops' ),
+					'uploaded_to_this_item' => __( 'Uploaded to this Project Template', 'marketingops' ),
+					'items_list'            => __( 'Project templates list', 'marketingops' ),
+					'items_list_navigation' => __( 'Project templates list navigation', 'marketingops' ),
+					'filter_items_list'     => __( 'Filter Project Templates list', 'marketingops' ),
 				),
 				'supports'            => array( 'title', 'editor', 'author', 'excerpt', 'thumbnail' ),
 				'hierarchical'        => false,
@@ -8655,36 +8655,36 @@ if ( ! function_exists( 'moc_conference_vault_custom_post_type_and_category_taxo
 		register_post_type(
 			'conference_vault',
 			array(
-				'label'               => __( 'Conference Vault', 'marketing-ops-core' ),
-				'description'         => __( 'Its custom post type for marketingops conference vault.', 'marketing-ops-core' ),
+				'label'               => __( 'Conference Vault', 'marketingops' ),
+				'description'         => __( 'Its custom post type for marketingops conference vault.', 'marketingops' ),
 				'labels'              => array(
-					'name'                  => _x( 'Conference Vault', 'Template General Name', 'marketing-ops-core' ),
-					'singular_name'         => _x( 'Conference Vault', 'Template Singular Name', 'marketing-ops-core' ),
-					'menu_name'             => __( 'Conference Vault', 'marketing-ops-core' ),
-					'name_admin_bar'        => __( 'Conference Vault', 'marketing-ops-core' ),
-					'archives'              => __( 'Conference Vault Archives', 'marketing-ops-core' ),
-					'attributes'            => __( 'Conference Vault Attributes', 'marketing-ops-core' ),
-					'parent_item_colon'     => __( 'Parent Conference Vault:', 'marketing-ops-core' ),
-					'all_items'             => __( 'All Conference Vault', 'marketing-ops-core' ),
-					'add_new_item'          => __( 'Add New Conference Vault Video', 'marketing-ops-core' ),
-					'add_new'               => __( 'Add New Video', 'marketing-ops-core' ),
-					'new_item'              => __( 'New Conference Vault Video', 'marketing-ops-core' ),
-					'edit_item'             => __( 'Edit Conference Vault Video', 'marketing-ops-core' ),
-					'update_item'           => __( 'Update Conference Vault Video', 'marketing-ops-core' ),
-					'view_item'             => __( 'View Conference Vault Video', 'marketing-ops-core' ),
-					'view_items'            => __( 'View Conference Vault Videos', 'marketing-ops-core' ),
-					'search_items'          => __( 'Search Conference Vault Video', 'marketing-ops-core' ),
-					'not_found'             => __( 'No Conference Vault Video found', 'marketing-ops-core' ),
-					'not_found_in_trash'    => __( 'No Conference Vault Video found in trash', 'marketing-ops-core' ),
-					'featured_image'        => __( 'Featured Image', 'marketing-ops-core' ),
-					'set_featured_image'    => __( 'Set featured image', 'marketing-ops-core' ),
-					'remove_featured_image' => __( 'Remove featured image', 'marketing-ops-core' ),
-					'use_featured_image'    => __( 'Use as featured image', 'marketing-ops-core' ),
-					'insert_into_item'      => __( 'Insert into Conference Vault Video', 'marketing-ops-core' ),
-					'uploaded_to_this_item' => __( 'Uploaded to this Conference Vault Video', 'marketing-ops-core' ),
-					'items_list'            => __( 'Conference Vault Videos list', 'marketing-ops-core' ),
-					'items_list_navigation' => __( 'Conference Vault Videos list navigation', 'marketing-ops-core' ),
-					'filter_items_list'     => __( 'Filter Conference Vault Videos list', 'marketing-ops-core' ),
+					'name'                  => _x( 'Conference Vault', 'Template General Name', 'marketingops' ),
+					'singular_name'         => _x( 'Conference Vault', 'Template Singular Name', 'marketingops' ),
+					'menu_name'             => __( 'Conference Vault', 'marketingops' ),
+					'name_admin_bar'        => __( 'Conference Vault', 'marketingops' ),
+					'archives'              => __( 'Conference Vault Archives', 'marketingops' ),
+					'attributes'            => __( 'Conference Vault Attributes', 'marketingops' ),
+					'parent_item_colon'     => __( 'Parent Conference Vault:', 'marketingops' ),
+					'all_items'             => __( 'All Conference Vault', 'marketingops' ),
+					'add_new_item'          => __( 'Add New Conference Vault Video', 'marketingops' ),
+					'add_new'               => __( 'Add New Video', 'marketingops' ),
+					'new_item'              => __( 'New Conference Vault Video', 'marketingops' ),
+					'edit_item'             => __( 'Edit Conference Vault Video', 'marketingops' ),
+					'update_item'           => __( 'Update Conference Vault Video', 'marketingops' ),
+					'view_item'             => __( 'View Conference Vault Video', 'marketingops' ),
+					'view_items'            => __( 'View Conference Vault Videos', 'marketingops' ),
+					'search_items'          => __( 'Search Conference Vault Video', 'marketingops' ),
+					'not_found'             => __( 'No Conference Vault Video found', 'marketingops' ),
+					'not_found_in_trash'    => __( 'No Conference Vault Video found in trash', 'marketingops' ),
+					'featured_image'        => __( 'Featured Image', 'marketingops' ),
+					'set_featured_image'    => __( 'Set featured image', 'marketingops' ),
+					'remove_featured_image' => __( 'Remove featured image', 'marketingops' ),
+					'use_featured_image'    => __( 'Use as featured image', 'marketingops' ),
+					'insert_into_item'      => __( 'Insert into Conference Vault Video', 'marketingops' ),
+					'uploaded_to_this_item' => __( 'Uploaded to this Conference Vault Video', 'marketingops' ),
+					'items_list'            => __( 'Conference Vault Videos list', 'marketingops' ),
+					'items_list_navigation' => __( 'Conference Vault Videos list navigation', 'marketingops' ),
+					'filter_items_list'     => __( 'Filter Conference Vault Videos list', 'marketingops' ),
 				),
 				'supports'            => array( 'title', 'editor', 'author', 'excerpt', 'thumbnail' ),
 				'hierarchical'        => true,
@@ -8708,26 +8708,26 @@ if ( ! function_exists( 'moc_conference_vault_custom_post_type_and_category_taxo
 		// Register taxonomy, pillar.
 		register_taxonomy( 'pillar', array( 'conference_vault' ), array(
 			'labels'            => array(
-				'name'                       => _x( 'Pillars', 'Taxonomy General Name', 'marketing-ops-core' ),
-				'singular_name'              => _x( 'Pillar', 'Taxonomy Singular Name', 'marketing-ops-core' ),
-				'menu_name'                  => __( 'Pillars', 'marketing-ops-core' ),
-				'all_items'                  => __( 'All Pillars', 'marketing-ops-core' ),
-				'parent_item'                => __( 'Parent Pillar', 'marketing-ops-core' ),
-				'parent_item_colon'          => __( 'Parent Pillar:', 'marketing-ops-core' ),
-				'new_item_name'              => __( 'New Pillar Name', 'marketing-ops-core' ),
-				'add_new_item'               => __( 'Add New Pillar', 'marketing-ops-core' ),
-				'edit_item'                  => __( 'Edit Pillar', 'marketing-ops-core' ),
-				'update_item'                => __( 'Update Pillar', 'marketing-ops-core' ),
-				'view_item'                  => __( 'View Pillar', 'marketing-ops-core' ),
-				'separate_items_with_commas' => __( 'Separate Pillarss with commas', 'marketing-ops-core' ),
-				'add_or_remove_items'        => __( 'Add or remove Pillarss', 'marketing-ops-core' ),
-				'choose_from_most_used'      => __( 'Choose from the most used', 'marketing-ops-core' ),
-				'popular_items'              => __( 'Popular Pillarss', 'marketing-ops-core' ),
-				'search_items'               => __( 'Search Pillarss', 'marketing-ops-core' ),
-				'not_found'                  => __( 'Not Found', 'marketing-ops-core' ),
-				'no_terms'                   => __( 'No Pillarss', 'marketing-ops-core' ),
-				'items_list'                 => __( 'Pillarss list', 'marketing-ops-core' ),
-				'items_list_navigation'      => __( 'Pillars list navigation', 'marketing-ops-core' ),
+				'name'                       => _x( 'Pillars', 'Taxonomy General Name', 'marketingops' ),
+				'singular_name'              => _x( 'Pillar', 'Taxonomy Singular Name', 'marketingops' ),
+				'menu_name'                  => __( 'Pillars', 'marketingops' ),
+				'all_items'                  => __( 'All Pillars', 'marketingops' ),
+				'parent_item'                => __( 'Parent Pillar', 'marketingops' ),
+				'parent_item_colon'          => __( 'Parent Pillar:', 'marketingops' ),
+				'new_item_name'              => __( 'New Pillar Name', 'marketingops' ),
+				'add_new_item'               => __( 'Add New Pillar', 'marketingops' ),
+				'edit_item'                  => __( 'Edit Pillar', 'marketingops' ),
+				'update_item'                => __( 'Update Pillar', 'marketingops' ),
+				'view_item'                  => __( 'View Pillar', 'marketingops' ),
+				'separate_items_with_commas' => __( 'Separate Pillarss with commas', 'marketingops' ),
+				'add_or_remove_items'        => __( 'Add or remove Pillarss', 'marketingops' ),
+				'choose_from_most_used'      => __( 'Choose from the most used', 'marketingops' ),
+				'popular_items'              => __( 'Popular Pillarss', 'marketingops' ),
+				'search_items'               => __( 'Search Pillarss', 'marketingops' ),
+				'not_found'                  => __( 'Not Found', 'marketingops' ),
+				'no_terms'                   => __( 'No Pillarss', 'marketingops' ),
+				'items_list'                 => __( 'Pillarss list', 'marketingops' ),
+				'items_list_navigation'      => __( 'Pillars list navigation', 'marketingops' ),
 			),
 			'hierarchical'      => true,
 			'public'            => true,
@@ -8741,26 +8741,26 @@ if ( ! function_exists( 'moc_conference_vault_custom_post_type_and_category_taxo
 		// Register taxonomy, conference.
 		register_taxonomy( 'conference', array( 'conference_vault' ), array(
 			'labels'            => array(
-				'name'                       => _x( 'Conferences', 'Taxonomy General Name', 'marketing-ops-core' ),
-				'singular_name'              => _x( 'Conference', 'Taxonomy Singular Name', 'marketing-ops-core' ),
-				'menu_name'                  => __( 'Conferences', 'marketing-ops-core' ),
-				'all_items'                  => __( 'All Conferences', 'marketing-ops-core' ),
-				'parent_item'                => __( 'Parent Conference', 'marketing-ops-core' ),
-				'parent_item_colon'          => __( 'Parent Conference:', 'marketing-ops-core' ),
-				'new_item_name'              => __( 'New Conference Name', 'marketing-ops-core' ),
-				'add_new_item'               => __( 'Add New Conference', 'marketing-ops-core' ),
-				'edit_item'                  => __( 'Edit Conference', 'marketing-ops-core' ),
-				'update_item'                => __( 'Update Conference', 'marketing-ops-core' ),
-				'view_item'                  => __( 'View Conference', 'marketing-ops-core' ),
-				'separate_items_with_commas' => __( 'Separate Conferences with commas', 'marketing-ops-core' ),
-				'add_or_remove_items'        => __( 'Add or remove Conferences', 'marketing-ops-core' ),
-				'choose_from_most_used'      => __( 'Choose from the most used', 'marketing-ops-core' ),
-				'popular_items'              => __( 'Popular Conferences', 'marketing-ops-core' ),
-				'search_items'               => __( 'Search Conferences', 'marketing-ops-core' ),
-				'not_found'                  => __( 'Not Found', 'marketing-ops-core' ),
-				'no_terms'                   => __( 'No Conferences', 'marketing-ops-core' ),
-				'items_list'                 => __( 'Conferences list', 'marketing-ops-core' ),
-				'items_list_navigation'      => __( 'Conferences list navigation', 'marketing-ops-core' ),
+				'name'                       => _x( 'Conferences', 'Taxonomy General Name', 'marketingops' ),
+				'singular_name'              => _x( 'Conference', 'Taxonomy Singular Name', 'marketingops' ),
+				'menu_name'                  => __( 'Conferences', 'marketingops' ),
+				'all_items'                  => __( 'All Conferences', 'marketingops' ),
+				'parent_item'                => __( 'Parent Conference', 'marketingops' ),
+				'parent_item_colon'          => __( 'Parent Conference:', 'marketingops' ),
+				'new_item_name'              => __( 'New Conference Name', 'marketingops' ),
+				'add_new_item'               => __( 'Add New Conference', 'marketingops' ),
+				'edit_item'                  => __( 'Edit Conference', 'marketingops' ),
+				'update_item'                => __( 'Update Conference', 'marketingops' ),
+				'view_item'                  => __( 'View Conference', 'marketingops' ),
+				'separate_items_with_commas' => __( 'Separate Conferences with commas', 'marketingops' ),
+				'add_or_remove_items'        => __( 'Add or remove Conferences', 'marketingops' ),
+				'choose_from_most_used'      => __( 'Choose from the most used', 'marketingops' ),
+				'popular_items'              => __( 'Popular Conferences', 'marketingops' ),
+				'search_items'               => __( 'Search Conferences', 'marketingops' ),
+				'not_found'                  => __( 'Not Found', 'marketingops' ),
+				'no_terms'                   => __( 'No Conferences', 'marketingops' ),
+				'items_list'                 => __( 'Conferences list', 'marketingops' ),
+				'items_list_navigation'      => __( 'Conferences list navigation', 'marketingops' ),
 			),
 			'hierarchical'      => true,
 			'public'            => true,
@@ -8774,26 +8774,26 @@ if ( ! function_exists( 'moc_conference_vault_custom_post_type_and_category_taxo
 		// Register taxonomy, skill level.
 		register_taxonomy( 'conference_skill_level', array( 'conference_vault' ), array(
 			'labels'            => array(
-				'name'                       => _x( 'Skill Levels', 'Taxonomy General Name', 'marketing-ops-core' ),
-				'singular_name'              => _x( 'Skill Level', 'Taxonomy Singular Name', 'marketing-ops-core' ),
-				'menu_name'                  => __( 'Skill Levels', 'marketing-ops-core' ),
-				'all_items'                  => __( 'All Skill Levels', 'marketing-ops-core' ),
-				'parent_item'                => __( 'Parent Skill Level', 'marketing-ops-core' ),
-				'parent_item_colon'          => __( 'Parent Skill Level:', 'marketing-ops-core' ),
-				'new_item_name'              => __( 'New Skill Level Name', 'marketing-ops-core' ),
-				'add_new_item'               => __( 'Add New Skill Level', 'marketing-ops-core' ),
-				'edit_item'                  => __( 'Edit Skill Level', 'marketing-ops-core' ),
-				'update_item'                => __( 'Update Skill Level', 'marketing-ops-core' ),
-				'view_item'                  => __( 'View Skill Level', 'marketing-ops-core' ),
-				'separate_items_with_commas' => __( 'Separate Skill Levels with commas', 'marketing-ops-core' ),
-				'add_or_remove_items'        => __( 'Add or remove Skill Levels', 'marketing-ops-core' ),
-				'choose_from_most_used'      => __( 'Choose from the most used', 'marketing-ops-core' ),
-				'popular_items'              => __( 'Popular Skill Levels', 'marketing-ops-core' ),
-				'search_items'               => __( 'Search Skill Levels', 'marketing-ops-core' ),
-				'not_found'                  => __( 'Not Found', 'marketing-ops-core' ),
-				'no_terms'                   => __( 'No Skill Levels', 'marketing-ops-core' ),
-				'items_list'                 => __( 'Skill Levels list', 'marketing-ops-core' ),
-				'items_list_navigation'      => __( 'Skill Levels list navigation', 'marketing-ops-core' ),
+				'name'                       => _x( 'Skill Levels', 'Taxonomy General Name', 'marketingops' ),
+				'singular_name'              => _x( 'Skill Level', 'Taxonomy Singular Name', 'marketingops' ),
+				'menu_name'                  => __( 'Skill Levels', 'marketingops' ),
+				'all_items'                  => __( 'All Skill Levels', 'marketingops' ),
+				'parent_item'                => __( 'Parent Skill Level', 'marketingops' ),
+				'parent_item_colon'          => __( 'Parent Skill Level:', 'marketingops' ),
+				'new_item_name'              => __( 'New Skill Level Name', 'marketingops' ),
+				'add_new_item'               => __( 'Add New Skill Level', 'marketingops' ),
+				'edit_item'                  => __( 'Edit Skill Level', 'marketingops' ),
+				'update_item'                => __( 'Update Skill Level', 'marketingops' ),
+				'view_item'                  => __( 'View Skill Level', 'marketingops' ),
+				'separate_items_with_commas' => __( 'Separate Skill Levels with commas', 'marketingops' ),
+				'add_or_remove_items'        => __( 'Add or remove Skill Levels', 'marketingops' ),
+				'choose_from_most_used'      => __( 'Choose from the most used', 'marketingops' ),
+				'popular_items'              => __( 'Popular Skill Levels', 'marketingops' ),
+				'search_items'               => __( 'Search Skill Levels', 'marketingops' ),
+				'not_found'                  => __( 'Not Found', 'marketingops' ),
+				'no_terms'                   => __( 'No Skill Levels', 'marketingops' ),
+				'items_list'                 => __( 'Skill Levels list', 'marketingops' ),
+				'items_list_navigation'      => __( 'Skill Levels list navigation', 'marketingops' ),
 			),
 			'hierarchical'      => true,
 			'public'            => true,
@@ -8854,11 +8854,11 @@ if ( ! function_exists( 'moc_strategists_box_inner_html' ) ) {
 		<div class="box-inner" data-sid="<?php echo esc_attr( $strategist_id ); ?>" data-uid="<?php echo esc_attr( $user_id ); ?>">
 			<div class="member-img">
 				<?php if ( ! empty( $profile_picture ) ) { ?>
-					<div class="m-img"><img alt="<?php echo esc_html( sprintf( __( '%1$s-user-image', 'marketing-ops-core' ), sanitize_title( $name ) ) ); ?>" src="<?php echo esc_url( $profile_picture ); ?>"></div>
+					<div class="m-img"><img alt="<?php echo esc_html( sprintf( __( '%1$s-user-image', 'marketingops' ), sanitize_title( $name ) ) ); ?>" src="<?php echo esc_url( $profile_picture ); ?>"></div>
 				<?php } ?>
 
 				<?php if ( ! empty( $company_logo ) ) { ?>
-					<div class="m-logo"><img alt="<?php echo esc_html( sprintf( __( '%1$s-company-logo', 'marketing-ops-core' ), sanitize_title( $company_name ) ) ); ?>" src="<?php echo esc_url( $company_logo ); ?>"></div>
+					<div class="m-logo"><img alt="<?php echo esc_html( sprintf( __( '%1$s-company-logo', 'marketingops' ), sanitize_title( $company_name ) ) ); ?>" src="<?php echo esc_url( $company_logo ); ?>"></div>
 				<?php } ?>
 			</div>
 			<div class="m-content">
@@ -8866,14 +8866,14 @@ if ( ! function_exists( 'moc_strategists_box_inner_html' ) ) {
 				<p><?php echo wp_kses_post( $member_position ); ?></p>
 				<div class="btn-text-change">
 					<?php if ( ! empty( $first_cat ) ) { ?>
-						<a href="<?php echo esc_url( sprintf( __( '/strategists/?cat=%1$s', 'marketing-ops-core' ), $first_cat->slug ) ); ?>" title="<?php echo esc_html( sprintf( __( 'Filter the strategists by %1$s', 'marketing-ops-core' ), $first_cat->name ) ); ?>"><?php echo esc_html( $first_cat->name ); ?></a>
+						<a href="<?php echo esc_url( sprintf( __( '/strategists/?cat=%1$s', 'marketingops' ), $first_cat->slug ) ); ?>" title="<?php echo esc_html( sprintf( __( 'Filter the strategists by %1$s', 'marketingops' ), $first_cat->name ) ); ?>"><?php echo esc_html( $first_cat->name ); ?></a>
 					<?php } ?>
 
 					<?php if ( 1 < count( $categories ) ) { ?>
 						<a href="<?php echo esc_url( get_permalink( $strategist_id ) ); ?>">+<?php echo esc_html( count( $categories ) - 1 ); ?></a>
 					<?php } ?>
 					<div class="h-gradiant-btn">
-						<a href="<?php echo esc_url( get_permalink( $strategist_id ) ); ?>"><?php esc_html_e( 'View strategist', 'marketing-ops-core' ); ?> <img src="/wp-content/uploads/2023/08/icons8_right_arrow_1-1.png" alt="icons8 right arrow" title="<?php echo esc_html( sprintf( __( 'View Strategist, %1$s', 'marketing-ops-core' ), $name ) ); ?>"></a>
+						<a href="<?php echo esc_url( get_permalink( $strategist_id ) ); ?>"><?php esc_html_e( 'View strategist', 'marketingops' ); ?> <img src="/wp-content/uploads/2023/08/icons8_right_arrow_1-1.png" alt="icons8 right arrow" title="<?php echo esc_html( sprintf( __( 'View Strategist, %1$s', 'marketingops' ), $name ) ); ?>"></a>
 					</div>
 				</div>
 			</div>
@@ -8949,7 +8949,7 @@ if ( ! function_exists( 'moc_template_card_box_html' ) ) {
 				<h3 class="specifiation">Show full desctiption <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.7501 0.138889C9.70969 0.138889 10.5001 0.929296 10.5001 1.88889L10.5001 6.16667L12.421 4.24577C12.4754 4.18982 12.5405 4.14536 12.6124 4.11503C12.6844 4.0847 12.7616 4.0691 12.8397 4.06918C12.9557 4.06932 13.069 4.10404 13.1652 4.1689C13.2613 4.23376 13.336 4.32581 13.3796 4.4333C13.4232 4.5408 13.4337 4.65884 13.4099 4.77237C13.3861 4.88589 13.329 4.98974 13.2459 5.07064L10.3292 7.98731C10.2198 8.09666 10.0714 8.15809 9.91676 8.15809C9.76208 8.15809 9.61372 8.09666 9.50432 7.98731L6.58766 5.07064C6.53167 5.01689 6.48698 4.95251 6.45619 4.88127C6.42539 4.81002 6.40913 4.73335 6.40834 4.65575C6.40755 4.57814 6.42225 4.50115 6.45159 4.4293C6.48092 4.35745 6.5243 4.29217 6.57918 4.23729C6.63406 4.18241 6.69934 4.13903 6.77119 4.1097C6.84304 4.08036 6.92003 4.06566 6.99764 4.06645C7.07524 4.06724 7.15191 4.0835 7.22315 4.1143C7.2944 4.14509 7.35878 4.18978 7.41253 4.24577L9.33343 6.16667L9.33343 1.88889C9.33343 1.5599 9.07909 1.30556 8.7501 1.30556L0.591616 1.30552C0.514316 1.30661 0.437572 1.29233 0.365841 1.26351C0.294109 1.23468 0.228821 1.19189 0.173772 1.13761C0.118723 1.08334 0.0750112 1.01866 0.0451755 0.947343C0.0153388 0.876026 -2.5807e-05 0.799491 -2.58002e-05 0.722184C-2.57934e-05 0.644878 0.0153389 0.568343 0.0451755 0.497026C0.0750112 0.425709 0.118723 0.361034 0.173772 0.306758C0.228821 0.252482 0.294109 0.209688 0.365841 0.180863C0.437572 0.152039 0.514317 0.137758 0.591616 0.138851L8.7501 0.138889Z" fill="#8F1D9B"/></svg></h3>
 
 				<a href="#" class="downloadbtn template-download">
-					<span><?php esc_html_e( 'Download', 'marketing-ops-core' ); ?></span>
+					<span><?php esc_html_e( 'Download', 'marketingops' ); ?></span>
 					<i><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none"><g clip-path="url(#clip0_12408_14530)"><path d="M8.12631 5.23446C9.01736 5.23446 9.75131 5.96841 9.75131 6.85946L9.75131 10.8317L11.535 9.048C11.5855 8.99604 11.646 8.95476 11.7128 8.92659C11.7796 8.89843 11.8513 8.88395 11.9238 8.88402C12.0315 8.88415 12.1367 8.91639 12.226 8.97661C12.3153 9.03684 12.3846 9.12232 12.4251 9.22214C12.4656 9.32195 12.4754 9.43156 12.4533 9.53698C12.4312 9.64239 12.3781 9.73882 12.3009 9.81395L9.59262 12.5223C9.49103 12.6238 9.35328 12.6809 9.20964 12.6809C9.06601 12.6809 8.92825 12.6238 8.82667 12.5223L6.11833 9.81395C6.06635 9.76403 6.02484 9.70425 5.99625 9.6381C5.96766 9.57195 5.95255 9.50075 5.95182 9.42869C5.95109 9.35662 5.96474 9.28514 5.99198 9.21842C6.01922 9.15169 6.0595 9.09108 6.11046 9.04012C6.16142 8.98916 6.22203 8.94888 6.28876 8.92164C6.35548 8.8944 6.42696 8.88075 6.49903 8.88148C6.57109 8.88221 6.64228 8.89732 6.70844 8.92591C6.77459 8.95451 6.83437 8.99601 6.88428 9.048L8.66797 10.8317L8.66798 6.85946C8.66798 6.55397 8.4318 6.3178 8.12631 6.3178L0.550579 6.31776C0.478802 6.31878 0.407539 6.30552 0.340932 6.27875C0.274324 6.25198 0.213698 6.21225 0.162581 6.16185C0.111464 6.11145 0.0708751 6.05139 0.0431709 5.98517C0.0154657 5.91895 0.00119871 5.84788 0.00119872 5.77609C0.00119873 5.70431 0.0154657 5.63324 0.0431709 5.56702C0.0708751 5.5008 0.111464 5.44074 0.162581 5.39034C0.213698 5.33994 0.274324 5.30021 0.340932 5.27344C0.407539 5.24667 0.478802 5.23341 0.550579 5.23443L8.12631 5.23446Z" fill="white"/></g><defs><clipPath id="clip0_12408_14530"><rect width="13" height="13" fill="white" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 13 0)"/></clipPath></defs></svg></i>
 				</a>
 			</div>
@@ -8991,7 +8991,7 @@ if ( ! function_exists( 'moc_template_card_box_html' ) ) {
 						<?php echo wp_kses_post( get_post_field( 'post_content', $template_id ) ); ?>
 
 						<a href="#" class="downloadbtn template-download">
-							<span><?php esc_html_e( 'Download', 'marketing-ops-core' ); ?></span>
+							<span><?php esc_html_e( 'Download', 'marketingops' ); ?></span>
 							<i><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none"><g clip-path="url(#clip0_12408_14530)"><path d="M8.12631 5.23446C9.01736 5.23446 9.75131 5.96841 9.75131 6.85946L9.75131 10.8317L11.535 9.048C11.5855 8.99604 11.646 8.95476 11.7128 8.92659C11.7796 8.89843 11.8513 8.88395 11.9238 8.88402C12.0315 8.88415 12.1367 8.91639 12.226 8.97661C12.3153 9.03684 12.3846 9.12232 12.4251 9.22214C12.4656 9.32195 12.4754 9.43156 12.4533 9.53698C12.4312 9.64239 12.3781 9.73882 12.3009 9.81395L9.59262 12.5223C9.49103 12.6238 9.35328 12.6809 9.20964 12.6809C9.06601 12.6809 8.92825 12.6238 8.82667 12.5223L6.11833 9.81395C6.06635 9.76403 6.02484 9.70425 5.99625 9.6381C5.96766 9.57195 5.95255 9.50075 5.95182 9.42869C5.95109 9.35662 5.96474 9.28514 5.99198 9.21842C6.01922 9.15169 6.0595 9.09108 6.11046 9.04012C6.16142 8.98916 6.22203 8.94888 6.28876 8.92164C6.35548 8.8944 6.42696 8.88075 6.49903 8.88148C6.57109 8.88221 6.64228 8.89732 6.70844 8.92591C6.77459 8.95451 6.83437 8.99601 6.88428 9.048L8.66797 10.8317L8.66798 6.85946C8.66798 6.55397 8.4318 6.3178 8.12631 6.3178L0.550579 6.31776C0.478802 6.31878 0.407539 6.30552 0.340932 6.27875C0.274324 6.25198 0.213698 6.21225 0.162581 6.16185C0.111464 6.11145 0.0708751 6.05139 0.0431709 5.98517C0.0154657 5.91895 0.00119871 5.84788 0.00119872 5.77609C0.00119873 5.70431 0.0154657 5.63324 0.0431709 5.56702C0.0708751 5.5008 0.111464 5.44074 0.162581 5.39034C0.213698 5.33994 0.274324 5.30021 0.340932 5.27344C0.407539 5.24667 0.478802 5.23341 0.550579 5.23443L8.12631 5.23446Z" fill="white"></path></g><defs><clipPath id="clip0_12408_14530"><rect width="13" height="13" fill="white" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 13 0)"></rect></clipPath></defs></svg></i>
 						</a>
 						<h3 class="specifiation [ js-collapser ]"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none"><g clip-path="url(#clip0_1_239)"><path d="M5.2499 8.86111C4.29031 8.86111 3.4999 8.0707 3.4999 7.11111L3.49991 2.83333L1.57901 4.75423C1.52458 4.81018 1.45948 4.85464 1.38756 4.88497C1.31564 4.9153 1.23836 4.9309 1.16031 4.93082C1.04431 4.93068 0.930991 4.89596 0.834823 4.8311C0.738655 4.76624 0.664005 4.67419 0.620409 4.5667C0.576813 4.4592 0.56625 4.34116 0.590071 4.22763C0.613891 4.11411 0.671012 4.01026 0.754138 3.92936L3.6708 1.01269C3.7802 0.903338 3.92856 0.841907 4.08324 0.841907C4.23792 0.841907 4.38628 0.903338 4.49568 1.01269L7.41234 3.92936C7.46833 3.98311 7.51302 4.04749 7.54381 4.11873C7.57461 4.18998 7.59087 4.26665 7.59166 4.34425C7.59245 4.42186 7.57775 4.49885 7.54841 4.5707C7.51908 4.64255 7.4757 4.70783 7.42082 4.76271C7.36594 4.81759 7.30066 4.86097 7.22881 4.8903C7.15696 4.91964 7.07997 4.93434 7.00236 4.93355C6.92476 4.93276 6.84809 4.9165 6.77685 4.8857C6.7056 4.85491 6.64122 4.81022 6.58747 4.75423L4.66657 2.83333L4.66657 7.11111C4.66657 7.4401 4.92091 7.69444 5.2499 7.69444L13.4084 7.69448C13.4857 7.69339 13.5624 7.70767 13.6342 7.73649C13.7059 7.76532 13.7712 7.80811 13.8262 7.86239C13.8813 7.91666 13.925 7.98134 13.9548 8.05266C13.9847 8.12397 14 8.20051 14 8.27782C14 8.35512 13.9847 8.43166 13.9548 8.50297C13.925 8.57429 13.8813 8.63897 13.8262 8.69324C13.7712 8.74752 13.7059 8.79031 13.6342 8.81914C13.5624 8.84796 13.4857 8.86224 13.4084 8.86115L5.2499 8.86111Z" fill="#F2477E"/></g><defs><clipPath id="clip0_1_239"><rect width="14" height="14" fill="white" transform="matrix(1 8.74228e-08 8.74228e-08 -1 0 14.5)"/></clipPath></defs></svg> Show less</h3>
@@ -9056,7 +9056,7 @@ if ( ! function_exists( 'moc_conference_vault_video_box_html' ) ) {
 						}
 						?>
 					<?php } else { ?>
-						<img src="/wp-content/uploads/2024/05/Rectangle-868.jpg" alt="conference-video-default-image" title="<?php esc_html_e( 'Conference Video Default Image', 'marketing-ops-core' ); ?>" />
+						<img src="/wp-content/uploads/2024/05/Rectangle-868.jpg" alt="conference-video-default-image" title="<?php esc_html_e( 'Conference Video Default Image', 'marketingops' ); ?>" />
 					<?php } ?>
 
 					<div class="overlayimagicon openPopupBtn">
@@ -9071,7 +9071,7 @@ if ( ! function_exists( 'moc_conference_vault_video_box_html' ) ) {
 
 					<!-- Session Author -->
 					<?php if ( ! empty( $session_by ) ) { ?>
-						<small><?php echo esc_html( sprintf( __( 'by %1$s', 'marketing-ops-core' ), $session_by ) ); ?></small>
+						<small><?php echo esc_html( sprintf( __( 'by %1$s', 'marketingops' ), $session_by ) ); ?></small>
 					<?php } ?>
 
 					<!-- Session Short Description -->
@@ -9170,7 +9170,7 @@ if ( ! function_exists( 'moc_conference_vault_main_html' ) ) {
 			if ( ! empty( $video_ids ) && is_array( $video_ids ) ) { ?>
 				<div class="conferencevaultevent">
 					<h2><?php echo wp_kses_post( $term->name ); ?></h2>
-					<p><?php echo esc_html( sprintf( _n( '%s session', '%s sessions', $videos_query->found_posts, 'marketing-ops-core' ), number_format_i18n( $videos_query->found_posts ) ) ); ?></p>
+					<p><?php echo esc_html( sprintf( _n( '%s session', '%s sessions', $videos_query->found_posts, 'marketingops' ), number_format_i18n( $videos_query->found_posts ) ) ); ?></p>
 					<div class="conferencevaultinner_innerright_inner">
 						<ul>
 							<?php
@@ -9182,7 +9182,7 @@ if ( ! function_exists( 'moc_conference_vault_main_html' ) ) {
 								<div class="conferencevaultinnergridboximage">
 									<div class="conferencevaultinnergridboximageshowmore">
 										<a target="_blank" href="<?php echo esc_url( get_term_link( $term->term_id ) ); ?>" title="<?php echo wp_kses_post( $term->name ); ?>">
-										<?php esc_html_e( 'Show this event', 'marketing-ops-core' ); ?>
+										<?php esc_html_e( 'Show this event', 'marketingops' ); ?>
 											<i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_26_82)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#242730"/></g><defs><clipPath id="clip0_26_82"><rect width="15" height="11" fill="white"/></clipPath></defs></svg></i>
 										</a>
 									</div>
@@ -9197,7 +9197,7 @@ if ( ! function_exists( 'moc_conference_vault_main_html' ) ) {
 		<?php } ?>
 		<!-- <div class="confernceloadmore">
 			<div class="confernceloadmoreinner">
-				<button type="button"><?php // esc_html_e( 'Load More', 'marketing-ops-core' ); ?></button>
+				<button type="button"><?php // esc_html_e( 'Load More', 'marketingops' ); ?></button>
 			</div>
 		</div> -->
 		<?php
@@ -9219,7 +9219,7 @@ if ( ! function_exists( 'moc_no_conference_found_html' ) ) {
 	 * @since 1.0.0
 	 */
 	function moc_no_conference_found_html( $message = '' ) {
-		$message = ( empty( $message ) ) ? __( 'No videos found matching your search criteria. Please try again.', 'marketing-ops-core' ) : $message;
+		$message = ( empty( $message ) ) ? __( 'No videos found matching your search criteria. Please try again.', 'marketingops' ) : $message;
 
 		// Start preparing the HTML.
 		ob_start();
@@ -9227,7 +9227,7 @@ if ( ! function_exists( 'moc_no_conference_found_html' ) ) {
 		<div class="ops-register no-conference-selected">
 			<div class="title"><p><?php echo esc_html( $message ); ?></p></div>
 			<div class="r-btn">
-				<a class="member-only-sessions-registration-btn" title="<?php esc_html_e( 'Reset', 'marketing-ops-core' ); ?>" href="/conference-vault/"><?php esc_html_e( 'Reset Filters', 'marketing-ops-core' ); ?>&nbsp;
+				<a class="member-only-sessions-registration-btn" title="<?php esc_html_e( 'Reset', 'marketingops' ); ?>" href="/conference-vault/"><?php esc_html_e( 'Reset Filters', 'marketingops' ); ?>&nbsp;
 					<img decoding="async" src="/wp-content/uploads/2023/08/icons8_right_arrow_1-1.png" alt="icons8 right arrow 1 1" title="arrow-img" />
 				</a>
 			</div>
@@ -9251,36 +9251,36 @@ if ( ! function_exists( 'moc_agency_custom_post_type_and_category_taxonomy' ) ) 
 		register_post_type(
 			'agency',
 			array(
-				'label'               => __( 'Agencies', 'marketing-ops-core' ),
-				'description'         => __( 'Its custom post type for marketingops agencies.', 'marketing-ops-core' ),
+				'label'               => __( 'Agencies', 'marketingops' ),
+				'description'         => __( 'Its custom post type for marketingops agencies.', 'marketingops' ),
 				'labels'              => array(
-					'name'                  => _x( 'Agencies', 'Template General Name', 'marketing-ops-core' ),
-					'singular_name'         => _x( 'Agency', 'Template Singular Name', 'marketing-ops-core' ),
-					'menu_name'             => __( 'Agencies', 'marketing-ops-core' ),
-					'name_admin_bar'        => __( 'Agencies', 'marketing-ops-core' ),
-					'archives'              => __( 'Agency Archives', 'marketing-ops-core' ),
-					'attributes'            => __( 'Agency Attributes', 'marketing-ops-core' ),
-					'parent_item_colon'     => __( 'Parent Agency:', 'marketing-ops-core' ),
-					'all_items'             => __( 'All Agencies', 'marketing-ops-core' ),
-					'add_new_item'          => __( 'Add New Agency', 'marketing-ops-core' ),
-					'add_new'               => __( 'Add New', 'marketing-ops-core' ),
-					'new_item'              => __( 'New Agency', 'marketing-ops-core' ),
-					'edit_item'             => __( 'Edit Agency', 'marketing-ops-core' ),
-					'update_item'           => __( 'Update Agency', 'marketing-ops-core' ),
-					'view_item'             => __( 'View Agency', 'marketing-ops-core' ),
-					'view_items'            => __( 'View Agencies', 'marketing-ops-core' ),
-					'search_items'          => __( 'Search Agency', 'marketing-ops-core' ),
-					'not_found'             => __( 'No Agency found', 'marketing-ops-core' ),
-					'not_found_in_trash'    => __( 'No Agency found in trash', 'marketing-ops-core' ),
-					'featured_image'        => __( 'Featured Image', 'marketing-ops-core' ),
-					'set_featured_image'    => __( 'Set featured image', 'marketing-ops-core' ),
-					'remove_featured_image' => __( 'Remove featured image', 'marketing-ops-core' ),
-					'use_featured_image'    => __( 'Use as featured image', 'marketing-ops-core' ),
-					'insert_into_item'      => __( 'Insert into Agency', 'marketing-ops-core' ),
-					'uploaded_to_this_item' => __( 'Uploaded to this Agency', 'marketing-ops-core' ),
-					'items_list'            => __( 'Agencies list', 'marketing-ops-core' ),
-					'items_list_navigation' => __( 'Agencies list navigation', 'marketing-ops-core' ),
-					'filter_items_list'     => __( 'Filter Agencies list', 'marketing-ops-core' ),
+					'name'                  => _x( 'Agencies', 'Template General Name', 'marketingops' ),
+					'singular_name'         => _x( 'Agency', 'Template Singular Name', 'marketingops' ),
+					'menu_name'             => __( 'Agencies', 'marketingops' ),
+					'name_admin_bar'        => __( 'Agencies', 'marketingops' ),
+					'archives'              => __( 'Agency Archives', 'marketingops' ),
+					'attributes'            => __( 'Agency Attributes', 'marketingops' ),
+					'parent_item_colon'     => __( 'Parent Agency:', 'marketingops' ),
+					'all_items'             => __( 'All Agencies', 'marketingops' ),
+					'add_new_item'          => __( 'Add New Agency', 'marketingops' ),
+					'add_new'               => __( 'Add New', 'marketingops' ),
+					'new_item'              => __( 'New Agency', 'marketingops' ),
+					'edit_item'             => __( 'Edit Agency', 'marketingops' ),
+					'update_item'           => __( 'Update Agency', 'marketingops' ),
+					'view_item'             => __( 'View Agency', 'marketingops' ),
+					'view_items'            => __( 'View Agencies', 'marketingops' ),
+					'search_items'          => __( 'Search Agency', 'marketingops' ),
+					'not_found'             => __( 'No Agency found', 'marketingops' ),
+					'not_found_in_trash'    => __( 'No Agency found in trash', 'marketingops' ),
+					'featured_image'        => __( 'Featured Image', 'marketingops' ),
+					'set_featured_image'    => __( 'Set featured image', 'marketingops' ),
+					'remove_featured_image' => __( 'Remove featured image', 'marketingops' ),
+					'use_featured_image'    => __( 'Use as featured image', 'marketingops' ),
+					'insert_into_item'      => __( 'Insert into Agency', 'marketingops' ),
+					'uploaded_to_this_item' => __( 'Uploaded to this Agency', 'marketingops' ),
+					'items_list'            => __( 'Agencies list', 'marketingops' ),
+					'items_list_navigation' => __( 'Agencies list navigation', 'marketingops' ),
+					'filter_items_list'     => __( 'Filter Agencies list', 'marketingops' ),
 				),
 				'supports'            => array( 'title', 'editor', 'author', 'excerpt', 'thumbnail' ),
 				'hierarchical'        => false,

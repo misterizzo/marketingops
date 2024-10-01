@@ -280,40 +280,40 @@ class Marketing_Ops_Core_Public {
 			array(
 				'ajaxurl'                         => admin_url( 'admin-ajax.php' ),
 				'plugin_url'                      => MOC_PLUGIN_URL,
-				'read_text_article'               => ! empty ( get_field( 'artilcle_read_time_text', 'option' ) ) ? get_field( 'artilcle_read_time_text', 'option' ) : esc_html__( 'min read', 'marketing-ops-core' ),
-				'read_text_workshop'              => ! empty ( get_field( 'read_time_workshop', 'option' ) ) ? get_field( 'read_time_workshop', 'option' ) : esc_html__( 'min read', 'marketing-ops-core' ),
+				'read_text_article'               => ! empty ( get_field( 'artilcle_read_time_text', 'option' ) ) ? get_field( 'artilcle_read_time_text', 'option' ) : esc_html__( 'min read', 'marketingops' ),
+				'read_text_workshop'              => ! empty ( get_field( 'read_time_workshop', 'option' ) ) ? get_field( 'read_time_workshop', 'option' ) : esc_html__( 'min read', 'marketingops' ),
 				'moc_post_type'                   => ! empty( $post->ID ) ? get_post_type( $post->ID ) : '',
 				'theme_path'                      => get_stylesheet_directory_uri(), 
 				'current_user_id'                 => ( is_user_logged_in() ) ? get_current_user_id() : 0,
 				'version_base_time'               => time(),
-				'toast_success_heading'           => __( 'Woohhoooo! Success..', 'marketing-ops-core' ),
-				'toast_error_heading'             => __( 'Ooops! Error..', 'marketing-ops-core' ),
-				'invalid_empty_message'           => __( 'There are a few errors that need to be addressed.', 'marketing-ops-core' ),
-				'edit_save_btn_text'              => __( 'Save', 'marketing-ops-core' ),
-				'edit_save_btn_processing_text'   => __( 'Saving..', 'marketing-ops-core' ),
-				'user_bio_empty_err_msg'          => __( 'This info. is required.', 'marketing-ops-core' ),
-				'user_wrong_website_url_err_msg'  => __( 'Website URL is invalid.', 'marketing-ops-core' ),
+				'toast_success_heading'           => __( 'Woohhoooo! Success..', 'marketingops' ),
+				'toast_error_heading'             => __( 'Ooops! Error..', 'marketingops' ),
+				'invalid_empty_message'           => __( 'There are a few errors that need to be addressed.', 'marketingops' ),
+				'edit_save_btn_text'              => __( 'Save', 'marketingops' ),
+				'edit_save_btn_processing_text'   => __( 'Saving..', 'marketingops' ),
+				'user_bio_empty_err_msg'          => __( 'This info. is required.', 'marketingops' ),
+				'user_wrong_website_url_err_msg'  => __( 'Website URL is invalid.', 'marketingops' ),
 				'moc_body_class'                  => $moc_body_class,
-				'moc_image_extention_is_invalid'  => __( 'Invalid file selected. Allowed extensions are: ' . $get_allowed_image_ext, 'marketing-ops-core' ),
+				'moc_image_extention_is_invalid'  => __( 'Invalid file selected. Allowed extensions are: ' . $get_allowed_image_ext, 'marketingops' ),
 				'moc_image_valid_ext'             => $explod_option,
 				'maximum_experience_time_limit'   => ! empty( get_field( 'maximum_experience_time_limit', 'option' ) ) ? get_field( 'maximum_experience_time_limit', 'option' ) : 40,
-				'moc_experience_max_length_err'   => __( 'Max. allowed: 40yrs.', 'marketing-ops-core' ),
-				'moc_experience_min_length_err'   => __( 'Invalid experience.', 'marketing-ops-core' ),
-				'moc_only_numbers_not_allowed'    => __( 'You can not add only numbers.', 'marketing-ops-core' ),
-				'moc_social_links_err_message'    => __( 'Social media URL invalid.', 'marketing-ops-core' ),
-				'moc_social_link_valid_url_err'   => __( 'The selected social media doesn\'t match the URL.', 'marketing-ops-core' ),
-				'moc_user_wrong_old_password_err' => __( 'Your old password is incorrect. Please type in the correct password to proceed.', 'marketing-ops-core' ),
+				'moc_experience_max_length_err'   => __( 'Max. allowed: 40yrs.', 'marketingops' ),
+				'moc_experience_min_length_err'   => __( 'Invalid experience.', 'marketingops' ),
+				'moc_only_numbers_not_allowed'    => __( 'You can not add only numbers.', 'marketingops' ),
+				'moc_social_links_err_message'    => __( 'Social media URL invalid.', 'marketingops' ),
+				'moc_social_link_valid_url_err'   => __( 'The selected social media doesn\'t match the URL.', 'marketingops' ),
+				'moc_user_wrong_old_password_err' => __( 'Your old password is incorrect. Please type in the correct password to proceed.', 'marketingops' ),
 				'is_member_directory_page'        => is_page( $member_directory_page ) ? 'yes' : 'no',
 				'is_blog_listings_page'           => is_page( $blog_page ) ? 'yes' : 'no',
 				'is_podcast_listings_page'        => is_page( $podcast_page ) ? 'yes' : 'no',
 				'is_training_seach_page'          => is_page( $training_search_page ) ? 'yes' : 'no',
 				'is_training_index_page'          => is_page( $training_page ) ? 'yes' : 'no',
 				'moc_otp_code'                    => $otp,
-				'moc_valid_email_error'           => __( 'Please enter valid email address.', 'marketing-ops-core' ),
-				'moc_valid_username_error'        => __( 'Please enter valid username.', 'marketing-ops-core' ),
-				'moc_work_period_invalid'         => __( 'Work period invalid.', 'marketing-ops-core' ),
-				'password_strength_error'         => __( 'Password should contain a minimum of 1 uppercase character and a number with a length of min 6 characters.', 'marketing-ops-core' ),
-				'not_match_password_err'          => __( 'Password and confirm password does not match.', 'marketing-ops-core' ),
+				'moc_valid_email_error'           => __( 'Please enter valid email address.', 'marketingops' ),
+				'moc_valid_username_error'        => __( 'Please enter valid username.', 'marketingops' ),
+				'moc_work_period_invalid'         => __( 'Work period invalid.', 'marketingops' ),
+				'password_strength_error'         => __( 'Password should contain a minimum of 1 uppercase character and a number with a length of min 6 characters.', 'marketingops' ),
+				'not_match_password_err'          => __( 'Password and confirm password does not match.', 'marketingops' ),
 				'moc_otp_expired_duration'        => ! empty( get_field( 'otp_expired_duration', 'option' ) ) ? get_field( 'otp_expired_duration', 'option' ) : 60,
 				'moc_otp_expiration_time'         => ! empty( get_field( 'otp_expiration_time', 'option' ) ) ? get_field( 'otp_expiration_time', 'option' ) : 60,
 				'is_no_bs_martech_demos'          => is_page( $no_bs_martech_demos ) ? 'yes' : 'no',
@@ -541,7 +541,7 @@ class Marketing_Ops_Core_Public {
 					$company_featured_image_id  = get_post_thumbnail_id( $company_id );
 					$company_featured_image_url = ( 0 === $company_featured_image_id ) ? get_field( 'jobs_placeholder_image', 'option' ) : wp_get_attachment_url( $company_featured_image_id );
 					$company_title              = get_the_title( $company_id );
-					$positions_text             = sprintf( _n( '%d position', '%d positions', $jobs_count, 'marketing-ops-core' ), $jobs_count );
+					$positions_text             = sprintf( _n( '%d position', '%d positions', $jobs_count, 'marketingops' ), $jobs_count );
 					$job_locations              = ( ! empty( $company_data['job_locations'] ) && is_array( $company_data['job_locations'] ) ) ? array_unique( $company_data['job_locations'] ) : array();
 					$job_locations_text         = '';
 
@@ -550,9 +550,9 @@ class Marketing_Ops_Core_Public {
 						if ( 1 === count( $job_locations ) ) {
 							$job_locations_text = ( ! empty( $job_locations[0] ) ) ? $job_locations[0] : '';
 						} elseif ( 2 === count( $job_locations ) ) {
-							$job_locations_text = implode( __( 'and', 'marketing-ops-core' ), $job_locations );
+							$job_locations_text = implode( __( 'and', 'marketingops' ), $job_locations );
 						} else {
-							$job_locations_text = __( 'multiple locations', 'marketing-ops-core' );
+							$job_locations_text = __( 'multiple locations', 'marketingops' );
 						}
 					}
 					?>
@@ -710,7 +710,7 @@ class Marketing_Ops_Core_Public {
 									</ul>
 								</div>
 								<div class="jobsmeta_view_position_btn">
-									<a href="<?php the_job_permalink( $get_job_id ); ?>" class="view_position_btn"> <?php esc_html_e( 'View Position', 'marketing-ops-core' ); ?> 
+									<a href="<?php the_job_permalink( $get_job_id ); ?>" class="view_position_btn"> <?php esc_html_e( 'View Position', 'marketingops' ); ?> 
 										<span class="elementor-button-icon elementor-align-icon-right">
 											<svg width="18" height="10" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg">
 												<path d="M12.9316 0.494141C12.8196 0.494168 12.7103 0.527593 12.6174 0.590141C12.5246 0.652688 12.4525 0.741513 12.4104 0.84525C12.3684 0.948987 12.3582 1.06292 12.3812 1.17247C12.4043 1.28202 12.4595 1.3822 12.5398 1.46021L15.3295 4.25H1.31245C1.23792 4.24895 1.16391 4.26272 1.09474 4.29051C1.02557 4.31831 0.962618 4.35957 0.909535 4.41191C0.856452 4.46425 0.8143 4.52661 0.78553 4.59538C0.756759 4.66415 0.741943 4.73795 0.741943 4.8125C0.741943 4.88704 0.756759 4.96085 0.78553 5.02962C0.8143 5.09839 0.856452 5.16075 0.909535 5.21309C0.962618 5.26543 1.02557 5.30669 1.09474 5.33449C1.16391 5.36228 1.23792 5.37605 1.31245 5.375H15.3295L12.5398 8.16479C12.4858 8.21663 12.4427 8.27871 12.413 8.34741C12.3833 8.4161 12.3676 8.49003 12.3668 8.56487C12.3661 8.6397 12.3803 8.71394 12.4085 8.78322C12.4368 8.85251 12.4787 8.91545 12.5316 8.96837C12.5845 9.02129 12.6474 9.06312 12.7167 9.09141C12.786 9.1197 12.8603 9.13387 12.9351 9.13311C13.0099 9.13235 13.0839 9.11667 13.1525 9.08698C13.2212 9.05729 13.2833 9.01419 13.3352 8.9602L17.0852 5.2102C17.1906 5.10471 17.2498 4.96166 17.2498 4.8125C17.2498 4.66334 17.1906 4.52029 17.0852 4.41479L13.3352 0.664795C13.2827 0.6108 13.22 0.567875 13.1507 0.538562C13.0814 0.509249 13.0069 0.494144 12.9316 0.494141Z" fill="white"></path>
@@ -829,7 +829,7 @@ class Marketing_Ops_Core_Public {
 				<div class="moc_form_container">
 					<div class="moc_input_field">
 						<input type="text" id="search_keywords" name="search_keywords" placeholder= "<?php echo esc_html( $placeholder_text ); ?>" value = "<?php echo esc_html( $search_keyword ); ?>" />
-						<span class="moc_conditional_checkbox"><input type="checkbox" class="<?php echo esc_html( $page_is_class ); ?>" name="moc_free_workshops_only" id="moc_free_workshops_only"><label for="moc_free_workshops_only"><?php esc_html_e( 'Free Trainings Only', 'marketing-ops-core' ); ?></label></span>
+						<span class="moc_conditional_checkbox"><input type="checkbox" class="<?php echo esc_html( $page_is_class ); ?>" name="moc_free_workshops_only" id="moc_free_workshops_only"><label for="moc_free_workshops_only"><?php esc_html_e( 'Free Trainings Only', 'marketingops' ); ?></label></span>
 						<?php
 						if ( ! empty( $search_keyword ) ) {
 							?>
@@ -920,7 +920,7 @@ class Marketing_Ops_Core_Public {
 				<?php
 			}
 		} else {
-			// echo '<div class="no_filters_available"><h5>' . esc_html__( 'No filters available', 'marketing-ops-core' ) . '</h5></div>';
+			// echo '<div class="no_filters_available"><h5>' . esc_html__( 'No filters available', 'marketingops' ) . '</h5></div>';
 			echo '';
 		}
 		return ob_get_clean();
@@ -1102,7 +1102,7 @@ class Marketing_Ops_Core_Public {
 		// Return the AJAX response.
 		$response = array(
 			'code'          => 'marketinops-save-user-basic-info',
-			'toast_message' => __( 'Your basic information is updated.', 'marketing-ops-core' ),
+			'toast_message' => __( 'Your basic information is updated.', 'marketingops' ),
 			'html'          => $html,
 		);
 		wp_send_json_success( $response );
@@ -1153,17 +1153,17 @@ class Marketing_Ops_Core_Public {
 		// check existing password.
 		if ( '' === $user_o_password && '' === $user_n_password ) {
 			$message       .= 'marketinops-save-user-general-info';
-			$toast_message .= __( 'Your basic information is updated.', 'marketing-ops-core' );
+			$toast_message .= __( 'Your basic information is updated.', 'marketingops' );
 			$redirect_url   = '';
 		} else if ( ( true === $old_password ) && !empty( $user_n_password )  ) {
 			wp_set_password( $user_n_password, $user_id );
 			$message       .= 'marketinops-save-user-general-info';
-			$toast_message .= __( 'Your basic information is updated.', 'marketing-ops-core' );
+			$toast_message .= __( 'Your basic information is updated.', 'marketingops' );
 			$redirect_url   = site_url( 'log-in' );
 			wp_password_change_notification( get_userdata( $user_id ) );
 		} else {
 			$message       .= 'marketinops-wrong-old-password';
-			$toast_message .= __( 'There are a few errors that need to be addressed.', 'marketing-ops-core' );
+			$toast_message .= __( 'There are a few errors that need to be addressed.', 'marketingops' );
 			$redirect_url   = '';
 		}
 		
@@ -1226,7 +1226,7 @@ class Marketing_Ops_Core_Public {
 		wp_send_json_success(
 			array(
 				'code'          => 'marketinops-save-martech',
-				'toast_message' => __( 'Your Martech tools experience is updated.', 'marketing-ops-core' ),
+				'toast_message' => __( 'Your Martech tools experience is updated.', 'marketingops' ),
 				'html'          => $html,
 			)
 		);
@@ -1268,7 +1268,7 @@ class Marketing_Ops_Core_Public {
 		// Return the AJAX response.
 		$response      = array(
 			'code'          => 'marketinops-save-skill',
-			'toast_message' => __( 'Your language skills are updated.', 'marketing-ops-core' ),
+			'toast_message' => __( 'Your language skills are updated.', 'marketingops' ),
 			'html'          => $html,
 		);
 		wp_send_json_success( $response );
@@ -1309,7 +1309,7 @@ class Marketing_Ops_Core_Public {
 		// Return the AJAX response.
 		$response      = array(
 			'code'          => 'marketinops-save-work',
-			'toast_message' => __( 'Your work experience is updated.', 'marketing-ops-core' ),
+			'toast_message' => __( 'Your work experience is updated.', 'marketingops' ),
 			'html'          => $html,
 		);
 		wp_send_json_success( $response );
@@ -1373,7 +1373,7 @@ class Marketing_Ops_Core_Public {
 		);
 		moc_update_syncari_data_tabels( $user_id, $update_syncari_data );
 		$message            = 'marketinops-update-user_avtar';
-		$toast_message      = __( 'Your profile picture uploaded.', 'marketing-ops-core' );
+		$toast_message      = __( 'Your profile picture uploaded.', 'marketingops' );
 		
 		
 		// Return the AJAX response.
@@ -1527,7 +1527,7 @@ class Marketing_Ops_Core_Public {
 		$current_url = home_url( $wp->request );
 		$flags       = ( ! empty ( $current_url ) && str_contains( $current_url, site_url( 'log-in' ) ) ) ? true : false;
 		if ( ! is_user_logged_in() && false === $flags ) {
-			$popup_text      = ! empty( get_field( 'login_text', 'option' ) ) ? get_field( 'login_text', 'option' ) : __( 'Tap here to login to your account', 'marketing-ops-core' );
+			$popup_text      = ! empty( get_field( 'login_text', 'option' ) ) ? get_field( 'login_text', 'option' ) : __( 'Tap here to login to your account', 'marketingops' );
 			$popup_site_logo = ! empty( get_field( 'site_small_logo', 'option' ) ) ? get_field( 'site_small_logo', 'option' ) : site_url() . '/wp-content/themes/hello-elementor_child/images/certificate/certificate_logo_small.png';
 			?>
 			<div class="custom_login_popup moc_custom_login_popup elementor-widget elementor-widget-html">
@@ -1597,7 +1597,7 @@ class Marketing_Ops_Core_Public {
 		if ( ! empty( $get_all_info['moc_certificates'] ) ) {
 			if ( ( $key = array_search( $certificate, $get_all_info['moc_certificates'] ) ) !== false) {
 				$message       = 'marketinops-alreay-exist-certificate';
-				$toast_err_msg = __( 'The selected certification is already added to your profile.', 'marketing-ops-core' );
+				$toast_err_msg = __( 'The selected certification is already added to your profile.', 'marketingops' );
 				$html                     = moc_selected_cerificate_html( $user_id );
 				$updated_db_user_ino      = get_user_meta( $user_id, 'user_all_info', true );
 				$updated_certificates_ids = $updated_db_user_ino['moc_certificates'];
@@ -1635,8 +1635,8 @@ class Marketing_Ops_Core_Public {
 				);
 				moc_update_syncari_data_tabels( $user_id, $update_syncari_data );
 				$html_for_sidebar         = moc_sidebar_certificate_html( $updated_certificates_ids );
-				$toast_err_msg            = __( 'Certification is added to your profile.', 'marketing-ops-core' );
-				$message                  = __( 'marketinops-added-certificate', 'marketing-ops-core' );
+				$toast_err_msg            = __( 'Certification is added to your profile.', 'marketingops' );
+				$message                  = __( 'marketinops-added-certificate', 'marketingops' );
 			}
 		} else {
 			$moc_certificates = array(
@@ -1672,8 +1672,8 @@ class Marketing_Ops_Core_Public {
 				'last_update_timestamp'   => gmdate('Y-m-d H:i:s'),
 			);
 			moc_update_syncari_data_tabels( $user_id, $update_syncari_data );
-			$toast_err_msg            = __( 'Your certificate is uploaded.', 'marketing-ops-core' );
-			$message                  = __( 'marketinops-added-certificate', 'marketing-ops-core' );
+			$toast_err_msg            = __( 'Your certificate is uploaded.', 'marketingops' );
+			$message                  = __( 'marketinops-added-certificate', 'marketingops' );
 		}
 		
 		
@@ -1731,7 +1731,7 @@ class Marketing_Ops_Core_Public {
 		// Return the AJAX response.
 		$response      = array(
 			'code'           => 'marketinops-deleted-certificate',
-			'toast_message'  => __( 'Your certificate is deleted.', 'marketing-ops-core' ),
+			'toast_message'  => __( 'Your certificate is deleted.', 'marketingops' ),
 			'html'           => $html,
 			'side_bar_html'  => $html_for_sidebar,
 			'added_class'    => $added_class,
@@ -1762,7 +1762,7 @@ class Marketing_Ops_Core_Public {
 		$author_bio                 = get_user_meta( $post_author_id, 'description', true );
 		?>
 		<div class="author-image-text">
-			<h5><?php echo sprintf( esc_html__( 'About The Author — %s', 'marketing-ops-core' ), $user_display_name ); ?></h5>
+			<h5><?php echo sprintf( esc_html__( 'About The Author — %s', 'marketingops' ), $user_display_name ); ?></h5>
 			<div class="wp-block-image">
 				<figure class="alignleft size-full is-resized">
 					<img class="wp-image" src="<?php echo esc_url( $post_author_image_url ); ?>" alt="<?php echo esc_attr( $post_author_name ); ?>" />
@@ -1819,8 +1819,8 @@ class Marketing_Ops_Core_Public {
 		// Return the AJAX response.
 		$response      = array(
 			'code'              => 'marketinops-be-guest-ops-cast',
-			'toast_message'     => __( 'We’ll have our team follow up with you soon, we’re looking forward to hosting you as a guest!', 'marketing-ops-core' ),
-			'toast_success_msg' => __( 'Thanks for reaching out.', 'marketing-ops-core' ),
+			'toast_message'     => __( 'We’ll have our team follow up with you soon, we’re looking forward to hosting you as a guest!', 'marketingops' ),
+			'toast_success_msg' => __( 'Thanks for reaching out.', 'marketingops' ),
 		);
 		wp_send_json_success( $response );
 		wp_die();
@@ -1867,7 +1867,7 @@ class Marketing_Ops_Core_Public {
 		// Return the AJAX response.
 		$response      = array(
 			'code'           => 'marketinops-add-custom-certificate',
-			'toast_message'  => __( 'Your request to add your certification has been submitted. One of our team member will get back to you soon!', 'marketing-ops-core' ),
+			'toast_message'  => __( 'Your request to add your certification has been submitted. One of our team member will get back to you soon!', 'marketingops' ),
 			'html'           => $html,
 		);
 		wp_send_json_success( $response );
@@ -1914,7 +1914,7 @@ class Marketing_Ops_Core_Public {
 		// Return the AJAX response.
 		$response      = array(
 			'code'           => 'marketinops-host-workshop',
-			'toast_message'  => __( 'Your request for hosting a workshop has been submitted. One of our team member will get back to you soon!', 'marketing-ops-core' ),
+			'toast_message'  => __( 'Your request for hosting a workshop has been submitted. One of our team member will get back to you soon!', 'marketingops' ),
 		);
 		wp_send_json_success( $response );
 		wp_die();
@@ -2121,17 +2121,17 @@ class Marketing_Ops_Core_Public {
 					if( 'experience_years' === $field_key ) {
 						$years_experiences = $options;
 						?>
-						<div class="expandableCollapsibleDiv"><h3 class="open"><?php esc_html_e( 'Years of experience', 'marketing-ops-core' ); ?></h3>	
+						<div class="expandableCollapsibleDiv"><h3 class="open"><?php esc_html_e( 'Years of experience', 'marketingops' ); ?></h3>	
 							<ul>
 								<li>
-									<input type="checkbox" name="experience_years[]" value="" id="any_year_exp" checked="checked" ><label for="any_year_exp"><?php esc_html_e( 'Any', 'marketing-ops-core' ); ?></label>
+									<input type="checkbox" name="experience_years[]" value="" id="any_year_exp" checked="checked" ><label for="any_year_exp"><?php esc_html_e( 'Any', 'marketingops' ); ?></label>
 								</li>
 								<?php 
 								if ( ! empty( $years_experiences ) && is_array( $years_experiences ) ) {
 									foreach ( $years_experiences as $years_experience ) {
 										?>
 										<li>
-											<input type="checkbox" name="experience_years[]" value="<?php echo esc_attr( $years_experience ); ?>" id="<?php echo esc_attr( $years_experience ); ?>"><label for="<?php echo esc_attr( $years_experience ); ?>"><?php echo esc_attr( $years_experience ); ?> <?php esc_html_e( 'years', 'marketing-ops-core' ); ?></label>
+											<input type="checkbox" name="experience_years[]" value="<?php echo esc_attr( $years_experience ); ?>" id="<?php echo esc_attr( $years_experience ); ?>"><label for="<?php echo esc_attr( $years_experience ); ?>"><?php echo esc_attr( $years_experience ); ?> <?php esc_html_e( 'years', 'marketingops' ); ?></label>
 										</li>
 
 										<?php
@@ -2211,11 +2211,11 @@ class Marketing_Ops_Core_Public {
 						<div class="moc_input_field">
 							<input placeholder="" class="member-search-form__input" type="search" id="member_s" name="member_s" title="Search" value="">
 							<div class="moc_members_count_value_div">
-								<span class="moc_jobs_search_keyword"><?php esc_html_e( 'Search query example', 'marketing-ops-core' )?></span>
+								<span class="moc_jobs_search_keyword"><?php esc_html_e( 'Search query example', 'marketingops' )?></span>
 								<span class="moc_members_count_value number_of_search moc_jobs_count_value"><?php echo esc_html( $fouded_posts_text ); ?></span>
 							</div>
 						</div>
-						<button class="member_search_form__submit" type="submit" title="Search" aria-label="Search"><?php esc_html_e( 'Search', 'marketing-ops-core' )?></button>
+						<button class="member_search_form__submit" type="submit" title="Search" aria-label="Search"><?php esc_html_e( 'Search', 'marketingops' )?></button>
 					</div>
 				</form>
 				<?php
@@ -2233,7 +2233,7 @@ class Marketing_Ops_Core_Public {
 		$saved_list_array = get_option( 'quick_filter_list' );
 		?>
 		<div class="quickfilter_container">
-			<div class="quicktitle"><?php esc_html_e( 'Quick filters', 'marketing-ops-core' ); ?></div>
+			<div class="quicktitle"><?php esc_html_e( 'Quick filters', 'marketingops' ); ?></div>
 			<ul class="quickvalues">
 			<?php
 			foreach ( $saved_list_array as $key => $values ) {
@@ -2250,10 +2250,10 @@ class Marketing_Ops_Core_Public {
 			</ul>
 		</div>
 		<div class="sortbycontainer">
-			<span class="sortby_text"><?php esc_html_e( 'Sort by', 'marketing-ops-core' ); ?></span>
+			<span class="sortby_text"><?php esc_html_e( 'Sort by', 'marketingops' ); ?></span>
 			<select class="sortby_members">
-				<option value="ASC"><?php esc_html_e( 'Newest', 'marketing-ops-core' ); ?></option>
-				<option value="DESC"><?php esc_html_e( 'Oldest', 'marketing-ops-core' ); ?></option>
+				<option value="ASC"><?php esc_html_e( 'Newest', 'marketingops' ); ?></option>
+				<option value="DESC"><?php esc_html_e( 'Oldest', 'marketingops' ); ?></option>
 			</select>
 		</div>
 		<?php
@@ -2631,7 +2631,7 @@ class Marketing_Ops_Core_Public {
 		if ( ! empty( $products_ids ) ) {
 			$html = moc_training_box_product_html( $products_ids );
 		} else {
-			$html = '<h3>'. esc_html( __( 'No products available.', 'marketing-ops-core' ) ) .'</h3>';
+			$html = '<h3>'. esc_html( __( 'No products available.', 'marketingops' ) ) .'</h3>';
 		}
 
 		$post_result_html = moc_post_count_results( $search_keyword, $products_ids, 'training', 'trainings' );
@@ -2789,7 +2789,7 @@ class Marketing_Ops_Core_Public {
 	 */
 	public function moc_change_html_apply_coupon( $coupon_label, $coupon ) {
 		$coupon_code  = $coupon->get_code();
-		$coupon_label = sprintf( __( 'Coupon: %1$s %2$s %3$s', 'marketing-ops-core' ), '<span>', $coupon_code, '</span>'  );
+		$coupon_label = sprintf( __( 'Coupon: %1$s %2$s %3$s', 'marketingops' ), '<span>', $coupon_code, '</span>'  );
 		return $coupon_label;
 	}
 	/**
@@ -2846,7 +2846,7 @@ class Marketing_Ops_Core_Public {
 			if ( username_exists( $username ) == null && email_exists( $email ) === false ) {
 				// Create the new user
 				$message .= 'marketingops-user-inserted-successfully';
-				$toast_message       .= __( 'You are successfully registered.', 'marketing-ops-core' );	
+				$toast_message       .= __( 'You are successfully registered.', 'marketingops' );	
 				$html                .= moc_otp_varification_html( $click_count );
 				$site_title           = get_option( 'blogname' );
 				$admin_email          = get_option('admin_email');
@@ -2861,10 +2861,10 @@ class Marketing_Ops_Core_Public {
 				wp_mail( $email, $subject_to_text, $body_content_to_text, $headers );
 			} else {
 				if (  email_exists( $email ) !== false ) {
-					$toast_message .= __( 'User with this email address already exists.', 'marketing-ops-core' );
+					$toast_message .= __( 'User with this email address already exists.', 'marketingops' );
 					$flag          .= 'email';
 				} else {
-					$toast_message .= __( 'This profile handle is already taken. Please change it to something else.', 'marketing-ops-core' );
+					$toast_message .= __( 'This profile handle is already taken. Please change it to something else.', 'marketingops' );
 					$flag          .= 'username';
 				}
 				$message       .= 'marketingops=already-email-exist';
@@ -2872,7 +2872,7 @@ class Marketing_Ops_Core_Public {
 			}
 		} else {
 			$message             .= 'marketingops-user-inserted-successfully';
-			$toast_message       .= __( 'OTP resent. Please check your inbox.', 'marketing-ops-core' );
+			$toast_message       .= __( 'OTP resent. Please check your inbox.', 'marketingops' );
 			$html                .= moc_otp_varification_html( $click_count );
 			$site_title           = get_option( 'blogname' );
 			$admin_email          = get_option('admin_email');
@@ -3007,14 +3007,14 @@ class Marketing_Ops_Core_Public {
 				}
 			} else {
 				$message       .= 'marketingops-not-verified-otp';
-				$toast_message .= __( 'A user already exists in our records.', 'marketing-ops-core' );
+				$toast_message .= __( 'A user already exists in our records.', 'marketingops' );
 			}
 			// wp_new_user_notification( $user_id );
 			$message       .= 'marketingops-verified-otp';
-			$toast_message .= __( 'OTP is verified and registration process initiated.', 'marketing-ops-core' );
+			$toast_message .= __( 'OTP is verified and registration process initiated.', 'marketingops' );
 		} else {
 			$message       .= 'marketingops-not-verified-otp';
-			$toast_message .= __( 'OTP invalid.', 'marketing-ops-core' );
+			$toast_message .= __( 'OTP invalid.', 'marketingops' );
 		}
 		$response      = array(
 			'code'             => $message,
@@ -3100,7 +3100,7 @@ class Marketing_Ops_Core_Public {
 				$author_image_url   = ! empty( $author_img_url ) ? $author_img_url[0] : get_avatar_url( $user_id, array( 'size' => 211 ) );
 				$image_url          = ! empty( $author_image_url ) ? $author_image_url : $default_author_img;
 				$message            = 'marketingops-success-final-steps';
-				$toast_message      = __( 'Profile data updated.', 'marketing-ops-core' );
+				$toast_message      = __( 'Profile data updated.', 'marketingops' );
 
 				if ( ! empty( $add_to_cart ) ) {
 					$get_product_permalink = get_the_permalink( $add_to_cart );
@@ -3125,11 +3125,11 @@ class Marketing_Ops_Core_Public {
 				$author_image_url   = ! empty( $author_img_url ) ? $author_img_url[0] : get_avatar_url( $user_id, array( 'size' => 211 ) );
 				$image_url          = ! empty( $author_image_url ) ? $author_image_url : $default_author_img;
 				$message            = 'marketinops-avtar-image-size-notcorrect';
-				$toast_message      = __( 'Please provide a picture of min. 212*212px and max. 512*512px for better profile views.', 'marketing-ops-core' );
+				$toast_message      = __( 'Please provide a picture of min. 212*212px and max. 512*512px for better profile views.', 'marketingops' );
 			}
 		} else {
 			$message            = 'marketingops-success-final-steps';
-			$toast_message      = __( 'Profile data updated.', 'marketing-ops-core' );
+			$toast_message      = __( 'Profile data updated.', 'marketingops' );
 			if ( ! empty( $add_to_cart ) ) {
 				$get_product_permalink = get_the_permalink( $add_to_cart );
 				$redirect_url      .= $get_product_permalink;
@@ -3201,7 +3201,7 @@ class Marketing_Ops_Core_Public {
 					// Redirect with a delay of 3 seconds
 					setTimeout(function(){
 						// Courses Loader HTML Append
-						var courses_loader_html = '<div class="courses_loader loader_bg hide"><span><?php esc_html_e( 'Taking you to the course…', 'marketing-ops-core' ); ?> </span><div class="loader"></div></div>'
+						var courses_loader_html = '<div class="courses_loader loader_bg hide"><span><?php esc_html_e( 'Taking you to the course…', 'marketingops' ); ?> </span><div class="loader"></div></div>'
 						$('body').append(courses_loader_html);
 						$('.courses_loader').addClass('show').removeClass('hide');
 					}, 3000);
@@ -3367,7 +3367,7 @@ class Marketing_Ops_Core_Public {
 			<div class="no_bs_index">
 				<div class="no_bs_container">
 					<div class="container_box">
-						<h2 class="moc_related_demo_heading"><?php esc_html_e( 'More Demos', 'marketing-ops-core' ); ?></h2>
+						<h2 class="moc_related_demo_heading"><?php esc_html_e( 'More Demos', 'marketingops' ); ?></h2>
 						<div class="no_bs_content_box">
 							<div class="box_container moc_no_bs_demo_loop_sectiion">
 								<?php echo moc_no_bs_demo_loop_html( $no_bs_demos, $paged, $count_posts, $posts_per_page, 'related' ); ?>
@@ -3601,11 +3601,11 @@ class Marketing_Ops_Core_Public {
 			update_user_caches( $user );
 		} else {
 			if ( array_key_exists( 'empty_username', $user_signon_response ) ) {
-				$user_response_msg = __( 'Email address does not exist!', 'marketing-ops-core' );
+				$user_response_msg = __( 'Email address does not exist!', 'marketingops' );
 			} else if ( array_key_exists( 'incorrect_password', $user_signon_response ) ) {
-				$user_response_msg = __( 'The password you entered for the user ' . $email . ' is incorrect.', 'marketing-ops-core' );
+				$user_response_msg = __( 'The password you entered for the user ' . $email . ' is incorrect.', 'marketingops' );
 			} else {
-				$user_response_msg = __( 'Something went wrong! Please try again.', 'marketing-ops-core' );
+				$user_response_msg = __( 'Something went wrong! Please try again.', 'marketingops' );
 			}
 			$message     = 'moc-failure-login';
 			$redirect_to = '';
@@ -3644,7 +3644,7 @@ class Marketing_Ops_Core_Public {
 			wp_send_json_success(
 				array(
 					'code'              => 'moc-forgot-password-failure',
-					'user_response_msg' => sprintf( __( 'We are unable to find an account with the email/surname, %1$s. Please try with a different email or username.', 'marketing-ops-core' ), $email ),
+					'user_response_msg' => sprintf( __( 'We are unable to find an account with the email/surname, %1$s. Please try with a different email or username.', 'marketingops' ), $email ),
 					'redirect_url'      => '',
 				)
 			);
@@ -3659,7 +3659,7 @@ class Marketing_Ops_Core_Public {
 		wp_send_json_success(
 			array(
 				'code'              => 'moc-forgot-password-success',
-				'user_response_msg' => __( 'Instructions to reset your account password has been sent to your email address. Please check your inbox.', 'marketing-ops-core' ),
+				'user_response_msg' => __( 'Instructions to reset your account password has been sent to your email address. Please check your inbox.', 'marketingops' ),
 				'redirect_url'      => site_url( 'log-in' ),
 			)
 		);
@@ -3702,7 +3702,7 @@ class Marketing_Ops_Core_Public {
 	 */
 	public function moc_change_shop_page_title_callback( $page_title ) {
 		if( 'Shop' === $page_title && is_shop() ) {
-			$page_title =  __( 'Swag', 'marketing-ops-core' );
+			$page_title =  __( 'Swag', 'marketingops' );
 		}
 		return $page_title;
 	}
@@ -3753,7 +3753,7 @@ class Marketing_Ops_Core_Public {
 							</defs>
 						</svg>			
 					</span>
-					<span class="elementor-button-text"><?php esc_html_e( 'Show more jobs', 'marketing-ops-core' ); ?></span>
+					<span class="elementor-button-text"><?php esc_html_e( 'Show more jobs', 'marketingops' ); ?></span>
 				</span>
 			</a>
 			<?php
@@ -3795,17 +3795,17 @@ class Marketing_Ops_Core_Public {
 					$badge_class    = '';
 
 					if ( empty( $member_slug ) || ! is_array( $member_slug ) ) {
-						$badge_text  = __( 'INACTIVE', 'marketing-ops-core' );
+						$badge_text  = __( 'INACTIVE', 'marketingops' );
 						$badge_class = 'inactive_tag';
 					} else {
 						if ( 1 === count( $member_slug ) && in_array( 'free-membership', $member_slug, true ) ) {
-							$badge_text  = __( 'FREE', 'marketing-ops-core' );
+							$badge_text  = __( 'FREE', 'marketingops' );
 							$badge_class = 'free_tag';
 						} elseif ( in_array( 'pro-plus-membership', $member_slug, true ) ) {
-							$badge_text  = __( 'PRO+', 'marketing-ops-core' );
+							$badge_text  = __( 'PRO+', 'marketingops' );
 							$badge_class = 'pro_plus_tag';
 						} else {
-							$badge_text  = __( 'PRO', 'marketing-ops-core' );
+							$badge_text  = __( 'PRO', 'marketingops' );
 							$badge_class = 'pro_tag';
 						}
 					}
@@ -3883,7 +3883,7 @@ class Marketing_Ops_Core_Public {
 								<div class="profile_menu_box_btn">
 									<div class="profile_pro_btn">
 										<a href="<?php echo esc_url( site_url( 'subscribe' ) ); ?>" class="btn gradient_btn">
-											<span class="text"><?php esc_html_e( 'Buy Pro subscription', 'marketing-ops-core' ); ?></span>
+											<span class="text"><?php esc_html_e( 'Buy Pro subscription', 'marketingops' ); ?></span>
 											<span class="svg">
 												<svg viewBox="0 0 15 8" fill="none" xmlns="http://www.w3.org/2000/svg">
 													<path d="M11.0262 0.494573C10.7892 0.485459 10.5693 0.621033 10.4725 0.837495C10.3745 1.05396 10.4167 1.30688 10.5807 1.48005L12.3728 3.41682H1.09283C0.882065 3.4134 0.687248 3.52391 0.581296 3.70619C0.474204 3.88734 0.474204 4.11292 0.581296 4.29406C0.687248 4.47634 0.882065 4.58685 1.09283 4.58344H12.3728L10.5807 6.52021C10.4349 6.67287 10.3836 6.89161 10.4452 7.09326C10.5067 7.29492 10.6719 7.44758 10.8769 7.49315C11.0831 7.53872 11.2973 7.46922 11.4375 7.31314L14.501 4.00013L11.4375 0.687111C11.3326 0.570905 11.1834 0.50027 11.0262 0.494573Z" fill="white"/>
@@ -3898,7 +3898,7 @@ class Marketing_Ops_Core_Public {
 								<div class="profile_menu_box_btn moc_community_forum_btn">
 									<div class="profile_pro_btn">
 										<a href="<?php echo esc_url( 'https://community.marketingops.com/oauth2/callback?__hstc=229962755.b93bca378ed6bbf1357104dfe4fb5e02.1655156614636.1655156614636.1655190485045.2&__hssc=229962755.1.1655190485045&__hsfp=1603849430' ); ?>" class="btn gradient_btn">
-											<span class="text"><?php esc_html_e( 'Community Forum', 'marketing-ops-core' ); ?></span>
+											<span class="text"><?php esc_html_e( 'Community Forum', 'marketingops' ); ?></span>
 											<span class="svg">
 												<svg viewBox="0 0 15 8" fill="none" xmlns="http://www.w3.org/2000/svg">
 													<path d="M11.0262 0.494573C10.7892 0.485459 10.5693 0.621033 10.4725 0.837495C10.3745 1.05396 10.4167 1.30688 10.5807 1.48005L12.3728 3.41682H1.09283C0.882065 3.4134 0.687248 3.52391 0.581296 3.70619C0.474204 3.88734 0.474204 4.11292 0.581296 4.29406C0.687248 4.47634 0.882065 4.58685 1.09283 4.58344H12.3728L10.5807 6.52021C10.4349 6.67287 10.3836 6.89161 10.4452 7.09326C10.5067 7.29492 10.6719 7.44758 10.8769 7.49315C11.0831 7.53872 11.2973 7.46922 11.4375 7.31314L14.501 4.00013L11.4375 0.687111C11.3326 0.570905 11.1834 0.50027 11.0262 0.494573Z" fill="white"/>
@@ -3915,7 +3915,7 @@ class Marketing_Ops_Core_Public {
 							?>
 							<li>
 								<a href="<?php echo esc_url( home_url() ); ?>/profile/?target=purchased_courses">
-									<span class="text"><?php esc_html_e( 'My Courses', 'marketing-ops-core' ); ?><span>
+									<span class="text"><?php esc_html_e( 'My Courses', 'marketingops' ); ?><span>
 								</a>
 							</li>
 							<?php
@@ -3936,7 +3936,7 @@ class Marketing_Ops_Core_Public {
 						?>
 						<li>
 							<a href="<?php echo esc_url( wp_logout_url( home_url() ) ); ?>">
-								<span class="text"><?php esc_html_e( 'Logout', 'marketing-ops-core' ); ?><span>
+								<span class="text"><?php esc_html_e( 'Logout', 'marketingops' ); ?><span>
 							</a>
 						</li>
 					</ul>
@@ -3974,7 +3974,7 @@ class Marketing_Ops_Core_Public {
 				<div class="r_menu_hover menu--close">
 					<div class="hover_menu_header">
 						<span class="menu_header_title">
-							<?php esc_html_e( 'Menu', 'marketing-ops-core' ); ?>
+							<?php esc_html_e( 'Menu', 'marketingops' ); ?>
 							<span class="sub-arrow">
 								<i class="fas fa-caret-down"></i>
 							</span>
@@ -4007,7 +4007,7 @@ class Marketing_Ops_Core_Public {
 										?>
 										<li class="menu-nav-item">
 											<a href="<?php echo esc_url( wp_logout_url( home_url() ) ); ?>" class="nav-item has-submenu" >
-												<span class="text"><?php esc_html_e( 'Logout', 'marketing-ops-core' ); ?><span>
+												<span class="text"><?php esc_html_e( 'Logout', 'marketingops' ); ?><span>
 											</a>
 										</li>
 										<?php
@@ -4020,8 +4020,8 @@ class Marketing_Ops_Core_Public {
 									?>
 									<li class="menu-nav-btn">
 										<div class="btn_container">
-											<a href="<?php echo esc_url( site_url( 'log-in' ) ); ?>" class="btn"><?php esc_html_e( 'Sign in', 'marketing-ops-core' ); ?></a>
-											<a href="<?php echo esc_url( site_url( 'subscribe' ) ); ?>" class="btn gradient_btn"><?php esc_html_e( 'Join Now', 'marketing-ops-core' ); ?></a>
+											<a href="<?php echo esc_url( site_url( 'log-in' ) ); ?>" class="btn"><?php esc_html_e( 'Sign in', 'marketingops' ); ?></a>
+											<a href="<?php echo esc_url( site_url( 'subscribe' ) ); ?>" class="btn gradient_btn"><?php esc_html_e( 'Join Now', 'marketingops' ); ?></a>
 										</div>
 									</li>
 									<?php
@@ -4055,17 +4055,17 @@ class Marketing_Ops_Core_Public {
 												$get_header_menus = get_field( 'top_header_user_menu', 'option' );
 
 												if ( empty( $member_slug ) || ! is_array( $member_slug ) ) {
-													$badge_text  = __( 'INACTIVE', 'marketing-ops-core' );
+													$badge_text  = __( 'INACTIVE', 'marketingops' );
 													$badge_class = 'inactive_tag';
 												} else {
 													if ( 1 === count( $member_slug ) && in_array( 'free-membership', $member_slug, true ) ) {
-														$badge_text  = __( 'FREE', 'marketing-ops-core' );
+														$badge_text  = __( 'FREE', 'marketingops' );
 														$badge_class = 'free_tag';
 													} elseif ( in_array( 'pro-plus-membership', $member_slug, true ) ) {
-														$badge_text  = __( 'PRO+', 'marketing-ops-core' );
+														$badge_text  = __( 'PRO+', 'marketingops' );
 														$badge_class = 'pro_plus_tag';
 													} else {
-														$badge_text  = __( 'PRO', 'marketing-ops-core' );
+														$badge_text  = __( 'PRO', 'marketingops' );
 														$badge_class = 'pro_tag';
 													}
 												}
@@ -4146,7 +4146,7 @@ class Marketing_Ops_Core_Public {
 																		<div class="profile_menu_box_btn">
 																			<div class="profile_pro_btn">
 																				<a href="<?php echo esc_url( site_url( 'subscribe' ) ); ?>" class="btn gradient_btn">
-																					<span class="text"><?php esc_html_e( 'Buy Pro subscription', 'marketing-ops-core' ); ?></span>
+																					<span class="text"><?php esc_html_e( 'Buy Pro subscription', 'marketingops' ); ?></span>
 																					<span class="svg">
 																						<svg viewBox="0 0 15 8" fill="none" xmlns="http://www.w3.org/2000/svg">
 																							<path d="M11.0262 0.494573C10.7892 0.485459 10.5693 0.621033 10.4725 0.837495C10.3745 1.05396 10.4167 1.30688 10.5807 1.48005L12.3728 3.41682H1.09283C0.882065 3.4134 0.687248 3.52391 0.581296 3.70619C0.474204 3.88734 0.474204 4.11292 0.581296 4.29406C0.687248 4.47634 0.882065 4.58685 1.09283 4.58344H12.3728L10.5807 6.52021C10.4349 6.67287 10.3836 6.89161 10.4452 7.09326C10.5067 7.29492 10.6719 7.44758 10.8769 7.49315C11.0831 7.53872 11.2973 7.46922 11.4375 7.31314L14.501 4.00013L11.4375 0.687111C11.3326 0.570905 11.1834 0.50027 11.0262 0.494573Z" fill="white"/>
@@ -4175,7 +4175,7 @@ class Marketing_Ops_Core_Public {
 																?>
 																<li>
 																	<a href="<?php echo esc_url( wp_logout_url( home_url() ) ); ?>" class="sub-nav-item" >
-																		<span class="text"><?php esc_html_e( 'Logout', 'marketing-ops-core' ); ?><span>
+																		<span class="text"><?php esc_html_e( 'Logout', 'marketingops' ); ?><span>
 																	</a>
 																</li>
 															</ul>
@@ -4750,13 +4750,13 @@ class Marketing_Ops_Core_Public {
 	public function moc_learndash_focus_header_user_dropdown_items_callback( $menu_items, $course_id, $user_id ) {
 		$menu_items['course-home'] = array(
 			'url'     => get_the_permalink( $course_id ),
-			'label'   => __( 'Back to Course', 'marketing-ops-core' ),
-			'classes' => __( 'moc_back_to_course', 'marketing-ops-core' ),
+			'label'   => __( 'Back to Course', 'marketingops' ),
+			'classes' => __( 'moc_back_to_course', 'marketingops' ),
 		);
 		$menu_items['logout'] = array(
 			'url'     => wp_logout_url( get_the_permalink( $course_id ) ),
 			'label'   => __( 'Logout', 'learndash' ),
-			'classes' => __( 'moc_logout_url', 'marketing-ops-core' ),
+			'classes' => __( 'moc_logout_url', 'marketingops' ),
 		);
 		return $menu_items;
 	}
@@ -4920,7 +4920,7 @@ class Marketing_Ops_Core_Public {
 			$memberships_info = moc_get_membership_plan_object();
 			$name             = $memberships_info[0]->plan->name;
 			$slug             = $memberships_info[0]->plan->slug;
-			$text             = (  ! empty( $slug ) && ( 'free-membership' !== $slug ) ) ? __( 'Now that you’re a Pro member, Join us on Slack!', 'marketing-ops-core' ) : __( 'Now that you’re a Free Member, Join us on Slack!', 'marketing-ops-core' );
+			$text             = (  ! empty( $slug ) && ( 'free-membership' !== $slug ) ) ? __( 'Now that you’re a Pro member, Join us on Slack!', 'marketingops' ) : __( 'Now that you’re a Free Member, Join us on Slack!', 'marketingops' );
 			$html = $text;
 		}
 		return $html;
@@ -5140,7 +5140,7 @@ class Marketing_Ops_Core_Public {
 		// If the subscription can be cancelled.
 		if ( 'active' === $status || 'on-hold' === $status || 'pending' === $status ) {
 			?>
-			<a class="button view mops-cancel-subscription" href="javascript:void(0);" data-cancelurl="<?php echo esc_url( $cancel_url ); ?>"><?php esc_html_e( 'Cancel Subscription', 'marketing-ops-core' ); ?></a>
+			<a class="button view mops-cancel-subscription" href="javascript:void(0);" data-cancelurl="<?php echo esc_url( $cancel_url ); ?>"><?php esc_html_e( 'Cancel Subscription', 'marketingops' ); ?></a>
 			<?php
 		}
 	}
@@ -5169,12 +5169,12 @@ class Marketing_Ops_Core_Public {
 				if ( 'active' === $status || 'on-hold' === $status || 'pending' === $status ) {
 					$actions['mops-cancel-subscription'] = array(
 						'url'  => $this->mops_get_subscription_cancel_url( $url, $id, $status ),
-						'name' => __( 'Cancel Subscription', 'marketing-ops-core' ),
+						'name' => __( 'Cancel Subscription', 'marketingops' ),
 					);
 				} elseif ( 'pending-cancel' === $status ) {
 					$actions['mops-cancel-subscription'] = array(
 						'url'  => $this->mops_get_subscription_cancel_url( $url, $id, $status ),
-						'name' => __( 'Confirm Subscription Cancellation', 'marketing-ops-core' ),
+						'name' => __( 'Confirm Subscription Cancellation', 'marketingops' ),
 					);
 				}
 			}
@@ -5207,12 +5207,12 @@ class Marketing_Ops_Core_Public {
 				if ( 'active' === $status || 'on-hold' === $status || 'pending' === $status ) {
 					$actions['mops-cancel-subscription'] = array(
 						'url'  => $this->mops_get_subscription_cancel_url( $url, $id, $status ),
-						'name' => __( 'Cancel Subscription', 'marketing-ops-core' ),
+						'name' => __( 'Cancel Subscription', 'marketingops' ),
 					);
 				} elseif ( 'pending-cancel' === $status ) {
 					$actions['mops-cancel-subscription'] = array(
 						'url'  => $this->mops_get_subscription_cancel_url( $url, $id, $status ),
-						'name' => __( 'Confirm Subscription Cancellation', 'marketing-ops-core' ),
+						'name' => __( 'Confirm Subscription Cancellation', 'marketingops' ),
 					);
 				}				
 			}
@@ -5266,7 +5266,7 @@ class Marketing_Ops_Core_Public {
 				<?php if ( ! empty( $post_ids ) && is_array( $post_ids ) ) { ?>
 					<div class="blog_links links_box">
 						<div class="links_title">
-							<h3><?php esc_html_e( 'Blog', 'marketing-ops-core' ); ?></h3>
+							<h3><?php esc_html_e( 'Blog', 'marketingops' ); ?></h3>
 						</div>
 						<div class="link_box_content">
 							<?php foreach ( $post_ids as $post_id ) { ?>
@@ -5280,7 +5280,7 @@ class Marketing_Ops_Core_Public {
 
 				<div class="podcast_links links_box">
 					<div class="links_title">
-						<h3><?php esc_html_e( 'Podcasts', 'marketing-ops-core' ); ?></h3>
+						<h3><?php esc_html_e( 'Podcasts', 'marketingops' ); ?></h3>
 					</div>
 					<div class="link_box_content">
 						<?php foreach ( $podcast_ids as $podcast_id ) { ?>
@@ -5293,7 +5293,7 @@ class Marketing_Ops_Core_Public {
 
 				<div class="resources_links links_box">
 					<div class="links_title">
-						<h3><?php esc_html_e( 'Resources', 'marketing-ops-core' ); ?></h3>
+						<h3><?php esc_html_e( 'Resources', 'marketingops' ); ?></h3>
 					</div>
 					<div class="link_box_content">
 						<div class="box_row">
@@ -5370,7 +5370,7 @@ class Marketing_Ops_Core_Public {
 								<!-- Popup Button -->
 								<div class="ks_button">
 									<a href="javascript:void(0);" class="popup_btn button moc_open_speaker_session_details">
-										<span class="text"><?php esc_html_e( 'View', 'marketing-ops-core' ); ?></span>
+										<span class="text"><?php esc_html_e( 'View', 'marketingops' ); ?></span>
 										<span class="svg_icon">
 											<svg xmlns="http://www.w3.org/2000/svg" width="20" height="11" viewBox="0 0 20 11" fill="none">
 												<path d="M14.7859 0.74192C14.4643 0.729551 14.1659 0.913544 14.0345 1.20731C13.9015 1.50109 13.9587 1.84433 14.1814 2.07935L16.6135 4.70782H1.30494C1.0189 4.70318 0.754506 4.85316 0.610713 5.10055C0.465374 5.34639 0.465374 5.65253 0.610713 5.89837C0.754506 6.14575 1.0189 6.29573 1.30494 6.29109H16.6135L14.1814 8.91957C13.9835 9.12675 13.9139 9.42361 13.9974 9.69728C14.0809 9.97096 14.3051 10.1781 14.5834 10.24C14.8632 10.3018 15.1539 10.2075 15.3441 9.99569L19.5017 5.49946L15.3441 1.00322C15.2018 0.845513 14.9993 0.749651 14.7859 0.74192Z" fill="white"></path>
@@ -5391,7 +5391,7 @@ class Marketing_Ops_Core_Public {
 												<?php } ?>
 
 												<?php if ( ! empty( $speaker_data['image'] ) ) { ?>
-													<span class="ks_img"><img src="<?php echo esc_url( $speaker_data['image'] ); ?>" alt="<?php echo wp_kses_post( sprintf( __( 'Profile picture of %1$s', 'marketing-ops-core' ), $speaker_data['name'] ) ); ?>" /></span>
+													<span class="ks_img"><img src="<?php echo esc_url( $speaker_data['image'] ); ?>" alt="<?php echo wp_kses_post( sprintf( __( 'Profile picture of %1$s', 'marketingops' ), $speaker_data['name'] ) ); ?>" /></span>
 												<?php } ?>
 											</a>
 										<?php } ?>
@@ -5461,7 +5461,7 @@ class Marketing_Ops_Core_Public {
 								<!-- Popup Button -->
 								<div class="ks_button">
 									<a href="javascript:void(0);" class="popup_btn button moc_open_speaker_session_details">
-										<span class="text"><?php esc_html_e( 'View', 'marketing-ops-core' ); ?></span>
+										<span class="text"><?php esc_html_e( 'View', 'marketingops' ); ?></span>
 										<span class="svg_icon">
 											<svg xmlns="http://www.w3.org/2000/svg" width="20" height="11" viewBox="0 0 20 11" fill="none">
 												<path d="M14.7859 0.74192C14.4643 0.729551 14.1659 0.913544 14.0345 1.20731C13.9015 1.50109 13.9587 1.84433 14.1814 2.07935L16.6135 4.70782H1.30494C1.0189 4.70318 0.754506 4.85316 0.610713 5.10055C0.465374 5.34639 0.465374 5.65253 0.610713 5.89837C0.754506 6.14575 1.0189 6.29573 1.30494 6.29109H16.6135L14.1814 8.91957C13.9835 9.12675 13.9139 9.42361 13.9974 9.69728C14.0809 9.97096 14.3051 10.1781 14.5834 10.24C14.8632 10.3018 15.1539 10.2075 15.3441 9.99569L19.5017 5.49946L15.3441 1.00322C15.2018 0.845513 14.9993 0.749651 14.7859 0.74192Z" fill="white"></path>
@@ -5482,7 +5482,7 @@ class Marketing_Ops_Core_Public {
 												<?php } ?>
 
 												<?php if ( ! empty( $speaker_data['image'] ) ) { ?>
-													<span class="ks_img"><img src="<?php echo esc_url( $speaker_data['image'] ); ?>" alt="<?php echo wp_kses_post( sprintf( __( 'Profile picture of %1$s', 'marketing-ops-core' ), $speaker_data['name'] ) ); ?>" /></span>
+													<span class="ks_img"><img src="<?php echo esc_url( $speaker_data['image'] ); ?>" alt="<?php echo wp_kses_post( sprintf( __( 'Profile picture of %1$s', 'marketingops' ), $speaker_data['name'] ) ); ?>" /></span>
 												<?php } ?>
 											</a>
 										<?php } ?>
@@ -5564,7 +5564,7 @@ class Marketing_Ops_Core_Public {
 							<div class="speaker_img">
 								<!-- Speaker Picture -->
 								<?php if ( ! empty( $speaker['picture'] ) ) { ?>
-									<img src="<?php echo esc_url( $speaker['picture'] ); ?>" alt="<?php echo wp_kses_post( sprintf( __( 'Profile picture of %1$s', 'marketing-ops-core' ), $speaker['name'] ) ); ?>" />
+									<img src="<?php echo esc_url( $speaker['picture'] ); ?>" alt="<?php echo wp_kses_post( sprintf( __( 'Profile picture of %1$s', 'marketingops' ), $speaker['name'] ) ); ?>" />
 								<?php } ?>
 							</div>
 							<div class="speaker_details_box">
@@ -5726,27 +5726,27 @@ class Marketing_Ops_Core_Public {
 			if ( 'dashboard' === $key ) {
 				// Add the "premium content" endpoint.
 				if ( ! array_key_exists( 'premium-content', $endpoints ) ) {
-					$new_endpoints['premium-content'] = __( 'Premium Content', 'marketing-ops-core' );
+					$new_endpoints['premium-content'] = __( 'Premium Content', 'marketingops' );
 				}
 
 				// Add the "certificates" endpoint.
 				if ( ! array_key_exists( 'ld-certificates', $endpoints ) ) {
-					$new_endpoints['ld-certificates'] = __( 'Certificates', 'marketing-ops-core' );
+					$new_endpoints['ld-certificates'] = __( 'Certificates', 'marketingops' );
 				}
 
 				// Add the "project-templates" endpoint.
 				if ( ! array_key_exists( 'project-templates', $endpoints ) ) {
-					$new_endpoints['project-templates'] = __( 'Project Templates', 'marketing-ops-core' );
+					$new_endpoints['project-templates'] = __( 'Project Templates', 'marketingops' );
 				}
 
 				// Add the "agency-profile" endpoint.
 				if ( ! array_key_exists( 'agency-profile', $endpoints ) ) {
-					$new_endpoints['agency-profile'] = __( 'Agency Profile', 'marketing-ops-core' );
+					$new_endpoints['agency-profile'] = __( 'Agency Profile', 'marketingops' );
 				}
 
 				// Add the "platform-profile" endpoint.
 				if ( ! array_key_exists( 'platform-profile', $endpoints ) ) {
-					$new_endpoints['platform-profile'] = __( 'Platform Profile', 'marketing-ops-core' );
+					$new_endpoints['platform-profile'] = __( 'Platform Profile', 'marketingops' );
 				}
 			}
 		}
@@ -5789,35 +5789,35 @@ class Marketing_Ops_Core_Public {
 
 		// Premium content endpoint title.
 		if ( $is_premium_content_endpoint && ! is_admin() && is_main_query() && in_the_loop() && is_account_page() ) {
-			$title = __( 'Premium Content', 'marketing-ops-core' );
+			$title = __( 'Premium Content', 'marketingops' );
 
 			remove_filter( 'the_title', array( $this, 'mops_the_title_callback' ) );
 		}
 
 		// Learndash courses endpoint title.
 		if ( $is_ld_certificates_endpoint && ! is_admin() && is_main_query() && in_the_loop() && is_account_page() ) {
-			$title = __( 'Certificates', 'marketing-ops-core' );
+			$title = __( 'Certificates', 'marketingops' );
 
 			remove_filter( 'the_title', array( $this, 'mops_the_title_callback' ) );
 		}
 
 		// Project templates endpoint title.
 		if ( $is_project_templates_endpoint && ! is_admin() && is_main_query() && in_the_loop() && is_account_page() ) {
-			$title = __( 'Project Templates', 'marketing-ops-core' );
+			$title = __( 'Project Templates', 'marketingops' );
 
 			remove_filter( 'the_title', array( $this, 'mops_the_title_callback' ) );
 		}
 
 		// Agency profile endpoint title.
 		if ( $is_agency_profile_endpoint && ! is_admin() && is_main_query() && in_the_loop() && is_account_page() ) {
-			$title = __( 'Agency Profile', 'marketing-ops-core' );
+			$title = __( 'Agency Profile', 'marketingops' );
 
 			remove_filter( 'the_title', array( $this, 'mops_the_title_callback' ) );
 		}
 
 		// Platform profile endpoint title.
 		if ( $is_platform_profile_endpoint && ! is_admin() && is_main_query() && in_the_loop() && is_account_page() ) {
-			$title = __( 'Platform Profile', 'marketing-ops-core' );
+			$title = __( 'Platform Profile', 'marketingops' );
 
 			remove_filter( 'the_title', array( $this, 'mops_the_title_callback' ) );
 		}
@@ -5887,16 +5887,16 @@ class Marketing_Ops_Core_Public {
 		?>
 		<header class="header-main mops-apalooza-timer">
 			<div class="alert-container">
-				<div class="copy-container"><h1 class="main-head"><?php esc_html_e( 'MOps-Apalooza starts in', 'marketing-ops-core' ); ?></h1></div>
+				<div class="copy-container"><h1 class="main-head"><?php esc_html_e( 'MOps-Apalooza starts in', 'marketingops' ); ?></h1></div>
 				<ul class="countdown-clock">
-					<li><span id="days">0</span><span><?php esc_html_e( 'days', 'marketing-ops-core' ); ?></span></li>
-					<li><span id="hours">0</span><span><?php esc_html_e( 'hours', 'marketing-ops-core' ); ?></span></li>
-					<li><span id="minutes">0</span><span><?php esc_html_e( 'minutes', 'marketing-ops-core' ); ?></span></li>
-					<li><span id="seconds">0</span><span><?php esc_html_e( 'seconds', 'marketing-ops-core' ); ?></span></li>
+					<li><span id="days">0</span><span><?php esc_html_e( 'days', 'marketingops' ); ?></span></li>
+					<li><span id="hours">0</span><span><?php esc_html_e( 'hours', 'marketingops' ); ?></span></li>
+					<li><span id="minutes">0</span><span><?php esc_html_e( 'minutes', 'marketingops' ); ?></span></li>
+					<li><span id="seconds">0</span><span><?php esc_html_e( 'seconds', 'marketingops' ); ?></span></li>
 				</ul>
 				<div class="nav-button-container">
 					<a class="nav-button-wrap" href="#">
-						<div id="nav-button"><?php esc_html_e( 'Buy Your Pass', 'marketing-ops-core' ); ?>
+						<div id="nav-button"><?php esc_html_e( 'Buy Your Pass', 'marketingops' ); ?>
 							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="11" viewBox="0 0 20 11" fill="none"><path d="M14.7859 0.74192C14.4643 0.729551 14.1659 0.913544 14.0345 1.20731C13.9015 1.50109 13.9587 1.84433 14.1814 2.07935L16.6135 4.70782H1.30494C1.0189 4.70318 0.754506 4.85316 0.610713 5.10055C0.465374 5.34639 0.465374 5.65253 0.610713 5.89837C0.754506 6.14575 1.0189 6.29573 1.30494 6.29109H16.6135L14.1814 8.91957C13.9835 9.12675 13.9139 9.42361 13.9974 9.69728C14.0809 9.97096 14.3051 10.1781 14.5834 10.24C14.8632 10.3018 15.1539 10.2075 15.3441 9.99569L19.5017 5.49946L15.3441 1.00322C15.2018 0.845513 14.9993 0.749651 14.7859 0.74192Z" fill="white"></path></svg>
 						</div>
 					</a>
@@ -6167,13 +6167,13 @@ class Marketing_Ops_Core_Public {
 				<div class="marketingopsbookmainboxuserimg">
 					<!-- USER IMAGE -->
 					<?php if ( ! empty( $profile_picture ) ) { ?>
-						<img alt="<?php echo esc_html( sprintf( __( '%1$s-user-image', 'marketing-ops-core' ), sanitize_title( $name ) ) ); ?>" src="<?php echo esc_url( $profile_picture ); ?>" />
+						<img alt="<?php echo esc_html( sprintf( __( '%1$s-user-image', 'marketingops' ), sanitize_title( $name ) ) ); ?>" src="<?php echo esc_url( $profile_picture ); ?>" />
 					<?php } ?>
 
 					<!-- USER COMPANY LOGO -->
 					<?php if ( ! empty( $company_logo ) ) { ?>
 						<div class="marketingopsbookmainboxuserimgprofileicon">
-							<img alt="<?php echo esc_html( sprintf( __( '%1$s-company-logo', 'marketing-ops-core' ), sanitize_title( $company_name ) ) ); ?>" src="<?php echo esc_url( $company_logo ); ?>" />
+							<img alt="<?php echo esc_html( sprintf( __( '%1$s-company-logo', 'marketingops' ), sanitize_title( $company_name ) ) ); ?>" src="<?php echo esc_url( $company_logo ); ?>" />
 						</div>
 					<?php } ?>
 					
@@ -6184,7 +6184,7 @@ class Marketing_Ops_Core_Public {
 			</div>
 			<div class="booksessionbtn">
 				<a class="booksesionbtnlink" href="#book_time_with_strategist_heading">
-					<?php esc_html_e( 'Book Session', 'marketing-ops-core' ); ?>
+					<?php esc_html_e( 'Book Session', 'marketingops' ); ?>
 					<span class="elementor-button-icon elementor-align-icon-right">
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="11" viewBox="0 0 20 11" fill="none"><path d="M14.7859 0.74192C14.4643 0.729551 14.1659 0.913544 14.0345 1.20731C13.9015 1.50109 13.9587 1.84433 14.1814 2.07935L16.6135 4.70782H1.30494C1.0189 4.70318 0.754506 4.85316 0.610713 5.10055C0.465374 5.34639 0.465374 5.65253 0.610713 5.89837C0.754506 6.14575 1.0189 6.29573 1.30494 6.29109H16.6135L14.1814 8.91957C13.9835 9.12675 13.9139 9.42361 13.9974 9.69728C14.0809 9.97096 14.3051 10.1781 14.5834 10.24C14.8632 10.3018 15.1539 10.2075 15.3441 9.99569L19.5017 5.49946L15.3441 1.00322C15.2018 0.845513 14.9993 0.749651 14.7859 0.74192Z" fill="white"></path></svg> 
 					</span>
@@ -6443,7 +6443,7 @@ class Marketing_Ops_Core_Public {
 		if ( ! empty( $term_ids ) && is_array( $term_ids ) ) {
 			$html = moc_conference_vault_main_html( $term_ids, $search_keyword );
 		} else {
-			$message = __( 'No conference is selected. Please pick up a conference from the left side to check out the sessions from that conference.', 'marketing-ops-core' );
+			$message = __( 'No conference is selected. Please pick up a conference from the left side to check out the sessions from that conference.', 'marketingops' );
 			$html    = moc_no_conference_found_html( $message );
 		}
 

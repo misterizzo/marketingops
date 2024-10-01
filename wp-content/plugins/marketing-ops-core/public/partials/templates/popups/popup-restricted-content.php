@@ -10,7 +10,7 @@
 		</div>
 		<div class="contnet_box">
 			<div class="popup_content">
-				<h2><?php esc_html_e( 'Membership Required', 'marketing-ops-core' ); ?></h2>
+				<h2><?php esc_html_e( 'Membership Required', 'marketingops' ); ?></h2>
 				<div class="content_icon">
 					<span class="svg">
 						<svg width="42" height="34" viewBox="0 0 42 34" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -18,14 +18,14 @@
 						</svg>
 					</span>
 				</div>
-				<p><?php esc_html_e( 'Sorry, this page is for our members only. You can easily access it by purchasing a membership - it\'s the best way to showcase your talents ❤️', 'marketing-ops-core' ); ?></p>
+				<p><?php esc_html_e( 'Sorry, this page is for our members only. You can easily access it by purchasing a membership - it\'s the best way to showcase your talents ❤️', 'marketingops' ); ?></p>
 				<a href="/subscribe/" class="btn black_btn">
-					<span><?php esc_html_e( 'Create my profile', 'marketing-ops-core' ); ?></span>
+					<span><?php esc_html_e( 'Create my profile', 'marketingops' ); ?></span>
 					<span class="icon"><img src="/wp-content/uploads/2022/03/right_arrow_partner.svg"></span>
 				</a>
 				<?php if ( ! is_user_logged_in() ) { ?>
 					<div class="link_box">
-						<p><?php esc_html_e( 'Already a member?', 'marketing-ops-core' ); ?> <a href="/log-in/"><?php esc_html_e( 'Login here', 'marketing-ops-core' ); ?></a>.</p>
+						<p><?php esc_html_e( 'Already a member?', 'marketingops' ); ?> <a href="/log-in/"><?php esc_html_e( 'Login here', 'marketingops' ); ?></a>.</p>
 					</div>
 				<?php } ?>
 			</div>

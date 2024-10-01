@@ -26,11 +26,11 @@ $liked_templates = get_user_meta( $user_id, 'template_likes', true );
 			<div class="mops-no-project-templates">
 				<div class="mops-inner-circle">
 					<img src="/wp-content/uploads/2023/09/Purchase-Order-1.svg">
-					<p><?php esc_html_e( 'You have not marked any project template favourite!', 'marketing-ops-core' ); ?></p>
+					<p><?php esc_html_e( 'You have not marked any project template favourite!', 'marketingops' ); ?></p>
 				</div>	
 			</div>
 			<div class="mops-no-items-button">
-				<a title="<?php esc_html_e( 'Learn More about Project Templates', 'marketing-ops-core' ); ?>" href="/templates/"><?php esc_html_e( 'Learn More about Project Templates', 'marketing-ops-core' ); ?></a>
+				<a title="<?php esc_html_e( 'Learn More about Project Templates', 'marketingops' ); ?>" href="/templates/"><?php esc_html_e( 'Learn More about Project Templates', 'marketingops' ); ?></a>
 			</div>
 		</div>
 	<?php } ?>

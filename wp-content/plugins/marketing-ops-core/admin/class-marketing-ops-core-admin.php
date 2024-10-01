@@ -162,10 +162,10 @@ class Marketing_Ops_Core_Admin {
 	 * @param    array $templates This variable holds the all the templates array.
 	 */
 	public function moc_add_page_template( $templates ) {
-		$templates['moc-user-edit.php']            = __( 'User Edit', 'marketing-ops-core' );
-		$templates['add-a-blog.php']               = __( 'Add Blog Template', 'marketing-ops-core' );
-		$templates['blog-listing-tempate.php']     = __( 'Blog Listing', 'marketing-ops-core' );
-		$templates['podcast-listings-tempate.php'] = __( 'Podcast Listing', 'marketing-ops-core' );
+		$templates['moc-user-edit.php']            = __( 'User Edit', 'marketingops' );
+		$templates['add-a-blog.php']               = __( 'Add Blog Template', 'marketingops' );
+		$templates['blog-listing-tempate.php']     = __( 'Blog Listing', 'marketingops' );
+		$templates['podcast-listings-tempate.php'] = __( 'Podcast Listing', 'marketingops' );
 
 		return $templates;
 	}
@@ -201,16 +201,16 @@ class Marketing_Ops_Core_Admin {
 		}
 		?>
 		<div class="tab">
-			<button class="tablinks active" data-src="tab_1"><?php esc_html_e( 'Social Media Links', 'marketing-ops-core' ); ?></button>
-			<button class="tablinks" data-src="tab_2"><?php esc_html_e( 'Martech tools experience', 'marketing-ops-core' ); ?></button>
-			<button class="tablinks" data-src="tab_3"><?php esc_html_e( 'Skills', 'marketing-ops-core' ); ?></button>
-			<button class="tablinks" data-src="tab_4"><?php esc_html_e( 'Work History', 'marketing-ops-core' ); ?></button>
-			<button class="tablinks" data-src="tab_5"><?php esc_html_e( 'Selected Certificates', 'marketing-ops-core' ); ?></button>
+			<button class="tablinks active" data-src="tab_1"><?php esc_html_e( 'Social Media Links', 'marketingops' ); ?></button>
+			<button class="tablinks" data-src="tab_2"><?php esc_html_e( 'Martech tools experience', 'marketingops' ); ?></button>
+			<button class="tablinks" data-src="tab_3"><?php esc_html_e( 'Skills', 'marketingops' ); ?></button>
+			<button class="tablinks" data-src="tab_4"><?php esc_html_e( 'Work History', 'marketingops' ); ?></button>
+			<button class="tablinks" data-src="tab_5"><?php esc_html_e( 'Selected Certificates', 'marketingops' ); ?></button>
 		</div>
 
 		<div id="tab_1" class="tabcontent active">
 			<table class="form-table">
-				<h3><?php esc_html_e( 'Social Media Links', 'marketing-ops-core' ); ?></h3>
+				<h3><?php esc_html_e( 'Social Media Links', 'marketingops' ); ?></h3>
 				<?php foreach ( $user_basic_info[ 'social_media_arr' ] as $social_links ) { ?>
 					<tr>
 						<th><?php echo esc_html( $social_links['tag'] ); ?></th>
@@ -224,7 +224,7 @@ class Marketing_Ops_Core_Admin {
 		</div>
 		<div id="tab_2" class="tabcontent">
 			<table class="form-table">
-				<h3><?php esc_html_e( 'Martech tools experience', 'marketing-ops-core' ); ?></h3>
+				<h3><?php esc_html_e( 'Martech tools experience', 'marketingops' ); ?></h3>
 				<?php
 				foreach ( $moc_martech_info as $moc_martech_row ) {
 					$main_platform_name = $moc_martech_row['platform'];
@@ -233,41 +233,41 @@ class Marketing_Ops_Core_Admin {
 					$skill_level        = (int)$moc_martech_row['skill_level'];
 
 					if ( 1 === $skill_level ) {
-						$skill_level_txt = esc_html__( 'BASIC', 'marketing-ops-core' );
+						$skill_level_txt = esc_html__( 'BASIC', 'marketingops' );
 						$skill_class     = 'yellow_btn';
 						$skill_html      = '<a id="' . $skill_class . '" class="expert_btn btn ' . esc_attr( $skill_class ) . '">' .esc_html( $skill_level_txt ) .'</a>';
 					} elseif ( 2 === $skill_level ) {
-						$skill_level_txt = esc_html__( 'INTERMEDIATE', 'marketing-ops-core' );
+						$skill_level_txt = esc_html__( 'INTERMEDIATE', 'marketingops' );
 						$skill_class     = 'gradient_btn';
 						$skill_html      = '<a id="' . $skill_class . '" class="expert_btn btn ' . esc_attr( $skill_class ) . '"><span>' .esc_html( $skill_level_txt ) .'</span></a>';
 					} elseif ( 3 === $skill_level ) {
-						$skill_level_txt = esc_html__( 'ADVANCED', 'marketing-ops-core' );
+						$skill_level_txt = esc_html__( 'ADVANCED', 'marketingops' );
 						$skill_class     = 'pink_btn';
 						$skill_html      = '<a id="' . $skill_class . '" class="expert_btn btn ' . esc_attr( $skill_class ) . '">' .esc_html( $skill_level_txt ) .'</a>';
 					} else {
-						$skill_level_txt = esc_html__( 'EXPERT', 'marketing-ops-core' );
+						$skill_level_txt = esc_html__( 'EXPERT', 'marketingops' );
 						$skill_class     = 'blue_btn';
 						$skill_html      = '<a id="' . $skill_class . '" class="expert_btn btn ' . esc_attr( $skill_class ) . '">' .esc_html( $skill_level_txt ) .'</a>';
 					}
 					$excperience_description = $moc_martech_row['exp_descp'];
 					?>
 					<tr>
-						<th><?php esc_html_e( 'Main platform', 'marketing-ops-core' ); ?></th>
+						<th><?php esc_html_e( 'Main platform', 'marketingops' ); ?></th>
 						<td><input type="text" name="main_platform[]" id="main_platform" value="<?php echo esc_html( $main_platform_name ); ?>" class="regular-text"></td>
 					</tr>
 					<tr>
-						<th><?php esc_html_e( 'Experience', 'marketing-ops-core' ); ?></th>
+						<th><?php esc_html_e( 'Experience', 'marketingops' ); ?></th>
 						<td><input type="text" name="moc_experience[]" id="moc_experience" value="<?php echo esc_html( $year_experience ); ?>" class="regular-text"></td>
 					</tr>
 					<tr>
-						<th><?php esc_html_e( 'Skill level', 'marketing-ops-core' ); ?></th>
+						<th><?php esc_html_e( 'Skill level', 'marketingops' ); ?></th>
 						<td>
 							<input class="range_slider_input rangeslider" type="range" name="moc_skill_level[]" min="1" max="4" step="1" value="<?php echo esc_html( $skill_level ); ?>">
 							<span class="moc_skill_span"><?php echo esc_html( $skill_level_txt ); ?></span>
 						</td>
 					</tr>
 					<tr>
-						<th><?php esc_html_e( 'Description', 'marketing-ops-core' ); ?></th>
+						<th><?php esc_html_e( 'Description', 'marketingops' ); ?></th>
 						<td><textarea name="moc_exp_description[]" id="moc_exp_description" rows="10" cols="30" class=""><?php echo esc_html( $excperience_description ); ?></textarea></td>
 					</tr>
 				<?php } ?>
@@ -275,7 +275,7 @@ class Marketing_Ops_Core_Admin {
 		</div>
 		<div id="tab_3" class="tabcontent">
 			<table class="form-table">
-				<h3><?php esc_html_e( 'Skills', 'marketing-ops-core' ); ?></h3>
+				<h3><?php esc_html_e( 'Skills', 'marketingops' ); ?></h3>
 				<?php 
 				foreach ( $moc_cl_skill_info as $moc_cl_skill_row ) {
 					$main_platform_name      = $moc_cl_skill_row['cl_platform'];
@@ -284,33 +284,33 @@ class Marketing_Ops_Core_Admin {
 					$skill_level             = (int)$moc_cl_skill_row['cl_skill_level'];
 
 					if ( 1 === $skill_level ) {
-						$skill_level_txt = esc_html__( 'BASIC', 'marketing-ops-core' );
+						$skill_level_txt = esc_html__( 'BASIC', 'marketingops' );
 						$skill_class     = 'yellow_btn';
 						$skill_html      = '<a id="' . $skill_class . '" class="expert_btn btn ' . esc_attr( $skill_class ) . '">' .esc_html( $skill_level_txt ) .'</a>';
 					} elseif ( 2 === $skill_level ) {
-						$skill_level_txt = esc_html__( 'INTERMEDIATE', 'marketing-ops-core' );
+						$skill_level_txt = esc_html__( 'INTERMEDIATE', 'marketingops' );
 						$skill_class     = 'gradient_btn';
 						$skill_html      = '<a id="' . $skill_class . '" class="expert_btn btn ' . esc_attr( $skill_class ) . '"><span>' .esc_html( $skill_level_txt ) .'</span></a>';
 					} elseif ( 3 === $skill_level ) {
-						$skill_level_txt = esc_html__( 'EXPERT', 'marketing-ops-core' );
+						$skill_level_txt = esc_html__( 'EXPERT', 'marketingops' );
 						$skill_class     = 'blue_btn';
 						$skill_html      = '<a id="' . $skill_class . '" class="expert_btn btn ' . esc_attr( $skill_class ) . '">' .esc_html( $skill_level_txt ) .'</a>';
 					} else {
-						$skill_level_txt = esc_html__( 'ADVANCED', 'marketing-ops-core' );
+						$skill_level_txt = esc_html__( 'ADVANCED', 'marketingops' );
 						$skill_class     = 'pink_btn';
 						$skill_html      = '<a id="' . $skill_class . '" class="expert_btn btn ' . esc_attr( $skill_class ) . '">' .esc_html( $skill_level_txt ) .'</a>';
 					}
 					?>
 					<tr>
-						<th><?php esc_html_e( 'Coding language', 'marketing-ops-core' ); ?></th>
+						<th><?php esc_html_e( 'Coding language', 'marketingops' ); ?></th>
 						<td><input type="text" name="moc_coding_language[]" id="moc_coding_language" value="<?php echo esc_html( $main_platform_name ); ?>" class="regular-text"></td>
 					</tr>
 					<tr>
-						<th><?php esc_html_e( 'Experience', 'marketing-ops-core' ); ?></th>
+						<th><?php esc_html_e( 'Experience', 'marketingops' ); ?></th>
 						<td><input type="text" name="moc_cl_experience[]" id="moc_cl_experience" value="<?php echo esc_html( $year_experience ); ?>" class="regular-text"></td>
 					</tr>
 					<tr>
-						<th><?php esc_html_e( 'Skill level', 'marketing-ops-core' ); ?></th>
+						<th><?php esc_html_e( 'Skill level', 'marketingops' ); ?></th>
 						<td>
 							<input class="range_slider_input rangeslider" type="range" name="moc_cl_skill_level[]" min="1" max="4" step="1" value="<?php echo esc_html( $skill_level ); ?>">
 							<span class="moc_skill_span"><?php echo esc_html( $skill_level_txt ); ?></span>
@@ -321,7 +321,7 @@ class Marketing_Ops_Core_Admin {
 		</div>
 		<div id="tab_4" class="tabcontent"> 
 			<table class="form-table">
-				<h3><?php esc_html_e( 'Work History', 'marketing-ops-core' ); ?></h3>
+				<h3><?php esc_html_e( 'Work History', 'marketingops' ); ?></h3>
 				<?php 
 				foreach ( $moc_work_data as $key=>$moc_work_info ) {
 					$company_name            = ! empty( $moc_work_info['work_company'] ) ? $moc_work_info['work_company'] : '';
@@ -338,18 +338,18 @@ class Marketing_Ops_Core_Admin {
 					$moc_at_present_val      = ! empty( $moc_work_info['moc_at_present_val'] ) ? $moc_work_info['moc_at_present_val'] : '';
 					?>
 					<tr>
-						<th><?php esc_html_e( 'Company', 'marketing-ops-core' ); ?></th>
+						<th><?php esc_html_e( 'Company', 'marketingops' ); ?></th>
 						<td><input type="text" name="moc_work_company[]" id="moc_work_company" value="<?php echo esc_html( $company_name ); ?>" class="regular-text"></td>
 					</tr>
 					<tr>
-						<th><?php esc_html_e( 'Position', 'marketing-ops-core' ); ?></th>
+						<th><?php esc_html_e( 'Position', 'marketingops' ); ?></th>
 						<td><input type="text" name="moc_work_position[]" id="moc_work_position" value="<?php echo esc_html( $position ); ?>" class="regular-text"></td>
 					</tr>
 					<tr>
-						<th><?php esc_html_e( 'Start Year', 'marketing-ops-core' ); ?></th>
+						<th><?php esc_html_e( 'Start Year', 'marketingops' ); ?></th>
 						<td>
 							<select name="moc_start_month[]">
-								<option value=""><?php esc_html_e( 'MM', 'marketing-ops-core' )?></option>
+								<option value=""><?php esc_html_e( 'MM', 'marketingops' )?></option>
 								<?php 
 								$month_array = moc_months_array();
 								foreach( $month_array as $key=>$month  ) { ?>
@@ -357,7 +357,7 @@ class Marketing_Ops_Core_Admin {
 								<?php } ?>
 							</select>
 							<select name="moc_start_year[]">
-								<option value=""><?php esc_html_e( 'YYYY', 'marketing-ops-core' )?></option>
+								<option value=""><?php esc_html_e( 'YYYY', 'marketingops' )?></option>
 								<?php
 								$get_current_year = date("Y");
 								for( $i = 1970; $i <= $get_current_year; $i++ ) { ?>
@@ -367,10 +367,10 @@ class Marketing_Ops_Core_Admin {
 						</td>
 					</tr>
 					<tr>
-						<th><?php esc_html_e( 'End Year', 'marketing-ops-core' ); ?></th>
+						<th><?php esc_html_e( 'End Year', 'marketingops' ); ?></th>
 						<td>
 							<select name="moc_end_month[]">
-								<option value=""><?php esc_html_e( 'MM', 'marketing-ops-core' )?></option>
+								<option value=""><?php esc_html_e( 'MM', 'marketingops' )?></option>
 								<?php 
 								$month_array = moc_months_array();
 								foreach( $month_array as $key=>$month  ) { ?>
@@ -378,7 +378,7 @@ class Marketing_Ops_Core_Admin {
 								<?php } ?>
 							</select>
 							<select name="moc_end_year[]">
-								<option value=""><?php esc_html_e( 'YYYY', 'marketing-ops-core' )?></option>
+								<option value=""><?php esc_html_e( 'YYYY', 'marketingops' )?></option>
 								<?php
 								$get_current_year = date("Y");
 								for( $i = 1970; $i <= $get_current_year; $i++ ) { ?>
@@ -388,11 +388,11 @@ class Marketing_Ops_Core_Admin {
 						</td>
 					</tr>
 					<tr>
-						<th><?php esc_html_e( 'Present', 'marketing-ops-core' ); ?></th>
+						<th><?php esc_html_e( 'Present', 'marketingops' ); ?></th>
 						<td><input id="moc_work_position" type="checkbox" name="moc_at_present_val[]" value="<?php echo esc_html( $moc_at_present_val ); ?>" <?php echo ( 'yes'  === $moc_at_present_val ) ? 'checked' : ''; ?> ></td>
 					</tr>
 					<tr>
-						<th><?php esc_html_e( 'Website', 'marketing-ops-core' ); ?></th>
+						<th><?php esc_html_e( 'Website', 'marketingops' ); ?></th>
 						<td><input type="text" name="moc_work_website[]" id="moc_work_position" value="<?php echo esc_html( $website ); ?>" class="regular-text"></td>
 					</tr>
 				<?php }	?>
@@ -405,7 +405,7 @@ class Marketing_Ops_Core_Admin {
 				$certificates_ids   = $certificates_query->posts;
 				?>
 				<tr>
-					<th><?php esc_html_e( 'Selected Certificates', 'marketing-ops-core' ); ?></th>
+					<th><?php esc_html_e( 'Selected Certificates', 'marketingops' ); ?></th>
 					<td>
 						<select name="moc_certificate[]" id="moc_certificate" multiple>
 							<?php foreach ( $certificates_ids as $certificates_id ) { ?>
@@ -714,7 +714,7 @@ class Marketing_Ops_Core_Admin {
 	 */
 	public function moc_woocommerce_product_data_tabs_callback( $tabs ) {
 		// Select Professor for courses.
-		$professor_tab_title = __( 'Professor', 'marketing-ops-core' );
+		$professor_tab_title = __( 'Professor', 'marketingops' );
 
 		/**
 		 * This hook fires in admin panel on the item settings page.
@@ -851,17 +851,17 @@ class Marketing_Ops_Core_Admin {
 	public function moc_manage_users_columns_callback( $defaults ) {
 		// If the column key, "show-in-frontend" doesn't exist.
 		if ( ! array_key_exists( 'show-in-frontend', $defaults ) ) {
-			$defaults['show-in-frontend'] = __( 'Public Visiblity', 'marketing-ops-core' );
+			$defaults['show-in-frontend'] = __( 'Public Visiblity', 'marketingops' );
 		}
 
 		// If the column key, "access-conference-vault" doesn't exist.
 		if ( ! array_key_exists( 'access-conference-vault', $defaults ) ) {
-			$defaults['access-conference-vault'] = __( 'Access Conference Vault', 'marketing-ops-core' );
+			$defaults['access-conference-vault'] = __( 'Access Conference Vault', 'marketingops' );
 		}
 
 		// If the column key, "memeber-since" doesn't exist.
 		if ( ! array_key_exists( 'memeber-since', $defaults ) ) {
-			$defaults['memeber-since'] = __( 'Member Since', 'marketing-ops-core' );
+			$defaults['memeber-since'] = __( 'Member Since', 'marketingops' );
 		}
 		
 		return $defaults;
@@ -923,7 +923,7 @@ class Marketing_Ops_Core_Admin {
 		wp_send_json_success(
 			array(
 				'code'          => 'toggled-show-in-frontend-user',
-				'toast_message' => ( 'yes' === $show_in_frontend ) ? __( 'User visiblity enabled.', 'marketing-ops-core' ) : __( 'User visiblity disabled.', 'marketing-ops-core' ),
+				'toast_message' => ( 'yes' === $show_in_frontend ) ? __( 'User visiblity enabled.', 'marketingops' ) : __( 'User visiblity disabled.', 'marketingops' ),
 			)
 		);
 		wp_die();
@@ -944,7 +944,7 @@ class Marketing_Ops_Core_Admin {
 		wp_send_json_success(
 			array(
 				'code'          => 'toggled-access-conference-vault-user',
-				'toast_message' => ( 'yes' === $access_conference_vault ) ? __( 'Access to conference vault enabled.', 'marketing-ops-core' ) : __( 'Access to conference vault disabled.', 'marketing-ops-core' ),
+				'toast_message' => ( 'yes' === $access_conference_vault ) ? __( 'Access to conference vault enabled.', 'marketingops' ) : __( 'Access to conference vault disabled.', 'marketingops' ),
 			)
 		);
 		wp_die();
@@ -952,7 +952,7 @@ class Marketing_Ops_Core_Admin {
 
 	public function moc_wc_membership_plan_data_tabs_callback( $fields ) {
 		$fields['membership_restrict_popup'] = array(
-			'label'  => __( 'Membership restrct popup content', 'marketing-ops-core' ),
+			'label'  => __( 'Membership restrct popup content', 'marketingops' ),
 			'target' => 'membership-restrict-popup-content',
 			'class'  => '',
 		);
@@ -973,10 +973,10 @@ class Marketing_Ops_Core_Admin {
 					array( 
 						'id'          => 'membership_restrict_popup_title',
 						'name'        => 'membership_restrict_popup_title',
-						'label'       => __( 'Title', 'marketing-ops-core' ),
-						'placeholder' => __( 'Free Membership', 'marketing-ops-core' ),
+						'label'       => __( 'Title', 'marketingops' ),
+						'placeholder' => __( 'Free Membership', 'marketingops' ),
 						'desc_tip'    => 'true',
-						'description' => __( 'Title of restriction popup', 'marketing-ops-core' ),
+						'description' => __( 'Title of restriction popup', 'marketingops' ),
 						'value'       => get_post_meta( $post->ID, 'membership_restrict_popup_title', true ),
 					)
 				);
@@ -985,7 +985,7 @@ class Marketing_Ops_Core_Admin {
 						'id'                => 'membership_restrict_popup_description',
 						'name'              => 'membership_restrict_popup_description',
 						'label'             => __( 'Title', '' ),
-						'placeholder'       => __( 'Description', 'marketing-ops-core' ),
+						'placeholder'       => __( 'Description', 'marketingops' ),
 						'desc_tip'          => 'true',
 						'description'       => __( 'Description of popup', '' ),
 						'value'             => get_post_meta( $post->ID, 'membership_restrict_popup_description', true ),
@@ -998,10 +998,10 @@ class Marketing_Ops_Core_Admin {
 					array( 
 						'id'          => 'membership_restrict_popup_btn_title',
 						'name'        => 'membership_restrict_popup_btn_title',
-						'label'       => __( 'Button Title', 'marketing-ops-core' ),
-						'placeholder' => __( 'Create a free account', 'marketing-ops-core' ),
+						'label'       => __( 'Button Title', 'marketingops' ),
+						'placeholder' => __( 'Create a free account', 'marketingops' ),
 						'desc_tip'    => 'true',
-						'description' => __( 'Button Title', 'marketing-ops-core' ),
+						'description' => __( 'Button Title', 'marketingops' ),
 						'value'       => get_post_meta( $post->ID, 'membership_restrict_popup_btn_title', true ),
 					)
 				);
@@ -1009,10 +1009,10 @@ class Marketing_Ops_Core_Admin {
 					array( 
 						'id'          => 'membership_restrict_popup_btn_link',
 						'name'        => 'membership_restrict_popup_btn_link',
-						'label'       => __( 'Button Link', 'marketing-ops-core' ),
-						'placeholder' => __( 'https://example.com', 'marketing-ops-core' ),
+						'label'       => __( 'Button Link', 'marketingops' ),
+						'placeholder' => __( 'https://example.com', 'marketingops' ),
 						'desc_tip'    => 'true',
-						'description' => __( 'Button Link', 'marketing-ops-core' ),
+						'description' => __( 'Button Link', 'marketingops' ),
 						'value'       => get_post_meta( $post->ID, 'membership_restrict_popup_btn_link', true ),
 					)
 				);
@@ -1168,7 +1168,7 @@ class Marketing_Ops_Core_Admin {
 		// Add the metabox for showing the download counter for the project templates.
 		add_meta_box(
 			'prj_template_download_counter_info',
-			__( 'Download Counter', 'marketing-ops-core' ),
+			__( 'Download Counter', 'marketingops' ),
 			array( $this, 'moc_prj_template_download_counter_callback' ),
 			'template',
 			'side',
@@ -1178,7 +1178,7 @@ class Marketing_Ops_Core_Admin {
 		// Add the metabox for showing the favourite counter and details for the project templates.
 		add_meta_box(
 			'prj_template_favourite_counter_info',
-			__( 'Favourite Counter', 'marketing-ops-core' ),
+			__( 'Favourite Counter', 'marketingops' ),
 			array( $this, 'moc_prj_template_favourite_counter_callback' ),
 			'template',
 			'side',
@@ -1195,7 +1195,7 @@ class Marketing_Ops_Core_Admin {
 		$post_id          = filter_input( INPUT_GET, 'post', FILTER_SANITIZE_NUMBER_INT );
 		$download_counter = ( ! is_null( $post_id ) ) ? (int) get_post_meta( $post_id, 'template_download', true ) : 0;
 
-		echo wp_kses_post( sprintf( __( '%2$sThis template has been downloaded %4$s%1$d%5$s times.%3$s', 'marketing-ops-core' ), $download_counter, '<p>', '</p>', '<strong>', '</strong>' ) );
+		echo wp_kses_post( sprintf( __( '%2$sThis template has been downloaded %4$s%1$d%5$s times.%3$s', 'marketingops' ), $download_counter, '<p>', '</p>', '<strong>', '</strong>' ) );
 	}
 
 	/**
@@ -1208,11 +1208,11 @@ class Marketing_Ops_Core_Admin {
 		$template_likes = ( ! is_null( $post_id ) ) ? get_post_meta( $post_id, 'template_likes', true ) : array();
 		$template_likes = ( ! empty( $template_likes ) && is_array( $template_likes ) ) ? $template_likes : array();
 
-		echo wp_kses_post( sprintf( __( '%2$sThis template has been marked favourite %4$s%1$d%5$s times.%3$s', 'marketing-ops-core' ), count( $template_likes ), '<p>', '</p>', '<strong>', '</strong>' ) );
+		echo wp_kses_post( sprintf( __( '%2$sThis template has been marked favourite %4$s%1$d%5$s times.%3$s', 'marketingops' ), count( $template_likes ), '<p>', '</p>', '<strong>', '</strong>' ) );
 
 		// If the fovourite counter is greater than 0.
 		if ( 0 < count( $template_likes ) ) {
-			echo wp_kses_post( sprintf( __( '%1$sPeople who marked it favourite are listed below:%2$s', 'marketing-ops-core' ), '<p>', '</p>' ) );
+			echo wp_kses_post( sprintf( __( '%1$sPeople who marked it favourite are listed below:%2$s', 'marketingops' ), '<p>', '</p>' ) );
 
 			echo '<ol class="mops-template-likes-user-list">';
 			foreach ( $template_likes as $user_id ) {
@@ -1232,17 +1232,17 @@ class Marketing_Ops_Core_Admin {
 	public function cf_manage_edit_template_columns_callback( $default_cols ) {
 		// If the array key doesn't exist for download counter.
 		if ( ! array_key_exists( 'downloads', $default_cols ) ) {
-			$default_cols['downloads'] = __( 'Downloads', 'marketing-ops-core' );
+			$default_cols['downloads'] = __( 'Downloads', 'marketingops' );
 		}
 
 		// If the array key doesn't exist for favourites counter.
 		if ( ! array_key_exists( 'favourites', $default_cols ) ) {
-			$default_cols['favourites'] = __( 'Favourites', 'marketing-ops-core' );
+			$default_cols['favourites'] = __( 'Favourites', 'marketingops' );
 		}
 
 		// If the array key doesn't exist for template file.
 		if ( ! array_key_exists( 'template_file', $default_cols ) ) {
-			$default_cols['template_file'] = __( 'File', 'marketing-ops-core' );
+			$default_cols['template_file'] = __( 'File', 'marketingops' );
 		}
 
 		return $default_cols;
@@ -1295,7 +1295,7 @@ class Marketing_Ops_Core_Admin {
 	public function cf_manage_edit_podcast_columns_callback( $default_cols ) {
 		// If the array key doesn't exist for podcast guests.
 		if ( ! array_key_exists( 'podcast_guest', $default_cols ) ) {
-			$default_cols['podcast_guest'] = __( 'Guest(s)', 'marketing-ops-core' );
+			$default_cols['podcast_guest'] = __( 'Guest(s)', 'marketingops' );
 		}
 
 		return $default_cols;
@@ -1326,7 +1326,7 @@ class Marketing_Ops_Core_Admin {
 				// Print the guests.
 				echo wp_kses_post( implode( ', ', $print_guests ) );
 			} else {
-				echo wp_kses_post( sprintf( __( '%1$sNo guests added.%2$s', 'marketing-ops-core' ), '<p>', '</p>' ) );
+				echo wp_kses_post( sprintf( __( '%1$sNo guests added.%2$s', 'marketingops' ), '<p>', '</p>' ) );
 			}
 		}
 	}
@@ -1363,12 +1363,12 @@ class Marketing_Ops_Core_Admin {
 	public function cf_manage_edit_conference_vault_columns_callback( $default_cols ) {
 		// If the array key doesn't exist for session video.
 		if ( ! array_key_exists( 'session_video', $default_cols ) ) {
-			$default_cols['session_video'] = __( 'Video', 'marketing-ops-core' );
+			$default_cols['session_video'] = __( 'Video', 'marketingops' );
 		}
 
 		// If the array key doesn't exist for session speakers.
 		if ( ! array_key_exists( 'session_speaker', $default_cols ) ) {
-			$default_cols['session_speaker'] = __( 'Speaker(s)', 'marketing-ops-core' );
+			$default_cols['session_speaker'] = __( 'Speaker(s)', 'marketingops' );
 		}
 
 		return $default_cols;

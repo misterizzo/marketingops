@@ -117,8 +117,8 @@ if ( false === $user_memberships ) {
 	<div class="margktingimgss"></div>
 	<div class="elementor-container elementor-column-gap-default">
 		<div class="conferencevaultinner">
-			<h1><?php esc_html_e( 'Conference Vault', 'marketing-ops-core' ); ?></h1>
-			<h3><?php esc_html_e( 'MarketingOps event speakers\' presentations archive from 2018 to present day. Enjoy.', 'marketing-ops-core' ); ?></h3>
+			<h1><?php esc_html_e( 'Conference Vault', 'marketingops' ); ?></h1>
+			<h3><?php esc_html_e( 'MarketingOps event speakers\' presentations archive from 2018 to present day. Enjoy.', 'marketingops' ); ?></h3>
 		</div>
 	</div>
 	<div class="elementor-container elementor-column-gap-default">
@@ -131,7 +131,7 @@ if ( false === $user_memberships ) {
 							<div class="elementor-widget-wrap elementor-element-populated">
 								<div class="directory_search_form">
 									<div class="expandableCollapsibleDiv platform_section">
-										<h3 class="open"><?php esc_html_e( 'Conference', 'marketing-ops-core' ); ?></h3>
+										<h3 class="open"><?php esc_html_e( 'Conference', 'marketingops' ); ?></h3>
 										<ul class="moc_training_filters" data-taxonomy="conference">
 											<?php foreach ( $conferences as $conference ) {
 												$conference_checked = ( in_array( $conference->term_id, $terms_from_conference, true ) ) ? 'checked' : '';
@@ -154,7 +154,7 @@ if ( false === $user_memberships ) {
 							<div class="elementor-widget-wrap elementor-element-populated">
 								<div class="directory_search_form">
 									<div class="expandableCollapsibleDiv platform_section">
-										<h3 class="open"><?php esc_html_e( 'Pillar', 'marketing-ops-core' ); ?></h3>
+										<h3 class="open"><?php esc_html_e( 'Pillar', 'marketingops' ); ?></h3>
 										<ul class="moc_training_filters" data-taxonomy="pillar">
 											<?php foreach ( $pillars as $pillar ) {
 												$pillar_checked = ( in_array( $pillar->term_id, $terms_from_pillar, true ) ) ? 'checked' : '';
@@ -177,7 +177,7 @@ if ( false === $user_memberships ) {
 							<div class="elementor-widget-wrap elementor-element-populated">
 								<div class="directory_search_form">
 									<div class="expandableCollapsibleDiv platform_section">
-										<h3 class="open"><?php esc_html_e( 'Skill Level', 'marketing-ops-core' ); ?></h3>
+										<h3 class="open"><?php esc_html_e( 'Skill Level', 'marketingops' ); ?></h3>
 										<ul class="moc_training_filters" data-taxonomy="conference_skill_level">
 											<?php foreach ( $skill_levels as $skill_level ) {
 												$skill_level_checked = ( in_array( $skill_level->term_id, $terms_from_skill_level, true ) ) ? 'checked' : '';
@@ -197,7 +197,7 @@ if ( false === $user_memberships ) {
 						<div class="elementor-widget-wrap elementor-element-populated">
 							<div class="directory_search_form mainsidbarsearch">
 								<div class="platform_section">
-									<h3 class="open"><?php esc_html_e( 'Search', 'marketing-ops-core' ); ?></h3>
+									<h3 class="open"><?php esc_html_e( 'Search', 'marketingops' ); ?></h3>
 									<div class="moc_input_field">
 										<input type="text" id="search_keywords" name="conference_main_search_keyword" placeholder="E.g.: Revenue" value="<?php echo esc_html( ( ! is_null( $get_search ) ? $get_search : '' ) ); ?>">
 									</div>

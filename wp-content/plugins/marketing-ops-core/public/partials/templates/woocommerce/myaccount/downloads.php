@@ -39,7 +39,7 @@ do_action( 'woocommerce_before_account_downloads', $has_downloads ); ?>
 		<div class="mops-no-downloads">
 			<div class="mops-inner-circle">
 				<img src="/wp-content/uploads/2023/09/Purchase-Order-1.svg">
-				<p><?php echo wp_kses_post( sprintf( __( 'No downloads available yet.%1$sTry Shopping.', 'marketing-ops-core' ), '<br />' ) ); ?></p>
+				<p><?php echo wp_kses_post( sprintf( __( 'No downloads available yet.%1$sTry Shopping.', 'marketingops' ), '<br />' ) ); ?></p>
 				<a class="woocommerce-Button" href="<?php echo esc_url( apply_filters( 'woocommerce_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ); ?>"><?php esc_html_e( 'Browse products', 'woocommerce' ); ?></a>
 			</div>	
 		</div>

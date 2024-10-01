@@ -45,7 +45,7 @@ $sessions = ( ! empty( $sessions['results'] ) ) ? $sessions['results'] : array()
 if ( ! empty( $sessions ) && is_array( $sessions ) ) {
 	?>
 	<div class="key_speaker_content apalooza_in_person_speakers_container mopza24">
-		<h2 class="heading"><?php esc_html_e( 'SESSIONS', 'marketing-ops-core' ); ?></h3>
+		<h2 class="heading"><?php esc_html_e( 'SESSIONS', 'marketingops' ); ?></h3>
 		<div class="key_speaker_container">
 			<div class="key_speaker_row">
 				<?php
@@ -66,7 +66,7 @@ if ( ! empty( $sessions ) && is_array( $sessions ) ) {
 							<!-- Popup Button -->
 							<div class="ks_button">
 								<a href="javascript:void(0);" class="popup_btn button moc_open_speaker_session_details">
-									<span class="text"><?php esc_html_e( 'View', 'marketing-ops-core' ); ?></span>
+									<span class="text"><?php esc_html_e( 'View', 'marketingops' ); ?></span>
 									<span class="svg_icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="11" viewBox="0 0 20 11" fill="none"><path d="M14.7859 0.74192C14.4643 0.729551 14.1659 0.913544 14.0345 1.20731C13.9015 1.50109 13.9587 1.84433 14.1814 2.07935L16.6135 4.70782H1.30494C1.0189 4.70318 0.754506 4.85316 0.610713 5.10055C0.465374 5.34639 0.465374 5.65253 0.610713 5.89837C0.754506 6.14575 1.0189 6.29573 1.30494 6.29109H16.6135L14.1814 8.91957C13.9835 9.12675 13.9139 9.42361 13.9974 9.69728C14.0809 9.97096 14.3051 10.1781 14.5834 10.24C14.8632 10.3018 15.1539 10.2075 15.3441 9.99569L19.5017 5.49946L15.3441 1.00322C15.2018 0.845513 14.9993 0.749651 14.7859 0.74192Z" fill="white"></path></svg></span>
 								</a>
 							</div>
@@ -122,5 +122,5 @@ if ( ! empty( $sessions ) && is_array( $sessions ) ) {
 	</div>
 	<?php
 } else {
-	?><p style="color: #fff;"><?php esc_html_e( 'There are no sessions fetched from API. Please contact the site administrator', 'marketing-ops-core' ); ?></p><?php
+	?><p style="color: #fff;"><?php esc_html_e( 'There are no sessions fetched from API. Please contact the site administrator', 'marketingops' ); ?></p><?php
 }

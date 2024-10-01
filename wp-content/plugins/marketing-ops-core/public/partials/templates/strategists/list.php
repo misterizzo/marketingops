@@ -28,21 +28,21 @@ $current_category       = filter_input( INPUT_GET, 'cat' );
 $posts_per_page         = ( ! empty( $args['number'] ) ) ? (int) $args['number'] : get_option( 'posts_per_page' );
 $strategists_query_args = moc_posts_query_args( 'strategists', 1, $posts_per_page );
 $strategists_query      = new WP_Query( $strategists_query_args );
-$load_more_btn_text     = ( ! empty( $args['load_more_btn_text'] ) ) ? $args['load_more_btn_text'] : __( 'Show More Strategists', 'marketing-ops-core' );
+$load_more_btn_text     = ( ! empty( $args['load_more_btn_text'] ) ) ? $args['load_more_btn_text'] : __( 'Show More Strategists', 'marketingops' );
 ?>
 <div id="strategists_filter_container" class="ops-cat-filter">
 	<?php if ( ! empty( $strategists_cats ) && is_array( $strategists_cats ) ) { ?>
 		<div class="top-categories">
 		<ul>
-			<span><b><?php esc_html_e( 'Categories', 'marketing-ops-core' ); ?></b></span>
-			<li class="<?php echo esc_html( ( is_null( $current_category ) ) ? 'active' : '' ); ?>"><a href="/strategists/" title="<?php esc_html_e( 'List all strategists.', 'marketing-ops-core' ); ?>"><?php esc_html_e( 'ALL', 'marketing-ops-core' ); ?></a></li>
+			<span><b><?php esc_html_e( 'Categories', 'marketingops' ); ?></b></span>
+			<li class="<?php echo esc_html( ( is_null( $current_category ) ) ? 'active' : '' ); ?>"><a href="/strategists/" title="<?php esc_html_e( 'List all strategists.', 'marketingops' ); ?>"><?php esc_html_e( 'ALL', 'marketingops' ); ?></a></li>
 			<?php foreach ( $strategists_cats as $strategists_cat ) {
 				// Skip, if the category name is empty.
 				if ( empty( $strategists_cat->name ) ) {
 					continue;
 				}
 				?>
-				<li class="<?php echo esc_html( ( ! is_null( $current_category ) && $strategists_cat->slug === $current_category ) ? 'active' : '' ); ?>"><a href="<?php echo esc_url( sprintf( __( '/strategists/?cat=%1$s#strategists_filter_container', 'marketing-ops-core' ), $strategists_cat->slug ) ); ?>" title="<?php echo esc_html( sprintf( __( 'Filter the strategists by %1$s', 'marketing-ops-core' ), $strategists_cat->name ) ); ?>"><?php echo esc_html( $strategists_cat->name . ' (' . $strategists_cat->count . ')' ); ?></a></li>
+				<li class="<?php echo esc_html( ( ! is_null( $current_category ) && $strategists_cat->slug === $current_category ) ? 'active' : '' ); ?>"><a href="<?php echo esc_url( sprintf( __( '/strategists/?cat=%1$s#strategists_filter_container', 'marketingops' ), $strategists_cat->slug ) ); ?>" title="<?php echo esc_html( sprintf( __( 'Filter the strategists by %1$s', 'marketingops' ), $strategists_cat->name ) ); ?>"><?php echo esc_html( $strategists_cat->name . ' (' . $strategists_cat->count . ')' ); ?></a></li>
 			<?php } ?>
 			</ul>
 		</div>

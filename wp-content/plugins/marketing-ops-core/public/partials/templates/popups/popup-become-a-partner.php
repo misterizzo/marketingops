@@ -15,8 +15,8 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
   <!-- Popup Content -->
   <div class="popup_content moc_become_a_partner_content">
     <!-- popup title -->
-    <h3 class="moc_become_a_partner_title"><?php esc_html_e( 'SUBMIT YOUR PARTNER OFFER', 'marketing-ops-core' ); ?></h3>
-    <h3 class="moc_become_a_partner_title"><?php esc_html_e( 'We are happy to hear from you!', 'marketing-ops-core' ); ?></h3>
+    <h3 class="moc_become_a_partner_title"><?php esc_html_e( 'SUBMIT YOUR PARTNER OFFER', 'marketingops' ); ?></h3>
+    <h3 class="moc_become_a_partner_title"><?php esc_html_e( 'We are happy to hear from you!', 'marketingops' ); ?></h3>
     
     <!-- Popup Closebtn -->
     <div class="popup_close moc_become_a_partner_close">

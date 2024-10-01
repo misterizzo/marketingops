@@ -92,7 +92,7 @@ do_action( 'woocommerce_before_account_payment_methods', $has_methods );
 							<?php } ?>
 						</div>
 						<div class="boxes">
-							<p><b><?php esc_html_e( 'Method', 'marketing-ops-core' ); ?></b></p>
+							<p><b><?php esc_html_e( 'Method', 'marketingops' ); ?></b></p>
 							<p>
 								<?php
 								if ( ! empty( $method['method']['last4'] ) ) {
@@ -105,7 +105,7 @@ do_action( 'woocommerce_before_account_payment_methods', $has_methods );
 							</p>
 						</div>
 						<div class="boxes">
-							<p><b><?php esc_html_e( 'Expires', 'marketing-ops-core' ); ?></b></p>
+							<p><b><?php esc_html_e( 'Expires', 'marketingops' ); ?></b></p>
 							<p><?php echo esc_html( $method['expires'] ); ?></p>
 						</div>
 						<div class="boxes">

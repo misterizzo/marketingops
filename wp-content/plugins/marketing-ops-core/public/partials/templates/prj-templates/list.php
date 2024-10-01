@@ -27,8 +27,8 @@ $allow_templates_access = ( false === $user_membership ) ? 'no' : ( ( empty( $us
 	<div class="margktingimgss"></div>
 	<div class="container">
 		<div class="mainHeading">
-			<h4><?php esc_html_e( 'Marketing Ops Templates', 'marketing-ops-core' ); ?></h4>
-			<p><?php esc_html_e( 'Ultimate collection of fail-proof MOps templates for planning, documentation, and more. Built by the community, for the community.', 'marketing-ops-core' ); ?></p>
+			<h4><?php esc_html_e( 'Marketing Ops Templates', 'marketingops' ); ?></h4>
+			<p><?php esc_html_e( 'Ultimate collection of fail-proof MOps templates for planning, documentation, and more. Built by the community, for the community.', 'marketingops' ); ?></p>
 		</div>
 		<?php // Check if the template files are available. ?>
 		<?php if ( ! empty( $templates_query->posts ) && is_array( $templates_query->posts ) ) { ?>
@@ -42,15 +42,15 @@ $allow_templates_access = ( false === $user_membership ) ? 'no' : ( ( empty( $us
 				?>
 			</div>
 		<?php } else { ?>
-			<p><?php esc_html_e( 'There are no templates available.', 'marketing-ops-core' ); ?></p>
+			<p><?php esc_html_e( 'There are no templates available.', 'marketingops' ); ?></p>
 		<?php } ?>
 		
 		<!-- UPLOAD TEMPLATE -->
 		<div class="uploadTemplateCard">
 			<div class="ulpadinnerbox">
-				<h4><?php esc_html_e( 'Do you have something to add?', 'marketing-ops-core' ); ?></h4>
-				<p><?php esc_html_e( 'Upload your template and support our community!', 'marketing-ops-core' ); ?></p>
-				<button><?php esc_html_e( 'Upload your template', 'marketing-ops-core' ); ?></button>
+				<h4><?php esc_html_e( 'Do you have something to add?', 'marketingops' ); ?></h4>
+				<p><?php esc_html_e( 'Upload your template and support our community!', 'marketingops' ); ?></p>
+				<button><?php esc_html_e( 'Upload your template', 'marketingops' ); ?></button>
 			</div>
 		</div>
 

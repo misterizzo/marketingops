@@ -33,8 +33,8 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php foreach ( WC()->cart->get_coupons() as $code => $coupon ) :
 			$coupon_code  = $coupon->get_code();
-			$coupon_label = sprintf( __( 'Coupon: %1$s %2$s %3$s', 'marketing-ops-core' ), '<span>', $coupon_code, '</span>'  );
-			$coupon_title = sprintf( __( 'Coupon: %1$s', 'marketing-ops-core' ), $coupon_code );
+			$coupon_label = sprintf( __( 'Coupon: %1$s %2$s %3$s', 'marketingops' ), '<span>', $coupon_code, '</span>'  );
+			$coupon_title = sprintf( __( 'Coupon: %1$s', 'marketingops' ), $coupon_code );
 			?>
 			<tr class="cart-discount nirabme coupon-<?php echo esc_attr( sanitize_title( $code ) ); ?>">
 				<th><?php echo $coupon_label; ?></th>

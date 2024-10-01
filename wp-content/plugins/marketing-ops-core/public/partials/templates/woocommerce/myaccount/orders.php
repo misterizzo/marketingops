@@ -100,7 +100,7 @@ if ( $has_orders ) : ?>
 		<div class="mops-no-orders">
 			<div class="mops-inner-circle">
 				<img src="/wp-content/uploads/2023/09/Purchase-Order-1.svg">
-				<p><?php echo wp_kses_post( sprintf( __( 'You don’t have%1$s any orders yet!', 'marketing-ops-core' ), '<br />' ) ); ?></p>
+				<p><?php echo wp_kses_post( sprintf( __( 'You don’t have%1$s any orders yet!', 'marketingops' ), '<br />' ) ); ?></p>
 			</div>	
 		</div>
 	</div>

@@ -30,13 +30,13 @@ foreach ( $users as $user ) {
 			array(
 				'id'                => 'moc_selected_professors',
 				'name'              => 'moc_selected_professors',
-				'label'             => __( 'Professor', 'marketing-ops-core' ),
+				'label'             => __( 'Professor', 'marketingops' ),
 				'class'             => 'select wc-enhanced-select',
 				'options'           => $user_arr,
 				'value'             => get_post_meta( $product_id, '_moc_selected_professors', true ),
 				'style'             => 'width: 90%',
 				'desc_tip'          => true,
-				'description'       => __( 'This sets of professors.', 'marketing-ops-core' ),
+				'description'       => __( 'This sets of professors.', 'marketingops' ),
 			)
 		);
         ?>

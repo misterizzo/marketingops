@@ -62,8 +62,8 @@ if ( ! empty( $courses ) && is_array( $courses ) ) {
 			<div class="mops-no-certificates">
 				<div class="mops-inner-circle">
 					<img src="/wp-content/uploads/2023/09/Purchase-Order-1.svg">
-					<p><?php esc_html_e( 'You don’t have any certificates yet!', 'marketing-ops-core' ); ?></p>
-					<p><?php esc_html_e( 'if you\'ve enrolled to any course and unable to see the expected certificate, please confirm if the course is completed.', 'marketing-ops-core' ); ?></p>
+					<p><?php esc_html_e( 'You don’t have any certificates yet!', 'marketingops' ); ?></p>
+					<p><?php esc_html_e( 'if you\'ve enrolled to any course and unable to see the expected certificate, please confirm if the course is completed.', 'marketingops' ); ?></p>
 				</div>	
 			</div>
 		</div>

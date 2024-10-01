@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
   <!-- Popup Content -->
   <div class="popup_content moc_add_custom_certificate_content">
     <!-- popup title -->
-    <h3 class="moc_add_custom_certificate_title"><?php esc_html_e( 'Certification Details', 'marketing-ops-core' ); ?></h3>
+    <h3 class="moc_add_custom_certificate_title"><?php esc_html_e( 'Certification Details', 'marketingops' ); ?></h3>
     <!-- Popup Closebtn -->
     <div class="popup_close moc_add_custom_certificate_close">
       <svg viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -32,17 +32,17 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
     <div class="popup_form moc_add_custom_certificate_form">
       <!-- Popup Form box-->
       <div class="form_box moc_required_field">
-        <input type="text" id="moc_add_custom_certificate_subject" placeholder="<?php esc_attr_e( 'Certfication Title', 'marketing-ops-core' )?>" />
+        <input type="text" id="moc_add_custom_certificate_subject" placeholder="<?php esc_attr_e( 'Certfication Title', 'marketingops' )?>" />
         <div class="moc_error moc_add_custom_certificate_subject_error"><span></span></div>
       </div>
       <!-- Popup Form box-->
       <div class="form_box moc_required_field">
-        <textarea id="moc_add_custom_certificate_description" placeholder="<?php esc_attr_e( 'Tell us more about your certification...', 'marketing-ops-core' )?>"></textarea>
+        <textarea id="moc_add_custom_certificate_description" placeholder="<?php esc_attr_e( 'Tell us more about your certification...', 'marketingops' )?>"></textarea>
         <div class="moc_error moc_add_custom_certificate_message_error"><span></span></div>
       </div>
       <!-- Popup Form box btn-->
       <div class="form_box box_btn">
-        <button type="submit" class="btn moc_add_custom_certificate_submit"><?php esc_html_e( 'Submit', 'marketing-ops-core' ); ?></button>
+        <button type="submit" class="btn moc_add_custom_certificate_submit"><?php esc_html_e( 'Submit', 'marketingops' ); ?></button>
       </div>
     </div>
     <!-- loader -->

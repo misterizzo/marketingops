@@ -59,10 +59,10 @@ if ( ! function_exists( 'mops_get_available_content_html' ) ) {
 				<?php } ?>
 			</div>
 			<div class="pc-btn">
-				<a class="view" href="<?php echo esc_url( get_permalink( $post_id ) ); ?>"><?php esc_html_e( 'View', 'marketing-ops-core' ); ?></a>
+				<a class="view" href="<?php echo esc_url( get_permalink( $post_id ) ); ?>"><?php esc_html_e( 'View', 'marketingops' ); ?></a>
 
 				<?php if ( $add_to_cart_button ) { ?>
-					<a class="add_to_cart" href="<?php echo esc_url( wc_get_checkout_url() . "?add-to-cart={$post_id}&quantity=1" ); ?>"><?php esc_html_e( 'Add to cart', 'marketing-ops-core' ); ?></a>
+					<a class="add_to_cart" href="<?php echo esc_url( wc_get_checkout_url() . "?add-to-cart={$post_id}&quantity=1" ); ?>"><?php esc_html_e( 'Add to cart', 'marketingops' ); ?></a>
 				<?php } ?>
 			</div>
 		</div>
@@ -168,20 +168,20 @@ if ( ! function_exists( 'mops_print_customer_content_html' ) ) {
 ?>
 <div class="primium-category-filter">
 	<div class="categories-filter">
-		<span><?php esc_html_e( 'Categories', 'marketing-ops-core' ); ?></span>
-		<button class="btn-cat active" data-filter="all"><?php esc_html_e( 'All', 'marketing-ops-core' ); ?></button>
-		<button class="btn-cat" data-filter="cat-1"><?php esc_html_e( 'Pages', 'marketing-ops-core' ); ?></button>
-		<button class="btn-cat" data-filter="cat-2"><?php esc_html_e( 'No BS Demos', 'marketing-ops-core' ); ?></button>
-		<button class="btn-cat" data-filter="cat-3"><?php esc_html_e( 'No BS Demo Offers', 'marketing-ops-core' ); ?></button>
-		<button class="btn-cat" data-filter="cat-4"><?php esc_html_e( 'Products', 'marketing-ops-core' ); ?></button>
-		<button class="btn-cat" data-filter="cat-5"><?php esc_html_e( 'Courses', 'marketing-ops-core' ); ?></button>
-		<button class="btn-cat" data-filter="cat-6"><?php esc_html_e( 'Purchasing Discounts', 'marketing-ops-core' ); ?></button>
+		<span><?php esc_html_e( 'Categories', 'marketingops' ); ?></span>
+		<button class="btn-cat active" data-filter="all"><?php esc_html_e( 'All', 'marketingops' ); ?></button>
+		<button class="btn-cat" data-filter="cat-1"><?php esc_html_e( 'Pages', 'marketingops' ); ?></button>
+		<button class="btn-cat" data-filter="cat-2"><?php esc_html_e( 'No BS Demos', 'marketingops' ); ?></button>
+		<button class="btn-cat" data-filter="cat-3"><?php esc_html_e( 'No BS Demo Offers', 'marketingops' ); ?></button>
+		<button class="btn-cat" data-filter="cat-4"><?php esc_html_e( 'Products', 'marketingops' ); ?></button>
+		<button class="btn-cat" data-filter="cat-5"><?php esc_html_e( 'Courses', 'marketingops' ); ?></button>
+		<button class="btn-cat" data-filter="cat-6"><?php esc_html_e( 'Purchasing Discounts', 'marketingops' ); ?></button>
 	</div>
 
 	<!-- PAGE -->
 	<div class="premium-cat-block cat-1" data-filter="cat-1">
 		<div class="inner-premium-cat">
-			<h3><?php esc_html_e( 'Member\'s Content', 'marketing-ops-core' ); ?></h3>
+			<h3><?php esc_html_e( 'Member\'s Content', 'marketingops' ); ?></h3>
 			<?php echo mops_print_customer_content_html( 'page', $premium_available_content, $premium_unavailable_content ); ?>
 		</div>
 	</div>
@@ -189,7 +189,7 @@ if ( ! function_exists( 'mops_print_customer_content_html' ) ) {
 	<!-- NO BS DEMO -->
 	<div class="portfolio-block premium-cat-block cat-2" data-filter="cat-2">
 		<div class="inner-premium-cat">
-			<h3><?php esc_html_e( 'No BS Demos', 'marketing-ops-core' ); ?></h3>
+			<h3><?php esc_html_e( 'No BS Demos', 'marketingops' ); ?></h3>
 			<?php echo mops_print_customer_content_html( 'no_bs_demo', $premium_available_content, $premium_unavailable_content ); ?>
 		</div>
 	</div>
@@ -197,7 +197,7 @@ if ( ! function_exists( 'mops_print_customer_content_html' ) ) {
 	<!-- NO BS DEMO OFFER -->
 	<div class="premium-cat-block cat-3" data-filter="cat-3">
 		<div class="inner-premium-cat">
-			<h3><?php esc_html_e( 'No BS Demo Offers', 'marketing-ops-core' ); ?></h3>
+			<h3><?php esc_html_e( 'No BS Demo Offers', 'marketingops' ); ?></h3>
 			<?php echo mops_print_customer_content_html( 'no_bs_demo_offer', $premium_available_content, $premium_unavailable_content ); ?>
 		</div>
 	</div>
@@ -205,21 +205,21 @@ if ( ! function_exists( 'mops_print_customer_content_html' ) ) {
 	<!-- PRODUCT -->
 	<div class="premium-cat-block cat-4" data-filter="cat-4">
 		<div class="inner-premium-cat">
-			<h3><?php esc_html_e( 'Products', 'marketing-ops-core' ); ?></h3>
+			<h3><?php esc_html_e( 'Products', 'marketingops' ); ?></h3>
 			<?php echo mops_print_customer_content_html( 'product', $premium_available_content, $premium_unavailable_content ); ?>
 		</div>
 	</div>
 
 	<div class="premium-cat-block cat-5" data-filter="cat-5">
 		<div class="inner-premium-cat">
-			<h3><?php esc_html_e( 'Learning material', 'marketing-ops-core' ); ?></h3>
+			<h3><?php esc_html_e( 'Learning material', 'marketingops' ); ?></h3>
 			<?php echo mops_print_customer_content_html( 'sfwd-courses', $premium_available_content, $premium_unavailable_content ); ?>
 		</div>
 	</div>
 
 	<div class="premium-cat-block cat-6" data-filter="cat-6">
 		<div class="inner-premium-cat">
-			<h3><?php esc_html_e( 'Product & course discounts', 'marketing-ops-core' ); ?></h3>
+			<h3><?php esc_html_e( 'Product & course discounts', 'marketingops' ); ?></h3>
 			<?php
 			// Available content.
 			if ( ! empty( $premium_available_content['purchasing_discount'] ) && is_array( $premium_available_content['purchasing_discount'] ) ) {
@@ -239,7 +239,7 @@ if ( ! function_exists( 'mops_print_customer_content_html' ) ) {
 								// Calculate the discounted object price.
 								if ( 'percentage' === $discount_type ) {
 									$discounted_obj_price           = $object_price - ( $object_price * $discount_amount / 100 );
-									$formatted_discounted_obj_price = ( 0 < $discounted_obj_price ) ? wc_price( $discounted_obj_price ) : __( 'Free', 'marketing-ops-core' );
+									$formatted_discounted_obj_price = ( 0 < $discounted_obj_price ) ? wc_price( $discounted_obj_price ) : __( 'Free', 'marketingops' );
 								}
 								?>
 								<div class="pc-box premium-unavailable-content">
@@ -247,7 +247,7 @@ if ( ! function_exists( 'mops_print_customer_content_html' ) ) {
 										<a href="<?php echo esc_url( get_permalink( $object_id ) ); ?>" target="_blank"><?php echo wp_kses_post( get_the_title( $object_id ) ); ?></a>
 										<div class="main-d-box">
 											<ul>
-												<li><?php echo wp_kses_post( sprintf( __( '%1$s discount!', 'marketing-ops-core' ), $formatted_discount_amt ) ); ?></li>
+												<li><?php echo wp_kses_post( sprintf( __( '%1$s discount!', 'marketingops' ), $formatted_discount_amt ) ); ?></li>
 												<li><?php echo wc_price( $object_price ); ?></li>
 												<li><?php echo wp_kses_post( $formatted_discounted_obj_price ); ?></li>
 											</ul>
@@ -257,8 +257,8 @@ if ( ! function_exists( 'mops_print_customer_content_html' ) ) {
 										<?php } ?>
 									</div>
 									<div class="pc-btn">
-										<a class="view" href="<?php echo esc_url( get_permalink( $object_id ) ); ?>"><?php esc_html_e( 'View', 'marketing-ops-core' ); ?></a>
-										<a class="add_to_cart" href="<?php echo esc_url( wc_get_checkout_url() . "?add-to-cart={$object_id}&quantity=1" ); ?>"><?php esc_html_e( 'Add to cart', 'marketing-ops-core' ); ?></a>
+										<a class="view" href="<?php echo esc_url( get_permalink( $object_id ) ); ?>"><?php esc_html_e( 'View', 'marketingops' ); ?></a>
+										<a class="add_to_cart" href="<?php echo esc_url( wc_get_checkout_url() . "?add-to-cart={$object_id}&quantity=1" ); ?>"><?php esc_html_e( 'Add to cart', 'marketingops' ); ?></a>
 									</div>
 								</div>
 								<?php
@@ -275,7 +275,7 @@ if ( ! function_exists( 'mops_print_customer_content_html' ) ) {
 										<a href="<?php echo esc_url( get_term_link( $object_id, 'product_cat' ) ); ?>" target="_blank"><?php echo wp_kses_post( get_term( $object_id )->name ); ?></a>
 										<div class="main-d-box">
 											<ul>
-												<li><?php echo wp_kses_post( sprintf( __( '%1$s discount!', 'marketing-ops-core' ), $formatted_discount_amt ) ); ?></li>
+												<li><?php echo wp_kses_post( sprintf( __( '%1$s discount!', 'marketingops' ), $formatted_discount_amt ) ); ?></li>
 											</ul>
 										</div>
 										<?php // if ( ! empty( wp_trim_words( get_post_field( 'post_content', $object_id ), 15 ) ) ) { ?>
@@ -283,7 +283,7 @@ if ( ! function_exists( 'mops_print_customer_content_html' ) ) {
 										<?php // } ?>
 									</div>
 									<div class="pc-btn">
-										<a class="view" href="<?php echo esc_url( get_term_link( $object_id, 'product_cat' ) ); ?>"><?php esc_html_e( 'View', 'marketing-ops-core' ); ?></a>
+										<a class="view" href="<?php echo esc_url( get_term_link( $object_id, 'product_cat' ) ); ?>"><?php esc_html_e( 'View', 'marketingops' ); ?></a>
 									</div>
 								</div>
 								<?php
@@ -311,7 +311,7 @@ if ( ! function_exists( 'mops_print_customer_content_html' ) ) {
 								// Calculate the discounted object price.
 								if ( 'percentage' === $discount_type ) {
 									$discounted_obj_price           = $object_price - ( $object_price * $discount_amount / 100 );
-									$formatted_discounted_obj_price = ( 0 < $discounted_obj_price ) ? wc_price( $discounted_obj_price ) : __( 'Free', 'marketing-ops-core' );
+									$formatted_discounted_obj_price = ( 0 < $discounted_obj_price ) ? wc_price( $discounted_obj_price ) : __( 'Free', 'marketingops' );
 								}
 								?>
 								<div class="pc-box premium-unavailable-content">
@@ -319,7 +319,7 @@ if ( ! function_exists( 'mops_print_customer_content_html' ) ) {
 										<a href="<?php echo esc_url( get_permalink( $object_id ) ); ?>" target="_blank"><?php echo wp_kses_post( get_the_title( $object_id ) ); ?></a>
 										<div class="main-d-box">
 											<ul>
-												<li><?php echo wp_kses_post( sprintf( __( '%1$s discount!', 'marketing-ops-core' ), $formatted_discount_amt ) ); ?></li>
+												<li><?php echo wp_kses_post( sprintf( __( '%1$s discount!', 'marketingops' ), $formatted_discount_amt ) ); ?></li>
 												<li><?php echo wc_price( $object_price ); ?></li>
 												<li><?php echo wp_kses_post( $formatted_discounted_obj_price ); ?></li>
 											</ul>
@@ -349,7 +349,7 @@ if ( ! function_exists( 'mops_print_customer_content_html' ) ) {
 										<a href="<?php echo esc_url( get_term_link( $object_id, 'product_cat' ) ); ?>" target="_blank"><?php echo wp_kses_post( get_term( $object_id )->name ); ?></a>
 										<div class="main-d-box">
 											<ul>
-												<li><?php echo wp_kses_post( sprintf( __( '%1$s discount!', 'marketing-ops-core' ), $formatted_discount_amt ) ); ?></li>
+												<li><?php echo wp_kses_post( sprintf( __( '%1$s discount!', 'marketingops' ), $formatted_discount_amt ) ); ?></li>
 											</ul>
 										</div>
 										<?php // if ( ! empty( wp_trim_words( get_post_field( 'post_content', $object_id ), 15 ) ) ) { ?>

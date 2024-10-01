@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
   <!-- Popup Content -->
   <div class="popup_content moc_confirmation_popup_content">
     <!-- popup title -->
-    <h3 class="moc_confirmation_popup_title"><?php esc_html_e( 'Confirm to edit publish post', 'marketing-ops-core' ); ?></h3>
+    <h3 class="moc_confirmation_popup_title"><?php esc_html_e( 'Confirm to edit publish post', 'marketingops' ); ?></h3>
     <!-- Popup Closebtn -->
     <div class="popup_close moc_confirmation_popup_close">
       <svg viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -30,8 +30,8 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
     </div>
     <!-- Popup Form -->
     <div class="form_box box_btn">
-        <button type="submit" class="btn moc_confirmation_popup_yes"><?php esc_html_e( 'Yes', 'marketing-ops-core' ); ?></button>
-        <button type="submit" class="btn moc_confirmation_popup_no"><?php esc_html_e( 'No', 'marketing-ops-core' ); ?></button>
+        <button type="submit" class="btn moc_confirmation_popup_yes"><?php esc_html_e( 'Yes', 'marketingops' ); ?></button>
+        <button type="submit" class="btn moc_confirmation_popup_no"><?php esc_html_e( 'No', 'marketingops' ); ?></button>
         <input type="hidden" class="moc_confirmation_article_id" value="">
         <input type="hidden" class="moc_confirmation_article_post_type" value="">
         <input type="hidden" class="moc_confirmation_article_post_tab" value="">

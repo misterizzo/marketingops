@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
   <!-- Popup Content -->
   <div class="popup_content moc_host_workshop_content">
     <!-- popup title -->
-    <h3 class="moc_host_workshop_title"><?php esc_html_e( 'Host a Workshop', 'marketing-ops-core' ); ?></h3>
+    <h3 class="moc_host_workshop_title"><?php esc_html_e( 'Host a Workshop', 'marketingops' ); ?></h3>
     <!-- Popup Closebtn -->
     <div class="popup_close moc_host_workshop_close">
       <svg viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -32,17 +32,17 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
     <div class="popup_form moc_host_workshop_form">
       <!-- Popup Form box-->
       <div class="form_box moc_required_field">
-        <input type="text" id="moc_host_workshop_subject" placeholder="<?php esc_attr_e( 'Subject', 'marketing-ops-core' )?>" />
+        <input type="text" id="moc_host_workshop_subject" placeholder="<?php esc_attr_e( 'Subject', 'marketingops' )?>" />
         <div class="moc_error moc_host_workshop_subject_error"><span></span></div>
       </div>
       <!-- Popup Form box-->
       <div class="form_box moc_required_field">
-        <textarea id="moc_host_workshop_description" placeholder="<?php esc_attr_e( 'Why do you want to host a workshop?', 'marketing-ops-core' )?>"></textarea>
+        <textarea id="moc_host_workshop_description" placeholder="<?php esc_attr_e( 'Why do you want to host a workshop?', 'marketingops' )?>"></textarea>
         <div class="moc_error moc_host_workshop_message_error"><span></span></div>
       </div>
       <!-- Popup Form box btn-->
       <div class="form_box box_btn">
-        <button type="submit" class="btn moc_host_workshop_submit"><?php esc_html_e( 'Submit', 'marketing-ops-core' ); ?></button>
+        <button type="submit" class="btn moc_host_workshop_submit"><?php esc_html_e( 'Submit', 'marketingops' ); ?></button>
       </div>
     </div>
     <!-- loader -->

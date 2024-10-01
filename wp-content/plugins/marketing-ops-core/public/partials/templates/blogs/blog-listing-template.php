@@ -26,12 +26,12 @@ $get_author_name = ! empty( $get_author_name ) ? $get_author_name : '';
     <div class="articles_box elementor-section elementor-top-section elementor-element elementor-section-boxed elementor-section-height-default elementor-section-height-default">
       <div class="elementor-container elementor-column-gap-default">
         <div class="articled_header articled_container">
-          <h1><?php esc_html_e( 'Blog articles', 'marketing-ops-core' ); ?></h1>
+          <h1><?php esc_html_e( 'Blog articles', 'marketingops' ); ?></h1>
           <div class="header_select">
-            <label><?php esc_html_e( 'Sort by', 'marketing-ops-core' ); ?></label>
+            <label><?php esc_html_e( 'Sort by', 'marketingops' ); ?></label>
             <select class="job-manager-filter" name="sortby_blogs">
-              <option value="DESC"><?php esc_html_e( 'Newest', 'marketing-ops-core' ); ?></option>
-              <option value="ASC"><?php esc_html_e( 'Oldest', 'marketing-ops-core' ); ?></option>
+              <option value="DESC"><?php esc_html_e( 'Newest', 'marketingops' ); ?></option>
+              <option value="ASC"><?php esc_html_e( 'Oldest', 'marketingops' ); ?></option>
             </select>
           </div>
         </div>
@@ -50,7 +50,7 @@ $get_author_name = ! empty( $get_author_name ) ? $get_author_name : '';
           ?>
           <div class="authore_tags articled_container">
             <div class="moc_tag_box_div text_box">
-              <span class="moc_author_title"><?php esc_html_e( 'Author: ', 'marketing-ops-core' ); ?></span>
+              <span class="moc_author_title"><?php esc_html_e( 'Author: ', 'marketingops' ); ?></span>
               <a href="javascript:;" class="moc_tag_box">
               <?php echo esc_html( $author_name ); ?>
                 <span class="close_icon">+</span>

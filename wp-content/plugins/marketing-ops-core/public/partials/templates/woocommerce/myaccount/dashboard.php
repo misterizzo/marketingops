@@ -43,8 +43,8 @@ if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
 	$premium_available_content_count = array_sum( array_values( $premium_available_content_count ) );
 	?>
 	<div class="newdashbordmain">
-		<h3><?php echo wp_kses_post( sprintf( __( 'Hello %1$s!', 'marketing-ops-core' ), $current_user->display_name ) ); ?></h3>
-		<span class="hedertitlethree"><?php esc_html_e( 'Take a look', 'marketing-ops-core' ); ?>:</span>
+		<h3><?php echo wp_kses_post( sprintf( __( 'Hello %1$s!', 'marketingops' ), $current_user->display_name ) ); ?></h3>
+		<span class="hedertitlethree"><?php esc_html_e( 'Take a look', 'marketingops' ); ?>:</span>
 		<ul class="dashbordlistmain">
 			<li>
 				<a href="/my-account/premium-content/">
@@ -53,11 +53,11 @@ if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
 							<div class="iconwithtitledashbord">
 								<i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3.5C11.2031 3.5026 10.5104 4.03906 10.3099 4.8099C10.1094 5.58073 10.4557 6.38802 11.1484 6.77865L9.04428 10.9844L5.23438 7.17448C5.57032 6.63542 5.58595 5.95573 5.27866 5.40104C4.97136 4.84635 4.38543 4.5 3.75001 4.5C2.89063 4.5026 2.16147 5.13021 2.02866 5.98177C1.89584 6.83073 2.40105 7.65104 3.21876 7.91406L4.83595 16H19.1641L20.7813 7.91667C21.6016 7.65365 22.1094 6.83333 21.9792 5.98177C21.8464 5.13021 21.112 4.5 20.25 4.5C19.6146 4.5 19.0313 4.84635 18.7214 5.40104C18.4141 5.95573 18.4297 6.63542 18.7656 7.17448L14.9557 10.9844L12.8516 6.77865C13.5469 6.39062 13.8932 5.58073 13.6927 4.8099C13.4922 4.03906 12.7969 3.5 12 3.5ZM5.00001 17.5V19.25C5.00001 20.2161 5.78386 21 6.75001 21H17.25C18.2162 21 19 20.2161 19 19.25V17.5H5.00001Z" fill="#6D7B83"/></svg></i>
 								<i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3.5C11.2031 3.5026 10.5104 4.03906 10.3099 4.8099C10.1094 5.58073 10.4557 6.38802 11.1484 6.77865L9.04428 10.9844L5.23438 7.17448C5.57032 6.63542 5.58595 5.95573 5.27866 5.40104C4.97136 4.84635 4.38543 4.5 3.75001 4.5C2.89063 4.5026 2.16147 5.13021 2.02866 5.98177C1.89584 6.83073 2.40105 7.65104 3.21876 7.91406L4.83595 16H19.1641L20.7813 7.91667C21.6016 7.65365 22.1094 6.83333 21.9792 5.98177C21.8464 5.13021 21.112 4.5 20.25 4.5C19.6146 4.5 19.0313 4.84635 18.7214 5.40104C18.4141 5.95573 18.4297 6.63542 18.7656 7.17448L14.9557 10.9844L12.8516 6.77865C13.5469 6.39062 13.8932 5.58073 13.6927 4.8099C13.4922 4.03906 12.7969 3.5 12 3.5ZM5.00001 17.5V19.25C5.00001 20.2161 5.78386 21 6.75001 21H17.25C18.2162 21 19 20.2161 19 19.25V17.5H5.00001Z" fill="url(#paint0_linear_0_224)"/><defs><linearGradient id="paint0_linear_0_224" x1="1.83093" y1="11.6415" x2="34.4163" y2="11.6415" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/>	</linearGradient></defs></svg></i>
-								<h4><?php esc_html_e( 'Premium Content', 'marketing-ops-core' ); ?></h4>
+								<h4><?php esc_html_e( 'Premium Content', 'marketingops' ); ?></h4>
 							</div>
 							<div class="bottomdashbordlist">
 								<ul>
-									<li><?php echo esc_html( sprintf( __( '%1$d items available', 'marketing-ops-core' ), $premium_available_content_count ) ); ?></li>
+									<li><?php echo esc_html( sprintf( __( '%1$d items available', 'marketingops' ), $premium_available_content_count ) ); ?></li>
 								</ul>
 							</div>
 							<div class="arrowrightdashbord"><span class="arrowsvgimg"></span></div>
@@ -569,19 +569,19 @@ if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
 		</div>
 	</div>
 	<p class="hello-customer">
-		<!-- <?php esc_html_e( 'Hello Himanshu', 'marketing-ops-core' ); ?> 
+		<!-- <?php esc_html_e( 'Hello Himanshu', 'marketingops' ); ?> 
 		<img src="<?php echo esc_url( $author_img_url ); ?>">
 		<strong><?php echo esc_html( $current_user->display_name ); ?></strong>  
-		(<?php esc_html_e( 'not', 'marketing-ops-core' ); ?> <strong><?php echo esc_html( $current_user->display_name ); ?></strong>? 
-		<a href="<?php echo esc_url( wc_logout_url() ); ?>"><?php esc_html_e( 'Log out', 'marketing-ops-core' ); ?></a>) -->
+		(<?php esc_html_e( 'not', 'marketingops' ); ?> <strong><?php echo esc_html( $current_user->display_name ); ?></strong>? 
+		<a href="<?php echo esc_url( wc_logout_url() ); ?>"><?php esc_html_e( 'Log out', 'marketingops' ); ?></a>) -->
 	</p>
 <?php } else { ?>
 	<p class="hello-customer">
-		<?php esc_html_e( 'Hello', 'marketing-ops-core' ); ?> 
+		<?php esc_html_e( 'Hello', 'marketingops' ); ?> 
 		<img src="<?php echo esc_url( $author_img_url ); ?>">
 		<strong><?php echo esc_html( $current_user->display_name ); ?></strong>  
-		(<?php esc_html_e( 'not', 'marketing-ops-core' ); ?> <strong><?php echo esc_html( $current_user->display_name ); ?></strong>? 
-		<a href="<?php echo esc_url( wc_logout_url() ); ?>"><?php esc_html_e( 'Log out', 'marketing-ops-core' ); ?></a>)
+		(<?php esc_html_e( 'not', 'marketingops' ); ?> <strong><?php echo esc_html( $current_user->display_name ); ?></strong>? 
+		<a href="<?php echo esc_url( wc_logout_url() ); ?>"><?php esc_html_e( 'Log out', 'marketingops' ); ?></a>)
 	</p>
 	<p class="customer-dashboard-links">
 		<?php

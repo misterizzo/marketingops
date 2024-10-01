@@ -68,25 +68,25 @@ if ( $show_downloads ) {
 					</div>
 					<div class="o-wrap">
 						<div class="sub-box">
-							<p><?php esc_html_e( 'Price', 'marketing-ops-core' ); ?></p>
+							<p><?php esc_html_e( 'Price', 'marketingops' ); ?></p>
 							<div class="inner-box">
 								<span><?php echo wp_kses_post( wc_price( $product_price ) ); ?></span>
 							</div>
 						</div>
 						<div class="sub-box">
-							<p><?php esc_html_e( 'Quantity', 'marketing-ops-core' ); ?></p>
+							<p><?php esc_html_e( 'Quantity', 'marketingops' ); ?></p>
 							<span><?php echo esc_html( $order_item->get_quantity() ); ?></span>
 						</div>
 						<div class="sub-box">
-							<p><?php esc_html_e( 'Subtotal', 'marketing-ops-core' ); ?></p>
+							<p><?php esc_html_e( 'Subtotal', 'marketingops' ); ?></p>
 							<span><?php echo wp_kses_post( wc_price( $item_subtotal ) ); ?></span>
 						</div>
 						<div class="sub-box">
-							<p><?php esc_html_e( 'Tax', 'marketing-ops-core' ); ?></p>
+							<p><?php esc_html_e( 'Tax', 'marketingops' ); ?></p>
 							<span><?php echo wp_kses_post( wc_price( $tax_subtotal ) ); ?></span>
 						</div>
 						<div class="sub-box">
-							<p><?php esc_html_e( 'Total', 'marketing-ops-core' ); ?></p>
+							<p><?php esc_html_e( 'Total', 'marketingops' ); ?></p>
 							<span><?php echo wp_kses_post( wc_price( $item_total ) ); ?></span>	
 						</div>
 					</div>
@@ -135,40 +135,40 @@ if ( $show_downloads ) {
 
 			<!-- ITEM SUBTOTAL -->
 			<?php if ( ! empty( $order->get_subtotal() ) ) { ?>
-				<div><label><?php esc_html_e( 'Items Subtotal', 'marketing-ops-core' ) ?>: </label><span><?php echo wp_kses_post( wc_price( $order->get_subtotal() ) ); ?></span></div>
+				<div><label><?php esc_html_e( 'Items Subtotal', 'marketingops' ) ?>: </label><span><?php echo wp_kses_post( wc_price( $order->get_subtotal() ) ); ?></span></div>
 			<?php } ?>
 
 			<!-- ITEM SHIPPING TOTAL -->
 			<?php if ( ! empty( $order->get_shipping_total() ) ) { ?>
-				<div><label><?php esc_html_e( 'Shipping', 'marketing-ops-core' ) ?>: </label><span><?php echo wp_kses_post( wc_price( $order->get_shipping_total() ) ); ?></span></div>
+				<div><label><?php esc_html_e( 'Shipping', 'marketingops' ) ?>: </label><span><?php echo wp_kses_post( wc_price( $order->get_shipping_total() ) ); ?></span></div>
 			<?php } ?>
 
 			<!-- COUPONS -->
 			<?php if ( ! empty( $coupons ) ) { ?>
 				<?php foreach ( $coupons as $coupon_code ) { ?>
-					<div><label><?php echo esc_html( sprintf( __( 'Coupon(s) [ %1$s ]', 'marketing-ops-core' ), $coupon_code ) ); ?>: </label><span>-<?php echo wp_kses_post( $order->get_discount_to_display() ); ?></span></div>
+					<div><label><?php echo esc_html( sprintf( __( 'Coupon(s) [ %1$s ]', 'marketingops' ), $coupon_code ) ); ?>: </label><span>-<?php echo wp_kses_post( $order->get_discount_to_display() ); ?></span></div>
 				<?php } ?>
 			<?php } ?>
 
 			<!-- ITEM TOTAL -->
 			<?php if ( ! empty( $order->get_total() ) ) { ?>
-				<div><label><?php esc_html_e( 'Order Total', 'marketing-ops-core' ) ?>: </label><span><?php echo wp_kses_post( wc_price( $order->get_total() ) ); ?></span></div>
+				<div><label><?php esc_html_e( 'Order Total', 'marketingops' ) ?>: </label><span><?php echo wp_kses_post( wc_price( $order->get_total() ) ); ?></span></div>
 				<hr />
-				<div><label><?php esc_html_e( 'Paid', 'marketing-ops-core' ) ?>:</label><span><?php echo wp_kses_post( wc_price( $order->get_total() ) ); ?></span></div>
+				<div><label><?php esc_html_e( 'Paid', 'marketingops' ) ?>:</label><span><?php echo wp_kses_post( wc_price( $order->get_total() ) ); ?></span></div>
 			<?php } ?>
 
 			<?php if ( ! empty( $order->get_payment_method_title() ) ) { ?>
 				<div><label style="margin-right: 155px;"><?php echo esc_html( $order_created_date->date( 'F j, Y @ h:i a' ) ); ?> via <?php echo esc_html( $order->get_payment_method_title() ); ?></label></div>
 			<?php } ?>
 			<?php if ( ! empty( $order->get_customer_ip_address() ) ) { ?>
-				<div><label style="margin-right: 155px;"><?php echo esc_html( sprintf( __( 'IP: %1$s', 'marketing-ops-core' ), $order->get_customer_ip_address() ) ); ?></label></div>
+				<div><label style="margin-right: 155px;"><?php echo esc_html( sprintf( __( 'IP: %1$s', 'marketingops' ), $order->get_customer_ip_address() ) ); ?></label></div>
 			<?php } ?>
 
 			<!-- REFUND -->
 			<?php if ( 0 < $order->get_total_refunded() ) { ?>
 				<hr />
-				<div class="refund-totals" style="color: red;"><label><?php esc_html_e( 'Refunded', 'marketing-ops-core' ) ?>: </label><span>-<?php echo wp_kses_post( wc_price( $order->get_total_refunded() ) ); ?></span></div>
-				<div><label><?php esc_html_e( 'Net Payment', 'marketing-ops-core' ) ?>:</label><span><?php echo wc_price( $order->get_total() - $order->get_total_refunded(), array( 'currency' => $order->get_currency() ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></div>
+				<div class="refund-totals" style="color: red;"><label><?php esc_html_e( 'Refunded', 'marketingops' ) ?>: </label><span>-<?php echo wp_kses_post( wc_price( $order->get_total_refunded() ) ); ?></span></div>
+				<div><label><?php esc_html_e( 'Net Payment', 'marketingops' ) ?>:</label><span><?php echo wc_price( $order->get_total() - $order->get_total_refunded(), array( 'currency' => $order->get_currency() ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></div>
 			<?php } ?>
 		</div>
 	</div>

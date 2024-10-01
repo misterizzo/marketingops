@@ -34,7 +34,7 @@ defined( 'ABSPATH' ) || exit;
 			$subscription_type    = '';
 			$trial_period_class   = '';
 			$subscription_text    = '';
-			$read_more_link       = '<a class="read-more" href="#" title="' . __( 'read more', 'marketing-ops-core' ) . '">' . __( 'read more', 'marketing-ops-core' ) . '</a>';
+			$read_more_link       = '<a class="read-more" href="#" title="' . __( 'read more', 'marketingops' ) . '">' . __( 'read more', 'marketingops' ) . '</a>';
 			if ( 0 < $parent_product_id ) {
 				$description          = ! empty( $parent_product->get_short_description() ) ? $parent_product->get_short_description() : $parent_product->get_description();
 				$shortdecription      = ! empty( $description ) ? $description : $parent_product->post->post_excerpt;
@@ -47,8 +47,8 @@ defined( 'ABSPATH' ) || exit;
 				$trim_shortdecription = ( strlen( $shortdecription ) > 50 ) ? wp_trim_words( $shortdecription, 8, "…{$read_more_link}" ) : $shortdecription;
 			}
 			if ( ! empty( $time_period ) ) {
-				$subscription_type  = ( 'year' === $time_period ) ? __( 'YEARLY', 'marketing-ops-core' ) : __( 'MONTHLY', 'marketing-ops-core' );
-				$subscription_text  = ( 'year' === $time_period ) ? __( 'year', 'marketing-ops-core' ) : __( 'month', 'marketing-ops-core' );
+				$subscription_type  = ( 'year' === $time_period ) ? __( 'YEARLY', 'marketingops' ) : __( 'MONTHLY', 'marketingops' );
+				$subscription_text  = ( 'year' === $time_period ) ? __( 'year', 'marketingops' ) : __( 'month', 'marketingops' );
 				$trial_period_class = ( 'year' === $time_period ) ? 'moc_year_class' : 'moc_month_class';
 			}
 			if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
@@ -74,7 +74,7 @@ defined( 'ABSPATH' ) || exit;
 						</h5>
 						<?php
 						if ( ! empty( $time_period ) ) {
-							?><p><?php esc_html_e( sprintf( __( '1 %1$s, starting %2$s', 'marketing-ops-core' ), $subscription_text, gmdate( 'd/m/Y' ) ) ); ?></p><?php
+							?><p><?php esc_html_e( sprintf( __( '1 %1$s, starting %2$s', 'marketingops' ), $subscription_text, gmdate( 'd/m/Y' ) ) ); ?></p><?php
 						} else {
 							?><p data-dots="…" data-fulldescription="<?php echo esc_attr( $shortdecription ); ?>" data-trimdescription="<?php echo esc_attr( $trim_shortdecription ); ?>" class="moc_product_description" ><?php echo wp_kses_post( $trim_shortdecription ); ?></p><?php
 						}

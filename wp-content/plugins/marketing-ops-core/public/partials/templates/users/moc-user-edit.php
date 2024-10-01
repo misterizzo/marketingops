@@ -306,7 +306,7 @@ if ( ! wp_is_mobile() ) {
 														echo moc_blog_contributions_html( get_current_user_id(), $blogs );
 													?>
 													<div class="show_more_btn">
-														<a href="<?php echo site_url( 'blog/?author=' . $user_nice_name ); ?>"><?php esc_html_e( 'show more', 'marketing-ops-core' ); ?></a>
+														<a href="<?php echo site_url( 'blog/?author=' . $user_nice_name ); ?>"><?php esc_html_e( 'show more', 'marketingops' ); ?></a>
 													</div>
 												</div>
 												<?php
@@ -333,7 +333,7 @@ if ( ! wp_is_mobile() ) {
 												echo moc_blog_contributions_html( get_current_user_id(), $blogs );
 											?>
 											<div class="show_more_btn">
-												<a href="<?php echo site_url( 'blog/?author=' . $user_nice_name ); ?>"><?php esc_html_e( 'show more', 'marketing-ops-core' ); ?></a>
+												<a href="<?php echo site_url( 'blog/?author=' . $user_nice_name ); ?>"><?php esc_html_e( 'show more', 'marketingops' ); ?></a>
 											</div>
 										</div>
 									<?php
@@ -373,7 +373,7 @@ if ( ! wp_is_mobile() ) {
 											echo moc_podcast_contributons_html( get_current_user_id(), $podcasts );
 										?>
 									<div class="show_more_btn">
-											<a href="<?php echo site_url( 'podcast/?author=' . $user_nice_name ); ?>"><?php esc_html_e( 'show more', 'marketing-ops-core' ); ?></a>
+											<a href="<?php echo site_url( 'podcast/?author=' . $user_nice_name ); ?>"><?php esc_html_e( 'show more', 'marketingops' ); ?></a>
 										</div>
 									</div>
 								<?php
@@ -463,7 +463,7 @@ if ( ! wp_is_mobile() ) {
 									$period              = moc_get_subsciption_start_date( $subscriptions );
 									$expiry_date         = moc_get_subsciption_end_date( $subscriptions );
 									$pending_days        = moc_get_days_differenc_between_dates( $start_date, $expiry_date );
-									$pending_days        = ! empty( $pending_days ) ? sprintf( __( '%1$s Days Remaining', 'marketing-ops-core' ), $pending_days ) : ''; 
+									$pending_days        = ! empty( $pending_days ) ? sprintf( __( '%1$s Days Remaining', 'marketingops' ), $pending_days ) : ''; 
 									$status              = moc_get_subsciption_status( $subscriptions );
 									$change_payment_link = wc_get_endpoint_url( 'subscription-payment-method', $subscription_id, wc_get_page_permalink( 'myaccount' ) );
 									$status_class    = '';
@@ -480,7 +480,7 @@ if ( ! wp_is_mobile() ) {
 										<div class="box_about_content box_content">
 											<div class="moc_inner_work_section_container">
 												<div class="title_with_btn">
-													<h3><?php esc_html_e( 'Subscription', 'marketing-ops-core' ); ?></h3>
+													<h3><?php esc_html_e( 'Subscription', 'marketingops' ); ?></h3>
 													<div class="title_right_box">
 														<!-- Memebrship Status - Start | 
 															by default it's show gray dot
@@ -514,10 +514,10 @@ if ( ! wp_is_mobile() ) {
 																			-->
 																			<div class="profile_member_btn">
 																				<a href="<?php echo esc_url( site_url( 'my-account/subscriptions' ) ); ?>" class="profile_member_btn">
-																					<?php esc_html_e( 'Manage subscriptions', 'marketing-ops-core' ); ?>
+																					<?php esc_html_e( 'Manage subscriptions', 'marketingops' ); ?>
 																				</a>
 																				<a href="<?php echo esc_url( $change_payment_link ); ?>" class="profile_member_btn">
-																					<?php esc_html_e( 'Edit card', 'marketing-ops-core' ); ?>
+																					<?php esc_html_e( 'Edit card', 'marketingops' ); ?>
 																				</a>
 																			</div>
 																		</div>
@@ -608,7 +608,7 @@ if ( ! wp_is_mobile() ) {
 							<div class="box_certi_content box_about_content box_content <?php echo esc_attr( $added_class ); ?>">
 								<div class="title_with_btn">
 									<!-- Avatar title -->
-									<h3><?php esc_html_e( 'Certifications', 'marketing-ops-core' ); ?></h3>
+									<h3><?php esc_html_e( 'Certifications', 'marketingops' ); ?></h3>
 								</div>
 								<div class="sub_title_with_content moc_sidebar_certificates">
 									<?php
@@ -667,7 +667,7 @@ if ( ! wp_is_mobile() ) {
 								<div class="box_badge_content box_about_content box_content">
 									<div class="title_with_btn">
 										<!-- Avatar title -->
-										<h3><?php esc_html_e( 'Community badges', 'marketing-ops-core' ); ?></h3>
+										<h3><?php esc_html_e( 'Community badges', 'marketingops' ); ?></h3>
 									</div>
 									<div class="sub_title_with_content">
 										<?php foreach ( $updated_community_badges as $key=>$community_badge_image ) {
@@ -704,10 +704,10 @@ if ( ! wp_is_mobile() ) {
 						<?php if ( true === $flag ){
 							?>
 							<div class="liks_box">
-								<a href="javascript:;" class="moc_edit_profile_btn"><?php esc_html_e( 'edit user profile', 'marketing-ops-core' ); ?></a>
+								<a href="javascript:;" class="moc_edit_profile_btn"><?php esc_html_e( 'edit user profile', 'marketingops' ); ?></a>
 							</div>
 							<div class="liks_box">
-								<a href="javascript:;" class="moc_view_profile"><?php esc_html_e( 'view public profile', 'marketing-ops-core' ); ?></a>
+								<a href="javascript:;" class="moc_view_profile"><?php esc_html_e( 'view public profile', 'marketingops' ); ?></a>
 							</div>
 						<?php
 						}
@@ -884,7 +884,7 @@ if ( ! wp_is_mobile() ) {
 									$period              = moc_get_subsciption_start_date( $subscriptions );
 									$expiry_date         = moc_get_subsciption_end_date( $subscriptions );
 									$pending_days        = moc_get_days_differenc_between_dates( $start_date, $expiry_date );
-									$pending_days        = ! empty( $pending_days ) ? sprintf( __( '%1$s Days Remaining', 'marketing-ops-core' ), $pending_days ) : ''; 
+									$pending_days        = ! empty( $pending_days ) ? sprintf( __( '%1$s Days Remaining', 'marketingops' ), $pending_days ) : ''; 
 									$status              = moc_get_subsciption_status( $subscriptions );
 									$change_payment_link = wc_get_endpoint_url( 'subscription-payment-method', $subscription_id, wc_get_page_permalink( 'myaccount' ) );
 									$status_class    = '';
@@ -901,7 +901,7 @@ if ( ! wp_is_mobile() ) {
 										<div class="box_about_content box_content">
 											<div class="moc_inner_work_section_container">
 												<div class="title_with_btn">
-													<h3><?php esc_html_e( 'Subscription', 'marketing-ops-core' ); ?></h3>
+													<h3><?php esc_html_e( 'Subscription', 'marketingops' ); ?></h3>
 													<div class="title_right_box">
 														<!-- Memebrship Status - Start | 
 															by default it's show gray dot
@@ -937,10 +937,10 @@ if ( ! wp_is_mobile() ) {
 																			-->
 																			<div class="profile_member_btn">
 																				<a href="<?php echo esc_url( site_url( 'my-account/subscriptions' ) ); ?>" class="profile_member_btn">
-																					<?php esc_html_e( 'Manage subscriptions', 'marketing-ops-core' ); ?>
+																					<?php esc_html_e( 'Manage subscriptions', 'marketingops' ); ?>
 																				</a>
 																				<a href="<?php echo esc_url( $change_payment_link ); ?>" class="profile_member_btn">
-																					<?php esc_html_e( 'Edit card', 'marketing-ops-core' ); ?>
+																					<?php esc_html_e( 'Edit card', 'marketingops' ); ?>
 																				</a>
 																			</div>
 																		</div>
@@ -983,7 +983,7 @@ if ( ! wp_is_mobile() ) {
 													echo moc_blog_contributions_html( get_current_user_id(), $blogs );
 												?>
 												<div class="show_more_btn">
-													<a href="<?php echo site_url( 'blog/?author=' . $user_nice_name ); ?>"><?php esc_html_e( 'show more', 'marketing-ops-core' ); ?></a>
+													<a href="<?php echo site_url( 'blog/?author=' . $user_nice_name ); ?>"><?php esc_html_e( 'show more', 'marketingops' ); ?></a>
 												</div>
 											</div>
 											<?php
@@ -1008,7 +1008,7 @@ if ( ! wp_is_mobile() ) {
 												echo moc_blog_contributions_html( get_current_user_id(), $blogs );
 											?>
 											<div class="show_more_btn">
-												<a href="<?php echo site_url( 'blog/?author=' . $user_nice_name ); ?>"><?php esc_html_e( 'show more', 'marketing-ops-core' ); ?></a>
+												<a href="<?php echo site_url( 'blog/?author=' . $user_nice_name ); ?>"><?php esc_html_e( 'show more', 'marketingops' ); ?></a>
 											</div>
 										</div>
 									<?php
@@ -1045,7 +1045,7 @@ if ( ! wp_is_mobile() ) {
 											echo moc_podcast_contributons_html( get_current_user_id(), $podcasts );
 										?>
 									<div class="show_more_btn">
-											<a href="<?php echo site_url( 'podcast/?author=' . $user_nice_name ); ?>"><?php esc_html_e( 'show more', 'marketing-ops-core' ); ?></a>
+											<a href="<?php echo site_url( 'podcast/?author=' . $user_nice_name ); ?>"><?php esc_html_e( 'show more', 'marketingops' ); ?></a>
 										</div>
 									</div>
 								<?php
@@ -1144,7 +1144,7 @@ if ( ! wp_is_mobile() ) {
 							<div class="box_certi_content box_about_content box_content <?php echo esc_attr( $added_class ); ?>">
 								<div class="title_with_btn">
 									<!-- Avatar title -->
-									<h3><?php esc_html_e( 'Certifications', 'marketing-ops-core' ); ?></h3>
+									<h3><?php esc_html_e( 'Certifications', 'marketingops' ); ?></h3>
 								</div>
 								<div class="sub_title_with_content moc_sidebar_certificates">
 									<?php
@@ -1202,7 +1202,7 @@ if ( ! wp_is_mobile() ) {
 								<div class="box_badge_content box_about_content box_content">
 									<div class="title_with_btn">
 										<!-- Avatar title -->
-										<h3><?php esc_html_e( 'Community badges', 'marketing-ops-core' ); ?></h3>
+										<h3><?php esc_html_e( 'Community badges', 'marketingops' ); ?></h3>
 									</div>
 									<div class="sub_title_with_content">
 										<?php foreach ( $updated_community_badges as $key=>$community_badge_image ) {

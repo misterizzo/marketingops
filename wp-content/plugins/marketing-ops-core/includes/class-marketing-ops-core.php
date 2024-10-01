@@ -66,7 +66,7 @@ class Marketing_Ops_Core {
 	 */
 	public function __construct() {
 		$this->version     = ( defined( 'MARKETING_OPS_CORE_VERSION' ) ) ? MARKETING_OPS_CORE_VERSION : '1.0.0';
-		$this->plugin_name = 'marketing-ops-core';
+		$this->plugin_name = 'marketingops';
 
 		$this->load_dependencies();
 		$this->set_locale();
