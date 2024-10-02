@@ -62,8 +62,9 @@ $customer_orders = wc_get_orders(
 		'posts_per_page' => 1,
 	)
 );
-$customer_order  = ( ! empty( $customer_orders[0] ) ) ? $customer_orders[0] : false;
-$order_date      = ( false !== $customer_order ) ? wc_format_datetime( $customer_order->get_date_created() ) : '';
+$customer_order   = ( ! empty( $customer_orders[0] ) ) ? $customer_orders[0] : false;
+$order_date       = ( false !== $customer_order ) ? wc_format_datetime( $customer_order->get_date_created() ) : '';
+$order_item_count = ( false !== $customer_order ) ? ( $customer_order->get_item_count() - $customer_order->get_item_count_refunded() ) : 0;
 
 if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
 	debug( $order_date );
@@ -170,7 +171,14 @@ if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
 							</div>
 							<div class="bottomdashbordlist">
 								<ul>
-									<li>last order dated August 24 2023 $125.00 for 1 item</li>
+									<li>
+										<?php
+										/* translators: 1: order date */
+										echo wp_kses_post( sprintf( __( 'last order dated %1$s', 'marketingops' ), $order_date ) );
+										/* translators: 1: formatted order total 2: total order items */
+										echo wp_kses_post( sprintf( _n( '%3$s%1$s%4$s for %3$s%2$s%4$s item', '%3$s%1$s%4$s for %3$s%2$s%4$s items', $order_item_count, 'woocommerce' ), $customer_order->get_formatted_order_total(), $order_item_count, '<span class="bold">', '</span>' ) );
+										?>
+									</li>
 								</ul>
 							</div>
 							<div class="arrowrightdashbord"><span class="arrowsvgimg"></span></div>
