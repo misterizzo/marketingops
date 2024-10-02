@@ -176,7 +176,7 @@ if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
 										/* translators: 1: order date */
 										echo wp_kses_post( sprintf( __( 'last ordered on %1$s', 'marketingops' ), $order_date ) );
 										/* translators: 1: formatted order total 2: total order items */
-										echo wp_kses_post( sprintf( _n( ' and paid %3$s%1$s%4$s for %3$s%2$s%4$s item', ' and paid %3$s%1$s%4$s for %3$s%2$s%4$s items', $order_item_count, 'woocommerce' ), $customer_order->get_formatted_order_total(), $order_item_count, '<span class="bold">', '</span>' ) );
+										echo wp_kses_post( sprintf( _n( ' and paid %3$s%1$s%4$s for %3$s%2$s%4$s item', ' and paid %3$s%1$s%4$s for %3$s%2$s%4$s items', $order_item_count, 'woocommerce' ), $customer_order->get_formatted_order_total(), $order_item_count, '<strong>', '</strong>' ) );
 										?>
 									</li>
 								</ul>
