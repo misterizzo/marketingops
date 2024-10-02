@@ -67,7 +67,6 @@ $order_date       = ( false !== $customer_order ) ? wc_format_datetime( $custome
 $order_item_count = ( false !== $customer_order ) ? ( $customer_order->get_item_count() - $customer_order->get_item_count_refunded() ) : 0;
 
 if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
-	debug( $order_date );
 	?>
 	<div class="newdashbordmain">
 		<h3><?php echo wp_kses_post( sprintf( __( 'Hello %1$s!', 'marketingops' ), $current_user->display_name ) ); ?></h3>
@@ -161,7 +160,7 @@ if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
 
 			<!-- orders -->
 			<li>
-				<a href="/my-account/orders/">
+				<a href="<?php echo esc_url( $customer_order->get_view_order_url() ); ?>">
 					<div class="innerdashbordlist">
 						<div class="innsersubdashbordlist">
 							<div class="iconwithtitledashbord">
