@@ -472,7 +472,9 @@ section.elementor-section.roadtomopza::after {content: "";position: absolute;bac
 .buycampmpzaticket{max-width:574px;height:271px;flex-shrink:0;border-radius:24px;background:radial-gradient(198.38% 115.72% at 87.5% 91.38%,rgba(26,33,54,0.42) 0%,rgba(26,33,54,0.70) 100%);position:relative;margin:0 auto;display:flex;align-items:center;align-content:center;justify-content:center;}
 
 .maintickbox .buycampmpzaticket{max-width:574px;height:271px;flex-shrink:0;border-radius:24px;background:none;position:relative;margin:0 auto;display:flex;align-items:center;align-content:center;justify-content:center;}
-
+.main_apalooza.invitedinner .main_apalooza_title h4 {
+    font-size: 36px;
+}
 
 .buycampmpzaticket .buymopzatktbtn{display:inline-flex;padding:20px 30px;justify-content:center;align-items:center;gap:10px;border-radius:302px;background:var(--horizontal-grad-1,linear-gradient(90deg,#FD4B7A -2.36%,#4D00AE 159.05%));color:var(--pure-white,#FFF);font-family:"Open Sans";font-size:16px;font-style:normal;font-weight:400;line-height:82%; /* 13.12px */}
 .buycampmpzaticket .buymopzatktbtn i{width:15px;height:10px;display:inline-flex;}
