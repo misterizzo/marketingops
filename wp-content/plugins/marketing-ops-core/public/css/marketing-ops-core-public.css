@@ -470,6 +470,10 @@ section.elementor-section.roadtomopza::after {content: "";position: absolute;bac
 .timetext p{color:var(--pure-white,#FFF);font-family:"Open Sans";font-size:14px;font-style:normal;font-weight:400;line-height:normal;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;margin:15px 0;}
 .earlybirdbutons{border-radius:38px!important;background:rgba(114,149,214,0.29)!important;display:flex;width:144px;padding:8px 17px;flex-direction:column;justify-content:center;align-items:center;gap:20px;flex-shrink:0;color:var(--pure-white,#FFF)!important;text-align:center;font-family:"Open Sans";font-size:14px;font-style:normal;font-weight:400;line-height:82%;}
 .buycampmpzaticket{max-width:574px;height:271px;flex-shrink:0;border-radius:24px;background:radial-gradient(198.38% 115.72% at 87.5% 91.38%,rgba(26,33,54,0.42) 0%,rgba(26,33,54,0.70) 100%);position:relative;margin:0 auto;display:flex;align-items:center;align-content:center;justify-content:center;}
+
+.maintickbox .buycampmpzaticket{max-width:574px;height:271px;flex-shrink:0;border-radius:24px;background:none;position:relative;margin:0 auto;display:flex;align-items:center;align-content:center;justify-content:center;}
+
+
 .buycampmpzaticket .buymopzatktbtn{display:inline-flex;padding:20px 30px;justify-content:center;align-items:center;gap:10px;border-radius:302px;background:var(--horizontal-grad-1,linear-gradient(90deg,#FD4B7A -2.36%,#4D00AE 159.05%));color:var(--pure-white,#FFF);font-family:"Open Sans";font-size:16px;font-style:normal;font-weight:400;line-height:82%; /* 13.12px */}
 .buycampmpzaticket .buymopzatktbtn i{width:15px;height:10px;display:inline-flex;}
 .socail_icons.twitter a{background:#1F2840;display:flex;align-items:center;align-content:center;justify-content:center;border-radius:50%;margin:0 0 5px;}
