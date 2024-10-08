@@ -66,7 +66,7 @@ $customer_order   = ( ! empty( $customer_orders[0] ) ) ? $customer_orders[0] : f
 $order_date       = ( false !== $customer_order ) ? wc_format_datetime( $customer_order->get_date_created() ) : '';
 $order_item_count = ( false !== $customer_order ) ? ( $customer_order->get_item_count() - $customer_order->get_item_count_refunded() ) : 0;
 
-if ( '183.82.160.137' === $_SERVER['REMOTE_ADDR'] ) {
+if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
 	?>
 	<div class="newdashbordmain">
 		<h3><?php echo wp_kses_post( sprintf( __( 'Hello %1$s!', 'marketingops' ), $current_user->display_name ) ); ?></h3>
