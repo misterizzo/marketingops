@@ -9533,7 +9533,7 @@ if ( ! function_exists( 'mops_get_user_avatar_url' ) ) {
 	function mops_get_user_avatar_url( $user_id ) {
 		$wp_user_avatar = get_user_meta( $user_id, 'wp_user_avatar', true );
 
-		var_dump( $wp_user_avatar );
+		var_dump( $wp_user_avatar, wp_get_attachment_url( $wp_user_avatar ) ); 
 
 		// $useravtar_id   = ! empty(  ) ? get_user_meta( $current_user->ID, 'wp_user_avatar', true ) : '';
 		// $user_image_url = ! empty( $useravtar_id ) ? get_post_meta( $useravtar_id, '_wp_attached_file', true ) : '';
