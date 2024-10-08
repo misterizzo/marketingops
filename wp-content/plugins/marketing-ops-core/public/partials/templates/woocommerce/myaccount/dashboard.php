@@ -79,6 +79,7 @@ $active_memberships = wc_memberships_get_user_memberships(
 		'status' => 'wcm-active',
 	)
 );
+$membership_message = ''; // Empty membership message.
 
 // If there is only one active membership, and that is free.
 if ( 1 === count( $active_memberships ) && ! empty( $active_memberships[0]->plan->slug ) && 'free-membership' === $active_memberships[0]->plan->slug ) {
@@ -88,8 +89,8 @@ if ( 1 === count( $active_memberships ) && ! empty( $active_memberships[0]->plan
 
 	// Loop through the memberhsips to get the active premium membership.
 	foreach ( $active_memberships as $active_membership ) {
-		var_dump( $active_memberships->plan->slug );
-		if ( 'free-membership' === $active_memberships->plan->slug ) {
+		// Skip, if the membership is free.
+		if ( 'free-membership' === $active_membership->plan->slug ) {
 			continue;
 		}
 
@@ -102,12 +103,12 @@ if ( 1 === count( $active_memberships ) && ! empty( $active_memberships[0]->plan
 			$active_membership->plan->name,
 			$membership_end_date
 		);
-
-		var_dump( $membership_name, $active_membership->get_start_date(), $active_membership->get_end_date() );
-		debug( $active_membership_messages );
-		debug( '-----' );
 	}
-	$membership_message = __( 'Premium membership till July 24 2024', 'marketingops' );
+
+	// If the membership messages are available.
+	if ( ! empty( $active_membership_messages ) && is_array( $active_membership_messages ) ) {
+		$membership_message = implode( ', ', $active_membership_messages );
+	}
 }
 
 if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
