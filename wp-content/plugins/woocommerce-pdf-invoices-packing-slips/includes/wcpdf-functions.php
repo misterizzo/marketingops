@@ -842,7 +842,7 @@ function wpo_wcpdf_base64_encode_file( string $src ) {
 	if ( empty( $src ) ) {
 		return false;
 	}
-	
+
 	$file_data = @file_get_contents( $src );
 	return base64_encode( $file_data ) ?? false;
 }
@@ -857,12 +857,12 @@ function wpo_wcpdf_is_file_readable( string $path ): bool {
 	if ( empty( $path ) ) {
 		return false;
 	}
-	
+
 	// Check if the path is a URL
 	if ( filter_var( $path, FILTER_VALIDATE_URL ) ) {
 		$parsed_url = parse_url( $path );
 		$args	    = array();
-		
+
 		// Check if the URL is localhost
 		if (
 			'localhost' === $parsed_url['host']                                             ||
@@ -874,15 +874,15 @@ function wpo_wcpdf_is_file_readable( string $path ): bool {
 		) {
 			$args['sslverify'] = false;
 		}
-		
+
 		$args     = apply_filters( 'wpo_wcpdf_url_remote_head_args', $args, $parsed_url, $path );
 		$response = wp_safe_remote_head( $path, $args );
-		
+
 		if ( is_wp_error( $response ) ) {
 			wcpdf_log_error( 'Failed to access file URL: ' . $path . ' Error: ' . $response->get_error_message(), 'critical' );
 			return false;
 		}
-		
+
 		$status_code = wp_remote_retrieve_response_code( $response );
 		return ( $status_code === 200 );
 
@@ -927,9 +927,55 @@ function wpo_wcpdf_get_image_src_in_base64( string $src ): string {
 	$image_base64 = wpo_wcpdf_base64_encode_file( $src );
 
 	if ( ! $image_base64 ) {
-		wcpdf_log_error( 'Unable to encode header logo to base64.', 'critical' );
+		wcpdf_log_error( 'Unable to encode image source to base64:' . $src, 'critical' );
 		return $src;
 	}
 
 	return 'data:' . $mime_type . ';base64,' . $image_base64;
+}
+
+/**
+ * Determine if the checkout is a block.
+ *
+ * @return bool
+ */
+function wpo_wcpdf_checkout_is_block(): bool {
+	$checkout_page_id = wc_get_page_id( 'checkout' );
+
+	$is_block = $checkout_page_id &&
+		function_exists( 'has_block' ) &&
+		has_block( 'woocommerce/checkout', $checkout_page_id );
+
+	if ( ! $is_block ) {
+		$is_block = class_exists( '\\WC_Blocks_Utils' ) &&
+			count( \WC_Blocks_Utils::get_blocks_from_page( 'woocommerce/checkout', 'checkout' ) ) > 0;
+	}
+
+	if ( ! $is_block ) {
+		$is_block = class_exists( '\\Automattic\\WooCommerce\\Blocks\\Utils\\CartCheckoutUtils' ) &&
+			is_callable( array( '\\Automattic\\WooCommerce\\Blocks\\Utils\\CartCheckoutUtils', 'is_checkout_block_default' ) ) &&
+			\Automattic\WooCommerce\Blocks\Utils\CartCheckoutUtils::is_checkout_block_default();
+	}
+
+	return $is_block;
+}
+
+/**
+ * Get the default table headers for the Simple template.
+ *
+ * @param object $document
+ * @return array
+ */
+function wpo_wcpdf_get_simple_template_default_table_headers( $document ): array {
+	$headers = array(
+		'product'  => __( 'Product', 'woocommerce-pdf-invoices-packing-slips' ),
+		'quantity' => __( 'Quantity', 'woocommerce-pdf-invoices-packing-slips' ),
+		'price'    => __( 'Price', 'woocommerce-pdf-invoices-packing-slips' ),
+	);
+	
+	if ( 'packing-slip' === $document->get_type() ) {
+		unset( $headers['price'] );
+	}
+	
+	return apply_filters( 'wpo_wcpdf_simple_template_default_table_headers', $headers, $document );
 }
