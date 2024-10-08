@@ -153,14 +153,8 @@ foreach ( $saved_payment_methods as $payment_method_type => $methods ) {
 }
 
 // Billing and shipping addresses.
-// $get_addresses = apply_filters(
-// 	'woocommerce_my_account_get_addresses',
-// 	array(
-// 		'billing'  => __( 'Billing address', 'woocommerce' ),
-// 		'shipping' => __( 'Shipping address', 'woocommerce' ),
-// 	),
-// 	$customer_id
-// );
+$address = wc_get_account_formatted_address( 'billing' );
+debug( $address );
 
 if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
 	?>
