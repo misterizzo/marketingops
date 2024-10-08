@@ -3845,7 +3845,7 @@ class Marketing_Ops_Core_Public {
 					<ul class="menu_hover">
 						<li>
 							<div class="profile_menu_box">
-								<div class="profile_menu_icon">
+								<div class="profile_menu_icon 1">
 									<a href="#">
 										<span class="svg">
 											<img src="<?php echo site_url(); ?>/wp-content/themes/hello-elementor_child/images/svg/setting_icon.svg" alt="setting_icon" />                    
@@ -4107,7 +4107,7 @@ class Marketing_Ops_Core_Public {
 															<ul class="menu_hover profile-menu--close">
 																<li>
 																	<div class="profile_menu_box">
-																		<div class="profile_menu_icon">
+																		<div class="profile_menu_icon 2">
 																			<a href="#">
 																				<span class="svg">
 																					<img src="<?php echo site_url(); ?>/wp-content/themes/hello-elementor_child/images/svg/setting_icon.svg" alt="setting_icon" />
