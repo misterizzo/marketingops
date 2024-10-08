@@ -116,6 +116,7 @@ class ComposerStaticInit0d9f807883abadeb2577675a9c386005
         'RankMathPro\\Updates' => __DIR__ . '/../..' . '/includes/class-updates.php',
         'RankMathPro\\Wizard\\Sitemap' => __DIR__ . '/../..' . '/includes/admin/wizard/class-sitemap.php',
         'RankMathPro\\WooCommerce' => __DIR__ . '/../..' . '/includes/modules/woocommerce/class-woocommerce-pro.php',
+        'RankMathPro\\WooCommerce\\Migrate_GTIN' => __DIR__ . '/../..' . '/includes/modules/woocommerce/class-migrate-gtin.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

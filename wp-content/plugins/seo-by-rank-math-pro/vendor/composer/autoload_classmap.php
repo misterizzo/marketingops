@@ -115,4 +115,5 @@ return array(
     'RankMathPro\\Updates' => $baseDir . '/includes/class-updates.php',
     'RankMathPro\\Wizard\\Sitemap' => $baseDir . '/includes/admin/wizard/class-sitemap.php',
     'RankMathPro\\WooCommerce' => $baseDir . '/includes/modules/woocommerce/class-woocommerce-pro.php',
+    'RankMathPro\\WooCommerce\\Migrate_GTIN' => $baseDir . '/includes/modules/woocommerce/class-migrate-gtin.php',
 );

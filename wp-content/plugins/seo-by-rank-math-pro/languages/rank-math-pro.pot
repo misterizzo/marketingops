@@ -8,7 +8,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language-Team: Rank Math\n"
 "Last-Translator: Rank Math\n"
-"POT-Creation-Date: 2024-09-18 05:24+0000\n"
+"POT-Creation-Date: 2024-10-03 05:05+0000\n"
 "Project-Id-Version: undefined\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
@@ -1278,6 +1278,10 @@ msgstr ""
 msgid "Rank Math PRO"
 msgstr ""
 
+#. translators: placeholder is the number of modified products.
+msgid "The GTIN values from the plugin are being transferred to the built-in WooCommerce GTIN field. This process runs in the background, and you'll receive a confirmation message once all product data has been successfully migrated. You can close this page."
+msgstr ""
+
 msgid "CSV File"
 msgstr ""
 
@@ -2392,6 +2396,9 @@ msgstr ""
 msgid "Global Identifier key to use in the Product Schema."
 msgstr ""
 
+msgid "GTIN"
+msgstr ""
+
 msgid "GTIN-8"
 msgstr ""
 
@@ -2428,15 +2435,22 @@ msgstr ""
 msgid "Set Product Pages to noindex when WooCommerce Catalog visibility is set to hidden."
 msgstr ""
 
-msgid "GTIN"
+#. translators: placeholder is the number of modified products.
+msgid "GTIN value has been successfully migrated to the WooCommerce GTIN field for %d product."
+msgid_plural "GTIN values have been successfully migrated to the WooCommerce GTIN field for %d products."
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "GTIN Migration Tool for WooCommerce"
 msgstr ""
 
-#. translators: Global Identifier name.
-msgid "%s value to use in the Product schema."
+msgid "Migrate GTIN values from the plugin into the native WooCommerce GTIN field."
 msgstr ""
 
-#. translators: Global Identifier name.
-msgid "%s value to use in Product schema."
+msgid "Migrate"
+msgstr ""
+
+msgid "No products found to migrate."
 msgstr ""
 
 msgid "Secondary phone"

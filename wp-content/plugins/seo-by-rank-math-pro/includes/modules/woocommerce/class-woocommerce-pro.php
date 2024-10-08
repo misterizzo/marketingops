@@ -10,6 +10,7 @@
 namespace RankMathPro;
 
 use RankMath\Helper;
+use RankMathPro\WooCommerce\Migrate_GTIN;
 use RankMath\Traits\Hooker;
 use RankMath\Schema\DB;
 
@@ -36,11 +37,15 @@ class WooCommerce {
 	 */
 	public function __construct() {
 		if ( is_admin() ) {
+			$this->filter( 'rank_math/database/tools', 'add_gtin_migration_tool' );
 			new Admin();
 			return;
 		}
+
+		Migrate_GTIN::get();
 		$this->filter( 'rank_math/sitemap/entry', 'remove_hidden_products', 10, 3 );
 		$this->action( 'wp', 'init' );
+		$this->filter( 'rank_math/tools/migrate_gtin_values', 'migrate_gtin_values' );
 	}
 
 	/**
@@ -175,7 +180,12 @@ class WooCommerce {
 			$product = wc_get_product( get_the_ID() );
 		}
 
-		$gtin = $product->get_meta( '_rank_math_gtin_code' );
+		// Remove the default gtin property added in the Free plugin so it can be overwritten with a selected key from Settings.
+		if ( isset( $entity['gtin'] ) ) {
+			unset( $entity['gtin'] );
+		}
+
+		$gtin = method_exists( $product, 'get_global_unique_id' ) ? $product->get_global_unique_id() : '';
 		if ( $gtin ) {
 			$entity[ $gtin_key ] = $gtin;
 		}
@@ -195,7 +205,7 @@ class WooCommerce {
 	 */
 	public function add_gtin_meta() {
 		global $product;
-		$gtin_code = $product->get_meta( '_rank_math_gtin_code' );
+		$gtin_code = method_exists( $product, 'get_global_unique_id' ) ? $product->get_global_unique_id() : '';
 		if ( ! $gtin_code ) {
 			return;
 		}
@@ -215,7 +225,11 @@ class WooCommerce {
 	 * @return array Modified robots.
 	 */
 	public function add_gtin_to_variation_param( $args, $product, $variation ) {
-		$args['rank_math_gtin'] = $this->get_formatted_value( $variation->get_meta( '_rank_math_gtin_code' ) );
+		if ( ! method_exists( $variation, 'get_global_unique_id' ) ) {
+			return $args;
+		}
+
+		$args['rank_math_gtin'] = $this->get_formatted_value( $variation->get_global_unique_id() );
 
 		return $args;
 	}
@@ -337,6 +351,45 @@ class WooCommerce {
 	}
 
 	/**
+	 * Add GTIN migration tool.
+	 *
+	 * @param array $tools Array of tools.
+	 *
+	 * @return array
+	 */
+	public function add_gtin_migration_tool( $tools ) {
+		$products = Migrate_GTIN::get()->find_posts();
+		if ( empty( $products ) || get_option( 'rank_math_gtin_migrated' ) ) {
+			return $tools;
+		}
+
+		$tools['migrate_gtin_values'] = [
+			'title'       => esc_html__( 'GTIN Migration Tool for WooCommerce', 'rank-math-pro' ),
+			'description' => esc_html__( 'Migrate GTIN values from the plugin into the native WooCommerce GTIN field.', 'rank-math-pro' ),
+			'button_text' => esc_html__( 'Migrate', 'rank-math-pro' ),
+		];
+
+		return $tools;
+	}
+
+	/**
+	 * Migrate GTIN values from the plugin into the native WooCommerce GTIN field.
+	 */
+	public function migrate_gtin_values() {
+		$products = Migrate_GTIN::get()->find_posts();
+		if ( empty( $products ) ) {
+			return [
+				'status'  => 'error',
+				'message' => __( 'No products found to migrate.', 'rank-math-pro' ),
+			];
+		}
+
+		Migrate_GTIN::get()->start( $products );
+
+		return __( 'The GTIN values from the plugin are being transferred to the built-in WooCommerce GTIN field. This process runs in the background, and you\'ll receive a confirmation message once all product data has been successfully migrated. You can close this page.', 'rank-math-pro' );
+	}
+
+	/**
 	 * Get Variant description.
 	 *
 	 * @param Object     $variation Variation Object.
@@ -386,14 +439,14 @@ class WooCommerce {
 	}
 
 	/**
-	 * Add gtin value in variable offer datta.
+	 * Add gtin value in variable offer data.
 	 *
 	 * @param int   $variation_id Variation ID.
 	 * @param array $entity       Offer entity.
 	 */
 	private function add_variable_gtin( $variation_id, &$entity ) {
 		$gtin_key = Helper::get_settings( 'general.gtin', 'gtin8' );
-		$gtin     = get_post_meta( $variation_id, '_rank_math_gtin_code', true );
+		$gtin     = get_post_meta( $variation_id, '_global_unique_id', true );
 		if ( ! $gtin || 'isbn' === $gtin_key ) {
 			return;
 		}

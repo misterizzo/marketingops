@@ -383,7 +383,7 @@ class Analytics {
 				'desc'    => sprintf(
 					/* translators: Link to kb article */
 					wp_kses_post( __( 'This option allows you to monitor the SEO performance of all of your sites in one centralized dashboard on RankMath.com, so you can check up on sites at a glance. <a href="%1$s" target="_blank">Learn more</a>.', 'rank-math-pro' ) ),
-					KB::get( 'help-analytics', 'Options Panel Analytics Tab Monitor Performance' )
+					KB::get( 'monitor-seo-performance', 'Options Panel Analytics Tab Monitor Performance' )
 				),
 				'default' => 'off',
 			],

@@ -491,9 +491,6 @@ class CSV_Import_Export_Redirections {
 			}
 		}
 
-		if ( isset( $status['actions']['merged'] ) ) {
-			$status['actions']['created'] += $status['actions']['merged'];
-		}
 		foreach ( $status['actions'] as $action => $times_taken ) {
 			$message .= '<br><br>';
 			$message .= '<code>' . self::get_localized_action( $action ) . ': ' . $times_taken . '</code>';

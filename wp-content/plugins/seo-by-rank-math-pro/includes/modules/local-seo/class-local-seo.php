@@ -187,7 +187,7 @@ class Local_Seo {
 			'supports'           => [ 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'revisions', 'custom-fields', 'page-attributes', 'publicize' ],
 			'rewrite'            => [
 				'slug'       => $post_type_slug,
-				'with_front' => $this->filter( 'locations/front', true ),
+				'with_front' => $this->do_filter( 'locations/front', true ),
 			],
 			'capabilities'       => [
 				'edit_post'          => $capability,
