@@ -120,12 +120,14 @@ if ( 1 === count( $active_memberships ) && ! empty( $active_memberships[0]->plan
 }
 
 // Saved payment methods.
-$my_payment_methods    = wc_get_customer_saved_methods_list( $current_user->ID );
-$saved_payment_methods = array();
+$saved_payment_methods = wc_get_customer_saved_methods_list( $current_user->ID );
+$payment_methods_temp  = array();
 
-foreach ( $my_payment_methods as $saved_method ) {
-	var_dump( $saved_method['method']['brand'] );
-	// $saved_payment_methods[] = sprintf( __( 'Visa ending in 7902 set as main method', 'marketingops' ), $method['method']['brand'] );
+foreach ( $saved_payment_methods as $methods ) {
+	foreach ( $methods as $payment_method ) {
+		var_dump( $saved_method['method']['brand'] );
+		// $saved_payment_methods[] = sprintf( __( 'Visa ending in 7902 set as main method', 'marketingops' ), $method['method']['brand'] );
+	}
 }
 
 
