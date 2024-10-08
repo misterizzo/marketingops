@@ -6032,9 +6032,13 @@ class Marketing_Ops_Core_Public {
 	 * @since 1.0.0
 	 */
 	public function mops_moc_posts_query_args_callback( $args = array() ) {
+		global $wp_query;
+
 		$current_category = filter_input( INPUT_GET, 'cat', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$term_id          = get_queried_object()->term_id;// Get the current queried term ID.
 		$posted_values    = filter_input_array( INPUT_POST );
+
+		debug( $wp_query->query_vars );
 
 		// If the current page is strategists.
 		if ( is_page( 'strategists' ) ) {
