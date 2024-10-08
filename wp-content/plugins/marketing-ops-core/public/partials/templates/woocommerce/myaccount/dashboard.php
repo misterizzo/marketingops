@@ -116,7 +116,7 @@ $my_payment_methods    = wc_get_customer_saved_methods_list( $current_user->ID )
 $saved_payment_methods = array();
 
 foreach ( $my_payment_methods as $saved_method ) {
-	var_dump( $method['method']['brand'] );
+	var_dump( $saved_method['method']['brand'] );
 	// $saved_payment_methods[] = sprintf( __( 'Visa ending in 7902 set as main method', 'marketingops' ), $method['method']['brand'] );
 }
 
