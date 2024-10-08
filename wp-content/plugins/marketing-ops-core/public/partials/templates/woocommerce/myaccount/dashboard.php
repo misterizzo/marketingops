@@ -70,7 +70,7 @@ $order_item_count = ( false !== $customer_order ) ? ( $customer_order->get_item_
 $posts_wp_query     = new WP_Query( moc_posts_query_args() );
 $podcasts_wp_query  = new WP_Query( moc_posts_query_args( 'podcast' ) );
 $workshops_wp_query = new WP_Query( moc_posts_query_args( 'workshop' ) );
-$learndash_courses  = learndash_user_get_enrolled_courses( get_current_user_id() );
+$learndash_courses  = learndash_user_get_enrolled_courses( $current_user->ID );
 
 // Active membership.
 $active_memberships = wc_memberships_get_user_memberships(
@@ -110,6 +110,11 @@ if ( 1 === count( $active_memberships ) && ! empty( $active_memberships[0]->plan
 		$membership_message = implode( ', ', $active_membership_messages );
 	}
 }
+
+// Saved payment methods.
+$saved_payment_methods = $saved_methods = wc_get_customer_saved_methods_list( $current_user->ID );
+
+debug( $saved_payment_methods );
 
 if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
 	?>
