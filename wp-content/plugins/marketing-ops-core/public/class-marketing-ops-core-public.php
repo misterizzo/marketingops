@@ -6037,10 +6037,7 @@ class Marketing_Ops_Core_Public {
 		$current_category = filter_input( INPUT_GET, 'cat', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$term_id          = get_queried_object()->term_id;// Get the current queried term ID.
 		$posted_values    = filter_input_array( INPUT_POST );
-
-		debug( $wp_query );
-
-		// $current_pagename = ( ! empty( $wp_query['pagename'] ) ) ? $wp_query['pagename'] : '';
+		$current_pagename = ( ! empty( $wp_query->query_vars['pagename'] ) ) ? $wp_query->query_vars['pagename'] : '';
 
 		// If the current page is strategists.
 		if ( is_page( 'strategists' ) ) {
@@ -6098,7 +6095,12 @@ class Marketing_Ops_Core_Public {
 				);
 			}
 		} elseif ( ! empty( $current_pagename ) && 'my-account' === $current_pagename ) {
-			$args['posts_per_page'] = -1;
+			if ( ! empty( $args['post_type'] ) ) {
+				if ( 'post' === $args['post_type'] ) {
+					$args['posts_per_page'] = -1;
+					$args['author']         = get_current_user_id();
+				}
+			}
 		}
 
 		return $args;
