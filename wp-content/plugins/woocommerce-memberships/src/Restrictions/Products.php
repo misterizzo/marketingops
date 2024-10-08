@@ -24,6 +24,8 @@
 namespace SkyVerge\WooCommerce\Memberships\Restrictions;
 
 use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
+use WC_Product;
+use WC_Product_Variation;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -48,7 +50,7 @@ class Products {
 	private $product_restricted = array();
 
 	/** @var array memoization for products purchasable status (associative array of product IDs => purchasable status) */
-	private $product_purchasable = array();
+	protected array $product_purchasable = [];
 
 	/** @var array memoization of variations parent products (associative array of variation IDs => parent product object */
 	private $parent_product = array();
@@ -184,10 +186,10 @@ class Products {
 	 * @since 1.9.0
 	 *
 	 * @param string $price price label (may contain HTML)
-	 * @param \WC_Product $product product being restricted
+	 * @param WC_Product $product product being restricted
 	 * @return string maybe the price to be shown (may contain HTML) or empty string if user can't see it
 	 */
-	public function hide_restricted_product_price( $price, \WC_Product $product ) {
+	public function hide_restricted_product_price( $price, WC_Product $product ) {
 
 		// bail out if user has not capability to view the restricted product (and thus its price)
 		if (    ! current_user_can( 'wc_memberships_view_restricted_product', $product->get_id() )
@@ -368,10 +370,10 @@ class Products {
 	 *
 	 * @since 1.9.4
 	 *
-	 * @param \WC_Product $product the product
+	 * @param WC_Product $product the product
 	 * @return bool
 	 */
-	private function product_can_be_purchased( $product ) {
+	protected function product_can_be_purchased( $product ) {
 
 		$product_id  = $product->get_id();
 		$purchasable = true;
@@ -381,7 +383,7 @@ class Products {
 		     || ! current_user_can( 'wc_memberships_purchase_restricted_product', $product_id )
 		     || ! current_user_can( 'wc_memberships_purchase_delayed_product',    $product_id ) ) {
 
-			$purchasable = wc_memberships()->get_restrictions_instance()->is_product_public( $product instanceof \WC_Product_Variation ? $product->get_parent_id() : $product_id );
+			$purchasable = wc_memberships()->get_restrictions_instance()->is_product_public( $product instanceof WC_Product_Variation ? $product->get_parent_id() : $product_id );
 		}
 
 		return $purchasable;
@@ -394,35 +396,51 @@ class Products {
 	 * @since 1.9.0
 	 *
 	 * @param bool $purchasable whether the product is purchasable
-	 * @param \WC_Product|\WC_Product_Variation $product the product
+	 * @param WC_Product|WC_Product_Variation $product the product
 	 * @return bool
 	 */
 	public function product_is_purchasable( $purchasable, $product ) {
 
-		if ( $purchasable ) {
-
-			if ( $product->is_type( 'variation' ) ) {
-
-				$purchasable = $this->variation_is_purchasable( $purchasable, $product );
-
-			} else {
-
-				$product_id = $product->get_id();
-
-				if ( array_key_exists( $product_id, $this->product_purchasable ) ) {
-
-					$purchasable = $this->product_purchasable[ $product_id ];
-
-				} else {
-
-					$purchasable = $this->product_can_be_purchased( $product );
-
-					$this->product_purchasable[ $product_id ] = $purchasable;
-				}
-			}
+		if (
+			! $purchasable ||
+			! $product instanceof WC_Product ||
+			! $this->shouldProductBeRestricted($product)
+		) {
+			return $purchasable;
 		}
 
-		return $purchasable;
+		if ($product->is_type('variation')) {
+			return $this->variation_is_purchasable($purchasable, $product);
+		}
+
+		$product_id = $product->get_id();
+
+		return $this->product_purchasable[$product_id] ??= $this->product_can_be_purchased($product);
+	}
+
+	protected function shouldProductBeRestricted(WC_Product $product) : bool
+	{
+		if (! $productId = $product->get_id()) {
+			return false;
+		}
+
+		$rules = wc_memberships()->get_rules_instance();
+
+		// this product has restrictions
+		if ($rules->get_product_restriction_rules($productId)) {
+			return true;
+		}
+
+		// this is a variation and the parent has restrictions
+		if (
+			$product->is_type('variation') &&
+			($parentId = $product->get_parent_id()) &&
+			$rules->get_product_restriction_rules($parentId)
+		) {
+			return true;
+		}
+
+		return false;
 	}
 
 
@@ -436,50 +454,45 @@ class Products {
 	 * @since 1.9.4
 	 *
 	 * @param bool $purchasable whether the variation is purchasable
-	 * @param \WC_Product_Variation $product_variation
+	 * @param WC_Product_Variation $product_variation
 	 * @return bool
 	 */
 	public function variation_is_purchasable( $purchasable, $product_variation ) {
-
-		if ( $purchasable ) {
-
-			$product_variation_id = $product_variation->get_id();
-
-			if ( array_key_exists( $product_variation_id, $this->product_purchasable ) ) {
-
-				$purchasable = $this->product_purchasable[ $product_variation_id ];
-
-			} else {
-
-				$purchasable = $this->product_can_be_purchased( $product_variation );
-
-				// we can check if parent is purchasable recursively while removing our filter to avoid loops
-				if ( $parent_product = $this->get_parent_product( $product_variation ) ) {
-
-					// if the product isn't purchasable, check if the parent is forced public
-					if ( ! $purchasable ) {
-
-						$purchasable = wc_memberships()->get_restrictions_instance()->is_product_public( $parent_product->get_id() );
-
-					// if the product is purchasable, check if the parent is restricted in the first place
-					} else {
-
-						// remove our filter so we can get the default purchasable status first
-						remove_filter( 'woocommerce_is_purchasable', array( $this, 'product_is_purchasable' ), 999 );
-
-						$parent_is_purchasable = $parent_product->is_purchasable();
-
-						// re-add our filter back
-						add_filter( 'woocommerce_is_purchasable', array( $this, 'product_is_purchasable' ), 999, 2 );
-
-						// flag the product variation based on the purchasable status of the parent product
-						$purchasable = $parent_is_purchasable && $this->product_is_purchasable( $parent_is_purchasable, $parent_product );
-					}
-				}
-
-				$this->product_purchasable[ $product_variation_id ] = $purchasable;
-			}
+		if (
+			! $purchasable ||
+			! $product_variation instanceof WC_Product_Variation ||
+			! $this->shouldProductBeRestricted($product_variation)
+		) {
+			return $purchasable;
 		}
+
+
+		$product_variation_id = $product_variation->get_id();
+
+		if ( array_key_exists( $product_variation_id, $this->product_purchasable ) ) {
+			return $this->product_purchasable[ $product_variation_id ];
+		}
+
+		$purchasable = $this->product_can_be_purchased( $product_variation );
+
+		// if we have no parent, then we can't proceed any further
+		if (! $parent_product = $this->get_parent_product( $product_variation )) {
+			return $purchasable;
+		}
+
+		// now our goal is to check the status of the parent
+
+		// if the product isn't purchasable, check if the parent is forced public
+		if ( ! $purchasable ) {
+
+			$purchasable = wc_memberships()->get_restrictions_instance()->is_product_public( $parent_product->get_id() );
+
+		} else {
+			// if the product is purchasable, the status of the variant is based on the purchasable status of its parent
+			$purchasable = $this->product_is_purchasable( true, $parent_product );
+		}
+
+		$this->product_purchasable[ $product_variation_id ] = $purchasable;
 
 		return $purchasable;
 	}
@@ -493,14 +506,14 @@ class Products {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @param \WC_Product_Variation $product_variation a variable product variation
+	 * @param WC_Product_Variation $product_variation a variable product variation
 	 * @return null|\WC_Product_Variable the parent variable product
 	 */
 	private function get_parent_product( $product_variation ) {
 
 		$parent_product = null;
 
-		if ( $product_variation instanceof \WC_Product_Variation ) {
+		if ( $product_variation instanceof WC_Product_Variation ) {
 
 			$product_variation_id = (int) $product_variation->get_id();
 
@@ -582,7 +595,7 @@ class Products {
 	 *
 	 * @param bool $is_visible
 	 * @param int $product_id
-	 * @param \WC_Product_Variation $variation
+	 * @param WC_Product_Variation $variation
 	 * @return bool
 	 */
 	public function hide_invisible_variations( $is_visible, $product_id, $variation ) {
@@ -607,7 +620,7 @@ class Products {
 	public function display_product_purchasing_restricted_message() {
 		global $product;
 
-		if ( $product instanceof \WC_Product ) {
+		if ( $product instanceof WC_Product ) {
 
 			$product_id = $product->get_id();
 			$args       = array( 'post_id' => $product_id );
@@ -686,7 +699,7 @@ class Products {
 	public function display_product_purchasing_discount_message() {
 		global $post, $product;
 
-		if ( $product instanceof \WC_Product ) {
+		if ( $product instanceof WC_Product ) {
 
 			$user_id = get_current_user_id();
 			$args    = array(

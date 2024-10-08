@@ -49,7 +49,7 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plans {
 		// handle granting access from a subscription product
 		add_filter( 'wc_memberships_access_granting_purchased_product_id',               array( $this, 'adjust_access_granting_product_id' ), 10, 3 );
 		add_action( 'wc_memberships_grant_membership_access_from_purchase',              array( $this, 'save_subscription_data' ), 10, 2 );
-		add_filter( 'wc_memberships_grant_access_from_new_purchase',                     array( $this, 'maybe_grant_access_from_new_subscription' ), 10, 2 );
+		add_filter( 'wc_memberships_grant_access_from_new_purchase',                     array( $this, 'maybeGrantAccessFromNewSubscription'), 10, 2 );
 		add_filter( 'wc_memberships_grant_access_from_existing_purchase',                array( $this, 'maybe_grant_access_from_existing_subscription' ), 10, 2 );
 		add_filter( 'wc_memberships_granted_access_from_existing_purchase',              array( $this, 'maybe_grant_access_from_existing_manual_subscription' ), 10, 3 );
 		add_filter( 'wc_memberships_grant_access_from_existing_purchase_order_statuses', array( $this, 'grant_access_from_active_subscription' ) );
@@ -147,7 +147,7 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plans {
 
 			foreach ( $access_granting_product_ids as $_product_id ) {
 
-				if ( \WC_Subscriptions_Product::is_subscription( $_product_id ) ) {
+				if ( WC_Subscriptions_Product::is_subscription( $_product_id ) ) {
 					$access_granting_subscription_product_ids[] = $_product_id;
 				}
 			}
@@ -169,7 +169,7 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plans {
 					// whichever gives access for a longer period, wins
 					foreach ( $access_granting_subscription_product_ids as $_subscription_product_id ) {
 
-						$expiration_date = \WC_Subscriptions_Product::get_expiration_date( $_subscription_product_id );
+						$expiration_date = WC_Subscriptions_Product::get_expiration_date( $_subscription_product_id );
 
 						// no expiration date always means the longest period
 						if ( ! $expiration_date ) {
@@ -193,6 +193,27 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plans {
 		return $product_id;
 	}
 
+	protected function shouldProcessGrantingAccessFromNewSubscription($args) : bool
+	{
+		if (! is_array($args)) {
+			return false;
+		}
+
+		if (
+			isset($args['order_id']) &&
+			is_numeric($args['order_id']) &&
+			wcs_order_contains_renewal($args['order_id'])
+		) {
+			// subscription renewals cannot grant access
+			return false;
+		}
+
+		if (! isset($args['order_id'], $args['product_id'], $args['user_id'])) {
+			return false;
+		}
+
+		return true;
+	}
 
 	/**
 	 * Only grants access to new subscriptions if they're not a subscription renewal.
@@ -203,77 +224,89 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plans {
 	 *
 	 * @param bool $grant_access
 	 * @param array $args
+	 *
 	 * @return bool
+	 *
+	 * @throws Exception
 	 */
-	public function maybe_grant_access_from_new_subscription( $grant_access, $args ) {
+	public function maybeGrantAccessFromNewSubscription($grant_access, $args)
+	{
+		if (! $this->shouldProcessGrantingAccessFromNewSubscription($args)) {
+			return false;
+		}
 
-		if ( isset( $args['order_id'] ) && is_numeric( $args['order_id'] ) && wcs_order_contains_renewal( $args['order_id'] ) ) {
+		$product = wc_get_product($args['product_id']);
+		if (! $product || ! WC_Subscriptions_Product::is_subscription($product)) {
+			return $grant_access;
+		}
 
-			// subscription renewals cannot grant access
-			$grant_access = false;
+		// reactivate a cancelled/pending cancel User Membership,
+		// when re-purchasing the same Subscription that grants access
+		$userId = (int) $args['user_id'];
+		$order = wc_get_order((int) $args['order_id']);
 
-		} elseif ( isset( $args['order_id'], $args['product_id'], $args['user_id'] ) ) {
+		// loop over all available membership plans
+		foreach (wc_memberships()->get_plans_instance()->get_membership_plans() as $plan) {
 
-			// reactivate a cancelled/pending cancel User Membership,
-			// when re-purchasing the same Subscription that grants access
+			// skip if no products grant access to this plan
+			if (! $plan->has_products()) {
+				continue;
+			}
 
-			$product = wc_get_product( $args['product_id'] );
+			$accessGrantingProductIds = wc_memberships_get_order_access_granting_product_ids($plan, $order);
 
-			if ( $product && \WC_Subscriptions_Product::is_subscription( $product ) ) {
+			foreach ($accessGrantingProductIds as $access_granting_product_id) {
 
-				$user_id = (int) $args['user_id'];
-				$order   = wc_get_order( (int) $args['order_id'] );
-				$plans   = wc_memberships()->get_plans_instance()->get_membership_plans();
-
-				// loop over all available membership plans
-				foreach ( $plans as $plan ) {
-
-					// skip if no products grant access to this plan
-					if ( ! $plan->has_products() ) {
-						continue;
-					}
-
-					$access_granting_product_ids = wc_memberships_get_order_access_granting_product_ids( $plan, $order );
-
-					foreach ( $access_granting_product_ids as $access_granting_product_id ) {
-
-						// sanity check: make sure the selected product ID in fact does grant access
-						if ( ! $plan->has_product( $access_granting_product_id ) ) {
-							continue;
-						}
-
-						if ( (int) $product->get_id() === (int) $access_granting_product_id ) {
-
-							$user_membership = wc_memberships_get_user_membership( $user_id, $plan );
-
-							// check if the user purchasing is already member of a plan
-							// but the membership is cancelled or pending cancellation
-							if (    $user_membership
-							     && $user_membership->has_status( array( 'pending', 'cancelled' ) )
-							     && wc_memberships_is_user_member( $user_id, $plan ) ) {
-
-								$order_id                = $order->get_id();
-								$subscription_membership = new \WC_Memberships_Integration_Subscriptions_User_Membership( $user_membership->post );
-
-								/* translators: Placeholders: %1$s is the subscription product name, %2%s is the order number */
-								$note = sprintf( __( 'Membership re-activated due to subscription re-purchase (%1$s, Order %2$s).', 'woocommerce-memberships' ),
-									$product->get_title(),
-									'<a href="' . admin_url( 'post.php?post=' . $order_id  . '&action=edit' ) .'" >' . $order_id. '</a>'
-								);
-
-								$subscription_membership->activate_membership( $note );
-
-								$subscription = wc_memberships_get_order_subscription( $order->get_id(), $product->get_id() );
-
-								$subscription_membership->set_subscription_id( $subscription ? $subscription->get_id() : 0 );
-							}
-						}
-					}
+				// sanity check: make sure the selected product ID in fact does grant access
+				if (! $plan->has_product($access_granting_product_id)) {
+					continue;
 				}
+
+				if ((int) $product->get_id() !== (int) $access_granting_product_id) {
+					continue;
+				}
+
+				$userMembership = wc_memberships_get_user_membership($userId, $plan);
+
+				// check if the user purchasing is already member of a plan
+				// but the membership is cancelled or pending cancellation
+				if (
+					! $userMembership ||
+					! $userMembership->has_status(['pending', 'cancelled']) ||
+					! wc_memberships_is_user_member($userId, $plan)
+				) {
+					continue;
+				}
+
+				$this->grantAccessFromNewSubscription($order, $userMembership, $product);
 			}
 		}
 
 		return $grant_access;
+	}
+
+	protected function grantAccessFromNewSubscription(
+		WC_Order $order,
+		WC_Memberships_User_Membership $user_membership,
+		WC_Product $product
+	) : void {
+		$order_id = $order->get_id();
+		$subscription_membership = $this->getSubscriptionsMembershipFromRegularMembership($user_membership);
+
+		/* translators: Placeholders: %1$s is the subscription product name, %2%s is the order number */
+		$note = sprintf(__('Membership re-activated due to subscription re-purchase (%1$s, Order %2$s).', 'woocommerce-memberships'),
+			$product->get_title(),
+			'<a href="'.admin_url('post.php?post='.$order_id.'&action=edit').'">'.$order_id.'</a>'
+		);
+
+		$subscription = wc_memberships_get_order_subscription($order->get_id(), $product->get_id());
+
+		$subscription_membership->set_subscription_id($subscription ? $subscription->get_id() : 0);
+
+		// set membership end date to the active subscription expire date.
+		$subscription_membership->set_end_date($subscription_membership->get_subscription_end_date() ?: '');
+
+		$subscription_membership->activate_membership($note);
 	}
 
 
@@ -293,7 +326,7 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plans {
 		$product = wc_get_product( $args['product_id'] );
 
 		// handle access from subscriptions
-		if ( $product && isset( $args['order_id'] ) && $args['order_id'] > 0 && \WC_Subscriptions_Product::is_subscription( $product ) ) {
+		if ( $product && isset( $args['order_id'] ) && $args['order_id'] > 0 && WC_Subscriptions_Product::is_subscription( $product ) ) {
 
 			$subscription = wc_memberships_get_order_subscription( $args['order_id'], $product->get_id() );
 
@@ -331,10 +364,10 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plans {
 	 *
 	 * @since 1.10.1
 	 *
-	 * @param \WC_Memberships_User_Membership|\WC_Memberships_Integration_Subscriptions_User_Membership|null $user_membership granted user membership or null when not granted by a purchase
+	 * @param \WC_Memberships_User_Membership|WC_Memberships_Integration_Subscriptions_User_Membership|null $user_membership granted user membership or null when not granted by a purchase
 	 * @param \WP_User|int $user a user that could be already a member
 	 * @param \WC_Memberships_Membership_Plan|\WC_Memberships_Integration_Subscriptions_Membership_Plan $membership_plan a plan that could include subscription access
-	 * @return \WC_Memberships_User_Membership|\WC_Memberships_Integration_Subscriptions_User_Membership|null
+	 * @return \WC_Memberships_User_Membership|WC_Memberships_Integration_Subscriptions_User_Membership|null
 	 */
 	public function maybe_grant_access_from_existing_manual_subscription( $user_membership, $user, $membership_plan ) {
 
@@ -355,13 +388,13 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plans {
 							'value'   => $user_id,
 							'compare' => '=',
 						],
-					]
+					],
 				] );
 
 				foreach ( $subscriptions as $subscription_id ) {
 
 					// if a membership was granted for the current plan while looping found subscriptions, break loop
-					if ( $user_membership instanceof \WC_Memberships_Integration_Subscriptions_User_Membership ) {
+					if ( $user_membership instanceof WC_Memberships_Integration_Subscriptions_User_Membership) {
 						break;
 					}
 
@@ -412,7 +445,7 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plans {
 												// tie membership to subscription
 												if ( $user_membership instanceof \WC_Memberships_User_Membership ) {
 
-													$user_membership = new \WC_Memberships_Integration_Subscriptions_User_Membership( $user_membership->get_id() );
+													$user_membership = new WC_Memberships_Integration_Subscriptions_User_Membership( $user_membership->get_id() );
 
 													$user_membership->set_subscription_id( $subscription_id );
 
@@ -506,14 +539,14 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plans {
 		// handle access from subscriptions
 		if (    $product
 		     && $integration
-		     && \WC_Subscriptions_Product::is_subscription( $product )
+		     && WC_Subscriptions_Product::is_subscription( $product )
 		     && $integration->has_membership_plan_subscription( $plan->get_id() ) ) {
 
 			$subscription = wc_memberships_get_order_subscription( $args['order_id'], $product->get_id() );
 
 			if ( $subscription ) {
 
-				$subscription_membership = new \WC_Memberships_Integration_Subscriptions_User_Membership( $args['user_membership_id'] );
+				$subscription_membership = new WC_Memberships_Integration_Subscriptions_User_Membership( $args['user_membership_id'] );
 
 				$subscription_membership->set_subscription_id( $subscription->get_id() );
 
@@ -608,7 +641,6 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plans {
 		return $data;
 	}
 
-
 	/**
 	 * Extends the membership plan API item schema.
 	 *
@@ -633,7 +665,7 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plans {
 				'description' => __( 'Marks a membership plan whose duration is not bound to a tied subscription, but where the subscription handles installment billing.', 'woocommerce-memberships' ),
 				'type'        => 'boolean',
 				'context'     => array( 'view', 'edit' ),
-			)
+			),
 		) );
 
 		$properties = Framework\SV_WC_Helper::array_insert_after( $properties, 'access_length_type', array(
@@ -680,5 +712,9 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plans {
 		return $schema;
 	}
 
-
+	protected function getSubscriptionsMembershipFromRegularMembership(
+		WC_Memberships_User_Membership $user_membership
+	) : WC_Memberships_Integration_Subscriptions_User_Membership {
+		return new WC_Memberships_Integration_Subscriptions_User_Membership($user_membership->post);
+	}
 }

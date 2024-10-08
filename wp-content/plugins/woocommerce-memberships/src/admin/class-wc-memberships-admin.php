@@ -21,8 +21,6 @@
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use Automattic\WooCommerce\Admin\Features\Navigation\Menu as Enhanced_Navigation_Menu;
-use Automattic\WooCommerce\Admin\Features\Navigation\Screen as Enhanced_Navigation_Screen;
 use SkyVerge\WooCommerce\Memberships\Admin\Views\Modals\Profile_Field\Confirm_Deletion;
 use SkyVerge\WooCommerce\Memberships\Admin\Views\Modals\User_Membership\Confirm_Edit_Profile_Fields;
 use SkyVerge\WooCommerce\Memberships\Admin\Profile_Fields;
@@ -96,10 +94,6 @@ class WC_Memberships_Admin {
 		add_action( 'admin_menu', [ $this, 'add_import_export_admin_page' ] );
 		// init profile fields page
 		add_action( 'admin_menu', [ $this, 'add_profile_fields_admin_page' ] );
-
-		// add navigation menu items
-		add_action( 'admin_menu',                        [ $this, 'add_enhanced_navigation_items' ] );
-		add_filter( 'woocommerce_navigation_menu_items', [ $this, 'edit_enhanced_navigation_items' ] );
 
 		// add additional bulk actions to memberships-restrictable post types
 		// TODO when WordPress 4.7 is the minimum required version, this may be updated to use new hooks {FN 2018-11-05}
@@ -479,107 +473,6 @@ class WC_Memberships_Admin {
 				$handler->delete_job( $current_job->id );
 			}
 		}
-	}
-
-
-	/**
-	 * Adds menu items for the enhanced WooCommerce navigation feature.
-	 *
-	 * TODO in the future reorganize some of the strings passed in this method's calls to keep things DRY {FN 2020-11-13}
-	 * For example, if autoloading is supported, different components could offer a method to retrieve their menu item name and such.
-	 *
-	 * @internal
-	 *
-	 * @since 1.20.0
-	 */
-	public function add_enhanced_navigation_items() {
-
-		if ( ! Framework\SV_WC_Helper::is_wc_navigation_enabled() ) {
-			return;
-		}
-
-		Enhanced_Navigation_Screen::register_post_type( 'wc_user_membership' );
-		Enhanced_Navigation_Screen::register_post_type( 'wc_membership_plan' );
-		Enhanced_Navigation_Menu::add_plugin_category( [
-			'id'    => 'woocommerce-memberships',
-			'title' => __( 'Memberships', 'woocommerce-memberships' ),
-		] );
-
-		$user_memberships = Enhanced_Navigation_Menu::get_post_type_items(
-			'wc_user_membership',
-			[
-				'parent' => 'woocommerce-memberships',
-				'title'  => __( 'Members', 'woocommerce-memberships' ),
-				'order'  => 1,
-			]
-		);
-
-		if ( isset( $user_memberships['all'] ) ) {
-			Enhanced_Navigation_Menu::add_plugin_item( $user_memberships['all'] );
-		}
-
-		$membership_plans = Enhanced_Navigation_Menu::get_post_type_items(
-			'wc_membership_plan',
-			[
-				'parent' => 'woocommerce-memberships',
-				'title'  => __( 'Plans', 'woocommerce-memberships' ),
-				'order'  => 2,
-			]
-		);
-
-		if ( isset( $membership_plans['all'] ) ) {
-			Enhanced_Navigation_Menu::add_plugin_item( $membership_plans['all'] );
-		}
-
-		Enhanced_Navigation_Menu::add_plugin_item( [
-			'id'         => 'woocommerce-memberships-import-export',
-			'title'      => __( 'Import / Export', 'woocommerce-memberships' ),
-			/** @see \WC_Memberships_Admin::add_import_export_admin_page() */
-			'capability' => (string) apply_filters( 'woocommerce_memberships_can_import_export', 'manage_woocommerce' ),
-			'url'        => 'wc_memberships_import_export',
-			'parent'     => 'woocommerce-memberships',
-			'order'      => 3,
-		] );
-
-		Enhanced_Navigation_Menu::add_plugin_item( [
-			'id'         => 'woocommerce-memberships-profile-fields',
-			'title'      => __( 'Profile Fields', 'woocommerce-memberships' ),
-			/** @see \WC_Memberships_Admin::add_profile_fields_admin_page() */
-			'capability' => (string) apply_filters( 'woocommerce_memberships_can_manage_profile_fields', 'manage_woocommerce' ),
-			'url'        => 'wc_memberships_profile_fields',
-			'parent'     => 'woocommerce-memberships',
-			'order'      => 4,
-		] );
-	}
-
-
-	/**
-	 * Tweaks the WooCommerce enhanced navigation menu item names.
-	 *
-	 * Ensures there are no duplicate Memberships entries.
-	 *
-	 * @internal
-	 *
-	 * @since 1.21.5
-	 *
-	 * @param array $menu_items
-	 * @return array
-	 */
-	public function edit_enhanced_navigation_items( $menu_items ) {
-
-		foreach ( (array) $menu_items as $i => $menu_item ) {
-
-			if ( isset( $menu_items[ $i ]['title'] ) && ! in_array( $i, [ 'woocommerce-memberships', 'settings-memberships' ], true ) && __( 'Memberships', 'woocommerce-memberships' ) === $menu_items[ $i ]['title'] ) {
-
-				if ( isset( $menu_items['woocommerce-memberships']['title'] ) ) {
-					$menu_items['woocommerce-memberships']['title'] = wc_memberships()->get_plugin_name();
-				}
-
-				break;
-			}
-		}
-
-		return $menu_items;
 	}
 
 
@@ -1512,12 +1405,9 @@ class WC_Memberships_Admin {
 
 			if ( is_array( $tabs ) ) :
 
-				// render, but do not show tabs if WooCommerce enhanced navigation is used (preserve regular screen)
-				$hide_in_enhanced_navigation = Framework\SV_WC_Helper::is_wc_navigation_enabled() ? 'style="display: none;"' : '';
-
 				?>
 				<div class="wrap woocommerce">
-					<h2 class="nav-tab-wrapper woo-nav-tab-wrapper" <?php echo $hide_in_enhanced_navigation; ?>>
+					<h2 class="nav-tab-wrapper woo-nav-tab-wrapper">
 						<?php $current_tab = $this->get_current_tab(); ?>
 						<?php $current_tab = 'members' === $current_tab && 'admin_page_wc_memberships_import_export' === $screen_id? 'import-export' : $current_tab; ?>
 						<?php foreach ( $tabs as $tab_id => $tab ) : ?>

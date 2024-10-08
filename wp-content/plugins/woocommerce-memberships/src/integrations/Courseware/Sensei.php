@@ -23,6 +23,7 @@
 
 namespace SkyVerge\WooCommerce\Memberships\Integrations\Courseware;
 
+use Sensei_Course_Enrolment;
 use SkyVerge\WooCommerce\Memberships\Integrations\Courseware;
 use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
 
@@ -146,7 +147,7 @@ class Sensei extends Courseware {
 	 */
 	protected function is_user_enrolled_in_course( int $user_id, int $course_id ) : bool {
 
-		return is_callable( 'Sensei_Course::is_user_enrolled' ) && \Sensei_Course::is_user_enrolled( $user_id, $course_id );
+		return is_callable( 'Sensei_Course::is_user_enrolled' ) && \Sensei_Course::is_user_enrolled( $course_id, $user_id );
 	}
 
 
@@ -198,19 +199,42 @@ class Sensei extends Courseware {
 	 * @param int $course_id
 	 * @throws \Exception
 	 */
-	protected function enroll_user_in_course( int $user_id, int $course_id ) {
-
-		if ( ! is_callable( 'Sensei_Course_Enrolment::get_course_instance' ) ) {
-			return;
-		}
-
+	protected function enroll_user_in_course(int $user_id, int $course_id)
+	{
 		// provides some loose backwards compatibility as the `enrol` method here was updated more recently
-		if ( $course = \Sensei_Course_Enrolment::get_course_instance( $course_id ) ) {
-			if ( is_callable( [ $course, 'enrol' ] ) ) {
-				$course->enrol( $user_id );
+		if ($course = $this->getCourseById($course_id)) {
+			if (is_callable([$course, 'enrol'])) {
+				$course->enrol($user_id);
 			} else {
-				$course->save_enrolment( $user_id, true );
+				$course->save_enrolment($user_id, true);
 			}
+		}
+	}
+
+
+	/** @inheritDoc */
+	protected function unEnrollUserFromCourse(int $userId, int $courseId) : void
+	{
+		if ($course = $this->getCourseById($courseId)) {
+			$course->withdraw($userId);
+		}
+	}
+
+
+	/**
+	 * Gets a course enrolment instance by course ID.
+	 *
+	 * @since n.nn.n
+	 *
+	 * @param int $courseId
+	 * @return Sensei_Course_Enrolment|null
+	 */
+	protected function getCourseById(int $courseId): ?Sensei_Course_Enrolment
+	{
+		if (is_callable('Sensei_Course_Enrolment::get_course_instance')) {
+			return Sensei_Course_Enrolment::get_course_instance($courseId);
+		} else {
+			return null;
 		}
 	}
 

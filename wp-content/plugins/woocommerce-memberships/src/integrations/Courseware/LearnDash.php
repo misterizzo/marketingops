@@ -194,6 +194,17 @@ class LearnDash extends Courseware {
 	}
 
 
+	/** @inheritDoc */
+	protected function unEnrollUserFromCourse(int $userId, int $courseId) : void
+	{
+		if ( ! function_exists( 'ld_update_course_access' ) ) {
+			return;
+		}
+
+		ld_update_course_access( $userId, $courseId, true );
+	}
+
+
 	/**
 	 * Gets the dependent courses for a prerequisite course.
 	 *

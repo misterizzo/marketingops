@@ -25,6 +25,7 @@ namespace SkyVerge\WooCommerce\Memberships\Integrations;
 
 use SkyVerge\WooCommerce\Memberships\Integrations\Courseware\Admin;
 use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
+use WC_Memberships_User_Membership;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -99,7 +100,7 @@ abstract class Courseware {
 	 *
 	 * @since 1.22.0
 	 *
-	 * @param \WC_Memberships_User_Membership $user_membership the user membership
+	 * @param WC_Memberships_User_Membership $user_membership the user membership
 	 */
 	public function handle_user_membership_status_changed( $user_membership ) {
 
@@ -107,7 +108,7 @@ abstract class Courseware {
 			return;
 		}
 
-		$this->maybe_start_courses_associated_with_membership( $user_membership );
+		$this->maybePerformMembershipCourseActions($user_membership);
 	}
 
 
@@ -129,7 +130,28 @@ abstract class Courseware {
 			return;
 		}
 
-		$this->maybe_start_courses_associated_with_membership( $user_membership );
+		$this->maybePerformMembershipCourseActions($user_membership);
+	}
+
+	/**
+	 * Performs course-related actions for a membership when the membership is saved or the status changes.
+	 *
+	 * @param WC_Memberships_User_Membership $userMembership
+	 * @return void
+	 */
+	protected function maybePerformMembershipCourseActions(WC_Memberships_User_Membership $userMembership): void
+	{
+		if ($this->isMembershipActive($userMembership)) {
+			$this->maybe_start_courses_associated_with_membership($userMembership);
+		} else {
+			$this->maybeUnEnrollFromCoursesAssociatedWithMembership($userMembership);
+		}
+	}
+
+	protected function isMembershipActive(WC_Memberships_User_Membership $userMembership) : bool
+	{
+		/** do not use {@see \WC_Memberships_User_Membership::is_active()} here to avoid triggering checks that may expire the membership */
+		return in_array($userMembership->get_status(), wc_memberships()->get_user_memberships_instance()->get_active_access_membership_statuses(), true);
 	}
 
 
@@ -140,18 +162,19 @@ abstract class Courseware {
 	 *
 	 * @since 1.22.0
 	 *
-	 * @param \WC_Memberships_User_Membership $user_membership the user membership
+	 * @param WC_Memberships_User_Membership $user_membership the user membership
 	 */
-	protected function maybe_start_courses_associated_with_membership( \WC_Memberships_User_Membership $user_membership ) {
-
-		/** do not use {@see \WC_Memberships_User_Membership::is_active()} here to avoid triggering checks that may expire the membership */
-		if ( ! in_array( $user_membership->get_status(), wc_memberships()->get_user_memberships_instance()->get_active_access_membership_statuses(), true ) ) {
-			return;
+	protected function maybe_start_courses_associated_with_membership(WC_Memberships_User_Membership $user_membership)
+	{
+		foreach ($this->get_user_membership_courses($user_membership) as $course) {
+			$this->auto_enroll_course((int) $course->ID, $user_membership);
 		}
+	}
 
-		foreach ( $this->get_user_membership_courses( $user_membership ) as $course ) {
-
-			$this->auto_enroll_course( (int) $course->ID, $user_membership );
+	protected function maybeUnEnrollFromCoursesAssociatedWithMembership(WC_Memberships_User_Membership $userMembership): void
+	{
+		foreach($this->get_user_membership_courses($userMembership) as $course) {
+			$this->autoUnEnrollCourse((int) $course->ID, $userMembership);
 		}
 	}
 
@@ -161,10 +184,10 @@ abstract class Courseware {
 	 *
 	 * @since 1.22.0
 	 *
-	 * @param \WC_Memberships_User_Membership $user_membership
+	 * @param WC_Memberships_User_Membership $user_membership
 	 * @return \WP_Post[]
 	 */
-	protected function get_user_membership_courses( \WC_Memberships_User_Membership $user_membership ) : array {
+	protected function get_user_membership_courses( WC_Memberships_User_Membership $user_membership ) : array {
 
 		$membership_plan = $user_membership->get_plan();
 
@@ -186,9 +209,9 @@ abstract class Courseware {
 	 * @since 1.22.0
 	 *
 	 * @param int $course_id
-	 * @param \WC_Memberships_User_Membership $user_membership
+	 * @param WC_Memberships_User_Membership $user_membership
 	 */
-	protected function auto_enroll_course( int $course_id, \WC_Memberships_User_Membership $user_membership ) {
+	protected function auto_enroll_course( int $course_id, WC_Memberships_User_Membership $user_membership ) {
 
 		/**
 		 * Filters whether to auto-enroll a given user in a course.
@@ -204,7 +227,7 @@ abstract class Courseware {
 		 * @param bool $auto_enroll_course
 		 * @param int $user_id the user that will start this course
 		 * @param int $course_id the course that will be started
-		 * @param \WC_Memberships_User_Membership $user_membership the user membership
+		 * @param WC_Memberships_User_Membership $user_membership the user membership
 		 */
 		$auto_enroll_course = (bool) apply_filters(
 			"wc_memberships_{$this->course_plugin_id}_auto_enroll_course",
@@ -219,17 +242,47 @@ abstract class Courseware {
 		}
 	}
 
+	protected function autoUnEnrollCourse(int $courseId, WC_Memberships_User_Membership $userMembership): void
+	{
+		/**
+		 * Filters whether to auto un-enroll a given user from a course.
+		 *
+		 * Determine if we should automatically un-enroll users on a specific course
+		 * that is part of a user membership.
+		 *
+		 * By default, users who are enrolled in the course and the plan has "auto enroll" enabled will be un-enrolled.
+		 *
+		 * @since 1.26.9
+		 *
+		 * @param bool $autoUnEnrollFromCourse
+		 * @param int $user_id the user that will start this course
+		 * @param int $course_id the course that will be started
+		 * @param WC_Memberships_User_Membership $user_membership the user membership
+		 */
+		$autoUnEnrollFromCourse = (bool) apply_filters(
+			"wc_memberships_{$this->course_plugin_id}_auto_unenroll_course",
+			$this->shouldUserAutoUnEnrollFromCourse($userMembership, $courseId),
+			$userMembership->get_user_id(),
+			$courseId,
+			$userMembership
+		);
+
+		if ($autoUnEnrollFromCourse) {
+			$this->unEnrollUserFromCourse($userMembership->get_user_id(), $courseId);
+		}
+	}
+
 
 	/**
 	 * Checks whether the user should be auto-enrolled in the given course.
 	 *
 	 * @since 1.22.0
 	 *
-	 * @param \WC_Memberships_User_Membership $user_membership
+	 * @param WC_Memberships_User_Membership $user_membership
 	 * @param int $course_id
 	 * @return bool
 	 */
-	protected function should_user_auto_enroll_in_course( \WC_Memberships_User_Membership $user_membership, int $course_id ) : bool {
+	protected function should_user_auto_enroll_in_course( WC_Memberships_User_Membership $user_membership, int $course_id ) : bool {
 
 		$applicable_rule = $this->get_applicable_course_restriction_rule_for_user_membership( $user_membership, $course_id );
 
@@ -237,6 +290,24 @@ abstract class Courseware {
 			&& $this->does_membership_plan_rule_auto_enroll_in_course( $applicable_rule )
 			&& ! $this->is_user_enrolled_in_course( $user_membership->get_user_id(), $course_id )
 			&& $this->has_user_completed_course_prerequisites( $user_membership->get_user_id(), $course_id );
+	}
+
+	/**
+	 * Checks whether the user should be auto un-enrolled from the given course.
+	 *
+	 * @since 1.26.9
+	 *
+	 * @param WC_Memberships_User_Membership $userMembership
+	 * @param int $courseId
+	 * @return bool
+	 */
+	protected function shouldUserAutoUnEnrollFromCourse(WC_Memberships_User_Membership $userMembership, int $courseId) : bool
+	{
+		$applicable_rule = $this->get_applicable_course_restriction_rule_for_user_membership($userMembership, $courseId);
+
+		return $applicable_rule
+			&& $this->does_membership_plan_rule_auto_enroll_in_course($applicable_rule) // if it auto enrolls, then it also auto un-enrolls
+			&& $this->is_user_enrolled_in_course($userMembership->get_user_id(), $courseId);
 	}
 
 
@@ -287,11 +358,11 @@ abstract class Courseware {
 	 *
 	 * @since 1.22.0
 	 *
-	 * @param \WC_Memberships_User_Membership $user_membership
+	 * @param WC_Memberships_User_Membership $user_membership
 	 * @param int $course_id
 	 * @return \WC_Memberships_Membership_Plan_Rule|null
 	 */
-	protected function get_applicable_course_restriction_rule_for_user_membership( \WC_Memberships_User_Membership $user_membership, int $course_id ) {
+	protected function get_applicable_course_restriction_rule_for_user_membership( WC_Memberships_User_Membership $user_membership, int $course_id ) {
 
 		$rules = $this->get_course_content_restriction_rules( $course_id );
 		$rules = empty( $rules ) ? [] : array_filter( $rules, static function( \WC_Memberships_Membership_Plan_Rule $rule ) use ( $user_membership ) {
@@ -453,6 +524,17 @@ abstract class Courseware {
 	 * @param int $course_id
 	 */
 	abstract protected function enroll_user_in_course( int $user_id, int $course_id );
+
+
+	/**
+	 * Un-enrolls the user from the given course
+	 *
+	 * @since 1.26.9
+	 *
+	 * @param int $userId
+	 * @param int $courseId
+	 */
+	abstract protected function unEnrollUserFromCourse(int $userId, int $courseId) : void;
 
 
 }

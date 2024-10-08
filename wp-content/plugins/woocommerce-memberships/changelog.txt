@@ -1,5 +1,12 @@
 *** WooCommerce Memberships Changelog ***
 
+2024.10.07 - version 1.26.9
+ * Fix - Sensei `is_user_enrolled_in_course()` method not working as expected
+ * Fix - In some edge cases, product variations were restricted from purchase when they shouldn't have been
+ * Fix - Ensure subscription-linked memberships do not unexpectedly expire when the customer resubscribes
+ * Fix - When configuring a membership plan to auto-enroll in a course, users are now auto un-enrolled if/when their membership becomes inactive
+ * Fix - Remove deprecated usages of WooCommerce enhanced navigation feature
+
 2024.08.01 - version 1.26.8
  * Tweak - "Membership ending soon" emails are no longer sent for paused memberships
  * Fix - Memberships connected to a subscription weren't inheriting the subscription's "End Date"

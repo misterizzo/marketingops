@@ -413,14 +413,12 @@ class WC_Memberships_Integration_Subscriptions_User_Membership extends \WC_Membe
 	/**
 	 * Gets the linked subscription's optionally set end date in UTC.
 	 *
-	 * Helper method, do not open to public.
-	 *
 	 * @since 1.13.2
 	 *
 	 * @param string $format a valid PHP format, or 'timestamp', or 'mysql'
 	 * @return int|string|null
 	 */
-	private function get_subscription_end_date( $format = 'mysql' ) {
+	public function get_subscription_end_date( $format = 'mysql' ) {
 
 		$subscription = $this->get_subscription();
 		$expiry_date  = ! $subscription ?: $subscription->get_time( 'end', 'gmt' );
