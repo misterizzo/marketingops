@@ -202,7 +202,7 @@ if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
 							</div>
 							<div class="bottomdashbordlist">
 								<ul>
-									<li><?php echo esc_html( sprintf( __( '%1$s%3$d%2$s articles, 0 podcasts, 3 workshops, 0 courses', 'marketingops' ), '<strong>', '</strong>', $posts_wp_query->found_posts ) ); ?></li>
+									<li><?php echo wp_kses_post( sprintf( __( '%1$s%3$d%2$s articles, 0 podcasts, 3 workshops, 0 courses', 'marketingops' ), '<strong>', '</strong>', $posts_wp_query->found_posts ) ); ?></li>
 								</ul>
 							</div>
 							<div class="arrowrightdashbord"><span class="arrowsvgimg"></span></div>
