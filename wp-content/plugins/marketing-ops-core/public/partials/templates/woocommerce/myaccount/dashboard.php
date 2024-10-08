@@ -172,11 +172,11 @@ $profile_points = 0;
 
 // Customer avatar.
 $customer_avatar_url = mops_get_user_avatar_url( $current_user->ID );
-$avatar_done         = ( false === $customer_avatar_url ) ? 'profiledone' : '';
+$avatar_done         = ( false === $customer_avatar_url ) ? '' : 'profiledone';
 $profile_points      = ( false === $customer_avatar_url ) ? $profile_points : ( $profile_points + 1 );
 
 // Profile completeness text.
-$profile_complete_message = sprintf( __( 'Profile is %1$s%3$s% %2$s complete', 'marketingops' ), '<span>', '</span>', ( $profile_points * 20 ) );
+$profile_complete_message = sprintf( __( 'Profile is %1$s %3$s% %2$s complete', 'marketingops' ), '<span>', '</span>', ( $profile_points * 20 ) );
 
 // User overview.
 // debug( get_user_meta( $current_user->ID ) );
