@@ -139,6 +139,7 @@ foreach ( $saved_payment_methods as $payment_method_type => $methods ) {
 			$payment_method_message .= ( true === $is_default_method ) ? __( ' is the default payment method', 'marketingops' ) : '';
 			$payment_methods_temp[]  = $payment_method_message;
 		} elseif ( 'link' === $payment_method_type ) {
+			$brand                   = ( ! empty( $payment_method['method']['brand'] ) ) ? $payment_method['method']['brand'] : '';
 			$payment_method_message  = sprintf(
 				__( '%1$s%3$s%2$s is the payment method last used.', 'marketingops' ),
 				'<strong>',
