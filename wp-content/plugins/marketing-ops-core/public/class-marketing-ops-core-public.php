@@ -3892,11 +3892,12 @@ class Marketing_Ops_Core_Public {
 									</div>
 								</div>
 								<?php
-
-								if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
-									debug( $member_slug );
-								}
 							}
+
+							if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
+								debug( $member_slug );
+							}
+
 							if ( ! empty( $member_slug ) && ( 'mo-pros-monthly-member' === $member_slug || 'mo-pros-yearly-member' === $member_slug ) ) { ?>
 								<div class="profile_menu_box_btn moc_community_forum_btn">
 									<div class="profile_pro_btn">
