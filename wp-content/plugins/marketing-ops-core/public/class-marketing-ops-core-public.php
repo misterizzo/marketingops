@@ -3878,8 +3878,7 @@ class Marketing_Ops_Core_Public {
 								</div>
 							</div>
 							<?php
-							if ( empty( $member_slug ) || ( 'free-membership' === $member_slug ) ) {
-								?>
+							if ( 1 === count( $member_slug ) && in_array( 'free-membership', $member_slug, true ) ) { ?>
 								<div class="profile_menu_box_btn">
 									<div class="profile_pro_btn">
 										<a href="<?php echo esc_url( site_url( 'subscribe' ) ); ?>" class="btn gradient_btn">
