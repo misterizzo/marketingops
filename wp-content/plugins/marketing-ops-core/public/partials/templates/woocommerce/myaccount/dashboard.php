@@ -83,7 +83,15 @@ $membership_message = ''; // Empty membership message.
 
 // If there is only one active membership, and that is free.
 if ( 1 === count( $active_memberships ) && ! empty( $active_memberships[0]->plan->slug ) && 'free-membership' === $active_memberships[0]->plan->slug ) {
-	$membership_message = __( 'Premium membership till July 24 2024', 'marketingops' );
+	$membership_end_date = $active_membership->get_end_date();
+	$membership_end_date = ( is_null( $membership_end_date ) ) ? __( 'forever', 'marketingops' ) : gmdate( 'F j, Y', strtotime( $membership_end_date ) );
+	$membership_message  = sprintf(
+		__( '%1$s%3$s%2$s until %1$s%4$s%2$s', 'marketingops' ),
+		'<strong>',
+		'</strong>',
+		$active_memberships[0]->plan->name,
+		$membership_end_date
+	);
 } else {
 	$active_membership_messages = array(); // Temporary array to store the membership messages.
 
