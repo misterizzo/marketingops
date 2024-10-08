@@ -372,7 +372,7 @@ body.active-popup {overflow: hidden !important;}
 .mops_mopsapalooza24_page .how_to_rating .elementor-container {margin-left:0px;}
 .mops_mopsapalooza24_page .qoute_in_join .elementor-widget-container {border: 1px solid #FFFFFF17;}
 .mops_mopsapalooza24_page .ma_footer .ma_footer_column .ma_footer_faq_title {margin-top:0px !important;}
-.mops_mopsapalooza24_page .ma_footer .ma_footer_column .ma_footer_faq_tabs .ma_footer_faq_tabs_content .elementor-widget-text-editor p a {color:#FD4B7A !important;}
+.mops_mopsapalooza24_page .ma_footer .ma_footer_column .ma_footer_faq_tabs .ma_footer_faq_tabs_content .elementor-widget-text-editor p a {color:#FD4B7A !important;text-decoration: none;}
 .mops_mopsapalooza24_page .faq_section .elementor-background-overlay {background-position: bottom !important;background-size: contain !important;}
 .mops_mopsapalooza24_page .faq_section a:hover {text-decoration: underline;color: #c36 !important;}
 .mops_mopsapalooza24_page .html_js_file, .mops_mopsapalooza24_page .mops_apalooza_new {display:none;}
