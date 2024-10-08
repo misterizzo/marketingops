@@ -68,7 +68,8 @@ $order_item_count = ( false !== $customer_order ) ? ( $customer_order->get_item_
 
 // Customer articles and content.
 $posts_wp_query_args = moc_posts_query_args();
-debug( $posts_wp_query_args );
+$posts_wp_query      = new WP_Query( $posts_wp_query_args );
+debug( $posts_wp_query );
 
 // 3 articles, 0 podcasts, 3 workshops, 0 courses
 
