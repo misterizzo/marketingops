@@ -6097,13 +6097,14 @@ class Marketing_Ops_Core_Public {
 		} elseif ( ! empty( $current_pagename ) && 'my-account' === $current_pagename ) {
 			if ( ! empty( $args['post_type'] ) ) {
 				if ( 'post' === $args['post_type'] ) {
-					$args['posts_per_page'] = -1;
+					$args['posts_per_page'] = 1;
 					$args['author']         = get_current_user_id();
 				} elseif ( 'podcast' === $args['post_type'] ) {
-					$args['meta_query'][] = array(
+					$args['posts_per_page'] = 1;
+					$args['meta_query'][]   = array(
 						'key'     => 'podcast_guest',
-						'value'   => get_current_user_id(),
-						'compare' => 'LIKE',
+						'value'   => '"(' . get_current_user_id() . ')"',
+						'compare' => 'REGEXP',
 					);
 				}
 			}
