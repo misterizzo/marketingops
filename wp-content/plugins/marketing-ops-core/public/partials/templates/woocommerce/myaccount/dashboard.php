@@ -86,8 +86,8 @@ if ( 1 === count( $active_memberships ) && ! empty( $active_memberships[0]->plan
 } else {
 	// Loop through the memberhsips to get the active premium membership.
 	foreach ( $active_memberships as $active_membership ) {
-		var_dump( $active_membership->get_start_date() );
-		var_dump( $active_membership->get_end_date() );
+		$membership_name = $active_membership->get_name();
+		var_dump( $membership_name, $active_membership->get_start_date(), $active_membership->get_end_date() );
 		debug( '-----' );
 	}
 	$membership_message = __( 'Premium membership till July 24 2024', 'marketingops' );
