@@ -172,11 +172,11 @@ $profile_points = 0;
 
 // Customer avatar.
 $customer_avatar_url = mops_get_user_avatar_url( $current_user->ID );
-$avatar_done         = ( false === $customer_avatar_url ) ? 'profiledone' : '';
+$avatar_done         = ( false === $customer_avatar_url ) ? '' : 'profiledone';
 $profile_points      = ( false === $customer_avatar_url ) ? $profile_points : ( $profile_points + 1 );
-var_dump( 'profile_points', $profile_points );
 
-debug( $current_user );
+// User overview.
+debug( get_user_meta( $current_user->ID ) );
 ?>
 <div class="newdashbordmain">
 	<h3><?php echo wp_kses_post( sprintf( __( 'Hello %1$s!', 'marketingops' ), $current_user->display_name ) ); ?></h3>
