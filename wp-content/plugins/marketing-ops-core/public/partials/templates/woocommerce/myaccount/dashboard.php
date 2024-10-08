@@ -121,7 +121,7 @@ foreach ( $my_payment_methods as $saved_method ) {
 }
 
 
-debug( $saved_payment_methods );
+debug( $my_payment_methods );
 
 if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
 	?>
