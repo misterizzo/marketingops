@@ -84,16 +84,30 @@ $active_memberships = wc_memberships_get_user_memberships(
 if ( 1 === count( $active_memberships ) && ! empty( $active_memberships[0]->plan->slug ) && 'free-membership' === $active_memberships[0]->plan->slug ) {
 	$membership_message = __( 'Premium membership till July 24 2024', 'marketingops' );
 } else {
+	$active_membership_messages = array(); // Temporary array to store the membership messages.
+
 	// Loop through the memberhsips to get the active premium membership.
 	foreach ( $active_memberships as $active_membership ) {
-		$membership_name = $active_membership->plan->name;
+		if ( 'free-membership' === $active_memberships->plan->slug ) {
+			continue;
+		}
+
+		$membership_end_date          = $active_membership->get_end_date();
+		$membership_end_date          = ( is_null( $membership_end_date ) ) ? __( 'forever', 'marketingops' ) : gmdate( 'F j, Y', strtotime( $membership_end_date ) );
+		$active_membership_messages[] = sprintf(
+			__( '%1$s%3$s%2$s until %1$s%4$s%2$s', 'marketingops' ),
+			'<strong>',
+			'</strong>',
+			$active_membership->plan->name,
+			$membership_end_date
+		);
+
 		var_dump( $membership_name, $active_membership->get_start_date(), $active_membership->get_end_date() );
+		debug( $active_membership_messages );
 		debug( '-----' );
 	}
 	$membership_message = __( 'Premium membership till July 24 2024', 'marketingops' );
 }
-
-debug( $active_memberships );
 
 if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
 	?>
