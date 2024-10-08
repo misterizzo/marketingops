@@ -71,8 +71,6 @@ $posts_wp_query      = new WP_Query( moc_posts_query_args() );
 
 // Customer articles and content: podcast.
 $podcasts_wp_query      = new WP_Query( moc_posts_query_args( 'podcast' ) );
-debug( $podcasts_wp_query );
-debug( get_post_meta( 230532, 'podcast_guest', true ) );
 
 if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
 	?>
@@ -206,7 +204,18 @@ if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
 							</div>
 							<div class="bottomdashbordlist">
 								<ul>
-									<li><?php echo wp_kses_post( sprintf( __( '%1$s%3$d%2$s articles, 0 podcasts, 3 workshops, 0 courses', 'marketingops' ), '<strong>', '</strong>', $posts_wp_query->found_posts ) ); ?></li>
+									<li>
+										<?php
+										echo wp_kses_post(
+											sprintf(
+												__( '%1$s%3$d%2$s articles, %1$s%4$d%2$s podcasts, 3 workshops, 0 courses', 'marketingops' ),
+												'<strong>',
+												'</strong>',
+												$posts_wp_query->found_posts,
+												$podcasts_wp_query->found_posts
+											)
+										);
+										?></li>
 								</ul>
 							</div>
 							<div class="arrowrightdashbord"><span class="arrowsvgimg"></span></div>
