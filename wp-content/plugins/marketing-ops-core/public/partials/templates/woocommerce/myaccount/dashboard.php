@@ -67,10 +67,11 @@ $order_date       = ( false !== $customer_order ) ? wc_format_datetime( $custome
 $order_item_count = ( false !== $customer_order ) ? ( $customer_order->get_item_count() - $customer_order->get_item_count_refunded() ) : 0;
 
 // Customer articles and content: posts.
-$posts_wp_query_args = moc_posts_query_args();
-$posts_wp_query      = new WP_Query( $posts_wp_query_args );
+$posts_wp_query      = new WP_Query( moc_posts_query_args() );
 
 // Customer articles and content: podcast.
+$podcasts_wp_query      = new WP_Query( moc_posts_query_args( 'podcast' ) );
+debug( $podcasts_wp_query );
 debug( get_post_meta( 230532, 'podcast_guest', true ) );
 
 if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
