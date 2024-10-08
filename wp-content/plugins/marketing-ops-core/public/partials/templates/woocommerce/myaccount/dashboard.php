@@ -76,7 +76,7 @@ $learndash_courses  = learndash_user_get_enrolled_courses( get_current_user_id()
 $active_memberships = wc_memberships_get_user_memberships(
 	$current_user->ID,
 	array(
-		'status' => 'active',
+		'status' => 'wcm-active',
 	)
 );
 
