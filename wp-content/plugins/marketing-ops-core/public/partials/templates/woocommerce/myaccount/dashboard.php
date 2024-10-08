@@ -72,8 +72,6 @@ $podcasts_wp_query  = new WP_Query( moc_posts_query_args( 'podcast' ) );
 $workshops_wp_query = new WP_Query( moc_posts_query_args( 'workshop' ) );
 $learndash_courses  = learndash_user_get_enrolled_courses( get_current_user_id() );
 
-var_dump( $learndash_courses );
-
 if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
 	?>
 	<div class="newdashbordmain">
@@ -210,12 +208,13 @@ if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
 										<?php
 										echo wp_kses_post(
 											sprintf(
-												__( '%1$s%3$d%2$s articles, %1$s%4$d%2$s podcasts, 3 workshops, 0 courses', 'marketingops' ),
+												__( '%1$s%3$d%2$s articles, %1$s%4$d%2$s podcasts, %1$s%5$d%2$s workshops, %1$s%6$d%2$s courses', 'marketingops' ),
 												'<strong>',
 												'</strong>',
 												$posts_wp_query->found_posts,
 												$podcasts_wp_query->found_posts,
-												$workshops_wp_query->found_posts
+												$workshops_wp_query->found_posts,
+												count( $learndash_courses )
 											)
 										);
 										?></li>
