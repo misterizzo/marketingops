@@ -123,24 +123,35 @@ if ( 1 === count( $active_memberships ) && ! empty( $active_memberships[0]->plan
 $saved_payment_methods = wc_get_customer_saved_methods_list( $current_user->ID );
 $payment_methods_temp  = array();
 
-foreach ( $saved_payment_methods as $methods ) {
+foreach ( $saved_payment_methods as $payment_method_type => $methods ) {
 	foreach ( $methods as $payment_method ) {
-		var_dump( $payment_method['is_default'] );
-		$brand                  = ( ! empty( $payment_method['method']['brand'] ) ) ? $payment_method['method']['brand'] : '';
-		$last4_digits           = ( ! empty( $payment_method['method']['last4'] ) ) ? $payment_method['method']['last4'] : '';
-		$is_default_method      = ( ! empty( $payment_method['method']['is_default'] ) ) ? $payment_method['method']['last4'] : '';
-		$payment_methods_temp[] = sprintf(
-			__( '%1$s%3$s%2$s ending in %1$s%4$s%2$s set as main method', 'marketingops' ),
-			'<strong>',
-			'</strong>',
-			$brand,
-			$last4_digits
-		);
+		if ( 'cc' === $payment_method_type ) {
+			$brand                   = ( ! empty( $payment_method['method']['brand'] ) ) ? $payment_method['method']['brand'] : '';
+			$last4_digits            = ( ! empty( $payment_method['method']['last4'] ) ) ? $payment_method['method']['last4'] : '';
+			$is_default_method       = ( ! empty( $payment_method['method']['is_default'] ) && true === $payment_method['method']['is_default'] ) ? true : false;
+			$payment_method_message  = sprintf(
+				__( '%1$s%3$s%2$s ending in %1$s%4$s%2$s', 'marketingops' ),
+				'<strong>',
+				'</strong>',
+				$brand,
+				$last4_digits
+			);
+			$payment_method_message .= ( true === $is_default_method ) ? __( ' is the default payment method', 'marketingops' ) : '';
+			$payment_methods_temp[]  = $payment_method_message;
+		} elseif ( 'link' === $payment_method_type ) {
+			$payment_method_message  = sprintf(
+				__( '%1$s%3$s%2$s is the payment method last used.', 'marketingops' ),
+				'<strong>',
+				'</strong>',
+				$brand
+			);
+			$payment_method_message .= ( true === $is_default_method ) ? __( ' is the default payment method', 'marketingops' ) : '';
+			$payment_methods_temp[]  = $payment_method_message;
+		}
 	}
 }
 
 debug( $payment_methods_temp );
-debug( $saved_payment_methods );
 
 if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
 	?>
