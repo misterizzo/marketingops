@@ -125,13 +125,20 @@ $payment_methods_temp  = array();
 
 foreach ( $saved_payment_methods as $methods ) {
 	foreach ( $methods as $payment_method ) {
-		var_dump( $payment_method['method']['brand'] );
-		// $saved_payment_methods[] = sprintf( __( 'Visa ending in 7902 set as main method', 'marketingops' ), $method['method']['brand'] );
+		$brand                  = ( ! empty( $payment_method['method']['brand'] ) ) ? $payment_method['method']['brand'] : '';
+		$last4_digits           = ( ! empty( $payment_method['method']['last4'] ) ) ? $payment_method['method']['last4'] : '';
+		$payment_methods_temp[] = sprintf(
+			__( '%1$s%3$s%2$s ending in %1$s%4$s%2$s set as main method', 'marketingops' ),
+			'<strong>',
+			'</strong>',
+			$brand,
+			$last4_digits
+		);
 	}
 }
 
-
-debug( $my_payment_methods );
+debug( $payment_methods_temp );
+debug( $saved_payment_methods );
 
 if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
 	?>
