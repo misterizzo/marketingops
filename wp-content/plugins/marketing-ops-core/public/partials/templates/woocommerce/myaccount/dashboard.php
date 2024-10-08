@@ -125,7 +125,7 @@ $payment_methods_temp  = array();
 
 foreach ( $saved_payment_methods as $methods ) {
 	foreach ( $methods as $payment_method ) {
-		var_dump( $payment_method['method']['is_default'] );
+		var_dump( $payment_method['is_default'] );
 		$brand                  = ( ! empty( $payment_method['method']['brand'] ) ) ? $payment_method['method']['brand'] : '';
 		$last4_digits           = ( ! empty( $payment_method['method']['last4'] ) ) ? $payment_method['method']['last4'] : '';
 		$is_default_method      = ( ! empty( $payment_method['method']['is_default'] ) ) ? $payment_method['method']['last4'] : '';
