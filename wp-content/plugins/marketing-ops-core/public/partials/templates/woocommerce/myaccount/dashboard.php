@@ -155,7 +155,7 @@ foreach ( $saved_payment_methods as $payment_method_type => $methods ) {
 // Billing and shipping addresses.
 $billing_address  = wc_get_account_formatted_address( 'billing' );
 $shipping_address = wc_get_account_formatted_address( 'shipping' );
-var_dump( $address, $shipping_address );
+var_dump( $billing_address, $shipping_address );
 
 if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
 	?>
