@@ -6037,7 +6037,10 @@ class Marketing_Ops_Core_Public {
 		$current_category = filter_input( INPUT_GET, 'cat', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$term_id          = get_queried_object()->term_id;// Get the current queried term ID.
 		$posted_values    = filter_input_array( INPUT_POST );
-		$current_pagename = ( ! empty( $wp_query['pagename'] ) ) ? $wp_query['pagename'] : '';
+
+		debug( $wp_query );
+
+		// $current_pagename = ( ! empty( $wp_query['pagename'] ) ) ? $wp_query['pagename'] : '';
 
 		// If the current page is strategists.
 		if ( is_page( 'strategists' ) ) {
