@@ -80,6 +80,17 @@ $active_memberships = wc_memberships_get_user_memberships(
 	)
 );
 
+// If there is only one active membership, and that is free.
+if ( 1 === count( $active_memberships ) && ! empty( $active_memberships[0]->plan->slug ) && 'free-membership' === $active_memberships[0]->plan->slug ) {
+	$membership_message = __( 'Premium membership till July 24 2024', 'marketingops' );
+} else {
+	// Loop through the memberhsips to get the active premium membership.
+	foreach ( $active_memberships as $active_membership ) {
+		var_dump( $active_membership->get_end_date() );
+	}
+	$membership_message = __( 'Premium membership till July 24 2024', 'marketingops' );
+}
+
 debug( $active_memberships );
 
 if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
@@ -269,7 +280,7 @@ if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
 							</div>
 							<div class="bottomdashbordlist">
 								<ul>
-									<li><?php esc_html_e( 'Register your working platform with MarketingOps', 'marketingops' ); ?></li>
+									<li><?php esc_html_e( 'Register your platform with MarketingOps', 'marketingops' ); ?></li>
 								</ul>
 							</div>
 							<div class="arrowrightdashbord"><span class="arrowsvgimg"></span></div>
@@ -290,7 +301,7 @@ if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
 							</div>
 							<div class="bottomdashbordlist">
 								<ul>
-									<li>Premium membership till July 24 2024</li>
+									<li><?php echo wp_kses_post( $membership_message ); ?></li>
 								</ul>
 							</div>
 							<div class="arrowrightdashbord"><span class="arrowsvgimg"></span></div>
