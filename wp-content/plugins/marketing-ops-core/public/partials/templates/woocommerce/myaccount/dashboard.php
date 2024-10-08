@@ -71,7 +71,7 @@ $posts_wp_query_args = moc_posts_query_args();
 $posts_wp_query      = new WP_Query( $posts_wp_query_args );
 
 // Customer articles and content: podcast.
-debug( get_post_meta( 230532 ) );
+debug( get_post_meta( 230532, 'podcast_guest', true ) );
 
 if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
 	?>
