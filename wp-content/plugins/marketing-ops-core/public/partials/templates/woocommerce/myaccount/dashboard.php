@@ -175,11 +175,8 @@ $customer_avatar_url = mops_get_user_avatar_url( $current_user->ID );
 $avatar_done         = ( false === $customer_avatar_url ) ? '' : 'profiledone';
 $profile_points      = ( false === $customer_avatar_url ) ? $profile_points : ( $profile_points + 1 );
 
-// Profile completeness text.
-$profile_complete_message = sprintf( __( 'Profile is %1$s %3$s% %2$s complete', 'marketingops' ), '<span>', '</span>', ( $profile_points * 20 ) );
-
 // User overview.
-// debug( get_user_meta( $current_user->ID ) );
+debug( get_user_meta( $current_user->ID ) );
 ?>
 <div class="newdashbordmain">
 	<h3><?php echo wp_kses_post( sprintf( __( 'Hello %1$s!', 'marketingops' ), $current_user->display_name ) ); ?></h3>
@@ -464,7 +461,7 @@ $profile_complete_message = sprintf( __( 'Profile is %1$s %3$s% %2$s complete', 
 	if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {?>
 		<!-- profile completeness -->
 		<div class="dashbordprofilebox">
-			<h4><?php echo wp_kses_post( $profile_complete_message ); ?></h4>
+			<h4><?php esc_html_e( 'Profile is ', 'marketingops' ) . ( $profile_points * 20 ) . '%' . esc_html_e( ' complete.', 'marketingops' ); ?></h4>
 			<p><?php esc_html_e( 'Complete your profile to enjoy all the platform\'s benefits.', 'marketingops' ); ?></p>
 				<ul class="roundprofilelist">
 					<li class="<?php echo esc_attr( $avatar_done ); ?>">
