@@ -352,6 +352,7 @@ body.active-popup {overflow: hidden !important;}
 }
 
 .select_plan_profile .elementor-widget-container .elementor-heading-title {background: -moz-linear-gradient(top, #FD4B7A  0%, #4D00AE  166.67%);background: -webkit-linear-gradient(top, #FD4B7A  0%, #4D00AE  166.67%);background: linear-gradient(to bottom, #FD4B7A  0%, #4D00AE  166.67%);-webkit-background-clip: text;-moz-background-clip: text;background-clip: text;-webkit-text-fill-color: transparent;font-size:50px !important;}
+.mops_mopsapalooza24_page .what_is_mopsapalooza h5 {background: linear-gradient(90deg, #FE6D4E -16.97%, #C1177E 43.41%, #8F30FC 99.11%);background-clip: text;-webkit-text-fill-color: transparent;}
 .mops_mopsapalooza24_page .based_on_reviewa {position: absolute;bottom: -5px;left: 100px;padding-bottom: 2px;width: auto !important;}
 .mops_mopsapalooza24_page .add_price_list li:first-child .elementor-price-list-title,
 .mops_mopsapalooza24_page .add_price_list li:first-child .elementor-price-list-price {color:white !important;}
