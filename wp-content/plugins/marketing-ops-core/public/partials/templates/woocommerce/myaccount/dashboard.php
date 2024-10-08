@@ -195,8 +195,6 @@ $profile_points    = ( ! empty( $customer_profile_info['moc_work_data'] ) && is_
 // Customer certifications.
 $certifications_done = ( ! empty( $customer_profile_info['moc_certificates'] ) && is_array( $customer_profile_info['moc_certificates'] ) ) ? 'profiledone' : '';
 $profile_points      = ( ! empty( $customer_profile_info['moc_certificates'] ) && is_array( $customer_profile_info['moc_certificates'] ) ) ? ( $profile_points + 1 ) : $profile_points;
-
-debug( $customer_profile_info );
 ?>
 <div class="newdashbordmain">
 	<h3><?php echo wp_kses_post( sprintf( __( 'Hello %1$s!', 'marketingops' ), $current_user->display_name ) ); ?></h3>
