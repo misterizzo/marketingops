@@ -1058,7 +1058,7 @@ table tbody tr:hover>th {
 
 .woocommerce-add-payment-method #add_payment_method #payment div.form-row button.woocommerce-Button:after {
 	content: "";
-	background-image: url(/wp-content/themes/hello-elementor_child/images/svg/right_arrow.svg) !important;
+	background-image: url(/wp-content/themes/marketingops/images/svg/right_arrow.svg) !important;
 	background-repeat: no-repeat !important;
 	background-position: center;
 	width: 20px;
@@ -1082,7 +1082,7 @@ table tbody tr:hover>th {
 .woocommerce-payment-methods .woocommerce-MyAccount-content a.button:after,
 .woocommerce-edit-account button.woocommerce-Button.button:after {
 	content: "";
-	background-image: url(/wp-content/themes/hello-elementor_child/images/svg/right_arrow.svg) !important;
+	background-image: url(/wp-content/themes/marketingops/images/svg/right_arrow.svg) !important;
 	background-repeat: no-repeat !important;
 	background-position: center;
 	width: 20px;
@@ -1796,7 +1796,7 @@ table tbody tr:hover>th {
 .woocommerce-view-order .woocommerce-order-details p.order-again a.button:after,
 .woocommerce-subscriptions td.subscription-actions.order-actions.woocommerce-orders-table__cell.woocommerce-orders-table__cell-subscription-actions.woocommerce-orders-table__cell-order-actions a.woocommerce-button.button.view:after {
 	content: "";
-	background-image: url(/wp-content/themes/hello-elementor_child/images/svg/right_arrow.svg) !important;
+	background-image: url(/wp-content/themes/marketingops/images/svg/right_arrow.svg) !important;
 	background-repeat: no-repeat !important;
 	background-position: center;
 	width: 20px;
@@ -1954,7 +1954,7 @@ table tbody tr:hover>th {
 
 .woocommerce-downloads .mops-no-downloads a.woocommerce-Button:after {
 	content: "";
-	background-image: url(/wp-content/themes/hello-elementor_child/images/svg/right_arrow.svg) !important;
+	background-image: url(/wp-content/themes/marketingops/images/svg/right_arrow.svg) !important;
 	background-repeat: no-repeat !important;
 	background-position: center;
 	width: 20px;
@@ -2087,7 +2087,7 @@ table tbody tr:hover>th {
 
 .main-payment-method .inner-payment-sec .payment-box .boxes a.button.delete:after {
 	content: "";
-	background-image: url(/wp-content/themes/hello-elementor_child/images/svg/right_arrow_black.svg) !important;
+	background-image: url(/wp-content/themes/marketingops/images/svg/right_arrow_black.svg) !important;
 	background-repeat: no-repeat !important;
 	background-position: center;
 	width: 20px;

@@ -68,7 +68,7 @@ while ( have_posts() ) :
               <div class="content_boxes">
                 <h5>Primary Automation Platform</h5>
                 <div class="content_boxed">
-                  <img src="/wp-content/themes/hello-elementor_child/images/svg/hubspot_img.svg" alt="hubspot_img" />
+                  <img src="/wp-content/themes/marketingops/images/svg/hubspot_img.svg" alt="hubspot_img" />
                   <a href="javascript:;" class="expert_btn btn">expert</a>
                 </div>
               </div>
@@ -85,19 +85,19 @@ while ( have_posts() ) :
                 <div class="content_boxed social_icons">
                   <div class="icons-box">
                     <a href="instagram.com/bazzyuno" class="icon-box">
-                      <img src="/wp-content/themes/hello-elementor_child/images/svg/instagram.svg" alt="instagram" />
+                      <img src="/wp-content/themes/marketingops/images/svg/instagram.svg" alt="instagram" />
                       <p>instagram.com/bazzyuno</p>
                     </a>
                   </div>
                   <div class="icons-box">
                     <a href="facebook.com/bazzyuno" class="icon-box">
-                      <img src="/wp-content/themes/hello-elementor_child/images/svg/facebook.svg" alt="facebook" />
+                      <img src="/wp-content/themes/marketingops/images/svg/facebook.svg" alt="facebook" />
                       <p>facebook.com/bazzyuno</p>
                     </a>
                   </div>
                   <div class="icons-box">
                     <a href="twitter.com/bazzyuno" class="icon-box">
-                      <img src="/wp-content/themes/hello-elementor_child/images/svg/twitter.svg" alt="twitter" />
+                      <img src="/wp-content/themes/marketingops/images/svg/twitter.svg" alt="twitter" />
                       <p>twitter.com/bazzyuno</p>
                     </a>
                   </div>
@@ -327,7 +327,7 @@ while ( have_posts() ) :
             </div>
             <div class="sub_title_with_content">
               <div class="profile_img">
-                <img src="./wp-content/themes/hello-elementor_child/images/profile_img.png" alt="profile_img" />
+                <img src="./wp-content/themes/marketingops/images/profile_img.png" alt="profile_img" />
                 <span class="profile-process-bar"></span>
               </div>
               <div class="profile_name">
@@ -343,10 +343,10 @@ while ( have_posts() ) :
             </div>
             <div class="sub_title_with_content">
               <div class="certi_img">
-                <img src="./wp-content/themes/hello-elementor_child/images/pardot_certi.jpg" alt="pardot_certi" />
+                <img src="./wp-content/themes/marketingops/images/pardot_certi.jpg" alt="pardot_certi" />
               </div>
               <div class="certi_img">
-                <img src="./wp-content/themes/hello-elementor_child/images/hub_certi.png" alt="hub_certi" />
+                <img src="./wp-content/themes/marketingops/images/hub_certi.png" alt="hub_certi" />
               </div>
             </div>
           </div>
@@ -358,13 +358,13 @@ while ( have_posts() ) :
             </div>
             <div class="sub_title_with_content">
               <div class="badge_img">
-                <img src="./wp-content/themes/hello-elementor_child/images/badge_1.png" alt="badge_1" />
+                <img src="./wp-content/themes/marketingops/images/badge_1.png" alt="badge_1" />
               </div>
               <div class="badge_img">
-                <img src="./wp-content/themes/hello-elementor_child/images/badge_2.png" alt="badge_2" />
+                <img src="./wp-content/themes/marketingops/images/badge_2.png" alt="badge_2" />
               </div>
               <div class="badge_img">
-                <img src="./wp-content/themes/hello-elementor_child/images/badge_3.png" alt="badge_3" />
+                <img src="./wp-content/themes/marketingops/images/badge_3.png" alt="badge_3" />
               </div>
             </div>
           </div>

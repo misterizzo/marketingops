@@ -91,7 +91,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="pyj_desc">
 	<div class="pyj_desc_box">
-		<div class="pyj_desc_icon"><img decoding="async" src="/wp-content/themes/hello-elementor_child/images/post_your_job/post_your_job_icon_2.svg" alt="post_your_job_desc_icon"></div>
+		<div class="pyj_desc_icon"><img decoding="async" src="/wp-content/themes/marketingops/images/post_your_job/post_your_job_icon_2.svg" alt="post_your_job_desc_icon"></div>
 			<div class="pyj_desc_text">
 				<p><b>Get help reaching the right Marketing Operations Professionals for your job!</b> <span>If you need more help targeting your job posting, getting it featured above the other posts, or with recruiting needs, please <a href="/contact/">contact us</a>.</span></p>
 			</div>

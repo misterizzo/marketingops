@@ -89,7 +89,7 @@ body .lefttext p {
 }
 
 .relatedpostbg article .elementor-post__title {
-    background-image: url(/wp-content/themes/hello-elementor_child/images/recent_bg_1.png);
+    background-image: url(/wp-content/themes/marketingops/images/recent_bg_1.png);
     background-position: top right;
     background-repeat: no-repeat;
     background-size: cover;
@@ -110,11 +110,11 @@ body .lefttext p {
 }
 
 .relatedpostbg article:nth-child(2) .elementor-post__title {
-    background-image: url(/wp-content/themes/hello-elementor_child/images/recent_bg_2.png);
+    background-image: url(/wp-content/themes/marketingops/images/recent_bg_2.png);
 }
 
 .relatedpostbg article:nth-child(3) .elementor-post__title {
-    background-image: url(/wp-content/themes/hello-elementor_child/images/recent_bg_3.png);
+    background-image: url(/wp-content/themes/marketingops/images/recent_bg_3.png);
 }
 
 .relatedpostbg .elementor-post__meta-data {
@@ -130,7 +130,7 @@ body .lefttext p {
 }
 
 .elementor-location-single {
-    background-image: url(/wp-content/themes/hello-elementor_child/images/blurcircle1.png);
+    background-image: url(/wp-content/themes/marketingops/images/blurcircle1.png);
     background-position: top right;
     background-repeat: no-repeat;
     background-size: auto;
@@ -496,7 +496,7 @@ background-size: cover;
     font-size: 16px;
     line-height: 13px;
     padding: 15px 37px;
-    background-image: url(/wp-content/themes/hello-elementor_child/images/svg/right_arrow.svg);
+    background-image: url(/wp-content/themes/marketingops/images/svg/right_arrow.svg);
     background-repeat: no-repeat;
     background-position: right 15px top 17px;
     width: auto;
@@ -636,7 +636,7 @@ ul.jobcats li {
 .searched_job_list ul.job_listings li.job_listing:last-of-type:after {
     content: "";
     position: absolute;
-    background-image: url(/wp-content/themes/hello-elementor_child/images/blog_page_blur_2.png);
+    background-image: url(/wp-content/themes/marketingops/images/blog_page_blur_2.png);
     background-repeat: no-repeat;
     width: 492px;
     height: 492px;
@@ -826,16 +826,16 @@ ul.jobcats li {
 }
 
 .searched_job_list ul.job_listings li.job_listing:hover .jobsmeta_container .jobsmeta .location {
-    background-image: url(/wp-content/themes/hello-elementor_child/images/svg/location_icon_colored.svg);
+    background-image: url(/wp-content/themes/marketingops/images/svg/location_icon_colored.svg);
 }
 
 .searched_job_list ul.job_listings li.job_listing:hover .jobsmeta_container .jobsmeta .salary {
-    background-image: url(/wp-content/themes/hello-elementor_child/images/svg/money_colored.svg);
+    background-image: url(/wp-content/themes/marketingops/images/svg/money_colored.svg);
     background-position: left 1px top 3px;
 }
 
 .searched_job_list ul.job_listings li.job_listing:hover .jobsmeta_container .jobsmeta .date {
-    background-image: url(/wp-content/themes/hello-elementor_child/images/svg/post_date_colored.svg);
+    background-image: url(/wp-content/themes/marketingops/images/svg/post_date_colored.svg);
     background-position: left 3px top 3px;
 }
 

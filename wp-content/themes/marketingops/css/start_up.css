@@ -24,7 +24,7 @@
 	left: -128px;
 	right: 0; 
 	margin: 0 auto;
-	background-image: url("/wp-content/themes/hello-elementor_child/images/startup_page/startup_land_lp_page_bg.svg");
+	background-image: url("/wp-content/themes/marketingops/images/startup_page/startup_land_lp_page_bg.svg");
 	background-repeat: no-repeat;
 	background-size: contain;
 	z-index: 1;
@@ -42,7 +42,7 @@
 	left: 0px;
 	right: 0;
 	margin: 0 auto;
-	background-image: url("/wp-content/themes/hello-elementor_child/images/startup_page/startup_land_lp_page_bg_shadow.svg");
+	background-image: url("/wp-content/themes/marketingops/images/startup_page/startup_land_lp_page_bg_shadow.svg");
 	background-repeat: no-repeat;
 	background-size: contain;
 }
@@ -58,7 +58,7 @@
 	width: 100%;
 	max-width: 1178px;
 	height: 69px;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/startup_page/startup_land_lp_page_title_shadow.svg');
+	background-image: url('/wp-content/themes/marketingops/images/startup_page/startup_land_lp_page_title_shadow.svg');
 	background-repeat: no-repeat;
 	background-size: contain;
 }
@@ -171,7 +171,7 @@
 
 .mops_startup_participate_section .mops_startup_participate_column .ma_ps_product .elementor-container .ma_ps_product_text::after {
 	content: "";
-	background-image: url("/wp-content/themes/hello-elementor_child/images/mopsapalooza/dots_line.svg");
+	background-image: url("/wp-content/themes/marketingops/images/mopsapalooza/dots_line.svg");
 	width: 9px;
 	height: calc(100% + 4px);
 	background-position: top left;
@@ -211,7 +211,7 @@
 }
 
 .mops_takes_section {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/startup_page/startup_land_lp_page_bg_two.svg');
+	background-image: url('/wp-content/themes/marketingops/images/startup_page/startup_land_lp_page_bg_two.svg');
 	background-position: center bottom 40px;
 	background-repeat: no-repeat;
 }
@@ -281,7 +281,7 @@
 		width: 100%;
 		height: 538px;
 		top: -85px;
-		background-image: url(/wp-content/themes/hello-elementor_child/images/startup_page/mobile_images/earth.svg);
+		background-image: url(/wp-content/themes/marketingops/images/startup_page/mobile_images/earth.svg);
 		background-size: 515px;
 		background-position: center;
 	}
@@ -306,7 +306,7 @@
 		top: initial;
 		right: 0;
 		bottom: 0;
-		background-image: url(/wp-content/themes/hello-elementor_child/images/startup_page/mobile_images/space_man.png);
+		background-image: url(/wp-content/themes/marketingops/images/startup_page/mobile_images/space_man.png);
 	}
 
 	.first_section .elementor-container::before {
@@ -314,7 +314,7 @@
 		height: 138px;
 		left: -82px;
 		bottom: 10px;
-		background-image: url(/wp-content/themes/hello-elementor_child/images/startup_page/mobile_images/freeze_earth.png);
+		background-image: url(/wp-content/themes/marketingops/images/startup_page/mobile_images/freeze_earth.png);
 	}
 
 	.first_section .first_section_column .page_title {
@@ -420,7 +420,7 @@
 	}
 
 	.mops_startup_participate_section .mops_startup_participate_column .ma_ps_product .elementor-container .ma_ps_product_text::after {
-		background-image: url('/wp-content/themes/hello-elementor_child/images/mopsapalooza/vertical_dots_line_new.svg');
+		background-image: url('/wp-content/themes/marketingops/images/mopsapalooza/vertical_dots_line_new.svg');
 		width: 100%;
 		height: 9px;
 		top: -5px;

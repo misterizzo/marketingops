@@ -827,7 +827,7 @@
 	.custom-header .header_menu .responsive_menu .r_menu_hover .hover_menu_body nav ul li ul:before,
 	.custom-header .header_menu .responsive_menu .r_menu_hover .hover_menu_body nav ul li ul:after {
 		content: "";
-		background-image: url("/wp-content/themes/hello-elementor_child/images/svg/menu_dropdown_shadow.svg");
+		background-image: url("/wp-content/themes/marketingops/images/svg/menu_dropdown_shadow.svg");
 		position: absolute;
 		left: -15px;
 		right: -15px;
@@ -2331,7 +2331,7 @@
 
 	.marketingops-three .marketingops-two-coum-box .elementor-container .marketingops-two-coum-image .elementor-widget-container:after {
 		content: "";
-		background-image: url("/wp-content/themes/hello-elementor_child/images/svg/marketingops-three_image_bg.svg");
+		background-image: url("/wp-content/themes/marketingops/images/svg/marketingops-three_image_bg.svg");
 		background-position: center;
 		background-repeat: no-repeat;
 		width: 100%;
@@ -3198,7 +3198,7 @@
 		bottom: -20px;
 		background-size: contain;
 		background-position: left bottom;
-		background-image: url("/wp-content/themes/hello-elementor_child/images/summer_camp/summer_camp_img_one_mobile_bg_svg.svg");
+		background-image: url("/wp-content/themes/marketingops/images/summer_camp/summer_camp_img_one_mobile_bg_svg.svg");
 	}
 
 	.image_with_text_right .box_image .elementor-widget-image:after {
@@ -3292,7 +3292,7 @@
 	.faq_section:before,
 	.membership-wrap:before,
 	.mistakes_guest_share:before {
-		background-image: url("/wp-content/themes/hello-elementor_child/images/summer_camp/faq_bg_mobile.png");
+		background-image: url("/wp-content/themes/marketingops/images/summer_camp/faq_bg_mobile.png");
 	}
 
 	.faq_section:after,
@@ -3931,7 +3931,7 @@
 
 	.professor_signup_section_2:after {
 		content: "";
-		background-image: url("/wp-content/themes/hello-elementor_child/images/info_page/banner_blur_mobile.png");
+		background-image: url("/wp-content/themes/marketingops/images/info_page/banner_blur_mobile.png");
 		width: 212px;
 		height: 424px;
 		position: absolute;
@@ -4009,7 +4009,7 @@
 	}
 
 	.professor_signup_section_5:after {
-		background-image: url("/wp-content/themes/hello-elementor_child/images/info_page/section_5_blur_mobile.png");
+		background-image: url("/wp-content/themes/marketingops/images/info_page/section_5_blur_mobile.png");
 		bottom: initial;
 		top: -182px;
 		left: 0;
@@ -4558,7 +4558,7 @@
 
 	.moc_mo_member_program::before {
 		height: 100%;
-		background-image: url('/wp-content/themes/hello-elementor_child/images/memeber_overview/mp_bg_mobile.svg');
+		background-image: url('/wp-content/themes/marketingops/images/memeber_overview/mp_bg_mobile.svg');
 	}
 
 	.moc_mo_member_program .moc_mo_mp_column .elementor-widget-heading {
@@ -4970,7 +4970,7 @@
 	.partner_testimonials:before,
 	.membership_section:before,
 	.mistakes_guest_share:before {
-		background-image: url('/wp-content/themes/hello-elementor_child/images/partner_page/partner_testimonials_mobile_bg.png');
+		background-image: url('/wp-content/themes/marketingops/images/partner_page/partner_testimonials_mobile_bg.png');
 		height: 59px;
 	}
 

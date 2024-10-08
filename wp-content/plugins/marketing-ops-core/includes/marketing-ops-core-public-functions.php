@@ -2575,8 +2575,8 @@ if ( ! function_exists( 'moc_member_directory_user_block_html' ) ) {
 				</a>
 				<!-- <div class="m-social-icon">
 					<ul>
-						<li><a href=""><img src="/wp-content/themes/hello-elementor_child/images/social_icons/twitter.svg"></a></li>
-						<li><a href=""><img src="/wp-content/themes/hello-elementor_child/images/social_icons/linkdin.svg"></a></li>
+						<li><a href=""><img src="/wp-content/themes/marketingops/images/social_icons/twitter.svg"></a></li>
+						<li><a href=""><img src="/wp-content/themes/marketingops/images/social_icons/linkdin.svg"></a></li>
 					</ul>
 				</div> -->
 			</div>
@@ -4704,7 +4704,7 @@ if ( ! function_exists( 'moc_otp_varification_html' ) ) {
 				</div>
 				<div class="email-otp-image">
 					<div class="image_container">
-						<img src="/wp-content/themes/hello-elementor_child/images/email_code/email_code_image.png" alt="email_code_image" />
+						<img src="/wp-content/themes/marketingops/images/email_code/email_code_image.png" alt="email_code_image" />
 					</div>
 				</div>
 			</div>
@@ -6738,7 +6738,7 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 											<!-- Course Img -->
 											<img src="<?php echo esc_url( $video_banner ); ?>" alt="<?php echo esc_attr( $product_title ); ?>" />
 											<!-- Play Icon -->
-											<img src="/wp-content/themes/hello-elementor_child/images/info_page/play.svg" alt="<?php echo esc_attr( $product_title ); ?>" class="play_btn" />
+											<img src="/wp-content/themes/marketingops/images/info_page/play.svg" alt="<?php echo esc_attr( $product_title ); ?>" class="play_btn" />
 										</a>
 									</div>
 									<?php
@@ -6913,7 +6913,7 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 											<!-- Course Img -->
 											<img src="<?php echo esc_url( $video_banner ); ?>" alt="<?php echo esc_attr( $product_title ); ?>" />
 											<!-- Play Icon -->
-											<img src="/wp-content/themes/hello-elementor_child/images/info_page/play.svg" alt="<?php echo esc_attr( $product_title ); ?>" class="play_btn" />
+											<img src="/wp-content/themes/marketingops/images/info_page/play.svg" alt="<?php echo esc_attr( $product_title ); ?>" class="play_btn" />
 										</a>
 									</div>
 									<?php
@@ -6937,7 +6937,7 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 							<div class="product_icon_box right_side_box">
 								<!-- Icon Box -->
 								<div class="icon_box">
-									<img src="/wp-content/themes/hello-elementor_child/images/course_product_page/courses_product_video.svg"
+									<img src="/wp-content/themes/marketingops/images/course_product_page/courses_product_video.svg"
 										alt="courses_product_video" />
 									<p><?php echo esc_html( $courses_count ); ?> <?php esc_html_e( 'courses', 'marketingops' ); ?></p>
 								</div>
@@ -6946,7 +6946,7 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 								if ( ! empty( $courses_length ) ) {
 									?>
 									<div class="icon_box">
-										<img src="/wp-content/themes/hello-elementor_child/images/course_product_page/courses_product_tv.svg"
+										<img src="/wp-content/themes/marketingops/images/course_product_page/courses_product_tv.svg"
 											alt="courses_product_tv" />
 										<p><?php echo esc_html( $courses_length ); ?></p>
 									</div>
@@ -7135,10 +7135,10 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 								<!-- Light Box Video Part -->
 								<div class="video_box">
 									<!-- Course Img -->
-									<img src="/wp-content/themes/hello-elementor_child/images/course_product_page/courses_product_page.jpg"
+									<img src="/wp-content/themes/marketingops/images/course_product_page/courses_product_page.jpg"
 										alt="courses_product_page" />
 									<!-- Play Icon -->
-									<img src="/wp-content/themes/hello-elementor_child/images/info_page/play.svg" alt="ply_icon"
+									<img src="/wp-content/themes/marketingops/images/info_page/play.svg" alt="ply_icon"
 										class="play_btn" />
 								</div>
 							</div>
@@ -7149,7 +7149,7 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 									<div class="bottom_box_left_side">
 										<!-- Author Img -->
 										<div class="author_img">
-											<img src="/wp-content/themes/hello-elementor_child/images/course_product_page/courses_product_author_image.png"
+											<img src="/wp-content/themes/marketingops/images/course_product_page/courses_product_author_image.png"
 												alt="courses_product_author_image" />
 										</div>
 										<!-- Author Content -->
@@ -7173,12 +7173,12 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 										<div class="right_side_brand_box">
 											<!-- Brand Img Box -->
 											<div class="brand_box">
-												<img src="/wp-content/themes/hello-elementor_child/images/course_product_page/courses_product_badge_1.png"
+												<img src="/wp-content/themes/marketingops/images/course_product_page/courses_product_badge_1.png"
 													alt="courses_product_badge_1" />
 											</div>
 											<!-- Brand Img Box -->
 											<div class="brand_box">
-												<img src="/wp-content/themes/hello-elementor_child/images/course_product_page/courses_product_badge_2.png"
+												<img src="/wp-content/themes/marketingops/images/course_product_page/courses_product_badge_2.png"
 													alt="courses_product_badge_2" />
 											</div>
 										</div>
@@ -7235,23 +7235,23 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 							<!-- Mobile Video Part -->
 							<div class="mobile_part video_box">
 								<!-- Course Img -->
-								<img src="/wp-content/themes/hello-elementor_child/images/course_product_page/courses_product_page.jpg"
+								<img src="/wp-content/themes/marketingops/images/course_product_page/courses_product_page.jpg"
 									alt="courses_product_page" />
 								<!-- Play Icon -->
-								<img src="/wp-content/themes/hello-elementor_child/images/info_page/play.svg" alt="ply_icon"
+								<img src="/wp-content/themes/marketingops/images/info_page/play.svg" alt="ply_icon"
 									class="play_btn" />
 							</div>
 							<!-- Product Icon Box -->
 							<div class="product_icon_box right_side_box">
 								<!-- Icon Box -->
 								<div class="icon_box">
-									<img src="/wp-content/themes/hello-elementor_child/images/course_product_page/courses_product_video.svg"
+									<img src="/wp-content/themes/marketingops/images/course_product_page/courses_product_video.svg"
 										alt="courses_product_video" />
 									<p><?php esc_html_e( '6 videos', 'marketingops' ); ?></p>
 								</div>
 								<!-- Icon Box -->
 								<div class="icon_box">
-									<img src="/wp-content/themes/hello-elementor_child/images/course_product_page/courses_product_tv.svg"
+									<img src="/wp-content/themes/marketingops/images/course_product_page/courses_product_tv.svg"
 										alt="courses_product_tv" />
 									<p><?php esc_html_e( '4 hours', 'marketingops' ); ?></p>
 								</div>

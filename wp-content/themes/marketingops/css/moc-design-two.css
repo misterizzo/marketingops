@@ -524,7 +524,7 @@ body .leadinModal .leadinModal-content .leadinModal-content-wrapper .leadin-cont
 /* Header CSS */
 
 .left_bottom_bar:after {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/svg/left_bars.svg');
+	background-image: url('/wp-content/themes/marketingops/images/svg/left_bars.svg');
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: contain;
@@ -742,7 +742,7 @@ body .leadinModal .leadinModal-content .leadinModal-content-wrapper .leadin-cont
 	width: 280px !important;
 	padding: 5px 35px !important;
 	display: inline-block !important;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/svg/right_arrow.svg');
+	background-image: url('/wp-content/themes/marketingops/images/svg/right_arrow.svg');
 	background-repeat: no-repeat;
 	background-position: top 26px right 75px;
 	text-indent: -20px;
@@ -849,7 +849,7 @@ body .leadinModal .leadinModal-content .leadinModal-content-wrapper .leadin-cont
 .marketingops-two .marketingops-two-image-box:after,
 #marketingops-post-section .marketingops-four-boxes:nth-child(2):after,
 .marketingops-six-section:after {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/dust_icon.png');
+	background-image: url('/wp-content/themes/marketingops/images/dust_icon.png');
 	background-size: 22px;
 	background-position: left 30px bottom 28px;
 	background-repeat: no-repeat;
@@ -1077,7 +1077,7 @@ body .leadinModal .leadinModal-content .leadinModal-content-wrapper .leadin-cont
 }
 
 .marketingops-three .marketingops-two-coum-box #testimonial_container:after {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/blurcircle1-2.png');
+	background-image: url('/wp-content/themes/marketingops/images/blurcircle1-2.png');
 	left: -240px;
 	opacity: 1;
 	z-index: -1;
@@ -1249,7 +1249,7 @@ body .leadinModal .leadinModal-content .leadinModal-content-wrapper .leadin-cont
 	left: initial;
 	right: 0;
 	top: -120px;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/blur_image.png');
+	background-image: url('/wp-content/themes/marketingops/images/blur_image.png');
 }
 
 .single-podcast .single_post_page .custom_html,
@@ -1326,7 +1326,7 @@ body .leadinModal .leadinModal-content .leadinModal-content-wrapper .leadin-cont
 .single-post .type-post .elementor-widget-theme-post-content .posts-newsletter:after {
 	content: "";
 	position: absolute;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/blog_page_blur.png');
+	background-image: url('/wp-content/themes/marketingops/images/blog_page_blur.png');
 	background-repeat: no-repeat;
 	background-position: center;
 	width: 663px;
@@ -1339,7 +1339,7 @@ body .leadinModal .leadinModal-content .leadinModal-content-wrapper .leadin-cont
 .single-post .type-post .elementor-widget-theme-post-content .posts-newsletter:before {
 	content: "";
 	position: absolute;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/blog_page_blur_2.png');
+	background-image: url('/wp-content/themes/marketingops/images/blog_page_blur_2.png');
 	background-repeat: no-repeat;
 	background-position: center;
 	width: 663px;
@@ -1403,7 +1403,7 @@ body .leadinModal .leadinModal-content .leadinModal-content-wrapper .leadin-cont
 .post_featured_job .post_featured_job_row h5 {padding-left: 15px;}
 .job_search_page .job_search_row .jobsearch {margin-bottom: 15px;}
 .job_search_page .job_search_row .jobsearch form .moc_form_container {flex-wrap: wrap;min-height: initial;background-color: transparent !important;}
-.job_search_page .job_search_row .jobsearch form .moc_input_field:after {content: "";background-color: transparent !important;background-image: url('/wp-content/themes/hello-elementor_child/images/svg/search.svg') !important;background-repeat: no-repeat;background-position: center;width: 37px;height: 38px;position: absolute;left: 25px;top: 50%;transform: translateY(-50%);background-size: contain;}
+.job_search_page .job_search_row .jobsearch form .moc_input_field:after {content: "";background-color: transparent !important;background-image: url('/wp-content/themes/marketingops/images/svg/search.svg') !important;background-repeat: no-repeat;background-position: center;width: 37px;height: 38px;position: absolute;left: 25px;top: 50%;transform: translateY(-50%);background-size: contain;}
 .job_search_page .job_search_row .jobsearch form input#search_keywords {border: 1px solid #E7EFEF;padding: 23px 230px 23px 85px !important;height: initial !important;min-height: initial;border-radius: 20px;border-top-right-radius: 50px;border-bottom-right-radius: 50px;background-color: transparent;}
 .page-id-166115 .job_search_page .job_search_row .jobsearch form input#search_keywords {background-color: #fff;}
 .job_search_page .job_search_row .jobsearch form input#search_keywords::placeholder {color: #45474F !important;}
@@ -1683,7 +1683,7 @@ body .leadinModal .leadinModal-content .leadinModal-content-wrapper .leadin-cont
 
 /* Directory Page CSS */
 .moc_search_member .moc_search_member_row .elementor-background-overlay {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/blur_image.png');
+	background-image: url('/wp-content/themes/marketingops/images/blur_image.png');
 }
 
 /* Job Post Page */
@@ -1702,7 +1702,7 @@ body .leadinModal .leadinModal-content .leadinModal-content-wrapper .leadin-cont
 
 .post_featured_job:after,
 .post_featured_job:before {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/job_post_blur.png');
+	background-image: url('/wp-content/themes/marketingops/images/job_post_blur.png');
 	right: 0px;
 	left: initial;
 	top: 0;
@@ -1939,7 +1939,7 @@ body .moc-form-container #moc-registration-1 .moc-form-field-wrap input:-webkit-
 
 body .moc-form-container #moc-registration-1 .moc-form-field-wrap,
 .woocommerce-lost-password .page-content .woocommerce form p.woocommerce-form-row input {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/svg/at_icon.svg') !important;
+	background-image: url('/wp-content/themes/marketingops/images/svg/at_icon.svg') !important;
 	background-position: top 20px right 20px !important;
 	background-repeat: no-repeat !important;
 	padding-right: 0;
@@ -1949,7 +1949,7 @@ body .moc-form-container #moc-registration-1 .moc-form-field-wrap,
 
 body .moc-form-container #moc-registration-1 .moc-form-field-wrap:after {
 	content: "";
-	background-image: url('/wp-content/themes/hello-elementor_child/images/svg/star.svg') !important;
+	background-image: url('/wp-content/themes/marketingops/images/svg/star.svg') !important;
 	width: 9px;
 	height: 9px;
 	position: absolute;
@@ -2020,7 +2020,7 @@ body .moc-form-container #moc-registration-1 .moc-form-field-wrap.reg-confirm-pa
 
 body .moc-form-container #moc-registration-1 .moc-form-field-wrap.reg-username,
 .woocommerce-lost-password .page-content .woocommerce form p.woocommerce-form-row input {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/svg/user_icon.svg') !important;
+	background-image: url('/wp-content/themes/marketingops/images/svg/user_icon.svg') !important;
 }
 
 body .moc-form-container #moc-registration-1 .moc-form-field-wrap.reg-password,
@@ -2029,7 +2029,7 @@ body .moc-form-container #moc-registration-1 .moc-form-field-wrap.reg-confirm-pa
 }
 
 body .moc-form-container #moc-registration-1 .moc-form-field-wrap.reg-cpf-who-referred-youtext {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/svg/ripper_icon.svg') !important;
+	background-image: url('/wp-content/themes/marketingops/images/svg/ripper_icon.svg') !important;
 }
 
 body .moc-form-container #moc-registration-1 .moc-form-field-wrap.reg-password .moc-form-material-icons {
@@ -2052,7 +2052,7 @@ body .moc-form-container #moc-registration-1 .moc-form-field-wrap.reg-password .
 .register_page.login_page:before,
 .new_arrival_section:before {
 	content: "";
-	background-image: url('/wp-content/themes/hello-elementor_child/images/profile_setup/sign-up-page-yellow-blur-image.png');
+	background-image: url('/wp-content/themes/marketingops/images/profile_setup/sign-up-page-yellow-blur-image.png');
 	position: absolute;
 	width: 459px;
 	height: 546px;
@@ -2064,7 +2064,7 @@ body .moc-form-container #moc-registration-1 .moc-form-field-wrap.reg-password .
 
 .register_page.login_page,
 .collection_title:after {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/login_page/login_bg_blur_image_2.png');
+	background-image: url('/wp-content/themes/marketingops/images/login_page/login_bg_blur_image_2.png');
 	background-position: left -30px top -160px;
 	background-repeat: no-repeat;
 	background-size: contain;
@@ -2072,7 +2072,7 @@ body .moc-form-container #moc-registration-1 .moc-form-field-wrap.reg-password .
 }
 
 .register_page.login_page:after {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/login_page/login_bg_blur_image_1.png');
+	background-image: url('/wp-content/themes/marketingops/images/login_page/login_bg_blur_image_1.png');
 	width: 362px;
 	height: 534px;
 	right: 0;
@@ -2081,7 +2081,7 @@ body .moc-form-container #moc-registration-1 .moc-form-field-wrap.reg-password .
 
 .register_page.login_page:before,
 .new_arrival_section:before {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/login_page/login_bg_blur_image_3.png');
+	background-image: url('/wp-content/themes/marketingops/images/login_page/login_bg_blur_image_3.png');
 	width: 546px;
 	height: 546px;
 	top: initial;
@@ -2112,7 +2112,7 @@ body .login_content .moc-form-container #moc-registration-1 .moc-form-submit-but
 	max-width: 180px;
 	width: 100% !important;
 	position: relative !important;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/svg/right_arrow.svg') !important;
+	background-image: url('/wp-content/themes/marketingops/images/svg/right_arrow.svg') !important;
 	background-repeat: no-repeat !important;
 	background-position: top 26px right 23px !important;
 	text-indent: -5px;
@@ -2291,7 +2291,7 @@ body .login_content .moc-form-container #moc-registration-1 .moc-form-submit-but
 	-moz-appearance: none;
 	-o-appearance: none;
 	appearance: none;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/svg/dropdown_select_arrow.svg');
+	background-image: url('/wp-content/themes/marketingops/images/svg/dropdown_select_arrow.svg');
 	background-repeat: no-repeat;
 	background-size: 8px;
 	background-position: center right 12px;
@@ -2341,7 +2341,7 @@ body .login_content .moc-form-container #moc-registration-1 .moc-form-submit-but
 .search_jobs .expandableCollapsibleDiv h3:after,
 .searchjobs .job_search_row .searched_job_list .job_listings .job_filters .search_jobs h3:after {
 	content: "";
-	background-image: url('/wp-content/themes/hello-elementor_child/images/svg/dropdown_select_arrow_up.svg');
+	background-image: url('/wp-content/themes/marketingops/images/svg/dropdown_select_arrow_up.svg');
 	background-repeat: no-repeat;
 	background-size: 8px;
 	background-position: center;
@@ -2464,7 +2464,7 @@ body .login_content .moc-form-container #moc-registration-1 .moc-form-submit-but
 	transform: translateY(-50%);
 	width: 15px;
 	height: 15px;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/svg/true_checkbox.svg');
+	background-image: url('/wp-content/themes/marketingops/images/svg/true_checkbox.svg');
 	background-repeat: no-repeat;
 	background-size: contain;
 	opacity: 0;
@@ -2664,7 +2664,7 @@ nav.job-manager-pagination ul li span.current:after {
 .directory_main_div .directory_result_div .members_directory .member-directory-pagination ul li a.arrowleft,
 nav.job-manager-pagination ul li.moc_next_page_li a,
 nav.job-manager-pagination ul li.moc_prev_page_li a {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/svg/pagination_right_arrow.svg');
+	background-image: url('/wp-content/themes/marketingops/images/svg/pagination_right_arrow.svg');
 	background-position: center right 19px;
 	background-repeat: no-repeat;
 	text-indent: -1000px;
@@ -2691,7 +2691,7 @@ nav.job-manager-pagination ul li.moc_prev_page_li a {
 .job_banner:after,
 .job_listing .single_job_listing .job_description:after {
 	content: "";
-	background-image: url('/wp-content/themes/hello-elementor_child/images/yellow_blur_shadow.png');
+	background-image: url('/wp-content/themes/marketingops/images/yellow_blur_shadow.png');
 	background-repeat: no-repeat;
 	background-position: left bottom;
 	position: absolute;
@@ -2791,7 +2791,7 @@ nav.job-manager-pagination ul li.moc_prev_page_li a {
 }
 
 .job_listing .single_job_listing .job_description:after {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/blurcircle1.png');
+	background-image: url('/wp-content/themes/marketingops/images/blurcircle1.png');
 	opacity: 0.4;
 	bottom: initial;
 	top: 55%;
@@ -2849,7 +2849,7 @@ body.job_listing-template-default .job_listing .page-content,
 /* Profile Page CSS */
 
 .edit_page_section {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/pink_blurb_edit_profile.png');
+	background-image: url('/wp-content/themes/marketingops/images/pink_blurb_edit_profile.png');
 	background-position: top 21% left;
 	background-repeat: no-repeat;
 	opacity: 1;
@@ -2870,20 +2870,20 @@ body.job_listing-template-default .job_listing .page-content,
 }
 
 .moc_view_other_profile .edit_page_section {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/blue_two_blurb_edit_profile.png');
+	background-image: url('/wp-content/themes/marketingops/images/blue_two_blurb_edit_profile.png');
 }
 
 .moc_view_other_profile .edit_page_section:after {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/yellow_blurb_edit_profile.png');
+	background-image: url('/wp-content/themes/marketingops/images/yellow_blurb_edit_profile.png');
 	opacity: 1;
 }
 
 .moc_view_own_profile .edit_page_section {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/blue_blurb_edit_profile.png');
+	background-image: url('/wp-content/themes/marketingops/images/blue_blurb_edit_profile.png');
 }
 
 .moc_view_own_profile .edit_page_section:after {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/pink_two_blurb_edit_profile.png');
+	background-image: url('/wp-content/themes/marketingops/images/pink_two_blurb_edit_profile.png');
 	opacity: 0.4;
 }
 
@@ -3906,7 +3906,7 @@ body .profile_page .profile_content .content_box .box_content .title_with_btn .t
 .job-manager-form fieldset .select2 .select2-selection .select2-selection__arrow {
 	padding: 8px 10px;
 	color: #6D7B83;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/social_icons/down_arrow_edit_profile.svg');
+	background-image: url('/wp-content/themes/marketingops/images/social_icons/down_arrow_edit_profile.svg');
 	background-repeat: no-repeat;
 	background-position: center right 14px;
 	-webkit-appearance: none;
@@ -3977,7 +3977,7 @@ body .moc-form-container #moc-registration-1 .moc-form-field-wrap .moc_error spa
 .moc_is_job_post_form form fieldset.fieldset-company_logo .job-manager-uploaded-files .job-manager-uploaded-file-preview a {
 	width: 40px;
 	height: 40px;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/social_icons/delete_icon.svg');
+	background-image: url('/wp-content/themes/marketingops/images/social_icons/delete_icon.svg');
 	background-repeat: no-repeat;
 	background-position: center;
 	text-indent: -10000px;
@@ -3994,7 +3994,7 @@ body .moc-form-container #moc-registration-1 .moc-form-field-wrap .moc_error spa
 }
 
 .profile_page .profile_content .content_box .content_boxed .upload_icon {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/social_icons/upload_icon.svg');
+	background-image: url('/wp-content/themes/marketingops/images/social_icons/upload_icon.svg');
 }
 
 .profile_page .profile_content .content_box .content_boxed .delete_icon_here .platform_left,
@@ -4011,7 +4011,7 @@ body .moc-form-container #moc-registration-1 .moc-form-field-wrap .moc_error spa
 .profile_page .profile_content .content_box .content_boxed ul.social_icons {
 	width: 48px;
 	height: 24px;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/social_icons/social_dropdown_arrow.svg');
+	background-image: url('/wp-content/themes/marketingops/images/social_icons/social_dropdown_arrow.svg');
 	background-repeat: no-repeat;
 	background-position: center right 10px;
 	position: absolute;
@@ -4039,37 +4039,37 @@ body .moc-form-container #moc-registration-1 .moc-form-field-wrap .moc_error spa
 .profile_page .profile_content .content_box .content_boxed ul.social_icons li.facebook,
 .profile_page .profile_content .content_box .content_boxed ul.social_icons li.facebook span,
 .profile_page .profile_content .content_box .box_content .sub_title_with_content .content_boxes .content_boxed .moc_not_editable_data .facebook {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/social_icons/facebook.svg')
+	background-image: url('/wp-content/themes/marketingops/images/social_icons/facebook.svg')
 }
 
 .profile_page .profile_content .content_box .content_boxed ul.social_icons li.insta,
 .profile_page .profile_content .content_box .content_boxed ul.social_icons li.insta span,
 .profile_page .profile_content .content_box .box_content .sub_title_with_content .content_boxes .content_boxed .moc_not_editable_data .insta {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/social_icons/insta.svg')
+	background-image: url('/wp-content/themes/marketingops/images/social_icons/insta.svg')
 }
 
 .profile_page .profile_content .content_box .content_boxed ul.social_icons li.twitter,
 .profile_page .profile_content .content_box .content_boxed ul.social_icons li.twitter span,
 .profile_page .profile_content .content_box .box_content .sub_title_with_content .content_boxes .content_boxed .moc_not_editable_data .twitter {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/social_icons/twitter.svg')
+	background-image: url('/wp-content/themes/marketingops/images/social_icons/twitter.svg')
 }
 
 .profile_page .profile_content .content_box .content_boxed ul.social_icons li.vk,
 .profile_page .profile_content .content_box .content_boxed ul.social_icons li.vk span,
 .profile_page .profile_content .content_box .box_content .sub_title_with_content .content_boxes .content_boxed .moc_not_editable_data .vk {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/social_icons/vk.svg')
+	background-image: url('/wp-content/themes/marketingops/images/social_icons/vk.svg')
 }
 
 .profile_page .profile_content .content_box .content_boxed ul.social_icons li.github,
 .profile_page .profile_content .content_box .content_boxed ul.social_icons li.github span,
 .profile_page .profile_content .content_box .box_content .sub_title_with_content .content_boxes .content_boxed .moc_not_editable_data .github {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/social_icons/github.svg')
+	background-image: url('/wp-content/themes/marketingops/images/social_icons/github.svg')
 }
 
 .profile_page .profile_content .content_box .content_boxed ul.social_icons li.linkedin,
 .profile_page .profile_content .content_box .content_boxed ul.social_icons li.linkedin span,
 .profile_page .profile_content .content_box .box_content .sub_title_with_content .content_boxes .content_boxed .moc_not_editable_data .linkedin {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/social_icons/linkdin.svg')
+	background-image: url('/wp-content/themes/marketingops/images/social_icons/linkdin.svg')
 }
 
 .profile_page .profile_content .content_box .content_boxed ul.social_icons ul {
@@ -4708,7 +4708,7 @@ body .moc-form-container #moc-registration-1 .moc-form-field-wrap .moc_error spa
 }
 
 .profile_page .profile_content .content_box .profile_member .box_content .sub_title_with_content .moc_profile_member_content .profile_content_box {
-	background-image: url("/wp-content/themes/hello-elementor_child/images/profile_setup/membership_box_bg.svg");
+	background-image: url("/wp-content/themes/marketingops/images/profile_setup/membership_box_bg.svg");
 	position: relative;
 	padding: 10px 0;
 	padding-left: 64px;
@@ -4967,7 +4967,7 @@ body .moc-form-container #moc-registration-1 .moc-form-field-wrap .moc_error spa
 }
 
 .training_content .training_content_boxed .boxed_bg {
-	background-image: url("/wp-content/themes/hello-elementor_child/images/training_page/training_bg_1.jpg");
+	background-image: url("/wp-content/themes/marketingops/images/training_page/training_bg_1.jpg");
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -5049,7 +5049,7 @@ body .moc-form-container #moc-registration-1 .moc-form-field-wrap .moc_error spa
 
 .training_page_poster .elementor-container,
 .traning_mark_ops_box .elementor-container {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/training_page/trraining_big_box_bg.jpg');
+	background-image: url('/wp-content/themes/marketingops/images/training_page/trraining_big_box_bg.jpg');
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -5058,27 +5058,27 @@ body .moc-form-container #moc-registration-1 .moc-form-field-wrap .moc_error spa
 }
 
 .traning_mark_ops_box.moc_training_index_1 .elementor-container {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/training_page/training_bg_1.jpg');
+	background-image: url('/wp-content/themes/marketingops/images/training_page/training_bg_1.jpg');
 }
 
 .traning_mark_ops_box.moc_training_index_2 .elementor-container {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/training_page/training_bg_2.jpg');
+	background-image: url('/wp-content/themes/marketingops/images/training_page/training_bg_2.jpg');
 }
 
 .traning_mark_ops_box.moc_training_index_3 .elementor-container {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/training_page/training_bg_3.jpg');
+	background-image: url('/wp-content/themes/marketingops/images/training_page/training_bg_3.jpg');
 }
 
 .traning_mark_ops_box.moc_training_index_4 .elementor-container {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/training_page/training_bg_4.jpg');
+	background-image: url('/wp-content/themes/marketingops/images/training_page/training_bg_4.jpg');
 }
 
 .traning_mark_ops_box.moc_training_index_5 .elementor-container {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/training_page/training_bg_5.jpg');
+	background-image: url('/wp-content/themes/marketingops/images/training_page/training_bg_5.jpg');
 }
 
 .traning_mark_ops_box.moc_training_index_6 .elementor-container {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/training_page/training_bg_6.jpg');
+	background-image: url('/wp-content/themes/marketingops/images/training_page/training_bg_6.jpg');
 }
 
 .traning_mark_ops_box.moc_training_index_6 .elementor-container .traning_mark_ops_box_left h2 {
@@ -5403,7 +5403,7 @@ body .moc-form-container #moc-registration-1 .moc-form-field-wrap .moc_error spa
 	background-position: center;
 	background-size: 6px;
 	background-repeat: no-repeat;
-	background-image: url("/wp-content/themes/hello-elementor_child/images/svg/pagination_right_arrow.svg");
+	background-image: url("/wp-content/themes/marketingops/images/svg/pagination_right_arrow.svg");
 }
 
 .custom_slider .slick-arrow.slick-next {
@@ -5542,7 +5542,7 @@ body .moc-form-container #moc-registration-1 .moc-form-field-wrap .moc_error spa
 	-moz-appearance: none;
 	-o-appearance: none;
 	appearance: none;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/svg/dropdown_select_arrow.svg');
+	background-image: url('/wp-content/themes/marketingops/images/svg/dropdown_select_arrow.svg');
 	background-repeat: no-repeat;
 	background-size: 8px;
 	background-position: center right 12px;
@@ -5718,7 +5718,7 @@ body .moc-form-container #moc-registration-1 .moc-form-field-wrap .moc_error spa
 .custom_pagination.pagination_container .blog-directory-pagination ul li .arrowright,
 .custom_pagination.pagination_container .blog-directory-pagination ul li .arrowleft,
 .custom_pagination.pagination_container nav ul li .arrowright,
-.custom_pagination.pagination_container nav ul li .arrowleft {background-image: url('/wp-content/themes/hello-elementor_child/images/svg/pagination_right_arrow.svg');background-position: center right 19px;background-repeat: no-repeat;text-indent: -1000px;overflow: hidden;}
+.custom_pagination.pagination_container nav ul li .arrowleft {background-image: url('/wp-content/themes/marketingops/images/svg/pagination_right_arrow.svg');background-position: center right 19px;background-repeat: no-repeat;text-indent: -1000px;overflow: hidden;}
 /* Podcast CSS */
 .page-template-podcast-listings-tempate .blog_articles .articled_header {justify-content: space-between;}
 .custom_pagination.pagination_container .blog-directory-pagination ul li .arrowleft,
@@ -6194,7 +6194,7 @@ body .moc-form-container #moc-registration-1 .moc-form-field-wrap .moc_error spa
 .moc_is_job_post_form form fieldset .required-field:after,
 .entry_level_templates .templates_column .templates_inner_section .templates_form_row .entry_level_form .form_container .form_row label span.required,
 .job-manager-form fieldset .required-field:after {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/svg/checkout_star.svg');
+	background-image: url('/wp-content/themes/marketingops/images/svg/checkout_star.svg');
 	background-position: center;
 	background-repeat: no-repeat;
 	text-indent: -10000px;
@@ -6438,7 +6438,7 @@ body .moc-form-container #moc-registration-1 .moc-form-field-wrap .moc_error spa
 
 .checkout_page_box .cart_page_container .cart_page_box .box_content .box_body .woocommerce-checkout-payment .wc_payment_methods .payment_box .wc-upe-form .form-row label:before,
 .checkout_page_box .cart_page_container .cart_page_box .box_content .box_body .woocommerce-checkout-payment .wc_payment_methods #stripe-payment-data .form-row.woocommerce-validated label:before {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/svg/true_checkbox.svg');
+	background-image: url('/wp-content/themes/marketingops/images/svg/true_checkbox.svg');
 	width: 15px;
 	height: 15px;
 	left: 5px;
@@ -6492,7 +6492,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 .summer_camp_product_page .product_page_inner_section.product_add_to_cart form .single_add_to_cart_button:after,
 .courses_product_page .courses_product_right_side .product_form button:after {
 	content: "";
-	background-image: url('/wp-content/themes/hello-elementor_child/images/svg/right_arrow.svg') !important;
+	background-image: url('/wp-content/themes/marketingops/images/svg/right_arrow.svg') !important;
 	background-repeat: no-repeat !important;
 	background-position: center;
 	width: 20px;
@@ -6606,11 +6606,11 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 }
 
 .woocommerce .woocommerce-message:before {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/woocommerce-notification/noti-true.svg');
+	background-image: url('/wp-content/themes/marketingops/images/woocommerce-notification/noti-true.svg');
 }
 
 .woocommerce .woocommerce-error:before {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/woocommerce-notification/noti-error.svg');
+	background-image: url('/wp-content/themes/marketingops/images/woocommerce-notification/noti-error.svg');
 }
 
 .woocommerce .woocommerce-order-details .order-again .button{
@@ -6647,7 +6647,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-position: center;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/profile_setup/profile_page_setup_bg.png');
+	background-image: url('/wp-content/themes/marketingops/images/profile_setup/profile_page_setup_bg.png');
 }
 
 .profile_setup .setup_container {
@@ -7051,7 +7051,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 .profile-success-section,
 .profile-success-section:after,
 .profile-success-section:before {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/profile_setup/blur_blur.png');
+	background-image: url('/wp-content/themes/marketingops/images/profile_setup/blur_blur.png');
 	background-position: center right;
 	background-repeat: no-repeat;
 	background-size: auto;
@@ -7064,7 +7064,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 }
 
 .profile-success-section:before {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/profile_setup/pink_blur.png');
+	background-image: url('/wp-content/themes/marketingops/images/profile_setup/pink_blur.png');
 	width: 461px;
 	height: 530px;
 	z-index: 0;
@@ -7072,7 +7072,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 }
 
 .profile-success-section:after {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/profile_setup/yellow_blur.png');
+	background-image: url('/wp-content/themes/marketingops/images/profile_setup/yellow_blur.png');
 	width: 546px;
 	height: 546px;
 	bottom: -50%;
@@ -7095,7 +7095,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: contain;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/no_bs_index/free_icon.svg');
+	background-image: url('/wp-content/themes/marketingops/images/no_bs_index/free_icon.svg');
 }
 
 .partner_section .partner_section_box .elementor-widget-wrap {
@@ -7149,7 +7149,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 	position: absolute;
 	left: 0;
 	top: -30%;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/partner_page/good_company_section_right_top_bg.png');
+	background-image: url('/wp-content/themes/marketingops/images/partner_page/good_company_section_right_top_bg.png');
 	background-size: contain;
 	background-repeat: no-repeat;
 }
@@ -7163,7 +7163,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 	right: 0;
 	bottom: -200px;
 	z-index: 3;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/partner_page/good_company_section_right_bottom_bg.png');
+	background-image: url('/wp-content/themes/marketingops/images/partner_page/good_company_section_right_bottom_bg.png');
 	background-size: contain;
 	background-repeat: no-repeat;
 }
@@ -7252,7 +7252,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 	width: 100%;
 	height: 110px;
 	z-index: 1;
-	background: url('/wp-content/themes/hello-elementor_child/images/partner_page/partner_testimonials_bg.png');
+	background: url('/wp-content/themes/marketingops/images/partner_page/partner_testimonials_bg.png');
 	background-color: #fff;
 	background-repeat: no-repeat;
 	background-position: right top;
@@ -7544,7 +7544,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: contain;
-	background-image: url("/wp-content/themes/hello-elementor_child/images/no_bs_index/partner_offer_bg_img_2.png");
+	background-image: url("/wp-content/themes/marketingops/images/no_bs_index/partner_offer_bg_img_2.png");
 }
 
 .no_bs_partner_boxed:before {
@@ -7557,7 +7557,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: contain;
-	background-image: url("/wp-content/themes/hello-elementor_child/images/no_bs_index/partner_offer_bg_img.png");
+	background-image: url("/wp-content/themes/marketingops/images/no_bs_index/partner_offer_bg_img.png");
 }
 
 .no_bs_partner .no_bs_container .no_bs_content_box .box_container .box_content,
@@ -7743,7 +7743,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: contain;
-	background-image: url("/wp-content/themes/hello-elementor_child/images/summer_camp/summer_camp_image_left_bg.png");
+	background-image: url("/wp-content/themes/marketingops/images/summer_camp/summer_camp_image_left_bg.png");
 }
 
 .image_with_text.image_with_text_right:before {
@@ -7759,7 +7759,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: contain;
-	background-image: url("/wp-content/themes/hello-elementor_child/images/summer_camp/summer_camp_image_right_bg.png");
+	background-image: url("/wp-content/themes/marketingops/images/summer_camp/summer_camp_image_right_bg.png");
 }
 
 .image_with_text .box_left {
@@ -7786,14 +7786,14 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/summer_camp/summer_camp_img_one_bg_svg.svg');
+	background-image: url('/wp-content/themes/marketingops/images/summer_camp/summer_camp_img_one_bg_svg.svg');
 }
 
 .image_with_text_right .box_image .elementor-widget-image:after {
 	right: -1px;
 	left: initial;
 	height: 266px;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/summer_camp/summer_camp_img_two_bg_svg.svg');
+	background-image: url('/wp-content/themes/marketingops/images/summer_camp/summer_camp_img_two_bg_svg.svg');
 }
 
 .image_with_text .box_text_content .box_text_content_one_box {
@@ -7890,7 +7890,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: contain;
-	background-image: url("/wp-content/themes/hello-elementor_child/images/summer_camp/summer_camp_image_contnet_left_bg.png");
+	background-image: url("/wp-content/themes/marketingops/images/summer_camp/summer_camp_image_contnet_left_bg.png");
 }
 
 .summer_camp_text_content:before {
@@ -7904,7 +7904,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: contain;
-	background-image: url("/wp-content/themes/hello-elementor_child/images/summer_camp/summer_camp_image_contnet_right_bg.png");
+	background-image: url("/wp-content/themes/marketingops/images/summer_camp/summer_camp_image_contnet_right_bg.png");
 }
 
 .summer_camp_text_content .elementor-column .elementor-widget-wrap {
@@ -7942,7 +7942,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 	height: 26px;
 	display: inline-block;
 	top: -2px;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/summer_camp/summer_camp_title_sound_icon.png');
+	background-image: url('/wp-content/themes/marketingops/images/summer_camp/summer_camp_title_sound_icon.png');
 }
 
 .summer_camp_text_content .text_content_title_img h2:after {
@@ -8160,7 +8160,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 
 .faq_section:before {
 	height: 95px;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/summer_camp/faq_bg.png');
+	background-image: url('/wp-content/themes/marketingops/images/summer_camp/faq_bg.png');
 }
 
 .faq_section:after {
@@ -8574,13 +8574,13 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 
 .summer_camp_product_page .product_page_inner_section.product_add_to_cart form .quantity button.plus,
 .cart_page_box .cart_page_container .cart_page_box .box_content .quantity button.plus {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/product_page/plus_icon.svg');
+	background-image: url('/wp-content/themes/marketingops/images/product_page/plus_icon.svg');
 	margin-left: 0;
 }
 
 .summer_camp_product_page .product_page_inner_section.product_add_to_cart form .quantity button.minus,
 .cart_page_box .cart_page_container .cart_page_box .box_content .quantity button.minus {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/product_page/minus_icon.svg');
+	background-image: url('/wp-content/themes/marketingops/images/product_page/minus_icon.svg');
 	background-position: center left 13px;
 }
 
@@ -8759,7 +8759,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 .course_lp_testimonial .testimonial_column:before,
 .mp_product .product_review .product_reviews .commentlist li .comment-text::before,
 .courses_review .review_box .customer_review .commentlist li .comment-text::after {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/info_page/quote_left.svg');
+	background-image: url('/wp-content/themes/marketingops/images/info_page/quote_left.svg');
 	left: 20px;
 	top: 20px;
 }
@@ -8767,7 +8767,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 .summer_camp_product_page .product_page_inner_section.product_reviews.product_info_page_reviews .woocommerce-Reviews .commentlist .comment:after,
 .course_lp_testimonial .testimonial_column:after,
 .mp_product .product_review .product_reviews .commentlist li .comment-text::after {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/info_page/quote_right.svg');
+	background-image: url('/wp-content/themes/marketingops/images/info_page/quote_right.svg');
 	right: 20px;
 	bottom: 20px;
 }
@@ -10132,7 +10132,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 	top: -40px;
 	right: -5px;
 	background-position: center;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/subscribe_page/best_seller.svg');
+	background-image: url('/wp-content/themes/marketingops/images/subscribe_page/best_seller.svg');
 	background-size: contain;
 }
 
@@ -10407,7 +10407,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 	position: absolute;
 	right: 0;
 	top: -55px;
-	background-image: url("/wp-content/themes/hello-elementor_child/images/founding/blue_shadow.png");
+	background-image: url("/wp-content/themes/marketingops/images/founding/blue_shadow.png");
 	background-repeat: no-repeat;
 	background-size: contain;
 }
@@ -10419,7 +10419,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 	position: absolute;
 	left: 0;
 	top: 100px;
-	background-image: url("/wp-content/themes/hello-elementor_child/images/founding/purple_shadow.png");
+	background-image: url("/wp-content/themes/marketingops/images/founding/purple_shadow.png");
 	background-repeat: no-repeat;
 	background-size: contain;
 	z-index: 1;
@@ -10432,7 +10432,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 	position: absolute;
 	right: 0;
 	bottom: -262px;
-	background-image: url("/wp-content/themes/hello-elementor_child/images/founding/yellow_shadow.png");
+	background-image: url("/wp-content/themes/marketingops/images/founding/yellow_shadow.png");
 	background-repeat: no-repeat;
 	background-size: contain;
 	z-index: 1;
@@ -10695,13 +10695,13 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 }
 
 .shadow_box.shadow_up:after {
-	background-image: url("/wp-content/themes/hello-elementor_child/images/founding/shadow_1.png");
+	background-image: url("/wp-content/themes/marketingops/images/founding/shadow_1.png");
 	left: 0;
 	top: 30px;
 }
 
 .shadow_box.shadow_down:after {
-	background-image: url("/wp-content/themes/hello-elementor_child/images/founding/shadow_2.png");
+	background-image: url("/wp-content/themes/marketingops/images/founding/shadow_2.png");
 	right: 0;
 	bottom: -30px;
 }
@@ -11551,7 +11551,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 }
 
 .give_away_banner_section:after {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/give_away/give_blurb_1.png');
+	background-image: url('/wp-content/themes/marketingops/images/give_away/give_blurb_1.png');
 	right: 0;
 	top: 0;
 	width: 299px;
@@ -11559,7 +11559,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 }
 
 .give_away_promo:before {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/give_away/give_blurb_2.png');
+	background-image: url('/wp-content/themes/marketingops/images/give_away/give_blurb_2.png');
 	left: 0;
 	bottom: 110px;
 	width: 299px;
@@ -11567,7 +11567,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 }
 
 .give_away_promo:after {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/give_away/give_blurb_3.png');
+	background-image: url('/wp-content/themes/marketingops/images/give_away/give_blurb_3.png');
 	right: 0;
 	bottom: 68px;
 	width: 337px;
@@ -11575,7 +11575,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 }
 
 .marketingops-give-away:after {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/give_away/give_blurb_4.png');
+	background-image: url('/wp-content/themes/marketingops/images/give_away/give_blurb_4.png');
 	right: 0;
 	bottom: -140px;
 	width: 223px;
@@ -11583,7 +11583,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 }
 
 .marketingops-give-away-professionals:after {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/give_away/give_blurb_5.png');
+	background-image: url('/wp-content/themes/marketingops/images/give_away/give_blurb_5.png');
 	left: 0;
 	bottom: -160px;
 	width: 477px;
@@ -11764,7 +11764,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 
 .marketingops-give-away-professionals.marketingops-three .marketingops-two-coum-box .elementor-container .marketingops-two-coum-image .elementor-widget-container:after {
 	content: "";
-	background-image: url("/wp-content/themes/hello-elementor_child/images/give_away/professinoal_image_bg.svg");
+	background-image: url("/wp-content/themes/marketingops/images/give_away/professinoal_image_bg.svg");
 	background-position: center;
 	background-repeat: no-repeat;
 	width: 100%;
@@ -11881,7 +11881,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 
 .user_profile_blog:after {
 	content: "";
-	background-image: url('/wp-content/themes/hello-elementor_child/images/user_profile/blue_shadow.png');
+	background-image: url('/wp-content/themes/marketingops/images/user_profile/blue_shadow.png');
 	width: 437px;
 	height: 534px;
 	position: absolute;
@@ -12535,7 +12535,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 /* Professor Signup CSS - Start */
 .professor_signup_section_1::after {
 	content: "";
-	background-image: url('/wp-content/themes/hello-elementor_child/images/info_page/banner_blur.png');
+	background-image: url('/wp-content/themes/marketingops/images/info_page/banner_blur.png');
 	width: 362px;
 	height: 636px;
 	position: absolute;
@@ -12627,7 +12627,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 .hiring_video_section .video_section_column .elementor-widget-video .elementor-custom-embed-play .eicon-play:before,
 .dynamic_video .elementor-widget-video .elementor-custom-embed-play .eicon-play:before {
 	content: "";
-	background-image: url('/wp-content/themes/hello-elementor_child/images/info_page/play.svg');
+	background-image: url('/wp-content/themes/marketingops/images/info_page/play.svg');
 	width: 44px;
 	height: 52px;
 	position: absolute;
@@ -12800,7 +12800,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 
 .professor_signup_section_5:after {
 	content: "";
-	background-image: url('/wp-content/themes/hello-elementor_child/images/info_page/section_5_blur.png');
+	background-image: url('/wp-content/themes/marketingops/images/info_page/section_5_blur.png');
 	width: 534px;
 	height: 535px;
 	position: absolute;
@@ -13072,7 +13072,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 /* Course Pre-Register LP Page CSS - Start */
 .course_lp_banner::after {
 	content: "";
-	background-image: url('/wp-content/themes/hello-elementor_child/images/courses_lp/cousee_lp_blur_three.jpg');
+	background-image: url('/wp-content/themes/marketingops/images/courses_lp/cousee_lp_blur_three.jpg');
 	width: 438px;
 	height: 534px;
 	top: -33px;
@@ -13117,7 +13117,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 
 .course_lp_automation_game::after {
 	content: "";
-	background-image: url('/wp-content/themes/hello-elementor_child/images/courses_lp/cousee_lp_blur_two.jpg');
+	background-image: url('/wp-content/themes/marketingops/images/courses_lp/cousee_lp_blur_two.jpg');
 	width: 464px;
 	height: 546px;
 	position: absolute;
@@ -13224,7 +13224,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 
 .course_lp_testimonial::after {
 	content: "";
-	background-image: url('/wp-content/themes/hello-elementor_child/images/courses_lp/cousee_lp_blur_one.jpg');
+	background-image: url('/wp-content/themes/marketingops/images/courses_lp/cousee_lp_blur_one.jpg');
 	width: 471px;
 	height: 711px;
 	position: absolute;
@@ -13351,7 +13351,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 }
 
 .annual_repo_banner_section .img_column:before {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/annual_repo/banner_blur_bottom.png');
+	background-image: url('/wp-content/themes/marketingops/images/annual_repo/banner_blur_bottom.png');
 	width: 773px;
 	height: 773px;
 	bottom: -293px;
@@ -13360,7 +13360,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 }
 
 .annual_repo_banner_section .img_column:after {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/annual_repo/banner_blur_top.png');
+	background-image: url('/wp-content/themes/marketingops/images/annual_repo/banner_blur_top.png');
 	width: 534px;
 	height: 509px;
 	top: -168px;
@@ -13716,14 +13716,14 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 
 .annual_testimonials.annual_testimonials_two:after {
 	display: block;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/annual_repo/annual_repo_testi_bg.png');
+	background-image: url('/wp-content/themes/marketingops/images/annual_repo/annual_repo_testi_bg.png');
 	top: 0;
 	left: 0;
 }
 
 .annual_testimonials.annual_testimonials_two:before {
 	display: block;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/annual_repo/annual_repo_testi_bg_two.png');
+	background-image: url('/wp-content/themes/marketingops/images/annual_repo/annual_repo_testi_bg_two.png');
 	bottom: 23px;
 	right: 0;
 }
@@ -13737,7 +13737,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 }
 
 .annual_repo_need_report:after {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/annual_repo/annual_repo_need_repo_blur_bg.png');
+	background-image: url('/wp-content/themes/marketingops/images/annual_repo/annual_repo_need_repo_blur_bg.png');
 	width: 417px;
 	height: 818px;
 	left: 0px;
@@ -13745,7 +13745,7 @@ body .checkout_page_box .cart_page_container .cart_page_box .box_content .box_bo
 }
 
 .annual_repo_need_report:before {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/annual_repo/annual_repo_need_repo_blur_bottom_bg.png');
+	background-image: url('/wp-content/themes/marketingops/images/annual_repo/annual_repo_need_repo_blur_bottom_bg.png');
 	right: 0;
 	bottom: -216px;
 	width: 515px;
@@ -14029,7 +14029,7 @@ body .learndash-wrapper .ld-focus .ld-focus-header .ld-user-menu .ld-user-menu-i
 	-moz-appearance: none;
 	-o-appearance: none;
 	appearance: none;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/svg/dropdown_select_arrow.svg');
+	background-image: url('/wp-content/themes/marketingops/images/svg/dropdown_select_arrow.svg');
 	background-repeat: no-repeat;
 	background-size: 8px;
 	background-position: center right 12px;
@@ -15231,8 +15231,8 @@ body .learndash-wrapper .ld-focus .ld-focus-header .ld-user-menu .ld-user-menu-i
 .moc_mo_member_program::before,
 .moc_mo_member_program::after,
 .moc_mo_member_program .moc_mo_mp_column .moc_mo_mp_icon_list ul li .elementor-icon-list-text a::after {content: "";position: absolute;background-repeat: no-repeat;background-size: contain;background-position: center;z-index: 1;}
-.moc_mo_experience::after {background-image: url('/wp-content/themes/hello-elementor_child/images/memeber_overview/partnership_prop.png');width: 638px;height: 638px;transform: rotate(-90deg);left: -320px;top: -415px;}
-.moc_mo_membership::after {background-image: url('/wp-content/themes/hello-elementor_child/images/memeber_overview/team_membership_prop.png');width: 223px;height: 463px;right: 0;top: 23px;z-index: 1;}
+.moc_mo_experience::after {background-image: url('/wp-content/themes/marketingops/images/memeber_overview/partnership_prop.png');width: 638px;height: 638px;transform: rotate(-90deg);left: -320px;top: -415px;}
+.moc_mo_membership::after {background-image: url('/wp-content/themes/marketingops/images/memeber_overview/team_membership_prop.png');width: 223px;height: 463px;right: 0;top: 23px;z-index: 1;}
 .moc_mo_partnership .elementor-container,
 .moc_mo_experience .elementor-container,
 .moc_mo_membership .elementor-container,
@@ -15256,8 +15256,8 @@ body .learndash-wrapper .ld-focus .ld-focus-header .ld-user-menu .ld-user-menu-i
 .moc_mo_membership.moc_mo_banner .moc_mo_banner_text_column .elementor-widget-text-editor p {margin-bottom: 18px;}
 .moc_mo_membership.moc_mo_banner .moc_mo_banner_text_column .elementor-widget-text-editor ul li {margin-bottom: 5px;font-weight: 600;}
 .moc_mo_membership.moc_mo_banner .moc_mo_banner_text_column .elementor-widget-button a {background-image: none;max-width: 138px;padding: 1px 10px;font-size: 14px;}
-.moc_mo_member_program::before {top: 0;right: 0;width: 100%;height: 650px;background-size: cover;background-position: right top;background-image: url('/wp-content/themes/hello-elementor_child/images/memeber_overview/mp_bg.svg');}
-.moc_mo_member_program::after {width: 940px;height: 940px;top: 1px;right: -363px;transform: rotate(-150deg);background-image: url('/wp-content/themes/hello-elementor_child/images/memeber_overview/member_program_prop.png');}
+.moc_mo_member_program::before {top: 0;right: 0;width: 100%;height: 650px;background-size: cover;background-position: right top;background-image: url('/wp-content/themes/marketingops/images/memeber_overview/mp_bg.svg');}
+.moc_mo_member_program::after {width: 940px;height: 940px;top: 1px;right: -363px;transform: rotate(-150deg);background-image: url('/wp-content/themes/marketingops/images/memeber_overview/member_program_prop.png');}
 .moc_mo_member_program .moc_mo_mp_column .elementor-widget-heading {margin-bottom: 45px;}
 .moc_mo_member_program .moc_mo_mp_column .moc_mo_mp_icon_list {margin-bottom: -40px;}
 .moc_mo_member_program .moc_mo_mp_column .moc_mo_mp_icon_list .elementor-widget-container {overflow: initial;}
@@ -15315,7 +15315,7 @@ body .learndash-wrapper .ld-focus .ld-focus-header .ld-user-menu .ld-user-menu-i
 .mops_post-your-marketing-operations-jobs_page .form_box fieldset .select2 .select2-selection {background: rgba(246, 247, 247, 0.5);border: 1px solid #E7EFEF;border-radius: 6px;}
 .mops_post-your-marketing-operations-jobs_page .form_box fieldset .required-field:after {z-index: 9;}
 .mops_post-your-marketing-operations-jobs_page .form_box fieldset.fieldset-type-term-multiselect .select2 ul li {background: #F0F2F3 !important;color: #45474F !important;display: flex;align-items: center;font-size: 14px;padding: 5px 10px;gap: 2px;}
-.mops_post-your-marketing-operations-jobs_page .form_box fieldset.fieldset-type-term-multiselect .select2 ul li span {color: #45474F !important;background-color: #fff;width: 15px;height: 15px;font-size: 0;order: 2;border-radius: 100px;background-repeat: no-repeat;background-size: cover;background-position: center;background-image: url('/wp-content/themes/hello-elementor_child/images/post_your_job/post_your_job_closed_icon.svg');display: none;}
+.mops_post-your-marketing-operations-jobs_page .form_box fieldset.fieldset-type-term-multiselect .select2 ul li span {color: #45474F !important;background-color: #fff;width: 15px;height: 15px;font-size: 0;order: 2;border-radius: 100px;background-repeat: no-repeat;background-size: cover;background-position: center;background-image: url('/wp-content/themes/marketingops/images/post_your_job/post_your_job_closed_icon.svg');display: none;}
 .mops_post-your-marketing-operations-jobs_page .form_box fieldset.fieldset-type-term-multiselect .select2 ul li:hover span {display: block;}
 .mops_post-your-marketing-operations-jobs_page .form_box fieldset.fieldset-type-term-multiselect .select2 ul li.select2-search {display: none;}
 .mops_post-your-marketing-operations-jobs_page .form_box p,

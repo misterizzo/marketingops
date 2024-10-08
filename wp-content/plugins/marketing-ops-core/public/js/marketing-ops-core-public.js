@@ -2997,7 +2997,7 @@
 		var moc_user_avtar = $('.moc_profie_pic');
 		moc_user_avtar.wrap('<form>').closest('form').get(0).reset();
 		moc_user_avtar.unwrap();
-		$( '#moc_profile_preview' ).attr( 'src', '/wp-content/themes/hello-elementor_child/images/profile_setup/user_icon.svg' );
+		$( '#moc_profile_preview' ).attr( 'src', '/wp-content/themes/marketingops/images/profile_setup/user_icon.svg' );
 		$( '.pic_box_content_box' ).show();
 		$( this ).hide();
 		$( '.pic_box' ).addClass( 'blank_pic' );
@@ -3120,7 +3120,7 @@
 						}
 					} else {
 						moc_show_toast( 'bg-danger', 'fa-skull-crossbones', toast_error_heading, response.data.toast_message );
-						$( '#moc_profile_preview' ).attr( 'src', '/wp-content/themes/hello-elementor_child/images/profile_setup/user_icon.svg' );
+						$( '#moc_profile_preview' ).attr( 'src', '/wp-content/themes/marketingops/images/profile_setup/user_icon.svg' );
 					}
 
 					// Deactivate the loader.

@@ -31,7 +31,7 @@ License URI:    https://www.gnu.org/licenses/gpl-3.0.html
 a.booksesionbtnlink:hover {color: #fff;}
 
 @media (max-width: 767px) {
-    .annual_repo_banner_section .text_column:after {background-image: url('/wp-content/themes/hello-elementor_child/images/annual_repo/banner_blur_top.png');width: 534px;height: 509px;top: 65px;right: -189px;content: '';position: absolute;}
+    .annual_repo_banner_section .text_column:after {background-image: url('/wp-content/themes/marketingops/images/annual_repo/banner_blur_top.png');width: 534px;height: 509px;top: 65px;right: -189px;content: '';position: absolute;}
     .annual_repo_spon .elementor-container {justify-content: center;}
     .mops_state-of-the-marketing-ops-professional-research-2023_page .footer-newsletter {display: block;}
     .mops_state-of-the-marketing-ops-professional-research-2023_page main#content {margin-bottom: 0px;}

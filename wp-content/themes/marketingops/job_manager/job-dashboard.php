@@ -116,9 +116,9 @@ $job_applications_column_name = $job_dashboard_columns['applications'];
 												echo '<a href="' . esc_url( $action_url ) . '" class="btn gradient_btn job-dashboard-action-' . esc_attr( $action ) . '">' . esc_html( $value['label'] ) . '</a>';
 												// echo '<a href="' . esc_url( $action_url ) . '" class="job-dashboard-action-' . esc_attr( $action ) . '">' . esc_html( $value['label'] ) . '</a>';	
 											} elseif( 'delete' === $action ) {
-												echo '<a href="' . esc_url( $action_url ) . '" class="btn delete_btn job-dashboard-action-' . esc_attr( $action ) . '"><img src="/wp-content/themes/hello-elementor_child/images/social_icons/delete_icon.svg" alt="delete_btn" /></a>';
+												echo '<a href="' . esc_url( $action_url ) . '" class="btn delete_btn job-dashboard-action-' . esc_attr( $action ) . '"><img src="/wp-content/themes/marketingops/images/social_icons/delete_icon.svg" alt="delete_btn" /></a>';
 											} else if( 'edit' === $action ) {
-												echo '<a href="' . esc_url( $action_url ) . '" class="btn delete_btn job-dashboard-action-' . esc_attr( $action ) . '"><img src="/wp-content/themes/hello-elementor_child/images/Frame 347.svg" alt="edit" /></a>';
+												echo '<a href="' . esc_url( $action_url ) . '" class="btn delete_btn job-dashboard-action-' . esc_attr( $action ) . '"><img src="/wp-content/themes/marketingops/images/Frame 347.svg" alt="edit" /></a>';
 											}
 										}
 									}
@@ -176,17 +176,17 @@ $job_applications_column_name = $job_dashboard_columns['applications'];
 								<div class="jobsmeta_container">
 									<ul class="jobsmeta">
 										<li class="location">
-											<img src="/wp-content/themes/hello-elementor_child/images/location_icon.svg" alt="location_icon" /> 
+											<img src="/wp-content/themes/marketingops/images/location_icon.svg" alt="location_icon" /> 
 											<?php the_job_location( true, $job->ID ); ?>
 										</li>
 										<?php if( ! empty( $job_salary ) ) : ?>
 										<li class="salary">
-											<img src="/wp-content/themes/hello-elementor_child/images/money.svg" alt="money" /> 
+											<img src="/wp-content/themes/marketingops/images/money.svg" alt="money" /> 
 											<?php echo esc_html( $job_salary ); ?>
 										</li>
 										<?php endif; ?>
 										<li class="date">
-											<img src="/wp-content/themes/hello-elementor_child/images/post_date.svg" alt="post_date" /> 
+											<img src="/wp-content/themes/marketingops/images/post_date.svg" alt="post_date" /> 
 											<time><?php the_job_publish_date( $job->ID ); ?></time>
 										</li>
 									</ul>

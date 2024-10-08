@@ -83,19 +83,19 @@
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-position: center;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/checkmark/checkmark_1.svg');
+	background-image: url('/wp-content/themes/marketingops/images/checkmark/checkmark_1.svg');
 }
 
 .marketingops .new_banner.custom-banner rs-layer .banner_content_point ul li.point_two::after {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/checkmark/checkmark_2.svg');
+	background-image: url('/wp-content/themes/marketingops/images/checkmark/checkmark_2.svg');
 }
 
 .marketingops .new_banner.custom-banner rs-layer .banner_content_point ul li.point_three::after {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/checkmark/checkmark_3.svg');
+	background-image: url('/wp-content/themes/marketingops/images/checkmark/checkmark_3.svg');
 }
 
 .marketingops .new_banner.custom-banner rs-layer .banner_content_point ul li.point_four::after {
-	background-image: url('/wp-content/themes/hello-elementor_child/images/checkmark/checkmark_4.svg');
+	background-image: url('/wp-content/themes/marketingops/images/checkmark/checkmark_4.svg');
 }
 
 .marketingops .new_banner.custom-banner rs-layer .rs-parallax-wrap {
@@ -137,7 +137,7 @@
 	top: -93px;
 	width: 664px;
 	height: 664px;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/new_homepage/blurb/community_blub_1.png');
+	background-image: url('/wp-content/themes/marketingops/images/new_homepage/blurb/community_blub_1.png');
 }
 
 .mops_community::before {
@@ -145,7 +145,7 @@
 	bottom: 295px;
 	width: 554px;
 	height: 554px;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/new_homepage/blurb/community_blub_2.png');
+	background-image: url('/wp-content/themes/marketingops/images/new_homepage/blurb/community_blub_2.png');
 }
 
 .mops_community .mops_com_column,
@@ -312,7 +312,7 @@
 	height: calc(100% + 160px);
 	background-position: top left;
 	background-size: cover;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/new_homepage/blurb/community_bg.svg');
+	background-image: url('/wp-content/themes/marketingops/images/new_homepage/blurb/community_bg.svg');
 }
 
 .dont_run_alone::before {
@@ -321,7 +321,7 @@
 	z-index: 2;
 	width: 498px;
 	height: 498px;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/new_homepage/blurb/dont_run_blurb.png');
+	background-image: url('/wp-content/themes/marketingops/images/new_homepage/blurb/dont_run_blurb.png');
 }
 
 .dont_run_alone .elementor-container {
@@ -349,7 +349,7 @@
 	right: 55px;
 	width: 22px;
 	height: 22px;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/new_homepage/blurb/dust_1.png');
+	background-image: url('/wp-content/themes/marketingops/images/new_homepage/blurb/dust_1.png');
 }
 
 .dont_run_alone .dra_image_column::before {
@@ -357,7 +357,7 @@
 	top: -2px;
 	width: 15px;
 	height: 15px;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/new_homepage/blurb/dust_2.png');
+	background-image: url('/wp-content/themes/marketingops/images/new_homepage/blurb/dust_2.png');
 }
 
 .dont_run_alone .dra_text_column .dra_title,
@@ -717,7 +717,7 @@
 	top: 0;
 	width: 664px;
 	height: 664px;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/new_homepage/blurb/become_pro_blurb.png');
+	background-image: url('/wp-content/themes/marketingops/images/new_homepage/blurb/become_pro_blurb.png');
 }
 
 .become_pro .elementor-container,
@@ -820,7 +820,7 @@
 	background-repeat: no-repeat;
 	background-position: right top;
 	background-size: cover;
-	background-image: url('/wp-content/themes/hello-elementor_child/images/new_homepage/gift_membership/gift_member_ship_bg.svg');
+	background-image: url('/wp-content/themes/marketingops/images/new_homepage/gift_membership/gift_member_ship_bg.svg');
 }
 
 .gift_memberhip .elementor-container {

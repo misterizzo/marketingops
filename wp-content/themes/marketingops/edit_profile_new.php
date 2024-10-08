@@ -427,7 +427,7 @@ get_header();
                   <div class="content_boxed">
                     <div class="img_content_box">
                       <div class="img_box">
-                        <img src="./wp-content/themes/hello-elementor_child/images/pardot_certi.jpg" alt="pardot_certi">
+                        <img src="./wp-content/themes/marketingops/images/pardot_certi.jpg" alt="pardot_certi">
                       </div>
                       <span>Salesforce Certified Pardot Consultant</span>
                     </div>
@@ -440,7 +440,7 @@ get_header();
                   <div class="content_boxed">
                     <div class="img_content_box">
                       <div class="img_box">
-                        <img src="./wp-content/themes/hello-elementor_child/images/pardot_certi.jpg" alt="pardot_certi">
+                        <img src="./wp-content/themes/marketingops/images/pardot_certi.jpg" alt="pardot_certi">
                       </div>
                       <span>Salesforce Certified Pardot Consultant</span>
                     </div>
@@ -453,7 +453,7 @@ get_header();
                   <div class="content_boxed">
                     <div class="img_content_box">
                       <div class="img_box">
-                        <img src="./wp-content/themes/hello-elementor_child/images/pardot_certi.jpg" alt="pardot_certi">
+                        <img src="./wp-content/themes/marketingops/images/pardot_certi.jpg" alt="pardot_certi">
                       </div>
                       <span>Salesforce Certified Pardot Consultant</span>
                     </div>
@@ -480,7 +480,7 @@ get_header();
               </div>
               <div class="sub_title_with_content">
                 <div class="profile_img">
-                  <img src="./wp-content/themes/hello-elementor_child/images/profile_img.png" alt="profile_img" />
+                  <img src="./wp-content/themes/marketingops/images/profile_img.png" alt="profile_img" />
                   <span class="profile-process-bar">
                     <div class="circleGraphic" data-src="65" style="height: 248px; width: 248px; left: -26px;top: -26px;"></div>
                     <svg class="progress blue" data-progress="65" x="0px" y="0px" viewBox="0 0 80 80">
@@ -507,10 +507,10 @@ get_header();
               </div>
               <div class="sub_title_with_content">
                 <div class="certi_img">
-                  <img src="./wp-content/themes/hello-elementor_child/images/pardot_certi.jpg" alt="pardot_certi" />
+                  <img src="./wp-content/themes/marketingops/images/pardot_certi.jpg" alt="pardot_certi" />
                 </div>
                 <div class="certi_img">
-                  <img src="./wp-content/themes/hello-elementor_child/images/hub_certi.png" alt="hub_certi" />
+                  <img src="./wp-content/themes/marketingops/images/hub_certi.png" alt="hub_certi" />
                 </div>
               </div>
             </div>
@@ -523,13 +523,13 @@ get_header();
               </div>
               <div class="sub_title_with_content">
                 <div class="badge_img">
-                  <img src="./wp-content/themes/hello-elementor_child/images/badge_1.png" alt="badge_1" />
+                  <img src="./wp-content/themes/marketingops/images/badge_1.png" alt="badge_1" />
                 </div>
                 <div class="badge_img">
-                  <img src="./wp-content/themes/hello-elementor_child/images/badge_2.png" alt="badge_2" />
+                  <img src="./wp-content/themes/marketingops/images/badge_2.png" alt="badge_2" />
                 </div>
                 <div class="badge_img">
-                  <img src="./wp-content/themes/hello-elementor_child/images/badge_3.png" alt="badge_3" />
+                  <img src="./wp-content/themes/marketingops/images/badge_3.png" alt="badge_3" />
                 </div>
               </div>
             </div>

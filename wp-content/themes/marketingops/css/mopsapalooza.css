@@ -41,7 +41,7 @@ body.active-popup {overflow: hidden !important;}
 .mops_apalooza_product_section .ma_ps_product .ma_ps_product_img .elementor-widget-heading span {color: #7295D6;}
 .mops_apalooza_product_section .ma_ps_product .ma_ps_product_img .elementor-widget-heading h2 p {margin-bottom: 0;font-weight: 600;font-size: 16px;line-height: 22px;color: #7295D6;margin-top: 5px;}
 .mops_apalooza_product_section .ma_ps_product .ma_ps_product_text {padding: 26px 30px 30px;background-color: #1A2136;position: relative;}
-.mops_apalooza_product_section .ma_ps_product .ma_ps_product_text::after {content: "";background-image: url('/wp-content/themes/hello-elementor_child/images/mopsapalooza/dots_line.svg');width: 9px;height: calc(100% + 4px);background-position: top left;background-repeat: repeat;position: absolute;top: -4px;left: 0px;}
+.mops_apalooza_product_section .ma_ps_product .ma_ps_product_text::after {content: "";background-image: url('/wp-content/themes/marketingops/images/mopsapalooza/dots_line.svg');width: 9px;height: calc(100% + 4px);background-position: top left;background-repeat: repeat;position: absolute;top: -4px;left: 0px;}
 .mops_apalooza_product_section .ma_ps_product .ma_ps_product_text:last-of-type {border-top-right-radius: 56px;border-bottom-right-radius: 56px;}
 .mops_apalooza_product_section .ma_ps_product .ma_ps_product_text .elementor-widget-wrap {padding-bottom: 55px;}
 .mops_apalooza_product_section .ma_ps_product .ma_ps_product_text .elementor-widget-heading {margin-bottom: 0;}
@@ -120,7 +120,7 @@ body.active-popup {overflow: hidden !important;}
 .ma_footer .ma_footer_column .ma_footer_inner_section_image_box .elementor-widget-image {margin: 0;width: auto;}
 .mops_apalooza_agenda_section {position: relative;margin-bottom: 0 !important;}
 .mops_apalooza_agenda_section .elementor-container {position: relative;z-index: 9;}
-.mops_apalooza_agenda_section .column_1 .elementor-widget-wrap {justify-content: end;background-image: url('/wp-content/themes/hello-elementor_child/images/mopsapalooza/agenda_column_border.svg');background-repeat: no-repeat;background-position: right 8px top 93px;}
+.mops_apalooza_agenda_section .column_1 .elementor-widget-wrap {justify-content: end;background-image: url('/wp-content/themes/marketingops/images/mopsapalooza/agenda_column_border.svg');background-repeat: no-repeat;background-position: right 8px top 93px;}
 .mops_apalooza_agenda_section .column_1 .elementor-widget-wrap .elementor-widget-wrap,
 .mops_apalooza_agenda_section .column_1:last-of-type .elementor-widget-wrap {background-image: none;}
 .mops_apalooza_agenda_section .column_1:last-of-type .elementor-widget-wrap {padding-left: 5px;justify-content: space-between;}
@@ -268,7 +268,7 @@ body.active-popup {overflow: hidden !important;}
 	.mops_apalooza_product_section .ma_ps_product .ma_ps_product_img::after {border-top-right-radius: 30px;}
 	.mops_apalooza_product_section .ma_ps_product .ma_ps_product_img {border-bottom-left-radius: 0;border-top-right-radius: 30px;}
 	.mops_apalooza_product_section .ma_ps_product .ma_ps_product_text:last-of-type {border-top-right-radius: 0;border-bottom-left-radius: 30px;}
-	.mops_apalooza_product_section .ma_ps_product .ma_ps_product_text::after {background-image: url('/wp-content/themes/hello-elementor_child/images/mopsapalooza/vertical_dots_line_new.svg');width: 100%;height: 9px;top: -5px;left: 0;background-repeat: repeat space;}
+	.mops_apalooza_product_section .ma_ps_product .ma_ps_product_text::after {background-image: url('/wp-content/themes/marketingops/images/mopsapalooza/vertical_dots_line_new.svg');width: 100%;height: 9px;top: -5px;left: 0;background-repeat: repeat space;}
 	.mops_apalooza_product_section .ma_ps_product .ma_ps_product_text::before {left: 0;}
 	.mops_apalooza_product_section .ma_ps_product .ma_ps_product_text:last-of-type::before {border-top-right-radius: 30px;}
 	.mops_apalooza_product_section .ma_ps_product .ma_ps_product_img {padding-top: 30px;}
@@ -286,14 +286,14 @@ body.active-popup {overflow: hidden !important;}
 	.mops_apalooza_product_section .ma_ps_product .ma_ps_product_img .elementor-widget-image {max-width: 95px;margin-bottom: 0;order: 2;}
 	.mops_apalooza_product_section .ma_ps_product .ma_ps_product_img .elementor-widget-heading {order: 1;width: calc(100% - 95px);padding-right: 15px;}
 	.mops_apalooza_product_section .ma_ps_product .ma_ps_product_text .elementor-widget-heading h4 p {font-style: italic;}
-	.ma_footer .elementor-background-overlay {background-image: url('/wp-content/themes/hello-elementor_child/images/mopsapalooza/mops_apalooza_footer_bg_mobile.svg') !important;background-size: 345px 313px !important;background-position: bottom right !important;}
+	.ma_footer .elementor-background-overlay {background-image: url('/wp-content/themes/marketingops/images/mopsapalooza/mops_apalooza_footer_bg_mobile.svg') !important;background-size: 345px 313px !important;background-position: bottom right !important;}
 	.ma_footer .ma_footer_column .ma_footer_faq_tabs .ma_footer_faq_tabs_header .elementor-widget-image {width: 50px;}
 	.ma_footer .ma_footer_column .ma_footer_faq_tabs .ma_footer_faq_tabs_header.gradiant_header .elementor-widget-heading {max-width: calc(100% - 50px);}
 	.ma_footer .ma_footer_column .ma_footer_faq_tabs .ma_footer_faq_tabs_header.gradiant_header .elementor-widget-button {display: none;}
 	.ma_footer .ma_footer_column .ma_footer_faq_tabs .ma_footer_faq_tabs_content .elementor-widget-button.mobile_btn {display: flex;}
 	.mops_apalooza_agenda_section .mops_apalooza_agenda_inner_section:first-of-type .elementor-container .mops_apalooza_agenda_image_column {order: 2;}
 	.mops_apalooza_agenda_section .mops_apalooza_agenda_inner_section:first-of-type .elementor-container .mops_apalooza_agenda_image_column:last-of-type {order: 1;margin-bottom: 10px;}
-	.mops_apalooza_agenda_section .column_1:first-of-type .elementor-widget-wrap {background-position: right 8px top 50px;background-image: url('/wp-content/themes/hello-elementor_child/images/mopsapalooza/agenda_column_border_mobile.svg');}
+	.mops_apalooza_agenda_section .column_1:first-of-type .elementor-widget-wrap {background-position: right 8px top 50px;background-image: url('/wp-content/themes/marketingops/images/mopsapalooza/agenda_column_border_mobile.svg');}
 	.mops_apalooza_agenda_section .column_1:first-of-type .elementor-widget-wrap .elementor-widget-wrap {background-image: none;}
 	.mops_apalooza_agenda_section .mops_apalooza_agenda_inner_section .mops_apalooza_agenda_text_column {margin-top: 25px;}
 	.mops_apalooza_agenda_section .mops_apalooza_agenda_inner_section {padding-right: 16px;}
@@ -315,7 +315,7 @@ body.active-popup {overflow: hidden !important;}
 	.ma_footer .ma_footer_column .ma_footer_inner_section_image_box > .elementor-container {gap: 40px;}
 	.ma_footer .ma_footer_column .main_title {margin-bottom: 30px;}
 	.ma_footer .ma_footer_column .ma_footer_inner_section_image_box .elementor-column .elementor-widget-wrap .elementor-widget-heading {margin-bottom: -10px;}
-	.tmw_100_section .elementor-background-overlay {background-image: url('/wp-content/themes/hello-elementor_child/images/mopsapalooza/tmw_100/tmw_100_bg_mobile.svg');}
+	.tmw_100_section .elementor-background-overlay {background-image: url('/wp-content/themes/marketingops/images/mopsapalooza/tmw_100/tmw_100_bg_mobile.svg');}
 	.tmw_100_section .tmw_100_text_column .elementor-widget-text-editor ul {padding-left: 0;max-width: 100%;}
 	.tmw_100_section .tmw_100_text_column .elementor-widget-heading {text-align: left;}
 	.doller_number_new {order:1;text-align: left;}

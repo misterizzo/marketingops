@@ -19,19 +19,19 @@ get_header();
 ?>
 <section class="mainagencydetails">
 <div class="leftbgbar">
-		<img src="/wp-content/themes/hello-elementor_child/images/agencypages/blurcircle1.png" alt="img" />
+		<img src="/wp-content/themes/marketingops/images/agencypages/blurcircle1.png" alt="img" />
 	</div>
 	<div class="leftbgbar_two">
-		<img src="/wp-content/themes/hello-elementor_child/images/agencypages/blur3.png" alt="img" />
+		<img src="/wp-content/themes/marketingops/images/agencypages/blur3.png" alt="img" />
 	</div>
 	<div class="rightbgbar">
-		<img src="/wp-content/themes/hello-elementor_child/images/agencypages/blur2.png" alt="img" />
+		<img src="/wp-content/themes/marketingops/images/agencypages/blur2.png" alt="img" />
 	</div>
 	<div class="agency-container">
 		<h1><span>Directly</span> Agency Details</h1>
 		<div class="agencymaintwotable">
 			<div class="agencymaintwotable-left">
-				<img src="/wp-content/themes/hello-elementor_child/images/agencypages/dircaly.png" alt="img" />
+				<img src="/wp-content/themes/marketingops/images/agencypages/dircaly.png" alt="img" />
 				<p>
 					Founded in 2007, Acceleration Partners is the only truly integrated global partnerships agency and a six-time Global Performance Marketing Award (GPMA) winner in the "Best Affiliate and Partner Marketing Agency" category. Acceleration Partners manages programs in 40+ countries for over 200 brands.
 				</p>
@@ -107,7 +107,7 @@ get_header();
 			<li>
 				<div class="spotilebox">
 					<div class="spotlightimgbox">
-						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/achievement-american.png" alt="img" /> 
+						<img src="/wp-content/themes/marketingops/images/agencypages/achievement-american.png" alt="img" /> 
 					</div>
 					<div class="spotligtext">
 						<h4>Natalie Filion</h4>
@@ -122,7 +122,7 @@ get_header();
 			<li>
 				<div class="spotilebox">
 					<div class="spotlightimgbox">
-						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/man-sea-coast-water.png" alt="img" /> 
+						<img src="/wp-content/themes/marketingops/images/agencypages/man-sea-coast-water.png" alt="img" /> 
 					</div>
 					<div class="spotligtext">
 						<h4>Jen Watson</h4>
@@ -137,7 +137,7 @@ get_header();
 			<li>
 				<div class="spotilebox">
 					<div class="spotlightimgbox">
-						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/laptop-computer-.png" alt="img" /> 
+						<img src="/wp-content/themes/marketingops/images/agencypages/laptop-computer-.png" alt="img" /> 
 					</div>
 					<div class="spotligtext">
 						<h4>Mesa Stevens</h4>
@@ -200,7 +200,7 @@ get_header();
 			<li>
 				<div class="spotilebox">
 					<div class="spotlightimgbox">
-						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/achievement-.png" alt="img" /> 
+						<img src="/wp-content/themes/marketingops/images/agencypages/achievement-.png" alt="img" /> 
 					</div>
 					<div class="spotligtext">
 						<h4 class="articalstitle">MO Pros Logo Socks</h4>
@@ -212,7 +212,7 @@ get_header();
 			<li>
 				<div class="spotilebox">
 					<div class="spotlightimgbox">
-						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/man-sea-coast.png" alt="img" /> 
+						<img src="/wp-content/themes/marketingops/images/agencypages/man-sea-coast.png" alt="img" /> 
 					</div>
 					<div class="spotligtext">
 						<h4 class="articalstitle">Ut porttitor leo a diam sollicitudin tempor id eu nisl. Scond line example</h4>
@@ -224,7 +224,7 @@ get_header();
 			<li>
 				<div class="spotilebox">
 					<div class="spotlightimgbox">
-						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/laptop-computer.png" alt="img" /> 
+						<img src="/wp-content/themes/marketingops/images/agencypages/laptop-computer.png" alt="img" /> 
 					</div>
 					<div class="spotligtext">
 						<h4 class="articalstitle">MO Pros Logo Socks</h4>
@@ -244,7 +244,7 @@ get_header();
 			<div class="joinnermainbox">
 				<div class="jobinnerbox">
 					<div class="jobinnerleft">
-						<img src="/wp-content/themes/hello-elementor_child/images/agencypages/shopify.png" alt="img" /> 
+						<img src="/wp-content/themes/marketingops/images/agencypages/shopify.png" alt="img" /> 
 					</div>
 					<div class="jobinnerright">
 						<h4>Communications manager</h4>

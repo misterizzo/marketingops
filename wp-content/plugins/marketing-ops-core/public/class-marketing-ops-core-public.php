@@ -1528,7 +1528,7 @@ class Marketing_Ops_Core_Public {
 		$flags       = ( ! empty ( $current_url ) && str_contains( $current_url, site_url( 'log-in' ) ) ) ? true : false;
 		if ( ! is_user_logged_in() && false === $flags ) {
 			$popup_text      = ! empty( get_field( 'login_text', 'option' ) ) ? get_field( 'login_text', 'option' ) : __( 'Tap here to login to your account', 'marketingops' );
-			$popup_site_logo = ! empty( get_field( 'site_small_logo', 'option' ) ) ? get_field( 'site_small_logo', 'option' ) : site_url() . '/wp-content/themes/hello-elementor_child/images/certificate/certificate_logo_small.png';
+			$popup_site_logo = ! empty( get_field( 'site_small_logo', 'option' ) ) ? get_field( 'site_small_logo', 'option' ) : site_url() . '/wp-content/themes/marketingops/images/certificate/certificate_logo_small.png';
 			?>
 			<div class="custom_login_popup moc_custom_login_popup elementor-widget elementor-widget-html">
 				<div class="elementor-widget-container">
@@ -3845,10 +3845,10 @@ class Marketing_Ops_Core_Public {
 					<ul class="menu_hover">
 						<li>
 							<div class="profile_menu_box">
-								<div class="profile_menu_icon 1">
+								<div class="profile_menu_icon">
 									<a href="#">
 										<span class="svg">
-											<img src="<?php echo site_url(); ?>/wp-content/themes/hello-elementor_child/images/svg/setting_icon.svg" alt="setting_icon" />                    
+											<img src="<?php echo site_url(); ?>/wp-content/themes/marketingops/images/svg/setting_icon.svg" alt="setting_icon" />                    
 										</span>
 									</a>
 								</div>
@@ -4107,10 +4107,10 @@ class Marketing_Ops_Core_Public {
 															<ul class="menu_hover profile-menu--close">
 																<li>
 																	<div class="profile_menu_box">
-																		<div class="profile_menu_icon 2">
+																		<div class="profile_menu_icon">
 																			<a href="#">
 																				<span class="svg">
-																					<img src="<?php echo site_url(); ?>/wp-content/themes/hello-elementor_child/images/svg/setting_icon.svg" alt="setting_icon" />
+																					<img src="<?php echo site_url(); ?>/wp-content/themes/marketingops/images/svg/setting_icon.svg" alt="setting_icon" />
 																				</span>
 																			</a>
 																		</div>
