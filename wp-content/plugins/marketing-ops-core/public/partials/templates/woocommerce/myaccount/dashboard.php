@@ -125,7 +125,7 @@ $payment_methods_temp  = array();
 
 foreach ( $saved_payment_methods as $methods ) {
 	foreach ( $methods as $payment_method ) {
-		var_dump( $saved_method['method']['brand'] );
+		var_dump( $payment_method['method']['brand'] );
 		// $saved_payment_methods[] = sprintf( __( 'Visa ending in 7902 set as main method', 'marketingops' ), $method['method']['brand'] );
 	}
 }
