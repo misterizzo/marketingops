@@ -69,9 +69,6 @@ $order_item_count = ( false !== $customer_order ) ? ( $customer_order->get_item_
 // Customer articles and content.
 $posts_wp_query_args = moc_posts_query_args();
 $posts_wp_query      = new WP_Query( $posts_wp_query_args );
-debug( $posts_wp_query->found_posts );
-
-// 3 articles, 0 podcasts, 3 workshops, 0 courses
 
 if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
 	?>
@@ -205,7 +202,7 @@ if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
 							</div>
 							<div class="bottomdashbordlist">
 								<ul>
-									<li>3 articles, 0 podcasts, 3 workshops, 0 courses</li>	
+									<li><?php echo esc_html( sprintf( __( '%1$d articles, 0 podcasts, 3 workshops, 0 courses', 'marketingops' ), $posts_wp_query->found_posts ) ); ?></li>
 								</ul>
 							</div>
 							<div class="arrowrightdashbord"><span class="arrowsvgimg"></span></div>
