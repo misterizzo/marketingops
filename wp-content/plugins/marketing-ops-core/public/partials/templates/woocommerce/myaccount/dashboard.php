@@ -66,11 +66,13 @@ $customer_order   = ( ! empty( $customer_orders[0] ) ) ? $customer_orders[0] : f
 $order_date       = ( false !== $customer_order ) ? wc_format_datetime( $customer_order->get_date_created() ) : '';
 $order_item_count = ( false !== $customer_order ) ? ( $customer_order->get_item_count() - $customer_order->get_item_count_refunded() ) : 0;
 
-// Customer articles and content: posts.
-$posts_wp_query      = new WP_Query( moc_posts_query_args() );
+// Customer articles and content: posts, podcasts, workshops.
+$posts_wp_query     = new WP_Query( moc_posts_query_args() );
+$podcasts_wp_query  = new WP_Query( moc_posts_query_args( 'podcast' ) );
+$workshops_wp_query = new WP_Query( moc_posts_query_args( 'workshop' ) );
+$learndash_courses  = learndash_user_get_enrolled_courses( get_current_user_id() );
 
-// Customer articles and content: podcast.
-$podcasts_wp_query      = new WP_Query( moc_posts_query_args( 'podcast' ) );
+var_dump( $learndash_courses );
 
 if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
 	?>
@@ -212,7 +214,8 @@ if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
 												'<strong>',
 												'</strong>',
 												$posts_wp_query->found_posts,
-												$podcasts_wp_query->found_posts
+												$podcasts_wp_query->found_posts,
+												$workshops_wp_query->found_posts
 											)
 										);
 										?></li>

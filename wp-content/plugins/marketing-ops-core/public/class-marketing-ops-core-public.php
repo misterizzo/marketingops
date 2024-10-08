@@ -6106,6 +6106,9 @@ class Marketing_Ops_Core_Public {
 						'value'   => '"(' . get_current_user_id() . ')"',
 						'compare' => 'REGEXP',
 					);
+				} elseif ( 'workshop' === $args['post_type'] ) {
+					$args['posts_per_page'] = 1;
+					$args['author']         = get_current_user_id();
 				}
 			}
 		}
