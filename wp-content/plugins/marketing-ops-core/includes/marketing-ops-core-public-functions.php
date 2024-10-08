@@ -9516,3 +9516,29 @@ if ( ! function_exists( 'mops_get_user_learndash_certificates' ) ) {
 		return $certificates;
 	}
 }
+
+/**
+ * Check if the function exists.
+ */
+if ( ! function_exists( 'mops_get_user_avatar_url' ) ) {
+	/**
+	 * Return the user avatar url.
+	 *
+	 * @param int $user_id User ID.
+	 *
+	 * @return string
+	 *
+	 * @since 1.0.0
+	 */
+	function mops_get_user_avatar_url( $user_id ) {
+		$wp_user_avatar = get_user_meta( $user_id, 'wp_user_avatar', true );
+
+		var_dump( $wp_user_avatar );
+
+		// $useravtar_id   = ! empty(  ) ? get_user_meta( $current_user->ID, 'wp_user_avatar', true ) : '';
+		// $user_image_url = ! empty( $useravtar_id ) ? get_post_meta( $useravtar_id, '_wp_attached_file', true ) : '';
+		// $image_url      = ! empty( $user_image_url ) ?  $upload_url['baseurl'] . '/' . $user_image_url : $default_author_img;
+
+		return '';
+	}
+}
