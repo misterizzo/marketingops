@@ -88,6 +88,7 @@ if ( 1 === count( $active_memberships ) && ! empty( $active_memberships[0]->plan
 
 	// Loop through the memberhsips to get the active premium membership.
 	foreach ( $active_memberships as $active_membership ) {
+		var_dump( $active_memberships->plan->slug );
 		if ( 'free-membership' === $active_memberships->plan->slug ) {
 			continue;
 		}
