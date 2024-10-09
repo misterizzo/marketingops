@@ -111,7 +111,7 @@ form#commentform .comment-form-rating .stars:nth-child(2) {display: none;}
 .mops_apalooza_session .key_speaker_content .key_speaker_row .key_speaker_box .key_speaker_details .ks_details{max-width: 100% !important;}
 .mops_apalooza_session .key_speaker_content .key_speaker_row .key_speaker_box:hover .key_speaker_details .ks_details{    max-width: calc(100% - 95px) !important;    margin-left: auto !important;}
 .mops_apalooza_session .key_speaker_content .key_speaker_row .key_speaker_box{min-height: 167px !important;}
-.apalooza_in_person_speakers_container .key_speaker_row .key_speaker_box:nth-child(10){min-height: 253px !important;}
+/* .apalooza_in_person_speakers_container .key_speaker_row .key_speaker_box:nth-child(10){min-height: 253px !important;} */
 .popup .popup_container .popup_content{padding: 30px 37px !important;}
 .popup .popup_container .popup_content{max-width: 641px !important;}
 .popup .popup_container .popup_content .popup_content_box .box_content .speaker_content{padding-right: 30px;}
