@@ -410,7 +410,7 @@ body.active-popup {overflow: hidden !important;}
 	#moc_apalooza_accelevents_purchase_tickets .popup_container .popup_content .popup_content_box {max-height:85vh;}
 }
 @media only screen and (max-width: 575px) {
-	.mops_mopsapalooza24_page .mops_apalooza_banner .elementor-widget-image.mobile_img img {width: 161vw !important;}
+	.mops_mopsapalooza24_page .mops_apalooza_banner .elementor-widget-image.mobile_img img {width: 100% !important;}
 }
 @media only screen and (max-width: 500px) {
 	.mops_mopsapalooza24_page .new_vip .elementor-element.elementor-element-6153d12{bottom: 0px !important;top: auto !important;}
