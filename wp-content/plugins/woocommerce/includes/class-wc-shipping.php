@@ -345,6 +345,8 @@ class WC_Shipping {
 					do_action( 'woocommerce_before_get_rates_for_package', $package, $shipping_method );
 
 					if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
+						debug( $package );
+						debug( '-----' );
 						debug( $shipping_method->get_rates_for_package( $package ) );
 					}
 
