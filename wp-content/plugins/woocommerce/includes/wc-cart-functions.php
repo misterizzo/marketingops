@@ -233,10 +233,6 @@ function wc_cart_totals_shipping_html() {
 	$packages = WC()->shipping()->get_packages();
 	$first    = true;
 
-	if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
-		debug( $packages );
-	}
-
 	foreach ( $packages as $i => $package ) {
 		$chosen_method = isset( WC()->session->chosen_shipping_methods[ $i ] ) ? WC()->session->chosen_shipping_methods[ $i ] : '';
 		$product_names = array();
