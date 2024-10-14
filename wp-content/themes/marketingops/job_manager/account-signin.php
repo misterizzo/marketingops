@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $post;
 
-if ( '' === $_SERVER['REMOTE_ADDR'] ) {
+if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
 	debug( $post );
 }
 
