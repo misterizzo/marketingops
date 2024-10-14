@@ -62,12 +62,19 @@ unset(  $job_fields['job_salary'] );
 			<h2><?php esc_html_e( 'Job Details', 'wp-job-manager' ); ?></h2>
 			<?php do_action( 'submit_job_form_job_fields_start' ); ?>
 			<?php foreach ( $job_fields as $key => $field ) {
-				if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
-					debug( $field ); die;
+				$field_type         = ( ! empty( $field['type'] ) ) ? $field['type'] : '';
+				$active_field_class = '';
+
+				if ( ! empty( $field_type ) && 'text' === $field_type ) {
+					$active_field_class = ( ! empty( $field['value'] ) ) ? 'active_label' : '';
 				}
+
+				// if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
+				// 	debug( $field ); die;
+				// }
 				?>
 				<fieldset class="fieldset-<?php echo esc_attr( $key ); ?> fieldset-type-<?php echo esc_attr( $field['type'] ); ?>">
-					<label for="<?php echo esc_attr( $key ); ?>" class=""><?php echo wp_kses_post( $field['label'] ) . wp_kses_post( apply_filters( 'submit_job_form_required_label', $field['required'] ? '' : ' <small>' . __( '(optional)', 'wp-job-manager' ) . '</small>', $field ) ); ?></label>
+					<label for="<?php echo esc_attr( $key ); ?>" class="<?php echo esc_attr( $active_field_class ); ?>"><?php echo wp_kses_post( $field['label'] ) . wp_kses_post( apply_filters( 'submit_job_form_required_label', $field['required'] ? '' : ' <small>' . __( '(optional)', 'wp-job-manager' ) . '</small>', $field ) ); ?></label>
 					<div class="field <?php echo $field['required'] ? 'required-field' : ''; ?>">
 						<?php get_job_manager_template( 'form-fields/' . $field['type'] . '-field.php', [ 'key' => $key, 'field' => $field ] ); ?>
 					</div>
