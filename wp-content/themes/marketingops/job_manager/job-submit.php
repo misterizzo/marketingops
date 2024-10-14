@@ -31,10 +31,6 @@ $updated_job_fileds = array(
 );
 $job_fields = ( job_manager_user_can_edit_job( $job_id ) ) ? $updated_job_fileds : $job_fields;
 unset(  $job_fields['job_salary'] );
-
-if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
-	debug( $job_fields );
-}
 ?>
 
 <form action="<?php echo esc_url( $action ); ?>" method="post" id="submit-job-form" class="job-manager-form<?php echo esc_attr( $class_job_edit ); ?>" enctype="multipart/form-data">
@@ -65,14 +61,18 @@ if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
 		<div class="form_box job_info_fields">
 			<h2><?php esc_html_e( 'Job Details', 'wp-job-manager' ); ?></h2>
 			<?php do_action( 'submit_job_form_job_fields_start' ); ?>
-			<?php foreach ( $job_fields as $key => $field ) : ?>
+			<?php foreach ( $job_fields as $key => $field ) {
+				if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
+					debug( $field ); die;
+				}
+				?>
 				<fieldset class="fieldset-<?php echo esc_attr( $key ); ?> fieldset-type-<?php echo esc_attr( $field['type'] ); ?>">
-					<label for="<?php echo esc_attr( $key ); ?>"><?php echo wp_kses_post( $field['label'] ) . wp_kses_post( apply_filters( 'submit_job_form_required_label', $field['required'] ? '' : ' <small>' . __( '(optional)', 'wp-job-manager' ) . '</small>', $field ) ); ?></label>
+					<label for="<?php echo esc_attr( $key ); ?>" class=""><?php echo wp_kses_post( $field['label'] ) . wp_kses_post( apply_filters( 'submit_job_form_required_label', $field['required'] ? '' : ' <small>' . __( '(optional)', 'wp-job-manager' ) . '</small>', $field ) ); ?></label>
 					<div class="field <?php echo $field['required'] ? 'required-field' : ''; ?>">
 						<?php get_job_manager_template( 'form-fields/' . $field['type'] . '-field.php', [ 'key' => $key, 'field' => $field ] ); ?>
 					</div>
 				</fieldset>
-			<?php endforeach; ?>
+			<?php } ?>
 
 			<?php do_action( 'submit_job_form_job_fields_end' ); ?>
 		</div>
