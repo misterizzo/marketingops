@@ -31,6 +31,10 @@ $updated_job_fileds = array(
 );
 $job_fields = ( job_manager_user_can_edit_job( $job_id ) ) ? $updated_job_fileds : $job_fields;
 unset(  $job_fields['job_salary'] );
+
+if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
+	debug( $job_fields );
+}
 ?>
 
 <form action="<?php echo esc_url( $action ); ?>" method="post" id="submit-job-form" class="job-manager-form<?php echo esc_attr( $class_job_edit ); ?>" enctype="multipart/form-data">
