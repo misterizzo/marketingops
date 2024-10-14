@@ -15,9 +15,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-?>
+global $post;
 
-<?php if ( is_user_logged_in() ) : ?>
+if ( '' === $_SERVER['REMOTE_ADDR'] ) {
+	debug( $post );
+}
+
+if ( is_user_logged_in() ) : ?>
 	<div class="pyj_login_form pyj_logged_form">
 		<fieldset class="fieldset-logged_in">
 			<label><?php esc_html_e( 'Your account', 'wp-job-manager' ); ?></label>
