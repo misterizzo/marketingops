@@ -25,10 +25,10 @@ if ( is_user_logged_in() ) { ?>
 			<label><?php esc_html_e( 'Your account', 'marketingops' ); ?></label>
 			<div class="field account-sign-in">
 				<?php
-					$user = wp_get_current_user();
-					$username = moc_user_display_name( get_current_user_id() );
-					// translators: Placeholder %s is the username.
-					printf( wp_kses_post( __( 'You are currently signed in as <strong>%s</strong>.', 'marketingops' ) ), esc_html( $username ) );
+				$user = wp_get_current_user();
+				$username = moc_user_display_name( get_current_user_id() );
+				// translators: Placeholder %s is the username.
+				printf( wp_kses_post( __( 'You are currently signed in as <strong>%s</strong>.', 'marketingops' ) ), esc_html( $username ) );
 				?>
 
 				<div class="pyj_login_form_btn">
@@ -42,6 +42,9 @@ if ( is_user_logged_in() ) { ?>
 <?php } else {
 	$account_required            = job_manager_user_requires_account();
 	$registration_enabled        = job_manager_enable_registration();
+
+	var_dump( $registration_enabled );
+
 	$registration_fields         = wpjm_get_registration_fields();
 	$use_standard_password_email = wpjm_use_standard_password_setup_email();
 	?>
@@ -50,18 +53,14 @@ if ( is_user_logged_in() ) { ?>
 			<label><?php esc_html_e( 'Have an account?', 'marketingops' ); ?></label>
 			<div class="field account-sign-in">
 				<label>
-					<?php if ( $registration_enabled ) : ?>
-
+					<?php if ( $registration_enabled ) { ?>
 						<?php printf( esc_html__( 'If you don\'t have an account you can create one below by entering your email address/username.', 'marketingops' ), $account_required ? '' : esc_html__( 'optionally', 'marketingops' ) . ' ' ); ?>
-						<?php if ( $use_standard_password_email ) : ?>
+						<?php if ( $use_standard_password_email ) { ?>
 							<?php printf( esc_html__( 'Your account details will be confirmed via email.', 'marketingops' ) ); ?>
-						<?php endif; ?>
-
-					<?php elseif ( $account_required ) : ?>
-
+						<?php } ?>
+					<?php } elseif ( $account_required ) { ?>
 						<?php echo wp_kses_post( apply_filters( 'submit_job_form_login_required_message',  __( 'You must sign in to create a new listing.', 'marketingops' ) ) ); ?>
-
-					<?php endif; ?>
+					<?php } ?>
 				</label>
 				<div class="pyj_login_form_btn">
 					<h4><?php esc_html_e( 'Already a member?', 'marketingops' ); ?></h4>
