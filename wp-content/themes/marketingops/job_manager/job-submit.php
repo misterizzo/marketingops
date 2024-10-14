@@ -86,22 +86,29 @@ unset(  $job_fields['job_salary'] );
 		
 		<div class="form_box job_info_fields">
 			<!-- Company Information Fields -->
-			<?php if ( $company_fields ) : ?>
+			<?php if ( $company_fields ) { ?>
 				<h2><?php esc_html_e( 'Company Details', 'wp-job-manager' ); ?></h2>
 
 				<?php do_action( 'submit_job_form_company_fields_start' ); ?>
 
-				<?php foreach ( $company_fields as $key => $field ) : ?>
+				<?php foreach ( $company_fields as $key => $field ) {
+					$field_type         = ( ! empty( $field['type'] ) ) ? $field['type'] : '';
+					$active_field_class = '';
+	
+					if ( ! empty( $field_type ) && 'text' === $field_type ) {
+						$active_field_class = ( ! empty( $field['value'] ) ) ? 'active_label' : '';
+					}
+					?>
 					<fieldset class="fieldset-<?php echo esc_attr( $key ); ?> fieldset-type-<?php echo esc_attr( $field['type'] ); ?>">
-						<label for="<?php echo esc_attr( $key ); ?>"><?php echo wp_kses_post( $field['label'] ) . wp_kses_post( apply_filters( 'submit_job_form_required_label', $field['required'] ? '' : ' <small>' . __( '(optional)', 'wp-job-manager' ) . '</small>', $field ) ); ?></label>
+						<label for="<?php echo esc_attr( $key ); ?>" class="<?php echo esc_attr( $active_field_class ); ?>"><?php echo wp_kses_post( $field['label'] ) . wp_kses_post( apply_filters( 'submit_job_form_required_label', $field['required'] ? '' : ' <small>' . __( '(optional)', 'wp-job-manager' ) . '</small>', $field ) ); ?></label>
 						<div class="field <?php echo $field['required'] ? 'required-field' : ''; ?>">
 							<?php get_job_manager_template( 'form-fields/' . $field['type'] . '-field.php', [ 'key' => $key, 'field' => $field ] ); ?>
 						</div>
 					</fieldset>
-				<?php endforeach; ?>
+				<?php } ?>
 
 				<?php do_action( 'submit_job_form_company_fields_end' ); ?>
-			<?php endif; ?>
+			<?php } ?>
 
 			<?php do_action( 'submit_job_form_end' ); ?>
 
