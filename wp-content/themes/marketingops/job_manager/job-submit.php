@@ -66,7 +66,7 @@ unset(  $job_fields['job_salary'] );
 				$active_field_class = '';
 
 				if ( ! empty( $field_type ) && 'text' === $field_type ) {
-					$active_field_class = ( ! empty( $field['value'] ) ) ? 'active_label' : '';
+					$active_field_class = ( ! empty( $field['value'] ) ) ? 'active-label' : '';
 				}
 
 				// if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
