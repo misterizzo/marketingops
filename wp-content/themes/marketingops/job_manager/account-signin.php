@@ -42,10 +42,6 @@ if ( is_user_logged_in() ) { ?>
 <?php } else {
 	$account_required    = job_manager_user_requires_account();
 	$registration_fields = wpjm_get_registration_fields();
-
-	if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
-		debug( $registration_fields );
-	}
 	?>
 	<div class="pyj_login_form">
 		<fieldset class="fieldset-login_required">
