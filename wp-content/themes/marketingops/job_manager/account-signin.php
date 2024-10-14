@@ -40,28 +40,18 @@ if ( is_user_logged_in() ) { ?>
 		</fieldset>
 	</div>
 <?php } else {
-	$account_required            = job_manager_user_requires_account();
-	$registration_enabled        = job_manager_enable_registration();
+	$account_required    = job_manager_user_requires_account();
+	$registration_fields = wpjm_get_registration_fields();
 
-	var_dump( $registration_enabled );
-
-	$registration_fields         = wpjm_get_registration_fields();
-	$use_standard_password_email = wpjm_use_standard_password_setup_email();
+	if ( '183.82.161.187' === $_SERVER['REMOTE_ADDR'] ) {
+		debug( $registration_fields );
+	}
 	?>
 	<div class="pyj_login_form">
 		<fieldset class="fieldset-login_required">
 			<label><?php esc_html_e( 'Have an account?', 'marketingops' ); ?></label>
 			<div class="field account-sign-in">
-				<label>
-					<?php if ( $registration_enabled ) { ?>
-						<?php printf( esc_html__( 'If you don\'t have an account you can create one below by entering your email address/username.', 'marketingops' ), $account_required ? '' : esc_html__( 'optionally', 'marketingops' ) . ' ' ); ?>
-						<?php if ( $use_standard_password_email ) { ?>
-							<?php printf( esc_html__( 'Your account details will be confirmed via email.', 'marketingops' ) ); ?>
-						<?php } ?>
-					<?php } elseif ( $account_required ) { ?>
-						<?php echo wp_kses_post( apply_filters( 'submit_job_form_login_required_message',  __( 'You must sign in to create a new listing.', 'marketingops' ) ) ); ?>
-					<?php } ?>
-				</label>
+				<label><?php echo wp_kses_post( apply_filters( 'submit_job_form_login_required_message',  __( 'You must sign in to create a new listing.', 'marketingops' ) ) ); ?></label>
 				<div class="pyj_login_form_btn">
 					<h4><?php esc_html_e( 'Already a member?', 'marketingops' ); ?></h4>
 					<a class="button" href="<?php echo esc_url( apply_filters( 'submit_job_form_login_url', home_url( "/log-in?redirect_to=/{$current_page_slug}/" ) ) ); ?>">
