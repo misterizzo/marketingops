@@ -86,7 +86,7 @@ unset(  $job_fields['job_salary'] );
 		</div>
 		
 		<div class="form_box job_info_fields">
-			<div class="overlaymessage"><h3 style="background-image: linear-gradient(100deg, #FD4B7A 0%, #4D00AE 100%);"><?php esc_html_e( 'The job posting facility is restricted to site members. Please login or register with us to continue.', 'marketingops' ); ?></h3></h3></div>
+			<div class="overlaymessage"><h3 style="color: #FA4A7A;"><?php esc_html_e( 'The job posting facility is restricted to site members. Please login or register with us to continue.', 'marketingops' ); ?></h3></h3></div>
 			<!-- Company Information Fields -->
 			<?php if ( $company_fields ) { ?>
 				<h2><?php esc_html_e( 'Company Details', 'wp-job-manager' ); ?></h2>
