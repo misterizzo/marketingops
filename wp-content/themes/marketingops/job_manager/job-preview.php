@@ -26,6 +26,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 			 */
 			do_action( 'preview_job_form_start' );
 			?>
+			<div class="job_listing_preview_title">
+				<input type="submit" name="continue" id="job_preview_submit_button" class="button job-manager-button-submit-listing" value="<?php echo esc_attr( apply_filters( 'submit_job_step_preview_submit_text', __( 'Submit Listing', 'wp-job-manager' ) ) ); ?>" />
+				<input type="submit" name="edit_job" class="button job-manager-button-edit-listing" value="<?php esc_attr_e( 'Edit listing', 'wp-job-manager' ); ?>" />
+				<!-- 
+					<h2><?php// esc_html_e( 'Preview', 'wp-job-manager' ); ?></h2>
+				-->
+			</div>
 			<div class="job_listing_preview single_job_listing">
 				<!-- 
 					<h1><?php // wpjm_the_job_title(); ?></h1>
