@@ -2501,3 +2501,14 @@ section.agencyformone.detailsblock .agencyformgroups.withoutmargin{margin:0;}
 .mops_post-your-marketing-operations-jobs_page .form_box fieldset.fieldset-type-checkbox .field input:checked~small:after {
     border-radius: 6px;
 }
+.mops_post-your-marketing-operations-jobs_page .form_box fieldset.fieldset-type-checkbox .field input:checked~small:before {
+    opacity: 1;
+}
+
+.mops_post-your-marketing-operations-jobs_page .form_box fieldset.fieldset-type-checkbox .field small:before {
+    z-index: 1;
+}
+
+.mops_post-your-marketing-operations-jobs_page .form_box fieldset.fieldset-type-checkbox .field input:checked~small:after {
+    border-radius: 6px;
+}
