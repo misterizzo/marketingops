@@ -59,7 +59,7 @@ unset(  $job_fields['job_salary'] );
 	<?php if ( job_manager_user_can_post_job() || job_manager_user_can_edit_job( $job_id ) ) : ?>
 		<!-- Job Information Fields -->
 		<div class="form_box job_info_fields">
-			<div class="overlaymessage"><h3>Login to post your job.</h3></div>
+			<div class="overlaymessage"><h3><?php esc_html_e( 'The job posting facility is restricted to site members. Please login or register with us to continue.', 'marketingops' ); ?></h3></div>
 			<h2><?php esc_html_e( 'Job Details', 'wp-job-manager' ); ?></h2>
 			<?php do_action( 'submit_job_form_job_fields_start' ); ?>
 			<?php foreach ( $job_fields as $key => $field ) {
@@ -86,7 +86,7 @@ unset(  $job_fields['job_salary'] );
 		</div>
 		
 		<div class="form_box job_info_fields">
-			<div class="overlaymessage"><h3>Login to post your job.</h3></div>
+			<div class="overlaymessage"><h3 style="color: red;"><?php esc_html_e( 'The job posting facility is restricted to site members. Please login or register with us to continue.', 'marketingops' ); ?></h3></h3></div>
 			<!-- Company Information Fields -->
 			<?php if ( $company_fields ) { ?>
 				<h2><?php esc_html_e( 'Company Details', 'wp-job-manager' ); ?></h2>
