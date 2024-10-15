@@ -2445,8 +2445,8 @@ section.agencyformone.detailsblock .agencyformgroups.withoutmargin{margin:0;}
 
 .moc_not_logged_in_user.mops_post-your-marketing-operations-jobs_page .form_box.job_info_fields {position: relative;}
 .job_manager_job_posting_fields .overlaymessage{display: none;}
-.moc_not_logged_in_user .job_manager_job_posting_fields .overlaymessage {position: absolute;width: 100%;height: 100%;top: 0;left: 0;right: 0;bottom: 0;background: rgba(0,0,0,0.4);z-index: 99999999999;display: flex;align-items: center;align-content: center;justify-content: center;}
-.moc_not_logged_in_user .job_manager_job_posting_fields .overlaymessage h3 {display: flex;align-items: center;color: #000;font-family: "Futura LT", Open Sans;font-style: normal;font-weight: 700;font-size: 25px;line-height: 35px;margin: 0 0 5px;padding: 0;color: #000;text-align: center;z-index: 999999999;position: relative;}
+.moc_not_logged_in_user .job_manager_job_posting_fields .overlaymessage {position: absolute;width: 100%;height: 100%;top: 0;left: 0;right: 0;bottom: 0;background: rgba(0,0,0,0.4);z-index: 999;display: flex;align-items: center;align-content: center;justify-content: center;}
+.moc_not_logged_in_user .job_manager_job_posting_fields .overlaymessage h3 {display: flex;align-items: center;color: #000;font-family: "Futura LT", Open Sans;font-style: normal;font-weight: 700;font-size: 25px;line-height: 35px;margin: 0 0 5px;padding: 0;color: #000;text-align: center;z-index: 999;position: relative;}
 .moc_preview_post_job main.site-main .moc_job_preview .job_listing_preview_title {width: 100%;}
 
 .mops_post-your-marketing-operations-jobs_page .form_box fieldset.fieldset-type-checkbox .field small:before {
