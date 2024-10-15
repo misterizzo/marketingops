@@ -2482,3 +2482,22 @@ section.agencyformone.detailsblock .agencyformgroups.withoutmargin{margin:0;}
 .moc_preview_post_job main.site-main .moc_job_preview .job_listing_preview_title {
     width: 100%;
 }
+
+.mops_post-your-marketing-operations-jobs_page .form_box fieldset.fieldset-type-checkbox .field small:before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px;
+    height: 15px;
+    background-image: url('/wp-content/themes/marketingops/images/svg/true_checkbox.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0;
+    z-index: 9;
+}
+
+.mops_post-your-marketing-operations-jobs_page .form_box fieldset.fieldset-type-checkbox .field input:checked~small:after {
+    border-radius: 6px;
+}
