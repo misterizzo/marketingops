@@ -2539,7 +2539,7 @@ section.agencyformone.detailsblock .agencyformgroups.withoutmargin{margin:0;}
     content: "";
     position: absolute;
     left: 5px !important;
-    top: 22% !important;
+    top: 50% !important;
     transform: translateY(-50%) !important;
     width: 15px;
     height: 15px;
