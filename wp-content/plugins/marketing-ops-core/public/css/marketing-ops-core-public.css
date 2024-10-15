@@ -2526,3 +2526,12 @@ section.agencyformone.detailsblock .agencyformgroups.withoutmargin{margin:0;}
     box-sizing: border-box;
     border-radius: 6px;
 }
+.job-manager-form.moc_edit_job_posts fieldset.fieldset-type-checkbox .field .description:before {
+    height: 14px;
+    width: 14px;
+    left: 6px !important;
+    bottom: 3px;
+    background-color: transparent !important;
+    z-index: 1;
+    border-radius: 3px;
+}
