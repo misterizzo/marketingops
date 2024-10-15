@@ -2437,3 +2437,7 @@ section.agencyformone.detailsblock .agencyformgroups.withoutmargin{margin:0;}
     margin: 0;
     padding: 0px 10px;
 }
+
+.form_box.job_info_fields fieldset.fieldset-company_name.fieldset-type-text {
+    margin-top: 0;
+}
