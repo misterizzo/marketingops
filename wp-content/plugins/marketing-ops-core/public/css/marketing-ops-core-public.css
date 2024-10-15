@@ -2512,3 +2512,17 @@ section.agencyformone.detailsblock .agencyformgroups.withoutmargin{margin:0;}
 .mops_post-your-marketing-operations-jobs_page .form_box fieldset.fieldset-type-checkbox .field input:checked~small:after {
     border-radius: 6px;
 }
+
+.mops_post-your-marketing-operations-jobs_page .form_box fieldset.fieldset-type-checkbox .field small:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 25px !important;
+    height: 25px !important;
+    background: rgba(246, 247, 247, 0.5);
+    border: 1px solid #E7EFEF !important;
+    box-sizing: border-box;
+    border-radius: 6px;
+}
