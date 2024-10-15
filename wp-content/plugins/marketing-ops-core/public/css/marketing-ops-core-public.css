@@ -2446,7 +2446,7 @@ section.agencyformone.detailsblock .agencyformgroups.withoutmargin{margin:0;}
 .moc_not_logged_in_user .mops_post-your-marketing-operations-jobs_page .form_box.job_info_fields {
     position: relative;
 }
-
+.overlaymessage{display: none;}
 .moc_not_logged_in_user .overlaymessage {
     position: absolute;
     width: 100%;
