@@ -2478,3 +2478,7 @@ section.agencyformone.detailsblock .agencyformgroups.withoutmargin{margin:0;}
     z-index: 999999999;
     position: relative;
 }
+
+.moc_preview_post_job main.site-main .moc_job_preview .job_listing_preview_title {
+    width: 100%;
+}
