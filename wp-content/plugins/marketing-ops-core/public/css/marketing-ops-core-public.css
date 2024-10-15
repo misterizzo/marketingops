@@ -2388,3 +2388,52 @@ section.agencyformone.detailsblock .agencyformgroups.withoutmargin{margin:0;}
 /* agency form */
 
 
+
+
+
+.moc_not_logged_in_user .pyj_form .pyj_login_form {
+    flex-wrap: nowrap;
+}
+.moc_not_logged_in_user .pyj_form .pyj_login_form fieldset.fieldset-login_required {
+    display: flex;
+    width: 100% !important;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+.moc_not_logged_in_user .pyj_form .pyj_login_form fieldset.fieldset-login_required label {
+    display: inline-flex !important;
+    width: 20% !important;
+    margin: 0 !important;
+}
+.moc_not_logged_in_user .pyj_form .pyj_login_form fieldset.fieldset-login_required .field.account-sign-in {
+    display: flex;
+    width: auto !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start;
+}
+.moc_not_logged_in_user .pyj_form .pyj_login_form fieldset.fieldset-login_required .field.account-sign-in label {
+    width: auto !important;
+}
+.moc_not_logged_in_user .pyj_form .pyj_login_form fieldset .account-sign-in .pyj_login_form_btn {
+    max-width: max-content;
+    width: 100%;
+    gap: 10px;
+    flex-wrap: nowrap;
+    padding: 0;
+}
+.moc_not_logged_in_user .pyj_form .pyj_login_form fieldset .account-sign-in .pyj_login_form_btn a {
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    max-width: 110px;
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    border-radius: 100px;
+    margin: 0;
+    padding: 0px 10px;
+}
