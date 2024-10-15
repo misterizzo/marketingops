@@ -2517,7 +2517,7 @@ section.agencyformone.detailsblock .agencyformgroups.withoutmargin{margin:0;}
     content: "";
     position: absolute;
     left: 0;
-    top: 20% !important;
+    top: 50% !important;
     transform: translateY(-50%);
     width: 25px !important;
     height: 25px !important;
@@ -2534,4 +2534,19 @@ section.agencyformone.detailsblock .agencyformgroups.withoutmargin{margin:0;}
     background-color: transparent !important;
     z-index: 1;
     border-radius: 3px;
+}
+ .mops_post-your-marketing-operations-jobs_page .form_box fieldset.fieldset-type-checkbox .field small:before {
+    content: "";
+    position: absolute;
+    left: 5px !important;
+    top: 22% !important;
+    transform: translateY(-50%) !important;
+    width: 15px;
+    height: 15px;
+    background-image: url(
+	'/wp-content/themes/marketingops/images/svg/true_checkbox.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0;
+    z-index: 9;
 }
