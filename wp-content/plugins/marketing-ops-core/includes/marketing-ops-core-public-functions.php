@@ -548,7 +548,7 @@ if ( ! function_exists( 'moc_get_posts_query_by_dynamic_conditions' ) ) {
  */
 if ( ! function_exists( 'moc_add_option_page' ) ) {
 	/**
-	 * Function to add custom taxonomy for job listings.
+	 * Add custom settings page for sitewide configurations.
 	 *
 	 * @since 1.0.0
 	 */
@@ -556,74 +556,74 @@ if ( ! function_exists( 'moc_add_option_page' ) ) {
 		if ( function_exists( 'acf_add_options_page' ) ) {
 			acf_add_options_page(
 				array(
-					'page_title' => 'Mops General Settings',
-					'menu_title' => 'Mops General Settings',
-					'menu_slug'  => 'mops-general-settings',
+					'page_title' => __( 'MarketingOps Global Settings', 'marketingops' ),
+					'menu_title' => __( 'MarketingOps Global Settings', 'marketingops' ),
+					'menu_slug'  => 'marketingops-global-settings',
 					'capability' => 'edit_posts',
 					'redirect'   => false,
 				), 
 			);
 			acf_add_options_sub_page(
 				array(
-					'page_title'  => 'Jobs Global Settings',
-					'menu_title'  => 'Jobs Global Settings',
-					'parent_slug' => 'mops-general-settings',
+					'page_title'  => __( 'Jobs Global', 'marketingops' ),
+					'menu_title'  => __( 'Jobs Global', 'marketingops' ),
+					'parent_slug' => 'marketingops-global-settings',
 				),
 			);
 			acf_add_options_sub_page(
 				array(
-					'page_title'  => 'Company Global Settings',
-					'menu_title'  => 'Company Global Settings',
-					'parent_slug' => 'mops-general-settings',
+					'page_title'  => __( 'Company Global', 'marketingops' ),
+					'menu_title'  => __( 'Company Global', 'marketingops' ),
+					'parent_slug' => 'marketingops-global-settings',
 				),
 			);
 			acf_add_options_sub_page(
 				array(
-					'page_title'  => 'Workshop Global Settings',
-					'menu_title'  => 'Workshop Global Settings',
-					'parent_slug' => 'mops-general-settings',
+					'page_title'  => __( 'Workshop Global', 'marketingops' ),
+					'menu_title'  => __( 'Workshop Global', 'marketingops' ),
+					'parent_slug' => 'marketingops-global-settings',
 				),
 			);
 			acf_add_options_sub_page(
 				array(
-					'page_title'  => 'Community badges',
-					'menu_title'  => 'Community badges',
-					'parent_slug' => 'mops-general-settings',
+					'page_title'  => __( 'Community Badges', 'marketingops' ),
+					'menu_title'  => __( 'Community Badges', 'marketingops' ),
+					'parent_slug' => 'marketingops-global-settings',
 				),
 			);
 			acf_add_options_sub_page(
 				array(
-					'page_title'  => 'No Bs Demo Settings',
-					'menu_title'  => 'No Bs Demo Settings',
-					'parent_slug' => 'mops-general-settings',
+					'page_title'  => __( 'No BS Demo', 'marketingops' ),
+					'menu_title'  => __( 'No BS Demo', 'marketingops' ),
+					'parent_slug' => 'marketingops-global-settings',
 				),
 			);
 			acf_add_options_sub_page(
 				array(
-					'page_title'  => 'Members Settings',
-					'menu_title'  => 'Members Settings',
-					'parent_slug' => 'mops-general-settings',
+					'page_title'  => __( 'Members', 'marketingops' ),
+					'menu_title'  => __( 'Members', 'marketingops' ),
+					'parent_slug' => 'marketingops-global-settings',
 				),
 			);
 			acf_add_options_sub_page(
 				array(
-					'page_title'  => 'Partners',
-					'menu_title'  => 'Partners',
-					'parent_slug' => 'mops-general-settings',
+					'page_title'  => __( 'Partners', 'marketingops' ),
+					'menu_title'  => __( 'Partners', 'marketingops' ),
+					'parent_slug' => 'marketingops-global-settings',
 				),
 			);
 			acf_add_options_sub_page(
 				array(
-					'page_title'  => 'Subscribe Plans',
-					'menu_title'  => 'Subscribe Plans',
-					'parent_slug' => 'mops-general-settings',
+					'page_title'  => __( 'Subscribe Plans', 'marketingops' ),
+					'menu_title'  => __( 'Subscribe Plans', 'marketingops' ),
+					'parent_slug' => 'marketingops-global-settings',
 				),
 			);
 			acf_add_options_sub_page(
 				array(
-					'page_title'  => 'Matchmaking Program',
-					'menu_title'  => 'Matchmaking Program',
-					'parent_slug' => 'mops-general-settings',
+					'page_title'  => __( 'Matchmaking Program', 'marketingops' ),
+					'menu_title'  => __( 'Matchmaking Program', 'marketingops' ),
+					'parent_slug' => 'marketingops-global-settings',
 				),
 			);
 		}
