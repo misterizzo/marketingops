@@ -2586,3 +2586,12 @@ section.agencyformone.detailsblock .agencyformgroups.withoutmargin{margin:0;}
 .elementor-menu-cart--cart-type-mini-cart.topbar_box .elementor-menu-cart__main p.woocommerce-mini-cart__buttons.buttons {
     margin: 0;
 } 
+
+
+.mops_spring-fling_elementor_library .elementor.elementor-62.elementor-location-header.moc_header {
+    display: none;
+}
+
+.mops_spring-fling_elementor_library .elementor.elementor-75.elementor-location-footer {
+    display: none;
+}
