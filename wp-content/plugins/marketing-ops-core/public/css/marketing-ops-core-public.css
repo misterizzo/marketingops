@@ -2554,13 +2554,16 @@ section.agencyformone.detailsblock .agencyformgroups.withoutmargin{margin:0;}
 } 
 
 
-.mops_spring-fling_elementor_library .elementor.elementor-62.elementor-location-header.moc_header {
+.mops_spring-fling_elementor_library .elementor.elementor-62.elementor-location-header.moc_header,
+.mops_springfling25_page .elementor.elementor-62.elementor-location-header.moc_header {
 	display: none;
 }
 
-.mops_spring-fling_elementor_library .elementor.elementor-75.elementor-location-footer {
+.mops_spring-fling_elementor_library .elementor.elementor-75.elementor-location-footer,
+.mops_springfling25_page .elementor.elementor-75.elementor-location-footer {
 	display: none;
 }
-.mops_spring-fling_elementor_library {
+.mops_spring-fling_elementor_library,
+.mops_springfling25_page {
 	padding-top: 0 !important;
 }
