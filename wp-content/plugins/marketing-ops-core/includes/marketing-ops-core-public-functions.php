@@ -5575,7 +5575,7 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 											<div class="moc-form-field-wrap moc-custom-html fw-full fda-standard fld-above">
 												<?php if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) { ?>
 													<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-													<div class="g-recaptcha" data-sitekey="6Lf7hWMqAAAAAOdXojJoN-QPgBDJSnlMXz2wICR"></div>
+													<div class="g-recaptcha" data-sitekey="6Lf7hWMqAAAAAOdXojJoN-QPgBDJSnlMXz2wICR-"></div>
 												<?php } ?>
 											</div>
 											<div class="moc-form-submit-button-wrap">
