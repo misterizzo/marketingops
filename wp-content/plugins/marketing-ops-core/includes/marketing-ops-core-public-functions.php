@@ -5572,17 +5572,13 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 													</div>
 												</div>
 											</div>
-											<div class="moc-form-field-wrap moc-custom-html fw-full fda-standard fld-above">
-												<div class="moc-form-field-input-textarea-wrap">
-													<p>
-														<?php
-														echo  sprintf( __( 'Don’t have an account %1$s Sign Up %2$s %3$s Forgot password? %2$s', 'marketingops' ), ' <a href="' . site_url( 'subscribe' ) . '">', '</a>', '<a href="' . site_url( 'forgot-password' ) . '">'  );
-														?>
-													</p>
-												</div>
-											</div>
 											<div class="moc-form-submit-button-wrap">
 												<button name="reg_login__submit" type="submit" class="moc-login-submit-form ppform-submit-button"><?php esc_html_e( 'Log In', 'marketingops' ); ?></button>
+											</div>
+											<div class="moc-form-field-wrap moc-custom-html fw-full fda-standard fld-above">
+												<div class="moc-form-field-input-textarea-wrap">
+													<p><?php echo  sprintf( __( 'Don’t have an account %1$s Sign Up %2$s %3$s Forgot password? %2$s', 'marketingops' ), ' <a href="' . site_url( 'subscribe' ) . '">', '</a>', '<a href="' . site_url( 'forgot-password' ) . '">'  ); ?></p>
+												</div>
 											</div>
 										</div>
 									</div>

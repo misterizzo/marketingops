@@ -2133,6 +2133,7 @@ body .moc-form-container #moc-registration-1 .moc-form-submit-button-wrap .moc-s
 body .login_content .moc-form-container #moc-registration-1 .moc-form-submit-button-wrap {
 	max-width: 220px;
 	width: 100%;
+	margin-bottom: 25px;
 }
 
 body .login_content .moc-form-container #moc-registration-1 .moc-form-submit-button-wrap button {
