@@ -126,8 +126,8 @@ class Marketing_Ops_Core {
 	private function define_admin_hooks() {
 		$plugin_admin = new Marketing_Ops_Core_Admin( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'moc_admin_enqueue_scripts_callback' );
+		$this->loader->add_action( 'login_enqueue_scripts', $plugin_admin, 'moc_login_enqueue_scripts_callback' );
 		$this->loader->add_action( 'job_manager_job_listing_data_fields', $plugin_admin, 'moc_get_job_custome_meta_fields' );
 		$this->loader->add_action( 'acf/init', $plugin_admin, 'moc_function_run_on_admin_init_callbak' );
 		$this->loader->add_filter( 'job_manager_default_company_logo', $plugin_admin, 'moc_company_placeholder_image_callback' );

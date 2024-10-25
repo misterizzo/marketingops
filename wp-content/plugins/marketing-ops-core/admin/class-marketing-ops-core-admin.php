@@ -68,48 +68,27 @@ class Marketing_Ops_Core_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Marketing_Ops_Core_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Marketing_Ops_Core_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-
+	public function moc_admin_enqueue_scripts_callback() {
+		// Custom admin css.
 		wp_enqueue_style(
 			$this->plugin_name . '-moc-admin-core',
-			plugin_dir_url( __FILE__ ) . 'css/marketing-ops-core-admin.css',
+			MOC_PLUGIN_URL . 'admin/css/marketing-ops-core-admin.css',
 			array(),
 			filemtime( MOC_PLUGIN_PATH . 'admin/css/marketing-ops-core-admin.css' ),
 			'all'
 		);
-		// wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/marketing-ops-core-admin.css', array(), $this->version, 'all' );
 
-	}
-
-	/**
-	 * Register the JavaScript for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_scripts() {
+		// Custom admin script.
 		wp_enqueue_script(
 			$this->plugin_name,
-			plugin_dir_url( __FILE__ ) . 'js/marketing-ops-core-admin.js',
+			MOC_PLUGIN_URL . 'admin/js/marketing-ops-core-admin.js',
 			array( 'jquery' ),
-			// filemtime( MOC_PLUGIN_PATH . 'public/js/marketing-ops-core-admin.js' ),
+			filemtime( MOC_PLUGIN_PATH . 'admin/js/marketing-ops-core-admin.js' ),
 			time(),
 			true
 		);
 
-		// Localize public script.
+		// Localize admin script.
 		wp_localize_script(
 			$this->plugin_name,
 			'Moc_Admin_JS_Obj',
@@ -117,8 +96,25 @@ class Marketing_Ops_Core_Admin {
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			)
 		);
-
 	}
+
+	/**
+	 * Enqueue custom script on the wp-login.php location.
+	 *
+	 * @since 1.0.0
+	 */
+	public function moc_login_enqueue_scripts_callback() {
+		// Custom login css.
+		wp_enqueue_style(
+			$this->plugin_name . '-moc-wp-login',
+			MOC_PLUGIN_URL . 'admin/css/marketing-ops-core-login.css',
+			array(),
+			filemtime( MOC_PLUGIN_PATH . 'admin/css/marketing-ops-core-login.css' ),
+			'all'
+		);
+	}
+
+
 	/**
 	 * Function to return Unset company details from job edit metabox.
 	 *

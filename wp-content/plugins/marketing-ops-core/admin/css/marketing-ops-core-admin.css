@@ -1,70 +1,11 @@
-/**
- * All of the CSS for your admin-specific functionality should be
- * included in this file.
- */
-/* Style the tab */
-.non-clickable {
-	pointer-events: none;
-	opacity: 0.5;
-}
-.tab {
-  overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
-}
-
-/* Style the buttons inside the tab */
-.tab button {
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-  font-size: 17px;
-}
-
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color: #ddd;
-}
-
-/* Create an active/current tablink class */
-.tab button.active {
-  background-color: #ccc;
-}
-
-/* Style the tab content */
-.tabcontent {
-  display: none;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
-}
-
-.tabcontent.active{
-  display: block;
-}
-
-/* Style the close button */
-.topright {
-  float: right;
-  cursor: pointer;
-  font-size: 28px;
-}
-
-.topright:hover {
-  color: red;
-}
-
-/* Product Professor Icon */
-.moc_product_professor_tab a:before{
-  content: "\f110" !important;
-}
-
-/* Hubspot membership deals admin page*/
-.hubwoo-ms-deals-stages-conf-table select {
-  padding: 0 5px !important;
-  width: 100%;
-}
+.non-clickable {pointer-events: none;opacity: 0.5;}
+.tab {overflow: hidden;border: 1px solid #ccc;background-color: #f1f1f1;}
+.tab button {background-color: inherit;float: left;border: none;outline: none;cursor: pointer;padding: 14px 16px;transition: 0.3s;font-size: 17px;}
+.tab button:hover {background-color: #ddd;}
+.tab button.active {background-color: #ccc;}
+.tabcontent {display: none;padding: 6px 12px;border: 1px solid #ccc;border-top: none;}
+.tabcontent.active {display: block;}
+.topright {float: right;cursor: pointer;font-size: 28px;}
+.topright:hover {color: red;}
+.moc_product_professor_tab a:before {content: "\f110" !important;}
+.hubwoo-ms-deals-stages-conf-table select {padding: 0 5px !important;width: 100%;}
