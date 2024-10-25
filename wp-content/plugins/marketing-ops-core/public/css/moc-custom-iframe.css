@@ -104,14 +104,14 @@ form#hsForm_69d7745b-7ffa-484f-ac1d-4687c6d18652 .hs-error-msgs label,
 .hsForm_01e3aae5-fc1f-4e62-bc15-f50922c27a5e span,
 .hsForm_01e3aae5-fc1f-4e62-bc15-f50922c27a5e .hs-input {color: #fff;}
 .hsForm_01e3aae5-fc1f-4e62-bc15-f50922c27a5e .field {margin-bottom: 10px;}
-.hsForm_01e3aae5-fc1f-4e62-bc15-f50922c27a5e input.hs-button.primary.large {padding: 20px 34px;border: none;border-radius: 100px;font-family: open_sansregular;font-size: 16px;font-weight: 400;background: #fd4b7a;background: -webkit-linear-gradient(90deg,#FD4B7A -2.36%,#4D00AE 159.05%);background: -moz-linear-gradient(90deg,#FD4B7A -2.36%,#4D00AE 159.05%);background: linear-gradient(90deg,#FD4B7A -2.36%,#4D00AE 159.05%);}
+.hsForm_01e3aae5-fc1f-4e62-bc15-f50922c27a5e input.hs-button.primary.large {padding: 20px 34px;border: none;border-radius: 100px;font-family: 'open_sansregular';font-size: 16px;font-weight: 400;background: #fd4b7a;background: -webkit-linear-gradient(90deg,#FD4B7A -2.36%,#4D00AE 159.05%);background: -moz-linear-gradient(90deg,#FD4B7A -2.36%,#4D00AE 159.05%);background: linear-gradient(90deg,#FD4B7A -2.36%,#4D00AE 159.05%);}
 .hsForm_01e3aae5-fc1f-4e62-bc15-f50922c27a5e fieldset .hs-richtext p a {color: #c4338c;text-decoration: none;}
 .hsForm_01e3aae5-fc1f-4e62-bc15-f50922c27a5e .actions {margin-top: 0px;margin-bottom: 10px;padding: 0 0px;}
 .hsForm_01e3aae5-fc1f-4e62-bc15-f50922c27a5e fieldset.form-columns-1 .input {margin-right: 0px;}
 .hsForm_01e3aae5-fc1f-4e62-bc15-f50922c27a5e fieldset.form-columns-2 .input {margin-right: 0px;}
 #accelevents_widget_selector_embed_script_95587f5d-b0e4-4f1b-87f5-8075dbb8bf72 .widget-checkout-button .widget-logo-footer .powered-by-container {display: none !important;}
 #hsForm_1add613a-e32e-4eb5-a0fa-ed152f63164a fieldset.form-columns-1 {width: 25%;float: left;}
-#banner-0 .frame-content__inner .frame-content__content .frame-content__text p {color: red;}
+#banner-0 .frame-content__inner .frame-content__content .frame-content__text p {font-family: 'open_sansregular';}
 
 @media only screen and (max-device-width: 575px) {
 	form#hsForm_740aad36-90a2-4d3d-8a22-13669ae2cf1a,
