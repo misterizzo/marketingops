@@ -5573,8 +5573,10 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 												</div>
 											</div>
 											<div class="moc-form-field-wrap moc-custom-html fw-full fda-standard fld-above">
-												<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-												<div class="g-recaptcha" data-sitekey="6Lf7hWMqAAAAAOdXojJoN-QPgBDJSnlMXz2wICR-"></div>
+												<?php if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) { ?>
+													<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+													<div class="g-recaptcha" data-sitekey="6Lf7hWMqAAAAAOdXojJoN-QPgBDJSnlMXz2wICR"></div>
+												<?php } ?>
 											</div>
 											<div class="moc-form-submit-button-wrap">
 												<button name="reg_login__submit" type="submit" class="moc-login-submit-form ppform-submit-button"><?php esc_html_e( 'Log In', 'marketingops' ); ?></button>
