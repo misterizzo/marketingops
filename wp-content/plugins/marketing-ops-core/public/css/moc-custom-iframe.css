@@ -113,6 +113,11 @@ form#hsForm_69d7745b-7ffa-484f-ac1d-4687c6d18652 .hs-error-msgs label,
 #hsForm_1add613a-e32e-4eb5-a0fa-ed152f63164a fieldset.form-columns-1 {width: 25%;float: left;}
 #banner-0 .frame-content__inner .frame-content__content .frame-content__text p {font-family: 'open_sansregular';}
 
+
+
+#sp-accept {border: none;color: #ffffff;background-image: linear-gradient(90deg, #D33B93 -2.36%, #FE7054 100%);border-radius: 100px 100px 100px 100px;background-color: transparent;fill: #fff;text-align: center;transition: all .3s;font-family: "Open Sans";font-weight: 400;font-size: 16px;}
+
+
 @media only screen and (max-device-width: 575px) {
 	form#hsForm_740aad36-90a2-4d3d-8a22-13669ae2cf1a,
 	form#hsForm_69d7745b-7ffa-484f-ac1d-4687c6d18652 {width: 100% !important;}
