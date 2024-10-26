@@ -115,8 +115,8 @@ form#hsForm_69d7745b-7ffa-484f-ac1d-4687c6d18652 .hs-error-msgs label,
 
 
 
-#sp-accept {border: none;color: #ffffff;background-image: linear-gradient(90deg, #D33B93 -2.36%, #FE7054 100%);border-radius: 100px 100px 100px 100px;background-color: transparent;fill: #fff;text-align: center;transition: all .3s;font-family: "Open Sans";font-weight: 400;font-size: 16px;}
-
+#sp-accept {border: none;color: #ffffff;background-image: linear-gradient(90deg, #D33B93 -2.36%, #FE7054 100%);border-radius: 100px 100px 100px 100px;background-color: transparent;fill: #fff;text-align: center;transition: all .3s;font-family: 'open_sansregular';font-weight: 400;font-size: 16px;}
+#sp-decline,#sp-customize{border:none;background-color: transparent;border-radius: 100px;font-family: 'open_sansregular';font-size: 16px;font-weight: 400;line-height: 82%;fill: #242730;color: #fff;background: #242730;transition: all .3s;}
 
 @media only screen and (max-device-width: 575px) {
 	form#hsForm_740aad36-90a2-4d3d-8a22-13669ae2cf1a,
