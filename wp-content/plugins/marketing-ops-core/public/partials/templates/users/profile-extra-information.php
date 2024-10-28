@@ -63,12 +63,12 @@ if ( is_user_logged_in() ) {
 	// $total_courses_count   = count( $total_courses );
 	?>
 	<section class="user_profile_blog elementor-section elementor-top-section elementor-element elementor-section-boxed elementor-section-height-default elementor-section-height-default">
-		<?php
-		if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
-			var_dump( $source );
-		}
-		?>
 		<div class="elementor-container elementor-column-gap-default">
+			<?php
+			if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
+				var_dump( $source );
+			}
+			?>
 			<!-- Left Sidebar -->
 			<div class="user_profile_left_side blog_box">
 				<div class="blog_box_container elementor-widget-wrap elementor-element-populated">
