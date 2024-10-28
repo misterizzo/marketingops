@@ -5362,7 +5362,7 @@ jQuery( document ).ready( function( $ ) {
 	// Agency signup email confirmation.
 	if ( $( '.agency-signup-email-confirmation' ).length ) {
 		$( document ).on( 'click', '.agency-signup-email-confirmation a', function( evt ) {
-			evt.stopPropagation();
+			evt.preventDefault();
 			$( '.mainpricebox' ).addClass( 'active' );
 		} );
 	}
