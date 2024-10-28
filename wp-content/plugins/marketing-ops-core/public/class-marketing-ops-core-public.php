@@ -3570,6 +3570,7 @@ class Marketing_Ops_Core_Public {
 		$email       = filter_var( $email, FILTER_SANITIZE_EMAIL );
 		$password    = filter_input( INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$ref_url     = filter_input( INPUT_POST, 'previous_url', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+
 		if ( ! empty( $email ) && is_email( $email ) ) {
 			if ( $user = get_user_by_email( $email ) ) {
 				$username = $user->user_login;
@@ -3582,7 +3583,7 @@ class Marketing_Ops_Core_Public {
 				'user_password' => $password,
 				'remember'      => true,
 			),
-			false
+			true
 		);
 
 		$user_signon_response = $user_signon->errors;
