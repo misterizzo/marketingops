@@ -5753,13 +5753,17 @@ class Marketing_Ops_Core_Public {
 				}
 
 				// Add the "agency-profile" endpoint.
-				if ( ! array_key_exists( 'agency-profile', $endpoints ) ) {
-					$new_endpoints['agency-profile'] = __( 'Agency Profile', 'marketingops' );
+				if ( current_user_can( 'administrator' ) ) {
+					if ( ! array_key_exists( 'agency-profile', $endpoints ) ) {
+						$new_endpoints['agency-profile'] = __( 'Agency Profile', 'marketingops' );
+					}
 				}
 
 				// Add the "platform-profile" endpoint.
-				if ( ! array_key_exists( 'platform-profile', $endpoints ) ) {
-					$new_endpoints['platform-profile'] = __( 'Platform Profile', 'marketingops' );
+				if ( current_user_can( 'administrator' ) ) {
+					if ( ! array_key_exists( 'platform-profile', $endpoints ) ) {
+						$new_endpoints['platform-profile'] = __( 'Platform Profile', 'marketingops' );
+					}
 				}
 			}
 		}
