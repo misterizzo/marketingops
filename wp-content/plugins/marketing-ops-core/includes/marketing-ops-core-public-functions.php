@@ -9559,6 +9559,10 @@ if ( ! function_exists( 'mops_verify_google_recaptcha' ) ) {
 		$verify_recaptcha_response = file_get_contents( "https://www.google.com/recaptcha/api/siteverify?secret={$secret_key}&response={$recaptcha_response}" );
 		$response_data             = json_decode( $verify_recaptcha_response );
 
+		if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
+			debug( $response_data );
+		}
+
 		return ( $response_data->success ) ? true : false;
 	}
 }
