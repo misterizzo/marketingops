@@ -2670,7 +2670,7 @@ jQuery( document ).ready( function( $ ) {
 		var email            = this_button.closest( '.moc_login_form_section' ).find('.moc-email').val();
 		var password         = this_button.closest( '.moc_login_form_section' ).find('.moc-password').val();
 		var previous_url     = (false !== moc_get_url_vars()) ? moc_get_url_vars()['redirect_to'] : '';
-		var captcha_response = grecaptcha.getResponse();
+		// var captcha_response = grecaptcha.getResponse();
 
 		$('.moc_error span').text('');
 
@@ -2704,7 +2704,7 @@ jQuery( document ).ready( function( $ ) {
 			email: email,
 			password: password,
 			previous_url: previous_url,
-			captcha_response: captcha_response,
+			// captcha_response: captcha_response,
 		};
 		$.ajax({
 			dataType: 'json',
