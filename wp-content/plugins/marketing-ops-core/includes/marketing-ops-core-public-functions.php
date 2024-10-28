@@ -9587,7 +9587,7 @@ if ( ! function_exists( 'mops_is_user_ambassador' ) ) {
 
 		// Return, if there are no user badges available.
 		if ( empty( $user_badges ) || ! is_array( $user_badges ) ) {
-			return false;
+			// return false;
 		}
 
 		debug( $community_badges );
