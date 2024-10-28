@@ -11,7 +11,9 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 global $current_user;
 
-var_dump( $current_user->ID );
+$linked_agency = get_user_meta( $current_user->ID, 'linked_agency', true );
+
+var_dump( $linked_agency );
 ?>
 <form>
     <section class="agencyformone">
