@@ -9,6 +9,8 @@
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
+global $current_user;
+
 var_dump( $current_user->ID );
 ?>
 <form>
