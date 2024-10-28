@@ -3575,15 +3575,24 @@ class Marketing_Ops_Core_Public {
 				$username = $user->user_login;
 			}
 		}
-			
-		$posted_info        = array();
-		$posted_info['user_login'] = $username;
-		$posted_info['user_password'] = $password;
-		$posted_info['remember'] = true;
 
-		$user_signon = wp_signon( $posted_info, false );
+		$user_signon          = wp_signon(
+			array(
+				'user_login'    => $username,
+				'user_password' => $password,
+				'remember'      => true,
+			),
+			false
+		);
+
 		$user_signon_response = $user_signon->errors;
-		
+
+		if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
+			debug( $user_signon_response );
+			var_dump( $user_signon_response );
+			die;
+		}
+
 		if ( empty( $user_signon_response )  ) {
 			$user_response_msg = __( 'You are successfully logged in.' );
 			$message           = 'moc-successfully-login';
