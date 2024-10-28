@@ -64,11 +64,6 @@ if ( is_user_logged_in() ) {
 	?>
 	<section class="user_profile_blog elementor-section elementor-top-section elementor-element elementor-section-boxed elementor-section-height-default elementor-section-height-default">
 		<div class="elementor-container elementor-column-gap-default">
-			<?php
-			if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
-				var_dump( $source );
-			}
-			?>
 			<!-- Left Sidebar -->
 			<div class="user_profile_left_side blog_box">
 				<div class="blog_box_container elementor-widget-wrap elementor-element-populated">
@@ -98,6 +93,13 @@ if ( is_user_logged_in() ) {
 			</div>
 			<!-- Right Sidebar -->
 			<div class="user_profile_right_side blog_box">
+				<?php
+				if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
+					if ( ! is_null( $source ) && 'customer-dashboard' === $source ) {
+						?><a title="<?php esc_html_e( 'Back to your e-commerce dashboard', 'marketingops' ); ?>" href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>"><?php esc_html_e( 'Back to dashboard', 'marketingops' ); ?></a><?php
+					}
+				}
+				?>
 				<div class="blog_box_container elementor-widget-wrap elementor-element-populated">
 					<div class="right_side_box_tabbing_content tabbing_content">
 						<div class="tabbing_content_container">
