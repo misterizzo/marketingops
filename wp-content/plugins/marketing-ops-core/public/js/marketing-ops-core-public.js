@@ -67,8 +67,8 @@
 	var image                           = document.getElementById('crop_profile_image');
 	var current_page_url                = window.location.origin + window.location.pathname;
 	var cropBoxData;
-    var canvasData;
-    var cropper;
+	var canvasData;
+	var cropper;
 
 	// Remove the free column from the pricing table.
 	$( '.subscribe_table .table_head .head_colum.free_colum, .subscribe_table .table_body .table_tr.btn_tr .body_colum.free_colum, .subscribe_table .table_body .table_tr.odd .body_colum.free_colum, .subscribe_table .table_body .table_tr.even .body_colum.free_colum' ).remove();
@@ -5246,11 +5246,11 @@
 	 */
 	function moc_copytoclipboard( text ) {
 		var sampleTextarea = document.createElement("textarea");
-    	document.body.appendChild(sampleTextarea);
-    	sampleTextarea.value = text; //save main text in it
-    	sampleTextarea.select(); //select textarea contenrs
-    	document.execCommand("copy");
-    	document.body.removeChild(sampleTextarea);
+		document.body.appendChild(sampleTextarea);
+		sampleTextarea.value = text; //save main text in it
+		sampleTextarea.select(); //select textarea contenrs
+		document.execCommand("copy");
+		document.body.removeChild(sampleTextarea);
 	}
 
 	function get_editor_content( editor_id ) {
@@ -5349,21 +5349,21 @@
 
 
 
-/* exapnd card */
+	/* exapnd card */
 	var $cell = $('.card');
 	$cell.find('.js-expander').click(function() {
   		var $thisCell = $(this).closest('.card');
   		if ($thisCell.hasClass('is-collapsed')) {
-    		$cell.not($thisCell).removeClass('is-expanded').addClass('is-collapsed').addClass('is-inactive');
-    		$thisCell.removeClass('is-collapsed').addClass('is-expanded');
-    		if ($cell.not($thisCell).hasClass('is-inactive')) {
-    		} else {
-      			$cell.not($thisCell).addClass('is-inactive');
-    		}
+			$cell.not($thisCell).removeClass('is-expanded').addClass('is-collapsed').addClass('is-inactive');
+			$thisCell.removeClass('is-collapsed').addClass('is-expanded');
+			if ($cell.not($thisCell).hasClass('is-inactive')) {
+			} else {
+	  			$cell.not($thisCell).addClass('is-inactive');
+			}
   		} else {
-    		$thisCell.removeClass('is-expanded').addClass('is-collapsed');
-    		$cell.not($thisCell).removeClass('is-inactive');
-    	}
+			$thisCell.removeClass('is-expanded').addClass('is-collapsed');
+			$cell.not($thisCell).removeClass('is-inactive');
+		}
 	});
 	$cell.find('.js-collapser').click(function() {
   		var $thisCell = $(this).closest('.card');
@@ -5372,33 +5372,21 @@
 	} );
 /* exapnd card */
 
-	if ($(".mops_subscribe_elementor_library")[0])
-	{
-    	$(".mops_subscribe_elementor_library").addClass("mops_subscribe_page");
-	} else 
-	{
+	if ($(".mops_subscribe_elementor_library")[0]) {
+		$(".mops_subscribe_elementor_library").addClass("mops_subscribe_page");
 	}
 	
 
-	if (jQuery("#enrollbtns")[0])
-	{
-		$("#enrollbtns").click(function() 
-		{  
-    		$('.mainpricebox').addClass("active");     
-  		});
+	if (jQuery("#enrollbtns")[0]) {
+		$("#enrollbtns").click(function() {
+			$('.mainpricebox').addClass("active");     
+  		} );
 
-	} else 
-	{
 	}
 
-	if (jQuery(".closebuttonmainprice")[0])
-	{
-		$(".closebuttonmainprice").click(function() 
-		{  
-    		$('.mainpricebox').removeClass("active");     
-  		});
-	} else 
-	{
+	if ( $( '.closebuttonmainprice' )[0] ) {
+		$( document ).on( 'click', '.closebuttonmainprice', function() {
+			$( '.mainpricebox' ).removeClass( 'active' );
+		} );
 	}
-
-})(jQuery);
+} )( jQuery );
