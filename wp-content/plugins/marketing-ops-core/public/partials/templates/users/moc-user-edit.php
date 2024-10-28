@@ -566,37 +566,8 @@ if ( ! wp_is_mobile() ) {
 									<div class="sub_title_with_content">
 										<!-- Become an ambassador -->
 										<?php
-
-										if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
-											mops_is_user_ambassador( $current_userid );
-										}
-
-										$community_badges = ! empty( get_user_meta( $current_userid, 'moc_community_badges', true ) ) ? get_user_meta( $current_userid, 'moc_community_badges', true ) : array();
-										if ( ! empty( $community_badges ) && is_array( $community_badges ) ) {
-											$get_settings_badges = get_field( 'community_badges', 'option' );
-											foreach ( $get_settings_badges as $get_settings_badge ) {
-												if ( in_array( $get_settings_badge['community_badges_title'], $community_badges, true ) ) {
-													$updated_community_badges_arr[] = $get_settings_badge['community_badges_title'];
-												}
-											}
-										}
-										if ( ! empty( $updated_community_badges_arr )   ) {
-											if ( ! in_array( 'Ambassador', $updated_community_badges_arr, true ) ) {
-												echo moc_become_ambassador_html();
-											}
-										} else {
-											echo moc_become_ambassador_html();	
-										}
-										?>
-										<!-- Become an ambassador -->
-										
-										<?php 
-										if ( ! empty( $updated_community_badges_arr ) ) {
-											if ( in_array( 'Ambassador', $updated_community_badges_arr, true ) ) {
-												echo moc_create_a_blog_html( $current_userid );
-											}
-										}
-										
+										$is_ambassador = mops_is_user_ambassador( $current_userid );
+										echo ( $is_ambassador ) ? moc_become_ambassador_html() : moc_create_a_blog_html( $current_userid );
 										?>
 										<!-- Become an ambassador -->
 										<?php echo moc_be_a_guest_on_ops_cast_html(); ?>

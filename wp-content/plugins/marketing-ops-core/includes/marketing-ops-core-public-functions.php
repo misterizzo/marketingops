@@ -9591,14 +9591,6 @@ if ( ! function_exists( 'mops_is_user_ambassador' ) ) {
 
 		$is_ambassador_in_badges = array_search( 'Ambassador', $user_badges, true );
 
-		debug( $user_badges );
-		var_dump( $is_ambassador_in_badges );
-
-		
-		foreach ( $get_settings_badges as $get_settings_badge ) {
-			if ( in_array( $get_settings_badge['community_badges_title'], $community_badges, true ) ) {
-				$updated_community_badges_arr[] = $get_settings_badge['community_badges_title'];
-			}
-		}
+		return ( false === $is_ambassador_in_badges ) ? false : true;
 	}
 }
