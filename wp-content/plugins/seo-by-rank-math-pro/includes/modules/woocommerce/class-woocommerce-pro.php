@@ -180,13 +180,13 @@ class WooCommerce {
 			$product = wc_get_product( get_the_ID() );
 		}
 
-		// Remove the default gtin property added in the Free plugin so it can be overwritten with a selected key from Settings.
-		if ( isset( $entity['gtin'] ) ) {
-			unset( $entity['gtin'] );
-		}
-
-		$gtin = method_exists( $product, 'get_global_unique_id' ) ? $product->get_global_unique_id() : '';
+		$gtin = $this->get_gtin_value( $product );
 		if ( $gtin ) {
+			// Remove the default gtin property added in the Free plugin so it can be overwritten with a selected key from Settings.
+			if ( isset( $entity['gtin'] ) ) {
+				unset( $entity['gtin'] );
+			}
+
 			$entity[ $gtin_key ] = $gtin;
 		}
 
@@ -205,7 +205,7 @@ class WooCommerce {
 	 */
 	public function add_gtin_meta() {
 		global $product;
-		$gtin_code = method_exists( $product, 'get_global_unique_id' ) ? $product->get_global_unique_id() : '';
+		$gtin_code = $this->get_gtin_value( $product );
 		if ( ! $gtin_code ) {
 			return;
 		}
@@ -225,11 +225,12 @@ class WooCommerce {
 	 * @return array Modified robots.
 	 */
 	public function add_gtin_to_variation_param( $args, $product, $variation ) {
-		if ( ! method_exists( $variation, 'get_global_unique_id' ) ) {
+		$gtin = $this->get_gtin_value( $variation );
+		if ( ! $gtin ) {
 			return $args;
 		}
 
-		$args['rank_math_gtin'] = $this->get_formatted_value( $variation->get_global_unique_id() );
+		$args['rank_math_gtin'] = $this->get_formatted_value( $gtin );
 
 		return $args;
 	}
@@ -325,32 +326,6 @@ class WooCommerce {
 	}
 
 	/**
-	 * Get Variant data.
-	 *
-	 * @param Object     $variation Variation Object.
-	 * @param WC_Product $product   Product Object.
-	 *
-	 * @since 3.0.57
-	 */
-	private function get_variant_data( $variation, $product ) {
-		$description = $this->get_variant_description( $variation, $product );
-		$description = $this->do_filter( 'product_description/apply_shortcode', false ) ? do_shortcode( $description ) : Helper::strip_shortcodes( $description );
-		$variant     = [
-			'@type'       => 'Product',
-			'sku'         => $variation->get_sku(),
-			'name'        => $variation->get_name(),
-			'description' => wp_strip_all_tags( $description, true ),
-			'image'       => wp_get_attachment_image_url( $variation->get_image_id() ),
-		];
-
-		$this->add_variable_attributes( $variation, $variant );
-		$this->add_variable_offer( $variation, $variant );
-		$this->add_variable_gtin( $variation->get_id(), $variant );
-
-		return $variant;
-	}
-
-	/**
 	 * Add GTIN migration tool.
 	 *
 	 * @param array $tools Array of tools.
@@ -358,6 +333,10 @@ class WooCommerce {
 	 * @return array
 	 */
 	public function add_gtin_migration_tool( $tools ) {
+		if ( self::add_gtin_field() ) {
+			return $tools;
+		}
+
 		$products = Migrate_GTIN::get()->find_posts();
 		if ( empty( $products ) || get_option( 'rank_math_gtin_migrated' ) ) {
 			return $tools;
@@ -387,6 +366,73 @@ class WooCommerce {
 		Migrate_GTIN::get()->start( $products );
 
 		return __( 'The GTIN values from the plugin are being transferred to the built-in WooCommerce GTIN field. This process runs in the background, and you\'ll receive a confirmation message once all product data has been successfully migrated. You can close this page.', 'rank-math-pro' );
+	}
+
+	/**
+	 * Whether to add and use the GTIN value from the Rank Math plugin.
+	 *
+	 * @since 3.0.73
+	 */
+	public static function add_gtin_field() {
+		return apply_filters( 'rank_math/woocommerce/add_gtin_field', false );
+	}
+
+	/**
+	 * Get Variant data.
+	 *
+	 * @param Object     $variation Variation Object.
+	 * @param WC_Product $product   Product Object.
+	 *
+	 * @since 3.0.57
+	 */
+	private function get_variant_data( $variation, $product ) {
+		$description = $this->get_variant_description( $variation, $product );
+		$description = $this->do_filter( 'product_description/apply_shortcode', false ) ? do_shortcode( $description ) : Helper::strip_shortcodes( $description );
+		$variant     = [
+			'@type'       => 'Product',
+			'sku'         => $variation->get_sku(),
+			'name'        => $variation->get_name(),
+			'description' => wp_strip_all_tags( $description, true ),
+			'image'       => wp_get_attachment_image_url( $variation->get_image_id() ),
+		];
+
+		$this->add_variable_attributes( $variation, $variant );
+		$this->add_variable_offer( $variation, $variant );
+		$this->add_variable_gtin( $variation->get_id(), $variant );
+
+		return $variant;
+	}
+
+	/**
+	 * Add gtin value in variable offer data.
+	 *
+	 * @param int   $variation_id Variation ID.
+	 * @param array $entity       Offer entity.
+	 */
+	private function add_variable_gtin( $variation_id, &$entity ) {
+		$meta_key = self::add_gtin_field() ? '_rank_math_gtin_code' : '_global_unique_id';
+		$gtin_key = Helper::get_settings( 'general.gtin', 'gtin8' );
+		$gtin     = get_post_meta( $variation_id, $meta_key, true );
+		if ( ! $gtin || 'isbn' === $gtin_key ) {
+			return;
+		}
+
+		$entity[ $gtin_key ] = $gtin;
+	}
+
+	/**
+	 * Get GTIN value from Product object.
+	 *
+	 * @param WC_Product $product Product Object.
+	 *
+	 * @since 3.0.73
+	 */
+	private function get_gtin_value( $product ) {
+		if ( self::add_gtin_field() ) {
+			return $product->get_meta( '_rank_math_gtin_code' );
+		}
+
+		return method_exists( $product, 'get_global_unique_id' ) ? $product->get_global_unique_id() : '';
 	}
 
 	/**
@@ -436,22 +482,6 @@ class WooCommerce {
 		if ( ! empty( $varies_by ) ) {
 			$entity['variesBy'] = array_unique( $varies_by );
 		}
-	}
-
-	/**
-	 * Add gtin value in variable offer data.
-	 *
-	 * @param int   $variation_id Variation ID.
-	 * @param array $entity       Offer entity.
-	 */
-	private function add_variable_gtin( $variation_id, &$entity ) {
-		$gtin_key = Helper::get_settings( 'general.gtin', 'gtin8' );
-		$gtin     = get_post_meta( $variation_id, '_global_unique_id', true );
-		if ( ! $gtin || 'isbn' === $gtin_key ) {
-			return;
-		}
-
-		$entity[ $gtin_key ] = $gtin;
 	}
 
 	/**

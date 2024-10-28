@@ -41,6 +41,13 @@ class Image_Seo_Pro {
 	public $title_change_case;
 
 	/**
+	 * Holds the current content's captions within a loop.
+	 *
+	 * @var array
+	 */
+	protected $captions = [];
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct() {
@@ -61,9 +68,9 @@ class Image_Seo_Pro {
 
 		$replacements = Helper::get_settings( 'general.image_replacements' );
 		if ( ! empty( $replacements ) ) {
-			$this->filter( 'the_content', 'attribute_replacements', 20 );
-			$this->filter( 'post_thumbnail_html', 'attribute_replacements', 20 );
-			$this->filter( 'woocommerce_single_product_image_thumbnail_html', 'attribute_replacements', 20 );
+			$this->filter( 'the_content', 'attribute_caption_replacements', 20 );
+			$this->filter( 'post_thumbnail_html', 'attribute_caption_replacements', 20 );
+			$this->filter( 'woocommerce_single_product_image_thumbnail_html', 'attribute_caption_replacements', 20 );
 			$this->filter( 'shortcode_atts_caption', 'caption_replacements', 20, 3 );
 		}
 
@@ -516,19 +523,22 @@ class Image_Seo_Pro {
 	 *
 	 * @return string         New post content.
 	 */
-	public function attribute_replacements( $content ) {
+	public function attribute_caption_replacements( $content ) {
 		$replacements = Helper::get_settings( 'general.image_replacements' );
 		foreach ( $replacements as $replacement_id => $replacement ) {
-			if ( ! count( array_intersect( $replacement['replace_in'], [ 'alt', 'title' ] ) ) ) {
+			if ( ! count( array_intersect( $replacement['replace_in'], [ 'alt', 'title', 'caption' ] ) ) ) {
 				continue;
 			}
 
 			foreach ( $replacement['replace_in'] as $attr ) {
 				if ( 'caption' === $attr ) {
-					continue;
+					$content = $this->caption_replacement( $content, $replacement['find'], $replacement['replace'] );
 				}
 
-				$content = $this->attribute_replacement( $content, $replacement['find'], $replacement['replace'], $attr );
+				if ( 'alt' === $attr || 'title' === $attr ) {
+					$content = $this->attribute_replacement( $content, $replacement['find'], $replacement['replace'], $attr );
+
+				}
 			}
 		}
 		return $content;
@@ -569,6 +579,31 @@ class Image_Seo_Pro {
 			$content = str_replace( $image[0], $new, $content );
 		}
 
+		return $content;
+	}
+
+	/**
+	 * Do the replacement in the contents captions.
+	 *
+	 * @param  string $content   Original content.
+	 * @param  string $find      Search string.
+	 * @param  string $replace   Replacement string.
+	 *
+	 * @return string            New content.
+	 */
+	protected function caption_replacement( $content, $find, $replace ) {
+		if ( empty( $this->captions ) ) {
+			$stripped_content = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $content );
+			preg_match_all( '/<figcaption[^>]+>.+?<\/figcaption>/iU', $stripped_content, $this->captions, PREG_SET_ORDER );
+			if ( empty( $this->captions ) ) {
+				return $content;
+			}
+		}
+		foreach ( $this->captions as $caption ) {
+			$replace = Helper::replace_vars( $replace, $this->get_post() );
+			$new     = str_replace( $find, $replace, $caption[0] );
+			$content = str_replace( $caption[0], $new, $content );
+		}
 		return $content;
 	}
 

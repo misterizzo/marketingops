@@ -75,8 +75,12 @@ class Migrate_GTIN extends \WP_Background_Process {
 	protected function task( $products ) {
 		try {
 			foreach ( $products as $product_id ) {
-				$product = wc_get_product( $product_id );
-				$gtin    = get_post_meta( $product_id, '_rank_math_gtin_code', true );
+				$product                = wc_get_product( $product_id );
+				$gtin                   = get_post_meta( $product_id, '_rank_math_gtin_code', true );
+				$global_unique_id_found = wc_get_product_id_by_global_unique_id( $gtin );
+				if ( ! empty( $global_unique_id_found ) ) {
+					continue;
+				}
 
 				$product->set_global_unique_id( $gtin );
 				$product->save();

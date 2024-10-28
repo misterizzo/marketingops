@@ -8,7 +8,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language-Team: Rank Math\n"
 "Last-Translator: Rank Math\n"
-"POT-Creation-Date: 2024-10-03 05:05+0000\n"
+"POT-Creation-Date: 2024-10-16 04:52+0000\n"
 "Project-Id-Version: undefined\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
@@ -2433,6 +2433,10 @@ msgid "Noindex Hidden Products"
 msgstr ""
 
 msgid "Set Product Pages to noindex when WooCommerce Catalog visibility is set to hidden."
+msgstr ""
+
+#. translators: Global Identifier name.
+msgid "%s added by Rank Math SEO). This field overrides WooCommerce GTIN data used in the Product Schema."
 msgstr ""
 
 #. translators: placeholder is the number of modified products.

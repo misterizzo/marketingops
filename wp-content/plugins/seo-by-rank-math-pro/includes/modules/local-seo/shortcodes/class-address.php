@@ -11,6 +11,8 @@
 namespace RankMathPro\Local_Seo;
 
 use RankMath\Helper;
+use RankMath\Traits\Hooker;
+use RankMath\Frontend\Shortcodes;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -18,6 +20,8 @@ defined( 'ABSPATH' ) || exit;
  * Address class.
  */
 class Address {
+
+	use Hooker;
 
 	/**
 	 * Get Address Data.
@@ -104,19 +108,31 @@ class Address {
 			return '';
 		}
 
-		$hash = array_filter(
-			[
-				'streetAddress'   => true,
-				'addressLocality' => true,
-				'addressRegion'   => ! empty( $atts['show_state'] ),
-				'addressCountry'  => ! empty( $atts['show_country'] ),
-				'postalCode'      => true,
-			]
-		);
+		$format = nl2br( Helper::get_settings( 'titles.local_address_format' ) );
+		$hash   = [
+			'streetAddress'   => 'address',
+			'addressLocality' => 'locality',
+			'postalCode'      => 'postalcode',
+			'addressRegion'   => 'region',
+			'addressCountry'  => 'country',
+		];
 
-		$glue = empty( $atts['show_on_one_line'] ) ? ',<br />' : ', ';
-		$data = implode( $glue, array_intersect_key( $address, $hash ) );
+		if ( ! $atts['show_state'] ) {
+			unset( $hash['addressRegion'] );
+			$format = str_replace( [ '{region},', '{region}' ], [ '', '' ], $format );
+		}
 
-		return '<h5>' . esc_html__( 'Address:', 'rank-math-pro' ) . '</h5><address>' . $data . '</address>';
+		if ( ! $atts['show_country'] ) {
+			unset( $hash['addressCountry'] );
+			$format = str_replace( [ '{country},', '{country}' ], [ '', '' ], $format );
+		}
+
+		$data = Shortcodes::get_address( $hash, $address, $format );
+
+		if ( ! empty( $atts['show_on_one_line'] ) ) {
+			$data = str_replace( "<br />", ' ', $data );
+		}
+
+		return '<h5>' . esc_html__( 'Address:', 'rank-math-pro' ) . '</h5><address>' . wp_kses_post( $data ) . '</address>';
 	}
 }
