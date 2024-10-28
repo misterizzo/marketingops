@@ -3591,7 +3591,7 @@ class Marketing_Ops_Core_Public {
 		if ( empty( $user_signon_response )  ) {
 			$user_response_msg = __( 'You are successfully logged in.', 'marketingops' );
 			$message           = 'moc-successfully-login';
-			$redirect_to       = ( ! empty( $ref_url ) && ( $ref_url !== site_url() && $ref_url !== site_url( 'log-in' ) ) ) : site_url() . $ref_url : site_url( 'profile' );
+			$redirect_to       = ( ! empty( $ref_url ) && ( $ref_url !== site_url() && $ref_url !== site_url( 'log-in' ) ) ) ? site_url() . $ref_url : site_url( 'profile' );
 			$user              = get_user_by('login', $username);
 
 			clean_user_cache( $user->data->ID );
