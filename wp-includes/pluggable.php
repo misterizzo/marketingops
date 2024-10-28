@@ -617,6 +617,12 @@ if ( ! function_exists( 'wp_authenticate' ) ) :
 		 */
 		$user = apply_filters( 'authenticate', null, $username, $password );
 
+		if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
+			debug( $user );
+			var_dump( $user );
+			die("lkkjasdasdsa");
+		}
+
 		if ( null === $user || false === $user ) {
 			/*
 			 * TODO: What should the error message be? (Or would these even happen?)
@@ -641,11 +647,6 @@ if ( ! function_exists( 'wp_authenticate' ) ) :
 			 * @param WP_Error $error    A WP_Error object with the authentication failure details.
 			 */
 			do_action( 'wp_login_failed', $username, $error );
-		}
-
-		if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
-			debug( $user );
-			die("lkkjasdasdsa");
 		}
 
 		return $user;
