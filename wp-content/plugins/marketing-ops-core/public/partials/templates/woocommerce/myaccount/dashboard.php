@@ -316,7 +316,7 @@ $profile_points      = ( ! empty( $customer_profile_info['moc_certificates'] ) &
 
 		<!-- my articles and content -->
 		<li>
-			<a href="<?php echo esc_url( ( mops_is_user_ambassador( $current_userid ) ) ? home_url( '/post-new/?source=customer-dashboard' ) : home_url( '/marketing-operations-community-ambassador-application/' ) ); ?>">
+			<a href="<?php echo esc_url( ( mops_is_user_ambassador( $current_user->ID ) ) ? home_url( '/post-new/?source=customer-dashboard' ) : home_url( '/marketing-operations-community-ambassador-application/' ) ); ?>">
 				<div class="innerdashbordlist">
 					<div class="innsersubdashbordlist">
 						<div class="iconwithtitledashbord">
