@@ -977,7 +977,7 @@ class Hubwoo_Admin {
 						$single_cart['sent'] = 'yes';
 					}
 
-					$guest_user_properties = apply_filters( 'hubwoo_map_new_abncart_properties', $single_cart['email'], $guest_user_properties );
+					$guest_user_properties = apply_filters( 'hubwoo_map_new_abncart_properties', $guest_user_properties, $single_cart['email'] );
 					
 					if ( ! empty( $guest_user_properties ) ) {
 						$guest_abandoned_carts[] = array(

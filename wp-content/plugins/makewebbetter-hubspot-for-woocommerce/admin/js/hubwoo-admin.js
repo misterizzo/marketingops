@@ -1767,7 +1767,7 @@
 						const deal_property = await jQuery.ajax({ type : 'POST', url  : ajaxUrl, data : { action : 'hubwoo_deals_create_property', hubwooSecurity, }, dataType : 'json', });
 						
 					allCreatedProperties = allCreatedProperties.map((prop) => { return prop.replace(/["']/g, "").trim()})
-					await saveUpdates( { 'hubwoo-groups-created': allCreatedGroups, 'hubwoo-properties-created': allCreatedProperties, 'hubwoo_fields_setup_completed': 1, 'hubwoo_pro_setup_completed': 1, 'hubwoo_plugin_version': '1.5.7' } );
+					await saveUpdates( { 'hubwoo-groups-created': allCreatedGroups, 'hubwoo-properties-created': allCreatedProperties, 'hubwoo_fields_setup_completed': 1, 'hubwoo_pro_setup_completed': 1, 'hubwoo_plugin_version': '1.5.8' } );
 					await runEcommSetup();
 					updateProgressBar( 100 );
 					transferScreen( 'move-to-list' );
@@ -2187,6 +2187,13 @@
 					}
 				}
 			);
+
+			jQuery(document).on('input', '#hubwoo_abncart_timing', function() {
+				var value = jQuery(this).val();
+				if (value < 5 && value !== "") {
+					jQuery(this).val(5);
+				}
+			});
 		},
 	);
 }( jQuery ) );

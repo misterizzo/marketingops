@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-09-23T15:57:23+00:00\n"
+"POT-Creation-Date: 2024-10-23T10:58:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Language: \n"
 "X-Generator: WP-CLI 2.11.0\n"
@@ -164,7 +164,7 @@ msgstr "HubSpot All-In-One Marketing %1$s kräver PHP %2$s eller högre. Uppgrad
 #. translators: %1$s: Plugin current version %2$s: WordPress required version
 #: public/admin/class-leadinadmin.php:266
 msgid "HubSpot All-In-One Marketing %1$s requires WordPress %2$s or higher Please upgrade WordPress first"
-msgstr "Marketing All-In-One di HubSpot %1$s richiede WordPress %2$s o versione superiore. Per prima cosa, esegui l'upgrade di WordPress."
+msgstr "HubSpot All-In-One Marketing %1$s kräver Wordress %2$s eller högre. Uppgradera WordPress först."
 
 #. translators: %1$s: HTML anchor opening tag %2$s: HTML anchor closing tag
 #: public/admin/class-noticemanager.php:36
