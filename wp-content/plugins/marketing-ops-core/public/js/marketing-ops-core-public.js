@@ -1,7 +1,7 @@
 /**
  * MarketingOps public JS file.
  */
-(function($) {
+jQuery( document ).ready( function( $ ) {
 	'use strict';
 
 	// Localized variables.
@@ -5163,7 +5163,7 @@
 	 * For Element equal height Js.
 	 * @param {string} element Holds the selected element.
 	 */
-	 function moc_dynamic_equal_heights(element, element_height) {
+	function moc_dynamic_equal_heights(element, element_height) {
 		if ($(window).width() > 768) {
 			var max_height = element_height;
 			$(element).each(function() {
@@ -5397,4 +5397,4 @@
 			$( '.mainpricebox' ).addClass( 'active' );
 		} );
 	}
-} )( jQuery );
+} );
