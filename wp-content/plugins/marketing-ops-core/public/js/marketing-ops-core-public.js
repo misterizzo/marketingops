@@ -5389,8 +5389,11 @@
 	}
 
 	// Agency signup email confirmation.
+	console.log( 'here' );
 	if ( $( '.agency-signup-email-confirmation' ).length ) {
+		console.log( 'here1' );
 		$( document ).on( 'click', '.agency-signup-email-confirmation a', function() {
+			console.log( 'here2' );
 			$( '.mainpricebox' ).addClass( 'active' );
 		} );
 	}
