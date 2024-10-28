@@ -653,8 +653,6 @@ jQuery( document ).ready( function( $ ) {
 		var v = $(this).val().replace(/[^0-9\.]/g, ''); // Remove non-numerics
 		$(this).val(v);
 	} );
-
-
 	
 	/**
 	 * jQuery to represent time for read any document of webpage.
@@ -3735,19 +3733,6 @@ jQuery( document ).ready( function( $ ) {
 	}
 
 	/**
-	 * Open the Accelevents purchase tickets modal.
-	 */
-	// if ( $( '.open_accelevents_purchase_tickets_modal' ).length ) {
-	// 	$( document ).on( 'click', '.open_accelevents_purchase_tickets_modal a.elementor-button', function( evt ) {
-	// 		evt.preventDefault();
-
-	// 		// Open the accelevents purchase tickets popup.
-	// 		$( '#moc_apalooza_accelevents_purchase_tickets' ).addClass( 'active' ).removeClass( 'non-active' );
-	// 		$( 'body' ).addClass( 'active-popup' );
-	// 	} );
-	// }
-
-	/**
 	 * Close the session modal.
 	 */
 	$( document ).on( 'click', '.moc_close_session_modal', function() {
@@ -4016,20 +4001,6 @@ jQuery( document ).ready( function( $ ) {
 			jQuery( '.uploadtemplatehubspotmodal' ).removeClass( 'active' );
 		} );
 	}
-
-	/**
-	 * Move the required * after the anchor tag on the checkout page.
-	 */
-	// $( document.body ).on( 'updated_cart_totals', function() {
-	// } );
-	// if ( $( '.woocommerce-terms-and-conditions-checkbox-text' ).length ) {
-	// 	$( document.body ).on( 'updated_cart_totals', function() {
-	// 	} );
-	// 	setTimeout( function() {
-	// 		var target_abbr = $( '.woocommerce-terms-and-conditions-checkbox-text' ).siblings( 'abbr.required' );
-	// 		target_abbr.addClass( 'hello-world' );
-	// 	}, 4000 );
-	// }
 
 	/**
 	 * Submit review.
