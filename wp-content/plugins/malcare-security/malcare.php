@@ -5,7 +5,7 @@ Plugin URI: https://www.malcare.com
 Description: MalCare WordPress Security Plugin - Malware Scanner, Cleaner, Security Firewall
 Author: MalCare Security
 Author URI: https://www.malcare.com
-Version: 5.77
+Version: 5.81
 Network: True
  */
 
@@ -171,6 +171,15 @@ if ((array_key_exists('bvplugname', $_REQUEST)) && ($_REQUEST['bvplugname'] == "
 					$apbct->settings['forms__contact_forms_test'] = 0;
 				}
 			});
+
+			#handling of Akismet plugin
+			add_filter('akismet_get_api_key', function($api_key) { return null; }, PHP_INT_MAX);
+
+			#handling of Formidable Antispam
+			add_filter('frm_validate_entry', function($errors, $values, $args) {
+				unset($errors['spam']);
+				return $errors;
+			}, PHP_INT_MAX, 3);
 		} else {
 			define('MCBASEPATH', plugin_dir_path(__FILE__));
 
@@ -200,14 +209,14 @@ if ((array_key_exists('bvplugname', $_REQUEST)) && ($_REQUEST['bvplugname'] == "
 		if ($bvinfo->isProtectModuleEnabled()) {
 			require_once dirname( __FILE__ ) . '/protect/protect.php';
 			//For backward compatibility.
-			MCProtect_V577::$settings = new MCWPSettings();
-			MCProtect_V577::$db = new MCWPDb();
-			MCProtect_V577::$info = new MCInfo(MCProtect_V577::$settings);
+			MCProtect_V581::$settings = new MCWPSettings();
+			MCProtect_V581::$db = new MCWPDb();
+			MCProtect_V581::$info = new MCInfo(MCProtect_V581::$settings);
 
-			add_action('mc_clear_pt_config', array('MCProtect_V577', 'uninstall'));
+			add_action('mc_clear_pt_config', array('MCProtect_V581', 'uninstall'));
 
 			if ($bvinfo->isActivePlugin()) {
-				MCProtect_V577::init(MCProtect_V577::MODE_WP);
+				MCProtect_V581::init(MCProtect_V581::MODE_WP);
 			}
 		}
 

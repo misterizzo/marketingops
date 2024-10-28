@@ -2,9 +2,9 @@
 Contributors: Cloudways
 Tags: cache,caching, performance, wp-cache, cdn
 Requires at least: 6.0
-Tested up to: 6.6.1
+Tested up to: 6.6.2
 Requires PHP: 7.4
-Stable tag: 2.1.14
+Stable tag: 2.1.17
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -159,6 +159,20 @@ Yes. The process of setting up CloudFlare with Breeze is easy. Check out the fol
 Using Gzip, Breeze compresses the request files, further reducing the size of the download files and speeding up the user experience.
 
 == Changelog ==
+
+= 2.1.17 =
+
+* Fix: Errors have been resolved during the activation, deactivation, updating, and deletion of plugins and themes from ManageWP.
+* Fix: The 'Host Google Fonts Locally' feature has been improved to prevent PHP warnings.
+* Fix: Improved multi-site sub-directory sub-site detection, ensuring the correct handling of blog_id for cache storage and cache purging.
+
+= 2.1.16 =
+
+* Fix: Refactor the handling of the woocommerce_after_product_object_save hook to ensure it is only executed once per request when  products  updated via the  API.
+
+= 2.1.15 =
+
+* Fix: Addressed vulnerabilities related to Broken Access Control and Cross-Site Scripting (XSS) as discovered by Patchstack.
 
 = 2.1.14 =
 

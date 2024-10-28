@@ -212,7 +212,9 @@ if (!class_exists('BVWPActLog')) :
 			if ($this->is_key_ignored($this->ignored_events, $post["type"]))
 				return;
 			$event_data = array();
-			if ($post["type"] === "product") {
+			if (!isset($post["type"])) {
+				$event_data["post"] = $post;
+			} elseif ($post["type"] === "product") {
 				$event_data["product"] = $post;
 			} elseif ($post["type"] === "shop_order") {
 				$event_data["order"] = $post;
@@ -227,7 +229,9 @@ if (!class_exists('BVWPActLog')) :
 			if ($this->is_key_ignored($this->ignored_events, $post["type"]))
 				return;
 			$event_data = array();
-			if ($post["type"] === "product") {
+			if (!isset($post["type"])) {
+				$event_data["post"] = $post;
+			} elseif ($post["type"] === "product") {
 				$event_data["product"] = $post;
 			} elseif ($post["type"] === "shop_order") {
 				$event_data["order"] = $post;
@@ -366,7 +370,9 @@ if (!class_exists('BVWPActLog')) :
 			if (!empty($plugins) && defined('WP_PLUGIN_DIR')) {
 				foreach ($plugins as $plugin) {
 					$plugin_data = get_plugin_data(WP_PLUGIN_DIR . '/' . $plugin);
-					$install_data = array('title' => $plugin_data['Name'], 'version' => $plugin_data['Version']);
+					$title = isset($plugin_data['Name']) ? $plugin_data['Name'] : '';
+					$version = isset($plugin_data['Version']) ? $plugin_data['Version'] : '';
+					$install_data = array('title' => $title, 'version' => $version);
 					array_push($data, $install_data);
 				}
 			}
@@ -378,7 +384,9 @@ if (!class_exists('BVWPActLog')) :
 			if (!empty($themes)) {
 				foreach ($themes as $theme) {
 					$theme_data = wp_get_theme($theme);
-					$install_data = array('title' => $theme_data['Name'], 'version' => $theme_data['Version']);
+					$title = isset($theme_data['Name']) ? $theme_data['Name'] : '';
+					$version = isset($theme_data['Version']) ? $theme_data['Version'] : '';
+					$install_data = array('title' => $title, 'version' => $version);
 					array_push($data, $install_data);
 				}
 			}
@@ -389,7 +397,9 @@ if (!class_exists('BVWPActLog')) :
 			$data = array();
 			if ($upgrader->bulk != "1") {
 				$plugin_data = $upgrader->new_plugin_data;
-				$install_data = array('title' => $plugin_data['Name'], 'version' => $plugin_data['Version']);
+				$title = isset($plugin_data['Name']) ? $plugin_data['Name'] : '';
+				$version = isset($plugin_data['Version']) ? $plugin_data['Version'] : '';
+				$install_data = array('title' => $title, 'version' => $version);
 				array_push($data, $install_data);
 			}
 			return $data;
@@ -398,7 +408,9 @@ if (!class_exists('BVWPActLog')) :
 		function get_theme_install_data($upgrader) {
 			$data = array();
 			$theme_data = $upgrader->new_theme_data;
-			$install_data = array('title' => $theme_data['Name'], 'version' => $theme_data['Version']);
+			$title = isset($theme_data['Name']) ? $theme_data['Name'] : '';
+			$version = isset($theme_data['Version']) ? $theme_data['Version'] : '';
+			$install_data = array('title' => $title, 'version' => $version);
 			array_push($data, $install_data);
 			return $data;
 		}
@@ -439,13 +451,15 @@ if (!class_exists('BVWPActLog')) :
 
 		function upgrade_handler($upgrader, $data) {
 			$event_data = array();
-			if ($data['action'] === 'update') {
-				if ('core' === $data['type']) {
-					return;
+			if (isset($data['action'])) {
+				if ($data['action'] === 'update') {
+					if ('core' === $data['type']) {
+						return;
+					}
+					$event_data = $this->get_update_data($data);
+				} else if ($data['action'] === 'install') {
+					$event_data = $this->get_install_data($upgrader, $data);
 				}
-				$event_data = $this->get_update_data($data);
-			} else if ($data['action'] === 'install') {
-				$event_data = $this->get_install_data($upgrader, $data);
 			}
 			$this->add_activity($event_data);
 		}

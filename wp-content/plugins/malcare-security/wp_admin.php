@@ -74,6 +74,47 @@ class MCWPAdmin {
 		}
 	}
 
+	public function handleDismissWSKBanner() {
+		$user_id = get_current_user_id();
+		if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['dismiss_wsk_banner']) && wp_verify_nonce($_POST['_wpnonce'], 'dismiss_wsk_banner')) {
+			update_user_meta($user_id, 'wsk_banner_dismissed', true);
+		}
+	}
+
+	public function canShowWSKBanner() {
+		if (!MCAccount::isConfigured($this->settings)) {
+			global $bvWebspacekitBannerShown;
+
+			if (!$bvWebspacekitBannerShown) {
+				$bvWebspacekitBannerShown = true;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public function initializeWSKBanner() {
+		if ($this->siteinfo->isWSKHosted()) {
+			$this->handleDismissWSKBanner();
+			$bannerDismissed = get_user_meta(get_current_user_id(), 'wsk_banner_dismissed', true);
+			if (!$bannerDismissed || (array_key_exists('page', $_REQUEST) && $_REQUEST['page'] == $this->bvinfo->plugname)) {
+				if ( $this->canShowWSKBanner() ){
+					add_action('admin_enqueue_scripts', function () {
+						wp_enqueue_style('wsk-fonts', 'https://fonts.googleapis.com/css2?family=Karla&family=Montserrat:wght@400;500;600;700&display=block');
+						wp_enqueue_style('wsk-stylesheet', plugins_url('css/webspacekit_banner.min.css', __FILE__));
+					});
+					add_action('in_admin_header', function () {
+						add_action('all_admin_notices', [$this, 'loadWSKBanner']);
+					}, 9999);
+				}
+			}
+		}
+	}
+
+	public function loadWSKBanner() {
+		require_once dirname( __FILE__ ) . "/admin/components/webspacekit_banner.php";
+	}
+
 	public function mcsecAdminMenu($hook) {
 		if ($hook === 'toplevel_page_malcare' || MCHelper::safePregMatch("/bv_add_account$/", $hook) ||
 				MCHelper::safePregMatch("/bv_account_details$/", $hook)) {

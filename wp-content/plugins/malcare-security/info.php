@@ -11,7 +11,7 @@ if (!class_exists('MCInfo')) :
 		public $ip_header_option = 'mcipheader';
 		public $brand_option = 'bv_whitelabel_infos';
 		public $wp_lp_whitelabel_option = 'mcLpWhitelabelConf';
-		public $version = '5.77';
+		public $version = '5.81';
 		public $webpage = 'https://www.malcare.com';
 		public $appurl = 'https://app.malcare.com';
 		public $slug = 'malcare-security/malcare.php';

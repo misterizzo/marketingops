@@ -2,10 +2,10 @@
 
 class Breeze_Store_Files {
 
-	var $store_files_dir = '/breeze/';
+	var $store_files_dir    = '/breeze/';
 	var $cdn_pixel_file_url = 'https://connect.facebook.net/en_US/fbevents.js';
-	var $cdn_gtm_js_file = 'https://www.googletagmanager.com/gtm.js';
-	var $cdn_gtm_js_route = 'https://www.googletagmanager.com/gtag/js';
+	var $cdn_gtm_js_file    = 'https://www.googletagmanager.com/gtm.js';
+	var $cdn_gtm_js_route   = 'https://www.googletagmanager.com/gtag/js';
 
 	public function init( $html = 0, $options = array() ) {
 
@@ -32,7 +32,6 @@ class Breeze_Store_Files {
 		}
 
 		return $html;
-
 	}
 
 	/**
@@ -65,26 +64,17 @@ class Breeze_Store_Files {
 			$file_dir        = $files_dir . $font_title . '/';
 			$stored_file_uri = $stored_files_uri . $font_title . '/';
 
-
-			$context = stream_context_create([
-				"http" => [
-					"header" => "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
-				],
-			]);
-
-
-			$font_content = file_get_contents($font_url, false, $context);
+			$font_api_response = wp_remote_get( esc_url_raw( $font_url ) );
+			$font_content      = wp_remote_retrieve_body( $font_api_response );
 
 			$local_css = $this->rewrite_google_fonts_files( $font_content, $font_title, $file_dir, $stored_file_uri );
 
 			if ( $local_css ) {
 				$html = str_replace( $font_url, $local_css, $html );
 			}
-
 		}
 
 		return $html;
-
 	}
 
 	/**
@@ -98,7 +88,7 @@ class Breeze_Store_Files {
 	 * @return false|string
 	 */
 	public function rewrite_google_fonts_files( $css, $font_title, $file_dir, $stored_files_uri ) {
-		$font_declarations = [];
+		$font_declarations = array();
 
 		// Extract Google Fonts declarations from css file
 		$pattern = '/url\((https:\/\/fonts\.gstatic\.com\/[^)]+)\)/';
@@ -114,16 +104,17 @@ class Breeze_Store_Files {
 			if ( $local_font_file ) {
 				$css = str_replace( $clean_font_url, $stored_files_uri . $filename, $css );
 			}
-
 		}
 
 		$local_css_file_name = $font_title . '.css';
 		$local_css_file_dir  = $file_dir . $local_css_file_name;
 		$local_css_file_uri  = $stored_files_uri . $local_css_file_name;
 
-		$css_file = fopen( $local_css_file_dir, 'w' );
-		fwrite( $css_file, $css );
-		fclose( $css_file );
+		if ( file_exists( $file_dir ) ) {
+			$css_file = fopen( $local_css_file_dir, 'w' );
+			fwrite( $css_file, $css );
+			fclose( $css_file );
+		}
 
 		if ( file_exists( $local_css_file_dir ) ) {
 			return $local_css_file_uri;
@@ -144,13 +135,14 @@ class Breeze_Store_Files {
 	public function extract_gtm( $html, $file_dir, $stored_files_uri ) {
 		$gtm_url        = $this->cdn_gtm_js_file;
 		$gtag_url       = $this->cdn_gtm_js_route;
-		$gtm_id_pattern = '/\'GTM-(.*?)\'/';;
+		$gtm_id_pattern = '/\'GTM-(.*?)\'/';
+
 		$gtag_id_pattern = "/gtag\('config', '([A-Za-z0-9-]+)'\)/";
 
 		preg_match( $gtm_id_pattern, $html, $gtm_id );
 		preg_match( $gtag_id_pattern, $html, $gtag_id );
 
-		$file_dir   = $file_dir . 'google/';
+		$file_dir = $file_dir . 'google/';
 
 		if ( isset( $gtm_id[1] ) ) {
 			$configValue = $gtm_id[1];
@@ -160,18 +152,16 @@ class Breeze_Store_Files {
 
 			if ( ! empty( $gtm_file_url ) ) {
 				$local_file = $this->download_files_locally( $gtm_file_url, $file_dir, 'gtm.js', '.js' );
-				$log = "User: " . $_SERVER['REMOTE_ADDR'] . ' - ' . date( "F j, Y, g:i a" ) . PHP_EOL .
-				       "Attempt: gtm_not_empty" . PHP_EOL .
-				       "URL Gtm: " . print_r( $gtm_file_url, true ) . PHP_EOL;
+				$log        = 'User: ' . $_SERVER['REMOTE_ADDR'] . ' - ' . date( 'F j, Y, g:i a' ) . PHP_EOL .
+						'Attempt: gtm_not_empty' . PHP_EOL .
+						'URL Gtm: ' . print_r( $gtm_file_url, true ) . PHP_EOL;
 
 				if ( $local_file ) {
 					$local_file_url = $stored_files_uri . 'google/gtm.js';
 
 					$html = str_replace( $gtm_url, $local_file_url, $html );
 				}
-
 			}
-
 		}
 
 		if ( isset( $gtag_id[1] ) ) {
@@ -188,11 +178,8 @@ class Breeze_Store_Files {
 
 					$html = str_replace( $gtag_url, $local_file_url, $html );
 				}
-
 			}
-
 		}
-
 
 		return $html;
 	}
@@ -258,11 +245,9 @@ class Breeze_Store_Files {
 
 				return str_replace( $fb_pixel_file_url[0][0], $local_file_url, $html );
 			}
-
 		}
 
 		return $html;
-
 	}
 
 
@@ -320,7 +305,7 @@ class Breeze_Store_Files {
 	public static function cleanup_all_extra_folder() {
 		global $wp_filesystem;
 		if ( empty( $wp_filesystem ) ) {
-			require_once( ABSPATH . '/wp-admin/includes/file.php' );
+			require_once ABSPATH . '/wp-admin/includes/file.php';
 			WP_Filesystem();
 		}
 		$ret = true;
@@ -339,5 +324,4 @@ class Breeze_Store_Files {
 
 		return $ret;
 	}
-
 }

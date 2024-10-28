@@ -57,7 +57,7 @@ class Breeze_ConfigCache {
 				$inherit_option = filter_var( $inherit_option, FILTER_VALIDATE_BOOLEAN );
 				if ( false === $inherit_option ) {
 					// Site uses own (custom) configuration.
-					$cache_configs["breeze-config-{$blog_id}"] = preg_replace( '(^https?://)', '', site_url() );
+					$cache_configs[ "breeze-config-{$blog_id}" ] = preg_replace( '(^https?://)', '', site_url() );
 				} else {
 					// Site uses global configuration.
 					$cache_configs['breeze-config'][ $blog_id ] = preg_replace( '(^https?://)', '', site_url() );
@@ -79,30 +79,45 @@ class Breeze_ConfigCache {
 			return;
 		} else {
 			$file_string = '<?php ' .
-			               "\n\r" . 'defined( \'ABSPATH\' ) || exit;' .
-			               "\n\r" . 'define( \'BREEZE_ADVANCED_CACHE\', true );' .
-			               "\n\r" . 'if ( is_admin() ) { return; }' .
-			               "\n\r" . 'if ( ! @file_exists( \'' . BREEZE_PLUGIN_DIR . 'breeze.php\' ) ) { return; }';
+						   "\n\r" . 'defined( \'ABSPATH\' ) || exit;' .
+						   "\n\r" . 'define( \'BREEZE_ADVANCED_CACHE\', true );' .
+						   "\n\r" . 'if ( is_admin() ) { return; }' .
+						   "\n\r" . 'if ( ! @file_exists( \'' . BREEZE_PLUGIN_DIR . 'breeze.php\' ) ) { return; }';
 		}
 
-		if ( !is_multisite() && 1 === count( $cache_configs ) ) {
+		if ( ! is_multisite() && 1 === count( $cache_configs ) ) {
 			// Only 1 config file available.
-			$blog_file   = trailingslashit( WP_CONTENT_DIR ) . 'breeze-config/breeze-config.php';
+			$blog_file    = trailingslashit( WP_CONTENT_DIR ) . 'breeze-config/breeze-config.php';
 			$file_string .= "\n\$config['config_path'] = '$blog_file';";
 		} else {
 			// Multiple configuration files, load appropriate one by comparing URLs.
 			$file_string .= "\n\r" . '$domain = strtolower( stripslashes( $_SERVER[\'HTTP_HOST\'] ) );' .
-			                "\n" . 'if ( substr( $domain, -3 ) == \':80\' ) {' .
-			                "\n" . '	$domain = substr( $domain, 0, -3 );' .
-			                "\n" . '} elseif ( substr( $domain, -4 ) == \':443\' ) {' .
-			                "\n" . '	$domain = substr( $domain, 0, -4 );' .
-			                "\n" . '}';
+							"\n" . 'if ( substr( $domain, -3 ) == \':80\' ) {' .
+							"\n" . '	$domain = substr( $domain, 0, -3 );' .
+							"\n" . '} elseif ( substr( $domain, -4 ) == \':443\' ) {' .
+							"\n" . '	$domain = substr( $domain, 0, -4 );' .
+							"\n" . '}';
 			if ( is_subdomain_install() ) {
 				$file_string .= "\n" . '$site_url = $domain;';
 			} else {
-				$file_string .= "\n" . 'list( $path ) = explode( \'?\', stripslashes( $_SERVER[\'REQUEST_URI\'] ) );' .
-				                "\n" . '$path_parts = explode( \'/\', rtrim( $path, \'/\' ) );' .
-				                "\n" . '$site_url = $domain . ( ! empty( $path_parts[1] ) ? \'/\' . $path_parts[1] : \'\' );';
+				$file_string .= <<<'FILE_STRING'
+
+function breeze_get_current_url_formatted() {
+	$domain = strtolower( stripslashes( $_SERVER['HTTP_HOST'] ) );
+	if ( substr( $domain, -3 ) == ':80' ) {
+		$domain = substr( $domain, 0, -3 );
+	} elseif ( substr( $domain, -4 ) == ':443' ) {
+		$domain = substr( $domain, 0, -4 );
+	}
+	$request_uri = stripslashes( $_SERVER['REQUEST_URI'] );
+	$path        = explode( '?', $request_uri, 2 )[0];
+	$full_url    = '//' . $domain . $path;
+	return rtrim( $full_url, '/' );
+}
+$site_url = breeze_get_current_url_formatted();
+
+FILE_STRING;
+
 			}
 
 			// Create conditional blocks for each site.
@@ -129,22 +144,71 @@ class Breeze_ConfigCache {
 							if ( isset( $e[2] ) ) {
 								$the_blog_id = (int) $e[2];
 							}
-
 						}
 
 						$define_blog_identity = "\n\t\t\$config['blog_id']={$the_blog_id};";
-						$file_string          .= "\n\t\t\$config['config_path'] = '$blog_file';" . $define_blog_identity . "\n\t\tbreak;";
+						$file_string         .= "\n\t\t\$config['config_path'] = '$blog_file';" . $define_blog_identity . "\n\t\tbreak;";
 					} else {
 						$file_string .= "\n\t\t\$config['config_path'] = '$blog_file';" . "\n\t\tbreak;";
 					}
-
 				}
 			}
 
 			$file_string .= "\n\t}";
 			$file_string .= "\n\t" . 'return $config;';
 			$file_string .= "\n}";
-			$file_string .= "\n" . '$config = breeze_fetch_configuration_data( $site_url );';
+			$file_string .= <<<'FILE_STRING'
+
+function breeze_get_subsite_from_url( $url ) {
+	$parsed_url    = parse_url( $url );
+	$domain        = strtolower( $parsed_url['host'] );
+	$path          = trim( $parsed_url['path'] ?? '', '/' );
+	$path_segments = array();
+	if ( ! empty( $path ) ) {
+		$path_segments = explode( '/', $path );
+	}
+	if ( ':80' === substr( $domain, -3 ) ) {
+		$domain = substr( $domain, 0, -3 );
+	} elseif ( ':443' === substr( $domain, -4 ) ) {
+		$domain = substr( $domain, 0, -4 );
+	}
+	$site_url = '';
+	if ( count( $path_segments ) >= 2 ) {
+		$site_url       = $domain . '/' . $path_segments[0] . '/' . $path_segments[1];
+		$subsite_config = breeze_fetch_configuration_data( $site_url );
+
+		if ( $subsite_config ) {
+			return $subsite_config;
+		}
+	}
+	if ( count( $path_segments ) >= 1 ) {
+		$site_url       = $domain . '/' . $path_segments[0];
+		$subsite_config = breeze_fetch_configuration_data( $site_url );
+		if ( $subsite_config ) {
+			return $subsite_config;
+		}
+	}
+	$site_url       = $domain;
+	$subsite_config = breeze_fetch_configuration_data( $site_url );
+	if ( $subsite_config ) {
+		return $subsite_config;
+	}
+
+	return '';
+}
+
+FILE_STRING;
+
+			if ( is_subdomain_install() ) {
+				$file_string .= "\n" . '$config = breeze_fetch_configuration_data( $site_url );';
+			} else {
+				$file_string .= <<<'FILE_STRING'
+
+$config = breeze_get_subsite_from_url( $site_url );
+				
+FILE_STRING;
+			}
+
 			$file_string .= "\n" . 'if ( ';
 			$file_string .= "\n" . ' empty( $config ) && ';
 			$file_string .= "\n" . ' false === filter_var( SUBDOMAIN_INSTALL, FILTER_VALIDATE_BOOLEAN ) && ';
@@ -161,13 +225,13 @@ class Breeze_ConfigCache {
 		}
 
 		$file_string .= "\nif ( empty( \$config ) || ! isset( \$config['config_path'] ) || ! @file_exists( \$config['config_path'] ) ) { return; }" .
-		                "\n\$breeze_temp_config = include \$config['config_path'];" .
-		                "\nif ( isset( \$config['blog_id'] ) ) { \$breeze_temp_config['blog_id'] = \$config['blog_id']; }" .
-		                "\n\$GLOBALS['breeze_config'] = \$breeze_temp_config; unset( \$breeze_temp_config );" .
-		                "\n" . 'if ( empty( $GLOBALS[\'breeze_config\'] ) || empty( $GLOBALS[\'breeze_config\'][\'cache_options\'][\'breeze-active\'] ) ) { return; }' .
-		                "\n" . 'if ( @file_exists( \'' . BREEZE_PLUGIN_DIR . 'inc/cache/execute-cache.php\' ) ) {' .
-		                "\n" . '	include_once \'' . BREEZE_PLUGIN_DIR . 'inc/cache/execute-cache.php\';' .
-		                "\n" . '}' . "\n";
+						"\n\$breeze_temp_config = include \$config['config_path'];" .
+						"\nif ( isset( \$config['blog_id'] ) ) { \$breeze_temp_config['blog_id'] = \$config['blog_id']; }" .
+						"\n\$GLOBALS['breeze_config'] = \$breeze_temp_config; unset( \$breeze_temp_config );" .
+						"\n" . 'if ( empty( $GLOBALS[\'breeze_config\'] ) || empty( $GLOBALS[\'breeze_config\'][\'cache_options\'][\'breeze-active\'] ) ) { return; }' .
+						"\n" . 'if ( @file_exists( \'' . BREEZE_PLUGIN_DIR . 'inc/cache/execute-cache.php\' ) ) {' .
+						"\n" . '	include_once \'' . BREEZE_PLUGIN_DIR . 'inc/cache/execute-cache.php\';' .
+						"\n" . '}' . "\n";
 
 		return $wp_filesystem->put_contents( $file, $file_string );
 	}
@@ -208,18 +272,18 @@ class Breeze_ConfigCache {
 		$lazy_load_native  = Breeze_Options_Reader::get_option_value( 'breeze-lazy-load-native', false, $create_root_config );
 		$preload_links     = Breeze_Options_Reader::get_option_value( 'breeze-preload-links', false, $create_root_config );
 		$lazy_load_iframes = Breeze_Options_Reader::get_option_value( 'breeze-lazy-load-iframes', false, $create_root_config );
-		$lazy_load_videos = Breeze_Options_Reader::get_option_value( 'breeze-lazy-load-videos', false, $create_root_config );
+		$lazy_load_videos  = Breeze_Options_Reader::get_option_value( 'breeze-lazy-load-videos', false, $create_root_config );
 
 		$storage['enabled-lazy-load']        = ( isset( $lazy_load ) ? $lazy_load : 0 );
 		$storage['use-lazy-load-native']     = ( isset( $lazy_load_native ) ? $lazy_load_native : 0 );
 		$storage['breeze-preload-links']     = ( isset( $preload_links ) ? $preload_links : 0 );
 		$storage['breeze-lazy-load-iframes'] = ( isset( $lazy_load_iframes ) ? $lazy_load_iframes : 0 );
-		$storage['breeze-lazy-load-videos'] = ( isset( $lazy_load_videos ) ? $lazy_load_videos : 0 );
+		$storage['breeze-lazy-load-videos']  = ( isset( $lazy_load_videos ) ? $lazy_load_videos : 0 );
 
 		//  CURCY - WooCommerce Multi Currency Premium.
 		if (
 			class_exists( 'WOOMULTI_CURRENCY' ) ||
-			class_exists( 'WOOMULTI_CURRENCY_F')
+			class_exists( 'WOOMULTI_CURRENCY_F' )
 		) {
 			if ( empty( $wmc_settings ) ) {
 				// if $wmc_settings is empty, we will check again.
@@ -291,7 +355,6 @@ class Breeze_ConfigCache {
 				$storage['woocs-store-type'] = get_option( 'woocs_storage', 'transient' );
 			}
 		}
-
 
 		if ( class_exists( 'WooCommerce' ) ) {
 			$ecommerce_exclude_urls = Breeze_Ecommerce_Cache::factory()->ecommerce_exclude_pages();
@@ -441,30 +504,33 @@ class Breeze_ConfigCache {
 
 		$the_headers = breeze_helper_fetch_headers();
 
-		$allowed_headers =  apply_filters('breeze_custom_headers_allow', array(
-			'content-security-policy',
-			'x-frame-options',
-			'referrer-policy',
-			'strict-transport-security',
-			'X-Content-Type-Options',
-			'Access-Control-Allow-Origin',
-			'Cross-Origin-Opener-Policy',
-			'Cross-Origin-Embedder-Policy',
-			'Cross-Origin-Resource-Policy',
-			'Permissions-Policy',
-			'X-XSS-Protection',
-		));
+		$allowed_headers = apply_filters(
+			'breeze_custom_headers_allow',
+			array(
+				'content-security-policy',
+				'x-frame-options',
+				'referrer-policy',
+				'strict-transport-security',
+				'X-Content-Type-Options',
+				'Access-Control-Allow-Origin',
+				'Cross-Origin-Opener-Policy',
+				'Cross-Origin-Embedder-Policy',
+				'Cross-Origin-Resource-Policy',
+				'Permissions-Policy',
+				'X-XSS-Protection',
+			)
+		);
 
-		if(is_array($the_headers) && !empty($the_headers)){
+		if ( is_array( $the_headers ) && ! empty( $the_headers ) ) {
 			$to_save_headers = array();
 
-			foreach($allowed_headers as $header_name){
-				$header_name = strtolower( $header_name);
-				if(array_key_exists($header_name, $the_headers)){
-					$to_save_headers[$header_name] = $the_headers[$header_name];
+			foreach ( $allowed_headers as $header_name ) {
+				$header_name = strtolower( $header_name );
+				if ( array_key_exists( $header_name, $the_headers ) ) {
+					$to_save_headers[ $header_name ] = $the_headers[ $header_name ];
 				}
 			}
-			if(!empty($to_save_headers)){
+			if ( ! empty( $to_save_headers ) ) {
 				$storage['breeze_custom_headers'] = $to_save_headers;
 			}
 		}
