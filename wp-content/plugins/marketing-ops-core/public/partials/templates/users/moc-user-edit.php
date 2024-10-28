@@ -565,7 +565,12 @@ if ( ! wp_is_mobile() ) {
 									</div>
 									<div class="sub_title_with_content">
 										<!-- Become an ambassador -->
-										<?php 
+										<?php
+
+										if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
+											mops_is_user_ambassador( $current_userid );
+										}
+
 										$community_badges = ! empty( get_user_meta( $current_userid, 'moc_community_badges', true ) ) ? get_user_meta( $current_userid, 'moc_community_badges', true ) : array();
 										if ( ! empty( $community_badges ) && is_array( $community_badges ) ) {
 											$get_settings_badges = get_field( 'community_badges', 'option' );

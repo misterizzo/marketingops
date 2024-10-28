@@ -9547,11 +9547,12 @@ if ( ! function_exists( 'mops_get_user_avatar_url' ) ) {
  */
 if ( ! function_exists( 'mops_verify_google_recaptcha' ) ) {
 	/**
-	 * Return the user avatar url.
+	 * Verify the google recaptcha response.
 	 *
-	 * @param int $user_id User ID.
+	 * @param string $recaptcha_response Google recaptcha response.
+	 * @param string $secret_key         Google recaptcha secret key.
 	 *
-	 * @return string|boolean
+	 * @return boolean
 	 *
 	 * @since 1.0.0
 	 */
@@ -9564,5 +9565,39 @@ if ( ! function_exists( 'mops_verify_google_recaptcha' ) ) {
 		}
 
 		return ( $response_data->success ) ? true : false;
+	}
+}
+
+/**
+ * Check if the function exists.
+ */
+if ( ! function_exists( 'mops_is_user_ambassador' ) ) {
+	/**
+	 * Check if the current user is ambassador.
+	 *
+	 * @param int $user_id User ID.
+	 *
+	 * @return boolean
+	 *
+	 * @since 1.0.0
+	 */
+	function mops_is_user_ambassador( $user_id ) {
+		$user_badges      = get_user_meta( $user_id, 'moc_community_badges', true );
+		$community_badges = get_field( 'community_badges', 'option' );
+
+		// Return, if there are no user badges available.
+		if ( empty( $user_badges ) || ! is_array( $user_badges ) ) {
+			return false;
+		}
+
+		debug( $community_badges );
+		debug( $user_badges );
+
+		
+		foreach ( $get_settings_badges as $get_settings_badge ) {
+			if ( in_array( $get_settings_badge['community_badges_title'], $community_badges, true ) ) {
+				$updated_community_badges_arr[] = $get_settings_badge['community_badges_title'];
+			}
+		}
 	}
 }
