@@ -643,6 +643,11 @@ if ( ! function_exists( 'wp_authenticate' ) ) :
 			do_action( 'wp_login_failed', $username, $error );
 		}
 
+		if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
+			debug( $user );
+			die("lkkjasdasdsa");
+		}
+
 		return $user;
 	}
 endif;
