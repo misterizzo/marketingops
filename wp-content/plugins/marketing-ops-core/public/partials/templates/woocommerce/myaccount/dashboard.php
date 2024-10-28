@@ -316,7 +316,7 @@ $profile_points      = ( ! empty( $customer_profile_info['moc_certificates'] ) &
 
 		<!-- my articles and content -->
 		<li>
-			<a href="/my-account/my-articles-and-content/">
+			<a href="javascript:void(0);">
 				<div class="innerdashbordlist">
 					<div class="innsersubdashbordlist">
 						<div class="iconwithtitledashbord">

@@ -5761,11 +5761,6 @@ class Marketing_Ops_Core_Public {
 				if ( ! array_key_exists( 'platform-profile', $endpoints ) ) {
 					$new_endpoints['platform-profile'] = __( 'Platform Profile', 'marketingops' );
 				}
-
-				// Add the "my-articles-and-content" endpoint.
-				if ( ! array_key_exists( 'my-articles-and-content', $endpoints ) ) {
-					$new_endpoints['my-articles-and-content'] = __( 'My Articles & Content', 'marketingops' );
-				}
 			}
 		}
 
@@ -5785,7 +5780,6 @@ class Marketing_Ops_Core_Public {
 		$vars['project-templates']       = 'project-templates';
 		$vars['agency-profile']          = 'agency-profile';
 		$vars['platform-profile']        = 'platform-profile';
-		$vars['my-articles-and-content'] = 'my-articles-and-content';
 
 		return $vars;
 	}
@@ -5842,13 +5836,6 @@ class Marketing_Ops_Core_Public {
 			remove_filter( 'the_title', array( $this, 'mops_the_title_callback' ) );
 		}
 
-		// My articles and content endpoint title.
-		if ( $is_my_articles_and_content_endpoint && ! is_admin() && is_main_query() && in_the_loop() && is_account_page() ) {
-			$title = __( 'My Articles & Content', 'marketingops' );
-
-			remove_filter( 'the_title', array( $this, 'mops_the_title_callback' ) );
-		}
-
 		return $title;
 	}
 
@@ -5895,15 +5882,6 @@ class Marketing_Ops_Core_Public {
 	 */
 	public function mops_woocommerce_account_platform_profile_endpoint_callback() {
 		include_once 'partials/templates/woocommerce/myaccount/platform-profile.php';
-	}
-
-	/**
-	 * Template for customer dashboard - my articles and content.
-	 *
-	 * @since 1.0.0
-	 */
-	public function mops_woocommerce_account_my_articles_and_content_endpoint_callback() {
-		include_once 'partials/templates/woocommerce/myaccount/my-articles-and-content.php';
 	}
 
 	/**
