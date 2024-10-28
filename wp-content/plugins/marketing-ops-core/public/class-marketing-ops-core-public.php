@@ -1425,14 +1425,13 @@ class Marketing_Ops_Core_Public {
 		// Add the restricted content modal.
 		if (
 			is_page( 'premium-event-with-darrell-alfonso' ) ||
-			is_page( 'member-only-partner-offers' ) ||
-			( is_post_type_archive( 'template' ) )
+			is_page( 'member-only-partner-offers' )
 		) {
 			require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content.php';
 		}
 
 		// Add the restricted content modal for pro-plus members.
-		if ( is_page( 'conference-vault' ) || is_singular( 'conference_vault' ) || is_tax( 'conference' ) ) {
+		if ( is_page( 'conference-vault' ) || is_singular( 'conference_vault' ) || is_tax( 'conference' ) || ( is_post_type_archive( 'template' ) ) ) {
 			require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content-pro-plus-members.php';
 		}
 
