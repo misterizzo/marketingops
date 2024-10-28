@@ -7,8 +7,8 @@
  * Text Domain: woocommerce-one-page-checkout
  * Domain Path: languages
  * Plugin URI:  https://woocommerce.com/products/woocommerce-one-page-checkout/
- * Version: 2.9.0
- * Tested up to: 6.6
+ * Version: 2.9.1
+ * Tested up to: 6.7
  * WC requires at least: 2.5
  * WC tested up to: 9.4
  * Woo: 527886:c9ba8f8352cd71b5508af5161268619a
@@ -68,7 +68,7 @@ if ( ! is_woocommerce_active() || version_compare( get_option( 'woocommerce_db_v
 	return;
 }
 
-define( 'WC_ONE_PAGE_CHECKOUT_VERSION', '2.9.0' ); // WRCS: DEFINED_VERSION.
+define( 'WC_ONE_PAGE_CHECKOUT_VERSION', '2.9.1' ); // WRCS: DEFINED_VERSION.
 
 add_filter( 'woocommerce_translations_updates_for_woocommerce-one-page-checkout', '__return_true' );
 
