@@ -3589,12 +3589,6 @@ class Marketing_Ops_Core_Public {
 		$user_signon_response = $user_signon->errors;
 
 		if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
-			var_dump( array(
-				'user_login'    => $username,
-				'user_password' => $password,
-				'remember'      => true,
-			) );
-			debug( $user_signon_response );
 			var_dump( $user_signon_response );
 			die;
 		}

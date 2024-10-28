@@ -108,6 +108,11 @@ function wp_signon( $credentials = array(), $secure_cookie = '' ) {
 
 	$user = wp_authenticate( $credentials['user_login'], $credentials['user_password'] );
 
+
+	if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
+		debug( $user ); die("poool");
+	}
+
 	if ( is_wp_error( $user ) ) {
 		return $user;
 	}
