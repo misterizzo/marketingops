@@ -5521,7 +5521,7 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 	 */
 	function moc_render_login_form_html( $section ) {
 		ob_start();
-		$grecaptcha_site_key = get_field( 'grecaptcha_site_key', 'option' );
+		// $grecaptcha_site_key = get_field( 'grecaptcha_site_key', 'option' );
 
 		if ( ! is_user_logged_in() ) {
 			?>
