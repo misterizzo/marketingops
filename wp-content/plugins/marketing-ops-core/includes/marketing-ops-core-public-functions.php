@@ -5521,6 +5521,8 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 	 */
 	function moc_render_login_form_html( $section ) {
 		ob_start();
+		$grecaptcha_site_key = get_field( 'grecaptcha_site_key', 'option' );
+
 		if ( ! is_user_logged_in() ) {
 			?>
 			<div class="elementor-column elementor-col-100 elementor-top-column elementor-element register_content login_content moc_login_form_section">
@@ -5575,7 +5577,8 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 											<div class="moc-form-field-wrap moc-custom-html fw-full fda-standard fld-above">
 												<?php if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) { ?>
 													<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-													<div class="g-recaptcha" data-sitekey="6Lf7hWMqAAAAAOdXojJoN-QPgBDJSnlMXz2wICR-"></div>
+													<input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+													<div class="g-recaptcha" data-sitekey="<?php echo esc_attr( $grecaptcha_site_key ); ?>"></div>
 												<?php } ?>
 											</div>
 											<div class="moc-form-submit-button-wrap">
@@ -9536,5 +9539,26 @@ if ( ! function_exists( 'mops_get_user_avatar_url' ) ) {
 		$wp_user_avatar = get_user_meta( $user_id, 'wp_user_avatar', true );
 
 		return ( empty( $wp_user_avatar ) || is_null( $wp_user_avatar ) || false === $wp_user_avatar ) ? false : wp_get_attachment_url( $wp_user_avatar );
+	}
+}
+
+/**
+ * Check if the function exists.
+ */
+if ( ! function_exists( 'mops_verify_google_recaptcha' ) ) {
+	/**
+	 * Return the user avatar url.
+	 *
+	 * @param int $user_id User ID.
+	 *
+	 * @return string|boolean
+	 *
+	 * @since 1.0.0
+	 */
+	function mops_verify_google_recaptcha( $recaptcha_response, $secret_key ) {
+		$verify_recaptcha_response = file_get_contents( "https://www.google.com/recaptcha/api/siteverify?secret={$secret_key}&response={$recaptcha_response}" );
+		$response_data             = json_decode( $verify_recaptcha_response );
+
+		return ( $response_data->success ) ? true : false;
 	}
 }

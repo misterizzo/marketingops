@@ -2667,15 +2667,17 @@
 	 */
 	$( document ).on( 'click', '.moc-login-submit-form', function( event ) {
 		event.preventDefault();
-		var this_button = $( this );
-		// this_button.text('Login ....');
-		var process_execute = true;
-		var email = this_button.closest( '.moc_login_form_section' ).find('.moc-email').val();
-		var password = this_button.closest( '.moc_login_form_section' ).find('.moc-password').val();
-		var previous_url = (false !== moc_get_url_vars()) ? moc_get_url_vars()['redirect_to'] : '';	
+		var this_button      = $( this );
+		var process_execute  = true;
+		var email            = this_button.closest( '.moc_login_form_section' ).find('.moc-email').val();
+		var password         = this_button.closest( '.moc_login_form_section' ).find('.moc-password').val();
+		var previous_url     = (false !== moc_get_url_vars()) ? moc_get_url_vars()['redirect_to'] : '';
+		var captcha_response = grecaptcha.getResponse();
+
 		$('.moc_error span').text('');
+
 		// check email input is empty or not.
-		if ('' === email) {
+		if ( '' === email ) {
 			this_button.closest( '.moc_login_form_section' ).find('.moc_email_err span').text(user_bio_empty_err_msg);
 			process_execute = false;
 		}
@@ -2691,44 +2693,45 @@
 			this_button.closest( '.moc_login_form_section' ).find('.moc_password_err span').text(user_bio_empty_err_msg);
 			process_execute = false;
 		}
+
 		if (false === process_execute) {
 			moc_show_toast('bg-danger', 'fa-skull-crossbones', toast_error_heading, invalid_empty_message);
-			// this_button.text('Log In');
 			return false;
-		} else {
-			var closest_loader = this_button.closest( '.moc_login_form_section' ).find( 'div.loader_bg' );
-			block_element( closest_loader );
-			var data = {
-				action: 'moc_user_login_process',
-				email: email,
-				password: password,
-				previous_url: previous_url,
-			};
-			$.ajax({
-				dataType: 'json',
-				url: ajaxurl,
-				type: 'POST',
-				data: data,
-				success: function( response ) {
-					if ('moc-failure-login' === response.data.code) {
-						moc_show_toast( 'bg-danger', 'fa-skull-crossbones', toast_error_heading, response.data.user_response_msg );
-						$('.moc-email').val( '' );
-						$('.moc-password').val( '' );
-					} else {
-						moc_show_toast( 'bg-success', 'fa-check-circle', toast_success_heading, response.data.user_response_msg );
-						$('.moc-email').val( '' );
-						$('.moc-password').val( '' );
-						this_button.prop('disabled', true);
-						if ( '' !== response.data.redirect_to ) {
-							setTimeout(function() {
-								window.location.href = response.data.redirect_to;
-							}, 1000);
-						}
-					}
-					unblock_element($('.loader_bg'));
-				}
-			} );
 		}
+
+		var closest_loader = this_button.closest( '.moc_login_form_section' ).find( 'div.loader_bg' );
+		block_element( closest_loader );
+		var data = {
+			action: 'moc_user_login_process',
+			email: email,
+			password: password,
+			previous_url: previous_url,
+			captcha_response: captcha_response,
+		};
+		$.ajax({
+			dataType: 'json',
+			url: ajaxurl,
+			type: 'POST',
+			data: data,
+			success: function( response ) {
+				if ('moc-failure-login' === response.data.code) {
+					moc_show_toast( 'bg-danger', 'fa-skull-crossbones', toast_error_heading, response.data.user_response_msg );
+					$('.moc-email').val( '' );
+					$('.moc-password').val( '' );
+				} else {
+					moc_show_toast( 'bg-success', 'fa-check-circle', toast_success_heading, response.data.user_response_msg );
+					$('.moc-email').val( '' );
+					$('.moc-password').val( '' );
+					this_button.prop('disabled', true);
+					if ( '' !== response.data.redirect_to ) {
+						setTimeout(function() {
+							window.location.href = response.data.redirect_to;
+						}, 1000);
+					}
+				}
+				unblock_element($('.loader_bg'));
+			}
+		} );
 	} );
 
 	/**
