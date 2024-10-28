@@ -1805,9 +1805,9 @@ section.conferencevaultevent.presentation.elementor-section.elementor-section-bo
 
 /* pricepopup */
 a#enrollbtns {color:#fff;cursor:pointer;}
-.mainpricebox{display:none;}
-.mainpricebox.active{display:block;position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9999;}
-.mainpricebox .innermainpricebox{position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);width:100%;max-width:450px;background:#fff;border-radius:12px;}
+.mainpricebox {display:none;}
+.mainpricebox.active {display:block;position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9999;}
+.mainpricebox .innermainpricebox {position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);width:100%;max-width:450px;background:#fff;border-radius:12px;}
 .mainpricebox .innermainpricebox .innerboxprice ul{display:flex;align-items:center;align-content:center;list-style:none;margin:0;padding:40px 40px 40px;justify-content:center;}
 .mainpricebox .innermainpricebox .innerboxprice ul li{width:calc(100% / 2);}
 .mainpricebox .innermainpricebox .innerboxprice ul li a.monthlybtns{background:#fa4a7a;background:linear-gradient(90deg,#FD4B7A -2.36%,#4D00AE 159.05%);transition:background .4s;color:#fff;padding:12px 24px;fill:#fff;text-align:center;border-radius:302px;}
@@ -1816,6 +1816,8 @@ a#enrollbtns {color:#fff;cursor:pointer;}
 .elementor-column.elementor-col-25.elementor-top-column.elementor-element.elementor-element-241a8774.pro_sec.membershipbox_one {width: 25% !important;}
 .elementor-column.elementor-col-25.elementor-top-column.elementor-element.elementor-element-241a8774.membershipbox_one.elementor-hidden-mobile {width: 25% !important;}
 .mainpricebox .innermainpricebox .innerboxprice h2 {background: linear-gradient(to bottom,#FD4B7A 0%,#4D00AE 166.67%);-webkit-background-clip: text;-moz-background-clip: text;background-clip: text;-webkit-text-fill-color: transparent;font-size: 20px;text-align: center;margin: 30px 0 0;font-weight: 400;}
+.mainpricebox .innermainpricebox {max-width: 560px;}
+.mainpricebox .innermainpricebox .innerboxprice {text-align: center;}
 
 @media screen and ( max-width:767px ) {
 	.mainpricebox .innermainpricebox{width:90%;}
