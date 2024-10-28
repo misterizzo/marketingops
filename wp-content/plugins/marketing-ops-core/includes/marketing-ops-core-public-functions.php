@@ -9582,16 +9582,17 @@ if ( ! function_exists( 'mops_is_user_ambassador' ) ) {
 	 * @since 1.0.0
 	 */
 	function mops_is_user_ambassador( $user_id ) {
-		$user_badges      = get_user_meta( $user_id, 'moc_community_badges', true );
-		$community_badges = get_field( 'community_badges', 'option' );
+		$user_badges = get_user_meta( $user_id, 'moc_community_badges', true );
 
 		// Return, if there are no user badges available.
 		if ( empty( $user_badges ) || ! is_array( $user_badges ) ) {
-			// return false;
+			return false;
 		}
 
-		debug( $community_badges );
+		$is_ambassador_in_badges = array_search( 'Ambassador', $user_badges, true );
+
 		debug( $user_badges );
+		var_dump( $is_ambassador_in_badges );
 
 		
 		foreach ( $get_settings_badges as $get_settings_badge ) {
