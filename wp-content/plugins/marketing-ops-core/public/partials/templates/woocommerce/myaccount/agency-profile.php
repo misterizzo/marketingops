@@ -8,6 +8,8 @@
  */
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
+
+var_dump( $current_user->ID );
 ?>
 <form>
     <section class="agencyformone">
