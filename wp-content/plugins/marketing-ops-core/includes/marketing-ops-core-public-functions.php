@@ -5582,7 +5582,7 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 												<?php // } ?>
 											</div>
 											<div class="moc-form-submit-button-wrap">
-												<button name="reg_login__submit" type="submit" class="moc-login-submit-form ppform-submit-button"><?php esc_html_e( 'Log In', 'marketingops' ); ?></button>
+												<button name="reg_login__submit" type="submit" class="moc-login-submit-form ppform-submit-button"><?php esc_html_e( 'Login', 'marketingops' ); ?></button>
 											</div>
 											<div class="moc-form-field-wrap moc-custom-html fw-full fda-standard fld-above">
 												<div class="moc-form-field-input-textarea-wrap">
