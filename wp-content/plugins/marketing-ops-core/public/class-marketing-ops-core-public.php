@@ -3573,7 +3573,7 @@ class Marketing_Ops_Core_Public {
 		$grecaptcha_secret_key = get_field( 'grecaptcha_secret_key', 'option' );
 
 		// As the first verification, let's verify the captcha.
-		$grecaptcha_verified = mops_verify_google_recaptcha( $captcha_response, $grecaptcha_secret_key );
+		// $grecaptcha_verified = mops_verify_google_recaptcha( $captcha_response, $grecaptcha_secret_key );
 
 		// if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
 		// 	var_dump( $grecaptcha_verified );
