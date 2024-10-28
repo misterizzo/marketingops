@@ -9591,6 +9591,10 @@ if ( ! function_exists( 'mops_is_user_ambassador' ) ) {
 
 		$is_ambassador_in_badges = array_search( 'Ambassador', $user_badges, true );
 
+		if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
+			var_dump( $is_ambassador_in_badges );
+		}
+
 		return ( false === $is_ambassador_in_badges ) ? false : true;
 	}
 }
