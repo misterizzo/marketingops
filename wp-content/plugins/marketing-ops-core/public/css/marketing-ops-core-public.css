@@ -154,17 +154,17 @@ form#commentform .comment-form-rating .stars:nth-child(2) {display: none;}
 .ops-d-shadow .elementor-element-populated {background: rgba(255, 255, 255, 0.5);border: 1px solid #e7efefbf;box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.03);}
 .ops-back-arrow,.ops-back-arrow p {margin-bottom: 0 !important;}
 .annual-darrel .testimonial_column {max-width: 806px;padding:10px !important;background: rgba(255, 255, 255, 0.5);box-shadow: 0px 40px 80px rgba(0, 0, 0, 0.05);border-radius: 40px;}
-.annual-darrel .testimonial_column:before {background-image: url(/wp-content/themes/marketingops/images/info_page/quote_left.svg);top: 20px;left: 20px;width: 50px;height: 40px;position: absolute;content: "";}
+.annual-darrel .testimonial_column:before {background-image: url('/wp-content/themes/marketingops/images/info_page/quote_left.svg');top: 20px;left: 20px;width: 50px;height: 40px;position: absolute;content: "";}
 .annual-darrel .testimonial_column img{-webkit-filter: drop-shadow(0px 15px 30px rgba(0, 0, 0, 0.1));filter: drop-shadow(0px 15px 30px rgba(0, 0, 0, 0.1));}
 .annual-darrel .testimonial_column .testimonial_column_inner_section .img_box {width: 100%;max-width: 130px;}
 .annual-darrel .testimonial_column .testimonial_column_inner_section .text_box {width: 100%;max-width: calc(100% - 130px);padding-left: 10px;}
 .annual-darrel .elementor-widget-image {width: auto !important;max-width:initial !important;}
-.annual-darrel .testimonial_column:after {background-image: url(/wp-content/themes/marketingops/images/info_page/quote_right.svg);bottom: 10px;right: 10px;width: 50px;height: 40px;position: absolute;content: "";}
+.annual-darrel .testimonial_column:after {background-image: url('/wp-content/themes/marketingops/images/info_page/quote_right.svg');bottom: 10px;right: 10px;width: 50px;height: 40px;position: absolute;content: "";}
 .annual-darrel .testimonial_column.testimonials-two {left: 150px;}
 .annual-darrel .testimonial_column.testimonials-three {left: 270px;}
 .annual-darrel.annual-testi-one:before {display: block;background-image: url(/wp-content/themes/marketingops/images/annual_repo/annual_repo_testi_bg_two.png);bottom: -140px;right: 0;content: "";background-repeat: no-repeat;background-position: top left;position: absolute;z-index: 1;width: 223px;height: 463px;}
-.annual-darrel.annual-testi-two:before {content: "";background-image: url(/wp-content/uploads/2023/08/blurcircle1-1.svg);background-position: top right;background-repeat: no-repeat;background-size: auto;position: absolute;right: 0;width: 534px;height: 534px;z-index: -1;}
-.annual-darrel.annual-testi-two:after {display: block;background-image: url(/wp-content/themes/marketingops/images/annual_repo/annual_repo_testi_bg.png);top: 0;left: 0;content: "";background-repeat: no-repeat;background-position: top left;position: absolute;z-index: -1;width: 223px;height: 463px;}
+.annual-darrel.annual-testi-two:before {content: "";background-image: url('/wp-content/uploads/2023/08/blurcircle1-1.svg');background-position: top right;background-repeat: no-repeat;background-size: auto;position: absolute;right: 0;width: 534px;height: 534px;z-index: -1;}
+.annual-darrel.annual-testi-two:after {display: block;background-image: url('/wp-content/themes/marketingops/images/annual_repo/annual_repo_testi_bg.png');top: 0;left: 0;content: "";background-repeat: no-repeat;background-position: top left;position: absolute;z-index: -1;width: 223px;height: 463px;}
 .marketingopsbookmainboxinner {background: rgba(255,255,255,.5);border: 1px solid #e7efefbf;box-shadow: 0 20px 40px rgba(0,0,0,.03);padding: 20px;border-radius: 24px 24px 24px 24px;margin-bottom: 20px;}
 .marketingopsbookmainboxuserimg {width: 100%;height: 100%;max-width: 170px;max-height: 170px;margin: 0 auto 20px;position:relative;}
 .marketingopsbookmainboxuserimg img {width: 100%;height: 100%;-o-object-fit: cover;object-fit: cover;border-radius: 100px;-o-object-position: center center;object-position: center center;overflow: hidden;}
@@ -259,7 +259,7 @@ span.elementor-button-icon.elementor-align-icon-right {margin-left: 10px;}
 .m-team-membership ul li{position: relative;list-style-type: none;}
 .m-team-membership ul li:before{content: "";position: absolute;left: -16px;width: 7px;height: 7px;background-color: #C4338C;border-radius: 100%;top: 9px;}
 .m-member-programs{position: relative;}
-.m-member-programs:before{content: "";position: absolute;left: 0;right: 0;top: 0;width: 100%;height: 110px;z-index: 1;background: url(/wp-content/themes/marketingops/images/partner_page/partner_testimonials_bg.png);background-color: #fff;background-repeat: no-repeat;background-position: right top;background-size: cover;}
+.m-member-programs:before{content: "";position: absolute;left: 0;right: 0;top: 0;width: 100%;height: 110px;z-index: 1;background: url('/wp-content/themes/marketingops/images/partner_page/partner_testimonials_bg.png');background-color: #fff;background-repeat: no-repeat;background-position: right top;background-size: cover;}
 .m-member-programs:after{content: "";position: absolute;background: #fff;background: linear-gradient(180deg,#FFFFFF 10.59%,rgba(241,243,244,0) 59.54%,#F1F3F4 94.99%);-webkit-transform: matrix(1,0,0,-1,0,0);transform: matrix(1,0,0,-1,0,0);left: 0;right: 0;width: 100%;height: calc(100% - 110px);top:110px;z-index: 0;}
 .m-member-programs h2{background: linear-gradient(26deg, #FD4B7A -2.36%, #4D00AE 121.05%) !important;-webkit-background-clip: text !important;background-clip: text !important;-webkit-text-fill-color: transparent !important;text-fill-color: transparent !important;text-align: center !important;}
 .m-member-programs .elementor-container{z-index: 9;}
@@ -275,9 +275,9 @@ span.elementor-button-icon.elementor-align-icon-right {margin-left: 10px;}
 .moc_is_checkout_page .show-password-input{top: .7em !important;-webkit-transform: initial !important;transform: initial !important;}
 .moc_not_logged_in_user .form-row input.input-text{background: rgba(246, 247, 247, 0.5);border: 1px solid #E7EFEF;border-radius: 6px;font-size: 16px;color: #45474F;padding: 12px 140px 12px 15px;}
 .moc_not_logged_in_user .woocommerce-form-login__submit{background: linear-gradient(90deg, #FA4A7A -2.36%, #9C2296 159.05%) !important;background: #FA4A7A;background: -moz-linear-gradient(90deg, #FA4A7A -2.36%, #9C2296 159.05%) !important;padding: 18px 15px !important;border-radius: 100px !important;max-width: 145px !important;width: 100% !important;position: relative !important;color: #fff !important;border: none !important;text-align: center;}
-.moc_not_logged_in_user .woocommerce-form-login__submit:after{content: "";background-image: url(/wp-content/themes/marketingops/images/svg/right_arrow.svg) !important;background-repeat: no-repeat !important;background-position: center; width: 20px;height: 11px;display: inline-block;margin-left: 6px;position: relative;top: 1px;}
+.moc_not_logged_in_user .woocommerce-form-login__submit:after{content: "";background-image: url('/wp-content/themes/marketingops/images/svg/right_arrow.svg') !important;background-repeat: no-repeat !important;background-position: center; width: 20px;height: 11px;display: inline-block;margin-left: 6px;position: relative;top: 1px;}
 .moc_not_logged_in_user p.form-row .woocommerce-form__label{padding-top: 6px;}
-.moc_not_logged_in_user .woocommerce-form-login.login span.required{background-image: url(/wp-content/themes/marketingops/images/svg/checkout_star.svg);background-position: center;background-repeat: no-repeat;text-indent: -10000px;overflow: hidden;width: 9px;height: 9px;background-size: contain;display: inline-block;position: absolute;top: 8px;}
+.moc_not_logged_in_user .woocommerce-form-login.login span.required{background-image: url('/wp-content/themes/marketingops/images/svg/checkout_star.svg');background-position: center;background-repeat: no-repeat;text-indent: -10000px;overflow: hidden;width: 9px;height: 9px;background-size: contain;display: inline-block;position: absolute;top: 8px;}
 .moc_not_logged_in_user  .form-row label{position: relative;}
 .woocommerce-checkout.moc_is_checkout_page .site-main .page-content{max-width: 1200px;}
 .moc_is_checkout_page .woocommerce-info,.moc_is_checkout_page .woocommerce-form-login-toggle,.moc_is_checkout_page .woocommerce-info,.moc_is_checkout_page .woocommerce-form.woocommerce-form-login,.moc_is_checkout_page .checkout_coupon{/*max-width: 800px;*/margin:0 auto 2em auto !important;}
@@ -287,7 +287,7 @@ span.elementor-button-icon.elementor-align-icon-right {margin-left: 10px;}
 .moc_is_checkout_page .cart_page_container .cart_page_box .box_content .wc_payment_methods .form-row{width: 100% !important;}
 .moc_is_checkout_page .cart_page_container .cart_page_box .box_content .wc_payment_methods .wc-stripe-elements-field{color: #45474F;font-size: 16px;background: rgba(246, 247, 247, 0.5);border: 1px solid #E7EFEF;border-radius: 6px;padding: 14px;}
 .moc_is_checkout_page span.woocommerce-terms-and-conditions-checkbox-text {display: inline-block !important;height: initial;margin: 0 !important;font-size: 14px;font-family: 'open_sanssemibold';padding-left: 35px;position: relative;}
-.moc_is_checkout_page .form-row span:before {background-image: url(/wp-content/themes/marketingops/images/svg/true_checkbox.svg);width: 15px;height: 15px;left: 5px;top: 50%;-webkit-transform: translateY(-50%);transform: translateY(-50%);border-radius: 0;opacity: 0;content: "";z-index: 1;background-repeat: no-repeat;position: absolute;}
+.moc_is_checkout_page .form-row span:before {background-image: url('/wp-content/themes/marketingops/images/svg/true_checkbox.svg');width: 15px;height: 15px;left: 5px;top: 50%;-webkit-transform: translateY(-50%);transform: translateY(-50%);border-radius: 0;opacity: 0;content: "";z-index: 1;background-repeat: no-repeat;position: absolute;}
 .moc_is_checkout_page .form-row input:checked~span:after {background: #FA4A7A;background: linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%);border: 1px solid #E7EFEF;content: "";position: absolute;left: 0;top: 50%;-webkit-transform: translateY(-50%);transform: translateY(-50%);width: 25px;height: 25px;border: 1px solid #E7EFEF;box-sizing: border-box;border-radius: 6px;content: "";}
 .moc_is_checkout_page .form-row span.woocommerce-terms-and-conditions-checkbox-text:after {content: "";border-radius: 6px !important;background: rgba(246, 247, 247, 0.5);border: 1px solid #E7EFEF;content: "";position: absolute;left: 0;top: 50%;-webkit-transform: translateY(-50%);transform: translateY(-50%);width: 25px;height: 25px;box-sizing: border-box;border: 1px solid #E7EFEF;}
 .moc_is_checkout_page .form-row.woocommerce-validated input:checked~span:before {opacity: 1;background-color: transparent;}
@@ -358,7 +358,7 @@ ul.members_directory .inner-member-directory .member-bottom-post .right-podcast{
 .woocommerce-order-pay #stripe-payment-data .wc-stripe-elements-field{color: #45474F;font-size: 16px;background: rgba(246, 247, 247, 0.5);border: 1px solid #E7EFEF;border-radius: 6px;padding: 14px;}
 .woocommerce-order-pay .payment_box .woocommerce-SavedPaymentMethods-saveNew{position: relative;}
 .woocommerce-order-pay .payment_box .woocommerce-SavedPaymentMethods-saveNew label:after{content: "";border-radius: 6px !important;background: rgba(246, 247, 247, 0.5);border: 1px solid #E7EFEF;content: "";position: absolute;left: 0;top: 56%;-webkit-transform: translateY(-50%);transform: translateY(-50%);width: 25px;height: 25px;box-sizing: border-box;border: 1px solid #E7EFEF;}
-.woocommerce-order-pay .payment_box .woocommerce-SavedPaymentMethods-saveNew label:before{background-image: url(/wp-content/themes/marketingops/images/svg/true_checkbox.svg);width: 15px;height: 15px;left: 5px;top: 51%;-webkit-transform: translateY(-50%);transform: translateY(-50%);border-radius: 0;opacity: 0;content: "";z-index: 1;background-repeat: no-repeat;position: absolute;}
+.woocommerce-order-pay .payment_box .woocommerce-SavedPaymentMethods-saveNew label:before{background-image: url('/wp-content/themes/marketingops/images/svg/true_checkbox.svg');width: 15px;height: 15px;left: 5px;top: 51%;-webkit-transform: translateY(-50%);transform: translateY(-50%);border-radius: 0;opacity: 0;content: "";z-index: 1;background-repeat: no-repeat;position: absolute;}
 .woocommerce-order-pay .payment_box input#wc-stripe-new-payment-method{opacity: 0;}
 .woocommerce-order-pay .payment_box .woocommerce-SavedPaymentMethods-saveNew input:checked~label:before{opacity: 1;}
 .woocommerce-order-pay .payment_box .woocommerce-SavedPaymentMethods-saveNew input:checked~label:after{background: #FA4A7A;background: linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%);border: 1px solid #E7EFEF; content: "";position: absolute;left: 0;top: 50%;-webkit-transform: translateY(-50%);transform: translateY(-50%);width: 25px;height: 25px;border: 1px solid #E7EFEF;box-sizing: border-box;border-radius: 6px;content: "";}
@@ -390,11 +390,11 @@ ul.members_directory .inner-member-directory .member-bottom-post .right-podcast{
 .woocommerce-order-pay form #payment ul li ul{padding-left: 0;}
 .woocommerce-add-payment-method .woocommerce-input-wrapper label.checkbox{position: relative;}
 .woocommerce-add-payment-method .woocommerce-input-wrapper label.checkbox:after{background: #fa4a7a;background: linear-gradient(90deg,#FD4B7A -2.36%,#4D00AE 159.05%);border: 1px solid #e7efef;content: "";position: absolute;left: 0;top: 50%;-webkit-transform: translateY(-50%);transform: translateY(-50%);width: 25px;height: 25px;border: 1px solid #e7efef;box-sizing: border-box; border-radius: 6px;content: "";}
-.woocommerce-add-payment-method .woocommerce-input-wrapper label.checkbox:before{background-image: url(/wp-content/themes/marketingops/images/svg/true_checkbox.svg);width: 15px;height: 15px;left: 5px;top: 50%;-webkit-transform: translateY(-50%);transform: translateY(-50%);border-radius: 0;opacity: 0;content: "";z-index: 1;background-repeat: no-repeat;position: absolute;}
+.woocommerce-add-payment-method .woocommerce-input-wrapper label.checkbox:before{background-image: url('/wp-content/themes/marketingops/images/svg/true_checkbox.svg');width: 15px;height: 15px;left: 5px;top: 50%;-webkit-transform: translateY(-50%);transform: translateY(-50%);border-radius: 0;opacity: 0;content: "";z-index: 1;background-repeat: no-repeat;position: absolute;}
 .woocommerce-add-payment-method .woocommerce-input-wrapper label.checkbox:before~input:checked {opacity: 1;background-color: transparent;}
 .woocommerce-order-pay #order_review ul li .form-row label{font-weight: 400;font-family: open_sanssemibold;font-size: 14px;color: #242730;line-height: initial;margin-bottom: 10px;}
 .woocommerce-order-pay #payment .form-row button.button{position: relative;padding: 18px;}
-.woocommerce-order-pay #payment .form-row button.button:after{content: "";background-image: url(/wp-content/themes/marketingops/images/svg/right_arrow.svg) !important;background-repeat: no-repeat !important;background-position: center;width: 20px;height: 11px;display: inline-block;margin-left: 6px;position: relative;top: 1px;}
+.woocommerce-order-pay #payment .form-row button.button:after{content: "";background-image: url('/wp-content/themes/marketingops/images/svg/right_arrow.svg') !important;background-repeat: no-repeat !important;background-position: center;width: 20px;height: 11px;display: inline-block;margin-left: 6px;position: relative;top: 1px;}
 
 /* road mopza */
 .roadtomopza .elementor-container.elementor-column-gap-default {justify-content: flex-end;}
@@ -434,7 +434,7 @@ ul.members_directory .inner-member-directory .member-bottom-post .right-podcast{
 .dinnerblocksmain_4 .dinnerblocksmain_4_inner .dinnerblocksmain_4_inner_:before {background: linear-gradient(90deg, #ED457F 80%, #F6F7F7 100%);content: '';position: absolute;left: 0;bottom: 0;width: 382px;height: 3px;flex-shrink: 0;}
 #hsForm_1add613a-e32e-4eb5-a0fa-ed152f63164a .hs_submit.hs-submit {margin-left: auto;display: flex;justify-content: flex-start;margin-top: 0%;}
 #hsForm_1add613a-e32e-4eb5-a0fa-ed152f63164a fieldset.form-columns-1:nth-child(13) {float: none;max-width: 100%;}
-.first_section::after {content: "";width: 1102px;max-width: 1102px;position: absolute;top: 0;bottom: 0;left: -128px;right: 0;margin: 0 auto;background-image: url("/wp-content/themes/marketingops/images/startup_page/startup_land_lp_page_bg.svg");background-repeat: no-repeat;background-size: contain;z-index: 1;}
+.first_section::after {content: "";width: 1102px;max-width: 1102px;position: absolute;top: 0;bottom: 0;left: -128px;right: 0;margin: 0 auto;background-image: url('/wp-content/themes/marketingops/images/startup_page/startup_land_lp_page_bg.svg');background-repeat: no-repeat;background-size: contain;z-index: 1;}
 .first_section .elementor-container .first_section_column {z-index: 9;}
 .mops_takes_section {background-image: url('/wp-content/themes/marketingops/images/startup_page/startup_land_lp_page_bg_two.svg');background-position: center bottom 40px;background-repeat: no-repeat;}
 .mops_startup_participate_section .mops_startup_participate_column .ma_ps_product .elementor-container .ma_ps_product_img::after,
@@ -918,7 +918,7 @@ div#download {margin: 0 5px;}
 .marketingopstemplates:before, .marketingopstemplates:after,.margktingimgss:after{content: "";background-repeat: no-repeat;background-position: top left;position: absolute;z-index: -1;}
 .marketingopstemplates:before {background-image: url('/wp-content/themes/marketingops/images/marketingtemplate/marketingnewtemplate-1.png');left: 0;top: 40%;width: 519px;height: 711px;}
 .marketingopstemplates:after {background-image: url('/wp-content/themes/marketingops/images/marketingtemplate/marketingnewtemplate-2.png');width: 438px;height: 533px;right: 0;top: 20px;z-index: -5;}
-.margktingimgss:after {background-image: url(/wp-content/themes/marketingops/images/marketingtemplate/marketingnewtemplate-3.png);width: 438px;height: 533px;right: 0;top: 84%;z-index: -5;}
+.margktingimgss:after {background-image: url('/wp-content/themes/marketingops/images/marketingtemplate/marketingnewtemplate-3.png');width: 438px;height: 533px;right: 0;top: 84%;z-index: -5;}
 .cardContainer .cardBox:hover {box-shadow: 0 40px 80px 0 rgba(0,0,0,.09);}
 .cardContainer .cardBox:hover .downloadbtn{opacity: 1;pointer-events:inherit;}
 .downloadbtn {display: inline-flex;height: 26px;padding: 6px 20px 7px 20px;justify-content: center;align-items: center;gap: 5px;flex-shrink: 0;border-radius: 302px;background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));color: var(--pure-white, #FFF);font-family: Open Sans;font-size: 14px;font-style: normal;font-weight: 400;line-height: 82%;position: relative;right: 0;margin-left: auto;opacity:0;pointer-events:none;}
@@ -1331,178 +1331,31 @@ display:none;
 .first_section .first_section_column .sub_title,
 .first_section .first_section_column .first_inner_section .first_inner_column .page_content_title,
 .first_section .first_section_column .first_inner_section .first_inner_column .elementor-widget-text-editor,
-.first_section .first_section_column .first_inner_section .first_inner_column .elementor-widget-text-editor p {
-	margin-bottom: 0;
-}
-
-.first_section {
-	background-position: top left 18vw !important;
-}
-
-.first_section::after {
-	content: "";
-	width: 1102px;
-	max-width: 1102px;
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: -128px;
-	right: 0; 
-	margin: 0 auto;
-	background-image: url("/wp-content/themes/marketingops/images/startup_page/startup_land_lp_page_bg.svg");
-	background-repeat: no-repeat;
-	background-size: contain;
-	z-index: 1;
-}
-
-.first_section::before {
-	content: "";
-	width: 100%;
-	max-width: 1060px;
-	height: 1060px;
-	z-index: 1;
-	position: absolute;
-	top: -253px;
-	bottom: 0;
-	left: 0px;
-	right: 0;
-	margin: 0 auto;
-	background-image: url("/wp-content/themes/marketingops/images/startup_page/startup_land_lp_page_bg_shadow.svg");
-	background-repeat: no-repeat;
-	background-size: contain;
-}
-
-.first_section .elementor-container::after {
-	content: "";
-	position: absolute;
-	top: 50px;
-	z-index: 0;
-	margin: 0;
-	left: 0;
-	right: 0;
-	width: 100%;
-	max-width: 1178px;
-	height: 69px;
-	background-image: url('/wp-content/themes/marketingops/images/startup_page/startup_land_lp_page_title_shadow.svg');
-	background-repeat: no-repeat;
-	background-size: contain;
-}
-
-.subscribetextbooxs h3{background: var(--vertical-grad-1, linear-gradient(180deg, #FD4B7A 0%, #4D00AE 166.67%));
-background-clip: text;
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-font-family: "Futura LT";
-font-size: 25px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;margin: 0 0 10px;}
-
-.titlesubscribse h3.elementor-heading-title.elementor-size-default
-{
-	font-family: "Futura LT";
-font-size: 14px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
-letter-spacing: 1px;
-text-transform: uppercase;
-background: var(--vertical-grad-1, linear-gradient(180deg, #FD4B7A 0%, #4D00AE 166.67%));
-background-clip: text;
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-margin: 10px 0;
-}
-.background_color_sec .elementor-container.elementor-column-gap-default {
-	background: #FBFBFB;
-	max-width: 668px !important;
-	border-radius: 5px;
-}
-
-.subscribeprobox.membershipbox_other .elementor-element.elementor-widget.elementor-widget-image {
-	margin-bottom: 0;
-}
-
-
-.first_section .elementor-container .elementor-container::after {
-	display: none;
-}
-
-.first_section .elementor-container .first_section_column {
-	z-index: 9;
-}
-
-.first_section .first_section_column .main_title {
-	margin-bottom: -10px;
-	position: relative;
-	z-index: 1;
-}
-
-.first_section .first_section_column .sub_title h2 {
-	font-family: "Inter", Open Sans !important;
-}
-
-.first_section .first_section_column .sub_title h2 span {
-	font-family: "Antry Sans", Open Sans;
-	text-decoration: underline;
-}
-
-.first_section .first_section_column .first_inner_section {
-	max-width: 657px;
-	margin: 35px auto 0;
-}
-
-.first_section .first_section_column .first_inner_section .first_inner_column .elementor-widget-wrap {
-	justify-content: center;
-}
-
-.first_section .first_section_column .first_inner_section .first_inner_column .elementor-widget-button {
-	margin: 25px 15px 25px 0;
-	width: auto;
-}
-
-.first_section .first_section_column .first_inner_section .first_inner_column .elementor-widget-button a {
-	background: #1a2136;
-	background: linear-gradient(90deg, #1a2136 0%, #1c3159 71.7%, #182a4b 100%);
-	border-radius: 100px;
-	max-width: 272px;
-	width: 272px;
-	padding: 15px 20px;
-}
-
+.first_section .first_section_column .first_inner_section .first_inner_column .elementor-widget-text-editor p {margin-bottom: 0;}
+.first_section {background-position: top left 18vw !important;}
+.first_section::after {content: "";width: 1102px;max-width: 1102px;position: absolute;top: 0;bottom: 0;left: -128px;right: 0; margin: 0 auto;background-image: url('/wp-content/themes/marketingops/images/startup_page/startup_land_lp_page_bg.svg');background-repeat: no-repeat;background-size: contain;z-index: 1;}
+.first_section::before {content: "";width: 100%;max-width: 1060px;height: 1060px;z-index: 1;position: absolute;top: -253px;bottom: 0;left: 0px;right: 0;margin: 0 auto;background-image: url('/wp-content/themes/marketingops/images/startup_page/startup_land_lp_page_bg_shadow.svg');background-repeat: no-repeat;background-size: contain;}
+.first_section .elementor-container::after {content: "";position: absolute;top: 50px;z-index: 0;margin: 0;left: 0;right: 0;width: 100%;max-width: 1178px;height: 69px;background-image: url('/wp-content/themes/marketingops/images/startup_page/startup_land_lp_page_title_shadow.svg');background-repeat: no-repeat;background-size: contain;}
+.subscribetextbooxs h3 {background: var(--vertical-grad-1, linear-gradient(180deg, #FD4B7A 0%, #4D00AE 166.67%));background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;font-family: "Futura LT";font-size: 25px;font-style: normal;font-weight: 700;line-height: normal;margin: 0 0 10px;}
+.titlesubscribse h3.elementor-heading-title.elementor-size-default {font-family: "Futura LT";font-size: 14px;font-style: normal;font-weight: 700;line-height: normal;letter-spacing: 1px;text-transform: uppercase;background: var(--vertical-grad-1, linear-gradient(180deg, #FD4B7A 0%, #4D00AE 166.67%));background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;margin: 10px 0;}
+.background_color_sec .elementor-container.elementor-column-gap-default {background: #FBFBFB;max-width: 668px !important;border-radius: 5px;}
+.subscribeprobox.membershipbox_other .elementor-element.elementor-widget.elementor-widget-image {margin-bottom: 0;}
+.first_section .elementor-container .elementor-container::after {display: none;}
+.first_section .elementor-container .first_section_column {z-index: 9;}
+.first_section .first_section_column .main_title {margin-bottom: -10px;position: relative;z-index: 1;}
+.first_section .first_section_column .sub_title h2 {font-family: "Inter", Open Sans !important;}
+.first_section .first_section_column .sub_title h2 span {font-family: "Antry Sans", Open Sans;text-decoration: underline;}
+.first_section .first_section_column .first_inner_section {max-width: 657px;margin: 35px auto 0;}
+.first_section .first_section_column .first_inner_section .first_inner_column .elementor-widget-wrap {justify-content: center;}
+.first_section .first_section_column .first_inner_section .first_inner_column .elementor-widget-button {margin: 25px 15px 25px 0;width: auto;}
+.first_section .first_section_column .first_inner_section .first_inner_column .elementor-widget-button a {background: #1a2136;background: linear-gradient(90deg, #1a2136 0%, #1c3159 71.7%, #182a4b 100%);border-radius: 100px;max-width: 272px;width: 272px;padding: 15px 20px;}
 .first_section .first_section_column .first_inner_section .first_inner_column .elementor-widget-button a span,
-.mops_takes_section .mops_takes_column .elementor-widget-button a span {
-	flex-grow: initial;
-}
-
-.first_section .first_section_column .first_inner_section .first_inner_column .elementor-widget-button.border_btn a {
-	background-image: none;
-	border: 1px solid #FFFFFF;
-	width: 240px;
-}
-
-.first_section .first_section_column .first_inner_section .first_inner_column .mops_page_content_title {
-	margin-bottom: 5px;
-}
-
-.first_section .first_section_column .first_inner_section .first_inner_column .elementor-widget-text-editor .elementor-widget-container {
-	display: flex;
-	justify-content: center;
-	margin-top: 2px;
-}
-
-.mops_startup_participate_section .mops_startup_participate_column .ma_ps_product {
-	margin-top: 25px;
-}
-
-.mops_startup_participate_section .mops_startup_participate_column .ma_ps_product .elementor-container .ma_ps_product_img {
-	background-color: #1a2136;
-	border-top-left-radius: 56px;
-	border-bottom-left-radius: 56px;
-	padding: 45px 32px 45px;
-	position: relative;
-}
-
+.mops_takes_section .mops_takes_column .elementor-widget-button a span {flex-grow: initial;}
+.first_section .first_section_column .first_inner_section .first_inner_column .elementor-widget-button.border_btn a {background-image: none;border: 1px solid #FFF;width: 240px;}
+.first_section .first_section_column .first_inner_section .first_inner_column .mops_page_content_title {margin-bottom: 5px;}
+.first_section .first_section_column .first_inner_section .first_inner_column .elementor-widget-text-editor .elementor-widget-container {display: flex;justify-content: center;margin-top: 2px;}
+.mops_startup_participate_section .mops_startup_participate_column .ma_ps_product {margin-top: 25px;}
+.mops_startup_participate_section .mops_startup_participate_column .ma_ps_product .elementor-container .ma_ps_product_img {background-color: #1a2136;border-top-left-radius: 56px;border-bottom-left-radius: 56px;padding: 45px 32px 45px;position: relative;}
 .mops_startup_participate_section .mops_startup_participate_column .ma_ps_product .elementor-container .ma_ps_product_text {
 	padding: 45px 32px 45px;
 	background-color: #1a2136;
@@ -1530,7 +1383,7 @@ margin: 10px 0;
 
 .mops_startup_participate_section .mops_startup_participate_column .ma_ps_product .elementor-container .ma_ps_product_text::after {
 	content: "";
-	background-image: url("/wp-content/themes/marketingops/images/mopsapalooza/dots_line.svg");
+	background-image: url('/wp-content/themes/marketingops/images/mopsapalooza/dots_line.svg');
 	width: 9px;
 	height: calc(100% + 4px);
 	background-position: top left;
@@ -1636,7 +1489,7 @@ margin: 10px 0;
 		width: 100%;
 		height: 538px;
 		top: -85px;
-		background-image: url(/wp-content/themes/marketingops/images/startup_page/mobile_images/earth.svg);
+		background-image: url('/wp-content/themes/marketingops/images/startup_page/mobile_images/earth.svg');
 		background-size: 515px;
 		background-position: center;
 	}
@@ -1661,7 +1514,7 @@ margin: 10px 0;
 		top: initial;
 		right: 0;
 		bottom: 0;
-		background-image: url(/wp-content/themes/marketingops/images/startup_page/mobile_images/space_man.png);
+		background-image: url('/wp-content/themes/marketingops/images/startup_page/mobile_images/space_man.png');
 	}
 
 	.first_section .elementor-container::before {
@@ -1669,7 +1522,7 @@ margin: 10px 0;
 		height: 138px;
 		left: -82px;
 		bottom: 10px;
-		background-image: url(/wp-content/themes/marketingops/images/startup_page/mobile_images/freeze_earth.png);
+		background-image: url('/wp-content/themes/marketingops/images/startup_page/mobile_images/freeze_earth.png');
 	}
 
 	.first_section .first_section_column .page_title {
@@ -1823,8 +1676,8 @@ margin: 10px 0;
 .marketingopstemplatesconfernace{position: relative;}
 .marketingopstemplatesconfernace:before {background-image: url('/wp-content/themes/marketingops/images/marketingtemplate/marketingnewtemplate-1.png');left:0;top:65%;width:519px;height:711px;content:"";background-repeat:no-repeat;background-position:top left;position:absolute;z-index:-1;}
 .marketingopstemplatesconfernace:after {background-image: url('/wp-content/themes/marketingops/images/marketingtemplate/marketingnewtemplate-2.png');width:360px;height:533px;right:0;top:-139px;z-index:0;content:"";background-repeat:no-repeat;background-position:top left;position:absolute;}
-.marketingopstemplatesconfernace .margktingimgss:after {background-image: url(/wp-content/themes/marketingops/images/marketingtemplate/marketingnewtemplate-3.png);width:400px;height:533px;right:0;top:90%;z-index:-5;}
-.marketingopstemplatesconfernace .margktingimgss:before {background-image: url(/wp-content/themes/marketingops/images/marketingtemplate/marketingnewtemplate-3.png);width:400px;height:533px;right:0;top: 33%;z-index:-5;content: "";background-repeat: no-repeat;background-position: top left;position: absolute;}
+.marketingopstemplatesconfernace .margktingimgss:after {background-image: url('/wp-content/themes/marketingops/images/marketingtemplate/marketingnewtemplate-3.png');width:400px;height:533px;right:0;top:90%;z-index:-5;}
+.marketingopstemplatesconfernace .margktingimgss:before {background-image: url('/wp-content/themes/marketingops/images/marketingtemplate/marketingnewtemplate-3.png');width:400px;height:533px;right:0;top: 33%;z-index:-5;content: "";background-repeat: no-repeat;background-position: top left;position: absolute;}
 section.conferencevault.elementor-section.elementor-section-boxed{padding-top:20px;}
 .mops_conference-vault_page .conferencevault .conferencevaultinner h1{text-align:center;font-family:"Futura LT","Open Sans";font-size:34px;font-style:normal;font-weight:700;line-height:normal;background:var(--horizontal-grad-1,linear-gradient(90deg,#FD4B7A -2.36%,#4D00AE 159.05%));background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin:0 0 10px;}
 .mops_conference-vault_page .conferencevault .conferencevaultinner{width:100%;text-align:center;}
@@ -2018,7 +1871,7 @@ section.profile_setup .content_boxed {display: flex;align-items: flex-start;alig
 section.profile_setup .content_boxed input[type="checkbox"]{opacity: 0 !important;position: absolute;margin: 0;left: 0;right: 0;width: 25px;height: 25px;text-align: left;z-index: 99;top: 50%;-webkit-transform: translateY(-50%);transform: translateY(-50%);}
 section.profile_setup .content_boxed label{font-family: 'open_sansregular';font-size: 14px;color: #45474F;display: flex;align-items: center;padding-left: 35px;position: relative;}
 .profile_setup .setup_container .form_btn p {text-align: left;margin-left: 35px !important;}
-section.profile_setup .content_boxed label:before{content: "";position: absolute;left: 5px;top: 25%;-webkit-transform: translateY(-50%);transform: translateY(-50%);width: 15px;height: 15px;background-image: url(/wp-content/themes/marketingops/images/svg/true_checkbox.svg);background-repeat: no-repeat;background-size: contain;opacity: 0;z-index: 9;}
+section.profile_setup .content_boxed label:before{content: "";position: absolute;left: 5px;top: 25%;-webkit-transform: translateY(-50%);transform: translateY(-50%);width: 15px;height: 15px;background-image: url('/wp-content/themes/marketingops/images/svg/true_checkbox.svg');background-repeat: no-repeat;background-size: contain;opacity: 0;z-index: 9;}
 section.profile_setup .content_boxed input:checked~label:before{opacity: 1;}
 section.profile_setup .content_boxed input:checked~label:after{border-radius: 6px;}
 section.profile_setup .content_boxed input:checked~label:after{background: #FA4A7A;background: linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%);}
