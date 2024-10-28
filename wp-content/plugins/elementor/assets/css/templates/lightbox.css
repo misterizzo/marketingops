@@ -149,6 +149,7 @@
 .elementor-lightbox .elementor-video-container .elementor-video-landscape video {
   width: 100%;
   max-height: 90vh;
+  height: auto;
 }
 .elementor-lightbox .elementor-video-container .elementor-video-portrait iframe,
 .elementor-lightbox .elementor-video-container .elementor-video-portrait video {

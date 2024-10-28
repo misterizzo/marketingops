@@ -14,6 +14,7 @@ return [
 		'elementor-v2-editor-v1-adapters',
 		'elementor-v2-icons',
 		'elementor-v2-locations',
+		'elementor-v2-menus',
 		'elementor-v2-ui',
 		'react',
 		'wp-i18n',

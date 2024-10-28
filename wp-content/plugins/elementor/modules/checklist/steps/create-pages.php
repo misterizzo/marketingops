@@ -29,7 +29,7 @@ class Create_Pages extends Step_Base {
 	}
 
 	public function get_description() : string {
-		return esc_html__( 'Jumpstart your creation with professional designs form the Template Library or start from scratch.', 'elementor' );
+		return esc_html__( 'Jumpstart your creation with professional designs from the Template Library or start from scratch.', 'elementor' );
 	}
 
 	public function get_cta_text() : string {
@@ -40,7 +40,15 @@ class Create_Pages extends Step_Base {
 		return Plugin::$instance->documents->get_create_new_post_url( 'page' );
 	}
 
+	public function get_learn_more_url() : string {
+		return 'http://go.elementor.com/app-website-checklist-pages-article';
+	}
+
 	public function get_is_completion_immutable() : bool {
 		return true;
+	}
+
+	public function get_image_src() : string {
+		return 'https://assets.elementor.com/checklist/v1/images/checklist-step-3.jpg';
 	}
 }

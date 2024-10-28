@@ -301,6 +301,11 @@ class Logger extends Model
         $headers = [];
 
         foreach ($email['headers'] as $key => $value) {
+
+            if($key == 'content-type' && $value == 'multipart/alternative') {
+                $value = 'text/html';
+            }
+
             if (is_array($value)) {
                 $values = [];
                 $value = array_filter($value);
@@ -394,7 +399,7 @@ class Logger extends Model
     {
         try {
 
-            $date = date('Y-m-d H:i:s', current_time('timestamp') - $days * DAY_IN_SECONDS);
+            $date = gmdate('Y-m-d H:i:s', current_time('timestamp') - $days * DAY_IN_SECONDS);
             $query = $this->db->prepare("DELETE FROM {$this->table} WHERE `created_at` < %s", $date);
             return $this->db->query($query);
 

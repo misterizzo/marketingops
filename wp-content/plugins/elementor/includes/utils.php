@@ -114,6 +114,10 @@ class Utils {
 		return defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG;
 	}
 
+	public static function is_elementor_debug() {
+		return defined( 'ELEMENTOR_DEBUG' ) && ELEMENTOR_DEBUG;
+	}
+
 	/**
 	 * Whether elementor test mode is enabled or not.
 	 *
@@ -881,5 +885,26 @@ class Utils {
 		$now_time = gmdate( 'U' );
 
 		return $now_time >= $sale_start_time && $now_time <= $sale_end_time;
+	}
+
+	public static function safe_throw( string $message ) {
+		if ( ! static::is_elementor_debug() ) {
+			return;
+		}
+
+		throw new \Exception( $message );
+	}
+
+	public static function has_invalid_post_permissions( $post ): bool {
+		$is_private = 'private' === $post->post_status
+			&& ! current_user_can( 'read_private_posts', $post->ID );
+
+		$not_allowed = 'publish' !== $post->post_status
+			&& ! current_user_can( 'edit_post', $post->ID );
+
+		$password_required = post_password_required( $post->ID )
+			&& ! current_user_can( 'edit_post', $post->ID );
+
+		return $is_private || $not_allowed || $password_required;
 	}
 }
