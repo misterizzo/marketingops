@@ -117,7 +117,7 @@ if ( false === $user_memberships ) {
 	<div class="margktingimgss"></div>
 	<div class="elementor-container elementor-column-gap-default">
 		<div class="conferencevaultinner">
-			<h1><?php echo wp_kses_post( get_the_title( get_the_ID() ) ); ?></h1>
+			<h1><?php echo wp_kses_post( get_the_title( $page_id ) ); ?></h1>
 			<h3><?php esc_html_e( 'MarketingOps event speakers\' presentations archive from 2018 to present day. Enjoy.', 'marketingops' ); ?></h3>
 		</div>
 	</div>
