@@ -5370,23 +5370,28 @@
   		$thisCell.removeClass('is-expanded').addClass('is-collapsed');
   		$cell.not($thisCell).removeClass('is-inactive');
 	} );
-/* exapnd card */
+	/* exapnd card */
 
-	if ($(".mops_subscribe_elementor_library")[0]) {
-		$(".mops_subscribe_elementor_library").addClass("mops_subscribe_page");
+	if ( $( '.mops_subscribe_elementor_library' )[0] ) {
+		$( '.mops_subscribe_elementor_library' ).addClass( 'mops_subscribe_page' );
 	}
-	
 
-	if (jQuery("#enrollbtns")[0]) {
-		$("#enrollbtns").click(function() {
-			$('.mainpricebox').addClass("active");     
-  		} );
-
+	if ( $( '#enrollbtns' )[0] ) {
+		$( document ).on( 'click', '#enrollbtns', function() {
+			$( '.mainpricebox' ).addClass( 'active' );
+		} );
 	}
 
 	if ( $( '.closebuttonmainprice' )[0] ) {
 		$( document ).on( 'click', '.closebuttonmainprice', function() {
 			$( '.mainpricebox' ).removeClass( 'active' );
+		} );
+	}
+
+	// Agency signup email confirmation.
+	if ( $( '.agency-signup-email-confirmation' ).length ) {
+		$( document ).on( 'click', '.agency-signup-email-confirmation a', function() {
+			$( '.mainpricebox' ).addClass( 'active' );
 		} );
 	}
 } )( jQuery );
