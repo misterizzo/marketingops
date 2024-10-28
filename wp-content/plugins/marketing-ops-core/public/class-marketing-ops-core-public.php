@@ -3588,25 +3588,16 @@ class Marketing_Ops_Core_Public {
 
 		$user_signon_response = $user_signon->errors;
 
-		if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
-			var_dump( $user_signon_response );
-			die;
-		}
-
 		if ( empty( $user_signon_response )  ) {
-			$user_response_msg = __( 'You are successfully logged in.' );
+			$user_response_msg = __( 'You are successfully logged in.', 'marketingops' );
 			$message           = 'moc-successfully-login';
-			if ( ! empty( $ref_url ) && ( $ref_url !== site_url() && $ref_url !== site_url( 'log-in' ) ) ) {
-				$redirect_to       = site_url() . $ref_url;	
-			} else {
-				$redirect_to       = site_url( 'profile' );
-			}
+			$redirect_to       = ( ! empty( $ref_url ) && ( $ref_url !== site_url() && $ref_url !== site_url( 'log-in' ) ) ) : site_url() . $ref_url : site_url( 'profile' );
 			$user              = get_user_by('login', $username);
-			$user_id           = $user->data->ID;
-			clean_user_cache( $user_id );
+
+			clean_user_cache( $user->data->ID );
 			wp_clear_auth_cookie();
-			wp_set_current_user( $user_id );
-			wp_set_auth_cookie( $user_id, true, true );
+			wp_set_current_user( $user->data->ID );
+			wp_set_auth_cookie( $user->data->ID, true, true );
 			update_user_caches( $user );
 		} else {
 			if ( array_key_exists( 'empty_username', $user_signon_response ) ) {
@@ -3619,12 +3610,15 @@ class Marketing_Ops_Core_Public {
 			$message     = 'moc-failure-login';
 			$redirect_to = '';
 		}
-		$response = array(
-			'code'              => $message,
-			'user_response_msg' => $user_response_msg,
-			'redirect_to'       => $redirect_to,
+
+		// Send the AJAX response.
+		wp_send_json_success(
+			array(
+				'code'              => $message,
+				'user_response_msg' => $user_response_msg,
+				'redirect_to'       => $redirect_to,
+			)
 		);
-		wp_send_json_success( $response );
 		wp_die();
 	}
 
