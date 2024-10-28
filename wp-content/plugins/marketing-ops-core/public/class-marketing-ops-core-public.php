@@ -3575,10 +3575,10 @@ class Marketing_Ops_Core_Public {
 		// As the first verification, let's verify the captcha.
 		$grecaptcha_verified = mops_verify_google_recaptcha( $captcha_response, $grecaptcha_secret_key );
 
-		if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
-			var_dump( $grecaptcha_verified );
-			die;
-		}
+		// if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
+		// 	var_dump( $grecaptcha_verified );
+		// 	die;
+		// }
 
 		if ( ! empty( $email ) && is_email( $email ) ) {
 			if ( $user = get_user_by_email( $email ) ) {

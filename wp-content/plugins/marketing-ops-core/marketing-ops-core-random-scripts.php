@@ -222,9 +222,9 @@ function fetch_mopza24_speakers() {
 	$session_board_event_sessions_response_code = wp_remote_retrieve_response_code( $session_board_event_sessions );
 	$session_board_event_sessions_response_body = wp_remote_retrieve_body( $session_board_event_sessions );
 
-	var_dump( $session_board_event_sessions_response_code );
-	debug( json_decode( $session_board_event_sessions_response_body ) );
-	die;
+	// var_dump( $session_board_event_sessions_response_code );
+	// debug( json_decode( $session_board_event_sessions_response_body ) );
+	// die;
 }
 
 // fetch_mopza24_speakers();
