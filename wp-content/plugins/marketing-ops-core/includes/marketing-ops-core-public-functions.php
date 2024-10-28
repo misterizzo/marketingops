@@ -9584,20 +9584,12 @@ if ( ! function_exists( 'mops_is_user_ambassador' ) ) {
 	function mops_is_user_ambassador( $user_id ) {
 		$user_badges = get_user_meta( $user_id, 'moc_community_badges', true );
 
-		if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
-			debug( $user_badges );
-		}
-
 		// Return, if there are no user badges available.
 		if ( empty( $user_badges ) || ! is_array( $user_badges ) ) {
 			return false;
 		}
 
 		$is_ambassador_in_badges = array_search( 'Ambassador', $user_badges, true );
-
-		if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
-			var_dump( $is_ambassador_in_badges );
-		}
 
 		return ( false === $is_ambassador_in_badges ) ? false : true;
 	}

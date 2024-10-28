@@ -567,10 +567,7 @@ if ( ! wp_is_mobile() ) {
 										<!-- Become an ambassador -->
 										<?php
 										$is_ambassador = mops_is_user_ambassador( $current_userid );
-										if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
-											var_dump( $is_ambassador );
-										}
-										echo ( $is_ambassador ) ? moc_become_ambassador_html() : moc_create_a_blog_html( $current_userid );
+										echo ( $is_ambassador ) ? moc_create_a_blog_html( $current_userid ) : moc_become_ambassador_html();
 										?>
 										<!-- Become an ambassador -->
 										<?php echo moc_be_a_guest_on_ops_cast_html(); ?>
