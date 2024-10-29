@@ -1358,567 +1358,82 @@ table tbody tr:hover>th {background-color: transparent !important;}
 	padding: 5px 0;
 }
 
-.woocommerce-view-subscription section.woocommerce-customer-details .customer-billing-address ul li img {
-	width: 25px;
-	height: 25px;
-	margin-right: 15px;
-}
-
-
-
-.woocommerce-downloads .mops-no-downloads {
-	background: url('/wp-content/uploads/2023/09/Ellipse-196.svg') no-repeat center/contain;
-	width: 372px;
-	height: 372px;
-	margin: 0 auto;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-wrap: wrap;
-	padding: 25px;
-}
-
-.woocommerce-downloads .mops-no-downloads .mops-inner-circle {
-	width: 100%;
-	text-align: center;
-}
-
-.woocommerce-downloads .mops-no-downloads .mops-inner-circle p {
-	font-size: 16px;
-	line-height: 21px;
-	font-weight: 600;
-	color: #6d7b83;
-	margin-top: 12px;
-}
-
-.main-payment-method .inner-payment-sec .payment-box .boxes a.button.delete {
-	background: #f1f3f4 !important;
-	color: #242730 !important;
-	font-size: 16px;
-	line-height: 13px;
-	padding: 15px 36px;
-}
-
-.main-payment-method .inner-payment-sec .payment-box .boxes a.button.delete:after {
-	content: "";
-	background-image: url(/wp-content/themes/marketingops/images/svg/right_arrow_black.svg) !important;
-	background-repeat: no-repeat !important;
-	background-position: center;
-	width: 20px;
-	height: 11px;
-	display: inline-block;
-	margin-left: 6px;
-	position: relative;
-	top: 1px;
-}
-
-.main-payment-method .inner-payment-sec .payment-box .boxes svg {
-	width: 50px;
-	height: 50px;
-	transform: scale(2.5);
-	transform-origin: left;
-}
-
-@media (min-width: 992px) and (max-width: 1199px) {}
-
-
-@media (min-width: 768px) and (max-width: 991px) {
-	.woocommerce-orders .woocommerce table.my_account_orders td {
-		padding: 10px 0px 10px 0;
-		width: 100% !important;
-	}
-
-	.woocommerce-orders .woocommerce table.my_account_orders td.woocommerce-orders-table__cell-order-status {
-		width: 100%;
-	}
-
-	.woocommerce-orders table.woocommerce-MyAccount-orders tr.woocommerce-orders-table__row--status-completed td.woocommerce-orders-table__cell-order-status:before {
-		background-color: transparent;
-	}
-
-	.woocommerce-orders-table__row--status-processing .woocommerce-orders-table__cell-order-status:before,
-	.woocommerce-orders tr.woocommerce-orders-table__row--status-pending td.woocommerce-orders-table__cell-order-status:before {
-		background-color: transparent;
-	}
-
-	.woocommerce table.shop_table_responsive tr td::before,
-	.woocommerce-page table.shop_table_responsive tr td::before {
-		left: 0;
-	}
-
-	.woocommerce table.shop_table_responsive tr:nth-child(2n) td,
-	.woocommerce-page table.shop_table_responsive tr:nth-child(2n) td {
-		background-color: transparent;
-	}
-}
-
-
-@media only screen and (max-width:767px) {
-	.woocommerce-orders .woocommerce table.my_account_orders td.woocommerce-orders-table__cell-order-status {
-		width: 100%;
-	}
-
-	.woocommerce-orders table.woocommerce-MyAccount-orders tr.woocommerce-orders-table__row--status-completed td.woocommerce-orders-table__cell-order-status:before {
-		background-color: transparent;
-	}
-
-	.woocommerce-orders-table__row--status-processing .woocommerce-orders-table__cell-order-status:before,
-	.woocommerce-orders tr.woocommerce-orders-table__row--status-pending td.woocommerce-orders-table__cell-order-status:before {
-		background-color: transparent;
-	}
-
-	.woocommerce table.shop_table_responsive tr td::before,
-	.woocommerce-page table.shop_table_responsive tr td::before {
-		left: 0;
-	}
-
-	.woocommerce table.shop_table_responsive tr:nth-child(2n) td,
-	.woocommerce-page table.shop_table_responsive tr:nth-child(2n) td {
-		background-color: transparent;
-	}
-
-	.woocommerce-view-order ul.woocommerce-order-overview.woocommerce-thankyou-order-details.order_details {
-		margin: 15px 10px 20px;
-		display: flex;
-		flex-wrap: wrap;
-	}
-}
-
-
-
-
-
-/* dashbord */
-.woocommerce-MyAccount-content .newdashbordmain {
-	border-radius: 24px;
-	border: 1px solid rgba(231, 239, 239, 0.75);
-	background: rgba(255, 255, 255, 0.50);
-	box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.03);
-	padding: 25px;
-}
-
-
-.woocommerce-MyAccount-content .newdashbordmain h3 {
-	font-family: "Futura LT";
-	font-size: 19px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: normal;
-	background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));
-	background-clip: text;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	background-clip: text;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	margin-bottom: 30px;
-	margin-left: 0;
-	margin-right: 5px;
-	display: inline-block;
-}
-
-.woocommerce-MyAccount-content .newdashbordmain span.hedertitlethree {
-	color: var(--Primary-text, #45474F);
-
-	/* B19 */
-	font-family: "Futura LT";
-	font-size: 19px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: normal;
-}
-
-.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain {
-	margin: 0 0 40px;
-	padding: 0;
-	display: flex;
-	list-style: none;
-	display: flex;
-	flex-direction: row;
-	align-items: flex-start;
-	gap: 25px;
-	flex-wrap: wrap;
-}
-
-.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li {
-	display: flex;
-	padding: 10px 15px;
-	flex-direction: column;
-	align-items: center;
-	gap: 15px;
-	flex: 0 0 calc((100% / 3) - 17px);
-	align-self: stretch;
-	border-radius: 12px;
-	background: var(--Dashboard-Card-Grad, radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.50) 55%, rgba(241, 243, 244, 0.40) 100%));
-	width: calc((100% / 3) - 17px);
-	position: relative;
-	border: 1px solid transparent;
-}
-
-.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li:hover
-{
-	border-radius: 12px;
-border: 1px solid #E3ECEC;
-background: radial-gradient(50% 50% at 50% 50%, #FFF 55%, rgba(241, 243, 244, 0.80) 100%);
-box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.03);
-}
-
-.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li .iconwithtitledashbord {
-	display: flex;
-	align-items: center;
-	align-content: center;
-	margin-bottom: 15px;
-}
-
-.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li .iconwithtitledashbord i {
-	width: 24px;
-	height: 24px;
-	margin-right: 5px;
-}
-
-.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li .iconwithtitledashbord i:nth-child(2) {
-	display: none;
-}
-
-.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li:hover i:first-child {
-	display: none;
-}
-
-.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li:hover i:nth-child(2) {
-	display: block;
-}
-
-.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li .innerdashbordlist {
-	width: 100%;
-	display: block;
-	padding-right: 30px;
-}
-
-.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li .iconwithtitledashbord h4 {
-	color: var(--technical-gray, #6D7B83);
-	font-family: "Open Sans";
-	font-size: 13px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: 25px;
-	margin: 0;
-	/* 192.308% */
-}
-
-.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li:hover h4 {
-	background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));
-	background-clip: text;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	background: -webkit-linear-gradient(112deg, #FD4B7A -2.36%, #4D00AE 27.05%);
-	background: -moz-linear-gradient(112deg, #FD4B7A -2.36%, #4D00AE 27.05%);
-	background: -o-linear-gradient(112deg, #FD4B7A -2.36%, #4D00AE 27.05%);
-	background: linear-gradient(112deg, #FD4B7A -2.36%, #4D00AE 27.05%);
-	background-clip: text;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-}
-
-.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li .innerdashbordlist .bottomdashbordlist ul {
-	padding: 0 5px;
-	margin: 0;
-	list-style: none;
-}
-
-.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li .innerdashbordlist .bottomdashbordlist ul li {
-	color: var(--Primary-text, #45474F);
-	font-family: "Open Sans";
-	font-size: 14px;
-	font-style: normal;
-	font-weight: 400;
-	line-height: normal;
-}
-
-.arrowrightdashbord {
-    position: absolute;
-    bottom: 5px;
-    right: 15px;
-    cursor: pointer;
-    display: block;
-    overflow: hidden;
-}
-
-.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li a {
-    width: 100%;
-    text-decoration: none;
-}
-
-.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li:hover .arrowrightdashbord {
-	display: block;
-}
-
-.arrowrightdashbord span {
-    display: flex;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    position: relative;
-    transition: all 0.3s ease;
-    left: -24px;
-}
-
-.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li:hover .arrowrightdashbord span {
-    left: 0;
-}
-
-.arrowsvgimg {
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='25' height='24' viewBox='0 0 25 24' fill='none'%3E%3Cpath d='M2.33331 13H19.9193L16.6276 16.2943C16.237 16.6823 16.237 17.3177 16.6276 17.7057C16.8229 17.9036 17.0781 18 17.3333 18C17.5885 18 17.8437 17.9036 18.039 17.7057L23.039 12.7057C23.2265 12.5208 23.3333 12.2656 23.3333 12C23.3333 11.7344 23.2265 11.4818 23.039 11.2943L18.039 6.29427C17.651 5.90364 17.0156 5.90364 16.6276 6.29427C16.237 6.68229 16.237 7.3177 16.6276 7.70572L19.9193 11H2.33331C1.78123 11 1.33331 11.4479 1.33331 12C1.33331 12.5521 1.78123 13 2.33331 13Z' fill='url(%23paint0_linear_0_228)'/%3E%3Cdefs%3E%3ClinearGradient id='paint0_linear_0_228' x1='0.814364' y1='12.0296' x2='36.3253' y2='12.0296' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23FD4B7A'/%3E%3Cstop offset='1' stop-color='%234D00AE'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E");
-	background-repeat: no-repeat no-repeat;
-	background-position: center center;
-	background-size: cover;
-	width: 24px;
-	height: 24px;
-	display: block;
-}
-
-
-
-.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox h4 {
-    color: var(--Primary-text, #45474F);
-    font-family: "Futura LT";
-    font-size: 19px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    margin: 0 0 5px;
-}
-
-.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox h4 span {
-	background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));
-	background-clip: text;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	font-family: "Futura LT";
-	font-size: 19px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: normal;
-}
-
-
-.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox p {
-
-	color: var(--Primary-text, #45474F);
-	font-family: "Open Sans";
-	font-size: 12px;
-	font-style: normal;
-	font-weight: 400;
-	line-height: normal;
-}
-
-
-.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist {
-	display: flex;
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li {
-    width: calc(100% / 5);
-    flex: 0 0 calc(100% / 5);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-}
-
-.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li h5{
-color: var(--Primary-text, #45474F);
-text-align: center;
-font-family: "Open Sans";
-font-size: 12px;
-font-style: normal;
-font-weight: 600;
-line-height: 25px; /* 208.333% */
-margin:0 0 5px;
-}
-
-.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li .roundprobilebox {
-    width: 76px;
-    height: 76px;
-    flex-shrink: 0;
-    background: radial-gradient(50% 50% at 50% 50%, #FFF 55%, rgba(241, 243, 244, 0.80) 100%);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-	position: relative;
-}
-
-.profilboxarrow
-{
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='16' viewBox='0 0 17 16' fill='none'%3E%3Cpath d='M8.5 0C4.08958 0 0.5 3.58958 0.5 8C0.5 12.4104 4.08958 16 8.5 16C12.9104 16 16.5 12.4104 16.5 8C16.5 3.58958 12.9104 0 8.5 0ZM7.9 4.2C7.9 3.86875 8.16875 3.6 8.5 3.6C8.83125 3.6 9.1 3.86875 9.1 4.2V9C9.1 9.33125 8.83125 9.6 8.5 9.6C8.16875 9.6 7.9 9.33125 7.9 9V4.2ZM8.5 12.4C8.05833 12.4 7.7 12.0417 7.7 11.6C7.7 11.1583 8.05833 10.8 8.5 10.8C8.94167 10.8 9.3 11.1583 9.3 11.6C9.3 12.0417 8.94167 12.4 8.5 12.4Z' fill='url(%23paint0_linear_0_315)'/%3E%3Cdefs%3E%3ClinearGradient id='paint0_linear_0_315' x1='0.122582' y1='8.03865' x2='25.9487' y2='8.03865' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23FD4B7A'/%3E%3Cstop offset='1' stop-color='%234D00AE'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E");
-background-repeat: no-repeat no-repeat;
-background-position: center center;
-background-size: cover;
-width: 15.857px;
-height: 15.857px;
-flex-shrink: 0;
-display: block;
-}
-
-
-.profiledone .profilboxarrow
-{
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M15.9286 7.99998C15.9286 12.3794 12.3795 15.9286 8.00001 15.9286C3.62055 15.9286 0.0714417 12.3794 0.0714417 7.99998C0.0714417 3.62052 3.62055 0.0714111 8.00001 0.0714111C12.3795 0.0714111 15.9286 3.62052 15.9286 7.99998ZM7.38394 10.8125L11.6697 6.52677C11.9197 6.27454 11.9197 5.86829 11.6697 5.61605C11.4174 5.36605 11.0112 5.36605 10.7589 5.61605L6.92859 9.44864L5.24108 7.75891C4.98885 7.50891 4.5826 7.50891 4.33037 7.75891C4.08037 8.01114 4.08037 8.41739 4.33037 8.66963L6.47323 10.8125C6.60046 10.9375 6.76341 11 6.92859 11C7.09376 11 7.25671 10.9375 7.38394 10.8125Z' fill='%2333C46D'/%3E%3C/svg%3E");
-background-repeat: no-repeat no-repeat;
-background-position: center center;
-background-size: cover;
-width: 15.857px;
-height: 15.857px;
-flex-shrink: 0;
-display: block;
-}
-
-.roundaroow {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-}
-
+.woocommerce-view-subscription section.woocommerce-customer-details .customer-billing-address ul li img {width: 25px;height: 25px;margin-right: 15px;}
+.woocommerce-downloads .mops-no-downloads {background: url('/wp-content/uploads/2023/09/Ellipse-196.svg') no-repeat center/contain;width: 372px;height: 372px;margin: 0 auto;display: flex;align-items: center;justify-content: center;flex-wrap: wrap;padding: 25px;}
+.woocommerce-downloads .mops-no-downloads .mops-inner-circle {width: 100%;text-align: center;}
+.woocommerce-downloads .mops-no-downloads .mops-inner-circle p {font-size: 16px;line-height: 21px;font-weight: 600;color: #6d7b83;margin-top: 12px;}
+.main-payment-method .inner-payment-sec .payment-box .boxes a.button.delete {background: #f1f3f4 !important;color: #242730 !important;font-size: 16px;line-height: 13px;padding: 15px 36px;}
+.main-payment-method .inner-payment-sec .payment-box .boxes a.button.delete:after {content: "";background-image: url('/wp-content/themes/marketingops/images/svg/right_arrow_black.svg') !important;background-repeat: no-repeat !important;background-position: center;width: 20px;height: 11px;display: inline-block;margin-left: 6px;position: relative;top: 1px;}
+.main-payment-method .inner-payment-sec .payment-box .boxes svg {width: 50px;height: 50px;transform: scale(2.5);transform-origin: left;}
+.woocommerce-MyAccount-content .newdashbordmain {border-radius: 24px;border: 1px solid rgba(231, 239, 239, 0.75);background: rgba(255, 255, 255, 0.50);box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.03);padding: 25px;}
+.woocommerce-MyAccount-content .newdashbordmain h3 {font-family: "Futura LT";font-size: 19px;font-style: normal;font-weight: 700;line-height: normal;background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;margin-bottom: 30px;margin-left: 0;margin-right: 5px;display: inline-block;}
+.woocommerce-MyAccount-content .newdashbordmain span.hedertitlethree {color: var(--Primary-text, #45474F);font-family: "Futura LT";font-size: 19px;font-style: normal;font-weight: 700;line-height: normal;}
+.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain {margin: 0 0 40px;padding: 0;display: flex;list-style: none;display: flex;flex-direction: row;align-items: flex-start;gap: 25px;flex-wrap: wrap;}
+.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li {display: flex;padding: 10px 15px;flex-direction: column;align-items: center;gap: 15px;flex: 0 0 calc((100% / 3) - 17px);align-self: stretch;border-radius: 12px;background: var(--Dashboard-Card-Grad, radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.50) 55%, rgba(241, 243, 244, 0.40) 100%));width: calc((100% / 3) - 17px);position: relative;border: 1px solid transparent;}
+.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li:hover {border-radius: 12px;border: 1px solid #E3ECEC;background: radial-gradient(50% 50% at 50% 50%, #FFF 55%, rgba(241, 243, 244, 0.80) 100%);box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.03);}
+.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li .iconwithtitledashbord {display: flex;align-items: center;align-content: center;margin-bottom: 15px;}
+.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li .iconwithtitledashbord i {width: 24px;height: 24px;margin-right: 5px;}
+.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li .iconwithtitledashbord i:nth-child(2) {display: none;}
+.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li:hover i:first-child {display: none;}
+.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li:hover i:nth-child(2) {display: block;}
+.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li .innerdashbordlist {width: 100%;display: block;padding-right: 30px;}
+.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li .iconwithtitledashbord h4 {color: var(--technical-gray, #6D7B83);font-family: "Open Sans";font-size: 13px;font-style: normal;font-weight: 700;line-height: 25px;margin: 0;}
+.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li:hover h4 {background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;background: -webkit-linear-gradient(112deg, #FD4B7A -2.36%, #4D00AE 27.05%);background: -moz-linear-gradient(112deg, #FD4B7A -2.36%, #4D00AE 27.05%);background: -o-linear-gradient(112deg, #FD4B7A -2.36%, #4D00AE 27.05%);background: linear-gradient(112deg, #FD4B7A -2.36%, #4D00AE 27.05%);background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}
+.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li .innerdashbordlist .bottomdashbordlist ul {padding: 0 5px;margin: 0;list-style: none;}
+.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li .innerdashbordlist .bottomdashbordlist ul li {color: var(--Primary-text, #45474F);font-family: "Open Sans";font-size: 14px;font-style: normal;font-weight: 400;line-height: normal;}
+.arrowrightdashbord {position: absolute;bottom: 5px;right: 15px;cursor: pointer;display: block;overflow: hidden;}
+.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li a {width: 100%;text-decoration: none;}
+.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li:hover .arrowrightdashbord {display: block;}
+.arrowrightdashbord span {display: flex;align-items: center;align-content: center;justify-content: center;position: relative;transition: all 0.3s ease;left: -24px;}
+.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li:hover .arrowrightdashbord span {left: 0;}
+.arrowsvgimg {background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='25' height='24' viewBox='0 0 25 24' fill='none'%3E%3Cpath d='M2.33331 13H19.9193L16.6276 16.2943C16.237 16.6823 16.237 17.3177 16.6276 17.7057C16.8229 17.9036 17.0781 18 17.3333 18C17.5885 18 17.8437 17.9036 18.039 17.7057L23.039 12.7057C23.2265 12.5208 23.3333 12.2656 23.3333 12C23.3333 11.7344 23.2265 11.4818 23.039 11.2943L18.039 6.29427C17.651 5.90364 17.0156 5.90364 16.6276 6.29427C16.237 6.68229 16.237 7.3177 16.6276 7.70572L19.9193 11H2.33331C1.78123 11 1.33331 11.4479 1.33331 12C1.33331 12.5521 1.78123 13 2.33331 13Z' fill='url(%23paint0_linear_0_228)'/%3E%3Cdefs%3E%3ClinearGradient id='paint0_linear_0_228' x1='0.814364' y1='12.0296' x2='36.3253' y2='12.0296' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23FD4B7A'/%3E%3Cstop offset='1' stop-color='%234D00AE'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E");background-repeat: no-repeat no-repeat;background-position: center center;background-size: cover;width: 24px;height: 24px;display: block;}
+.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox h4 {color: var(--Primary-text, #45474F);font-family: "Futura LT";font-size: 19px;font-style: normal;font-weight: 700;line-height: normal;margin: 0 0 5px;}
+.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox h4 span {background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;font-family: "Futura LT";font-size: 19px;font-style: normal;font-weight: 700;line-height: normal;}
+.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox p {color: var(--Primary-text, #45474F);font-family: "Open Sans";font-size: 12px;font-style: normal;font-weight: 400;line-height: normal;}
+.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist {display: flex;margin: 0;padding: 0;list-style: none;}
+.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li {width: calc(100% / 5);flex: 0 0 calc(100% / 5);display: flex;flex-direction: column;justify-content: center;align-items: center;align-content: center;}
+.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li h5 {color: var(--Primary-text, #45474F);text-align: center;font-family: "Open Sans";font-size: 12px;font-style: normal;font-weight: 600;line-height: 25px;margin:0 0 5px;}
+.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li .roundprobilebox {width: 76px;height: 76px;flex-shrink: 0;background: radial-gradient(50% 50% at 50% 50%, #FFF 55%, rgba(241, 243, 244, 0.80) 100%);border-radius: 50%;display: flex;align-items: center;align-content: center;justify-content: center;position: relative;}
+.profilboxarrow {background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='16' viewBox='0 0 17 16' fill='none'%3E%3Cpath d='M8.5 0C4.08958 0 0.5 3.58958 0.5 8C0.5 12.4104 4.08958 16 8.5 16C12.9104 16 16.5 12.4104 16.5 8C16.5 3.58958 12.9104 0 8.5 0ZM7.9 4.2C7.9 3.86875 8.16875 3.6 8.5 3.6C8.83125 3.6 9.1 3.86875 9.1 4.2V9C9.1 9.33125 8.83125 9.6 8.5 9.6C8.16875 9.6 7.9 9.33125 7.9 9V4.2ZM8.5 12.4C8.05833 12.4 7.7 12.0417 7.7 11.6C7.7 11.1583 8.05833 10.8 8.5 10.8C8.94167 10.8 9.3 11.1583 9.3 11.6C9.3 12.0417 8.94167 12.4 8.5 12.4Z' fill='url(%23paint0_linear_0_315)'/%3E%3Cdefs%3E%3ClinearGradient id='paint0_linear_0_315' x1='0.122582' y1='8.03865' x2='25.9487' y2='8.03865' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23FD4B7A'/%3E%3Cstop offset='1' stop-color='%234D00AE'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E");background-repeat: no-repeat no-repeat;background-position: center center;background-size: cover;width: 15.857px;height: 15.857px;flex-shrink: 0;display: block;}
+.profiledone .profilboxarrow{background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M15.9286 7.99998C15.9286 12.3794 12.3795 15.9286 8.00001 15.9286C3.62055 15.9286 0.0714417 12.3794 0.0714417 7.99998C0.0714417 3.62052 3.62055 0.0714111 8.00001 0.0714111C12.3795 0.0714111 15.9286 3.62052 15.9286 7.99998ZM7.38394 10.8125L11.6697 6.52677C11.9197 6.27454 11.9197 5.86829 11.6697 5.61605C11.4174 5.36605 11.0112 5.36605 10.7589 5.61605L6.92859 9.44864L5.24108 7.75891C4.98885 7.50891 4.5826 7.50891 4.33037 7.75891C4.08037 8.01114 4.08037 8.41739 4.33037 8.66963L6.47323 10.8125C6.60046 10.9375 6.76341 11 6.92859 11C7.09376 11 7.25671 10.9375 7.38394 10.8125Z' fill='%2333C46D'/%3E%3C/svg%3E");background-repeat: no-repeat no-repeat;background-position: center center;background-size: cover;width: 15.857px;height: 15.857px;flex-shrink: 0;display: block;}
+.roundaroow {position: absolute;top: 5px;right: 5px;}
 .profiledone .roundprobilebox svg{opacity: 0.3;}
-
-.addprofilebtn {
-    color: var(--pure-white, #FFF);
-    font-family: "Open Sans";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 82%;
-    display: flex;
-    width: 61px;
-    padding: 7px 10px 8px 10px;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    border-radius: 302px;
-    background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));
-    margin: 10px 0 0;
-}
-.dashbordprofilebox {
-    margin: 0 0 40px;
-}
+.addprofilebtn {color: var(--pure-white, #FFF);font-family: "Open Sans";font-size: 14px;font-style: normal;font-weight: 400;line-height: 82%;display: flex;width: 61px;padding: 7px 10px 8px 10px;justify-content: center;align-items: center;gap: 5px;border-radius: 302px;background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));margin: 10px 0 0;}
+.dashbordprofilebox {margin: 0 0 40px;}
 .profiledone .addprofilebtn{visibility: hidden;opacity: 0;pointer-events: none;}
-
-.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li {
-
-	position: relative;
-}
-
-.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li:after {
-	z-index: 1;
-	content: '';
-	width: 40%;
-	height: 1px;
-	background: #DEE2E2;
-	position: absolute;
-	top: 50%;
-	transform: translate(-50%,-50%);
-	left: 0%;
-	-webkit-transform: translate(-50%,-50%);
-	-moz-transform: translate(-50%,-50%);
-	-ms-transform: translate(-50%,-50%);
-	-o-transform: translate(-50%,-50%);
-}
+.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li {position: relative;}
+.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li:after {z-index: 1;content: '';width: 40%;height: 1px;background: #DEE2E2;position: absolute;top: 50%;transform: translate(-50%,-50%);left: 0%;-webkit-transform: translate(-50%,-50%);-moz-transform: translate(-50%,-50%);-ms-transform: translate(-50%,-50%);-o-transform: translate(-50%,-50%);}
 .woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li:first-child:after{display:none;}
 
-@media only screen and (max-width:767px) 
-{
-	.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain {
-		margin: 0 0 40px;
-		padding: 0;
-		display: flex;
-		list-style: none;
-		display: flex;
-		flex-direction: row;
-		align-items: flex-start;
-		gap: 10px;
-		flex-wrap: wrap;
-	}
-	.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li {
-		display: flex;
-		padding: 10px 15px;
-		flex-direction: column;
-		align-items: center;
-		gap: 15px;
-		flex: 0 0 100%;
-		align-self: stretch;
-		border-radius: 12px;
-		background: var(--Dashboard-Card-Grad, radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.50) 55%, rgba(241, 243, 244, 0.40) 100%));
-		width: 100%;
-		position: relative;
-	}
-	.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li .arrowsvgimg{
-		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='12' viewBox='0 0 22 12' fill='none'%3E%3Cpath d='M1 7H18.5859L15.2943 10.2943C14.9036 10.6823 14.9036 11.3177 15.2943 11.7057C15.4896 11.9036 15.7448 12 16 12C16.2552 12 16.5104 11.9036 16.7057 11.7057L21.7057 6.70573C21.8932 6.52084 22 6.26563 22 6C22 5.73438 21.8932 5.48177 21.7057 5.29427L16.7057 0.294273C16.3177 -0.0963515 15.6823 -0.0963515 15.2943 0.294273C14.9036 0.682294 14.9036 1.31771 15.2943 1.70573L18.5859 5H1C0.447917 5 0 5.44792 0 6C0 6.55209 0.447917 7 1 7Z' fill='%236D7B83'/%3E%3C/svg%3E");
-		background-repeat: no-repeat no-repeat;
-		background-position: center center;
-		background-size: contain;
-		width: 24px;
-		height: 24px;
-		flex-shrink: 0;
-	}
-	.arrowrightdashbord {
-		top: 10px;
-		position: absolute;
-		bottom: 5px;
-		right: 15px;
-		cursor: pointer;
-		display: block;
-	}
-	.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li:hover .arrowsvgimg {
-		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='25' height='24' viewBox='0 0 25 24' fill='none'%3E%3Cpath d='M2.33331 13H19.9193L16.6276 16.2943C16.237 16.6823 16.237 17.3177 16.6276 17.7057C16.8229 17.9036 17.0781 18 17.3333 18C17.5885 18 17.8437 17.9036 18.039 17.7057L23.039 12.7057C23.2265 12.5208 23.3333 12.2656 23.3333 12C23.3333 11.7344 23.2265 11.4818 23.039 11.2943L18.039 6.29427C17.651 5.90364 17.0156 5.90364 16.6276 6.29427C16.237 6.68229 16.237 7.3177 16.6276 7.70572L19.9193 11H2.33331C1.78123 11 1.33331 11.4479 1.33331 12C1.33331 12.5521 1.78123 13 2.33331 13Z' fill='url(%23paint0_linear_0_228)'/%3E%3Cdefs%3E%3ClinearGradient id='paint0_linear_0_228' x1='0.814364' y1='12.0296' x2='36.3253' y2='12.0296' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23FD4B7A'/%3E%3Cstop offset='1' stop-color='%234D00AE'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E");
-		background-repeat: no-repeat no-repeat;
-		background-position: center center;
-		background-size: cover;
-		width: 24px;
-		height: 24px;
-		display: block;
-	}
-
-	.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist {
-		display: flex;
-		margin: 0;
-		padding: 0;
-		list-style: none;
-		flex-wrap: wrap;
-		flex-direction: row;
-		justify-content: center;
-	}
-
-	.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li {
-		width: calc(100% / 3);
-		flex: 0 0 calc(100% / 3);
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		align-content: center;
-		position: relative;
-	}
-
-	.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li:after {
-		z-index: 1;
-		content: '';
-		width: 25%;
-		height: 1px;
-		background: #DEE2E2;
-		position: absolute;
-		top: 50%;
-		transform: translate(-50%,-50%);
-		left: 0%;
-		-webkit-transform: translate(-50%,-50%);
-		-moz-transform: translate(-50%,-50%);
-		-ms-transform: translate(-50%,-50%);
-		-o-transform: translate(-50%,-50%);
+@media (min-width: 768px) and (max-width: 991px) {
+	.woocommerce-orders .woocommerce table.my_account_orders td {padding: 10px 0px 10px 0;width: 100% !important;}
+	.woocommerce-orders .woocommerce table.my_account_orders td.woocommerce-orders-table__cell-order-status {width: 100%;}
+	.woocommerce-orders table.woocommerce-MyAccount-orders tr.woocommerce-orders-table__row--status-completed td.woocommerce-orders-table__cell-order-status:before {background-color: transparent;}
+	.woocommerce-orders-table__row--status-processing .woocommerce-orders-table__cell-order-status:before,
+	.woocommerce-orders tr.woocommerce-orders-table__row--status-pending td.woocommerce-orders-table__cell-order-status:before {background-color: transparent;}
+	.woocommerce table.shop_table_responsive tr td::before,
+	.woocommerce-page table.shop_table_responsive tr td::before {left: 0;}
+	.woocommerce table.shop_table_responsive tr:nth-child(2n) td,
+	.woocommerce-page table.shop_table_responsive tr:nth-child(2n) td {background-color: transparent;}
 }
-.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li:first-child:after,
-.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li:nth-child(4):after{display:none;}
+@media only screen and ( max-width:767px ) {
+	.woocommerce-orders .woocommerce table.my_account_orders td.woocommerce-orders-table__cell-order-status {width: 100%;}
+	.woocommerce-orders table.woocommerce-MyAccount-orders tr.woocommerce-orders-table__row--status-completed td.woocommerce-orders-table__cell-order-status:before {background-color: transparent;}
+	.woocommerce-orders-table__row--status-processing .woocommerce-orders-table__cell-order-status:before,
+	.woocommerce-orders tr.woocommerce-orders-table__row--status-pending td.woocommerce-orders-table__cell-order-status:before {background-color: transparent;}
+	.woocommerce table.shop_table_responsive tr td::before,
+	.woocommerce-page table.shop_table_responsive tr td::before {left: 0;}
+	.woocommerce table.shop_table_responsive tr:nth-child(2n) td,
+	.woocommerce-page table.shop_table_responsive tr:nth-child(2n) td {background-color: transparent;}
+	.woocommerce-view-order ul.woocommerce-order-overview.woocommerce-thankyou-order-details.order_details {margin: 15px 10px 20px;display: flex;flex-wrap: wrap;}
+	.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain {margin: 0 0 40px;padding: 0;display: flex;list-style: none;display: flex;flex-direction: row;align-items: flex-start;gap: 10px;flex-wrap: wrap;}
+	.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li {display: flex;padding: 10px 15px;flex-direction: column;align-items: center;gap: 15px;flex: 0 0 100%;align-self: stretch;border-radius: 12px;background: var(--Dashboard-Card-Grad, radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.50) 55%, rgba(241, 243, 244, 0.40) 100%));width: 100%;position: relative;}
+	.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li .arrowsvgimg {background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='12' viewBox='0 0 22 12' fill='none'%3E%3Cpath d='M1 7H18.5859L15.2943 10.2943C14.9036 10.6823 14.9036 11.3177 15.2943 11.7057C15.4896 11.9036 15.7448 12 16 12C16.2552 12 16.5104 11.9036 16.7057 11.7057L21.7057 6.70573C21.8932 6.52084 22 6.26563 22 6C22 5.73438 21.8932 5.48177 21.7057 5.29427L16.7057 0.294273C16.3177 -0.0963515 15.6823 -0.0963515 15.2943 0.294273C14.9036 0.682294 14.9036 1.31771 15.2943 1.70573L18.5859 5H1C0.447917 5 0 5.44792 0 6C0 6.55209 0.447917 7 1 7Z' fill='%236D7B83'/%3E%3C/svg%3E");background-repeat: no-repeat no-repeat;background-position: center center;background-size: contain;width: 24px;height: 24px;flex-shrink: 0;}
+	.arrowrightdashbord {top: 10px;position: absolute;bottom: 5px;right: 15px;cursor: pointer;display: block;}
+	.woocommerce-MyAccount-content .newdashbordmain ul.dashbordlistmain>li:hover .arrowsvgimg {background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='25' height='24' viewBox='0 0 25 24' fill='none'%3E%3Cpath d='M2.33331 13H19.9193L16.6276 16.2943C16.237 16.6823 16.237 17.3177 16.6276 17.7057C16.8229 17.9036 17.0781 18 17.3333 18C17.5885 18 17.8437 17.9036 18.039 17.7057L23.039 12.7057C23.2265 12.5208 23.3333 12.2656 23.3333 12C23.3333 11.7344 23.2265 11.4818 23.039 11.2943L18.039 6.29427C17.651 5.90364 17.0156 5.90364 16.6276 6.29427C16.237 6.68229 16.237 7.3177 16.6276 7.70572L19.9193 11H2.33331C1.78123 11 1.33331 11.4479 1.33331 12C1.33331 12.5521 1.78123 13 2.33331 13Z' fill='url(%23paint0_linear_0_228)'/%3E%3Cdefs%3E%3ClinearGradient id='paint0_linear_0_228' x1='0.814364' y1='12.0296' x2='36.3253' y2='12.0296' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23FD4B7A'/%3E%3Cstop offset='1' stop-color='%234D00AE'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E");background-repeat: no-repeat no-repeat;background-position: center center;background-size: cover;width: 24px;height: 24px;display: block;}
+	.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist {display: flex;margin: 0;padding: 0;list-style: none;flex-wrap: wrap;flex-direction: row;justify-content: center;}
+	.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li {width: calc(100% / 3);flex: 0 0 calc(100% / 3);display: flex;flex-direction: column;justify-content: center;align-items: center;align-content: center;position: relative;}
+	.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li:after {z-index: 1;content: '';width: 25%;height: 1px;background: #DEE2E2;position: absolute;top: 50%;transform: translate(-50%,-50%);left: 0%;-webkit-transform: translate(-50%,-50%);-moz-transform: translate(-50%,-50%);-ms-transform: translate(-50%,-50%);-o-transform: translate(-50%,-50%);}
+	.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li:first-child:after,
+	.woocommerce-MyAccount-content .newdashbordmain .dashbordprofilebox ul.roundprofilelist li:nth-child(4):after{display:none;}
 }
