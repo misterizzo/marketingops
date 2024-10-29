@@ -5372,9 +5372,20 @@ jQuery( document ).ready( function( $ ) {
 
 	// Proceed to agency signup.
 	if ( $( '.proceed-to-agency-signup' ).length ) {
-		$( document ).on( 'click', '.proceed-to-agency-signup', function() {
+		$( document ).on( 'click', '.proceed-to-agency-signup', function( evt ) {
+			evt.preventDefault();
 			var use_same_email = $( 'input[name="agency-signup-same-email"]:checked' ).val();
-			console.log( 'use_same_email', use_same_email );
+
+			// If it's the free subscription.
+			if ( 'free' === current_agency_subscription ) {
+				// If the customer wants to go with same email.
+				if ( 'yes' === use_same_email ) {
+					console.log( 'window location', window.location );
+					// window.location.href = '';
+				} else if ( 'no' === use_same_email ) { // If the customer wants to go with a different email.
+
+				}
+			}
 		} );
 	}
 
