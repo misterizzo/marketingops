@@ -94,10 +94,8 @@ if ( is_user_logged_in() ) {
 			<!-- Right Sidebar -->
 			<div class="user_profile_right_side blog_box">
 				<?php
-				if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
-					if ( ! is_null( $source ) && 'customer-dashboard' === $source ) {
-						?><a title="<?php esc_html_e( 'Back to your e-commerce dashboard', 'marketingops' ); ?>" href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>"><?php esc_html_e( 'Back to dashboard', 'marketingops' ); ?></a><?php
-					}
+				if ( ! is_null( $source ) && 'customer-dashboard' === $source ) {
+					?><a class="back-to-customer-dashboard" title="<?php esc_html_e( 'Back to your e-commerce dashboard', 'marketingops' ); ?>" href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>"><?php esc_html_e( 'Back to dashboard', 'marketingops' ); ?></a><?php
 				}
 				?>
 				<div class="blog_box_container elementor-widget-wrap elementor-element-populated">
