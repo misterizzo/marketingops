@@ -5367,9 +5367,14 @@ jQuery( document ).ready( function( $ ) {
 			evt.preventDefault();
 			$( '.mainpricebox' ).addClass( 'active' );
 			current_agency_subscription = $( this ).parents( '.agency-signup-email-confirmation' ).data( 'agency-subscription' );
+		} );
+	}
 
-			console.log( $( this ).parents( '.agency-signup-email-confirmation' ).html() );
-			console.log( 'current_agency_subscription', current_agency_subscription );
+	// Proceed to agency signup.
+	if ( $( '.proceed-to-agency-signup' ).length ) {
+		$( document ).on( 'click', '.proceed-to-agency-signup', function() {
+			var use_same_email = $( 'input[name="agency-signup-same-email"]:checked' ).val();
+			console.log( 'use_same_email', use_same_email );
 		} );
 	}
 
