@@ -2422,3 +2422,12 @@ section.agencyformone.detailsblock .agencyformgroups.withoutmargin{margin:0;}
 .mops_springfling25_page {
 	padding-top: 0 !important;
 }
+
+
+
+
+
+.elementor-container.elementor-column-gap-default.profiledashbordmain{flex-wrap:wrap;}
+.elementor-container.elementor-column-gap-default.profiledashbordmain a.back-to-customer-dashboard{display:inline;width:auto;flex:0 0 100%;margin:-15px 25px 15px;padding-left:25px;position:relative;}
+.elementor-container.elementor-column-gap-default.profiledashbordmain a.back-to-customer-dashboard:hover{text-decoration:none;}
+.elementor-container.elementor-column-gap-default.profiledashbordmain a.back-to-customer-dashboard span.svg{position:absolute;transform:rotate(-180deg) translateY(37%);left:0;top:50%;    /* transform: translateX(-50%); */}

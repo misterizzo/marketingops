@@ -63,10 +63,20 @@ if ( is_user_logged_in() ) {
 	// $total_courses_count   = count( $total_courses );
 	?>
 	<section class="user_profile_blog elementor-section elementor-top-section elementor-element elementor-section-boxed elementor-section-height-default elementor-section-height-default">
-		<div class="elementor-container elementor-column-gap-default">
+		<div class="elementor-container elementor-column-gap-default profiledashbordmain">
 			<?php
 			if ( ! is_null( $source ) && 'customer-dashboard' === $source ) {
-				?><a class="back-to-customer-dashboard" title="<?php esc_html_e( 'Back to your e-commerce dashboard', 'marketingops' ); ?>" href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>"><?php esc_html_e( 'Back to dashboard', 'marketingops' ); ?></a><?php
+				?><a class="back-to-customer-dashboard" title="<?php esc_html_e( 'Back to your e-commerce dashboard', 'marketingops' ); ?>" href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>"> <span class="svg">
+													<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+														<path d="M10.5262 0.494085C10.2892 0.484971 10.0693 0.620545 9.97249 0.837007C9.87452 1.05347 9.91667 1.30639 10.0807 1.47956L11.8728 3.41633H0.592831C0.382065 3.41291 0.187248 3.52342 0.0812957 3.70571C-0.0257965 3.88685 -0.0257965 4.11243 0.0812957 4.29357C0.187248 4.47586 0.382065 4.58637 0.592831 4.58295H11.8728L10.0807 6.51972C9.9349 6.67238 9.88363 6.89112 9.94515 7.09277C10.0067 7.29443 10.1719 7.44709 10.3769 7.49266C10.5831 7.53823 10.7973 7.46874 10.9375 7.31266L14.001 3.99964L10.9375 0.686623C10.8326 0.570417 10.6834 0.499781 10.5262 0.494085Z" fill="url(#paint0_linear_2170_635)"></path>
+														<defs>
+															<linearGradient id="paint0_linear_2170_635" x1="-0.329264" y1="4.01698" x2="22.2686" y2="4.01698" gradientUnits="userSpaceOnUse">
+																<stop stop-color="#FD4B7A"></stop>
+																<stop offset="1" stop-color="#4D00AE"></stop>
+															</linearGradient>
+														</defs>
+													</svg>
+												</span> <?php esc_html_e( 'Back to dashboard', 'marketingops' ); ?></a><?php
 			}
 			?>
 			<!-- Left Sidebar -->
