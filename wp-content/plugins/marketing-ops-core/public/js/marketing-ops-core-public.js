@@ -5359,11 +5359,18 @@ jQuery( document ).ready( function( $ ) {
 		} );
 	}
 
+	var current_agency_subscription = '';
+
 	// Agency signup email confirmation.
 	if ( $( '.agency-signup-email-confirmation' ).length ) {
 		$( document ).on( 'click', '.agency-signup-email-confirmation a', function( evt ) {
 			evt.preventDefault();
 			$( '.mainpricebox' ).addClass( 'active' );
+			current_agency_subscription = $( this ).parent( '.agency-signup-email-confirmation' ).data( 'agency-subscription' );
+
+			console.log( 'current_agency_subscription', current_agency_subscription );
 		} );
 	}
+
+
 } );
