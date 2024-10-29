@@ -11,20 +11,26 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 global $current_user;
 
-$linked_agency = get_user_meta( $current_user->ID, 'linked_agency', true );
+$show_agency_signup_form = false;
+$linked_agency           = get_user_meta( $current_user->ID, 'linked_agency', true );
+$agency_signup_request   = filter_input( INPUT_GET, 'agency_signup', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+
+if ( ! is_null( $agency_signup_request ) && 'free' === $agency_signup_request ) {
+	$show_agency_signup_form = true;
+}
 
 // If the linked agency is not available, show the registration page.
-if ( empty( $linked_agency ) ) {
+if ( ! $show_agency_signup_form ) {
 	echo do_shortcode( '[elementor-template id="231177"]' );
 } else {
 	?>
-	<form>
+	<form name="agency-signup-form" method="GET" enctype="multipart/form-data">
 		<section class="agencyformone">
-			<h1>General</h1>
+			<h1><?php esc_html_e( 'General', 'marketingops' ); ?></h1>
 			<div class="agencyformgroup">
-				<label>Agency name <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></label>
+				<label><?php esc_html_e( 'Agency name', 'marketingops' ); ?> <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></label>
 				<input type="text" class="agancyinputbox" id="agencyname" name="agencyname">
-				<small>This will be how your name will be displayed in the account section</small>
+				<small><?php esc_html_e( 'This will be how your name will be displayed in the account section', 'marketingops' ); ?></small>
 			</div> 
 
 			<div class="agencyformgroup logoupload">
