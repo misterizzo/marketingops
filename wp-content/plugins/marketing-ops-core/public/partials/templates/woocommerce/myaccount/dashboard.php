@@ -350,7 +350,7 @@ $profile_points      = ( ! empty( $customer_profile_info['moc_certificates'] ) &
 
 		<!-- agency profile -->
 		<li>
-			<a href="/my-account/agency-profile/">
+			<a href="javascript:void(0);">
 				<div class="innerdashbordlist">
 					<div class="innsersubdashbordlist">
 						<div class="iconwithtitledashbord">
@@ -371,7 +371,7 @@ $profile_points      = ( ! empty( $customer_profile_info['moc_certificates'] ) &
 
 		<!-- platform profile -->
 		<li>
-			<a href="/my-account/platform-profile/">
+			<a href="javascript:void(0);">
 				<div class="innerdashbordlist">
 					<div class="innsersubdashbordlist">
 						<div class="iconwithtitledashbord">
