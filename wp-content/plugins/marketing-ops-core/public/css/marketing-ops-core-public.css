@@ -2431,3 +2431,6 @@ section.agencyformone.detailsblock .agencyformgroups.withoutmargin{margin:0;}
 .elementor-container.elementor-column-gap-default.profiledashbordmain a.back-to-customer-dashboard{display:inline;width:auto;flex:0 0 100%;margin:-15px 25px 15px;padding-left:25px;position:relative;}
 .elementor-container.elementor-column-gap-default.profiledashbordmain a.back-to-customer-dashboard:hover{text-decoration:none;}
 .elementor-container.elementor-column-gap-default.profiledashbordmain a.back-to-customer-dashboard span.svg{position:absolute;transform:rotate(-180deg) translateY(37%);left:0;top:50%;    /* transform: translateX(-50%); */}
+.mainpricebox.my-account-agency-profile.agencysignup .innermainpricebox .innerboxprice ul{display:flex;align-items:center;align-content:center;list-style:none;margin:0;padding:40px 40px 40px;justify-content:flex-start;flex-wrap:wrap;}
+.mainpricebox.my-account-agency-profile.agencysignup .innermainpricebox .innerboxprice ul li{width:100%;text-align:left;}
+.mainpricebox.my-account-agency-profile.agencysignup .innermainpricebox .innerboxprice ul li small{width:100%;display:block;}
