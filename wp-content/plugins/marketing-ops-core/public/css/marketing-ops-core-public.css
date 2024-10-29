@@ -2434,3 +2434,5 @@ section.agencyformone.detailsblock .agencyformgroups.withoutmargin{margin:0;}
 .mainpricebox.my-account-agency-profile.agencysignup .innermainpricebox .innerboxprice ul{display:flex;align-items:center;align-content:center;list-style:none;margin:0;padding:40px 40px 40px;justify-content:flex-start;flex-wrap:wrap;}
 .mainpricebox.my-account-agency-profile.agencysignup .innermainpricebox .innerboxprice ul li{width:100%;text-align:left;}
 .mainpricebox.my-account-agency-profile.agencysignup .innermainpricebox .innerboxprice ul li small{width:100%;display:block;}
+.mainpricebox.my-account-agency-profile.agencysignup p [type="radio"]:checked + label:before, 
+.mainpricebox.my-account-agency-profile.agencysignup p [type="radio"]:not(:checked) + label:before {border: solid 1px;}
