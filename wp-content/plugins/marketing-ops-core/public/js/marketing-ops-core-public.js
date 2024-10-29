@@ -5366,8 +5366,9 @@ jQuery( document ).ready( function( $ ) {
 		$( document ).on( 'click', '.agency-signup-email-confirmation a', function( evt ) {
 			evt.preventDefault();
 			$( '.mainpricebox' ).addClass( 'active' );
-			current_agency_subscription = $( this ).parent( '.agency-signup-email-confirmation' ).data( 'agency-subscription' );
+			current_agency_subscription = $( this ).parents( '.agency-signup-email-confirmation' ).data( 'agency-subscription' );
 
+			console.log( $( this ).parents( '.agency-signup-email-confirmation' ).html() );
 			console.log( 'current_agency_subscription', current_agency_subscription );
 		} );
 	}
