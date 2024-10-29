@@ -12,7 +12,6 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 global $current_user;
 
 $linked_agency = get_user_meta( $current_user->ID, 'linked_agency', true );
-$linked_agency = 100;
 
 // If the linked agency is not available, show the registration page.
 if ( empty( $linked_agency ) ) {
