@@ -5380,8 +5380,7 @@ jQuery( document ).ready( function( $ ) {
 			if ( 'free' === current_agency_subscription ) {
 				// If the customer wants to go with same email.
 				if ( 'yes' === use_same_email ) {
-					console.log( 'window location', window.location );
-					// window.location.href = '';
+					window.location.href = window.location.origin + window.location.pathname + '?agency_signup=free&email=same';
 				} else if ( 'no' === use_same_email ) { // If the customer wants to go with a different email.
 
 				}
