@@ -426,3 +426,17 @@ body.active-popup {overflow: hidden !important;}
 .mops_mopsapalooza24_page .add_price_list li:nth-child(3) .elementor-price-list-title,
 .mops_mopsapalooza24_page .add_price_list li:nth-child(3) .elementor-price-list-price{color:#fff!important;}
 .mops_mopsapalooza24_page .key_speaker_content.mopza24 .heading {color: #FFF;font-family: "Futura LT", Open Sans;font-size: 36px;font-weight: 700;text-transform: uppercase;line-height: 45px;}
+
+
+
+
+
+
+
+
+.add_price_list.pricelist2025 ul.elementor-price-list li:nth-child(2) a.elementor-price-list-item span.elementor-price-list-title{color:#5B719A;font-family:"Open Sans";font-size:20px;font-style:normal;font-weight:400;line-height:normal;opacity:0.6;}
+.add_price_list.pricelist2025 ul.elementor-price-list li:nth-child(2) a.elementor-price-list-item span.elementor-price-list-price{color:#5B719A;font-family:"Futura LT";font-size:34px;font-style:normal;font-weight:700;line-height:normal;opacity:0.6;}
+.add_price_list.pricelist2025 ul.elementor-price-list li:nth-child(3) span.elementor-price-list-title{color:#5B719A;font-family:"Open Sans";font-size:20px;font-style:normal;font-weight:400;line-height:normal;opacity:0.3;}
+.add_price_list.pricelist2025 ul.elementor-price-list li:nth-child(3) span.elementor-price-list-price{color:#5B719A;/* B34 */font-family:"Futura LT";font-size:34px;font-style:normal;font-weight:700;line-height:normal;opacity:0.3;}
+.add_price_list.pricelist2025 ul.elementor-price-list li:nth-child(4) span.elementor-price-list-title{color:#5B719A;font-family:"Open Sans";font-size:20px;font-style:normal;font-weight:400;line-height:normal;opacity:0.3;}
+.add_price_list.pricelist2025 ul.elementor-price-list li:nth-child(4) span.elementor-price-list-price{color:#5B719A;/* B34 */font-family:"Futura LT";font-size:34px;font-style:normal;font-weight:700;line-height:normal;opacity:0.3;}
