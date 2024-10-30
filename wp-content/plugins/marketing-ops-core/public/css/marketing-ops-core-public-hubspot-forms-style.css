@@ -386,7 +386,7 @@ ul.no-list.hs-error-msgs.inputs-list li {
 #hsForm_70585a5a-b8ca-49d6-841c-088c0de5170b fieldset.form-columns-1:nth-child(12) input, 
 #hsForm_70585a5a-b8ca-49d6-841c-088c0de5170b fieldset.form-columns-1:nth-child(5) select
 {
-    border-radius: 6px;
+    border-radius: 6px; 
     border: 1px solid var(--gray-stroke, #E7EFEF);
     background: rgba(255, 255, 255, 0.50);
 }
