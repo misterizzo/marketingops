@@ -2474,7 +2474,7 @@ line-height: normal;
     padding-top: 10px;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px !important;
+    margin-bottom: 10px !important; 
 }
 
 .elementor-menu-cart--cart-type-mini-cart.topbar_box .elementor-menu-cart__main p.woocommerce-mini-cart__buttons.buttons {
