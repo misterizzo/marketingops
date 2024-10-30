@@ -2450,6 +2450,58 @@ line-height: normal;
     border-radius: 21px;
 }
 
+.elementor-menu-cart--cart-type-mini-cart.topbar_box .elementor-menu-cart__main p.woocommerce-mini-cart__buttons.buttons a.button.wc-forward {
+    display: inline-flex;
+    height: 26px;
+    padding: 7px 10px 8px 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+    border-radius: 302px;
+    background: var(--gray-color, #F1F3F4);
+    color: var(--Primary-text, #45474F);
+    font-family: "Open Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 82%;
+}
+
+.elementor-menu-cart--cart-type-mini-cart.topbar_box .elementor-menu-cart__main p.woocommerce-mini-cart__total.total {
+    border-top: solid 1px #EDF3F3;
+    margin-top: 10px;
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.elementor-menu-cart--cart-type-mini-cart.topbar_box .elementor-menu-cart__main p.woocommerce-mini-cart__buttons.buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.elementor-menu-cart--cart-type-mini-cart.topbar_box .elementor-menu-cart__main p.woocommerce-mini-cart__buttons.buttons a.button.checkout.wc-forward {
+    margin-left: 10px;
+}
+
+.elementor-menu-cart--cart-type-mini-cart.topbar_box .widget_shopping_cart_content ul.woocommerce-mini-cart.cart_list.product_list_widget li.woocommerce-mini-cart-item.mini_cart_item a.remove.remove_from_cart_button {
+    font-size: 0;
+    order: 3;
+    margin-left: 10px;
+}
+.elementor-menu-cart--cart-type-mini-cart.topbar_box .widget_shopping_cart_content ul.woocommerce-mini-cart.cart_list.product_list_widget li.woocommerce-mini-cart-item.mini_cart_item a{position: relative;}
+.elementor-menu-cart--cart-type-mini-cart.topbar_box .widget_shopping_cart_content ul.woocommerce-mini-cart.cart_list.product_list_widget li.woocommerce-mini-cart-item.mini_cart_item a.remove.remove_from_cart_button:after {
+    background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='11.5' stroke='url(%23paint0_linear_0_135)'/%3E%3Cpath d='M10.95 6.00004C10.8776 5.99911 10.8059 6.0157 10.7412 6.0484C10.6766 6.0811 10.6207 6.12894 10.5785 6.18785C10.5363 6.24677 10.5089 6.31501 10.4987 6.38677C10.4885 6.45853 10.4958 6.5317 10.52 6.60004H9.19222C8.64105 6.60004 8.12491 6.87587 7.81937 7.3348L7.10922 8.40004H7.05004C6.99041 8.39919 6.9312 8.41021 6.87587 8.43245C6.82053 8.45468 6.77017 8.48769 6.7277 8.52956C6.68523 8.57143 6.65151 8.62133 6.6285 8.67634C6.60548 8.73136 6.59363 8.7904 6.59363 8.85004C6.59363 8.90967 6.60548 8.96871 6.6285 9.02373C6.65151 9.07875 6.68523 9.12864 6.7277 9.17051C6.77017 9.21238 6.82053 9.24539 6.87587 9.26763C6.9312 9.28986 6.99041 9.30088 7.05004 9.30004H7.27914C7.31774 9.30587 7.35694 9.30666 7.39574 9.30238L8.13754 16.2258C8.22704 17.0605 8.93879 17.7 9.77816 17.7H14.2213C15.0607 17.7 15.7724 17.0605 15.862 16.2258L16.6043 9.30238C16.6424 9.30646 16.6808 9.30567 16.7186 9.30004H16.95C17.0097 9.30088 17.0689 9.28986 17.1242 9.26763C17.1795 9.24539 17.2299 9.21238 17.2724 9.17051C17.3148 9.12864 17.3486 9.07875 17.3716 9.02373C17.3946 8.96871 17.4064 8.90967 17.4064 8.85004C17.4064 8.7904 17.3946 8.73136 17.3716 8.67634C17.3486 8.62133 17.3148 8.57143 17.2724 8.52956C17.2299 8.48769 17.1795 8.45468 17.1242 8.43245C17.0689 8.41021 17.0097 8.39919 16.95 8.40004H16.8909L16.1807 7.3348C15.8749 6.87612 15.3588 6.60004 14.8079 6.60004H13.4801C13.5043 6.5317 13.5116 6.45853 13.5014 6.38677C13.4912 6.31501 13.4638 6.24677 13.4216 6.18785C13.3794 6.12894 13.3235 6.0811 13.2588 6.0484C13.1941 6.0157 13.1225 5.99911 13.05 6.00004H10.95ZM9.19222 7.50004H14.8079C15.0591 7.50004 15.2925 7.6249 15.4319 7.83402L15.8092 8.40004H8.19086L8.5682 7.83402C8.5684 7.83383 8.56859 7.83363 8.56879 7.83344C8.70783 7.62458 8.9406 7.50004 9.19222 7.50004ZM8.30101 9.30004H15.6991L14.9672 16.1297C14.9259 16.5148 14.6084 16.8 14.2213 16.8H9.77816C9.39114 16.8 9.07414 16.5148 9.03285 16.1297L8.30101 9.30004Z' fill='url(%23paint1_linear_0_135)'/%3E%3Cdefs%3E%3ClinearGradient id='paint0_linear_0_135' x1='-0.566127' y1='12.058' x2='38.1731' y2='12.058' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23FD4B7A'/%3E%3Cstop offset='1' stop-color='%234D00AE'/%3E%3C/linearGradient%3E%3ClinearGradient id='paint1_linear_0_135' x1='6.33857' y1='11.8783' x2='23.7919' y2='11.8783' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23FD4B7A'/%3E%3Cstop offset='1' stop-color='%234D00AE'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E");
+background-repeat: no-repeat no-repeat;
+background-position: center center;
+background-size: cover;
+    width: 24px;
+    height: 24px;
+    content: '';
+}
+
 .elementor-menu-cart--cart-type-mini-cart.topbar_box .elementor-menu-cart__main {
 	padding: 20px 10px;
 }
