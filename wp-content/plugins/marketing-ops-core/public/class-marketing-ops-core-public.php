@@ -4618,7 +4618,8 @@ class Marketing_Ops_Core_Public {
 			wp_mail(
 				array(
 					$admin_email,
-					'audrey@marketingops.com'
+					'audrey@marketingops.com',
+					'grace@marketingops.com',
 				),
 				$subject_to_text,
 				$body_content_to_text,
