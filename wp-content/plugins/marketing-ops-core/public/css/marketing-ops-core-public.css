@@ -2554,3 +2554,9 @@ background-size: cover;
 .add_price_list.supererlybirdnew2025 .elementor-element-populated{max-width:472px;width:100%;}
 .mopza2025editor .elementor-widget-container label{color:#FA4A7C;font-family:"Open Sans";font-size:16px;font-style:normal;font-weight:400;line-height:normal;text-transform:uppercase;}
 .mopza2025editor .elementor-widget-container label.bluetext{color:#00BDE2;font-family:"Open Sans";font-size:16px;font-style:normal;font-weight:400;line-height:normal;text-transform:uppercase;}
+
+
+@media (max-width:767px)
+{
+	.gradient_btn.doller_number_new.open_accelevents_purchase_tickets_modal.mpza2025btns a{position:relative;left:-55%;}
+}
