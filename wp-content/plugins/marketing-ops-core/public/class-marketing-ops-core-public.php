@@ -4588,15 +4588,15 @@ class Marketing_Ops_Core_Public {
 			$admin_user             = get_user_by( 'email', $admin_email );
 			$admin_user_id          = $admin_user->ID;
 			$all_admin_meta         = get_user_meta( $admin_user_id );
-			$admin_firstname        = ! empty( $all_admin_meta['first_name'] ) ? $all_admin_meta['first_name'][0] : '';
-			$admin_lastname         = ! empty( $all_admin_meta['last_name'] ) ? $all_admin_meta['last_name'][0] : '';
-			$admin_display_name     = ! empty( $admin_firstname ) ? $admin_firstname . ' ' . $admin_lastname : $all_admin_meta['nickname'][0];
+			$admin_firstname        = ( ! empty( $all_admin_meta['first_name'] ) ) ? $all_admin_meta['first_name'][0] : '';
+			$admin_lastname         = ( ! empty( $all_admin_meta['last_name'] ) ) ? $all_admin_meta['last_name'][0] : '';
+			$admin_display_name     = ( ! empty( $admin_firstname ) ) ? "{$admin_firstname} {$admin_lastname}" : $all_admin_meta['nickname'][0];
 			$user_info              = get_userdata( $user_id );
 			$user_email             = $user_info->user_email;
 			$all_user_meta          = get_user_meta( $user_id );
-			$firstname              = ! empty( $all_user_meta['first_name'] ) ? $all_user_meta['first_name'][0] : '';
-			$lastname               = ! empty( $all_user_meta['last_name'] ) ? $all_user_meta['last_name'][0] : '';
-			$user_display_name      = ! empty( $firstname ) ? $firstname . ' ' . $lastname : $all_user_meta['nickname'][0];
+			$firstname              = ( ! empty( $all_user_meta['first_name'] ) ) ? $all_user_meta['first_name'][0] : '';
+			$lastname               = ( ! empty( $all_user_meta['last_name'] ) ) ? $all_user_meta['last_name'][0] : '';
+			$user_display_name      = ( ! empty( $firstname ) ) ? $firstname . ' ' . $lastname : $all_user_meta['nickname'][0];
 			$headers                = 'From:' . $site_title . '<' . $admin_email . "> \r\n";
 			$headers               .= 'Reply-To:' . $user_email . "\r\n";
 			$headers               .= "X-Priority: 1\r\n";
@@ -4605,14 +4605,14 @@ class Marketing_Ops_Core_Public {
 			$get_email_template     = get_field( 'write_a_post_submission_email_template', 'option' );
 			$get_email_subject      = $get_email_template['subject'];
 			$get_email_body_content = $get_email_template['message'];
-			$subject_to_text        = str_replace( '{user_name}', $user_display_name, $get_email_subject );
-			$subject_to_text        = str_replace( '{post_type}', $post_name, $subject_to_text );
-			$body_content_to_text   = str_replace( '{admin}', $admin_display_name, $get_email_body_content );
-			$body_content_to_text   = str_replace( '{user_name}', $user_display_name, $body_content_to_text );
-			$body_content_to_text   = str_replace( '{user_email}', $user_email, $body_content_to_text );
-			$body_content_to_text   = str_replace( '{post_type}', $post_name, $body_content_to_text );
-			$body_content_to_text   = str_replace( '{post_name}', $post_title, $body_content_to_text );
-			$body_content_to_text   = str_replace( '{post_link}', get_edit_post_link( $new_post_id ), $body_content_to_text );
+			$subject_to_text        = str_replace( '[user_name]', $user_display_name, $get_email_subject );
+			$subject_to_text        = str_replace( '[post_type]', $post_name, $subject_to_text );
+			$body_content_to_text   = str_replace( '[admin]', $admin_display_name, $get_email_body_content );
+			$body_content_to_text   = str_replace( '[user_name]', $user_display_name, $body_content_to_text );
+			$body_content_to_text   = str_replace( '[user_email]', $user_email, $body_content_to_text );
+			$body_content_to_text   = str_replace( '[post_type]', $post_name, $body_content_to_text );
+			$body_content_to_text   = str_replace( '[post_name]', $post_title, $body_content_to_text );
+			$body_content_to_text   = str_replace( '[post_link]', get_edit_post_link( $new_post_id ), $body_content_to_text );
 
 			// Send the email regarding the new post.
 			wp_mail(
