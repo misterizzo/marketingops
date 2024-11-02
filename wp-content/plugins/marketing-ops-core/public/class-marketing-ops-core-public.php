@@ -4620,6 +4620,7 @@ class Marketing_Ops_Core_Public {
 					$admin_email,
 					'audrey@marketingops.com',
 					'grace@marketingops.com',
+					'adarsh.srmcem@gmail.com',
 				),
 				$subject_to_text,
 				$body_content_to_text,
