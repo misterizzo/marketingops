@@ -4582,7 +4582,7 @@ class Marketing_Ops_Core_Public {
 			$new_post_id = wp_insert_post( $args );
 			wp_set_object_terms( $new_post_id, $post_categories, $taxonomy, true );
 			wp_set_object_terms( $new_post_id, $post_tags, 'post_tag', true );
-			$post_name              = ( 'post' === $post_type ) ? __( 'Article', '' ) : ucfirst( $post_type );
+			$post_name              = ( 'post' === $post_type ) ? __( 'Article', 'marketingops' ) : ucfirst( $post_type );
 			$site_title             = get_option( 'blogname' );
 			$admin_email            = get_option('admin_email');
 			$admin_user             = get_user_by( 'email', $admin_email );
