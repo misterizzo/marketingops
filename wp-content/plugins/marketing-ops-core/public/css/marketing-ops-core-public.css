@@ -1710,7 +1710,7 @@ section.conferencevault.elementor-section.elementor-section-boxed{padding-top:20
 	.mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright ul{display:-ms-grid;display:grid;-ms-grid-columns:(1fr)[2];grid-template-columns:repeat(2,1fr);}
 }
 @media screen and (max-width:767px){
-	.mops_conference-vault_page .conferencevault .conferencevaultinner h3{max-width:670px;}
+	.mops_conference-vault_page .conferencevault .conferencevaultinner h3{max-width:100%;}
 	.mops_conference-vault_page .conferencevaultinner_inner{padding:20px;flex-wrap:wrap;}
 	.mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerleft{width:100%;}
 	.mops_conference-vault_page .conferencevaultinner_inner .conferencevaultinner_innerright{display:flex;max-width:877px;width:100%;}
