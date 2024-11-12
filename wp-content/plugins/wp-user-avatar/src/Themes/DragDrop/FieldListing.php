@@ -71,7 +71,7 @@ class FieldListing
 
         if ( ! in_array($field_type, ['login-remember']) && strpos($field_type, 'agreeable') === false && ! empty($field_setting['label'])) {
             $output = sprintf('<div class="pp-form-label-wrap"><label for="%s" class="pp-form-label">', $field_id);
-            $output .= $field_setting['label'];
+            $output .= wp_kses_post($field_setting['label']);
 
             if ($this->is_field_required($field_setting)) {
                 $output .= ' <span class="pp-form-required-label">*</span>';

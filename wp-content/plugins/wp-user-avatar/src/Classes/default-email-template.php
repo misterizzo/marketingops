@@ -22,7 +22,7 @@ $footer_text = DT::get_customizer_value('footer_text');
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title><?= $email_subject ?></title>
+    <title><?= esc_attr($email_subject) ?></title>
     <style type="text/css" rel="stylesheet" media="all">
         @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 
@@ -150,12 +150,12 @@ $footer_text = DT::get_customizer_value('footer_text');
         }
 
         body {
-            background-color: <?=$background_color?>;
-            color: <?=$content_text_color?>;
+            background-color: <?=esc_attr($background_color)?>;
+            color: <?=esc_attr($content_text_color)?>;
         }
 
         p {
-            color: <?=$content_text_color?>;
+            color: <?=esc_attr($content_text_color)?>;
         }
 
         .email-wrapper {
@@ -165,7 +165,7 @@ $footer_text = DT::get_customizer_value('footer_text');
             -premailer-width: 100%;
             -premailer-cellpadding: 0;
             -premailer-cellspacing: 0;
-            background-color: <?=$background_color?>;
+            background-color: <?=esc_attr($background_color)?>;
         }
 
         .email-content {
@@ -188,7 +188,7 @@ $footer_text = DT::get_customizer_value('footer_text');
         .email-masthead a.email-masthead_name {
             font-size: 26px;
             font-weight: bold;
-            color: <?=$background_text_color?>;
+            color: <?=esc_attr($background_text_color)?>;
             text-decoration: none;
         }
 
@@ -210,7 +210,7 @@ $footer_text = DT::get_customizer_value('footer_text');
             -premailer-width: 570px;
             -premailer-cellpadding: 0;
             -premailer-cellspacing: 0;
-            background-color: <?=$content_background_color?>;
+            background-color: <?=esc_attr($content_background_color)?>;
         }
 
         .email-footer {
@@ -225,7 +225,7 @@ $footer_text = DT::get_customizer_value('footer_text');
 
         .email-footer,
         .email-footer p {
-            color: <?=$background_text_color?>;
+            color: <?=esc_attr($background_text_color)?>;
         }
 
         .content-cell {
@@ -249,8 +249,7 @@ $footer_text = DT::get_customizer_value('footer_text');
         .f-fallback {
             font-family: Arial, sans-serif;
         }
-    </style>
-    <![endif]-->
+    </style><![endif]-->
 </head>
 <body>
 <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation">

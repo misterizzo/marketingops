@@ -34,16 +34,16 @@ trait WPProfileFieldParserTrait
         ?>
         <tr>
             <th>
-                <label for="<?= $field_key; ?>"><?= htmlspecialchars_decode($label_name); ?></label>
+                <label for="<?= esc_attr($field_key); ?>"><?= wp_kses_post(htmlspecialchars_decode($label_name)); ?></label>
             </th>
             <td>
                 <?php if (in_array(($type = $field_type), $input_fields_array)) : ?>
-                    <input type="<?= $type; ?>" name="<?= esc_attr($field_key); ?>" id="<?= $field_key; ?>" value="<?= esc_attr(get_the_author_meta($field_key, $user->ID)); ?>" class="regular-text"/>
+                    <input type="<?= esc_attr($type); ?>" name="<?= esc_attr($field_key); ?>" id="<?= esc_attr($field_key); ?>" value="<?= esc_attr(get_the_author_meta($field_key, $user->ID)); ?>" class="regular-text"/>
                     <?php $this->description_markup($description); ?>
                 <?php endif; ?>
 
                 <?php if ($field_type == 'date') : ?>
-                    <input type="text" name="<?= esc_attr($field_key); ?>" id="<?= $field_key; ?>" value="<?= esc_attr(get_the_author_meta($field_key, $user->ID)); ?>" class="pp_datepicker regular-text">
+                    <input type="text" name="<?= esc_attr($field_key); ?>" id="<?= esc_attr($field_key); ?>" value="<?= esc_attr(get_the_author_meta($field_key, $user->ID)); ?>" class="pp_datepicker regular-text">
                     <?php $this->description_markup($description); ?>
                     <?php $this->date_field_picker($field_key); ?>
                 <?php endif; ?>
@@ -54,22 +54,22 @@ trait WPProfileFieldParserTrait
                     <select name="<?= $field_key; ?>">
                         <option value=""><?php esc_html__('Select a country&hellip;', 'wp-user-avatar'); ?></option>
                         <?php foreach ($countries as $ckey => $cvalue) : ?>
-                            <option value="<?= $ckey; ?>" <?php selected($value, $ckey); ?>><?= $cvalue; ?> </option>';
+                            <option value="<?= esc_attr($ckey); ?>" <?php selected($value, $ckey); ?>><?= esc_attr($cvalue); ?> </option>';
                         <?php endforeach; ?>
                     </select>
                     <?php $this->description_markup($description); ?>
                 <?php endif; ?>
 
                 <?php if ($field_type == 'textarea') : ?>
-                    <textarea rows="5" name="<?= $field_key; ?>"><?= esc_attr(get_the_author_meta($field_key, $user->ID)); ?></textarea>
+                    <textarea rows="5" name="<?= esc_attr($field_key); ?>"><?= esc_attr(get_the_author_meta($field_key, $user->ID)); ?></textarea>
                     <?php $this->description_markup($description); ?>
                 <?php endif; ?>
 
                 <?php if ($field_type == 'radio') : ?>
                     <?php $radio_buttons = array_map('trim', explode(',', $options)); ?>
                     <?php foreach ($radio_buttons as $radio_button) : $radio_button = esc_attr($radio_button); ?>
-                        <input id="<?= $radio_button ?>" type="radio" name="<?= esc_attr($field_key); ?>" value="<?= $radio_button ?>" <?php checked((get_the_author_meta($field_key, $user->ID)), $radio_button); ?> />
-                        <label for="<?= $radio_button ?>"><?= $radio_button ?></label>
+                        <input id="<?= esc_attr($radio_button) ?>" type="radio" name="<?= esc_attr($field_key); ?>" value="<?= $radio_button ?>" <?php checked((get_the_author_meta($field_key, $user->ID)), $radio_button); ?> />
+                        <label for="<?= esc_attr($radio_button) ?>"><?= $radio_button ?></label>
                         <br/>
                     <?php endforeach; ?>
                     <?php $this->description_markup($description); ?>
@@ -79,7 +79,7 @@ trait WPProfileFieldParserTrait
                     $cpf_saved_data = get_the_author_meta($field_key, $user->ID);
                     $cpf_saved_data = ('1' == $cpf_saved_data) ? 'true' : $cpf_saved_data;
 
-                    echo sprintf('<input type="hidden" name="%s" value="false" style="display: none">', $field_key);
+                    echo sprintf('<input type="hidden" name="%s" value="false" style="display: none">', esc_attr($field_key));
                     echo sprintf('<input id="%1$s" type="checkbox" name="%1$s" value="true" %2$s/>', esc_attr($field_key), checked($cpf_saved_data, 'true', false));
                     echo sprintf('<label for="%1$s">%2$s</label><br/>', esc_attr($field_key), $description);
                 }
@@ -119,7 +119,7 @@ trait WPProfileFieldParserTrait
 
                     $cpf_saved_data = get_the_author_meta($field_key, $user->ID);
 
-                    echo "<select id='$field_key' name='$select_tag_key' $multiple>";
+                    echo sprintf('<select id="%1$s" name="%2$s" %3$s>', esc_attr($field_key), esc_attr($select_tag_key), $multiple);
                     foreach ($select_options_values as $options_key => $options_value) {
                         $selected = null;
                         // if data is for multi select dropdown
@@ -137,7 +137,7 @@ trait WPProfileFieldParserTrait
                     $this->description_markup($description);
 
                     if ($is_multi_selectable === true) {
-                        echo sprintf('<script>jQuery(function () {jQuery("#%s").select2({width: "350px"});});</script>', $field_key);
+                        echo sprintf('<script>jQuery(function () {jQuery("#%s").select2({width: "350px"});});</script>', esc_attr($field_key));
                     }
                 }
 
@@ -149,7 +149,7 @@ trait WPProfileFieldParserTrait
                         echo "<p><a href='$link'>$filename</a></p>";
                     }
                     ?>
-                    <input name="<?= $field_key; ?>" type="file">
+                    <input name="<?= esc_attr($field_key); ?>" type="file">
                     <?php $this->description_markup($description); ?>
                     <?php
                 }

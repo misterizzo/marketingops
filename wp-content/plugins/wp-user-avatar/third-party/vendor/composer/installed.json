@@ -626,26 +626,26 @@
         },
         {
             "name": "sniccowp\/php-scoper-wordpress-excludes",
-            "version": "6.6.0",
-            "version_normalized": "6.6.0.0",
+            "version": "6.6.2",
+            "version_normalized": "6.6.2.0",
             "source": {
                 "type": "git",
                 "url": "https:\/\/github.com\/snicco\/php-scoper-wordpress-excludes.git",
-                "reference": "56cce0bed93ec18e04519de987f7bf78af5385c3"
+                "reference": "b87d7455bdf05c25f9a688fc3862bb3f2b7c8b15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https:\/\/api.github.com\/repos\/snicco\/php-scoper-wordpress-excludes\/zipball\/56cce0bed93ec18e04519de987f7bf78af5385c3",
-                "reference": "56cce0bed93ec18e04519de987f7bf78af5385c3",
+                "url": "https:\/\/api.github.com\/repos\/snicco\/php-scoper-wordpress-excludes\/zipball\/b87d7455bdf05c25f9a688fc3862bb3f2b7c8b15",
+                "reference": "b87d7455bdf05c25f9a688fc3862bb3f2b7c8b15",
                 "shasum": ""
             },
             "require-dev": {
                 "php": "^7.4",
                 "php-stubs\/wordpress-globals": "0.2.0",
-                "php-stubs\/wordpress-stubs": "6.6.0",
+                "php-stubs\/wordpress-stubs": "6.6.2",
                 "sniccowp\/php-scoper-excludes": "dev-master"
             },
-            "time": "2024-08-24T00:01:07+00:00",
+            "time": "2024-10-01T00:32:14+00:00",
             "type": "library",
             "installation-source": "dist",
             "notification-url": "https:\/\/packagist.org\/downloads\/",
@@ -670,7 +670,7 @@
             ],
             "support": {
                 "issues": "https:\/\/github.com\/snicco\/php-scoper-wordpress-excludes\/issues",
-                "source": "https:\/\/github.com\/snicco\/php-scoper-wordpress-excludes\/tree\/6.6.0"
+                "source": "https:\/\/github.com\/snicco\/php-scoper-wordpress-excludes\/tree\/6.6.2"
             },
             "install-path": "..\/sniccowp\/php-scoper-wordpress-excludes"
         },
@@ -1044,17 +1044,17 @@
         },
         {
             "name": "symfony\/translation",
-            "version": "v5.4.42",
-            "version_normalized": "5.4.42.0",
+            "version": "v5.4.44",
+            "version_normalized": "5.4.44.0",
             "source": {
                 "type": "git",
                 "url": "https:\/\/github.com\/symfony\/translation.git",
-                "reference": "1d702caccb9f091b738696185f778b1bfef7b5b2"
+                "reference": "6fed3a20b5b87ee9cdd9dacf545922b8fd475921"
             },
             "dist": {
                 "type": "zip",
-                "url": "https:\/\/api.github.com\/repos\/symfony\/translation\/zipball\/1d702caccb9f091b738696185f778b1bfef7b5b2",
-                "reference": "1d702caccb9f091b738696185f778b1bfef7b5b2",
+                "url": "https:\/\/api.github.com\/repos\/symfony\/translation\/zipball\/6fed3a20b5b87ee9cdd9dacf545922b8fd475921",
+                "reference": "6fed3a20b5b87ee9cdd9dacf545922b8fd475921",
                 "shasum": ""
             },
             "require": {
@@ -1093,7 +1093,7 @@
                 "symfony\/config": "",
                 "symfony\/yaml": ""
             },
-            "time": "2024-07-26T12:14:19+00:00",
+            "time": "2024-09-15T08:12:35+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1124,7 +1124,7 @@
             "description": "Provides tools to internationalize your application",
             "homepage": "https:\/\/symfony.com",
             "support": {
-                "source": "https:\/\/github.com\/symfony\/translation\/tree\/v5.4.42"
+                "source": "https:\/\/github.com\/symfony\/translation\/tree\/v5.4.44"
             },
             "funding": [
                 {

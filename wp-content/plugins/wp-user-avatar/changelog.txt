@@ -1,5 +1,19 @@
 ﻿== Changelog ==
 
+= 4.15.17 =
+* Fixed bug that displays double 'tripple-mdash' in billing state field.
+* Fixed bug where country/state field ID instead of title was displayed in member directory & user profile.
+* Improved content protection compatibility with WooCommerce.
+
+= 4.15.16 =
+* Fixed fatal error: Uncaught ValueError.
+* Bumped Stripe API version to 2024-06-20.
+
+= 4.15.15 =
+* Improved support for cache-heavy hosting like WPEngine and Pantheon.
+* Fixed XSS on plan edit page metabox and builder form field label.
+* Improve compatibility with jQuery 4.
+
 = 4.15.14 =
 * Added WooCommerce compatibility to content protection where add-to-cart button is hidden for restricted product.
 * Added ppress_is_checkout_autoscroll_enabled filter to disable checkout autoscroll feature.

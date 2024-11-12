@@ -5,6 +5,7 @@ namespace ProfilePress\Core\Themes\DragDrop;
 use ProfilePress\Core\Base;
 use ProfilePress\Core\Classes\FormRepository as FR;
 use ProfilePress\Core\Classes\PROFILEPRESS_sql;
+use ProfilePress\Core\Membership\CheckoutFields;
 
 class ProfileFieldListing
 {
@@ -112,11 +113,13 @@ class ProfileFieldListing
 
                     $field_key = $field_setting['custom_field'];
 
-                    $field_title = PROFILEPRESS_sql::get_field_label($field_key);
+                    $custom_field_title = PROFILEPRESS_sql::get_field_label($field_key);
 
-                    if ( ! $field_title) {
-                        $field_title = PROFILEPRESS_sql::get_contact_info_field_label($field_key);
+                    if ( ! $custom_field_title) {
+                        $custom_field_title = PROFILEPRESS_sql::get_contact_info_field_label($field_key);
                     }
+
+                    if ( ! empty($custom_field_title)) $field_title = $custom_field_title;
 
                     $field_type = $field_type . ' key="' . $field_key . '"';
                 }
@@ -160,8 +163,13 @@ class ProfileFieldListing
 
                     $custom_field_type = PROFILEPRESS_sql::get_field_type($field_key);
 
-                    if ($custom_field_type == 'country') {
-                        $parsed_shortcode = ppress_array_of_world_countries($parsed_shortcode) ?? '';
+                    if ($field_key == CheckoutFields::BILLING_COUNTRY || $custom_field_type == 'country') {
+                        $parsed_shortcode = ppress_get_country_title($parsed_shortcode);
+                    }
+
+                    if ($field_key == CheckoutFields::BILLING_STATE) {
+                        $db_country       = do_shortcode('[profile-cpf key=' . CheckoutFields::BILLING_COUNTRY . ']', true);
+                        $parsed_shortcode = ppress_get_country_state_title($parsed_shortcode, $db_country);
                     }
                 }
 

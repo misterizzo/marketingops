@@ -155,8 +155,4 @@ if (!\class_exists('ProfilePressVendor\PAnD')) {
             return \true;
         }
     }
-    /**
-     * Class PAnD
-     */
-    \class_alias('ProfilePressVendor\PAnD', 'PAnD', \false);
 }

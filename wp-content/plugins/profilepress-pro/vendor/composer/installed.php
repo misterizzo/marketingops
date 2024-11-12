@@ -67,8 +67,8 @@
             'dev_requirement' => false,
         ),
         'profilepress/libsodium' => array(
-            'pretty_version' => '0.2.1726674944',
-            'version' => '0.2.1726674944.0',
+            'pretty_version' => '0.2.1729346153',
+            'version' => '0.2.1729346153.0',
             'reference' => NULL,
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../src/libsodium',

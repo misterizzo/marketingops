@@ -59,10 +59,10 @@ class PlanIntegrationsMetabox
         <tr>
             <td class="sort"></td>
             <td class="file_name">
-                <input type="text" class="input_text" placeholder="<?php esc_html_e('File name', 'wp-user-avatar') ?>" name="<?= $name ?>_names[]" value="<?= $file_name ?>">
+                <input type="text" class="input_text" placeholder="<?php esc_html_e('File name', 'wp-user-avatar') ?>" name="<?= esc_attr($name) ?>_names[]" value="<?= esc_attr($file_name) ?>">
             </td>
             <td class="file_url">
-                <input type="text" class="input_text" placeholder="https://" name="<?= $name ?>_urls[]" value="<?= $file_url ?>">
+                <input type="text" class="input_text" placeholder="https://" name="<?= esc_attr($name) ?>_urls[]" value="<?= esc_url($file_url) ?>">
             </td>
             <td class="file_url_choose">
                 <a href="#" class="button upload_file_button" data-choose="<?php esc_html_e('Choose file', 'wp-user-avatar') ?>" data-update="<?php esc_html_e('Insert file URL', 'wp-user-avatar') ?>"><?php esc_html_e('Choose file', 'wp-user-avatar') ?></a>
@@ -99,7 +99,7 @@ class PlanIntegrationsMetabox
             <tfoot>
             <tr>
                 <th colspan="2">
-                    <a href="#" class="button insert""><?php esc_html_e('Add File', 'wp-user-avatar') ?></a>
+                    <a href="#" class="button insert"><?php esc_html_e('Add File', 'wp-user-avatar') ?></a>
                 </th>
                 <th colspan="3">
                 </th>

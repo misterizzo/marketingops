@@ -140,7 +140,18 @@ class PPVkontakte extends OAuth2
         $userProfile = new Profile();
 
         $userProfile->identifier = $data->get('id');
-        $userProfile->email = $this->getStoredData('email');
+
+        if (apply_filters('ppress_social_login_vk_use_email', false)) {
+            $userProfile->email = $this->getStoredData('email');
+        } else {
+            /**
+             * The email address returned by VK is not always verified!
+             * This means the email address might not actually belong to the account
+             * There is no way to check the verification status of the email address
+             * As such we must never trust the email address
+             */
+            $userProfile->email = '';
+        }
         $userProfile->firstName = $data->get('first_name');
         $userProfile->lastName = $data->get('last_name');
         $userProfile->displayName = $data->get('screen_name');

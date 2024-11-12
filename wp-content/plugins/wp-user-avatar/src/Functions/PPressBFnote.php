@@ -18,9 +18,9 @@ if ( ! class_exists('\PPressBFnote')) {
 
             add_action('admin_init', array($this, 'dismiss_admin_notice'));
 
-            $this->this_year = '2023';
+            $this->this_year = '2024';
             $this->last_year = $this->this_year - 1;
-            $this->start     = strtotime('november 23rd, ' . $this->this_year);
+            $this->start     = strtotime('november 28th, ' . $this->this_year);
             $this->end       = strtotime('december 1st, ' . $this->this_year);
         }
 

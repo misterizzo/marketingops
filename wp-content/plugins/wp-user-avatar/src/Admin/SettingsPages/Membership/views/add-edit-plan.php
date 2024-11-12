@@ -148,6 +148,9 @@ if ( ! ExtensionManager::is_premium()) {
         'Campaign Monitor' => [
             esc_html__("Subscribe members to your Campaign Monitor lists when they register or subscribe to a membership plan and sync membership and profile changes with Campaign Monitor.", 'wp-user-avatar')
         ],
+        'WooCommerce' => [
+            esc_html__("Sell paid memberships via WooCommerce, and create members-only discounts.", 'wp-user-avatar')
+        ]
     ];
     ob_start();
     ?>
@@ -159,7 +162,7 @@ if ( ! ExtensionManager::is_premium()) {
         <?php endforeach; ?>
         <div>
             <a href="https://profilepress.com/pricing/?utm_source=wp_dashboard&utm_medium=upgrade&utm_campaign=edit_plan_page_integration_metabox" target="__blank" class="button-primary">
-                <?php esc_html_e('Get ProfilePress Pro →', 'wp-user-avatar') ?>
+                <?php esc_html_e('Get ProfilePress Premium →', 'wp-user-avatar') ?>
             </a>
         </div>
     </div>

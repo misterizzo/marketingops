@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the ProfilePress Pro - Standard plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: ProfilePress Pro - Standard 4.11.1\n"
+"Project-Id-Version: ProfilePress Pro - Standard 4.11.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/profilepress-pro\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-09-18T15:56:39+00:00\n"
+"POT-Creation-Date: 2024-10-19T13:57:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: profilepress-pro\n"
@@ -715,7 +715,7 @@ msgstr ""
 
 #: src/libsodium/src/EmailConfirmation.php:61
 #: src/libsodium/src/EmailConfirmation.php:250
-#: src/libsodium/src/Libsodium.php:143
+#: src/libsodium/src/Libsodium.php:137
 msgid "Confirm Your Email Address to Activate Your Account"
 msgstr ""
 
@@ -844,37 +844,37 @@ msgid "The age of unconfirmed user accounts before they are deleted. Defaults to
 msgstr ""
 
 #: src/libsodium/src/EmailConfirmation.php:568
-#: src/libsodium/src/Libsodium.php:141
+#: src/libsodium/src/Libsodium.php:135
 msgid "Account is pending email confirmation."
 msgstr ""
 
 #: src/libsodium/src/EmailConfirmation.php:568
-#: src/libsodium/src/Libsodium.php:141
+#: src/libsodium/src/Libsodium.php:135
 msgid "Click to resend"
 msgstr ""
 
 #: src/libsodium/src/EmailConfirmation.php:584
-#: src/libsodium/src/Libsodium.php:139
+#: src/libsodium/src/Libsodium.php:133
 msgid "Confirmation link is invalid or has expired."
 msgstr ""
 
 #: src/libsodium/src/EmailConfirmation.php:584
-#: src/libsodium/src/Libsodium.php:139
+#: src/libsodium/src/Libsodium.php:133
 msgid "Click to resend."
 msgstr ""
 
 #: src/libsodium/src/EmailConfirmation.php:598
-#: src/libsodium/src/Libsodium.php:137
+#: src/libsodium/src/Libsodium.php:131
 msgid "Email successfully verified. You can now log in."
 msgstr ""
 
 #: src/libsodium/src/EmailConfirmation.php:611
-#: src/libsodium/src/Libsodium.php:140
+#: src/libsodium/src/Libsodium.php:134
 msgid "Confirmation email successfully resent"
 msgstr ""
 
 #: src/libsodium/src/EmailConfirmation.php:623
-#: src/libsodium/src/Libsodium.php:138
+#: src/libsodium/src/Libsodium.php:132
 msgid "Email address for this user is already verified."
 msgstr ""
 
@@ -1158,117 +1158,117 @@ msgstr ""
 msgid "Select the LearnDash courses to enroll users in after registration through this form"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:126
+#: src/libsodium/src/Libsodium.php:120
 msgid "Spam registration detected. Please try again"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:128
+#: src/libsodium/src/Libsodium.php:122
 msgid "One-time login has expired or is invalid"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:129
+#: src/libsodium/src/Libsodium.php:123
 #: src/libsodium/src/PasswordlessLogin.php:275
 msgid "One-time login URL sent successfully to your email"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:131
+#: src/libsodium/src/Libsodium.php:125
 #: src/libsodium/src/PasswordlessLogin.php:91
 #: src/libsodium/src/PasswordlessLogin.php:243
 msgid "One-time login to %s"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:146
+#: src/libsodium/src/Libsodium.php:140
 msgid "%sERROR%s: This account is blocked"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:147
+#: src/libsodium/src/Libsodium.php:141
 msgid "%sERROR%s: This account is pending approval"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:148
+#: src/libsodium/src/Libsodium.php:142
 msgid "%sERROR%s: This account has been rejected"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:150
+#: src/libsodium/src/Libsodium.php:144
 #: src/libsodium/src/UserModeration/UserModerationNotification.php:162
 msgid "Account Awaiting Review"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:153
+#: src/libsodium/src/Libsodium.php:147
 #: src/libsodium/src/UserModeration/UserModeration.php:105
 #: src/libsodium/src/UserModeration/UserModerationNotification.php:73
 msgid "Your Account is Approved"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:156
+#: src/libsodium/src/Libsodium.php:150
 #: src/libsodium/src/UserModeration/UserModeration.php:120
 #: src/libsodium/src/UserModeration/UserModerationNotification.php:95
 msgid "Your Account Has Been Rejected"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:159
+#: src/libsodium/src/Libsodium.php:153
 #: src/libsodium/src/UserModeration/UserModeration.php:135
 #: src/libsodium/src/UserModeration/UserModerationNotification.php:117
 msgid "Your Account is Blocked"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:162
+#: src/libsodium/src/Libsodium.php:156
 #: src/libsodium/src/UserModeration/UserModeration.php:150
 #: src/libsodium/src/UserModeration/UserModerationNotification.php:140
 msgid "Your Account is Unblocked"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:165
+#: src/libsodium/src/Libsodium.php:159
 #: src/libsodium/src/UserModeration/UserModeration.php:89
 #: src/libsodium/src/UserModeration/UserModerationNotification.php:220
 msgid "Account Awaiting Approval"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:168
+#: src/libsodium/src/Libsodium.php:162
 msgid "Sign in with Facebook"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:169
+#: src/libsodium/src/Libsodium.php:163
 msgid "Sign in with X"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:170
+#: src/libsodium/src/Libsodium.php:164
 msgid "Sign in with Google"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:171
+#: src/libsodium/src/Libsodium.php:165
 msgid "Sign in with LinkedIn"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:172
+#: src/libsodium/src/Libsodium.php:166
 msgid "Sign in with GitHub"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:173
+#: src/libsodium/src/Libsodium.php:167
 msgid "Sign in with VK"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:175
+#: src/libsodium/src/Libsodium.php:169
 msgid "ERROR: Please retry CAPTCHA"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:196
+#: src/libsodium/src/Libsodium.php:190
 msgid "Gender"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:198
+#: src/libsodium/src/Libsodium.php:192
 msgid "Gender of a user."
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:207
+#: src/libsodium/src/Libsodium.php:201
 msgid "Country"
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:209
+#: src/libsodium/src/Libsodium.php:203
 msgid "The country users are from."
 msgstr ""
 
-#: src/libsodium/src/Libsodium.php:279
+#: src/libsodium/src/Libsodium.php:273
 msgid "Required by %s"
 msgstr ""
 
@@ -3566,6 +3566,14 @@ msgstr ""
 
 #: src/libsodium/src/SocialLogin/Init.php:741
 msgid "Delete Log"
+msgstr ""
+
+#: src/libsodium/src/SocialLogin/ProcessSocialLogin.php:61
+msgid "Ensure your social account has a verified email to log in"
+msgstr ""
+
+#: src/libsodium/src/SocialLogin/ProcessSocialLogin.php:255
+msgid "User account not found. Please try again"
 msgstr ""
 
 #: src/libsodium/src/Traits.php:19

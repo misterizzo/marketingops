@@ -137,7 +137,7 @@ class RegistrationFormBuilder
         <script type="text/javascript">
             var pass_strength = 0;
             (function ($) {
-                $(document).on('ready', function () {
+                $(function () {
                     var password1 = $('input[name=reg_password]');
                     var password2 = $('input[name=reg_password2]');
                     var submitButton = $('input[name=reg_submit]');

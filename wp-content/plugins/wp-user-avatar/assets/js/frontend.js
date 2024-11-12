@@ -30,6 +30,8 @@ function Frontend() {
             }
         });
 
+        this.submit_reload_form_on_billing_country_field_change();
+
         // only enable if pp_disable_ajax_form filter is false.
         if (pp_ajax_form.disable_ajax_form === 'true') return;
 
@@ -94,6 +96,15 @@ function Frontend() {
             input.attr('type', 'password');
             $(this).text('visibility')
         }
+    };
+
+    this.submit_reload_form_on_billing_country_field_change = function () {
+        $(document).on('change', '.pp-edit-profile-form-wrap select[name=ppress_billing_country]', function (e) {
+            $(document).on('pp_form_edit_profile_success', function() {
+                window.location.reload();
+            });
+            $(this).closest('form').find('input.pp-submit-form').trigger('click');
+        });
     };
 
     this.ajax_edit_profile = function (e) {
@@ -544,7 +555,7 @@ function Frontend() {
             return strength;
         }
 
-        $(document).on('ready', function () {
+        $(function () {
 
             var password1 = $('input[name=password_new]');
             var password2 = $('input[name=password_confirm_new]');

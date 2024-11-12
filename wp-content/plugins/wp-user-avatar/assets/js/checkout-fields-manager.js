@@ -1,6 +1,6 @@
 (function ($) {
 
-    $(document).on('ready', function () {
+    $(function () {
 
         var template = wp.template('ppress-checkout-field-item');
 

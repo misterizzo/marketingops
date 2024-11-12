@@ -162,7 +162,7 @@ class FrontendController extends BaseController
      */
     public function exclude_page_from_pantheon_server_cache()
     {
-        if (apply_filters('ppress_enable_pantheon_caching_exclusion', true) && isset($_ENV['PANTHEON_ENVIRONMENT'])) {
+        if (apply_filters('ppress_enable_pantheon_caching_exclusion', true) && !empty($_ENV['PANTHEON_ENVIRONMENT'])) {
             $domain = $_SERVER['HTTP_HOST'];
             $path   = wp_parse_url(get_permalink(), PHP_URL_PATH);
             setcookie('NO_CACHE', '1', time() + 0, $path, $domain);

@@ -379,11 +379,11 @@
         },
         {
             "name": "profilepress/libsodium",
-            "version": "0.2.1726674944",
-            "version_normalized": "0.2.1726674944.0",
+            "version": "0.2.1729346153",
+            "version_normalized": "0.2.1729346153.0",
             "dist": {
                 "type": "zip",
-                "url": "https://php.fury.io/uDXRvLf8b2ywvgcokC7z/mailoptin/~/up/ver_1GW4SG/profilepresslibsodium-0-2-1726674944.zip"
+                "url": "https://php.fury.io/uDXRvLf8b2ywvgcokC7z/mailoptin/~/up/ver_1Lj7Da/profilepresslibsodium-0-2-1729346153.zip"
             },
             "require": {
                 "bacon/bacon-qr-code": "^2.0",

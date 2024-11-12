@@ -42,7 +42,7 @@ class PostContent
 
         add_action('wp', function () {
             $this->woocommerce_compatibility();
-        });
+        }, 9999);
     }
 
     public function uncode_theme_compatibility()
@@ -82,18 +82,18 @@ class PostContent
                 });
 
                 remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
-
-                add_filter('woocommerce_loop_add_to_cart_link', function ($add_to_cart_html, $product) {
-
-                    // is_post_content_restricted can be used because global $post; will always be WP_Post of each loop product item
-                    if ($this->is_post_content_restricted(true)) {
-                        return '';
-                    }
-
-                    return $add_to_cart_html;
-
-                }, 99, 2);
             }
+
+            add_filter('woocommerce_loop_add_to_cart_link', function ($add_to_cart_html, $product) {
+
+                // is_post_content_restricted can be used because global $post; will always be WP_Post of each loop product item
+                if ($this->is_post_content_restricted(true)) {
+                    return '';
+                }
+
+                return $add_to_cart_html;
+
+            }, 99, 2);
         }
     }
 

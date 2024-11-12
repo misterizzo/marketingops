@@ -55,8 +55,8 @@ if (empty($found)) {
                             $order->get_order_key(), $index, $downloads['download_expiry']
                         ); ?>
                         <tr>
-                            <td><?php echo $plan->get_name() ?></td>
-                            <td><?php echo $file_name ?></td>
+                            <td><?php echo esc_html($plan->get_name()) ?></td>
+                            <td><?php echo esc_html($file_name) ?></td>
                             <td><?php echo DownloadService::init()->get_downloads_remaining($order->get_id(), $plan->get_id(), $file_url) ?></td>
                             <td>
                                 <a class="ppress-myac-action" href="<?php echo esc_url($download_url) ?>"><?php esc_html_e('Download', 'wp-user-avatar'); ?></a>

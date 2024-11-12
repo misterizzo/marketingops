@@ -15,13 +15,7 @@ define('PROFILEPRESS_PRO_ROOT', wp_normalize_path(plugin_dir_path(PROFILEPRESS_P
 /** internally uses wp_normalize_path */
 define('PROFILEPRESS_PRO_URL', plugin_dir_url(PROFILEPRESS_PRO_SYSTEM_FILE_PATH));
 
-if (strpos(__FILE__, 'profilepress-pro' . DIRECTORY_SEPARATOR . 'src') !== false) {
-    // production url path to assets folder.
-    define('PROFILEPRESS_PRO_LIBSODIUM_ASSETS_URL', PROFILEPRESS_PRO_URL . 'src/libsodium/src/assets/');
-} else {
-    // dev url path to assets folder.
-    define('PROFILEPRESS_PRO_LIBSODIUM_ASSETS_URL', PROFILEPRESS_PRO_URL . '../' . dirname(substr(__FILE__, strpos(__FILE__, 'profilepress-pro'))) . '/assets/');
-}
+define('PROFILEPRESS_PRO_LIBSODIUM_ASSETS_URL', plugins_url('assets/', __FILE__));
 
 define('PROFILEPRESS_PRO_ITEM_NAME', 'ProfilePress Pro');
 define('PROFILEPRESS_PRO_ITEM_ID', 163588);

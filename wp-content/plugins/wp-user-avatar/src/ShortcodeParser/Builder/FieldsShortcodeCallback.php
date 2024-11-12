@@ -94,7 +94,21 @@ class FieldsShortcodeCallback
     {
         if ( ! is_array($atts)) return $atts;
 
-        $invalid_atts = array('enforce', 'key', 'type', 'field_key', 'limit', 'options', 'key_value_options', 'checkbox_text', 'date_format', 'field_width', 'icon', 'checked_state', 'billing_country');
+        $invalid_atts = array(
+            'enforce',
+            'key',
+            'type',
+            'field_key',
+            'limit',
+            'options',
+            'key_value_options',
+            'checkbox_text',
+            'date_format',
+            'field_width',
+            'icon',
+            'checked_state',
+            'billing_country'
+        );
 
         $valid_atts = array();
 
@@ -132,7 +146,7 @@ class FieldsShortcodeCallback
             $key = sanitize_text_field(trim($key));
 
             // skip all onXYZ attributes eg onclick, onmouseover etc
-            if(strpos($key, 'on') === 0) continue;
+            if (strpos($key, 'on') === 0) continue;
 
             // add class to submit button.
             if ($field_name == $this->tag_name . '_submit' && $key == 'class') {
@@ -1020,7 +1034,7 @@ class FieldsShortcodeCallback
 
                 if ( ! empty($country) && ! empty($states = ppress_array_of_world_states($country))) {
                     $type                      = 'select';
-                    $atts['key_value_options'] = ['' => '&mdash;&mdash;&mdash;'] + $states;
+                    $atts['key_value_options'] = $states;
                 }
             }
         }

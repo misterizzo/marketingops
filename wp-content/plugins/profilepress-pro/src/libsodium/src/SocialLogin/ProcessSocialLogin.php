@@ -11,6 +11,26 @@ class ProcessSocialLogin
 
     public $provider;
 
+    public $identifier;
+
+    public $email;
+
+    public $username;
+
+    public $password;
+
+    public $firstName;
+
+    public $lastName;
+
+    public $gender;
+
+    public $bio;
+
+    public $website;
+
+    public $avatar_url;
+
     /**
      * Constructor poop
      *
@@ -37,10 +57,16 @@ class ProcessSocialLogin
         $this->website    = ! empty($hybrid_profile_data->webSiteURL) ? $hybrid_profile_data->webSiteURL : '';
         $this->avatar_url = self::copy_social_avatar_locally($hybrid_profile_data->photoURL);
 
+        if (isset($hybrid_profile_data->emailVerified) && empty($hybrid_profile_data->emailVerified)) {
+            $error = esc_html__('Ensure your social account has a verified email to log in', 'profilepress-pro');
+            wp_safe_redirect(add_query_arg('pp-sl-error', rawurlencode($error), ppress_login_url()));
+            exit;
+        }
+
         // if user identifier already exist or email exist, login in the user otherwise create an account.
         if ($this->_identifier_exist($hybrid_profile_data->identifier)) {
             $login_response = $this->login_user($hybrid_profile_data->identifier);
-        } elseif (email_exists($this->email)) {
+        } elseif ( ! empty($this->email) && email_exists($this->email)) {
             $login_response = $this->login_user();
         } else {
             $register = $this->register_and_login();
@@ -99,21 +125,24 @@ class ProcessSocialLogin
     /**
      * Return the user's IDP email or create one depending on the IDP used.
      *
+     * This can return empty string eg VK if no user email is returned by VK API. That is when $hybrid_profile_data->email is empty string
+     *
      * @param $hybrid_profile_data
      *
      * @return string
      */
     public function construct_email($hybrid_profile_data)
     {
-        if (empty($hybrid_profile_data->emailVerified) && empty($hybrid_profile_data->email)) {
+        if (empty($hybrid_profile_data->emailVerified) && empty($hybrid_profile_data->email) && ! empty($this->username)) {
             $val = $this->username . '@' . $this->provider . '.com';
+        } elseif ( ! empty($hybrid_profile_data->emailVerified) && is_string($hybrid_profile_data->emailVerified)) {
+            $val = $hybrid_profile_data->emailVerified;
         } else {
-            $val = ! empty($hybrid_profile_data->emailVerified) && is_string($hybrid_profile_data->emailVerified) ? $hybrid_profile_data->emailVerified : $hybrid_profile_data->email;
+            $val = $hybrid_profile_data->email;
         }
 
         return strtolower($val);
     }
-
 
     /**
      * Copy the profile picture to local server with the name returned.
@@ -205,7 +234,6 @@ class ProcessSocialLogin
         return $user_id;
     }
 
-
     /**
      * Login the user.
      *
@@ -213,7 +241,7 @@ class ProcessSocialLogin
      *
      * @param bool $registration_flag
      *
-     * @return \WP_Error|null
+     * @return \WP_Error|void
      */
     public function login_user($identifier = '', $registration_flag = false)
     {
@@ -221,6 +249,10 @@ class ProcessSocialLogin
             $user_id = $this->get_user_id_by_meta_data('pp_social_identifier', $identifier);
         } else {
             $user_id = self::_get_user_id($this->email);
+        }
+
+        if (empty($user_id)) {
+            return new \WP_Error('user_id_not_found', esc_html__('User account not found. Please try again', 'profilepress-pro'));;
         }
 
         $preflight_check = apply_filters('ppress_before_social_login_init', false, $user_id, $this);
@@ -300,7 +332,7 @@ class ProcessSocialLogin
      *
      * @param $email
      *
-     * @return int
+     * @return int|false
      */
     private static function _get_user_id($email)
     {
@@ -308,6 +340,8 @@ class ProcessSocialLogin
         if (false !== $user) {
             return $user->ID;
         }
+
+        return false;
     }
 
     /**

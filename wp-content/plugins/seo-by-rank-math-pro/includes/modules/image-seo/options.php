@@ -165,16 +165,18 @@ $cmb->add_group_field(
 		'id'         => 'find',
 		'type'       => 'text',
 		'attributes' => [ 'placeholder' => esc_attr__( 'Find', 'rank-math-pro' ) ],
+		'sanitization_cb' => [ '\\RankMathPro\\Image_Seo_Pro', 'sanitize_replace_value' ],
 	]
 );
 
 $cmb->add_group_field(
 	$replacement_fields,
 	[
-		'id'         => 'replace',
-		'type'       => 'text',
-		'attributes' => [ 'placeholder' => esc_attr__( 'Replace', 'rank-math-pro' ) ],
-		'classes'    => 'rank-math-supports-variables dropdown-up',
+		'id'              => 'replace',
+		'type'            => 'text',
+		'attributes'      => [ 'placeholder' => esc_attr__( 'Replace', 'rank-math-pro' ) ],
+		'classes'         => 'rank-math-supports-variables dropdown-up',
+		'sanitization_cb' => [ '\\RankMathPro\\Image_Seo_Pro', 'sanitize_replace_value' ],
 	]
 );
 

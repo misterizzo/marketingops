@@ -1,11 +1,11 @@
 === Paid Membership Plugin, Ecommerce, User Registration Form, Login Form, User Profile & Restrict Content – ProfilePress ===
 Contributors: properfraction, collizo4sky
 Donate link: https://profilepress.com/pricing/
-Tags: membership, ecommerce, user registration, user profile, stripe
+Tags: membership, ecommerce, user registration, user profile, paid membership
 Requires at least: 5.3
 Requires PHP: 7.4
 Tested up to: 6.6
-Stable tag: 4.15.14
+Stable tag: 4.15.17
 License: GPLv2 or later
 
 Setup paid membership, accept payment, sell subscription & digital product, paywall, create login & registration form, user profile & member directory
@@ -29,6 +29,8 @@ https://www.youtube.com/watch?v=OXkWVm53Xzo&rel=0
 ### Excellent Membership Features
 
 ProfilePress ecommerce plugin is suited for selling non-physical goods, including online courses, digital downloads, downloadable files, paid memberships, subscriptions, services, accepting donations, selling digital downloads, etc.
+
+Our WordPress membership plugin is a perfect alternative to MemberPress, Paid Memberships Pro, MemberMouse, Thrive Apprentice, WishList Member, Ultimate Membership Pro and more!
 
 = Protect Registration Forms Against Banned Email Addresses =
 
@@ -180,6 +182,20 @@ Any file type can be sold using ProfilePress ecommerce and membership plugin, in
 11. Content Protection
 
 == Changelog ==
+
+= Paid Membership, Ecommerce & User Registration 4.15.17 =
+* Fixed bug that displays double 'tripple-mdash' in billing state field.
+* Fixed bug where country/state field ID instead of title was displayed in member directory & user profile.
+* Improved content protection compatibility with WooCommerce.
+
+= Paid Membership, Ecommerce & User Registration 4.15.16 =
+* Fixed fatal error: Uncaught ValueError.
+* Bumped Stripe API version to 2024-06-20.
+
+= Paid Membership, Ecommerce & User Registration 4.15.15 =
+* Improved support for cache-heavy hosting like WPEngine and Pantheon.
+* Fixed XSS on plan edit page metabox and builder form field label.
+* Improve compatibility with jQuery 4.
 
 = Paid Membership, Ecommerce & User Registration 4.15.14 =
 * Added WooCommerce compatibility to content protection where add-to-cart button is hidden for restricted product.
