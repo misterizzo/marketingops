@@ -1562,7 +1562,7 @@ ul.imagify-datas-details.imagify-datas-details {
 	border-radius: 5px;
 	color: #c51161 !important;
 	font-weight: bold;
-	padding: 10px;
+	padding: 10px 0;
 	text-align: center;
 	text-decoration: none;
 	text-transform: uppercase;
@@ -1575,15 +1575,6 @@ ul.imagify-datas-details.imagify-datas-details {
 	vertical-align: top;
 }
 
-.imagify-upsell-dismiss::before {
-	position: absolute;
-    top: 5px;
-    right: 5px;
-	content: "\2715";
-    color: #2e3243;
-    font-size: 2em;
-}
-
 .imagify-upsell .imagify-meteo-icon {
 	filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(104deg) brightness(103%) contrast(103%);
 }
@@ -1594,4 +1585,79 @@ ul.imagify-datas-details.imagify-datas-details {
 
 .imagify-original-fize-size .value {
 	padding-left: 15px !important;
+}
+.imagify-card {
+	border: 1px solid #dfdfdf;
+	background-color: #f4f7f9;
+	border-radius: 5px;
+	width:95%;
+}
+.imagify-card-header {
+	margin-bottom: 10px;
+	padding-top: 25px;
+}
+.imagify-card-logo {
+	height: 42px;
+}
+.imagify-card-logo img {
+	display: block;
+	margin: 0 auto 0;
+}
+.imagify-card-header h4 {
+	text-align: center;
+	color: #323232;
+	font-size: 1.1em;
+	font-weight:bold;
+}
+.imagify-card-body {
+	margin-bottom: 10px;
+	padding: 0 10px 0 10px;
+	height: 87px;
+}
+.imagify-card-body p {
+	font-size: 1em;
+	color: #323232;
+	text-align:center;
+	line-height: 17px;
+}
+.imagify-card-footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 10px;
+	height: 40px;
+}
+.imagify-card-footer span {
+	text-transform: uppercase;
+	font-weight:bold;
+	color: #6f9c3b;
+}
+.imagify-card-footer a {
+	margin: 0 15px 0 15px;
+	font-size: 1em;
+	font-weight: bold;
+}
+.imagify-card-footer a.imagify-card-btn {
+	text-transform: uppercase;
+	text-decoration: none;
+	background-color: #2f3242;
+	padding: 8px 20px 8px 20px;
+	color: white;
+}
+.imagify-plugin-family-col {
+	float: left;
+	width: 25%;
+	box-sizing: border-box;
+	-webkit-flex-basis: 25%;
+	-ms-flex-preferred-size: 25%;
+	flex-basis: 25%;
+}
+.imagify-upsell-cta {
+	display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.imagify-upsell-cta .imagify-svg-icon {
+	margin-left: 7px;
+    margin-top: 2px;
 }

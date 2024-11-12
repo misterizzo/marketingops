@@ -4,7 +4,7 @@ Tags: cache,caching, performance, wp-cache, cdn
 Requires at least: 6.0
 Tested up to: 6.6.2
 Requires PHP: 7.4
-Stable tag: 2.1.17
+Stable tag: 2.1.18
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -159,6 +159,10 @@ Yes. The process of setting up CloudFlare with Breeze is easy. Check out the fol
 Using Gzip, Breeze compresses the request files, further reducing the size of the download files and speeding up the user experience.
 
 == Changelog ==
+
+= 2.1.18 =
+
+* Fix: By setting WooCommerce pages as the homepage, all website pages were excluded from caching. This issue has now been successfully fixed for both the single site and multisite environments.
 
 = 2.1.17 =
 

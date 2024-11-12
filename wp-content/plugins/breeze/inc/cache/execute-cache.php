@@ -232,6 +232,10 @@ if ( ! $check_exclude ) {
  */
 function breeze_cache( $buffer, $flags ) {
 	global $breeze_user_logged, $breeze_use_cache_system;
+
+	if ( constant_donotcachepage_found() ) {
+		return $buffer;
+	}
 	// No cache for pages without 200 response status
 	if ( http_response_code() !== 200 ) {
 		return $buffer;
@@ -466,6 +470,17 @@ function breeze_cache( $buffer, $flags ) {
 }
 
 /**
+ * Check for the constant woocommerce and other plugins declares.
+ */
+function constant_donotcachepage_found() {
+	if ( ! defined( 'DONOTCACHEPAGE' ) || ! DONOTCACHEPAGE ) {
+		return false;
+	}
+
+	return ! apply_filters( 'breeze_override_donotcachepage', false );
+}
+
+/**
  * Get URL path for caching
  *
  * @return string
@@ -623,6 +638,7 @@ function check_exclude_page( $opts_config, $current_url ) {
  *
  */
 function exec_breeze_check_for_exclude_values( $needle = '', $haystack = array() ) {
+
 	if ( empty( $needle ) || empty( $haystack ) ) {
 		return array();
 	}
@@ -641,7 +657,6 @@ function exec_breeze_check_for_exclude_values( $needle = '', $haystack = array()
 
 	return $is_string_in_array;
 }
-
 
 /**
  * Function used to determine if the excluded URL contains regexp

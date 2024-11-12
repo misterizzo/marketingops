@@ -143,7 +143,7 @@ class User {
 		$this->next_date_update             = $user->next_date_update;
 		$this->is_active                    = $user->is_active;
 		$this->is_monthly                   = $user->is_monthly;
-		$this->error                        = false;
+		$this->error                        = is_wp_error( $user );
 	}
 
 	/**

@@ -32,6 +32,7 @@ class ComposerStaticInit756ac87c04f28c62893b9c6fa457d43b
         'GtmEcommerceWoo\\Lib\\Service\\EventStrategiesService' => __DIR__ . '/../..' . '/src/Service/EventStrategiesService.php',
         'GtmEcommerceWoo\\Lib\\Service\\GtmSnippetService' => __DIR__ . '/../..' . '/src/Service/GtmSnippetService.php',
         'GtmEcommerceWoo\\Lib\\Service\\PluginService' => __DIR__ . '/../..' . '/src/Service/PluginService.php',
+        'GtmEcommerceWoo\\Lib\\Service\\ProductFeedService' => __DIR__ . '/../..' . '/src/Service/ProductFeedService.php',
         'GtmEcommerceWoo\\Lib\\Service\\SettingsService' => __DIR__ . '/../..' . '/src/Service/SettingsService.php',
         'GtmEcommerceWoo\\Lib\\Util\\SanitizationUtil' => __DIR__ . '/../..' . '/src/Util/SanitizationUtil.php',
         'GtmEcommerceWoo\\Lib\\Util\\WcOutputUtil' => __DIR__ . '/../..' . '/src/Util/WcOutputUtil.php',

@@ -549,7 +549,13 @@ class Breeze_Ecommerce_Cache {
 
 		if ( ! empty( $permalink ) ) {
 			// Custom URL structure
-			$url = parse_url( get_permalink( $postID ), PHP_URL_PATH );
+			$url           = parse_url( get_permalink( $postID ), PHP_URL_PATH );
+			$home_url      = trailingslashit( get_home_url() );
+			$home_url_path = parse_url( $home_url, PHP_URL_PATH );
+
+			if( '/' === $url || $home_url_path === $url || $home_url === $url ) {
+				$url = '/' . get_post_field( 'post_name', $postID ) . '/';
+			}
 		} else {
 			$url = get_permalink( $postID );
 		}

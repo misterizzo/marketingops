@@ -17,6 +17,7 @@ return array(
     'GtmEcommerceWoo\\Lib\\Service\\EventStrategiesService' => $baseDir . '/src/Service/EventStrategiesService.php',
     'GtmEcommerceWoo\\Lib\\Service\\GtmSnippetService' => $baseDir . '/src/Service/GtmSnippetService.php',
     'GtmEcommerceWoo\\Lib\\Service\\PluginService' => $baseDir . '/src/Service/PluginService.php',
+    'GtmEcommerceWoo\\Lib\\Service\\ProductFeedService' => $baseDir . '/src/Service/ProductFeedService.php',
     'GtmEcommerceWoo\\Lib\\Service\\SettingsService' => $baseDir . '/src/Service/SettingsService.php',
     'GtmEcommerceWoo\\Lib\\Util\\SanitizationUtil' => $baseDir . '/src/Util/SanitizationUtil.php',
     'GtmEcommerceWoo\\Lib\\Util\\WcOutputUtil' => $baseDir . '/src/Util/WcOutputUtil.php',

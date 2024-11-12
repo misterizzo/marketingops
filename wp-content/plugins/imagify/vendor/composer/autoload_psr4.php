@@ -6,6 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'WPMedia\\PluginFamily\\' => array($vendorDir . '/wp-media/plugin-family/src'),
     'Imagify\\ThirdParty\\WPRocket\\' => array($baseDir . '/inc/3rd-party/wp-rocket/classes'),
     'Imagify\\ThirdParty\\RegenerateThumbnails\\' => array($baseDir . '/inc/3rd-party/regenerate-thumbnails/classes'),
     'Imagify\\ThirdParty\\NGG\\' => array($baseDir . '/inc/3rd-party/nextgen-gallery/classes'),
