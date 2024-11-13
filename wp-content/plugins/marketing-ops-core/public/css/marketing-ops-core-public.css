@@ -23,6 +23,13 @@ body .learndash-wrapper .ld-quiz-actions input[name=restartQuiz],
 .moc_top_bar .moc_top_bar_row .topbar_box .top_bar_user_profile .user_profile_icon.nav_dropdown:active .menu_hover,
 .moc_top_bar .moc_top_bar_row .topbar_box .top_bar_user_profile .user_profile_icon.nav_dropdown:focus-within .menu_hover,
 .moc_top_bar .moc_top_bar_row .topbar_box .top_bar_user_profile .user_profile_icon.nav_dropdown.active_menu .menu_hover {max-height: 450px !important;}
+
+.moc_top_bar .moc_top_bar_row .topbar_box .top_bar_user_profile .user_profile_icon.nav_dropdown:hover .menu_hover
+{
+max-height: inherit !important;
+}
+
+
 .non-clickable {pointer-events: none;opacity: 0.5;}
 .profile_page .profile_content .content_box .content_boxed ul.social_icons ul.open {display: block;}
 .moc_editable_data {display: none;}
