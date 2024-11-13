@@ -3824,34 +3824,20 @@ class Marketing_Ops_Core_Public {
 
 					$get_header_menus = get_field( 'top_header_user_menu', 'option' );
 					?>
-					<a href="javascript:;" class="profile_menu">
+					<a href="javascript:void(0);" class="profile_menu">
 						<!-- If user has logged or an image -->
 						<?php
 						if ( ! empty( $image_url ) ) {
-							?>
-							<div class="elementor-icon">
-								<img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $user_name ); ?>">
-							</div>
-							<?php
+							?><div class="elementor-icon"><img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $user_name ); ?>"></div><?php
 						} else {
-							?>
-							<div class="elementor-icon">
-								<i aria-hidden="true" class="fas fa-user"></i>
-							</div>
-							<?php
+							?><div class="elementor-icon"><i aria-hidden="true" class="fas fa-user"></i></div><?php
 						} ?>
 						<div class="elementor-profile-text">
 							<div class="box_content">
 								<h6><?php echo esc_attr( $user_name ); ?></h6>
-								<span class="svg">
-									<svg viewBox="0 0 8 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-										<path d="M4.25891 5.61542C4.05935 5.89195 3.6476 5.89195 3.44803 5.61542L0.0953551 0.969819C-0.143294 0.639137 0.0929932 0.177216 0.500797 0.177216L7.20614 0.177215C7.61395 0.177215 7.85024 0.639136 7.61159 0.969818L4.25891 5.61542Z" fill="#242730"/>
-									</svg>                            
-								</span>
+								<span class="svg"><svg viewBox="0 0 8 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.25891 5.61542C4.05935 5.89195 3.6476 5.89195 3.44803 5.61542L0.0953551 0.969819C-0.143294 0.639137 0.0929932 0.177216 0.500797 0.177216L7.20614 0.177215C7.61395 0.177215 7.85024 0.639136 7.61159 0.969818L4.25891 5.61542Z" fill="#242730"/></svg></span>
 							</div>
-							<div class="box_tag">
-								<span class="<?php echo esc_attr( $badge_class ); ?> tag"><?php echo esc_html( $badge_text ); ?></span>
-							</div>
+							<div class="box_tag"><span class="<?php echo esc_attr( $badge_class ); ?> tag"><?php echo esc_html( $badge_text ); ?></span></div>
 						</div>
 					</a>
 					<ul class="menu_hover">
@@ -3954,9 +3940,7 @@ class Marketing_Ops_Core_Public {
 					</ul>
 					<?php
 				} else {
-					echo '<div class="menu_hover">';
-					echo moc_render_login_form_html( 'header' );
-					echo '</div>';
+					echo '<div class="menu_hover">' . moc_render_login_form_html( 'header' ) . '</div>';
 				}
 				?>
 			</div>
@@ -4000,19 +3984,19 @@ class Marketing_Ops_Core_Public {
 					</div>
 					<div class="hover_menu_body">
 						<nav>
-							
 							<ul class="menu_main_ul">
 								<!-- normal Dropdown -->
 								<div class="normal_menu">
 									<!-- if has dropdown -->
 									<?php
-									$defaults = array(
-									  'theme_location' => 'header', 
-									  'container' => '', 
-									  'menu_class' => 'nav navbar-nav menu__list', 
-									  'menu' => 'Main Menu'
-									);
-									wp_nav_menu($defaults); 
+									wp_nav_menu(
+										array(
+											'theme_location' => 'header', 
+											'container'      => '', 
+											'menu_class'     => 'nav navbar-nav menu__list', 
+											'menu'           => 'Main Menu',
+										)
+									); 
 									?>
 									<!-- if not dropdown -->
 									<?php if( is_user_logged_in() ) {
@@ -4085,31 +4069,19 @@ class Marketing_Ops_Core_Public {
 												<div class="topbar_box">
 													<div class="top_bar_user_profile">
 														<div class="user_profile_icon nav_dropdown">
-															<a href="javascript:;" class="profile_menu">
+															<a href="javascript:void(0);" class="profile_menu">
 																<!-- If user has logged or an image -->
 																<?php
 																if ( ! empty( $image_url ) ) {
-																	?>
-																	<div class="elementor-icon">
-																		<img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $user_name ); ?>">
-																	</div>
-																	<?php
+																	?><div class="elementor-icon"><img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $user_name ); ?>"></div><?php
 																} else {
-																	?>
-																	<div class="elementor-icon">
-																		<i aria-hidden="true" class="fas fa-user"></i>
-																	</div>
-																	<?php
+																	?><div class="elementor-icon"><i aria-hidden="true" class="fas fa-user"></i></div><?php
 																}
 																?>
 																<div class="elementor-profile-text">
 																	<div class="box_content">
 																		<h6><?php echo esc_html( $user_name ); ?></h6>
-																		<span class="svg">
-																			<svg viewBox="0 0 8 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-																				<path d="M4.25891 5.61542C4.05935 5.89195 3.6476 5.89195 3.44803 5.61542L0.0953551 0.969819C-0.143294 0.639137 0.0929932 0.177216 0.500797 0.177216L7.20614 0.177215C7.61395 0.177215 7.85024 0.639136 7.61159 0.969818L4.25891 5.61542Z" fill="#242730"/>
-																			</svg>                            
-																		</span>
+																		<span class="svg"><svg viewBox="0 0 8 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.25891 5.61542C4.05935 5.89195 3.6476 5.89195 3.44803 5.61542L0.0953551 0.969819C-0.143294 0.639137 0.0929932 0.177216 0.500797 0.177216L7.20614 0.177215C7.61395 0.177215 7.85024 0.639136 7.61159 0.969818L4.25891 5.61542Z" fill="#242730"/></svg></span>
 																	</div>
 																	<div class="box_tag">
 																		<span class="<?php echo esc_attr( $badge_class ); ?> tag"><?php echo esc_html( $badge_text ); ?></span>
