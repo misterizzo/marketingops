@@ -221,6 +221,9 @@ if ( ! function_exists( 'mops_print_customer_content_html' ) ) {
 		<div class="inner-premium-cat">
 			<h3><?php esc_html_e( 'Product & course discounts', 'marketingops' ); ?></h3>
 			<?php
+			if ( '183.82.160.95' === $_SERVER['REMOTE_ADDR'] ) {
+				debug( $premium_available_content['purchasing_discount'] );
+			}
 			// Available content.
 			if ( ! empty( $premium_available_content['purchasing_discount'] ) && is_array( $premium_available_content['purchasing_discount'] ) ) {
 				// Itrate throughout the unavailable content.
