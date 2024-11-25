@@ -889,6 +889,15 @@ div#moc_apaloza_workshop.popup .popup_container .popup_content .box_content .box
 .fulldescriptionboxleft.cardContainer .cardBox	.cardBoxText{display:flex;width:calc(100% - 100px);flex-direction:column;align-items:flex-start;}
 .cardBoxText .cardtitle{color:var(--Primary-text,#45474F);font-family:"Open Sans";font-size:14px;font-style:normal;font-weight:600;line-height:normal;}
 .fulldescriptionboxleft.cardContainer .cardBox p{color:#45474F;font-family:Open Sans;font-size:14px;font-style:normal;font-weight:400;line-height:normal;max-width:100%;display:flex;-webkit-line-clamp:inherit;-webkit-box-orient:inherit;overflow:inherit;max-height:inherit;margin-bottom:5px;}
+.fulldescriptionboxleft.cardContainer .cardBox .cardBoxText {display: inline-block;}
+.fulldescriptionboxleft.cardContainer .cardBox .cardBoxText h1,
+.fulldescriptionboxleft.cardContainer .cardBox .cardBoxText h2,
+.fulldescriptionboxleft.cardContainer .cardBox .cardBoxText h3,
+.fulldescriptionboxleft.cardContainer .cardBox .cardBoxText h4,
+.fulldescriptionboxleft.cardContainer .cardBox .cardBoxText h5,
+.fulldescriptionboxleft.cardContainer .cardBox .cardBoxText h6,
+.fulldescriptionboxleft.cardContainer .cardBox .cardBoxText .cardtitle {display: inline-block;width: 100%;}
+.fulldescriptionboxleft.cardContainer .cardBox .cardBoxText .cardtitle {margin-top: 20px;}
 .fulldescriptionboxleft.cardContainer .cardBox .cardBoxText>ul>li:last-child{margin-bottom:5px;}
 .fulldescriptionbox .fulldescriptionboxright{max-width:445px;flex:0 0 445px;margin-left:15px;}
 .fulldescriptionboxleft.cardContainer .cardBox .cardBoxText ul{margin-bottom:0;list-style-type:disc;padding-left:20px;}
