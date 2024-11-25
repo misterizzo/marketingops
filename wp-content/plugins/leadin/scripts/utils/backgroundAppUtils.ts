@@ -3,6 +3,7 @@ import {
   hubspotBaseUrl,
   locale,
   portalId,
+  leadinPluginVersion,
 } from '../constants/leadinConfig';
 import { initApp } from './appUtils';
 
@@ -19,6 +20,12 @@ export function initBackgroundApp(initFn: CallbackFn | CallbackFn[]) {
   initApp(main);
 }
 
+const getLeadinConfig = () => {
+  return {
+    leadinPluginVersion,
+  };
+};
+
 export const getOrCreateBackgroundApp = (refreshToken = '') => {
   if ((window as any).LeadinBackgroundApp) {
     return (window as any).LeadinBackgroundApp;
@@ -27,6 +34,7 @@ export const getOrCreateBackgroundApp = (refreshToken = '') => {
   const options = new IntegratedAppOptions()
     .setLocale(locale)
     .setDeviceId(deviceId)
+    .setLeadinConfig(getLeadinConfig())
     .setRefreshToken(refreshToken);
 
   const embedder = new IntegratedAppEmbedder(

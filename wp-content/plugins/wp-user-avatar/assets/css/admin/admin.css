@@ -971,7 +971,7 @@
 }
 
 .pp-form-buider-settings-popup-container .pp-form-buider-settings-popup-body select.pp-form-control {
-    background-image: url(../../images/frontend/arrow-down.png);
+    background-image: url(../images/frontend/arrow-down.png);
     background-position: right 20px center;
     background-repeat: no-repeat;
     background-size: 10px auto;

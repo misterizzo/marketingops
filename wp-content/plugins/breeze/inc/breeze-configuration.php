@@ -233,7 +233,7 @@ class Breeze_Configuration {
 				if ( trim( $url ) == '' ) {
 					continue;
 				}
-				$url                                              = current( explode( '?', $url, 2 ) );
+				$url = current( explode( '?', $url, 2 ) );
 				$move_to_footer_js[ sanitize_text_field( $url ) ] = sanitize_text_field( $url );
 			}
 		}
@@ -316,7 +316,7 @@ class Breeze_Configuration {
 				if ( '' === trim( $font_url ) ) {
 					continue;
 				}
-				$font_url                                          = current( explode( '?', $font_url, 2 ) );
+				$font_url = current( explode( '?', $font_url, 2 ) );
 				$preload_fonts[ sanitize_text_field( $font_url ) ] = sanitize_text_field( $font_url );
 			}
 		}
@@ -376,7 +376,18 @@ class Breeze_Configuration {
 		$response = array();
 		parse_str( $_POST['form-data'], $_POST );
 
-		$exclude_urls     = $this->string_convert_arr( sanitize_textarea_field( $_POST['exclude-urls'] ) );
+		$exclude_urls = $this->string_convert_arr( $_POST['exclude-urls'] );
+		if ( is_array( $exclude_urls ) && ! empty( $exclude_urls ) ) {
+			foreach ( $exclude_urls as &$url_list_item ) {
+				if ( false === strpos( $url_list_item, ':' ) ) {
+					$url_list_item = esc_url( '/' . $url_list_item );
+					$url_list_item = ltrim( $url_list_item, '/' );
+				} else {
+					$url_list_item = esc_url( $url_list_item );
+				}
+			}
+		}
+
 		$cache_query_str  = $this->string_convert_arr( sanitize_textarea_field( $_POST['cache-query-str'] ) );
 		$breeze_api_token = $_POST['breeze-api-token'];
 		if ( ! empty( $exclude_urls ) ) {
@@ -596,71 +607,71 @@ class Breeze_Configuration {
 			$text_html_expiry = '   ExpiresByType text/html "access plus 0 seconds"' . PHP_EOL;
 
 			$args['content'] = '<IfModule mod_headers.c>' . PHP_EOL .
-			                   '   Header append Cache-Control "s-maxage=2592000"' . PHP_EOL .
-			                   '</IfModule>' . PHP_EOL .
-			                   '<IfModule mod_env.c>' . PHP_EOL .
-			                   '   SetEnv BREEZE_BROWSER_CACHE_ON 1' . PHP_EOL .
-			                   '</IfModule>' . PHP_EOL .
-			                   '<IfModule mod_expires.c>' . PHP_EOL .
-			                   '   ExpiresActive On' . PHP_EOL .
-			                   '   ExpiresDefault "access plus 1 month"' . PHP_EOL .
+							   '   Header append Cache-Control "s-maxage=2592000"' . PHP_EOL .
+							   '</IfModule>' . PHP_EOL .
+							   '<IfModule mod_env.c>' . PHP_EOL .
+							   '   SetEnv BREEZE_BROWSER_CACHE_ON 1' . PHP_EOL .
+							   '</IfModule>' . PHP_EOL .
+							   '<IfModule mod_expires.c>' . PHP_EOL .
+							   '   ExpiresActive On' . PHP_EOL .
+							   '   ExpiresDefault "access plus 1 month"' . PHP_EOL .
 
-			                   '   # Assets' . PHP_EOL .
-			                   '   ExpiresByType text/css "access plus 1 month"' . PHP_EOL .
-			                   '   ExpiresByType application/javascript "access plus 1 month"' . PHP_EOL .
-			                   '   ExpiresByType application/x-javascript "access plus 1 month"' . PHP_EOL .
-			                   '   ExpiresByType text/javascript "access plus 1 month"' . PHP_EOL .
+							   '   # Assets' . PHP_EOL .
+							   '   ExpiresByType text/css "access plus 1 month"' . PHP_EOL .
+							   '   ExpiresByType application/javascript "access plus 1 month"' . PHP_EOL .
+							   '   ExpiresByType application/x-javascript "access plus 1 month"' . PHP_EOL .
+							   '   ExpiresByType text/javascript "access plus 1 month"' . PHP_EOL .
 
-			                   '   # Media assets ' . PHP_EOL .
-			                   '   ExpiresByType audio/ogg "access plus 1 year"' . PHP_EOL .
-			                   '   ExpiresByType image/bmp "access plus 1 year"' . PHP_EOL .
-			                   '   ExpiresByType image/gif "access plus 1 year"' . PHP_EOL .
-			                   '   ExpiresByType image/jpeg "access plus 1 year"' . PHP_EOL .
-			                   '   ExpiresByType image/png "access plus 1 year"' . PHP_EOL .
-			                   '   ExpiresByType image/svg+xml "access plus 1 year"' . PHP_EOL .
-			                   '   ExpiresByType image/webp "access plus 1 year"' . PHP_EOL .
-			                   '   ExpiresByType video/mp4 "access plus 1 year"' . PHP_EOL .
-			                   '   ExpiresByType video/ogg "access plus 1 year"' . PHP_EOL .
-			                   '   ExpiresByType video/webm "access plus 1 year"' . PHP_EOL .
-			                   '   # Font assets ' . PHP_EOL .
-			                   '   ExpiresByType application/vnd.ms-fontobject "access plus 1 year"' . PHP_EOL .
-			                   '   ExpiresByType font/eot "access plus 1 year"' . PHP_EOL .
-			                   '   ExpiresByType font/opentype "access plus 1 year"' . PHP_EOL .
-			                   '   ExpiresByType application/x-font-ttf "access plus 1 year"' . PHP_EOL .
-			                   '   ExpiresByType application/font-woff "access plus 1 year"' . PHP_EOL .
-			                   '   ExpiresByType application/x-font-woff "access plus 1 year"' . PHP_EOL .
-			                   '   ExpiresByType font/woff "access plus 1 year"' . PHP_EOL .
-			                   '   ExpiresByType application/font-woff2 "access plus 1 year"' . PHP_EOL .
+							   '   # Media assets ' . PHP_EOL .
+							   '   ExpiresByType audio/ogg "access plus 1 year"' . PHP_EOL .
+							   '   ExpiresByType image/bmp "access plus 1 year"' . PHP_EOL .
+							   '   ExpiresByType image/gif "access plus 1 year"' . PHP_EOL .
+							   '   ExpiresByType image/jpeg "access plus 1 year"' . PHP_EOL .
+							   '   ExpiresByType image/png "access plus 1 year"' . PHP_EOL .
+							   '   ExpiresByType image/svg+xml "access plus 1 year"' . PHP_EOL .
+							   '   ExpiresByType image/webp "access plus 1 year"' . PHP_EOL .
+							   '   ExpiresByType video/mp4 "access plus 1 year"' . PHP_EOL .
+							   '   ExpiresByType video/ogg "access plus 1 year"' . PHP_EOL .
+							   '   ExpiresByType video/webm "access plus 1 year"' . PHP_EOL .
+							   '   # Font assets ' . PHP_EOL .
+							   '   ExpiresByType application/vnd.ms-fontobject "access plus 1 year"' . PHP_EOL .
+							   '   ExpiresByType font/eot "access plus 1 year"' . PHP_EOL .
+							   '   ExpiresByType font/opentype "access plus 1 year"' . PHP_EOL .
+							   '   ExpiresByType application/x-font-ttf "access plus 1 year"' . PHP_EOL .
+							   '   ExpiresByType application/font-woff "access plus 1 year"' . PHP_EOL .
+							   '   ExpiresByType application/x-font-woff "access plus 1 year"' . PHP_EOL .
+							   '   ExpiresByType font/woff "access plus 1 year"' . PHP_EOL .
+							   '   ExpiresByType application/font-woff2 "access plus 1 year"' . PHP_EOL .
 
-			                   '   # Data interchange' . PHP_EOL .
-			                   '   ExpiresByType application/xml "access plus 0 seconds"' . PHP_EOL .
-			                   '   ExpiresByType application/json "access plus 0 seconds"' . PHP_EOL .
-			                   '   ExpiresByType application/ld+json "access plus 0 seconds"' . PHP_EOL .
-			                   '   ExpiresByType application/schema+json "access plus 0 seconds"' . PHP_EOL .
-			                   '   ExpiresByType application/vnd.geo+json "access plus 0 seconds"' . PHP_EOL .
-			                   '   ExpiresByType text/xml "access plus 0 seconds"' . PHP_EOL .
-			                   '   ExpiresByType application/rss+xml "access plus 1 hour"' . PHP_EOL .
-			                   '   ExpiresByType application/rdf+xml "access plus 1 hour"' . PHP_EOL .
-			                   '   ExpiresByType application/atom+xml "access plus 1 hour"' . PHP_EOL .
+							   '   # Data interchange' . PHP_EOL .
+							   '   ExpiresByType application/xml "access plus 0 seconds"' . PHP_EOL .
+							   '   ExpiresByType application/json "access plus 0 seconds"' . PHP_EOL .
+							   '   ExpiresByType application/ld+json "access plus 0 seconds"' . PHP_EOL .
+							   '   ExpiresByType application/schema+json "access plus 0 seconds"' . PHP_EOL .
+							   '   ExpiresByType application/vnd.geo+json "access plus 0 seconds"' . PHP_EOL .
+							   '   ExpiresByType text/xml "access plus 0 seconds"' . PHP_EOL .
+							   '   ExpiresByType application/rss+xml "access plus 1 hour"' . PHP_EOL .
+							   '   ExpiresByType application/rdf+xml "access plus 1 hour"' . PHP_EOL .
+							   '   ExpiresByType application/atom+xml "access plus 1 hour"' . PHP_EOL .
 
-			                   '   # Manifest files' . PHP_EOL .
-			                   '   ExpiresByType application/manifest+json "access plus 1 week"' . PHP_EOL .
-			                   '   ExpiresByType application/x-web-app-manifest+json "access plus 0 seconds"' . PHP_EOL .
-			                   '   ExpiresByType text/cache-manifest  "access plus 0 seconds"' . PHP_EOL .
+							   '   # Manifest files' . PHP_EOL .
+							   '   ExpiresByType application/manifest+json "access plus 1 week"' . PHP_EOL .
+							   '   ExpiresByType application/x-web-app-manifest+json "access plus 0 seconds"' . PHP_EOL .
+							   '   ExpiresByType text/cache-manifest  "access plus 0 seconds"' . PHP_EOL .
 
-			                   '   # Favicon' . PHP_EOL .
-			                   '   ExpiresByType image/vnd.microsoft.icon "access plus 1 week"' . PHP_EOL .
-			                   '   ExpiresByType image/x-icon "access plus 1 week"' . PHP_EOL .
-			                   '   # HTML no caching' . PHP_EOL .
-			                   $text_html_expiry .
+							   '   # Favicon' . PHP_EOL .
+							   '   ExpiresByType image/vnd.microsoft.icon "access plus 1 week"' . PHP_EOL .
+							   '   ExpiresByType image/x-icon "access plus 1 week"' . PHP_EOL .
+							   '   # HTML no caching' . PHP_EOL .
+							   $text_html_expiry .
 
-			                   '   # Other' . PHP_EOL .
-			                   '   ExpiresByType application/xhtml-xml "access plus 1 month"' . PHP_EOL .
-			                   '   ExpiresByType application/pdf "access plus 1 month"' . PHP_EOL .
-			                   '   ExpiresByType application/x-shockwave-flash "access plus 1 month"' . PHP_EOL .
-			                   '   ExpiresByType text/x-cross-domain-policy "access plus 1 week"' . PHP_EOL .
+							   '   # Other' . PHP_EOL .
+							   '   ExpiresByType application/xhtml-xml "access plus 1 month"' . PHP_EOL .
+							   '   ExpiresByType application/pdf "access plus 1 month"' . PHP_EOL .
+							   '   ExpiresByType application/x-shockwave-flash "access plus 1 month"' . PHP_EOL .
+							   '   ExpiresByType text/x-cross-domain-policy "access plus 1 week"' . PHP_EOL .
 
-			                   '</IfModule>' . PHP_EOL;
+							   '</IfModule>' . PHP_EOL;
 
 			$args['conditions'] = array(
 				'mod_expires',
@@ -690,41 +701,41 @@ class Breeze_Configuration {
 			$args['clean'] = true;
 		} else {
 			$args['content'] = '<IfModule mod_env.c>' . PHP_EOL .
-			                   '    SetEnv BREEZE_GZIP_ON 1' . PHP_EOL .
-			                   '</IfModule>' . PHP_EOL .
-			                   '<IfModule mod_deflate.c>' . PHP_EOL .
-			                   '	AddType x-font/woff .woff' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE text/plain' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE image/svg+xml' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE text/html' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE text/xml' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE text/css' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE text/vtt' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE text/x-component' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE text/javascript' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE application/js' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE application/x-httpd-php' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE application/x-httpd-fastphp' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE application/atom+xml' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE application/json' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE application/ld+json' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE application/x-web-app-manifest+json' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE application/xml' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE application/xhtml+xml' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE application/rss+xml' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE application/javascript' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE application/x-javascript' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE application/x-font-ttf' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE application/vnd.ms-fontobject' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE font/opentype' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE font/ttf' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE font/eot font/otf' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE font/otf' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE font/woff' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE application/x-font-woff' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE application/font-woff2' . PHP_EOL .
-			                   '	AddOutputFilterByType DEFLATE image/x-icon' . PHP_EOL .
-			                   '</IfModule>' . PHP_EOL;
+							   '    SetEnv BREEZE_GZIP_ON 1' . PHP_EOL .
+							   '</IfModule>' . PHP_EOL .
+							   '<IfModule mod_deflate.c>' . PHP_EOL .
+							   '	AddType x-font/woff .woff' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE text/plain' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE image/svg+xml' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE text/html' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE text/xml' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE text/css' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE text/vtt' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE text/x-component' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE text/javascript' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE application/js' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE application/x-httpd-php' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE application/x-httpd-fastphp' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE application/atom+xml' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE application/json' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE application/ld+json' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE application/x-web-app-manifest+json' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE application/xml' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE application/xhtml+xml' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE application/rss+xml' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE application/javascript' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE application/x-javascript' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE application/x-font-ttf' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE application/vnd.ms-fontobject' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE font/opentype' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE font/ttf' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE font/eot font/otf' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE font/otf' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE font/woff' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE application/x-font-woff' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE application/font-woff2' . PHP_EOL .
+							   '	AddOutputFilterByType DEFLATE image/x-icon' . PHP_EOL .
+							   '</IfModule>' . PHP_EOL;
 
 			$args['conditions'] = array(
 				'mod_deflate',
@@ -1601,7 +1612,7 @@ class Breeze_Configuration {
 		// Analyze minification directory sizes.
 		$files_path = rtrim( WP_CONTENT_DIR, '/' ) . '/cache/breeze-minification';
 		if ( $is_subsite ) {
-			$blog_id    = get_current_blog_id();
+			$blog_id     = get_current_blog_id();
 			$files_path .= DIRECTORY_SEPARATOR . $blog_id;
 		}
 		$size_cache += breeze_get_directory_size( $files_path, array( 'index.html' ) );
@@ -1698,7 +1709,7 @@ class Breeze_Configuration {
 			if ( isset( $is_json['warnings'], $is_json['warnings']['security'], $is_json['warnings']['security']['malware'] ) ) {
 				$is_safe = false;
 
-				$response['message'] = '<strong>' . __( 'Important: ', 'breeze' ) . '</strong>';
+				$response['message']  = '<strong>' . __( 'Important: ', 'breeze' ) . '</strong>';
 				$response['message'] .= __( 'The CDN URL you\'ve used is insecure.', 'breeze' );
 			}
 		}
@@ -1940,7 +1951,7 @@ class Breeze_Configuration {
 			'breeze-display-clean'     => '1',
 
 		);
-		$basic         = $default_basic;
+		$basic = $default_basic;
 
 		// Default File
 		$default_file = array(

@@ -3,11 +3,11 @@
 /**
  * Plugin Name: Menu Image
  * Description: Improve your navigation menu items with images, logos, icons, buttons.
- * Version: 3.11
+ * Version: 3.12
  * Plugin URI: https://www.freshlightlab.com/menu-image-wordpress-plugin/?utm_source=wprepo-menu-image&utm_medium=wprepo_readme&utm_campaign=Plugin+URI
  * Author: Freshlight Lab
  * Author URI: https://www.freshlightlab.com/?utm_source=wprepo-menu-image&utm_medium=wprepo_readme&utm_campaign=Author+URI
- * Tested up to: 6.2
+ * Tested up to: 6.7
  * Text Domain: menu-image
  * Domain Path: /languages/
  * License: GPLv2
@@ -15,7 +15,7 @@
 if ( !defined( 'ABSPATH' ) ) {
     die;
 }
-define( 'MENU_IMAGE_VERSION', '3.11' );
+define( 'MENU_IMAGE_VERSION', '3.12' );
 define( 'MENU_IMAGE_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'MENU_IMAGE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 /**

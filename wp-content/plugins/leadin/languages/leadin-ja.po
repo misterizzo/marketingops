@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-10-23T10:58:57+00:00\n"
+"POT-Creation-Date: 2024-11-19T10:31:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Language: \n"
 "X-Generator: WP-CLI 2.11.0\n"
@@ -173,7 +173,7 @@ msgstr "HubSpotプラグインは現在接続されていません。WordPress�
 
 #: public/admin/class-reviewbanner.php:27
 msgid "Dismiss this notice"
-msgstr "この通知を無視してください。"
+msgstr "この通知を無視"
 
 #. translators: %1$s: Current user name or nickname
 #: public/admin/class-reviewbanner.php:31
@@ -183,7 +183,7 @@ msgstr "%1$sさん、こんにちは。"
 #. translators: %1$s: HTML anchor opening tag %2$s: HTML anchor closing tag
 #: public/admin/class-reviewbanner.php:36
 msgid "Have you got 2 minutes to complete %1$sthis survey%2$s about the HubSpot for WordPress plugin?"
-msgstr "HubSpot for WordPressプラグインに関する%1$sこのアンケート%2$sにご回答いただくため、2分ほどお時間をいただいてよろしいですか？"
+msgstr "HubSpot for WordPressプラグインに関する%1$sこのアンケート%2$sへのご協力をお願いしたいのですが、少しお時間をいただけますか？（所要時間：2分程度）"
 
 #: public/admin/class-reviewbanner.php:37
 msgid "We read every response Your feedback helps our team make the improvements that you need the most"

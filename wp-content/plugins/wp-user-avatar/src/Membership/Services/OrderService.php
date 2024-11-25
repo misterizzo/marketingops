@@ -36,8 +36,25 @@ class OrderService
     {
         return Calculator::init($cart_vars->total)->isNegativeOrZero() && (
                 ! PlanFactory::fromId($cart_vars->plan_id)->is_auto_renew() ||
-                Calculator::init($cart_vars->recurring_amount)->isNegativeOrZero()
+                Calculator::init($cart_vars->recurring_amount)->isNegativeOrZero() ||
+                $this->is_disable_payment_for_zero_initial_subscription_payment($cart_vars)
             );
+    }
+
+    /**
+     * Should payment form be displayed when initial payment of a subscription zero amount?
+     *
+     * @param CartEntity $cart_vars
+     *
+     * @return bool
+     */
+    public function is_disable_payment_for_zero_initial_subscription_payment($cart_vars)
+    {
+        if (PlanFactory::fromId($cart_vars->plan_id)->is_recurring()) {
+            return apply_filters('ppress_checkout_disable_payment_for_zero_initial_payment', false, $cart_vars);
+        }
+
+        return false;
     }
 
     public function customer_has_trialled($plan_id = '')

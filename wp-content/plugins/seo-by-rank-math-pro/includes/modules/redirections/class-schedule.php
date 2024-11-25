@@ -159,12 +159,12 @@ class Schedule {
 		}
 
 		$args = [
-			'hook' => "rank_math/redirections/$hook",
-			'args' => [ (int) $redirection_id ],
-			'status' => \ActionScheduler_Store::STATUS_COMPLETE,
+			'hook'     => "rank_math/redirections/$hook",
+			'args'     => [ (int) $redirection_id ],
+			'status'   => \ActionScheduler_Store::STATUS_COMPLETE,
 			'per_page' => 1,
-			'orderby' => 'action_id',
-			'order' => 'DESC',
+			'orderby'  => 'action_id',
+			'order'    => 'DESC',
 		];
 
 		$actions = as_get_scheduled_actions( $args );
@@ -186,7 +186,7 @@ class Schedule {
 			'start_date' => isset( $params['start-date'] ) ? $params['start-date'] : '',
 			'end_date'   => isset( $params['end-date'] ) ? $params['end-date'] : '',
 		];
-		$this->save_start_end_dates( $redirection->get_id() );
+		$this->save_start_end_dates( $redirection );
 
 		return true;
 	}
@@ -195,10 +195,11 @@ class Schedule {
 	 * Save scheduled start/end dates for a redirection.
 	 * The dates were previously added to the $this->save_start_end array.
 	 *
-	 * @param int $redirection_id Redirection ID.
+	 * @param int $redirection Redirection Object.
 	 */
-	public function save_start_end_dates( $redirection_id ) {
-		$start_date = strtotime( $this->save_start_end['start_date'] );
+	public function save_start_end_dates( $redirection ) {
+		$redirection_id = $redirection->get_id();
+		$start_date     = strtotime( $this->save_start_end['start_date'] );
 		$this->clear_scheduled_activation( $redirection_id );
 		if ( $start_date ) {
 			$this->schedule_activation( $redirection_id, $start_date );
@@ -213,9 +214,11 @@ class Schedule {
 		// Set active status.
 		$now = time();
 		if ( ( $start_date && $start_date > $now ) || ( $end_date && $end_date < $now ) ) {
-			$_POST['status'] = 'inactive';
+			$redirection->set_status( 'inactive' );
+			$redirection->save();
 		} elseif ( $start_date && $start_date <= $now && ( ! $end_date || $end_date > $now ) ) {
-			$_POST['status'] = 'active';
+			$redirection->set_status( 'active' );
+			$redirection->save();
 		}
 	}
 
@@ -235,6 +238,12 @@ class Schedule {
 		return $classes;
 	}
 
+	/**
+	 * Add start & end date to the data attribute used when editing a Redirection rule
+	 *
+	 * @param array $data Redirection data.
+	 * @return array
+	 */
 	public function add_schedule_time_in_data_attribute( $data ) {
 		$data['start-date'] = self::get_start_date( $data['id'] );
 		$data['end-date']   = self::get_end_date( $data['id'] );

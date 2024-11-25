@@ -1,3 +1,6 @@
+= 11.1.73 (2024-11-19) =
+* Remove unknow wp_json_decode function
+
 = 11.1.66 (2024-10-23) =
 * Register gutenberg blocks at PHP side
 
@@ -297,7 +300,4 @@
 
 = 8.9.14 (2022-04-12) =
 * Fix security issue related to form inputs
-
-= 8.9.0 (2022-04-11) =
-* Add api that gets the correct hublet
 

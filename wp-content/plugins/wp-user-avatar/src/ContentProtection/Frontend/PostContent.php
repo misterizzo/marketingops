@@ -159,9 +159,12 @@ class PostContent
 
                         $access_condition = ppress_var($meta, 'access_condition', []);
 
-                        $noaccess_action = ppress_var($access_condition, 'noaccess_action');
+                        /* commented this out because we want content to be restricted when accessed via rss and rest api
+                           this is even redundant because redirect happens before the_content hook is fired.
+                           $noaccess_action = ppress_var($access_condition, 'noaccess_action');
 
-                        if ('message' != $noaccess_action) continue;
+                           if ('message' != $noaccess_action) continue;
+                        */
 
                         $who_can_access = ppress_var($access_condition, 'who_can_access', 'everyone');
 

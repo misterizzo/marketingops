@@ -80,6 +80,11 @@ class PPRESS_Session
         return $this->session;
     }
 
+    public function get_all()
+    {
+        return $this->session->toArray();
+    }
+
     /**
      * Retrieve a session variable
      *

@@ -4,6 +4,7 @@ namespace GtmEcommerceWoo\Lib\Service;
 
 use GtmEcommerceWoo\Lib\Util\SanitizationUtil;
 use GtmEcommerceWoo\Lib\Util\WpSettingsUtil;
+use WC_Order;
 
 /**
  * Logic related to working with settings and options
@@ -11,6 +12,9 @@ use GtmEcommerceWoo\Lib\Util\WpSettingsUtil;
 class SettingsService {
 	/** @var WpSettingsUtil */
 	protected $wpSettingsUtil;
+
+	/** @var OrderMonitorService */
+	protected $orderMonitorService;
 
 	/** @var array */
 	protected $events;
@@ -42,8 +46,9 @@ class SettingsService {
 	/** @var array */
 	protected $eventsConfig = [];
 
-	public function __construct( WpSettingsUtil $wpSettingsUtil, array $events, array $proEvents, array $serverEvents, string $tagConciergeApiUrl, string $pluginVersion) {
+	public function __construct( WpSettingsUtil $wpSettingsUtil, OrderMonitorService $orderMonitorService, array $events, array $proEvents, array $serverEvents, string $tagConciergeApiUrl, string $pluginVersion) {
 		$this->wpSettingsUtil = $wpSettingsUtil;
+		$this->orderMonitorService = $orderMonitorService;
 		$this->events = $events;
 		$this->proEvents = $proEvents;
 		$this->serverEvents = $serverEvents;
@@ -83,6 +88,12 @@ class SettingsService {
 			'GTM Server Presets' . ( $this->isPro ? '' : ' PRO' ),
 			false,
 			!$this->isPro
+		);
+
+		$this->wpSettingsUtil->addTab(
+			'monitoring',
+			'Monitoring',
+			false
 		);
 
 		$this->wpSettingsUtil->addTab(
@@ -285,20 +296,61 @@ class SettingsService {
 		);
 
 		$this->wpSettingsUtil->addSettingsSection(
-			'server_side_endpoint_cogs',
-			'sGTM COGS Endpoint',
+			'server_side_endpoint_poas',
+			'sGTM POAS Endpoint',
 			'When using server-side GTM you can make additional transformation before data is sent to the 3rd party platform. This endpoint allows replacing default revenue based conversion values with profit information stored in WooCommerce using COGS plugin.',
 			'gtm_server',
 			[ 'grid' => 'end', 'badge' =>  $this->isPro ? null : 'PRO' ]
 		);
 
-		/*$this->wpSettingsUtil->addSettingsSection(
-			'product_feed_facebook',
-			'Facebook Product Feed',
-			'',
-			'tools',
-			[ 'grid' => 'end', 'badge' => 'PRO' ]
-		);*/
+		$statistics = $this->orderMonitorService->getStatistics();
+
+		$total = $statistics->getTotal();
+
+		$stats = [
+			'total' => $total,
+			'tracked' => $statistics->getTracked($total['count']),
+			'tracked_with_warnings' => $statistics->getTrackedWithWarnings($total['count']),
+			'not_tracked' => $statistics->getNotTracked($total['count']),
+			'blocked' => $statistics->getBlocked($total['count']),
+			'analytics_denied' => $statistics->getAnalyticsDenied($total['count']),
+			'ad_denied' => $statistics->getAdDenied($total['count']),
+			'no_thank_you_page' => $statistics->getNoThankYouPage($total['count'])
+		];
+		$description = sprintf('<br /><br />
+				<div class="metabox-holder"><div class="postbox-container" style="float: none; display: flex; flex-wrap:wrap;"><div style="margin-left: 3%%; width: 30%%" class="postbox"><div class="inside"><h3>Total</h3><p>Total trackable<br /></p>transactions: %d<br />value: %.2f</div></div><div style="margin-left: 3%%; width: 30%%" class="postbox"><div class="inside"><h3>Tracked with warnings</h3><p>Events was correctly tracked by Google Tag Manager but we detected: adblock was detected, analytical consent was denied or advertising consent was denied</p>transactions: %d (%d%%)<br />value: %.2f</div></div><div style="margin-left: 3%%; width: 30%%" class="postbox"><div class="inside"><h3>Not tracked</h3><p>Events weren\'t correctly tracked by Google Tag Manager. Depending on tracking implementation it can be caused by user not returning to the order confirmation page.</p>transactions: %d (%d%%)<br />value: %.2f</div></div> </div></div><br />',
+			$stats['total']['count'],
+			$stats['total']['value'],
+			$stats['tracked_with_warnings']['count'],
+			$stats['tracked_with_warnings']['count_percentage'],
+			$stats['tracked_with_warnings']['value'],
+			$stats['not_tracked']['count'],
+			$stats['not_tracked']['count_percentage'],
+			$stats['not_tracked']['value']
+		);
+
+		$description .= sprintf('<br /><br />
+				<div class="metabox-holder"><div class="postbox-container" style="float: none; display: flex; flex-wrap:wrap;"><div style="margin-left: 3%%; width: 21.75%%" class="postbox"><div class="inside"><h3>Blocked</h3><p>Transactions blocked by browsers and ad blocking extensions</p>transactions: %d (%d%%)<br />value: %.2f</div></div><div style="margin-left: 3%%; width: 21.75%%" class="postbox"><div class="inside"><h3>Analytics Denied</h3><p>Transactions with analytical purposes denied by the user. Won\'t show up in GA4 reporting</p>transactions: %d (%d%%)<br />value: %.2f</div></div><div style="margin-left: 3%%; width: 21.75%%" class="postbox"><div class="inside"><h3>Ad Denied</h3><p>Transactions with ad purposes denied by the user. Won\'t show up in Google Ads reporting</p>transactions: %d (%d%%)<br />value: %.2f</div></div><div style="margin-left: 3%%; width: 21.75%%" class="postbox"><div class="inside"><h3>No thank you page visit</h3><p>Orders where customers didn\'t reach the order confirmation page (thank you page).<br /></p>transactions: %d (%d%%)<br />value: %.2f</div></div></div></div><br />',
+			$stats['blocked']['count'],
+			$stats['blocked']['count_percentage'],
+			$stats['blocked']['value'],
+			$stats['analytics_denied']['count'],
+			$stats['analytics_denied']['count_percentage'],
+			$stats['analytics_denied']['value'],
+			$stats['ad_denied']['count'],
+			$stats['ad_denied']['count_percentage'],
+			$stats['ad_denied']['value'],
+			$stats['no_thank_you_page']['count'],
+			$stats['no_thank_you_page']['count_percentage'],
+			$stats['no_thank_you_page']['value']
+		);
+
+		$this->wpSettingsUtil->addSettingsSection(
+			'monitoring',
+			'Tracking Monitoring',
+			$description,
+			'monitoring'
+		);
 
 		$this->wpSettingsUtil->addSettingsField(
 			'disabled',
@@ -315,6 +367,14 @@ class SettingsService {
 			'basic',
 			$this->isPro ? 'When checked the plugin will send logged client id to dataLayer.' : '<a style="font-size: 0.7em" href="https://go.tagconcierge.com/MSm8e" target="_blank">Upgrade to PRO to track user id.</a>',
 			['disabled' => !$this->isPro, 'title' => $this->isPro ? '' : 'Upgrade to PRO to use user tracking']
+		);
+
+		$this->wpSettingsUtil->addSettingsField(
+			'monitor_disabled',
+			'Disable monitor?',
+			[$this, 'checkboxField'],
+			'basic',
+			'When checked the plugin won\'t diagnose orders context like information about adblock or denied user consents.'
 		);
 
 		$this->wpSettingsUtil->addSettingsField(
@@ -523,11 +583,11 @@ class SettingsService {
 		);
 
 		$this->wpSettingsUtil->addSettingsField(
-			'server_side_endpoint_cogs_enabled',
-			'Enable COGS Endpoint',
+			'server_side_endpoint_poas_enabled',
+			'Enable POAS Endpoint',
 			[$this, 'checkboxField'],
-			'server_side_endpoint_cogs',
-			'Enable serving COGS information for sGTM container.',
+			'server_side_endpoint_poas',
+			'Enable serving Profit (POAS) information for sGTM container.',
 			[
 				'disabled' => !$this->isPro
 			]
@@ -551,14 +611,6 @@ class SettingsService {
 				'type' => 'text'
 			]
 		);
-
-		/*$this->wpSettingsUtil->addSettingsField(
-			'product_feed_facebook_enabled',
-			'Enable Product Feed',
-			[$this, 'checkboxField'],
-			'product_feed_facebook',
-			'Generate Product Feed for Facebook / Meta Product Catalog.'
-		);*/
 
 		$this->wpSettingsUtil->addSettingsField(
 			'gtm_snippet_prevent_load',

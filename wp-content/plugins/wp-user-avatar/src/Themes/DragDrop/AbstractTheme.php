@@ -50,7 +50,7 @@ abstract class AbstractTheme implements ThemeInterface
         add_filter('ppress_form_builder_meta_box_colors_settings', [$this, 'color_settings']);
 
         // add div wrapper to remember me checkbox
-        add_filter('ppress_form_field_listing_login-remember', [$this, 'remember_me_checkbox_wrapper'], 10, 2);
+        add_filter('ppress_form_field_listing_login-remember', [$this, 'remember_me_checkbox_wrapper'], 10, 4);
         // when label is found in field settings, it is automatically added before the field so we are removing it.
         add_filter('ppress_form_field_listing_setting_login-remember', [$this, 'remember_me_checkbox_remove_label']);
     }
@@ -97,12 +97,24 @@ abstract class AbstractTheme implements ThemeInterface
         return $field_setting;
     }
 
-    public function remember_me_checkbox_wrapper($tag, $field_setting)
+    public function remember_me_checkbox_wrapper($tag, $field_setting, $form_id, $form_type)
     {
-        return sprintf(
-            '<div class="ppform-remember-me"><label class="ppform-remember-checkbox">%s <span class="ppform-remember-label">%s</span></label></div>',
-            $tag, $field_setting['label']
-        );
+        if ($form_type == FR::LOGIN_TYPE) {
+
+            static $flag = [];
+
+            if ( ! isset($flag[$form_id . '_' . $form_type])) {
+
+                $flag[$form_id . '_' . $form_type] = true;
+
+                return sprintf(
+                    '<div class="ppform-remember-me"><label class="ppform-remember-checkbox">%s <span class="ppform-remember-label">%s</span></label></div>',
+                    $tag, $field_setting['label']
+                );
+            }
+        }
+
+        return $tag;
     }
 
     public function default_metabox_settings()

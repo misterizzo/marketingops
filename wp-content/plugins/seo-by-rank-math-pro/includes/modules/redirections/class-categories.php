@@ -283,6 +283,12 @@ class Categories {
 		wp_set_object_terms( $redirection->get_id(), array_map( 'absint', $params['categories'] ), 'rank_math_redirection_category' );
 	}
 
+	/**
+	 * Add categories to the data attribute used when editing a Redirection rule
+	 *
+	 * @param array $data Redirection data.
+	 * @return array
+	 */
 	public function add_category_in_data_attributes( $data ) {
 		$data['categories'] = $this->get_redirection_categories( $data['id'], [ 'fields' => 'ids' ] );
 

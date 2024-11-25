@@ -1,11 +1,11 @@
 === Paid Membership Plugin, Ecommerce, User Registration Form, Login Form, User Profile & Restrict Content – ProfilePress ===
 Contributors: properfraction, collizo4sky
 Donate link: https://profilepress.com/pricing/
-Tags: membership, ecommerce, user registration, user profile, paid membership
+Tags: membership, ecommerce, user registration, user profile, memberships
 Requires at least: 5.3
 Requires PHP: 7.4
-Tested up to: 6.6
-Stable tag: 4.15.17
+Tested up to: 6.7
+Stable tag: 4.15.18
 License: GPLv2 or later
 
 Setup paid membership, accept payment, sell subscription & digital product, paywall, create login & registration form, user profile & member directory
@@ -183,6 +183,13 @@ Any file type can be sold using ProfilePress ecommerce and membership plugin, in
 
 == Changelog ==
 
+= Paid Membership, Ecommerce & User Registration 4.15.18 =
+* Added ppress_checkout_disable_payment_for_zero_initial_payment filter to disable payment when initial amount is zero.
+* Added filter to disable tab widget user registration.
+* Fixed bug where restricted content could be accessed via rest api.
+* Fixed icon error in admin css.
+* Fixed bug with multiple display of login remember label.
+
 = Paid Membership, Ecommerce & User Registration 4.15.17 =
 * Fixed bug that displays double 'tripple-mdash' in billing state field.
 * Fixed bug where country/state field ID instead of title was displayed in member directory & user profile.
@@ -191,22 +198,5 @@ Any file type can be sold using ProfilePress ecommerce and membership plugin, in
 = Paid Membership, Ecommerce & User Registration 4.15.16 =
 * Fixed fatal error: Uncaught ValueError.
 * Bumped Stripe API version to 2024-06-20.
-
-= Paid Membership, Ecommerce & User Registration 4.15.15 =
-* Improved support for cache-heavy hosting like WPEngine and Pantheon.
-* Fixed XSS on plan edit page metabox and builder form field label.
-* Improve compatibility with jQuery 4.
-
-= Paid Membership, Ecommerce & User Registration 4.15.14 =
-* Added WooCommerce compatibility to content protection where add-to-cart button is hidden for restricted product.
-* Added ppress_is_checkout_autoscroll_enabled filter to disable checkout autoscroll feature.
-* Updated Twitter social login to X.
-* Remove deprecated jQuery codes.
-
-= Paid Membership, Ecommerce & User Registration 4.15.13 =
-* Pro: [WooCommerce Memberships feature](https://profilepress.com/article/create-woocommerce-membership-website/?ref=changelog)
-* Added setting for disabling My Account tabs.
-* Fixed date_created time bug with manual order.
-* Fixed bug where expired coupons could be used via URL.
 
 See the [changelog file](https://plugins.svn.wordpress.org/wp-user-avatar/trunk/changelog.txt) for full change log information.

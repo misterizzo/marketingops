@@ -8,8 +8,6 @@ class Breeze_Upgrade {
 
 	public $breeze_version;
 
-	public $version_upgrades = array();
-
 	public function __construct() {}
 
 	public function init() {
@@ -17,38 +15,53 @@ class Breeze_Upgrade {
 		$this->breeze_version = get_option( 'breeze_version' );
 
 		if ( empty( $this->breeze_version ) || version_compare( BREEZE_VERSION, $this->breeze_version, '!=' ) ) {
-			if ( ! class_exists( 'Breeze_ConfigCache' ) ) {
-				// config to cache
-				require_once BREEZE_PLUGIN_DIR . 'inc/cache/config-cache.php';
-			}
-			if ( $this->do_upgrades_run() ) {
-				add_action( 'wp_loaded', array( $this, 'do_breeze_upgrade' ) );
-			}
+			add_action( 'wp_loaded', array( $this, 'do_breeze_upgrade' ) );
 			update_option( 'breeze_version', BREEZE_VERSION, true );
-			Breeze_ConfigCache::factory()->write();
+			self::refresh_config_files();
 			do_action( 'breeze_clear_all_cache' );
 		}
 	}
 
-	public function do_upgrades_run() {
+	public function do_breeze_upgrade() {
+		$is_older_than_v2118 = false;
 
-		$run_upgrades = false;
-
+		// Version 2.1.18 updates.
 		if ( ( ! empty( $this->breeze_version ) && version_compare( $this->breeze_version, '2.1.18', '<' ) )
 			|| ( empty( $this->breeze_version ) && ! empty( get_option( 'breeze_first_install' ) ) ) ) {
-			$run_upgrades = true;
-			array_push( $this->version_upgrades, 'v2118_upgrades' );
+			$is_older_than_v2118 = true;
+			$this->v2118_upgrades();
+		}
+		// Version 2.1.19 updates.
+		if ( $is_older_than_v2118 || version_compare( $this->breeze_version, '2.1.19', '<' ) ) {
+			$this->v2119_upgrades();
 		}
 
-		return $run_upgrades;
-	}
-
-	public function do_breeze_upgrade() {
-		foreach ( $this->version_upgrades as $version_upgrade ) {
-			call_user_func( array( $this, $version_upgrade ) );
-		}
 		do_action( 'breeze_after_existing_upgrade_routine', $this->breeze_version );
 		update_option( 'breeze_version_upgraded_from', $this->breeze_version );
+	}
+
+	public function v2119_upgrades() {
+		if ( defined( 'DISABLE_WP_CRON' ) && DISABLE_WP_CRON ) {
+			return;
+		}
+
+		if ( ! function_exists( '_get_cron_array' ) || ! function_exists( 'wp_unschedule_event' ) ) {
+			return;
+		}
+		$crons = _get_cron_array();
+		if ( empty( $crons ) ) {
+			return;
+		}
+
+		$hook = 'breeze_after_update_scheduled_hook';
+
+		foreach ( $crons as $timestamp => $cron ) {
+			if ( isset( $cron[ $hook ] ) ) {
+				foreach ( $cron[ $hook ] as $instance ) {
+					wp_unschedule_event( $timestamp, $hook, $instance['args'], false );
+				}
+			}
+		}
 	}
 
 	public function v2118_Upgrades() {
@@ -57,7 +70,7 @@ class Breeze_Upgrade {
 			return;
 		}
 		if ( ! class_exists( 'Breeze_Ecommerce_Cache' ) ) {
-			require_once( BREEZE_PLUGIN_DIR . 'inc/cache/ecommerce-cache.php' );
+			require_once BREEZE_PLUGIN_DIR . 'inc/cache/ecommerce-cache.php';
 		}
 
 		if ( is_multisite() ) {
@@ -68,7 +81,7 @@ class Breeze_Upgrade {
 					switch_to_blog( $blog_id );
 					$inherit_settings = get_blog_option( $blog_id, 'breeze_inherit_settings' );
 
-					if( ! $inherit_settings ) {
+					if ( ! $inherit_settings ) {
 						Breeze_ConfigCache::write_config_cache();
 					}
 
@@ -80,6 +93,61 @@ class Breeze_Upgrade {
 		} else {
 			Breeze_ConfigCache::write_config_cache();
 		}
+	}
+
+
+	/**
+	 * This function is used to refresh config files and is called from other parts of plugin too.
+	 */
+	public static function refresh_config_files() {
+
+		global $wp_filesystem;
+		if ( empty( $wp_filesystem ) ) {
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			WP_Filesystem();
+		}
+
+		// import these file in front-end when required.
+		if ( ! class_exists( 'Breeze_Ecommerce_Cache' ) ) {
+			// cache when ecommerce installed
+			require_once BREEZE_PLUGIN_DIR . 'inc/cache/ecommerce-cache.php';
+		}
+
+		// import these file in front-end when required.
+		if ( ! class_exists( 'Breeze_ConfigCache' ) ) {
+			// config to cache
+			require_once BREEZE_PLUGIN_DIR . 'inc/cache/config-cache.php';
+		}
+
+		if ( is_multisite() ) {
+			// For multi-site we need to also reset the root config-file.
+			Breeze_ConfigCache::factory()->write_config_cache( true );
+
+			$blogs = get_sites();
+			if ( ! empty( $blogs ) ) {
+				foreach ( $blogs as $blog_data ) {
+					$blog_id = $blog_data->blog_id;
+					switch_to_blog( $blog_id );
+
+					// if the settings are inherited, then we do not need to refresh the config file.
+					$inherit_option = get_option( 'breeze_inherit_settings' );
+					$inherit_option = filter_var( $inherit_option, FILTER_VALIDATE_BOOLEAN );
+
+					// If the settings are not inherited from parent blog, then refresh the config file.
+					if ( false === $inherit_option ) {
+						// Refresh breeze-cache.php file
+						Breeze_ConfigCache::factory()->write_config_cache();
+					}
+
+					restore_current_blog();
+				}
+			}
+		} else {
+			// For single site.
+			// Refresh breeze-cache.php file
+			Breeze_ConfigCache::factory()->write_config_cache();
+		}
+		Breeze_ConfigCache::factory()->write();
 	}
 }
 

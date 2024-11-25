@@ -310,22 +310,25 @@ class Keywords {
 				$data,
 				function( $a, $b ) use ( $orderby ) {
 					if ( false === array_key_exists( 'position', $a ) ) {
-						$a['position'] = [ 'total' => '0' ];
+						$a['position'] = [ 'total' => 0 ];
 					}
 					if ( false === array_key_exists( 'position', $b ) ) {
-						$b['position'] = [ 'total' => '0' ];
+						$b['position'] = [ 'total' => 0 ];
 					}
 
 					if ( 0 === intval( $b['position']['total'] ) ) {
 						return 0;
 					}
 
-					return $a['position']['total'] > $b['position']['total'];
+					return $a['position']['total'] > $b['position']['total'] ? 1 : -1;
 				}
 			);
 		}
 
-		$result['rowsData'] = $data;
+		$result = [
+			'rowsData' => $data,
+		];
+
 		// get total rows by search.
 		$args = wp_parse_args(
 			[
@@ -525,8 +528,9 @@ class Keywords {
 	 * @param  string $order    The order to sort by.
 	 */
 	public function sort_data( $data, $order_by, $order ) {
+		$order_by = 'keyword' === $order_by ? 'query' : $order_by;
 		$sort_order  = 'ASC' === $order ? SORT_ASC : SORT_DESC;
-		$sort_column = in_array( $order_by, [ 'clicks', 'impressions', 'position', 'ctr' ], true ) ? $order_by : 'position';
+		$sort_column = in_array( $order_by, [ 'query', 'clicks', 'impressions', 'position', 'ctr' ], true ) ? $order_by : 'position';
 
 		$sort_data = array_column( $data, $sort_column );
 		array_multisort( $sort_data, $sort_order, $data );

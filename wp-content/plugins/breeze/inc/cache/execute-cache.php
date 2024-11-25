@@ -316,7 +316,13 @@ function breeze_cache( $buffer, $flags ) {
 		}
 		// Regular expression pattern to match anchor (a) tags
 		$pattern = '/<a\s+(.*?)>/si';
-		$buffer  = preg_replace_callback( $pattern, 'breeze_cc_process_match', $buffer );
+		$buffer = preg_replace_callback(
+			$pattern,
+			function ( $matches ) {
+				return breeze_cc_process_match( $matches );
+			},
+			$buffer
+		);
 
 		// Buffer decoding.
 		$buffer = mb_decode_numericentity( $buffer, array( 0x80, 0x10FFFF, 0, ~0 ), 'UTF-8' );
@@ -702,5 +708,60 @@ function exec_breeze_file_match_pattern( $file_url, $pattern ) {
 	$result           = preg_match( '/' . $pattern . '/', $file_url );
 
 	return $result;
+}
+
+/**
+ * Preg replace callback function for anchor handling
+ *
+ * @param $match
+ *
+ * @return string
+ */
+function breeze_cc_process_match( $match ) {
+	// Get the home URL
+	$home_url = $GLOBALS['breeze_config']['homepage'];
+	$home_url = ltrim( $home_url, 'https:' );
+
+	// Set the rel attribute values
+	$replacement_rel_arr = array( 'noopener', 'noreferrer' );
+
+	// Extract the href and target attributes
+	$href_attr   = '';
+	$target_attr = '';
+	preg_match( '/href=(\'|")(.*?)\\1/si', $match[1], $href_match );
+	preg_match( '/target=(\'|")(.*?)\\1/si', $match[1], $target_match );
+	if ( $href_match ) {
+		$href_attr = $href_match[2];
+	}
+	if ( $target_match ) {
+		$target_attr = $target_match[2];
+	}
+
+	// Check if this is an external link
+	if ( ! empty( $href_attr ) &&
+		filter_var( $href_attr, FILTER_VALIDATE_URL ) &&
+		strpos( $href_attr, $home_url ) === false &&
+		strpos( $target_attr, '_blank' ) !== false ) {
+
+		// Extract the rel attribute, if present
+		$rel_attr = '';
+		preg_match( '/rel=(\'|")(.*?)\\1/si', $match[1], $rel_match );
+		if ( $rel_match ) {
+			$rel_attr = $rel_match[2];
+		}
+
+		// Set or modify the rel attribute as necessary
+		if ( empty( $rel_attr ) ) {
+			return '<a ' . $match[1] . ' rel="noopener noreferrer">';
+		} else {
+			$existing_rels = explode( ' ', $rel_attr );
+			$existing_rels = array_unique( array_merge( $replacement_rel_arr, $existing_rels ) );
+
+			return '<a ' . str_replace( $rel_attr, implode( ' ', $existing_rels ), $match[1] ) . '>';
+		}
+	} else {
+		// If this is not an external link, just return the matched string
+		return '<a ' . $match[1] . '>';
+	}
 }
 

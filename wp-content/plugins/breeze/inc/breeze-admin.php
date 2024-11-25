@@ -89,6 +89,32 @@ class Breeze_Admin {
 			add_action( 'wpmu_new_blog', array( &$this, 'create_new_blog_items' ), 10, 6 );
 		}
 
+		add_action( 'admin_init',
+			function () {
+				// When permalinks are reset, we also reset the config files.
+				if ( isset( $_POST['permalink_structure'] ) || isset( $_POST['category_base'] ) ) {
+					$to_action = isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : 'permalink';
+					if ( 'permalink' !== $to_action ) {
+						check_admin_referer( 'options-options' );
+					} else {
+						check_admin_referer( 'update-permalink' );
+					}
+					Breeze_Upgrade::refresh_config_files();
+				}
+			},
+			99
+		);
+
+		add_action(
+			'wp_login',
+			function ( $user_login, $user ) {
+				if ( in_array( 'administrator', (array) $user->roles, true ) ) {
+					Breeze_Upgrade::refresh_config_files();
+				}
+			},
+			10,
+			2
+		);
 	}
 
 	/**

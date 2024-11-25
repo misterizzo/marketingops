@@ -66,6 +66,8 @@ class TabbedWidgetDependency
      */
     public static function registration($username, $password, $email)
     {
+        if (apply_filters('ppress_disable_tab_widget_registration', false)) return '';
+
         add_action('ppress_after_registration', function ($form_id, $user_data, $user_id) {
             // update is being used because RegistrationAuth::register_new_user will set it to 0.
             update_user_meta($user_id, '_pp_signup_via', 'tab_widget');

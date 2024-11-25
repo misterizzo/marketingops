@@ -1,5 +1,12 @@
 ﻿== Changelog ==
 
+= 4.15.18 =
+* Added ppress_checkout_disable_payment_for_zero_initial_payment filter to disable payment when initial amount is zero.
+* Added filter to disable tab widget user registration.
+* Fixed bug where restricted content could be accessed via rest api.
+* Fixed icon error in admin css.
+* Fixed bug with multiple display of login remember label.
+
 = 4.15.17 =
 * Fixed bug that displays double 'tripple-mdash' in billing state field.
 * Fixed bug where country/state field ID instead of title was displayed in member directory & user profile.

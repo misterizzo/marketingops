@@ -123,26 +123,66 @@ function breeze_is_supported( $check ) {
 	return $return;
 }
 
+// Function to extract the base domain from a URL
+function breeze_get_base_domain( $domain ) {
+
+	if ( preg_match( '/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i', $domain, $regs ) ) {
+		return $regs['domain'];
+	}
+	return false;
+}
 /**
  * If an array provided, the function will check all
  * array items to see if all of them are valid URLs.
  *
  * @param array $url_list
- * @param string $extension
  *
  * @return bool
  * @since 1.1.0
- *
  */
-function breeze_validate_urls( $url_list = array() ) {
+function breeze_validate_urls( array $url_list = array() ): bool {
 	if ( ! is_array( $url_list ) ) {
 		return false;
 	}
 
-	$is_valid = true;
+	$is_valid = false;
 	foreach ( $url_list as $url ) {
-		if ( ! filter_var( $url, FILTER_VALIDATE_URL ) ) {
-			$is_valid = false;
+		$url = trim( $url );
+		if ( empty( $url ) ) {
+			continue;
+		}
+
+		if ( false === strpos( $url, ':' ) ) {
+			$url = 'https://' . $url;
+		}
+
+		$parsed_url = wp_parse_url( $url );
+		if ( false === $parsed_url ) {
+			return false;
+		}
+
+		// Encode the path to make it a valid URL.
+		$encoded_path = '';
+		if ( isset( $parsed_url['path'] ) ) {
+			$encoded_path = implode( '/', array_map( 'rawurlencode', explode( '/', $parsed_url['path'] ) ) );
+		}
+
+		// Reconstruct the URL with the encoded path.
+		$encoded_url  = ( isset( $parsed_url['scheme'] ) ? $parsed_url['scheme'] . '://' : '' ) . ( $parsed_url['host'] ?? '' ) . $encoded_path;
+		$encoded_url .= ( isset( $parsed_url['query'] ) ? '?' . $parsed_url['query'] : '' );
+		$encoded_url .= ( isset( $parsed_url['fragment'] ) ? '#' . $parsed_url['fragment'] : '' );
+		$base_domain  = breeze_get_base_domain( $parsed_url['host'] ?? '' );
+
+		if ( empty( $base_domain ) ) {
+			return false;
+		}
+
+		if ( ! checkdnsrr( $base_domain, 'ANY' ) ) {
+			return false;
+		}
+
+		if ( ! filter_var( $encoded_url, FILTER_VALIDATE_URL ) ) {
+
 			if ( false === $is_valid ) {
 				$is_valid = breeze_validate_url_via_regexp( $url );
 			}
@@ -150,6 +190,8 @@ function breeze_validate_urls( $url_list = array() ) {
 			if ( false === $is_valid ) {
 				$is_valid = breeze_string_contains_exclude_regexp( $url );
 			}
+		} else {
+			$is_valid = true;
 		}
 
 		if ( false === $is_valid ) {
@@ -1134,11 +1176,11 @@ function breeze_static_check_cdn_url( $cdn_url ) {
 /**
  * Fetch homepage headers by cURL ping no cache.
  *
-* @param int $retry How many retries.
-* @param int $time_fresh If you want to use a custom number instead of time.
-* @param boolean $use_headers whether to use the function stream_context_set_default
-*
-* @return bool|array
+ * @param int $retry How many retries.
+ * @param int $time_fresh If you want to use a custom number instead of time.
+ * @param boolean $use_headers whether to use the function stream_context_set_default
+ *
+ * @return bool|array
  */
 function breeze_helper_fetch_headers( int $retry = 1, int $time_fresh = 0, bool $use_headers = false ) {
 	// Code specific for Cloudways Server.

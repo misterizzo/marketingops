@@ -39,7 +39,6 @@ humbug_phpscoper_expose_class('Stringable', 'ProfilePressVendor\Stringable');
 // https://github.com/humbug/php-scoper/blob/master/docs/further-reading.md#function-aliases
 if (!function_exists('app')) { function app() { return \ProfilePressVendor\app(...func_get_args()); } }
 if (!function_exists('calculateTranslationStatus')) { function calculateTranslationStatus() { return \ProfilePressVendor\calculateTranslationStatus(...func_get_args()); } }
-if (!function_exists('composerRequire623f666e7d8d98438f266c9ab8aebe18')) { function composerRequire623f666e7d8d98438f266c9ab8aebe18() { return \ProfilePressVendor\composerRequire623f666e7d8d98438f266c9ab8aebe18(...func_get_args()); } }
 if (!function_exists('extractLocaleFromFilePath')) { function extractLocaleFromFilePath() { return \ProfilePressVendor\extractLocaleFromFilePath(...func_get_args()); } }
 if (!function_exists('extractTranslationKeys')) { function extractTranslationKeys() { return \ProfilePressVendor\extractTranslationKeys(...func_get_args()); } }
 if (!function_exists('fdiv')) { function fdiv() { return \ProfilePressVendor\fdiv(...func_get_args()); } }

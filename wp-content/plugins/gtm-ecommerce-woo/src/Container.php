@@ -5,6 +5,7 @@ namespace GtmEcommerceWoo\Lib;
 use GtmEcommerceWoo\Lib\EventStrategy;
 use GtmEcommerceWoo\Lib\Service\EventStrategiesService;
 use GtmEcommerceWoo\Lib\Service\GtmSnippetService;
+use GtmEcommerceWoo\Lib\Service\OrderMonitorService;
 use GtmEcommerceWoo\Lib\Service\SettingsService;
 use GtmEcommerceWoo\Lib\Service\PluginService;
 use GtmEcommerceWoo\Lib\Service\EventInspectorService;
@@ -12,6 +13,7 @@ use GtmEcommerceWoo\Lib\Service\ProductFeedService;
 use GtmEcommerceWoo\Lib\Util\WpSettingsUtil;
 use GtmEcommerceWoo\Lib\Util\WcOutputUtil;
 use GtmEcommerceWoo\Lib\Util\WcTransformerUtil;
+use GtmEcommerceWoo\Lib\Service\OrderDiagnosticsService;
 
 class Container {
 
@@ -34,6 +36,8 @@ class Container {
 
 	/** @var WcTransformerUtil */
 	protected $wcTransformerUtil;
+
+	protected $orderMonitorService;
 
 	public function __construct( string $pluginVersion ) {
 		$snakeCaseNamespace = 'gtm_ecommerce_woo';
@@ -80,7 +84,8 @@ class Container {
 
 		$this->eventStrategiesService = new EventStrategiesService($wpSettingsUtil, $wcOutputUtil, $eventStrategies);
 		$this->gtmSnippetService = new GtmSnippetService($wpSettingsUtil);
-		$this->settingsService = new SettingsService($wpSettingsUtil, $events, $proEvents, $serverEvents, $tagConciergeApiUrl, $pluginVersion);
+		$this->orderMonitorService = new OrderMonitorService($wpSettingsUtil, $wcOutputUtil);
+		$this->settingsService = new SettingsService($wpSettingsUtil, $this->orderMonitorService, $events, $proEvents, $serverEvents, $tagConciergeApiUrl, $pluginVersion);
 		$this->pluginService = new PluginService($spineCaseNamespace, $wpSettingsUtil, $wcOutputUtil, $pluginVersion);
 		$this->eventInspectorService = new EventInspectorService($wpSettingsUtil, $wcOutputUtil);
 		$this->productFeedService = new ProductFeedService($snakeCaseNamespace, $wpSettingsUtil);
@@ -112,5 +117,9 @@ class Container {
 
 	public function getWcTransformerUtil() {
 		return $this->wcTransformerUtil;
+	}
+
+	public function getOrderMonitorService(): OrderMonitorService {
+		return $this->orderMonitorService;
 	}
 }

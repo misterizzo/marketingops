@@ -388,6 +388,11 @@ function initBackgroundApp(initFn) {
   }
   (0,_appUtils__WEBPACK_IMPORTED_MODULE_1__.initApp)(main);
 }
+var getLeadinConfig = function getLeadinConfig() {
+  return {
+    leadinPluginVersion: _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.leadinPluginVersion
+  };
+};
 var getOrCreateBackgroundApp = function getOrCreateBackgroundApp() {
   var refreshToken = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
   if (window.LeadinBackgroundApp) {
@@ -396,7 +401,7 @@ var getOrCreateBackgroundApp = function getOrCreateBackgroundApp() {
   var _window = window,
     IntegratedAppEmbedder = _window.IntegratedAppEmbedder,
     IntegratedAppOptions = _window.IntegratedAppOptions;
-  var options = new IntegratedAppOptions().setLocale(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.locale).setDeviceId(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.deviceId).setRefreshToken(refreshToken);
+  var options = new IntegratedAppOptions().setLocale(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.locale).setDeviceId(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.deviceId).setLeadinConfig(getLeadinConfig()).setRefreshToken(refreshToken);
   var embedder = new IntegratedAppEmbedder('integrated-plugin-proxy', _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.portalId, _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.hubspotBaseUrl, function () {}).setOptions(options);
   embedder.attachTo(document.body, false);
   embedder.postStartAppMessage(); // lets the app know all all data has been passed to it
