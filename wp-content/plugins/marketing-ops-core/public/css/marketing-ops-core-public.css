@@ -898,6 +898,7 @@ div#moc_apaloza_workshop.popup .popup_container .popup_content .box_content .box
 .fulldescriptionboxleft.cardContainer .cardBox .cardBoxText h6,
 .fulldescriptionboxleft.cardContainer .cardBox .cardBoxText .cardtitle {display: inline-block;width: 100%;}
 .fulldescriptionboxleft.cardContainer .cardBox .cardBoxText .cardtitle {margin-top: 20px;}
+.fulldescriptionboxleft.cardContainer .cardBox .cardBoxText .js-collapser {text-align: left;}
 .fulldescriptionboxleft.cardContainer .cardBox .cardBoxText>ul>li:last-child{margin-bottom:5px;}
 .fulldescriptionbox .fulldescriptionboxright{max-width:445px;flex:0 0 445px;margin-left:15px;}
 .fulldescriptionboxleft.cardContainer .cardBox .cardBoxText ul{margin-bottom:0;list-style-type:disc;padding-left:20px;}
