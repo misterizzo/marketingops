@@ -235,7 +235,8 @@ if ( ! function_exists( 'mops_print_customer_content_html' ) ) {
 							// Iterate through the object IDs.
 							foreach ( $discount_object['object_ids'] as $obj_index => $object_id ) {
 								if ( '183.82.160.95' === $_SERVER['REMOTE_ADDR'] ) {
-									var_dump( get_post_field( 'post_status', $object_id ), get_post_field( 'post_type', $object_id ) );
+									var_dump( get_post_field( 'post_status', $object_id ) );
+									var_dump( get_post_field( 'post_type', $object_id ) );
 								}
 
 								$object_price         = (float) get_post_meta( $object_id, '_price', true );
