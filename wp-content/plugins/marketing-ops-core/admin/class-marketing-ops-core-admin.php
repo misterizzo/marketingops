@@ -1389,4 +1389,35 @@ class Marketing_Ops_Core_Admin {
 			echo $video_speaker;
 		}
 	}
+
+	/**
+	 * Add custom columns to the 'page' posts.
+	 *
+	 * @param array $default_cols Columns array.
+	 * @return array
+	 * @since 1.0.0
+	 */
+	public function moc_manage_edit_page_columns_callback( $default_cols ) {
+		// If the array key doesn't exist for "additional labels".
+		if ( ! array_key_exists( 'additional_label', $default_cols ) ) {
+			$default_cols['additional_label'] = __( 'Additional Label', 'marketingops' );
+		}
+
+		return $default_cols;
+	}
+
+	/**
+	 * Add custom column data to the 'page' posts.
+	 *
+	 * @param string $column_name Column name.
+	 * @param int    $post_id Post ID.
+	 * @since 1.0.0
+	 */
+	public function moc_manage_page_posts_custom_column_callback( $column_name, $post_id ) {
+		// Print the content for "additional_label" column name.
+		if ( 'additional_label' === $column_name ) {
+			$additional_label = get_field( 'additional_label', $post_id );
+			debug( $additional_label );
+		}
+	}
 }

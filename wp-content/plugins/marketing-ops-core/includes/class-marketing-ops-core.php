@@ -174,6 +174,8 @@ class Marketing_Ops_Core {
 		$this->loader->add_filter( 'recovery_mode_email', $plugin_admin, 'moc_recovery_mode_email_callback', 20, 2 );
 		$this->loader->add_filter( 'manage_edit-conference_vault_columns', $plugin_admin, 'cf_manage_edit_conference_vault_columns_callback' );
 		$this->loader->add_action( 'manage_conference_vault_posts_custom_column', $plugin_admin, 'cf_manage_conference_vault_posts_custom_column_callback', 10, 2 );
+		$this->loader->add_filter( 'manage_edit-page_columns', $plugin_admin, 'moc_manage_edit_page_columns_callback' );
+		$this->loader->add_action( 'manage_page_posts_custom_column', $plugin_admin, 'moc_manage_page_posts_custom_column_callback', 10, 2 );
 	}
 
 	/**
