@@ -1417,8 +1417,11 @@ class Marketing_Ops_Core_Admin {
 		// Print the content for "additional_label" column name.
 		if ( 'additional_label' === $column_name ) {
 			$additional_label = get_field( 'additional_label', $post_id );
-			var_dump( $additional_label );
-			debug( $additional_label );
+
+			// If it's not null.
+			if ( ! is_null( $additional_label ) && is_array( $additional_label ) ) {
+				echo wp_kses_post( implode( ', ', $additional_label ) );
+			}
 		}
 	}
 }
