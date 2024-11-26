@@ -1417,6 +1417,7 @@ class Marketing_Ops_Core_Admin {
 		// Print the content for "additional_label" column name.
 		if ( 'additional_label' === $column_name ) {
 			$additional_label = get_field( 'additional_label', $post_id );
+			var_dump( $additional_label );
 			debug( $additional_label );
 		}
 	}
