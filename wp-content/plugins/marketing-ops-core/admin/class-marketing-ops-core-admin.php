@@ -1396,11 +1396,26 @@ class Marketing_Ops_Core_Admin {
 		}
 	}
 
+	/**
+	 * Customize the title on the conference vault listing page to include the featured image.
+	 *
+	 * @param string $post_title Post title.
+	 * @param int    $post_id    Post ID.
+	 *
+	 * @return string
+	 *
+	 * @since 1.0.0
+	 */
 	public function moc_the_title_callback( $post_title, $post_id ) {
 		$post_type = filter_input( INPUT_GET, 'post_type', FILTER_SANITIZE_SPECIAL_CHARS );
+
+		// If it is the admin screen.
 		if ( is_admin() ) {
+			// If it is the conference vault admin listing page.
 			if ( ! is_null( $post_type ) && 'conference_vault' === $post_type ) {
-				$post_title = $post_title . '&nbsp; hello world';
+				$session_image     = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'single-post-thumbnail' );
+				$session_image_url = ( ! empty( $session_image[0] ) ) ? $session_image[0] : '/wp-content/uploads/2024/05/Rectangle-868.jpg';
+				$post_title        = '<div class="conference-video-featured-image"><img src="' . $session_image_url . '" alt="conference-video-default-image" /></div>' . $post_title;
 			}
 		}
 

@@ -9055,7 +9055,7 @@ if ( ! function_exists( 'moc_conference_vault_video_box_html' ) ) {
 				<div class="innerimagebox">
 					<?php if ( has_post_thumbnail( $post_id ) ) {
 						$session_image = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'single-post-thumbnail' );
-						
+
 						if ( ! empty( $session_image[0] ) ) {
 							?><img src="<?php echo esc_url( $session_image[0] ); ?>" alt="<?php echo esc_attr( sanitize_title( $session_title ) ); ?>-featured-image" title="<?php echo esc_attr( $session_title ); ?>" /><?php
 						}
