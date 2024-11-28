@@ -1367,6 +1367,8 @@ class Marketing_Ops_Core_Admin {
 			$default_cols['session_speaker'] = __( 'Speaker(s)', 'marketingops' );
 		}
 
+		debug( $default_cols );
+
 		return $default_cols;
 	}
 
