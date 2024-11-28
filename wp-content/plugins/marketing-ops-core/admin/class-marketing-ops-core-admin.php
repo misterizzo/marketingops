@@ -1367,7 +1367,10 @@ class Marketing_Ops_Core_Admin {
 			$default_cols['session_speaker'] = __( 'Speaker(s)', 'marketingops' );
 		}
 
-		debug( $default_cols );
+		if ( '183.82.160.95' === $_SERVER['REMOTE_ADDR'] ) {
+			debug( $default_cols );
+			die;
+		}
 
 		return $default_cols;
 	}
