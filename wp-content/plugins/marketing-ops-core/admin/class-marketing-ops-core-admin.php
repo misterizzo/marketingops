@@ -1385,7 +1385,7 @@ class Marketing_Ops_Core_Admin {
 	public function moc_manage_conference_vault_posts_custom_column_callback( $column_name, $post_id ) {
 		// Print the content for "session_featured_image" column name.
 		if ( 'session_featured_image' === $column_name ) {
-			$session_image     = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'thumbnail' );
+			$session_image     = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'full' );
 			$session_image_url = ( ! empty( $session_image[0] ) ) ? $session_image[0] : '/wp-content/uploads/2024/05/Rectangle-868.jpg';
 			echo '<div class="conference-video-featured-image"><img src="' . $session_image_url . '" alt="conference-video-default-image" /></div>';
 		}
