@@ -1367,6 +1367,11 @@ class Marketing_Ops_Core_Admin {
 			$default_cols['session_speaker'] = __( 'Speaker(s)', 'marketingops' );
 		}
 
+		// If the array key doesn't exist for session featured image.
+		if ( ! array_key_exists( 'session_featured_image', $default_cols ) ) {
+			$default_cols['session_featured_image'] = __( 'Featured Image', 'marketingops' );
+		}
+
 		return $default_cols;
 	}
 
@@ -1378,10 +1383,12 @@ class Marketing_Ops_Core_Admin {
 	 * @since 1.0.0
 	 */
 	public function moc_manage_conference_vault_posts_custom_column_callback( $column_name, $post_id ) {
-		// Print the content for "title" column name.
-		// if ( 'title' === $column_name ) {
-			
-		// }
+		// Print the content for "session_featured_image" column name.
+		if ( 'session_featured_image' === $column_name ) {
+			$session_image     = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'single-post-thumbnail' );
+			$session_image_url = ( ! empty( $session_image[0] ) ) ? $session_image[0] : '/wp-content/uploads/2024/05/Rectangle-868.jpg';
+			echo '<div class="conference-video-featured-image"><img src="' . $session_image_url . '" alt="conference-video-default-image" /></div>';
+		}
 
 		// Print the content for "session video" column name.
 		if ( 'session_video' === $column_name ) {
@@ -1394,32 +1401,6 @@ class Marketing_Ops_Core_Admin {
 			$video_speaker = get_field( 'session_author', $post_id );
 			echo $video_speaker;
 		}
-	}
-
-	/**
-	 * Customize the title on the conference vault listing page to include the featured image.
-	 *
-	 * @param string $post_title Post title.
-	 * @param int    $post_id    Post ID.
-	 *
-	 * @return string
-	 *
-	 * @since 1.0.0
-	 */
-	public function moc_the_title_callback( $post_title, $post_id ) {
-		$post_type = filter_input( INPUT_GET, 'post_type', FILTER_SANITIZE_SPECIAL_CHARS );
-
-		// If it is the admin screen.
-		if ( is_admin() ) {
-			// If it is the conference vault admin listing page.
-			if ( ! is_null( $post_type ) && 'conference_vault' === $post_type ) {
-				$session_image     = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'single-post-thumbnail' );
-				$session_image_url = ( ! empty( $session_image[0] ) ) ? $session_image[0] : '/wp-content/uploads/2024/05/Rectangle-868.jpg';
-				$post_title        = '<div class="conference-video-featured-image"><img src="' . $session_image_url . '" alt="conference-video-default-image" /></div>' . $post_title;
-			}
-		}
-
-		return $post_title;
 	}
 
 	/**
