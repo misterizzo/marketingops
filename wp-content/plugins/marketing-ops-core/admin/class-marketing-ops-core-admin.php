@@ -1356,7 +1356,7 @@ class Marketing_Ops_Core_Admin {
 	 * @return array
 	 * @since 1.0.0
 	 */
-	public function cf_manage_edit_conference_vault_columns_callback( $default_cols ) {
+	public function moc_manage_edit_conference_vault_columns_callback( $default_cols ) {
 		// If the array key doesn't exist for session video.
 		if ( ! array_key_exists( 'session_video', $default_cols ) ) {
 			$default_cols['session_video'] = __( 'Video', 'marketingops' );
@@ -1365,11 +1365,6 @@ class Marketing_Ops_Core_Admin {
 		// If the array key doesn't exist for session speakers.
 		if ( ! array_key_exists( 'session_speaker', $default_cols ) ) {
 			$default_cols['session_speaker'] = __( 'Speaker(s)', 'marketingops' );
-		}
-
-		if ( '183.82.160.95' === $_SERVER['REMOTE_ADDR'] ) {
-			debug( $default_cols );
-			die;
 		}
 
 		return $default_cols;
@@ -1382,17 +1377,34 @@ class Marketing_Ops_Core_Admin {
 	 * @param int    $post_id Post ID.
 	 * @since 1.0.0
 	 */
-	public function cf_manage_conference_vault_posts_custom_column_callback( $column_name, $post_id ) {
+	public function moc_manage_conference_vault_posts_custom_column_callback( $column_name, $post_id ) {
+		// Print the content for "title" column name.
+		// if ( 'title' === $column_name ) {
+			
+		// }
+
 		// Print the content for "session video" column name.
 		if ( 'session_video' === $column_name ) {
 			$video_url = get_field( 'vimeo_video_url', $post_id );
 			echo '<a href="' . $video_url . '" target="_blank" title="' . $video_url . '">' . $video_url . '</a>';
 		}
 
+		// Print the content for "session speaker" column name.
 		if ( 'session_speaker' === $column_name ) {
 			$video_speaker = get_field( 'session_author', $post_id );
 			echo $video_speaker;
 		}
+	}
+
+	public function moc_the_title_callback( $post_title, $post_id ) {
+		$post_type = filter_input( INPUT_GET, 'post_type', FILTER_SANITIZE_SPECIAL_CHARS );
+		if ( is_admin() ) {
+			if ( ! is_null( $post_type ) && 'conference_vault' === $post_type ) {
+				$title = $title . '&nbsp; hello world';
+			}
+		}
+
+		return $title;
 	}
 
 	/**
