@@ -1400,11 +1400,11 @@ class Marketing_Ops_Core_Admin {
 		$post_type = filter_input( INPUT_GET, 'post_type', FILTER_SANITIZE_SPECIAL_CHARS );
 		if ( is_admin() ) {
 			if ( ! is_null( $post_type ) && 'conference_vault' === $post_type ) {
-				$title = $title . '&nbsp; hello world';
+				$post_title = $post_title . '&nbsp; hello world';
 			}
 		}
 
-		return $title;
+		return $post_title;
 	}
 
 	/**
