@@ -327,8 +327,7 @@ if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
 	<div class="agency-container">
 		<h3><?php esc_html_e( 'Jobs', 'marketingops' ); ?></h3>
 		<?php foreach ( $agency_jobs->posts as $job_id ) {
-			$job_type = wp_get_object_terms( $job_id, 'job_listing_type' );
-			debug( $job_type );
+			$job_types = wp_get_object_terms( $job_id, 'job_listing_type' );
 			?>
 			<div class="jobdetailbox">
 				<div class="joinnermainbox">
@@ -343,7 +342,13 @@ if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
 					</div>
 					<div class="jobbtns">
 						<a href="javascript:void(0);" class="seniurlevelbtn">Senior Level</a>
-						<a href="javascript:void(0);" class="fulltimbtn">Full-Time</a>
+
+						<!-- JOB TYPE -->
+						<?php if ( ! empty( $job_types ) && is_array( $job_types ) ) { ?>
+							<?php foreach ( $job_types as $job_type ) { ?>
+								<a href="javascript:void(0);" class="fulltimbtn"><?php echo esc_html( $job_type->name ); ?></a>
+							<?php } ?>
+						<?php } ?>
 					</div>
 				</div>
 				<p><?php echo wp_kses_post( wp_trim_words( get_post_field( 'post_content', $job_id ), 40, '...' ) ); ?></p>
