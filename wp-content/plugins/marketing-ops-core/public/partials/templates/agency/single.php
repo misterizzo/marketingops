@@ -311,7 +311,7 @@ if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
 									</div>
 								<?php } ?>
 								<div class="spotligtext">
-									<h4 class="articalstitle"><?php echo wp_kses_post(  ); ?></h4>
+									<h4 class="articalstitle"><?php echo wp_kses_post( $article_title ); ?></h4>
 									<p class="articals"><?php echo wp_kses_post( wp_trim_words( get_post_field( 'post_content', $article_id ), 20, '...' ) ); ?></p>
 								</div>
 							</div>
