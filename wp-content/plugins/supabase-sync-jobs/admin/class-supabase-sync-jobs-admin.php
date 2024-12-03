@@ -419,7 +419,7 @@ class Supabase_Sync_Jobs_Admin {
 		// Redirect to the plugin settings page just as it is activated.
 		if ( get_option( 'supabase_do_plugin_activation_redirect' ) ) {
 			delete_option( 'supabase_do_plugin_activation_redirect' );
-			wp_safe_redirect( admin_url( 'edit.php?post_type=job_listing&page=sync-with-supabase' ) );
+			wp_safe_redirect( admin_url( 'edit.php?post_type=job_listing&page=job-manager-settings#settings-supabase_jobs_sync' ) );
 			exit;
 		}
 	}
