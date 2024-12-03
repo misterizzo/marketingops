@@ -44,6 +44,7 @@ $agency_awards                   = get_field( 'agency_awards', $agency_id );
 $agency_include_articles         = get_field( 'agency_include_articles', $agency_id );
 $agency_include_jobs             = get_field( 'agency_include_jobs', $agency_id );
 $agency_video                    = get_field( 'agency_video', $agency_id );
+$agency_articles                 = moc_posts_query_args( 'post', 1, 3 );
 
 // Collect all the agency types.
 if ( ! empty( $agency_types ) && is_array( $agency_types ) ) {
@@ -287,6 +288,8 @@ if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
 	</section>
 <?php } ?>
 
+<!-- ARTICLES -->
+<?php debug( $agency_articles ); ?>
 <section class="agency-spotlight">
 	<div class="agency-container">
 		<h2>Articles & Press Releases</h2>
@@ -299,30 +302,6 @@ if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
 					<div class="spotligtext">
 						<h4 class="articalstitle">MO Pros Logo Socks</h4>
 						<p class="articals">Sem integer vitae justo eget magna fermentum. Arcu dui vivamus arcu felis bibendum. Nibh nisl condimentum id venenatis a condimentum...</p>
-					</div>
-				</div>
-			</li>
-
-			<li>
-				<div class="spotilebox">
-					<div class="spotlightimgbox">
-						<img src="/wp-content/themes/marketingops/images/agencypages/man-sea-coast.png" alt="img" /> 
-					</div>
-					<div class="spotligtext">
-						<h4 class="articalstitle">Ut porttitor leo a diam sollicitudin tempor id eu nisl. Scond line example</h4>
-						<p class="articals">Vitae suscipit tellus mauris a diam maecenas sed. Diam maecenas sed enim ut sem viverra....</p>
-					</div>
-				</div>
-			</li>
-
-			<li>
-				<div class="spotilebox">
-					<div class="spotlightimgbox">
-						<img src="/wp-content/themes/marketingops/images/agencypages/laptop-computer.png" alt="img" /> 
-					</div>
-					<div class="spotligtext">
-						<h4 class="articalstitle">MO Pros Logo Socks</h4>
-						<p class="articals">Felis bibendum ut tristique et egestas quis ipsum suspendisse. Nisl nisi scelerisque eu ultrices vitae auctor eu.</p>
 					</div>
 				</div>
 			</li>
