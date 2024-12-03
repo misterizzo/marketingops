@@ -44,7 +44,8 @@ $agency_awards                   = get_field( 'agency_awards', $agency_id );
 $agency_include_articles         = get_field( 'agency_include_articles', $agency_id );
 $agency_include_jobs             = get_field( 'agency_include_jobs', $agency_id );
 $agency_video                    = get_field( 'agency_video', $agency_id );
-$agency_articles                 = moc_posts_query_args( 'post', 1, 3 );
+$agency_articles_args            = moc_posts_query_args( 'post', 1, 3 );
+$agency_articles                 = new WP_Query( $agency_articles_args );
 
 // Collect all the agency types.
 if ( ! empty( $agency_types ) && is_array( $agency_types ) ) {
@@ -289,7 +290,7 @@ if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
 <?php } ?>
 
 <!-- ARTICLES -->
-<?php debug( $agency_articles ); ?>
+<?php debug( $agency_articles->posts ); ?>
 <section class="agency-spotlight">
 	<div class="agency-container">
 		<h2><?php esc_html_e( 'Articles & Press Releases', 'marketingops' ); ?></h2>
