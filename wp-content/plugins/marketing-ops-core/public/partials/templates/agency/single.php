@@ -292,7 +292,7 @@ if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
 <?php debug( $agency_articles ); ?>
 <section class="agency-spotlight">
 	<div class="agency-container">
-		<h2>Articles & Press Releases</h2>
+		<h2><?php esc_html_e( 'Articles & Press Releases', 'marketingops' ); ?></h2>
 		<ul class="spotlitlist">
 			<li>
 				<div class="spotilebox">
@@ -312,7 +312,7 @@ if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
 
 <section class="agaeny_jobs">
 	<div class="agency-container">
-		<h3>Jobs</h3>
+		<h3><?php esc_html_e( 'Jobs', 'marketingops' ); ?></h3>
 		<div class="jobdetailbox">
 			<div class="joinnermainbox">
 				<div class="jobinnerbox">
@@ -325,17 +325,11 @@ if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
 					</div>
 				</div>
 				<div class="jobbtns">
-					<a href="javascript:void(0);" class="seniurlevelbtn">
-						Senior Level
-					</a>
-					<a href="javascript:void(0);" class="fulltimbtn">
-						Full-Time
-					</a>
+					<a href="javascript:void(0);" class="seniurlevelbtn">Senior Level</a>
+					<a href="javascript:void(0);" class="fulltimbtn">Full-Time</a>
 				</div>
 			</div>
-			<p>
-				Been trying to design my website for yr now, and need someone to revamp it and finish it off. Using wordpress with elementor pro. It is a brand website and it will need landing, homepage, about us, shop, blog, and contact pages. Need prof help to finish it off and make it look more polished. Also need SEO help as well as setting up...
-			</p>
+			<p>Been trying to design my website for yr now, and need someone to revamp it and finish it off. Using wordpress with elementor pro. It is a brand website and it will need landing, homepage, about us, shop, blog, and contact pages. Need prof help to finish it off and make it look more polished. Also need SEO help as well as setting up...</p>
 			<ul>
 				<li>
 					<i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2C7.313 2 3.5 5.813 3.5 10.5C3.5 12.518 4.2245 14.4765 5.5465 16.024C5.6975 16.1955 9.26 20.2435 10.45 21.378C10.8845 21.7925 11.442 22 12 22C12.558 22 13.1155 21.7925 13.5505 21.378C14.934 20.0585 18.3125 16.1855 18.4605 16.0155C19.7755 14.4765 20.5 12.518 20.5 10.5C20.5 5.813 16.687 2 12 2ZM12 13C10.6195 13 9.5 11.8805 9.5 10.5C9.5 9.1195 10.6195 8 12 8C13.3805 8 14.5 9.1195 14.5 10.5C14.5 11.8805 13.3805 13 12 13Z" fill="#6D7B83"/></svg></i> IL, Chicago

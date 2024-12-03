@@ -6000,7 +6000,7 @@ class Marketing_Ops_Core_Public {
 	 * @since 1.0.0
 	 */
 	public function mops_moc_posts_query_args_callback( $args = array() ) {
-		global $wp_query;
+		global $wp_query, $post;
 
 		$current_category = filter_input( INPUT_GET, 'cat', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$term_id          = get_queried_object()->term_id;// Get the current queried term ID.
@@ -6079,6 +6079,8 @@ class Marketing_Ops_Core_Public {
 					$args['author']         = get_current_user_id();
 				}
 			}
+		} elseif ( is_singular( 'agency' ) ) {
+			$args['author'] = get_field( 'agency_owner', $post->ID );
 		}
 
 		return $args;
