@@ -46,6 +46,8 @@ $agency_include_jobs             = get_field( 'agency_include_jobs', $agency_id 
 $agency_video                    = get_field( 'agency_video', $agency_id );
 $agency_articles_args            = moc_posts_query_args( 'post', 1, 3 );
 $agency_articles                 = new WP_Query( $agency_articles_args );
+$agency_jobs_args                = moc_posts_query_args( 'job_listing', 1, 3 );
+$agency_jobs                     = new WP_Query( $agency_jobs_args );
 
 // Collect all the agency types.
 if ( ! empty( $agency_types ) && is_array( $agency_types ) ) {
@@ -296,17 +298,19 @@ if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
 			<h2><?php esc_html_e( 'Articles & Press Releases', 'marketingops' ); ?></h2>
 			<ul class="spotlitlist">
 				<?php foreach ( $agency_articles->posts as $article_id ) {
-					var_dump( get_post_field( 'post_excerpt', $article_id ) );
-					debug( '----' );
+					$featured_image_id  = get_post_thumbnail_id( $article_id );
+					$featured_image_url = ( ! empty( $featured_image_id ) && 0 !== $featured_image_id ) ? wp_get_attachment_image_url( $featured_image_id ) : '';
 					?>
 					<li>
 						<div class="spotilebox">
-							<div class="spotlightimgbox">
-								<img src="/wp-content/themes/marketingops/images/agencypages/achievement-.png" alt="img" /> 
-							</div>
+							<?php if ( ! empty( $featured_image_url ) ) { ?>
+								<div class="spotlightimgbox">
+									<img src="<?php echo esc_url( $featured_image_url ); ?>" alt="img" /> 
+								</div>
+							<?php } ?>
 							<div class="spotligtext">
 								<h4 class="articalstitle"><?php echo wp_kses_post( get_the_title( $article_id ) ); ?></h4>
-								<p class="articals">Sem integer vitae justo eget magna fermentum. Arcu dui vivamus arcu felis bibendum. Nibh nisl condimentum id venenatis a condimentum...</p>
+								<p class="articals"><?php echo wp_kses_post( wp_trim_words( get_post_field( 'post_content', $article_id ), 20, '...' ) ); ?></p>
 							</div>
 						</div>
 					</li>
@@ -316,7 +320,8 @@ if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
 	</section>
 <?php } ?>
 
-
+<!-- JOBS -->
+<?php debug( $agency_jobs ); ?>
 <section class="agaeny_jobs">
 	<div class="agency-container">
 		<h3><?php esc_html_e( 'Jobs', 'marketingops' ); ?></h3>
