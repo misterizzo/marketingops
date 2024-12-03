@@ -37,7 +37,9 @@ $agency_user_email               = get_field( 'agency_user_email', $agency_id );
 $agency_user_website             = get_field( 'agency_user_website', $agency_id );
 $agency_people                   = get_field( 'agency_people', $agency_id );
 $agency_clients                  = get_field( 'agency_clients', $agency_id );
+$agency_clients_string           = array();
 $agency_certifications           = get_field( 'agency_certifications', $agency_id );
+$agency_certifications_string    = array();
 $agency_awards                   = get_field( 'agency_awards', $agency_id );
 $agency_include_articles         = get_field( 'agency_include_articles', $agency_id );
 $agency_include_jobs             = get_field( 'agency_include_jobs', $agency_id );
@@ -72,7 +74,7 @@ if ( ! empty( $agency_primary_verticals ) && is_array( $agency_primary_verticals
 		$agency_primary_verticals_string[] = $agency_primary_vertical->name;
 	}
 
-	// Join the primayr verticals with comma separation.
+	// Join the primary verticals with comma separation.
 	$agency_primary_verticals_string = implode( ', ', $agency_primary_verticals_string );
 }
 
@@ -83,8 +85,34 @@ if ( ! empty( $agency_services ) && is_array( $agency_services ) ) {
 		$agency_services_string[] = $agency_service->name;
 	}
 
-	// Join the servvices with comma separation.
+	// Join the services with comma separation.
 	$agency_services_string = implode( ', ', $agency_services_string );
+}
+
+// Collect the clients.
+if ( ! empty( $agency_clients ) && is_array( $agency_clients ) ) {
+	// Loop through the clients.
+	foreach ( $agency_clients as $agency_client ) {
+		if ( empty( $agency_client['client_name'] ) ) continue;
+
+		$agency_clients_string[] = $agency_client['client_name'];
+	}
+
+	// Join the clients with comma separation.
+	$agency_clients_string = implode( ', ', $agency_clients_string );
+}
+
+// Collect the certifications.
+if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
+	// Loop through the clients.
+	foreach ( $agency_certifications as $agency_certification ) {
+		if ( empty( $agency_certification['certification_name'] ) ) continue;
+
+		$agency_certifications_string[] = $agency_certification['certification_name'];
+	}
+
+	// Join the certifications with comma separation.
+	$agency_certifications_string = implode( ', ', $agency_certifications_string );
 }
 ?>
 <!-- BASIC DETAILS -->
@@ -224,49 +252,40 @@ if ( ! empty( $agency_services ) && is_array( $agency_services ) ) {
 <?php } ?>
 
 <!-- CLIENTS -->
-<?php debug( $agency_clients ); ?>
-<section class="agaeny_clients">
-	<div class="agency-container">
-		<h3><?php esc_html_e( 'Clients', 'marketingops' ); ?></h3>
-		<p>
-			Allbirds, GoTo, Noom, Truff, Target, Legacy Box, Instacart, Redbubble, Blenders Eyewear, Crocs, Umbra, Helly Hansen, Eight Sleep, Mint Mobile, Third Love, Dick's Sporting Goods, Drop, Sizzlefish, DiscountMugs, Nutrafol, Proactiv, Hawthorne, HydroPeptide, Crossrope
-		</p>
-	</div>	
-</section>
+<?php if ( ! empty( $agency_clients_string ) ) { ?>
+	<section class="agaeny_clients">
+		<div class="agency-container">
+			<h3><?php esc_html_e( 'Clients', 'marketingops' ); ?></h3>
+			<p><?php echo wp_kses_post( $agency_clients_string ); ?></p>
+		</div>	
+	</section>
+<?php } ?>
 
 <!-- CERTIFICATIONS -->
-<?php debug( $agency_certifications ); ?>
-<section class="agaeny_clients">
-	<div class="agency-container">
-		<h3><?php esc_html_e( 'Certifications', 'marketingops' ); ?></h3>
-		<p>Impact, CJ, Awin/ShareASale, Rakuten, Partnerize</p>
-	</div>	
-</section>
+<?php if ( ! empty( $agency_certifications_string ) ) { ?>
+	<section class="agaeny_clients">
+		<div class="agency-container">
+			<h3><?php esc_html_e( 'Certifications', 'marketingops' ); ?></h3>
+			<p><?php echo wp_kses_post( $agency_certifications_string ); ?></p>
+		</div>	
+	</section>
+<?php } ?>
 
 <!-- AWARDS -->
-<?php debug( $agency_awards ); ?>
-<section class="agaeny_clients">
-	<div class="agency-container">
-		<h3><?php esc_html_e( 'Awards', 'marketingops' ); ?></h3>
-		<ul>
-			<li>
-				Best Travel, Leisure and Lifestyle Campaign - London, 2020 International Performance Marketing Awards
-			</li>	
-			<li>
-				Best B2B Strategy, USA - 2022 Highly Commended, International Performance Marketing Awards
-			</li>
-			<li>
-				Top 20 Digital Strategy Leaders of 2020 - Digital Strategy Institute	
-			</li>	
-			<li>
-				GROWTH500 - 2019 Top 500 Fastest Growing Companies in Canada, Canadian Business Magazine
-			</li>
-			<li>
-				Global Excellence Award - London, 2018 Performance Marketing Awards
-			</li>
-		</ul>
-	</div>	
-</section>
+<?php if ( ! empty( $agency_awards ) && is_array( $agency_awards ) ) { ?>
+	<section class="agaeny_clients">
+		<div class="agency-container">
+			<h3><?php esc_html_e( 'Awards', 'marketingops' ); ?></h3>
+			<ul>
+				<?php foreach ( $agency_awards as $agency_award ) {
+					if ( ! empty( $agency_award['award_name'] ) ) { ?>
+						<li><?php echo esc_html( $agency_award['award_name'] ); ?></li>
+					<?php }
+				} ?>
+			</ul>
+		</div>	
+	</section>
+<?php } ?>
 
 <section class="agency-spotlight">
 	<div class="agency-container">
