@@ -9305,6 +9305,39 @@ if ( ! function_exists( 'moc_agency_custom_post_type_and_category_taxonomy' ) ) 
 				'show_in_rest'        => true,
 			)
 		);
+
+		// Register taxonomy, agency_type.
+		register_taxonomy( 'agency_type', array( 'agency' ), array(
+			'labels'            => array(
+				'name'                       => _x( 'Agency Types', 'Taxonomy General Name', 'marketingops' ),
+				'singular_name'              => _x( 'Agency Type', 'Taxonomy Singular Name', 'marketingops' ),
+				'menu_name'                  => __( 'Agency Types', 'marketingops' ),
+				'all_items'                  => __( 'All Agency Types', 'marketingops' ),
+				'parent_item'                => __( 'Parent Agency Type', 'marketingops' ),
+				'parent_item_colon'          => __( 'Parent Agency Type:', 'marketingops' ),
+				'new_item_name'              => __( 'New Agency Type Name', 'marketingops' ),
+				'add_new_item'               => __( 'Add New Agency Type', 'marketingops' ),
+				'edit_item'                  => __( 'Edit Agency Type', 'marketingops' ),
+				'update_item'                => __( 'Update Agency Type', 'marketingops' ),
+				'view_item'                  => __( 'View Agency Type', 'marketingops' ),
+				'separate_items_with_commas' => __( 'Separate Agency Types with commas', 'marketingops' ),
+				'add_or_remove_items'        => __( 'Add or remove Agency Types', 'marketingops' ),
+				'choose_from_most_used'      => __( 'Choose from the most used', 'marketingops' ),
+				'popular_items'              => __( 'Popular Agency Types', 'marketingops' ),
+				'search_items'               => __( 'Search Agency Types', 'marketingops' ),
+				'not_found'                  => __( 'Not Found', 'marketingops' ),
+				'no_terms'                   => __( 'No Agency Types', 'marketingops' ),
+				'items_list'                 => __( 'Agency Types list', 'marketingops' ),
+				'items_list_navigation'      => __( 'Agency Types list navigation', 'marketingops' ),
+			),
+			'hierarchical'      => true,
+			'public'            => true,
+			'show_ui'           => true,
+			'show_in_menu'      => true,
+			'show_admin_column' => true,
+			'show_in_nav_menus' => true,
+			'show_in_rest'      => true,
+		) );
 	}
 }
 
