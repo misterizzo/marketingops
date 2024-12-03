@@ -32,6 +32,9 @@ $agency_services                 = wp_get_object_terms( $agency_id, 'agency_serv
 $agency_services_string          = array();
 $agency_founded_year             = get_field( 'agency_year_founded', $agency_id );
 $agency_employees                = get_field( 'agency_employees', $agency_id );
+$agency_user_name                = get_field( 'agency_user_name', $agency_id );
+$agency_user_email               = get_field( 'agency_user_email', $agency_id );
+$agency_user_website             = get_field( 'agency_user_website', $agency_id );
 
 // Collect all the agency types.
 if ( ! empty( $agency_types ) && is_array( $agency_types ) ) {
@@ -146,12 +149,23 @@ if ( ! empty( $agency_services ) && is_array( $agency_services ) ) {
 					<li>
 						<div class="leftwithicon">
 							<i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M19.75 4C20.9922 4 22 5.00781 22 6.25V17.7552C22 18.9974 20.9922 20.0052 19.75 20.0052H4.25C3.00781 20.0052 2 18.9974 2 17.7552V6.25C2 5.00781 3.00781 4 4.25 4H19.75ZM9.25 12.5H5.75C5.36979 12.5 5.05729 12.7812 5.00781 13.1484L5 13.25V13.7422L5.00781 13.8516C5.16927 14.9635 6.10156 15.5026 7.5 15.5026C8.83073 15.5026 9.73958 15.0156 9.96354 14.0078L9.99219 13.8516L10 13.7422V13.25C10 12.8698 9.71875 12.5573 9.35156 12.5078L9.25 12.5ZM18.25 12.9948H13.7526L13.651 13.0026C13.2839 13.0521 13.0026 13.3672 13.0026 13.7448C13.0026 14.125 13.2839 14.4401 13.651 14.4896L13.7526 14.4948H18.25L18.3516 14.4896C18.7188 14.4401 19 14.125 19 13.7448C19 13.3672 18.7188 13.0521 18.3516 13.0026L18.25 12.9948ZM7.5 8.5026C6.67188 8.5026 6 9.17448 6 10.0026C6 10.8307 6.67188 11.5026 7.5 11.5026C8.32813 11.5026 9 10.8307 9 10.0026C9 9.17448 8.32813 8.5026 7.5 8.5026ZM18.25 9.5H13.7526L13.651 9.50781C13.2839 9.55729 13.0026 9.86979 13.0026 10.25C13.0026 10.6302 13.2839 10.9427 13.651 10.9922L13.7526 11H18.25L18.3516 10.9922C18.7188 10.9427 19 10.6302 19 10.25C19 9.86979 18.7188 9.55729 18.3516 9.50781L18.25 9.5Z" fill="#6D7B83"/></svg></i> 
-							Contact:
+							<?php esc_html_e( 'Contact:', 'marketingops' ); ?>
 						</div>
 						<div class="contervtbox">
-							<b>Dan Martel</b>
-							<a href="mailto:dmartel@accelerationpartners.com">dmartel@accelerationpartners.com</a>
-							<a href="javascript:void(0);">Visit Website</a>
+							<!-- AGENCY USER NAME -->
+							<?php if ( ! empty( $agency_user_name ) ) { ?>
+								<b><?php echo wp_kses_post( $agency_user_name ); ?></b>
+							<?php } ?>
+
+							<!-- AGENCY USER EMAIL -->
+							<?php if ( ! empty( $agency_user_email ) ) { ?>
+								<a href="mailto:<?php echo wp_kses_post( $agency_user_email ); ?>"><?php echo wp_kses_post( $agency_user_email ); ?></a>
+							<?php } ?>
+
+							<!-- AGENCY WEBSITE -->
+							<?php if ( ! empty( $agency_user_website ) ) { ?>
+								<a href="<?php echo esc_url( $agency_user_website ); ?>"><?php echo esc_url( $agency_user_website ); ?></a>
+							<?php } ?>
 						</div>	
 					</li>
 				</ul>
