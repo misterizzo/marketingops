@@ -182,18 +182,31 @@ if ( ! empty( $agency_services ) && is_array( $agency_services ) ) {
 			<h2>In the Spotlight</h2>
 			<ul class="spotlitlist">
 				<!-- PEOPLE LIST -->
-				<?php foreach ( $agency_people as $person ) { debug( $person ); ?>
+				<?php foreach ( $agency_people as $person ) {
+					$person_image = ( ! empty( $person['display_picture'] ) ) ? wp_get_attachment_url( $person['display_picture'] ) : '';
+					?>
 					<li>
 						<div class="spotilebox">
-							<div class="spotlightimgbox">
-								<img src="/wp-content/themes/marketingops/images/agencypages/achievement-american.png" alt="img" /> 
-							</div>
+							<?php if ( ! empty( $person_image ) ) { ?>
+								<div class="spotlightimgbox">
+									<img src="<?php echo esc_url( $person_image ); ?>" alt="<?php echo ( ! empty( $person['full_name'] ) ) ? sanitize_title( $person['full_name'] ) : ''; ?>-img" /> 
+								</div>
+							<?php } ?>
 							<div class="spotligtext">
-								<h4>Natalie Filion</h4>
-								<p>Account Director</p>
-								<a href="javascript:void(0);" class="sociallinkbtn">
-									LinkedIn
-								</a>
+								<!-- PERSON NAME -->
+								<?php if ( ! empty( $person['full_name'] ) ) { ?>
+									<h4><?php echo esc_html_e( $person['full_name'] ); ?></h4>
+								<?php } ?>
+
+								<!-- POSITION -->
+								<?php if ( ! empty( $person['position'] ) ) { ?>
+									<p><?php echo esc_html_e( $person['position'] ); ?></p>
+								<?php } ?>
+
+								<!-- LINKEDIN PROFILE -->
+								<?php if ( ! empty( $person['linkedin_profile'] ) ) { ?>
+									<a href="javascript:void(0);" class="sociallinkbtn"><?php esc_html_e( 'LinkedIn', 'marketingops' ); ?></a>
+								<?php } ?>
 							</div>
 						</div>
 					</li>
