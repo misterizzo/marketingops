@@ -30,6 +30,8 @@ $agency_primary_verticals        = wp_get_object_terms( $agency_id, 'agency_prim
 $agency_primary_verticals_string = array();
 $agency_services                 = wp_get_object_terms( $agency_id, 'agency_service' );
 $agency_services_string          = array();
+$agency_founded_year             = get_field( 'agency_year_founded', $agency_id );
+$agency_employees                = get_field( 'agency_employees', $agency_id );
 
 // Collect all the agency types.
 if ( ! empty( $agency_types ) && is_array( $agency_types ) ) {
@@ -109,16 +111,16 @@ if ( ! empty( $agency_services ) && is_array( $agency_services ) ) {
 					<li>
 						<div class="leftwithicon">
 							<i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21 7V6.25C21 4.45833 19.5417 3 17.75 3H6.25C4.45833 3 3 4.45833 3 6.25V7H21ZM3 8.5V17.75C3 19.5417 4.45833 21 6.25 21H17.75C19.5417 21 21 19.5417 21 17.75V8.5H3ZM14.0026 16.3177L12.5469 17.7734C12.2448 18.0755 11.7552 18.0755 11.4531 17.7734L9.9974 16.3177C9.77865 16.0964 9.71094 15.7656 9.83073 15.4766C9.95052 15.1875 10.2318 15 10.5443 15H13.4557C13.7682 15 14.0495 15.1875 14.1693 15.4766C14.2891 15.7656 14.2214 16.0964 14.0026 16.3177ZM14.1693 13.0234C14.0495 13.3125 13.7682 13.5 13.4557 13.5H10.5443C10.2318 13.5 9.95052 13.3125 9.83073 13.0234C9.71094 12.7344 9.77604 12.4036 9.9974 12.1823L11.4531 10.7266C11.7552 10.4245 12.2448 10.4245 12.5469 10.7266L14.0026 12.1823C14.2214 12.4036 14.2891 12.7344 14.1693 13.0234Z" fill="#6D7B83"/></svg></i> 
-							Founded:
+							<?php esc_html_e( 'Founded:', 'marketingops' ); ?>
 						</div>
-						2007
+						<?php echo esc_html( $agency_founded_year ); ?>
 					</li>
 					<li>
 						<div class="leftwithicon">
 							<i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3C10.3438 3 9 4.34375 9 6C9 7.65625 10.3438 9 12 9C13.6562 9 15 7.65625 15 6C15 4.34375 13.6562 3 12 3ZM5.5 4C4.11979 4 3 5.11979 3 6.5C3 7.88021 4.11979 9 5.5 9C6.88021 9 8 7.88021 8 6.5C8 5.11979 6.88021 4 5.5 4ZM18.5 4C17.1198 4 16 5.11979 16 6.5C16 7.88021 17.1198 9 18.5 9C19.8802 9 21 7.88021 21 6.5C21 5.11979 19.8802 4 18.5 4ZM12 21C9.51823 21 7.5 18.9818 7.5 16.5V11.75C7.5 10.7839 8.28385 10 9.25 10H14.75C15.7161 10 16.5 10.7839 16.5 11.75V16.5C16.5 18.9818 14.4818 21 12 21ZM6.5 16.5V11.75C6.5 11.0859 6.73698 10.4766 7.13021 10H3.75C2.78385 10 2 10.7839 2 11.75V15C2 17.2057 3.79427 19 6 19C6.35417 19 6.70052 18.9557 7.03125 18.8646C7.03125 18.8646 7.03646 18.862 7.03906 18.862C6.69792 18.1432 6.5 17.3464 6.5 16.5ZM17.5 16.5V11.75C17.5 11.0859 17.263 10.4766 16.8698 10H20.25C21.2161 10 22 10.7839 22 11.75V15C22 17.2057 20.2057 19 18 19C17.6458 19 17.2995 18.9557 16.9688 18.8646C16.9688 18.8646 16.9635 18.862 16.9609 18.862C17.3021 18.1432 17.5 17.3464 17.5 16.5Z" fill="#6D7B83"/></svg></i> 
-							Employees:
+							<?php esc_html_e( 'Employees:', 'marketingops' ); ?>
 						</div>
-						100-500
+						<?php echo esc_html( $agency_employees ); ?>
 					</li>
 					<li>
 						<div class="leftwithicon">
