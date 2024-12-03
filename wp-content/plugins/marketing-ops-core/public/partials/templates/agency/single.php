@@ -16,19 +16,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 get_header();
+
+// Get all the agency details.
+global $post;
+$agency_id    = get_the_ID();
+$agency_title = get_the_title( $agency_id );
 ?>
 <section class="mainagencydetails">
-<div class="leftbgbar">
-		<img src="/wp-content/themes/marketingops/images/agencypages/blurcircle1.png" alt="img" />
-	</div>
-	<div class="leftbgbar_two">
-		<img src="/wp-content/themes/marketingops/images/agencypages/blur3.png" alt="img" />
-	</div>
-	<div class="rightbgbar">
-		<img src="/wp-content/themes/marketingops/images/agencypages/blur2.png" alt="img" />
-	</div>
+	<div class="leftbgbar"><img src="/wp-content/themes/marketingops/images/agencypages/blurcircle1.png" alt="img" /></div>
+	<div class="leftbgbar_two"><img src="/wp-content/themes/marketingops/images/agencypages/blur3.png" alt="img" /></div>
+	<div class="rightbgbar"><img src="/wp-content/themes/marketingops/images/agencypages/blur2.png" alt="img" /></div>
 	<div class="agency-container">
-		<h1><span>Directly</span> Agency Details</h1>
+		<h1><span><?php echo wp_kses_post( $agency_title ); ?></span>&nbsp;<?php esc_html_e( 'Agency Details', 'marketingops' ); ?></h1>
 		<div class="agencymaintwotable">
 			<div class="agencymaintwotable-left">
 				<img src="/wp-content/themes/marketingops/images/agencypages/dircaly.png" alt="img" />
