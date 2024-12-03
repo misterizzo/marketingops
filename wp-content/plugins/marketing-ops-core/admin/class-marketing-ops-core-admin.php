@@ -1150,6 +1150,8 @@ class Marketing_Ops_Core_Admin {
 			return false;
 		} elseif ( 'page' === $post_type ) { // If the post type is page.
 			return false;
+		} elseif ( 'agency' === $post_type ) { // If the post type is agency.
+			return false;
 		}
 
 		return $current_status;
