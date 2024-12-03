@@ -290,25 +290,28 @@ if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
 <?php } ?>
 
 <!-- ARTICLES -->
-<?php debug( $agency_articles->posts ); ?>
-<section class="agency-spotlight">
-	<div class="agency-container">
-		<h2><?php esc_html_e( 'Articles & Press Releases', 'marketingops' ); ?></h2>
-		<ul class="spotlitlist">
-			<li>
-				<div class="spotilebox">
-					<div class="spotlightimgbox">
-						<img src="/wp-content/themes/marketingops/images/agencypages/achievement-.png" alt="img" /> 
-					</div>
-					<div class="spotligtext">
-						<h4 class="articalstitle">MO Pros Logo Socks</h4>
-						<p class="articals">Sem integer vitae justo eget magna fermentum. Arcu dui vivamus arcu felis bibendum. Nibh nisl condimentum id venenatis a condimentum...</p>
-					</div>
-				</div>
-			</li>
-		</ul>
-	</div>	
-</section>
+<?php if ( ! empty( $agency_articles->posts ) && is_array( $agency_articles->posts ) ) { ?>
+	<section class="agency-spotlight">
+		<div class="agency-container">
+			<h2><?php esc_html_e( 'Articles & Press Releases', 'marketingops' ); ?></h2>
+			<ul class="spotlitlist">
+				<?php foreach ( $agency_articles->posts as $article_id ) { ?>
+					<li>
+						<div class="spotilebox">
+							<div class="spotlightimgbox">
+								<img src="/wp-content/themes/marketingops/images/agencypages/achievement-.png" alt="img" /> 
+							</div>
+							<div class="spotligtext">
+								<h4 class="articalstitle"><?php echo wp_kses_post( get_the_title( $article_id ) ); ?></h4>
+								<p class="articals">Sem integer vitae justo eget magna fermentum. Arcu dui vivamus arcu felis bibendum. Nibh nisl condimentum id venenatis a condimentum...</p>
+							</div>
+						</div>
+					</li>
+				<?php } ?>
+			</ul>
+		</div>	
+	</section>
+<?php } ?>
 
 
 <section class="agaeny_jobs">
