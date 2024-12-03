@@ -16,7 +16,7 @@ $linked_agency           = get_user_meta( $current_user->ID, 'linked_agency', tr
 $agency_signup_request   = filter_input( INPUT_GET, 'agency_signup', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 if ( ! is_null( $agency_signup_request ) && 'free' === $agency_signup_request ) {
-	$show_agency_signup_form = true;
+	// $show_agency_signup_form = true;
 }
 
 // If the linked agency is not available, show the registration page.
