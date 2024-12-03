@@ -6086,6 +6086,8 @@ class Marketing_Ops_Core_Public {
 				$args['author']      = get_field( 'agency_owner', $post->ID );
 				$args['post_status'] = 'closed';
 			}
+
+			debug( $args );
 		}
 
 		return $args;

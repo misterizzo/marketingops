@@ -293,9 +293,9 @@ if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
 
 <!-- ARTICLES -->
 <?php
-debug( $agency_articles_args );
-debug( $agency_articles );
-debug( $agency_articles->posts );
+// debug( $agency_articles_args );
+// debug( $agency_articles );
+// debug( $agency_articles->posts );
 ?>
 <?php if ( ! empty( $agency_articles->posts ) && is_array( $agency_articles->posts ) ) { ?>
 	<section class="agency-spotlight">
