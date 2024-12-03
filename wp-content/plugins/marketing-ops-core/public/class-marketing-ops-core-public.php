@@ -6080,8 +6080,12 @@ class Marketing_Ops_Core_Public {
 				}
 			}
 		} elseif ( is_singular( 'agency' ) ) {
-			$args['author'] = get_field( 'agency_owner', $post->ID );
-			$args['post_status'] = 'closed';
+			if ( 'post' === $args['post_type'] ) {
+				$args['author'] = get_field( 'agency_owner', $post->ID );
+			} elseif ( 'job_listing' === $args['post_type'] ) {
+				$args['author']      = get_field( 'agency_owner', $post->ID );
+				$args['post_status'] = 'closed';
+			}
 		}
 
 		return $args;
