@@ -302,17 +302,19 @@ if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
 					$featured_image_url = ( ! empty( $featured_image_id ) && 0 !== $featured_image_id ) ? wp_get_attachment_image_url( $featured_image_id ) : '';
 					?>
 					<li>
-						<div class="spotilebox">
-							<?php if ( ! empty( $featured_image_url ) ) { ?>
-								<div class="spotlightimgbox">
-									<img src="<?php echo esc_url( $featured_image_url ); ?>" alt="img" /> 
+						<a href="<?php echo esc_url( get_permalink( $article_id ) ); ?>">
+							<div class="spotilebox">
+								<?php if ( ! empty( $featured_image_url ) ) { ?>
+									<div class="spotlightimgbox">
+										<img src="<?php echo esc_url( $featured_image_url ); ?>" alt="img" /> 
+									</div>
+								<?php } ?>
+								<div class="spotligtext">
+									<h4 class="articalstitle"><?php echo wp_kses_post( get_the_title( $article_id ) ); ?></h4>
+									<p class="articals"><?php echo wp_kses_post( wp_trim_words( get_post_field( 'post_content', $article_id ), 20, '...' ) ); ?></p>
 								</div>
-							<?php } ?>
-							<div class="spotligtext">
-								<h4 class="articalstitle"><?php echo wp_kses_post( get_the_title( $article_id ) ); ?></h4>
-								<p class="articals"><?php echo wp_kses_post( wp_trim_words( get_post_field( 'post_content', $article_id ), 20, '...' ) ); ?></p>
 							</div>
-						</div>
+						</a>
 					</li>
 				<?php } ?>
 			</ul>
