@@ -35,6 +35,7 @@ $agency_employees                = get_field( 'agency_employees', $agency_id );
 $agency_user_name                = get_field( 'agency_user_name', $agency_id );
 $agency_user_email               = get_field( 'agency_user_email', $agency_id );
 $agency_user_website             = get_field( 'agency_user_website', $agency_id );
+$agency_people                   = get_field( 'agency_people', $agency_id );
 
 // Collect all the agency types.
 if ( ! empty( $agency_types ) && is_array( $agency_types ) ) {
@@ -174,57 +175,33 @@ if ( ! empty( $agency_services ) && is_array( $agency_services ) ) {
 	</div>
 </section>
 
-<section class="agency-spotlight">
-	<div class="agency-container">
-		<h2>In the Spotlight</h2>
-		<ul class="spotlitlist">
-			<li>
-				<div class="spotilebox">
-					<div class="spotlightimgbox">
-						<img src="/wp-content/themes/marketingops/images/agencypages/achievement-american.png" alt="img" /> 
-					</div>
-					<div class="spotligtext">
-						<h4>Natalie Filion</h4>
-						<p>Account Director</p>
-						<a href="javascript:void(0);" class="sociallinkbtn">
-							LinkedIn
-						</a>
-					</div>
-				</div>
-			</li>
-
-			<li>
-				<div class="spotilebox">
-					<div class="spotlightimgbox">
-						<img src="/wp-content/themes/marketingops/images/agencypages/man-sea-coast-water.png" alt="img" /> 
-					</div>
-					<div class="spotligtext">
-						<h4>Jen Watson</h4>
-						<p>Director of Strategic Operations</p>
-						<a href="javascript:void(0);" class="sociallinkbtn">
-							LinkedIn
-						</a>
-					</div>
-				</div>
-			</li>
-
-			<li>
-				<div class="spotilebox">
-					<div class="spotlightimgbox">
-						<img src="/wp-content/themes/marketingops/images/agencypages/laptop-computer-.png" alt="img" /> 
-					</div>
-					<div class="spotligtext">
-						<h4>Mesa Stevens</h4>
-						<p>Account Director</p>
-						<a href="javascript:void(0);" class="sociallinkbtn">
-							LinkedIn
-						</a>
-					</div>
-				</div>
-			</li>
-		</ul>
-	</div>	
-</section>
+<!-- IN THE SPOTLIGHT -->
+<?php if ( ! empty( $agency_people ) && is_array( $agency_people ) ) { ?>
+	<section class="agency-spotlight">
+		<div class="agency-container">
+			<h2>In the Spotlight</h2>
+			<ul class="spotlitlist">
+				<!-- PEOPLE LIST -->
+				<?php foreach ( $agency_people as $person ) { debug( $person ); ?>
+					<li>
+						<div class="spotilebox">
+							<div class="spotlightimgbox">
+								<img src="/wp-content/themes/marketingops/images/agencypages/achievement-american.png" alt="img" /> 
+							</div>
+							<div class="spotligtext">
+								<h4>Natalie Filion</h4>
+								<p>Account Director</p>
+								<a href="javascript:void(0);" class="sociallinkbtn">
+									LinkedIn
+								</a>
+							</div>
+						</div>
+					</li>
+				<?php } ?>
+			</ul>
+		</div>	
+	</section>
+<?php } ?>
 
 <section class="agaeny_clients">
 	<div class="agency-container">
