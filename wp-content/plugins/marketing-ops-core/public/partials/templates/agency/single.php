@@ -23,13 +23,13 @@ $agency_id                       = get_the_ID();
 $agency_title                    = get_the_title( $agency_id );
 $agency_description              = get_post_field( 'post_content', $agency_id );
 $agency_types                    = wp_get_object_terms( $agency_id, 'agency_type' );
-$agency_types_string             = '';
+$agency_types_string             = array();
 $agency_regions                  = wp_get_object_terms( $agency_id, 'agency_region' );
-$agency_regions_string           = '';
+$agency_regions_string           = array();
 $agency_primary_verticals        = wp_get_object_terms( $agency_id, 'agency_primary_vertical' );
-$agency_primary_verticals_string = '';
+$agency_primary_verticals_string = array();
 $agency_services                 = wp_get_object_terms( $agency_id, 'agency_service' );
-$agency_services_string          = '';
+$agency_services_string          = array();
 
 // Collect all the agency types.
 if ( ! empty( $agency_types ) && is_array( $agency_types ) ) {
