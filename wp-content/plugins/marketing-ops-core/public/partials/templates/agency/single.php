@@ -22,6 +22,19 @@ global $post;
 $agency_id                = get_the_ID();
 $agency_title             = get_the_title( $agency_id );
 $agency_description       = get_post_field( 'post_content', $agency_id );
+$agency_types             = wp_get_object_terms( $agency_id, 'agency_type' );
+$agency_regions           = wp_get_object_terms( $agency_id, 'agency_region' );
+$agency_primary_verticals = wp_get_object_terms( $agency_id, 'agency_primary_vertical' );
+$agency_services          = wp_get_object_terms( $agency_id, 'agency_service' );
+
+debug( $agency_types );
+debug( '------------' );
+debug( $agency_regions );
+debug( '------------' );
+debug( $agency_primary_verticals );
+debug( '------------' );
+debug( $agency_services );
+debug( '------------' );
 ?>
 <section class="mainagencydetails">
 	<div class="leftbgbar"><img src="/wp-content/themes/marketingops/images/agencypages/blurcircle1.png" alt="img" /></div>
@@ -33,7 +46,7 @@ $agency_description       = get_post_field( 'post_content', $agency_id );
 			<div class="agencymaintwotable-left">
 				<!-- AGENCY FEATURED IMAGE -->
 				<?php if ( has_post_thumbnail( $agency_id ) ) {
-					get_the_post_thumbnail( $agency_id, 'full' );
+					echo wp_kses_post( get_the_post_thumbnail( $agency_id, 'full' ) );
 				} ?>
 
 				<!-- AGENCY DESCRIPTION -->
