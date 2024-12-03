@@ -2093,7 +2093,7 @@ background-size: cover;
 .agency-spotlight .agency-container .spotlitlist li .spotilebox .spotligtext h4.articalstitle{color: var(--text-main2-45474F, #45474F);font-family: "Futura LT";font-size: 16px;font-style: normal;font-weight: 700;line-height: normal;}
 
 .agaeny_jobs .agency-container{max-width:1180px;margin:0 auto 30px;}
-.agaeny_jobs .agency-container .jobdetailbox{max-width:877px;flex-shrink:0;border-radius:24px;border:1px solid rgba(231,239,239,0.75);background:rgba(255,255,255,0.50);box-shadow:0px 20px 40px 0px rgba(0,0,0,0.03);padding:20px 20px;}
+.agaeny_jobs .agency-container .jobdetailbox {max-width:877px;flex-shrink:0;border-radius:24px;border:1px solid rgba(231,239,239,0.75);background:rgba(255,255,255,0.50);box-shadow:0px 20px 40px 0px rgba(0,0,0,0.03);padding:20px 20px;margin-top: 10px;}
 .agaeny_jobs .agency-container .jobdetailbox .joinnermainbox{display:flex;justify-content:space-between;}
 .agaeny_jobs .agency-container .jobdetailbox .joinnermainbox .jobinnerbox{display:flex;align-items:center;align-content:center;}
 .agaeny_jobs .agency-container .jobdetailbox .joinnermainbox .jobinnerright h4{color:var(--Primary-text,#45474F);margin:0;font-family:"Futura LT";font-size:19px;font-style:normal;font-weight:700;line-height:normal;}
