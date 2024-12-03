@@ -323,7 +323,7 @@ if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
 <?php } ?>
 
 <!-- JOBS -->
-<?php debug( $agency_jobs ); ?>
+<?php debug( $agency_jobs_args ); debug( $agency_jobs->posts ); ?>
 <section class="agaeny_jobs">
 	<div class="agency-container">
 		<h3><?php esc_html_e( 'Jobs', 'marketingops' ); ?></h3>
