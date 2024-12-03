@@ -295,7 +295,10 @@ if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
 		<div class="agency-container">
 			<h2><?php esc_html_e( 'Articles & Press Releases', 'marketingops' ); ?></h2>
 			<ul class="spotlitlist">
-				<?php foreach ( $agency_articles->posts as $article_id ) { ?>
+				<?php foreach ( $agency_articles->posts as $article_id ) {
+					var_dump( get_post_field( 'post_excerpt', $article_id ) );
+					debug( '----' );
+					?>
 					<li>
 						<div class="spotilebox">
 							<div class="spotlightimgbox">
