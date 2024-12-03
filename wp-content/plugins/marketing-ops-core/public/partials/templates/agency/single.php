@@ -19,22 +19,27 @@ get_header();
 
 // Get all the agency details.
 global $post;
-$agency_id                = get_the_ID();
-$agency_title             = get_the_title( $agency_id );
-$agency_description       = get_post_field( 'post_content', $agency_id );
-$agency_types             = wp_get_object_terms( $agency_id, 'agency_type' );
-$agency_regions           = wp_get_object_terms( $agency_id, 'agency_region' );
-$agency_primary_verticals = wp_get_object_terms( $agency_id, 'agency_primary_vertical' );
-$agency_services          = wp_get_object_terms( $agency_id, 'agency_service' );
+$agency_id                       = get_the_ID();
+$agency_title                    = get_the_title( $agency_id );
+$agency_description              = get_post_field( 'post_content', $agency_id );
+$agency_types                    = wp_get_object_terms( $agency_id, 'agency_type' );
+$agency_types_string             = '';
+$agency_regions                  = wp_get_object_terms( $agency_id, 'agency_region' );
+$agency_regions_string           = '';
+$agency_primary_verticals        = wp_get_object_terms( $agency_id, 'agency_primary_vertical' );
+$agency_primary_verticals_string = '';
+$agency_services                 = wp_get_object_terms( $agency_id, 'agency_service' );
+$agency_services_string          = '';
 
-debug( $agency_types );
-debug( '------------' );
-debug( $agency_regions );
-debug( '------------' );
-debug( $agency_primary_verticals );
-debug( '------------' );
-debug( $agency_services );
-debug( '------------' );
+// Collect all the agency types.
+if ( ! empty( $agency_types ) && is_array( $agency_types ) ) {
+	// Loop through the agency types.
+	foreach ( $agency_types as $agency_type ) {
+		$agency_types_string[] = $agency_type->name;
+	}
+
+	$agency_types_string = implode( ', ', $agency_types_string );
+}
 ?>
 <section class="mainagencydetails">
 	<div class="leftbgbar"><img src="/wp-content/themes/marketingops/images/agencypages/blurcircle1.png" alt="img" /></div>
@@ -63,9 +68,9 @@ debug( '------------' );
 					<li>
 						<div class="leftwithicon">
 							<i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4.75 4C3.23437 4 2 5.23437 2 6.75V17.25C2 18.7656 3.23437 20 4.75 20H19.25C20.7656 20 22 18.7656 22 17.25V6.75C22 5.23437 20.7656 4 19.25 4H4.75ZM9.5 8.5C9.80469 8.5 10.0781 8.6849 10.1953 8.96615L12.4453 14.4661C12.6016 14.849 12.4167 15.2891 12.0339 15.4453C11.9401 15.4818 11.8464 15.5 11.75 15.5C11.4557 15.5 11.1745 15.3229 11.0547 15.0339L10.8385 14.5H8.16146L7.94531 15.0339C7.78906 15.4193 7.34896 15.6016 6.96615 15.4453C6.58333 15.2891 6.39844 14.849 6.55469 14.4661L8.80469 8.96615C8.92188 8.6849 9.19531 8.5 9.5 8.5ZM16.875 9.5C17.2188 9.5 17.5 9.78125 17.5 10.125V14.875C17.5 15.2188 17.2188 15.5 16.875 15.5H15.25C14.0104 15.5 13 14.4896 13 13.25C13 12.0104 14.0104 11 15.25 11H16.25V10.125C16.25 9.78125 16.5312 9.5 16.875 9.5ZM9.5 11.2318L8.77604 13H10.224L9.5 11.2318ZM15.25 12.25C14.6979 12.25 14.25 12.6979 14.25 13.25C14.25 13.8021 14.6979 14.25 15.25 14.25H16.25V12.25H15.25Z" fill="#6D7B83"/></svg></i> 
-							Type:
+							<?php esc_html_e( 'Type:', 'marketingops' ); ?>
 						</div>
-						Affiliate/OPM
+						<?php echo wp_kses_post( $agency_types_string ); ?>
 					</li>
 					<li>
 						<div class="leftwithicon">
