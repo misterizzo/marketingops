@@ -6081,7 +6081,7 @@ class Marketing_Ops_Core_Public {
 			}
 		} elseif ( is_singular( 'agency' ) ) {
 			$args['author'] = get_field( 'agency_owner', $post->ID );
-			$args['post_status'] = 'any';
+			$args['post_status'] = 'closed';
 		}
 
 		return $args;
