@@ -36,6 +36,12 @@ $agency_user_name                = get_field( 'agency_user_name', $agency_id );
 $agency_user_email               = get_field( 'agency_user_email', $agency_id );
 $agency_user_website             = get_field( 'agency_user_website', $agency_id );
 $agency_people                   = get_field( 'agency_people', $agency_id );
+$agency_clients                  = get_field( 'agency_clients', $agency_id );
+$agency_certifications           = get_field( 'agency_certifications', $agency_id );
+$agency_awards                   = get_field( 'agency_awards', $agency_id );
+$agency_include_articles         = get_field( 'agency_include_articles', $agency_id );
+$agency_include_jobs             = get_field( 'agency_include_jobs', $agency_id );
+$agency_video                    = get_field( 'agency_video', $agency_id );
 
 // Collect all the agency types.
 if ( ! empty( $agency_types ) && is_array( $agency_types ) ) {
@@ -81,6 +87,7 @@ if ( ! empty( $agency_services ) && is_array( $agency_services ) ) {
 	$agency_services_string = implode( ', ', $agency_services_string );
 }
 ?>
+<!-- BASIC DETAILS -->
 <section class="mainagencydetails">
 	<div class="leftbgbar"><img src="/wp-content/themes/marketingops/images/agencypages/blurcircle1.png" alt="img" /></div>
 	<div class="leftbgbar_two"><img src="/wp-content/themes/marketingops/images/agencypages/blur3.png" alt="img" /></div>
@@ -216,27 +223,31 @@ if ( ! empty( $agency_services ) && is_array( $agency_services ) ) {
 	</section>
 <?php } ?>
 
+<!-- CLIENTS -->
+<?php debug( $agency_clients ); ?>
 <section class="agaeny_clients">
 	<div class="agency-container">
-		<h3>Clients</h3>
+		<h3><?php esc_html_e( 'Clients', 'marketingops' ); ?></h3>
 		<p>
 			Allbirds, GoTo, Noom, Truff, Target, Legacy Box, Instacart, Redbubble, Blenders Eyewear, Crocs, Umbra, Helly Hansen, Eight Sleep, Mint Mobile, Third Love, Dick's Sporting Goods, Drop, Sizzlefish, DiscountMugs, Nutrafol, Proactiv, Hawthorne, HydroPeptide, Crossrope
 		</p>
 	</div>	
 </section>
 
+<!-- CERTIFICATIONS -->
+<?php debug( $agency_certifications ); ?>
 <section class="agaeny_clients">
 	<div class="agency-container">
-		<h3>Certifications</h3>
-		<p>
-		Impact, CJ, Awin/ShareASale, Rakuten, Partnerize
-		</p>
+		<h3><?php esc_html_e( 'Certifications', 'marketingops' ); ?></h3>
+		<p>Impact, CJ, Awin/ShareASale, Rakuten, Partnerize</p>
 	</div>	
 </section>
 
+<!-- AWARDS -->
+<?php debug( $agency_awards ); ?>
 <section class="agaeny_clients">
 	<div class="agency-container">
-		<h3>Awards</h3>
+		<h3><?php esc_html_e( 'Awards', 'marketingops' ); ?></h3>
 		<ul>
 			<li>
 				Best Travel, Leisure and Lifestyle Campaign - London, 2020 International Performance Marketing Awards
