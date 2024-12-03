@@ -334,7 +334,7 @@ if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
 							<img src="/wp-content/themes/marketingops/images/agencypages/shopify.png" alt="img" /> 
 						</div>
 						<div class="jobinnerright">
-							<h4><?php echo wp_kses_post( $job_id ); ?></h4>
+							<h4><?php echo wp_kses_post( get_the_title( $job_id ) ); ?></h4>
 							<h5>Shopify</h5>
 						</div>
 					</div>
