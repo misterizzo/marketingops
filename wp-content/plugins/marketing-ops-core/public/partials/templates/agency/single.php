@@ -22,9 +22,6 @@ global $post;
 $agency_id                = get_the_ID();
 $agency_title             = get_the_title( $agency_id );
 $agency_description       = get_post_field( 'post_content', $agency_id );
-$agency_featured_image_id = get_the_post_thumbnail( $agency_id, 'full' );
-
-var_dump( $agency_featured_image_id );
 ?>
 <section class="mainagencydetails">
 	<div class="leftbgbar"><img src="/wp-content/themes/marketingops/images/agencypages/blurcircle1.png" alt="img" /></div>
@@ -35,7 +32,9 @@ var_dump( $agency_featured_image_id );
 		<div class="agencymaintwotable">
 			<div class="agencymaintwotable-left">
 				<!-- AGENCY FEATURED IMAGE -->
-				<img src="/wp-content/themes/marketingops/images/agencypages/dircaly.png" alt="img" />
+				<?php if ( has_post_thumbnail( $agency_id ) ) {
+					get_the_post_thumbnail( $agency_id, 'full' );
+				} ?>
 
 				<!-- AGENCY DESCRIPTION -->
 				<?php if ( ! empty( $agency_description ) ) { ?>
