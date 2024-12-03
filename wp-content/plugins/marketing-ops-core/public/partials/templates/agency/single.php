@@ -298,6 +298,7 @@ if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
 			<h2><?php esc_html_e( 'Articles & Press Releases', 'marketingops' ); ?></h2>
 			<ul class="spotlitlist">
 				<?php foreach ( $agency_articles->posts as $article_id ) {
+					$article_title      = get_the_title( $article_id );
 					$featured_image_id  = get_post_thumbnail_id( $article_id );
 					$featured_image_url = ( ! empty( $featured_image_id ) && 0 !== $featured_image_id ) ? wp_get_attachment_image_url( $featured_image_id ) : '';
 					?>
@@ -306,11 +307,11 @@ if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
 							<div class="spotilebox">
 								<?php if ( ! empty( $featured_image_url ) ) { ?>
 									<div class="spotlightimgbox">
-										<img src="<?php echo esc_url( $featured_image_url ); ?>" alt="img" /> 
+										<img src="<?php echo esc_url( $featured_image_url ); ?>" alt="<?php echo ( ! empty( $article_title ) ) ? sanitize_title( $article_title ) : ''; ?>-img" /> 
 									</div>
 								<?php } ?>
 								<div class="spotligtext">
-									<h4 class="articalstitle"><?php echo wp_kses_post( get_the_title( $article_id ) ); ?></h4>
+									<h4 class="articalstitle"><?php echo wp_kses_post(  ); ?></h4>
 									<p class="articals"><?php echo wp_kses_post( wp_trim_words( get_post_field( 'post_content', $article_id ), 20, '...' ) ); ?></p>
 								</div>
 							</div>
@@ -327,16 +328,21 @@ if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
 	<div class="agency-container">
 		<h3><?php esc_html_e( 'Jobs', 'marketingops' ); ?></h3>
 		<?php foreach ( $agency_jobs->posts as $job_id ) {
-			$job_types = wp_get_object_terms( $job_id, 'job_listing_type' );
+			$job_title          = get_the_title( $job_id );
+			$job_types          = wp_get_object_terms( $job_id, 'job_listing_type' );
+			$featured_image_id  = get_post_thumbnail_id( $job_id );
+			$featured_image_url = ( ! empty( $featured_image_id ) && 0 !== $featured_image_id ) ? wp_get_attachment_image_url( $featured_image_id ) : '';
 			?>
 			<div class="jobdetailbox">
 				<div class="joinnermainbox">
 					<div class="jobinnerbox">
-						<div class="jobinnerleft">
-							<img src="/wp-content/themes/marketingops/images/agencypages/shopify.png" alt="img" /> 
-						</div>
+						<?php if ( ! empty( $featured_image_url ) ) { ?>
+							<div class="jobinnerleft">
+								<img src="<?php echo esc_url( $featured_image_url ); ?>" alt="<?php echo ( ! empty( $job_title ) ) ? sanitize_title( $job_title ) : ''; ?>-img" /> 
+							</div>
+						<?php } ?>
 						<div class="jobinnerright">
-							<h4><?php echo wp_kses_post( get_the_title( $job_id ) ); ?></h4>
+							<h4><?php echo wp_kses_post( $job_title ); ?></h4>
 							<h5>Shopify</h5>
 						</div>
 					</div>
