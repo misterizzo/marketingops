@@ -326,7 +326,10 @@ if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
 <section class="agaeny_jobs">
 	<div class="agency-container">
 		<h3><?php esc_html_e( 'Jobs', 'marketingops' ); ?></h3>
-		<?php foreach ( $agency_jobs->posts as $job_id ) { ?>
+		<?php foreach ( $agency_jobs->posts as $job_id ) {
+			$job_type = wp_get_object_terms( $job_id, 'job_listing_type' );
+			debug( $job_type );
+			?>
 			<div class="jobdetailbox">
 				<div class="joinnermainbox">
 					<div class="jobinnerbox">
