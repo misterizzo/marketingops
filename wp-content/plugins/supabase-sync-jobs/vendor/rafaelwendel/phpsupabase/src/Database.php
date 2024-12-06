@@ -41,7 +41,7 @@ class Database {
      * @access public
      * @return string|null
      */
-    public function getError() : string|null
+    public function getError()
     {
         return $this->service->getError();
     }
