@@ -1439,4 +1439,70 @@ class Marketing_Ops_Core_Admin {
 			}
 		}
 	}
+
+	/**
+	 * Add new filter to the pages listing.
+	 *
+	 * @since 1.0.0
+	 */
+	public function moc_restrict_manage_posts_callback() {
+		global $pagenow;
+
+		$selected_additional_label = filter_input( INPUT_GET, 'additional_label', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$post_type                 = filter_input( INPUT_GET, 'post_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+
+		// Only for the pages.
+		if ( 'page' === $post_type && is_admin() && 'edit.php' === $pagenow ) {
+			$additional_labels         = array(
+				'webinars'  => __( 'Webinars', 'marketingops' ),
+				'signups'   => __( 'Signups', 'marketingops' ),
+				'community' => __( 'Community', 'marketingops' ),
+				'blogs'     => __( 'Blogs', 'marketingops' ),
+				'corporate' => __( 'Corporate', 'marketingops' ),
+				'events'    => __( 'Events', 'marketingops' ),
+			);
+	
+			// Start preparing the HTML.
+			ob_start();
+			?>
+			<select name="additional_label">
+				<option value="-1"><?php esc_html_e( 'Filter by additional label', 'marketingops' ); ?></option>
+	
+				<?php // Loop through the additional labels. ?>
+				<?php foreach ( $additional_labels as $additional_label_slug => $additional_label_name ) {
+					$selected = ( ! is_null( $selected_additional_label ) && $additional_label_slug === $selected_additional_label ) ? 'selected' : '';
+					?>
+					<option <?php echo esc_attr( $selected ); ?> value="<?php echo esc_attr( $additional_label_slug ); ?>"><?php echo esc_attr( $additional_label_name ); ?></option>
+				<?php } ?>
+			</select>
+			<?php
+	
+			echo ob_get_clean();
+		}
+	}
+
+	/**
+	 * Filter the pages based on the query for additional label.
+	 *
+	 * @param WP_Query $query WordPress query object.
+	 *
+	 * @since 1.0.0
+	 */
+	public function moc_parse_query_callback( $query ) {
+		global $pagenow;
+
+		$post_type                 = filter_input( INPUT_GET, 'post_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$selected_additional_label = filter_input( INPUT_GET, 'additional_label', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+
+		// Only for the pages.
+		if ( 'page' === $post_type && is_admin() && 'edit.php' === $pagenow && ! is_null( $selected_additional_label ) ) {
+			if ( -1 !== $selected_additional_label ) {
+				$query->query_vars['meta_query'][] = array(
+					'key'     => 'additional_label',
+					'value'   => sprintf( ':"%s";', $selected_additional_label ),
+					'compare' => 'LIKE',
+				);
+			}
+		}
+	}
 }
