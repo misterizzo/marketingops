@@ -1607,8 +1607,7 @@ jQuery( document ).ready( function( $ ) {
 				crop_modal.modal('show');
 			};
 
-			if(files && files.length > 0)
-			{
+			if(files && files.length > 0) {
 				var reader = new FileReader();
 				reader.onload = function(evt)
 				{
