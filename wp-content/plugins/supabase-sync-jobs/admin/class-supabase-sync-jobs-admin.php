@@ -345,8 +345,6 @@ class Supabase_Sync_Jobs_Admin {
 		$chunk_index = $page - 1;
 		$chunk       = ( array_key_exists( $chunk_index, $jobs ) ) ? $jobs[ $chunk_index ] : array();
 
-		debug( $chunk ); die;
-
 		// Return, if the chunk is empty, means all the jobs are imported.
 		if ( empty( $chunk ) || ! is_array( $chunk ) ) {
 			/**

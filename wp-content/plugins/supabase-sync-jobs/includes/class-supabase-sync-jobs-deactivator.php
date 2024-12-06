@@ -31,13 +31,13 @@ class Supabase_Sync_Jobs_Deactivator {
 	 */
 	public static function deactivate() {
 		// Clear the scheduled crons now.
-		// if ( wp_next_scheduled( 'supabase_import_jobs_cron' ) ) {
-		// 	wp_clear_scheduled_hook( 'supabase_import_jobs_cron' );
-		// }
+		if ( wp_next_scheduled( 'supabase_import_jobs_cron' ) ) {
+			wp_clear_scheduled_hook( 'supabase_import_jobs_cron' );
+		}
 
-		// if ( wp_next_scheduled( 'supabase_delete_expired_jobs_cron' ) ) {
-		// 	wp_clear_scheduled_hook( 'supabase_delete_expired_jobs_cron' );
-		// }
+		if ( wp_next_scheduled( 'supabase_delete_expired_jobs_cron' ) ) {
+			wp_clear_scheduled_hook( 'supabase_delete_expired_jobs_cron' );
+		}
 	}
 
 }
