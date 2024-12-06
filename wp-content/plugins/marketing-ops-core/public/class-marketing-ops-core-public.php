@@ -66,13 +66,13 @@ class Marketing_Ops_Core_Public {
 				filemtime( MOC_PLUGIN_PATH . 'public/css/bootstrap.min.css' ),
 				'all'
 			);
-			wp_enqueue_style(
-				$this->plugin_name . '-dropzone',
-				plugin_dir_url( __FILE__ ) . 'css/dropzone.css',
-				array(),
-				filemtime( MOC_PLUGIN_PATH . 'public/css/dropzone.css' ),
-				'all'
-			);
+			// wp_enqueue_style(
+			// 	$this->plugin_name . '-dropzone',
+			// 	plugin_dir_url( __FILE__ ) . 'css/dropzone.css',
+			// 	array(),
+			// 	filemtime( MOC_PLUGIN_PATH . 'public/css/dropzone.css' ),
+			// 	'all'
+			// );
 			wp_enqueue_style(
 				$this->plugin_name . '-cropper',
 				plugin_dir_url( __FILE__ ) . 'css/cropper.css',
@@ -87,13 +87,13 @@ class Marketing_Ops_Core_Public {
 				filemtime( MOC_PLUGIN_PATH . 'public/js/bootstrap.min.js' ),
 				true
 			);
-			wp_enqueue_script(
-				$this->plugin_name . '-dropzone',
-				plugin_dir_url( __FILE__ ) . 'js/dropzone.js',
-				array( 'jquery' ),
-				filemtime( MOC_PLUGIN_PATH . 'public/js/dropzone.js' ),
-				true
-			);
+			// wp_enqueue_script(
+			// 	$this->plugin_name . '-dropzone',
+			// 	plugin_dir_url( __FILE__ ) . 'js/dropzone.js',
+			// 	array( 'jquery' ),
+			// 	filemtime( MOC_PLUGIN_PATH . 'public/js/dropzone.js' ),
+			// 	true
+			// );
 			wp_enqueue_script(
 				$this->plugin_name . '-cropper',
 				plugin_dir_url( __FILE__ ) . 'js/cropper.js',
