@@ -138,7 +138,7 @@ class Service {
      * @access public
      * @return string|null
      */
-    public function getError() : string|null
+    public function getError()
     {
         return $this->error;
     }
