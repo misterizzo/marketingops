@@ -1495,6 +1495,7 @@ class Marketing_Ops_Core_Admin {
 		$selected_additional_label = filter_input( INPUT_GET, 'additional_label', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 		var_dump( $selected_additional_label );
+		die("pool");
 
 		// Only for the pages.
 		if ( 'page' === $post_type && is_admin() && 'edit.php' === $pagenow && ! is_null( $selected_additional_label ) ) {
