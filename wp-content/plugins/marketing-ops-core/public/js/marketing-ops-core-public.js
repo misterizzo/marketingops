@@ -1626,35 +1626,37 @@ jQuery( document ).ready( function( $ ) {
 
 		window.addEventListener('DOMContentLoaded', function () {
 			var avatar = this.document.getElementById('hiddenProfileImg');
-			var image = document.getElementById('crop_profile_image');
+			var image  = document.getElementById('crop_profile_image');
 			var cropBoxData;
 			var canvasData;
 			var cropper;
 
 			crop_modal.on('shown.bs.modal', function () {
-			cropper = new Cropper(image, {
-				autoCropArea: 0.5,
-				viewMode: 1,
-				ready: function () {
-				//Should set crop box data first here
-				cropper.setCropBoxData(cropBoxData).setCanvasData(canvasData);
-				}
-			});
-			}).on('hidden.bs.modal', function () {
+				cropper = new Cropper(image, {
+					autoCropArea: 0.5,
+					viewMode: 1,
+					ready: function () {
+						cropper.setCropBoxData( cropBoxData ).setCanvasData( canvasData ); //Should set crop box data first here
+					}
+				} );
+			} ).on( 'hidden.bs.modal', function () {
 				cropper.destroy();
 				cropper = null;
-				$('.moc_avtar_image_upload').val('');
-			});
+				$( '.moc_avtar_image_upload' ).val( '' );
+			} );
 
-			document.getElementById('rotateImg').addEventListener('click', function () {
-				cropper.rotate(90);
-			});
+			// Initiate the rotate image tool.
+			$( document ).on( 'click', '#rotateImg', function() {
+				cropper.rotate( 90 );
+			} );
 
-			document.getElementById('cropProfileImg').addEventListener('click', function () {
+			// Initiate the crop image tool.
+			$( document ).on( 'click', '#cropProfileImg', function() {
+				console.log( 'hello world' );
 				var initialAvatarURL;
 				var canvas;
-				crop_modal.modal('hide');
-				if (cropper) {
+				crop_modal.modal( 'hide' );
+				if ( cropper ) {
 					canvas = cropper.getCroppedCanvas();
 					initialAvatarURL = avatar.src;
 					avatar.src = canvas.toDataURL("image/png");
