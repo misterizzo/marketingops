@@ -1323,6 +1323,7 @@ class Marketing_Ops_Core_Public {
 	public function moc_user_avtar_upload_callback() {
 		global $wp_filesystem;
 		WP_Filesystem();
+
 		$posted_array     = filter_input_array( INPUT_POST );
 		$user_id          = ( ! empty( $posted_array['user_id'] ) ) ? $posted_array['user_id'] : '';
 		$dataurl          = $posted_array['user_avtar'];
@@ -1337,7 +1338,7 @@ class Marketing_Ops_Core_Public {
 			$file_path,
 			$file_data,
 		);
-	
+
 		$old_avtar = get_user_meta( $user_id, 'wp_user_avatar', true );
 		if ( ! empty( $old_avtar ) ) {
 			$old_profile_image =  wp_upload_dir()['url'] . '/' . get_post( $old_avtar )->post_title;
@@ -1363,28 +1364,18 @@ class Marketing_Ops_Core_Public {
 		$author_img_id      = ! empty( get_user_meta( $user_id, 'wp_user_avatar', true ) ) ? get_user_meta( $user_id, 'wp_user_avatar', true ) : '';
 		$author_img_url     = ! empty( $author_img_id ) ? get_post_meta( $author_img_id, '_wp_attached_file', true ) : '';
 		$image_url          = ! empty( $author_img_url ) ? $upload_dir['baseurl'] . '/' . $author_img_url : $default_author_img;
-		// Update syncari_database.
-		$user_all_info            = get_user_meta( $user_id, 'user_all_info', true );
-		$update_syncari_data      = array(
-			'user_ID'               => $user_id,
-			'user_info'             => maybe_serialize($user_all_info),
-			'user_avatar'           => $attach_id,
-			'last_update_timestamp' => gmdate('Y-m-d H:i:s'),
-		);
-		moc_update_syncari_data_tabels( $user_id, $update_syncari_data );
-		$message            = 'marketinops-update-user_avtar';
-		$toast_message      = __( 'Your profile picture uploaded.', 'marketingops' );
-		
-		
+
 		// Return the AJAX response.
-		$response      = array(
-			'code'           => $message,
-			'toast_message'  => $toast_message,
-			'user_image_url' => $image_url,
+		wp_send_json_success(
+			array(
+				'code'           => 'marketinops-update-user_avtar',
+				'toast_message'  => __( 'Your profile picture uploaded.', 'marketingops' ),
+				'user_image_url' => $image_url,
+			)
 		);
-		wp_send_json_success( $response );
 		wp_die();
 	}
+
 	/**
 	 * Add custom assets to WordPress public footer section.
 	 *

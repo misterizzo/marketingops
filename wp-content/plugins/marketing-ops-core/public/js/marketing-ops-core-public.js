@@ -64,7 +64,7 @@ jQuery( document ).ready( function( $ ) {
 	var member_plan_slug                = Moc_Public_JS_Obj.member_plan_slug;
 	var member_plan                     = ( 0 === member_plan_slug.length ) ? 'inactive' : ( ( 1 === member_plan_slug.length && -1 !== $.inArray( 'free-membership', member_plan_slug ) ) ? 'free' : 'pro' );
 	var crop_modal                      = $('#cropModal');
-	var image                           = document.getElementById('crop_profile_image');
+	// var image                           = document.getElementById('crop_profile_image');
 	var current_page_url                = window.location.origin + window.location.pathname;
 	var cropBoxData;
 	var canvasData;
@@ -1591,113 +1591,117 @@ jQuery( document ).ready( function( $ ) {
 		});
 	});
 	if ( 'yes' === moc_profile_page || 'yes' === moc_postnew_page ) {
-		// jQuery ajax for uploading profile picture.
+		var avatar = $( '#hiddenProfileImg' ), image = $( '#crop_profile_image' ), cropBoxData, canvasData, cropper;
+
+		/**
+		 * jQuery ajax for uploading profile picture.
+		 * Initiate the cropper modal.
+		 */
 		$(document).on('change', '.moc_avtar_image_upload', function(evt) {
-			var this_element = $(this);
-			var file_val = this_element.val();
-			var ext_array = moc_image_valid_ext;
-			var ext = file_val.split('.').pop();
-			if ($.inArray(ext, ext_array) === -1) {
+			var this_element = $( this );
+			var file_val     = this_element.val();
+			var ext_array    = moc_image_valid_ext;
+			var ext          = file_val.split( '.' ).pop();
+
+			// If a file other than the allowed extensions is uploaded, exit the process.
+			if ( -1 === $.inArray( ext, ext_array ) ) {
 				moc_show_toast('bg-danger', 'fa-skull-crossbones', toast_error_heading, moc_image_extention_is_invalid);
 				return false;
 			}
+
 			var files = evt.target.files;
-			var done = function(url){
-				image.src = url;
-				crop_modal.modal('show');
+			var done  = function( url ) {
+				image.attr( 'src', url );
+				crop_modal.modal( 'show' );
 			};
 
-			if(files && files.length > 0) {
-				var reader = new FileReader();
-				reader.onload = function(evt)
-				{
-					done(reader.result);
+			if ( files && 0 < files.length ) {
+				var reader    = new FileReader();
+				reader.onload = function( evt ) {
+					done( reader.result );
 				};
-				reader.readAsDataURL(files[0]);
+				reader.readAsDataURL( files[0] );
 			}
-		});
+		} );
 
+		// Close the crop image modal.
 		$( document ).on( 'click', '.crop_modal_close', function() {
-			crop_modal.modal('hide');
-			crop_modal.data('bs.modal',null);
-			$('.moc_avtar_image_upload').val('');
-		});
+			crop_modal.modal( 'hide' );
+			crop_modal.data( 'bs.modal', null );
+			$( '.moc_avtar_image_upload' ).val( '' );
+		} );
 
-		window.addEventListener('DOMContentLoaded', function () {
-			var avatar = this.document.getElementById('hiddenProfileImg');
-			var image  = document.getElementById('crop_profile_image');
-			var cropBoxData;
-			var canvasData;
-			var cropper;
-
-			crop_modal.on('shown.bs.modal', function () {
-				cropper = new Cropper(image, {
+		crop_modal.on('shown.bs.modal', function () {
+			cropper = new Cropper(
+				document.getElementById( 'crop_profile_image' ),
+				{
 					autoCropArea: 0.5,
 					viewMode: 1,
 					ready: function () {
 						cropper.setCropBoxData( cropBoxData ).setCanvasData( canvasData ); //Should set crop box data first here
 					}
-				} );
-			} ).on( 'hidden.bs.modal', function () {
-				cropper.destroy();
-				cropper = null;
-				$( '.moc_avtar_image_upload' ).val( '' );
-			} );
-
-			// Initiate the rotate image tool.
-			$( document ).on( 'click', '#rotateImg', function() {
-				cropper.rotate( 90 );
-			} );
-
-			// Initiate the crop image tool.
-			$( document ).on( 'click', '#cropProfileImg', function() {
-				console.log( 'hello world' );
-				var initialAvatarURL;
-				var canvas;
-				crop_modal.modal( 'hide' );
-				if ( cropper ) {
-					canvas = cropper.getCroppedCanvas();
-					initialAvatarURL = avatar.src;
-					avatar.src = canvas.toDataURL("image/png");
-					var imgDataUrl = canvas.toDataURL();
-					var this_element = $('.moc_avtar_image_upload');
-					var file_val = this_element.val();
-					var formData = new FormData();
-					formData.append("user_avtar", imgDataUrl);
-					formData.append("filename", file_val);
-					formData.append("action", "moc_user_avtar_upload");
-					formData.append("user_id", current_user_id);
-					block_element(this_element.closest('div.moc_not_changable_container').find('.loader_bg'));
-					$.ajax({
-						url: ajaxurl,
-						method: 'POST',
-						type: 'POST',
-						data: formData,
-						contentType: false,
-						processData: false,
-						success: function( response ) {
-							if ('marketinops-update-user_avtar' === response.data.code) {
-								moc_show_toast('bg-success', 'fa-check-circle', toast_success_heading, response.data.toast_message);
-							} else if ('marketinops-avtar-image-size-notcorrect' === response.data.code) {
-								// Reset the file input type.
-								var moc_user_avtar = $('.moc_avtar_image_upload');
-								moc_user_avtar.wrap('<form>').closest('form').get(0).reset();
-								moc_user_avtar.unwrap();
-								moc_show_toast('bg-danger', 'fa-skull-crossbones', toast_error_heading, response.data.toast_message);
-							}
-							$('.moc_profile_img').attr('src', response.data.user_image_url);
-							$( '.user_profile_icon .elementor-icon img' ).attr('src', response.data.user_image_url);
-							unblock_element($('.loader_bg'));
-							$('.moc_avtar_image_upload').val('');
-						},
-					});
 				}
-			} );
-		});
-	}
-	
+			);
+		} ).on( 'hidden.bs.modal', function () {
+			cropper.destroy();
+			cropper = null;
+			$( '.moc_avtar_image_upload' ).val( '' );
+		} );
 
-	
+		// Initiate the rotate image tool.
+		$( document ).on( 'click', '#rotateImg', function() {
+			cropper.rotate( 90 );
+		} );
+
+		// Initiate the crop image tool.
+		$( document ).on( 'click', '#cropProfileImg', function() {
+			var initialAvatarURL, canvas;
+			crop_modal.modal( 'hide' );
+
+			if ( cropper ) {
+				canvas           = cropper.getCroppedCanvas();
+				initialAvatarURL = avatar.attr( 'src' );
+				avatar.attr( 'src', canvas.toDataURL( 'image/png' ) );
+				var this_element = $('.moc_avtar_image_upload');
+				var file_val     = this_element.val();
+
+				// Set the ajax form data.
+				var formData = new FormData();
+				formData.append( 'filename', file_val );
+				formData.append( 'action', 'moc_user_avtar_upload' );
+				formData.append( 'user_id', current_user_id );
+				formData.append( 'user_avtar', canvas.toDataURL() );
+
+				$.ajax( {
+					url: ajaxurl,
+					method: 'POST',
+					type: 'POST',
+					data: formData,
+					contentType: false,
+					processData: false,
+					beforeSend: function() {
+						block_element( this_element.closest( 'div.moc_not_changable_container' ).find( '.loader_bg' ) );
+					},
+					success: function( response ) {
+						if ( 'marketinops-update-user_avtar' === response.data.code ) {
+							moc_show_toast('bg-success', 'fa-check-circle', toast_success_heading, response.data.toast_message);
+						} else if ( 'marketinops-avtar-image-size-notcorrect' === response.data.code ) {
+							// Reset the file input type.
+							var moc_user_avtar = $( '.moc_avtar_image_upload' );
+							moc_user_avtar.wrap( '<form>' ).closest( 'form' ).get(0).reset();
+							moc_user_avtar.unwrap();
+							moc_show_toast( 'bg-danger', 'fa-skull-crossbones', toast_error_heading, response.data.toast_message );
+						}
+
+						$( '.moc_profile_img' ).attr( 'src', response.data.user_image_url );
+						$( '.user_profile_icon .elementor-icon img' ).attr( 'src', response.data.user_image_url );
+						unblock_element( $( '.loader_bg' ) );
+						$( '.moc_avtar_image_upload' ).val('');
+					},
+				});
+			}
+		} );
+	}
 
 	// jQuery ajax for submit request from be a guest on ops cast.
 	$(document).on('click', '.moc_profile_submit', function(event) {
@@ -5388,6 +5392,4 @@ jQuery( document ).ready( function( $ ) {
 			}
 		} );
 	}
-
-
 } );
