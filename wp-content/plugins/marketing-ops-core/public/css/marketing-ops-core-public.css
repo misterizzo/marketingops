@@ -101,9 +101,10 @@ form#commentform .comment-form-rating .stars:nth-child(2) {display: none;}
 
 /**** Cropping css start****/
 .page-template-moc-user-edit-php .modal img, .moc_view_own_profile  .modal img {display: block;max-width: 100%;border-radius: unset !important;z-index: 0 !important;}
-.page-template-moc-user-edit-php .modal .modal-dialog, .moc_view_own_profile .modal .modal-dialog{max-width: 1000px !important;-webkit-transform: translateY(11%) !important;transform: translateY(11%) !important;}
+.page-template-moc-user-edit-php .modal .modal-dialog, .moc_view_own_profile .modal .modal-dialog{max-width: 1000px !important;-webkit-transform: translateY(11%) !important;transform: unset !important;}
 .page-template-moc-user-edit-php .fade, .moc_view_own_profile .fade{opacity: 1 !important;}
 .modal-backdrop {z-index: -1 !important;}
+#cropModal.show {display: flex !important;align-items: center;justify-content: center;}
 /**** Cropping css end****/
 
 .apalooza_in_person_speakers_container .key_speaker_box.hide_this_box {display: none !important;}
