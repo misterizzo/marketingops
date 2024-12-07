@@ -11,16 +11,17 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 global $current_user;
 
-$show_agency_signup_form = false;
-$linked_agency           = get_user_meta( $current_user->ID, 'linked_agency', true );
-$agency_signup_request   = filter_input( INPUT_GET, 'agency_signup', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+// $show_agency_signup_form = false;
+// $linked_agency           = get_user_meta( $current_user->ID, 'linked_agency', true );
+// $agency_signup_request   = filter_input( INPUT_GET, 'agency_signup', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
-if ( ! is_null( $agency_signup_request ) && 'free' === $agency_signup_request ) {
-	$show_agency_signup_form = true;
-}
+// if ( ! is_null( $agency_signup_request ) && 'free' === $agency_signup_request ) {
+// 	$show_agency_signup_form = true;
+// }
 
 // If the linked agency is not available, show the registration page.
-if ( ! $show_agency_signup_form ) {
+// if ( ! $show_agency_signup_form ) {
+if ( false ) {
 	echo do_shortcode( '[elementor-template id="231177"]' );
 } else {
 	?>
