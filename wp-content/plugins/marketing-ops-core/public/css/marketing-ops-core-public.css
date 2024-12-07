@@ -1,5 +1,5 @@
 :root {
-  --arrow-bg: rgba(69, 71, 79, 0.3);
+  --arrow-bg: rgba(255, 255, 255, 1);
   --arrow-icon: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg);
   --select-bg: rgba(69, 71, 79, 0.2);
 }
