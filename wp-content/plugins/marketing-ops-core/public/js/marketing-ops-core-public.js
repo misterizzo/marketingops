@@ -5480,3 +5480,32 @@ jQuery( document ).ready( function( $ ) {
         }
     });
 });
+
+
+const addRegionButton = document.getElementById('add-region-btn');
+const regionsContainer = document.getElementById('regions-container');
+function createRegion() {
+  const newRegion = document.createElement('div');
+  newRegion.classList.add('region');
+  const inputField = document.createElement('input');
+  inputField.type = 'text';
+  inputField.placeholder = 'Enter region';
+  const saveIcon = document.createElement('i');
+  saveIcon.classList.add('save');
+  saveIcon.textContent = 'save';
+  const closeIcon = document.createElement('i');
+  closeIcon.classList.add('close');
+  closeIcon.textContent = 'close';
+  closeIcon.addEventListener('click', () => {
+    regionsContainer.removeChild(newRegion);
+  });
+  newRegion.appendChild(inputField);
+  newRegion.appendChild(saveIcon);
+  newRegion.appendChild(closeIcon);
+  return newRegion;
+}
+addRegionButton.addEventListener('click', () => {
+  const newRegion = createRegion();
+  regionsContainer.appendChild(newRegion);
+});
+

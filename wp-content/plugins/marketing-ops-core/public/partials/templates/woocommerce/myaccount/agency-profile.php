@@ -165,6 +165,8 @@ if ( false ) {
 			</div>
 			<button class="addregion">Add another region</button>
 
+			<div id="regions-container"></div>
+
 			<div class="agencyformgroups">
 				<div class="agencyfirstblock">
 					<label>Primary Verticals <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></label>
@@ -311,66 +313,10 @@ if ( false ) {
 			</div>
 
 
-			<h4>Person 2</h4>
-			<div class="agencyformgroups">
-				<div class="agencyfirstblock">
-					<label>Full Name</label>
-					<input type="text" class="agancyinputbox" id="fullnmame" name="fullnmame">
-				</div> 
-				<div class="agencyfirstblock">
-					<label>Position</label>
-					<input type="text" class="agancyinputbox" id="position" name="position">
-				</div>    
-			</div>
-			<div class="agencyformgroup bottomtext">
-				<label>LinkedIn URL </label>
-				<input type="text" class="agancyinputbox" id="linkedin" name="linkedin">
-			</div>
-
-			<div class="agencyformgroup">
-				<label>Image </label>
-				<div class="upload-btn-wrapper image-upload-container">
-					<button class="btn">Select an image</button>
-					<p>For the best results, crop your photo to 640 x 380px before uploading.</p>
-					<input type="file" class="imageInput" onchange="readURL(this)" accept="image/*" />
-					<div id="previewContainer" class="preview-container" style="display: none;">
-    						<img class="preview-image" src="#" alt="Image Preview" />
-    						<button class="removePreview" id="removePreview" onclick="removePreview()"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="15.35" stroke="white" stroke-width="1.3"></circle><path d="M11 11L16 16L11 21" stroke="white" stroke-width="1.3"></path><path d="M21 11L16 16L21 21" stroke="white" stroke-width="1.3"></path></svg></button>
-  						</div>
-				</div>
-			</div>
+			
 
 
-			<h4>Person 3</h4>
-			<div class="agencyformgroups">
-				<div class="agencyfirstblock">
-					<label>Full Name</label>
-					<input type="text" class="agancyinputbox" id="fullnmame" name="fullnmame">
-				</div> 
-				<div class="agencyfirstblock">
-					<label>Position</label>
-					<input type="text" class="agancyinputbox" id="position" name="position">
-				</div>    
-			</div>
-			<div class="agencyformgroup bottomtext">
-				<label>LinkedIn URL </label>
-				<input type="text" class="agancyinputbox" id="linkedin" name="linkedin">
-			</div>
-
-
-
-			<div class="agencyformgroup">
-				<label>Image </label>
-				<div class="upload-btn-wrapper image-upload-container">
-					<button class="btn">Select an image</button>
-					<p>For the best results, crop your photo to 640 x 380px before uploading.</p>
-					<input type="file" class="imageInput" onchange="readURL(this)" accept="image/*" />
-					<div id="previewContainer" class="preview-container" style="display: none;">
-    						<img class="preview-image" src="#" alt="Image Preview" />
-    						<button class="removePreview" id="removePreview" onclick="removePreview()"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="15.35" stroke="white" stroke-width="1.3"></circle><path d="M11 11L16 16L11 21" stroke="white" stroke-width="1.3"></path><path d="M21 11L16 16L21 21" stroke="white" stroke-width="1.3"></path></svg></button>
-  						</div>
-				</div>
-			</div>
+			
 		</section>
 
 		<section class="agencyformone mentions">
