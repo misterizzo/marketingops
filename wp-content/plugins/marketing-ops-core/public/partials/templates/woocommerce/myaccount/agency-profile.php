@@ -25,7 +25,8 @@ if ( false ) {
 	echo do_shortcode( '[elementor-template id="231177"]' );
 } else {
 	?>
-	<form name="agency-signup-form" method="GET" enctype="multipart/form-data">
+	<!-- <form name="agency-signup-form" method="GET" enctype="multipart/form-data"> -->
+		<form name="agency-signup-form">
 		<section class="agencyformone">
 			<h1><?php esc_html_e( 'General', 'marketingops' ); ?></h1>
 			<div class="agencyformgroup">
