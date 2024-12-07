@@ -5482,9 +5482,9 @@ jQuery( document ).ready( function( $ ) {
 
 
 
-jQuery( document ).ready( function( $ ) {
-  const $addRegionButton = $('#add-region-btn');
-  const $regionsContainer = $('#regions-container');
+jQuery(document).ready(function ($) {
+  const $addRegionButton = $('.addregion'); 
+  const $regionsContainer = $('#regions-container'); 
   function createRegion() {
     const $newRegion = $('<div class="region"></div>');
     const $inputField = $('<input type="text" placeholder="Enter region">');
@@ -5501,5 +5501,6 @@ jQuery( document ).ready( function( $ ) {
     $regionsContainer.append($newRegion);
   });
 });
+
 
 
