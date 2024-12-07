@@ -5459,17 +5459,48 @@ function removePreview(button, event) {
 /* youtube preview */     
 
 jQuery( document ).ready( function( $ ) {
-    const $toggleButton = $("#toggleButton");
-    const $toggleContent = $(".toggelecheckselct");
-    const $closeButton = $("#closeButton");
+    // const $toggleButton = $("#toggleButton");
+    // const $toggleContent = $(".toggelecheckselct");
+    // const $closeButton = $("#closeButton");
 
-    // Toggle visibility on button click
-    $toggleButton.on("click", function() {
-        $toggleContent.toggle();  // Toggles visibility
-    });
+    // // Toggle visibility on button click
+    // $toggleButton.on("click", function() {
+    //     $toggleContent.toggle();  // Toggles visibility
+    // });
 
-    // Close functionality
-    $closeButton.on("click", function() {
-        $toggleContent.hide();  // Hides the content
+    // // Close functionality
+    // $closeButton.on("click", function() {
+    //     $toggleContent.hide();  // Hides the content
+    // });
+
+
+    
+    let isContentVisible = false;
+
+    $('#toggleButton').on('click', function() {
+        if (!isContentVisible) {
+            // Dynamically create the .toggelecheckselct content
+            const toggleContent = `
+                <div class="toggelecheckselct">
+                    <div class="agencyformgroup form-group">
+                        <input type="checkbox" id="articles">
+                        <label for="articles">Publish articles & press releases posted by me</label>
+                    </div>
+                    <button id="closeButton">Close</button>
+                </div>
+            `;
+
+            $('#dynamicContainer').append(toggleContent);
+
+            isContentVisible = true;
+
+            // Close button functionality inside dynamically added content
+            $('#closeButton').on('click', function() {
+                $('.toggelecheckselct').remove();
+                isContentVisible = false;
+            });
+        }
     });
+});
+
 });
