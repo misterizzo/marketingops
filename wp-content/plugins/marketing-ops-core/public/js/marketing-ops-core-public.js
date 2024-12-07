@@ -5399,22 +5399,23 @@ jQuery( document ).ready( function( $ ) {
 
 /* image preview */
 function readURL(input) {
+  const container = input.closest('.image-upload-container');
+  const previewContainer = container.querySelector('.preview-container');
+  const img = container.querySelector('.preview-image');
   if (input.files && input.files[0]) {
     const reader = new FileReader();
     reader.onload = function (e) {
-      const previewContainer = document.getElementById('previewContainer');
-      const img = document.getElementById('blah');
       img.src = e.target.result; 
       previewContainer.style.display = 'block'; 
     };
-    reader.readAsDataURL(input.files[0]);
+    reader.readAsDataURL(input.files[0]); 
   }
 }
-
-function removePreview() {
-  const previewContainer = document.getElementById('previewContainer');
-  const inputFile = document.getElementById('imageInput');
-  const img = document.getElementById('blah');
+function removePreview(button) {
+  const container = button.closest('.image-upload-container');
+  const previewContainer = container.querySelector('.preview-container');
+  const inputFile = container.querySelector('.imageInput');
+  const img = container.querySelector('.preview-image');
   img.src = ''; 
   previewContainer.style.display = 'none'; 
   inputFile.value = ''; 

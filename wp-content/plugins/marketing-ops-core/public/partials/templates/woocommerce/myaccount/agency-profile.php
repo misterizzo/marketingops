@@ -40,10 +40,10 @@ if ( false ) {
 				<div class="upload-btn-wrapper">
 					<button class="btn">Select an image</button>
 					<p>For the best results, upload horizontal version, 560 x 240px max</p>
-					<input type="file" id="imageInput" name="myfile" onchange="readURL(this)" accept="image/*" />
+					<input type="file" class="imageInput" name="myfile" onchange="readURL(this)" accept="image/*" />
 						<div id="previewContainer" class="preview-container" style="display: none;">
-    						<img id="blah" src="#" alt="Image Preview" />
-    						<button id="removePreview" onclick="removePreview()"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="15.35" stroke="white" stroke-width="1.3"></circle><path d="M11 11L16 16L11 21" stroke="white" stroke-width="1.3"></path><path d="M21 11L16 16L21 21" stroke="white" stroke-width="1.3"></path></svg></button>
+    						<img class="preview-image" src="#" alt="Image Preview" />
+    						<button class="removePreview" id="removePreview" onclick="removePreview()"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="15.35" stroke="white" stroke-width="1.3"></circle><path d="M11 11L16 16L11 21" stroke="white" stroke-width="1.3"></path><path d="M21 11L16 16L21 21" stroke="white" stroke-width="1.3"></path></svg></button>
   						</div>
 				</div>
 			</div>
@@ -301,7 +301,11 @@ if ( false ) {
 				<div class="upload-btn-wrapper">
 					<button class="btn">Select an image</button>
 					<p>For the best results, crop your photo to 640 x 380px before uploading.</p>
-					<input type="file" name="myfile" />
+					<input type="file" class="imageInput" onchange="readURL(this)" accept="image/*"/>
+					<div class="preview-container" style="display: none;">
+    						<img class="preview-image" src="#" alt="Image Preview" />
+    						<button class="removePreview" id="removePreview" onclick="removePreview()"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="15.35" stroke="white" stroke-width="1.3"></circle><path d="M11 11L16 16L11 21" stroke="white" stroke-width="1.3"></path><path d="M21 11L16 16L21 21" stroke="white" stroke-width="1.3"></path></svg></button>
+  						</div>
 				</div>
 			</div>
 
@@ -327,7 +331,11 @@ if ( false ) {
 				<div class="upload-btn-wrapper">
 					<button class="btn">Select an image</button>
 					<p>For the best results, crop your photo to 640 x 380px before uploading.</p>
-					<input type="file" name="myfile" />
+					<input class="imageInput" onchange="readURL(this)" accept="image/*" />
+					<div id="previewContainer" class="preview-container" style="display: none;">
+    						<img class="preview-image" src="#" alt="Image Preview" />
+    						<button class="removePreview" id="removePreview" onclick="removePreview()"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="15.35" stroke="white" stroke-width="1.3"></circle><path d="M11 11L16 16L11 21" stroke="white" stroke-width="1.3"></path><path d="M21 11L16 16L21 21" stroke="white" stroke-width="1.3"></path></svg></button>
+  						</div>
 				</div>
 			</div>
 
@@ -348,12 +356,18 @@ if ( false ) {
 				<input type="text" class="agancyinputbox" id="linkedin" name="linkedin">
 			</div>
 
+
+
 			<div class="agencyformgroup">
 				<label>Image </label>
 				<div class="upload-btn-wrapper">
 					<button class="btn">Select an image</button>
 					<p>For the best results, crop your photo to 640 x 380px before uploading.</p>
-					<input type="file" name="myfile" />
+					<input type="file" class="imageInput" onchange="readURL(this)" accept="image/*" />
+					<div id="previewContainer" class="preview-container" style="display: none;">
+    						<img class="preview-image" src="#" alt="Image Preview" />
+    						<button class="removePreview" id="removePreview" onclick="removePreview()"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="15.35" stroke="white" stroke-width="1.3"></circle><path d="M11 11L16 16L11 21" stroke="white" stroke-width="1.3"></path><path d="M21 11L16 16L21 21" stroke="white" stroke-width="1.3"></path></svg></button>
+  						</div>
 				</div>
 			</div>
 		</section>
