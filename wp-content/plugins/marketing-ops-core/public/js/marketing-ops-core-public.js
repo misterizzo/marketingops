@@ -5507,7 +5507,7 @@ jQuery(document).ready(function ($) {
 jQuery(document).ready(function ($) {
   let personCounter = 1;
   $(".addpersone").on("click", function () {
-    personCounter++; 
+    personCounter++;
     const newPersonHTML = `
       <div class="person-block" id="personBlock${personCounter}">
         <h4>Person ${personCounter} 
@@ -5532,15 +5532,11 @@ jQuery(document).ready(function ($) {
           <div class="upload-btn-wrapper image-upload-container">
             <button class="btn">Select an image</button>
             <p>For the best results, crop your photo to 640 x 380px before uploading.</p>
-            <input type="file" class="imageInput" id="image${personCounter}" onchange="readURL(this)" accept="image/*" />
+            <input type="file" class="imageInput" id="image${personCounter}" accept="image/*" />
             <div id="previewContainer${personCounter}" class="preview-container" style="display: none;">
               <img class="preview-image" src="#" alt="Image Preview" />
-              <button class="removePreview remove-preview-btn" id="removePreview${personCounter}">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="16" cy="16" r="15.35" stroke="white" stroke-width="1.3"></circle>
-                  <path d="M11 11L16 16L11 21" stroke="white" stroke-width="1.3"></path>
-                  <path d="M21 11L16 16L21 21" stroke="white" stroke-width="1.3"></path>
-                </svg>
+              <button type="button" class="remove-preview-btn" data-preview-id="${personCounter}">
+                Remove
               </button>
             </div>
           </div>
@@ -5549,8 +5545,30 @@ jQuery(document).ready(function ($) {
     $("#dynamicContent").append(newPersonHTML);
   });
   $("#dynamicContent").on("click", ".remove-person", function () {
-    const personId = $(this).data("person-id"); 
-    $(`#personBlock${personId}`).remove(); 
+    const personId = $(this).data("person-id");
+    $(`#personBlock${personId}`).remove();
+  });
+  $("#dynamicContent").on("change", ".imageInput", function () {
+    const container = $(this).closest('.image-upload-container');
+    const previewContainer = container.find('.preview-container');
+    const img = container.find('.preview-image');
+    if (this.files && this.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        img.attr('src', e.target.result);
+        previewContainer.show();
+      };
+      reader.readAsDataURL(this.files[0]);
+    }
+  });
+  $("#dynamicContent").on("click", ".remove-preview-btn", function () {
+    const container = $(this).closest('.image-upload-container');
+    const previewContainer = container.find('.preview-container');
+    const inputFile = container.find('.imageInput');
+    const img = container.find('.preview-image');
+    img.attr('src', '');
+    previewContainer.hide();
+    inputFile.val('');
   });
 });
 /* toggle */
