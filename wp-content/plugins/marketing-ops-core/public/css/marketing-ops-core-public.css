@@ -2094,7 +2094,7 @@ background-size: cover;
 .agency-spotlight .agency-container .spotlitlist li .spotilebox .spotligtext h4.articalstitle{color: var(--text-main2-45474F, #45474F);font-family: "Futura LT";font-size: 16px;font-style: normal;font-weight: 700;line-height: normal;}
 
 .upload-btn-wrapper div#previewContainer{position:absolute;top:0;}
-.upload-btn-wrapper div#previewContainer button#removePreview{position:absolute;z-index:99;top:10px;right:10px;}
+.upload-btn-wrapper div#previewContainer button#removePreview{position:absolute;z-index:99;top:10px;right:10px;background:#45474F;padding:5px;border-radius:100px;border:none;height:43px;width:42px;}
 
 .agaeny_jobs .agency-container{max-width:1180px;margin:0 auto 30px;}
 .agaeny_jobs .agency-container .jobdetailbox {max-width:877px;flex-shrink:0;border-radius:24px;border:1px solid rgba(231,239,239,0.75);background:rgba(255,255,255,0.50);box-shadow:0px 20px 40px 0px rgba(0,0,0,0.03);padding:20px 20px;margin-top: 10px;}
@@ -2194,7 +2194,7 @@ section.agencyformone.detailsblock .agencyformgroups{margin:40px 0;}
 section.agencyformone ul{list-style:none;display:flex;gap:10px;align-items:center;margin:0;align-content:center;justify-content:flex-end;padding:0;margin-left:auto;}
 section.agencyformone ul li .savedratbtn{display:flex;padding:15px 30px;justify-content:center;align-items:center;gap:5px;border-radius:302px;background:var(--gray-color,#F1F3F4);color:var(--text-main,#242730);font-family:"Open Sans";font-size:16px;font-style:normal;font-weight:400;line-height:82%; /* 13.12px */text-decoration:none;}
 section.agencyformone ul li .profilebtn{display:flex;padding:15px 30px;justify-content:center;align-items:center;gap:5px;border-radius:302px;background:var(--green,#33C46D);color:var(--pure-white,#FFF);font-family:"Open Sans";font-size:16px;font-style:normal;font-weight:400;line-height:82%; /* 13.12px */text-decoration:none;}
-.upload-btn-wrapper{display:flex;width:340px;padding:47px 48px 40px 47px;justify-content:center;align-items:center;border-radius:6px;border:1px solid var(--gray-stroke,#E7EFEF);background:rgba(246,247,247,0.50);flex-direction:column;position:relative;margin:0 0 30px;}
+.upload-btn-wrapper{display:flex;width:340px;padding:47px 48px 40px 47px;justify-content:center;align-items:center;border-radius:6px;border:1px solid var(--gray-stroke,#E7EFEF);background:rgba(246,247,247,0.50);flex-direction:column;position:relative;margin:0 0 30px;overflow:hidden;}
 .agencyformgroup.logoupload{margin-top:30px;}
 .upload-btn-wrapper button.btn{display:flex;padding:7px 20px 8px 20px;justify-content:center;align-items:center;gap:5px;border-radius:302px;background:var(--Primary-text,#45474F);color:var(--pure-white,#FFF);text-align:center;font-family:"Open Sans";font-size:14px;font-style:normal;font-weight:400;line-height:82%;margin:0 0 20px;}
 .upload-btn-wrapper p{color:var(--technical-gray,#6D7B83);text-align:center;font-family:"Open Sans";font-size:14px;font-style:normal;font-weight:400;line-height:normal;margin:0;}
