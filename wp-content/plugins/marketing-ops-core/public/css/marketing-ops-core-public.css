@@ -1,3 +1,19 @@
+:root {
+  --arrow-bg: rgba(69, 71, 79, 0.3);
+  --arrow-icon: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg);
+  --select-bg: rgba(69, 71, 79, 0.2);
+}
+select.marketingops-selectbox {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 0;
+    outline: 0;
+    background: var(--arrow-icon) no-repeat right 0.8em center/1.4em, linear-gradient(to left, var(--arrow-bg) 3em, var(--select-bg) 3em);
+    border-radius: 0.25em;
+    cursor: pointer;
+}
+
 /* Password Page */
 .page-template-elementor_canvas .post-password-form {display: none !important;}
 .page-template-elementor_canvas .post-password-form {height: 100vh;position: fixed;left: 0;right: 0;top: 0;bottom: 0;padding-top: 0;}
