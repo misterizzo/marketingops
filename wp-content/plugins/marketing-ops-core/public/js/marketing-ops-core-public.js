@@ -5457,3 +5457,24 @@ function removePreview(button, event) {
     return match ? { id: match[1], type: 'vimeo' } : null;
   }
 /* youtube preview */     
+
+document.addEventListener("DOMContentLoaded", function () {
+    const toggleButton = document.getElementById("toggleButton");
+    const toggleContent = document.querySelector(".toggelecheckselct");
+    const closeButton = document.getElementById("closeButton");
+
+    // Toggle visibility on button click
+    toggleButton.addEventListener("click", () => {
+        if (toggleContent.style.display === "none" || toggleContent.style.display === "") {
+            toggleContent.style.display = "block";
+        } else {
+            toggleContent.style.display = "none";
+        }
+    });
+
+    // Close functionality
+    closeButton.addEventListener("click", () => {
+        toggleContent.style.display = "none";
+    });
+});
+  
