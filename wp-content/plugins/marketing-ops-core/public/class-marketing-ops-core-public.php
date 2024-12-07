@@ -6078,7 +6078,7 @@ class Marketing_Ops_Core_Public {
 				$args['post_status'] = 'closed';
 			}
 
-			debug( $args );
+			// debug( $args );
 		}
 
 		return $args;

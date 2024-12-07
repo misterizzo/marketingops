@@ -303,7 +303,7 @@ if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
 			<h2><?php esc_html_e( 'Articles & Press Releases', 'marketingops' ); ?></h2>
 			<ul class="spotlitlist">
 				<?php foreach ( $agency_articles->posts as $article_id ) {
-					var_dump( $article_id, get_post_type( $article_id ) );
+					// var_dump( $article_id, get_post_type( $article_id ) );
 					$article_title      = get_the_title( $article_id );
 					$featured_image_id  = get_post_thumbnail_id( $article_id );
 					$featured_image_url = ( ! empty( $featured_image_id ) && 0 !== $featured_image_id ) ? wp_get_attachment_image_url( $featured_image_id ) : '';
