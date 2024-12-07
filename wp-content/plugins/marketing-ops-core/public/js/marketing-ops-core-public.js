@@ -5421,4 +5421,10 @@ function removePreview(button, event) {
   previewContainer.style.display = 'none'; 
   inputFile.value = ''; 
 }
+
+document.querySelectorAll('.removePreview').forEach(button => {
+  button.addEventListener('click', function () {
+    removePreview(this);
+  });
+});
 /* image preview */        
