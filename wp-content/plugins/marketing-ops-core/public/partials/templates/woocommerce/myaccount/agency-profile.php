@@ -313,10 +313,8 @@ if ( false ) {
 				</div>
 			</div>
 
-
-			
-
-
+			<div id="dynamicContent"></div>
+			<button class="addpersone">Add Person</button>
 			
 		</section>
 

@@ -5398,28 +5398,30 @@ jQuery( document ).ready( function( $ ) {
 
 
 /* image preview */
-function readURL(input) {
-  const container = input.closest('.image-upload-container');
-  const previewContainer = container.querySelector('.preview-container');
-  const img = container.querySelector('.preview-image');
-  if (input.files && input.files[0]) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      img.src = e.target.result; 
-      previewContainer.style.display = 'block'; 
-    };
-    reader.readAsDataURL(input.files[0]); 
-  }
-}
-function removePreview(button) {
-  const container = button.closest('.image-upload-container');
-  const previewContainer = container.querySelector('.preview-container');
-  const inputFile = container.querySelector('.imageInput');
-  const img = container.querySelector('.preview-image');
-  img.src = ''; 
-  previewContainer.style.display = 'none'; 
-  inputFile.value = ''; 
-}
+jQuery(document).ready(function ($) {
+  $('.imageInput').on('change', function () {
+    const container = $(this).closest('.image-upload-container');
+    const previewContainer = container.find('.preview-container');
+    const img = container.find('.preview-image');
+    if (this.files && this.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        img.attr('src', e.target.result);
+        previewContainer.show();
+      };
+      reader.readAsDataURL(this.files[0]);
+    }
+  });
+  $('.remove-preview-btn').on('click', function () {
+    const container = $(this).closest('.image-upload-container');
+    const previewContainer = container.find('.preview-container');
+    const inputFile = container.find('.imageInput');
+    const img = container.find('.preview-image');
+    img.attr('src', '');
+    previewContainer.hide();
+    inputFile.val('');
+  });
+});
 /* image preview */     
 
 /* youtube preview */   
@@ -5457,6 +5459,7 @@ function removePreview(button) {
   }
 /* youtube preview */     
 
+/* toggle */  
 jQuery( document ).ready( function( $ ) {
     let isContentVisible = false;
     $('#toggleButton').on('click', function() {
@@ -5480,8 +5483,6 @@ jQuery( document ).ready( function( $ ) {
     });
 });
 
-
-
 jQuery(document).ready(function ($) {
   const $addRegionButton = $('.addregion'); 
   const $regionsContainer = $('#regions-container'); 
@@ -5503,4 +5504,54 @@ jQuery(document).ready(function ($) {
 });
 
 
+jQuery(document).ready(function ($) {
+  let personCounter = 1;
+  $(".addpersone").on("click", function () {
+    personCounter++; 
+    const newPersonHTML = `
+      <div class="person-block" id="personBlock${personCounter}">
+        <h4>Person ${personCounter} 
+          <button class="remove-person" data-person-id="${personCounter}">Remove</button>
+        </h4>
+        <div class="agencyformgroups">
+          <div class="agencyfirstblock">
+            <label>Full Name</label>
+            <input type="text" class="agancyinputbox" id="fullnmame${personCounter}" name="fullnmame${personCounter}">
+          </div> 
+          <div class="agencyfirstblock">
+            <label>Position</label>
+            <input type="text" class="agancyinputbox" id="position${personCounter}" name="position${personCounter}">
+          </div>    
+        </div>
+        <div class="agencyformgroup bottomtext">
+          <label>LinkedIn URL</label>
+          <input type="text" class="agancyinputbox" id="linkedin${personCounter}" name="linkedin${personCounter}">
+        </div>
+        <div class="agencyformgroup">
+          <label>Image</label>
+          <div class="upload-btn-wrapper image-upload-container">
+            <button class="btn">Select an image</button>
+            <p>For the best results, crop your photo to 640 x 380px before uploading.</p>
+            <input type="file" class="imageInput" id="image${personCounter}" onchange="readURL(this)" accept="image/*" />
+            <div id="previewContainer${personCounter}" class="preview-container" style="display: none;">
+              <img class="preview-image" src="#" alt="Image Preview" />
+              <button class="removePreview" id="removePreview${personCounter}" onclick="removePreview(${personCounter})">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="15.35" stroke="white" stroke-width="1.3"></circle>
+                  <path d="M11 11L16 16L11 21" stroke="white" stroke-width="1.3"></path>
+                  <path d="M21 11L16 16L21 21" stroke="white" stroke-width="1.3"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    $("#dynamicContent").append(newPersonHTML);
+  });
+  $("#dynamicContent").on("click", ".remove-person", function () {
+    const personId = $(this).data("person-id"); 
+    $(`#personBlock${personId}`).remove(); 
+  });
+});
+/* toggle */
 
