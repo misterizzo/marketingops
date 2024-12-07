@@ -5488,8 +5488,8 @@ jQuery(document).ready(function ($) {
   function createRegion() {
     const $newRegion = $('<div class="region"></div>');
     const $inputField = $('<input type="text" placeholder="Enter region">');
-    const $saveIcon = $('<i class="save">save</i>');
-    const $closeIcon = $('<i class="close">close</i>');
+    const $saveIcon = $('<i class="save fa fa-check-circle"></i>');
+    const $closeIcon = $('<i class="close fa fa-times-circle"></i>');
     $closeIcon.on('click', function () {
       $newRegion.remove();
     });
