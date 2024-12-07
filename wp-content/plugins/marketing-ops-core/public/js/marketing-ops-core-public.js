@@ -5421,10 +5421,39 @@ function removePreview(button, event) {
   previewContainer.style.display = 'none'; 
   inputFile.value = ''; 
 }
+/* image preview */     
 
-document.querySelectorAll('.removePreview').forEach(button => {
-  button.addEventListener('click', function () {
-    removePreview(this);
+/* youtube preview */   
+  const videoInput = document.getElementById('Video');
+  const videoPreview = document.getElementById('videoPreview');
+  videoInput.addEventListener('input', () => {
+    const url = videoInput.value;
+    const videoId = extractYouTubeVideoId(url) || extractVimeoVideoId(url);
+    if (videoId) {
+      const embedUrl = videoId.type === 'youtube'
+        ? `https://www.youtube.com/embed/${videoId.id}`
+        : `https://player.vimeo.com/video/${videoId.id}`;
+      videoPreview.innerHTML = `
+        <iframe 
+          width="560" 
+          height="315" 
+          src="${embedUrl}" 
+          frameborder="0" 
+          allow="autoplay; fullscreen; picture-in-picture" 
+          allowfullscreen>
+        </iframe>`;
+    } else {
+      videoPreview.innerHTML = `<p style="color: red;">Invalid YouTube or Vimeo URL</p>`;
+    }
   });
-});
-/* image preview */        
+  function extractYouTubeVideoId(url) {
+    const regex = /(?:https?:\/\/)?(?:www\.)?youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/|live\/)?([a-zA-Z0-9_-]{11})|(?:https?:\/\/)?(?:www\.)?youtu\.be\/([a-zA-Z0-9_-]{11})/;
+    const match = url.match(regex);
+    return match ? { id: match[1] || match[2], type: 'youtube' } : null;
+  }
+  function extractVimeoVideoId(url) {
+    const regex = /(?:https?:\/\/)?(?:www\.)?vimeo\.com\/(?:video\/)?(\d+)/;
+    const match = url.match(regex);
+    return match ? { id: match[1], type: 'vimeo' } : null;
+  }
+/* youtube preview */     

@@ -426,6 +426,7 @@ if ( false ) {
 			<h6 class="jbtitle">Video</h6>
 				<label>Youtube / Vimeo link </label>
 				<input type="text" class="agancyinputbox" id="Video" name="Video">
+				<div id="videoPreview" style="margin-top: 20px;"></div>
 			</div>
 
 			<h6 class="jbtitle">Jobs</h6>
