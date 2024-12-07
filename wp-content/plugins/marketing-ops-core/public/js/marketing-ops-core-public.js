@@ -5474,7 +5474,7 @@ jQuery( document ).ready( function( $ ) {
     // });
 
 
-    
+
     let isContentVisible = false;
 
     $('#toggleButton').on('click', function() {
@@ -5501,6 +5501,4 @@ jQuery( document ).ready( function( $ ) {
             });
         }
     });
-});
-
 });
