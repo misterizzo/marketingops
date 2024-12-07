@@ -5411,8 +5411,7 @@ function readURL(input) {
     reader.readAsDataURL(input.files[0]); 
   }
 }
-function removePreview(button, event) {
-  event.preventDefault(); 
+function removePreview(button) {
   const container = button.closest('.image-upload-container');
   const previewContainer = container.querySelector('.preview-container');
   const inputFile = container.querySelector('.imageInput');

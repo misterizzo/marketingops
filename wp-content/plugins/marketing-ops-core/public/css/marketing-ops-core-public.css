@@ -2613,3 +2613,24 @@ background-size: cover;
 {
 	.gradient_btn.doller_number_new.open_accelevents_purchase_tickets_modal.mpza2025btns a{position:relative;left:-55%;}
 }
+
+
+
+.fromgops button#toggleButton {
+    display: inline-flex;
+    padding: 15px 30px;
+    justify-content: center;
+    align-items: center!important;
+    gap: 5px;
+    border-radius: 302px;
+    background: var(--horizontal-grad-1,linear-gradient(90deg,#FD4B7A -2.36%,#4D00AE 159.05%));
+    color: var(--pure-white,#FFF);
+    font-family: "Open Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 82%;
+    text-decoration: none!important;
+    align-items: center;
+    align-content: center;
+}

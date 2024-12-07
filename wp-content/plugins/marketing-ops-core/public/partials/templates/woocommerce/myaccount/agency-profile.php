@@ -163,9 +163,10 @@ if ( false ) {
 				<input type="checkbox" id="southamerica">
 				<label for="southamerica">South America</label>
 			</div>
+			<div class="agencyformgroup form-group"id="regions-container"></div>
 			<button class="addregion">Add another region</button>
 
-			<div id="regions-container"></div>
+			
 
 			<div class="agencyformgroups">
 				<div class="agencyfirstblock">
