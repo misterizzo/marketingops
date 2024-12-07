@@ -5458,23 +5458,18 @@ function removePreview(button, event) {
   }
 /* youtube preview */     
 
-document.addEventListener("DOMContentLoaded", function () {
-    const toggleButton = document.getElementById("toggleButton");
-    const toggleContent = document.querySelector(".toggelecheckselct");
-    const closeButton = document.getElementById("closeButton");
+jQuery( document ).ready( function( $ ) {
+    const $toggleButton = $("#toggleButton");
+    const $toggleContent = $(".toggelecheckselct");
+    const $closeButton = $("#closeButton");
 
     // Toggle visibility on button click
-    toggleButton.addEventListener("click", () => {
-        if (toggleContent.style.display === "none" || toggleContent.style.display === "") {
-            toggleContent.style.display = "block";
-        } else {
-            toggleContent.style.display = "none";
-        }
+    $toggleButton.on("click", function() {
+        $toggleContent.toggle();  // Toggles visibility
     });
 
     // Close functionality
-    closeButton.addEventListener("click", () => {
-        toggleContent.style.display = "none";
+    $closeButton.on("click", function() {
+        $toggleContent.hide();  // Hides the content
     });
 });
-  
