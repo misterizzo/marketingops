@@ -5393,3 +5393,30 @@ jQuery( document ).ready( function( $ ) {
 		} );
 	}
 } );
+
+
+
+
+/* image preview */
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const previewContainer = document.getElementById('previewContainer');
+      const img = document.getElementById('blah');
+      img.src = e.target.result; 
+      previewContainer.style.display = 'block'; 
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function removePreview() {
+  const previewContainer = document.getElementById('previewContainer');
+  const inputFile = document.getElementById('imageInput');
+  const img = document.getElementById('blah');
+  img.src = ''; 
+  previewContainer.style.display = 'none'; 
+  inputFile.value = ''; 
+}
+/* image preview */        
