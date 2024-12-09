@@ -462,7 +462,7 @@ class Supabase_Sync_Jobs_Admin {
 		}
 
 		// Loop through the jobs.
-		foreach ( $job_ids as $job_id ) {
+		foreach ( $job_ids->posts as $job_id ) {
 			var_dump( $job_id );
 		}
 
