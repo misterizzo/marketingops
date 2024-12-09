@@ -424,7 +424,7 @@ class Supabase_Sync_Jobs_Admin {
 		}
 
 		// Publish all the supabase jobs.
-		// $this->supabase_publish_all_jobs();
+		$this->supabase_publish_all_jobs();
 	}
 
 	/**
@@ -470,7 +470,7 @@ class Supabase_Sync_Jobs_Admin {
 				array(
 					'post_status' => 'publish',
 				),
-				array( $job_id )
+				array( 'ID' => $job_id )
 			);
 		}
 
