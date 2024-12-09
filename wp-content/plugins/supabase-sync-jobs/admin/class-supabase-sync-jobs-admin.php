@@ -830,4 +830,38 @@ class Supabase_Sync_Jobs_Admin {
 		);
 		wp_die();
 	}
+
+	/**
+	 * Add custom columns to the 'job_listing' posts.
+	 *
+	 * @param array $default_cols Columns array.
+	 *
+	 * @return array
+	 *
+	 * @since 1.0.0
+	 */
+	public function supabase_manage_edit_job_listing_columns_callback( $default_cols ) {
+		// If the array key doesn't exist for job ID from supabase.
+		if ( ! array_key_exists( 'supabase_job_id', $default_cols ) ) {
+			$default_cols['supabase_job_id'] = __( 'Supabase Job ID', 'supabase-sync-jobs' );
+		}
+
+		return $default_cols;
+	}
+
+	/**
+	 * Add custom column data to the 'job_listing' posts.
+	 *
+	 * @param string $column_name Column name.
+	 * @param int    $post_id Post ID.
+	 *
+	 * @since 1.0.0
+	 */
+	public function supabase_manage_job_listing_posts_custom_column_callback( $column_name, $post_id ) {
+		// Print the content for "session speaker" column name.
+		if ( 'supabase_job_id' === $column_name ) {
+			$job_id = get_post_meta( $post_id, '_supabase_job_id', true );
+			echo ( ! empty( $job_id ) ) ? $job_id : '';
+		}
+	}
 }
