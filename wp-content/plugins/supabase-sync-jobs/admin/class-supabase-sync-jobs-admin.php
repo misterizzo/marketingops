@@ -274,7 +274,7 @@ class Supabase_Sync_Jobs_Admin {
 						<a class="button button-primary" href="<?php echo esc_url( admin_url( 'edit.php?post_type=job_listing' ) ); ?>"><?php esc_html_e( 'View jobs', 'supabase-sync-jobs' ); ?></a>
 						<a class="button button-secondary openCollapse_log" href="javascript:void(0);"><?php esc_html_e( 'View import log', 'supabase-sync-jobs' ); ?></a>
 					</div>
-					<div class="collapse-wrapper">
+					<div class="collapse-wrapper" style="display: none;">
 						<div class="collapse-body">
 							<table class="widefat wc-importer-error-log-table">
 								<thead>
@@ -424,7 +424,7 @@ class Supabase_Sync_Jobs_Admin {
 		}
 
 		// Publish all the supabase jobs.
-		$this->supabase_publish_all_jobs();
+		// $this->supabase_publish_all_jobs();
 	}
 
 	/**
@@ -440,13 +440,17 @@ class Supabase_Sync_Jobs_Admin {
 			return;
 		}
 
+		// debug( get_post( 156091 ) );
+		// debug( get_post_meta( 156091 ) );
+		// die;
+
 		// Get the jobs.
 		$job_ids = new WP_Query(
 			array(
 				'post_type'      => 'job_listing',
 				'paged'          => 1,
 				'posts_per_page' => -1,
-				'post_status'    => 'pending',
+				'post_status'    => 'any',
 				'fields'         => 'ids',
 				'meta_query'     => array(
 					'relation' => 'AND',
@@ -467,13 +471,22 @@ class Supabase_Sync_Jobs_Admin {
 
 		// Loop through the jobs.
 		foreach ( $job_ids->posts as $job_id ) {
+			$post_status = get_post_field( 'post_status', $job_id );
+
+			// Skip, if the post status is published.
+			if ( 'publish' === $post_status ) {
+				continue;
+			}
+
 			var_dump( $job_id );
+
+			// Update the post status.
 			$wpdb->update(
 				$wpdb->posts,
-				array(
-					'post_status' => 'publish',
-				),
-				array( 'ID' => $job_id )
+				array( 'post_status' => 'publish' ),
+				array( 'ID' => $job_id ),
+				array( '%s' ),
+				array( '%d' )
 			);
 
 			debug( get_post( $job_id ) );
@@ -513,15 +526,16 @@ class Supabase_Sync_Jobs_Admin {
 	 * @since 1.0.0
 	 */
 	private function create_job_listing( $position, $job_supabase_id ) {
+		$local_time = date_i18n( _x( 'Y-m-d H:i:s', 'timezone date format' ) );
 
 		// Save the job listing post object in the database and return the job ID.
 		return wp_insert_post(
 			array(
 				'post_title'    => $position,
 				'post_status'   => 'publish',
-				'post_author'   => 1,
-				'post_date'     => gmdate( 'Y-m-d H:i:s' ),
-				'post_modified' => gmdate( 'Y-m-d H:i:s' ),
+				'post_author'   => 2455,
+				'post_date'     => $local_time,
+				'post_modified' => $local_time,
 				'post_type'     => 'job_listing',
 				'meta_input'    => array(
 					'_supabase_job_id' => $job_supabase_id
@@ -573,6 +587,7 @@ class Supabase_Sync_Jobs_Admin {
 		update_post_meta( $existing_job_id, '_created_at_supabase_datetime', gmdate( 'F j, Y h:i:s A', strtotime( $created_datetime ) ) );
 		update_post_meta( $existing_job_id, '_job_expires', $job_closing );
 		update_post_meta( $existing_job_id, '_compensation', $compensation );
+		update_post_meta( $existing_job_id, 'ppma_authors_name', 'mikedrizzo' );
 
 		// If the compensation is available.
 		if ( ! empty( $compensation ) && false !== stripos( $compensation, ' - ' ) && false !== stripos( $compensation, 'a year' ) ) {
