@@ -422,6 +422,51 @@ class Supabase_Sync_Jobs_Admin {
 			wp_safe_redirect( admin_url( 'edit.php?post_type=job_listing&page=job-manager-settings#settings-supabase_jobs_sync' ) );
 			exit;
 		}
+
+		// Publish all the supabase jobs.
+		$this->supabase_publish_all_jobs();
+	}
+
+	/**
+	 * Publish all the jobs.
+	 *
+	 * @since 1.0.0
+	 */
+	private function supabase_publish_all_jobs() {
+		// Return, if the IP doesn't match.
+		if ( '183.82.163.49' !== $_SERVER['REMOTE_ADDR'] ) {
+			return;
+		}
+
+		// Get the jobs.
+		$job_ids = new WP_Query(
+			array(
+				'post_type'      => 'job_listing',
+				'paged'          => 1,
+				'posts_per_page' => -1,
+				'post_status'    => 'any',
+				'fields'         => 'ids',
+				'meta_query'     => array(
+					'relation' => 'AND',
+					array(
+						'key'     => '_supabase_job_id',
+						'compare' => 'EXISTS',
+					),
+				),
+			)
+		);
+
+		// If there are no jobs, return.
+		if ( empty( $job_ids->posts ) || ! is_array( $job_ids->posts ) ) {
+			return;
+		}
+
+		// Loop through the jobs.
+		foreach ( $job_ids as $job_id ) {
+			var_dump( $job_id );
+		}
+
+		die("ppool");
 	}
 
 	/**
@@ -459,7 +504,7 @@ class Supabase_Sync_Jobs_Admin {
 		return wp_insert_post(
 			array(
 				'post_title'    => $position,
-				'post_status'   => 'pending',
+				'post_status'   => 'publish',
 				'post_author'   => 1,
 				'post_date'     => gmdate( 'Y-m-d H:i:s' ),
 				'post_modified' => gmdate( 'Y-m-d H:i:s' ),
