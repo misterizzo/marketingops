@@ -424,7 +424,7 @@ class Supabase_Sync_Jobs_Admin {
 		}
 
 		// Publish all the supabase jobs.
-		// $this->supabase_publish_all_jobs();
+		$this->supabase_publish_all_jobs();
 	}
 
 	/**
@@ -446,7 +446,7 @@ class Supabase_Sync_Jobs_Admin {
 				'post_type'      => 'job_listing',
 				'paged'          => 1,
 				'posts_per_page' => -1,
-				'post_status'    => 'any',
+				'post_status'    => 'pending',
 				'fields'         => 'ids',
 				'meta_query'     => array(
 					'relation' => 'AND',
@@ -463,8 +463,11 @@ class Supabase_Sync_Jobs_Admin {
 			return;
 		}
 
+		debug( $job_ids->posts );
+
 		// Loop through the jobs.
 		foreach ( $job_ids->posts as $job_id ) {
+			var_dump( $job_id );
 			$wpdb->update(
 				$wpdb->posts,
 				array(
@@ -472,6 +475,9 @@ class Supabase_Sync_Jobs_Admin {
 				),
 				array( 'ID' => $job_id )
 			);
+
+			debug( get_post( $job_id ) );
+			die;
 		}
 
 		die("done");
