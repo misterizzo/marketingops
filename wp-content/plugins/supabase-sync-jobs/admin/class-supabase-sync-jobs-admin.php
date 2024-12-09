@@ -433,6 +433,8 @@ class Supabase_Sync_Jobs_Admin {
 	 * @since 1.0.0
 	 */
 	private function supabase_publish_all_jobs() {
+		global $wpdb;
+
 		// Return, if the IP doesn't match.
 		if ( '183.82.163.49' !== $_SERVER['REMOTE_ADDR'] ) {
 			return;
@@ -463,10 +465,16 @@ class Supabase_Sync_Jobs_Admin {
 
 		// Loop through the jobs.
 		foreach ( $job_ids->posts as $job_id ) {
-			var_dump( $job_id );
+			$wpdb->update(
+				$wpdb->posts,
+				array(
+					'post_status' => 'publish',
+				),
+				array( $job_id )
+			);
 		}
 
-		die("ppool");
+		die("done");
 	}
 
 	/**
