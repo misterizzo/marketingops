@@ -134,7 +134,7 @@ class Supabase_Sync_Jobs {
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'supabase_admin_init_callback' );
 		$this->loader->add_action( 'init', $plugin_admin, 'supabase_init_callback' );
 		$this->loader->add_action( 'supabase_import_jobs_cron', $plugin_admin, 'supabase_supabase_import_jobs_cron_callback' );
-		$this->loader->add_action( 'supabase_delete_expired_jobs_cron', $plugin_admin, 'supabase_supabase_delete_expired_jobs_cron_callback' );
+		$this->loader->add_action( 'supabase_close_expired_jobs_cron', $plugin_admin, 'supabase_supabase_close_expired_jobs_cron_callback' );
 		$this->loader->add_action( 'wp_ajax_test_supabase_api', $plugin_admin, 'supabase_test_supabase_api_callback' );
 		$this->loader->add_filter( 'manage_edit-job_listing_columns', $plugin_admin, 'supabase_manage_edit_job_listing_columns_callback' );
 		$this->loader->add_action( 'manage_job_listing_posts_custom_column', $plugin_admin, 'supabase_manage_job_listing_posts_custom_column_callback', 10, 2 );

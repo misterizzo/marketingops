@@ -51,8 +51,8 @@ class Supabase_Sync_Jobs_Activator {
 		 * Setup the cron for deleting the expired jobs from native database.
 		 * The daily cron is setup.
 		 */
-		if ( ! wp_next_scheduled( 'supabase_delete_expired_jobs_cron' ) ) {
-			wp_schedule_event( time(), 'daily', 'supabase_delete_expired_jobs_cron' );
+		if ( ! wp_next_scheduled( 'supabase_close_expired_jobs_cron' ) ) {
+			wp_schedule_event( time(), 'daily', 'supabase_close_expired_jobs_cron' );
 		}
 
 		// Redirect to plugin settings page on the plugin activation.

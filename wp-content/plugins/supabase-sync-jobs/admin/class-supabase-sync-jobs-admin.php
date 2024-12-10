@@ -108,18 +108,6 @@ class Supabase_Sync_Jobs_Admin {
 					'placeholder' => 'xxxxxxx',
 					'track'       => 'value',
 				),
-				array(
-					'name'    => 'supabase_delete_expired_jobs',
-					'std'     => 'delete_expired_jobs',
-					'label'   => __( 'Delete expired jobs.', 'supabase-sync-jobs' ),
-					'desc'    => __( 'Delete the expired jobs from the database that are exclusively imported from Supabase.', 'supabase-sync-jobs' ),
-					'type'    => 'radio',
-					'options' => array(
-						'trash'  => __( 'Move to the trash', 'wp-job-manager' ),
-						'delete' => __( 'Skip the trash and delete permanently', 'wp-job-manager' ),
-					),
-					'track'   => 'value',
-				)
 			),
 		);
 
@@ -370,8 +358,9 @@ class Supabase_Sync_Jobs_Admin {
 
 		// Iterate through the loop to import the jobs.
 		foreach ( $chunk as $part ) {
-			$job_supabase_id = ( ! empty( $part['id'] ) ) ? $part['id'] : false;
-			$position        = ( ! empty( $part['position'] ) ) ? $part['position'] : false;
+			$job_supabase_id  = ( ! empty( $part['id'] ) ) ? $part['id'] : false;
+			$position         = ( ! empty( $part['position'] ) ) ? $part['position'] : false;
+			$created_datetime = ( ! empty( $part['created_at'] ) ) ? $part['created_at'] : date_i18n( _x( 'Y-m-d H:i:s', 'timezone date format' ) );
 
 			// Skip the update if the job supabase id or job position is missing.
 			if ( false === $job_supabase_id || false === $position ) {
@@ -384,7 +373,7 @@ class Supabase_Sync_Jobs_Admin {
 
 			// If the job doesn't exist.
 			if ( false === $job_exists ) {
-				$job_id = $this->create_job_listing( $position, $job_supabase_id ); // Create job with position.
+				$job_id = $this->create_job_listing( $position, $created_datetime, $job_supabase_id ); // Create job with position.
 				$new_jobs_added++; // Increase the counter of new job listing created.
 			} else {
 				$job_id = $job_exists;
@@ -525,20 +514,18 @@ class Supabase_Sync_Jobs_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	private function create_job_listing( $position, $job_supabase_id ) {
-		$local_time = date_i18n( _x( 'Y-m-d H:i:s', 'timezone date format' ) );
-
+	private function create_job_listing( $position, $created_datetime, $job_supabase_id ) {
 		// Save the job listing post object in the database and return the job ID.
 		return wp_insert_post(
 			array(
 				'post_title'    => $position,
 				'post_status'   => 'publish',
 				'post_author'   => 2455,
-				'post_date'     => $local_time,
-				'post_modified' => $local_time,
+				'post_date'     => date_i18n( _x( 'Y-m-d H:i:s', 'timezone date format' ), strtotime( $created_datetime ) ),
+				'post_modified' => date_i18n( _x( 'Y-m-d H:i:s', 'timezone date format' ), strtotime( $created_datetime ) ),
 				'post_type'     => 'job_listing',
 				'meta_input'    => array(
-					'_supabase_job_id' => $job_supabase_id
+					'_supabase_job_id' => $job_supabase_id,
 				),
 			)
 		);
@@ -554,6 +541,7 @@ class Supabase_Sync_Jobs_Admin {
 	 */
 	private function supabase_update_job( $existing_job_id, $part ) {
 		global $wpdb;
+		$local_time       = date_i18n( _x( 'Y-m-d H:i:s', 'timezone date format' ) ); // Local time.
 		$created_datetime = ( ! empty( $part['created_at'] ) ) ? $part['created_at'] : '';
 		$company          = ( ! empty( $part['company'] ) ) ? $part['company'] : '';
 		$position         = ( ! empty( $part['position'] ) ) ? $part['position'] : '';
@@ -563,10 +551,10 @@ class Supabase_Sync_Jobs_Admin {
 		$compensation     = ( ! empty( $part['compensation'] ) ) ? $part['compensation'] : '';
 		$description      = ( ! empty( $part['description'] ) ) ? $part['description'] : '';
 		$type             = ( ! empty( $part['type'] ) ) ? $part['type'] : '';
-		$job_opening      = gmdate( 'Y-m-d', strtotime( $created_datetime ) );
+		$job_opening      = date_i18n( _x( 'Y-m-d H:i:s', 'timezone date format' ), strtotime( $created_datetime ) );
 		$job_closes_after = get_option( 'job_application_closes_after_days', false );
 		$job_closes_after = ( ! empty( $job_closes_after ) ) ? (int) $job_closes_after : 90;
-		$job_closing      = gmdate( 'Y-m-d', strtotime( $job_opening . " + {$job_closes_after} day" ) );
+		$job_closing      = date_i18n( _x( 'Y-m-d', 'timezone date format' ), strtotime( $job_opening . " + {$job_closes_after} day" ) );
 		$min_salary       = '';
 		$max_salary       = '';
 
@@ -580,12 +568,15 @@ class Supabase_Sync_Jobs_Admin {
 		update_post_meta( $existing_job_id, '_job_location', $location );
 		update_post_meta( $existing_job_id, '_remote_position', $remote );
 		update_post_meta( $existing_job_id, '_job_description', $description );
+		update_post_meta( $existing_job_id, '_job_about', $description );
 		update_post_meta( $existing_job_id, '_application', $application_url );
 		update_post_meta( $existing_job_id, '_company_name', $company );
 		update_post_meta( $existing_job_id, '_company_name', $company );
 		update_post_meta( $existing_job_id, '_created_at_supabase_timestamp', strtotime( $created_datetime ) );
-		update_post_meta( $existing_job_id, '_created_at_supabase_datetime', gmdate( 'F j, Y h:i:s A', strtotime( $created_datetime ) ) );
+		update_post_meta( $existing_job_id, '_created_at_supabase_datetime', date_i18n( _x( 'F j, Y h:i:s A', 'timezone date format' ), strtotime( $created_datetime ) ) );
 		update_post_meta( $existing_job_id, '_job_expires', $job_closing );
+		update_post_meta( $existing_job_id, '_application_deadline', $job_closing );
+		update_post_meta( $existing_job_id, '_job_deadline', $job_closing );
 		update_post_meta( $existing_job_id, '_compensation', $compensation );
 		update_post_meta( $existing_job_id, 'ppma_authors_name', 'mikedrizzo' );
 
@@ -606,8 +597,9 @@ class Supabase_Sync_Jobs_Admin {
 		$wpdb->update(
 			$wpdb->posts,
 			array(
+				'post_date'     => $job_opening,
 				'post_content'  => $description,
-				'post_modified' => gmdate( 'Y-m-d H:i:s' ),
+				'post_modified' => $local_time,
 			),
 			array( 'ID' => $existing_job_id ),
 			array( '%s', '%s' ),
@@ -671,18 +663,39 @@ class Supabase_Sync_Jobs_Admin {
 		// Import all the jobs from supabase database.
 		// $this->supabase_supabase_import_jobs_cron_callback();
 
-		// Delete all the expired jobs.
-		// $this->supabase_supabase_delete_expired_jobs_cron_callback();
+		// Close all the expired jobs.
+		if ( '183.82.163.49' === $_SERVER['REMOTE_ADDR'] ) {
+			// $this->supabase_supabase_close_expired_jobs_cron_callback();
+		}
+		// $this->supabase_supabase_close_expired_jobs_cron_callback();
 	}
 
 	/**
-	 * Delete all the expired jobs.
+	 * Close all the expired jobs.
 	 * The cron callback will only remove the jobs that are imported from Supabase and have been expired.
 	 *
 	 * @since 1.0.0
 	 */
-	private function supabase_supabase_delete_expired_jobs_cron_callback() {
-		// Get the jobs that should be removed.
+	private function supabase_supabase_close_expired_jobs_cron_callback() {
+		global $wpdb;
+
+		// Return, if admin.
+		if ( is_admin() ) {
+			return;
+		}
+
+		// update_post_meta( 233442, '_job_expires', '2024-12-08' );
+		debug( get_post_meta( 233442 ) );
+		die("ppoi");
+
+		// debug( get_post( 158326 ) );
+		// debug( get_post_meta( 158326 ) );
+		// die;
+
+		// Local time.
+		$local_time = date_i18n( _x( 'Y-m-d H:i:s', 'timezone date format' ) );
+
+		// Get the jobs that should be closed.
 		$job_ids = new WP_Query(
 			array(
 				'post_type'      => 'job_listing',
@@ -698,7 +711,7 @@ class Supabase_Sync_Jobs_Admin {
 					),
 					array(
 						'key'     => '_job_expires',
-						'value'   => gmdate( 'Y-m-d' ),
+						'value'   => $local_time,
 						'compare' => '<=',
 						'type'    => 'DATETIME',
 					)
@@ -711,18 +724,23 @@ class Supabase_Sync_Jobs_Admin {
 			return;
 		}
 
-		// Get the admin config.
-		$delete_jobs = get_option( 'supabase_delete_expired_jobs', false );
-
 		// Loop through the jobs to remove them.
 		foreach ( $job_ids->posts as $job_id ) {
-			if ( false !== $delete_jobs ) {
-				if ( 'trash' === $delete_jobs ) {
-					wp_trash_post( $job_id );
-				} elseif( 'delete' === $delete_jobs ) {
-					wp_delete_post( $job_id, true );
-				}
-			}
+			var_dump( $job_id );
+			$wpdb->update(
+				$wpdb->posts,
+				array(
+					'post_status'    => 'expired',
+					'comment_status' => 'closed',
+					'ping_status'    => 'closed',
+				),
+				array(
+					'ID' => $job_id,
+				),
+				array( '%s', '%s', '%s' ),
+				array( '%d' )
+			);
+			die;
 		}
 	}
 
@@ -733,6 +751,7 @@ class Supabase_Sync_Jobs_Admin {
 	 * @since 1.0.0
 	 */
 	public function supabase_supabase_import_jobs_cron_callback() {
+		$local_time       = date_i18n( _x( 'F j, Y, H:i:s', 'timezone date format' ) ); // Local time.
 		$database_url     = get_option( 'supabase_database_url', false );
 		$database_api_key = get_option( 'supabase_database_api_key', false );
 
@@ -740,7 +759,7 @@ class Supabase_Sync_Jobs_Admin {
 		if ( ! empty( $database_url ) && false !== $database_url && ! empty( $database_api_key ) && false !== $database_api_key ) {
 			// Set the import log.
 			/* translators: 1: %s: today's date */
-			$message = sprintf( __( 'Starting import today: %1$s', 'supabase-sync-jobs' ), gmdate( 'F j, Y, H:i:s' ) );
+			$message = sprintf( __( 'Starting import today: %1$s', 'supabase-sync-jobs' ), $local_time );
 			$this->supabase_write_import_log( $message );
 
 			$jobs = $this->fetch_jobs_from_supabase( $database_api_key, $database_url ); // Shoot the API to get jobs.
@@ -814,7 +833,8 @@ class Supabase_Sync_Jobs_Admin {
 
 			// Set the import log.
 			/* translators: 1: %s: today's date */
-			$message = sprintf( __( 'Import completed: %1$s', 'supabase-sync-jobs' ), gmdate( 'F j, Y, H:i:s' ) );
+			$local_time = date_i18n( _x( 'F j, Y, H:i:s', 'timezone date format' ) ); // Local time.
+			$message    = sprintf( __( 'Import completed: %1$s', 'supabase-sync-jobs' ), $local_time );
 			$this->supabase_write_import_log( $message );
 		}
 	}
@@ -838,9 +858,10 @@ class Supabase_Sync_Jobs_Admin {
 
 		// Iterate through the loop to import the jobs.
 		foreach ( $chunk as $part ) {
-			$part            = (array) $part;
-			$job_supabase_id = ( ! empty( $part['id'] ) ) ? $part['id'] : false;
-			$position        = ( ! empty( $part['position'] ) ) ? $part['position'] : false;
+			$part             = (array) $part;
+			$job_supabase_id  = ( ! empty( $part['id'] ) ) ? $part['id'] : false;
+			$position         = ( ! empty( $part['position'] ) ) ? $part['position'] : false;
+			$created_datetime = ( ! empty( $part['created_at'] ) ) ? $part['created_at'] : date_i18n( _x( 'Y-m-d H:i:s', 'timezone date format' ) );
 
 			// Skip the update if the job supabase id or job position is missing.
 			if ( false === $job_supabase_id || false === $position ) {
@@ -853,7 +874,7 @@ class Supabase_Sync_Jobs_Admin {
 
 			// If the job doesn't exist.
 			if ( false === $job_exists ) {
-				$job_id = $this->create_job_listing( $position, $job_supabase_id ); // Create job with position.
+				$job_id = $this->create_job_listing( $position, $created_datetime, $job_supabase_id ); // Create job with position.
 				$new_jobs_added++; // Increase the counter of new job listing created.
 			} else {
 				$job_id = $job_exists;
