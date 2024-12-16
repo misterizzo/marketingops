@@ -16,6 +16,7 @@ $agency_id        = $wpdb->get_results( "SELECT `post_id` FROM {$wpdb->postmeta}
 
 echo "SELECT `post_id` FROM {$wpdb->postmeta} WHERE 'meta_key' =  'agency_owner' AND 'meta_value' = '{$current_user->ID}'";
 debug( $agency_id );
+debug( get_post_meta( 229519 ) );
 
 // $show_agency_signup_form = false;
 // $linked_agency           = get_user_meta( $current_user->ID, 'linked_agency', true );
