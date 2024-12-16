@@ -16,6 +16,7 @@ $agency_id        = new WP_Query(
 	array(
 		'post_type'      => 'agency',
 		'posts_per_page' => 1,
+		'post_status'    => array( 'publish', 'draft' ),
 		'meta_query'     => array(
 			array(
 				'key'     => 'agency_owner',
