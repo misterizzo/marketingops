@@ -12,11 +12,21 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 global $current_user, $wpdb;
 
 $is_agency_member = mops_is_user_agency_partner( $current_user->ID );
-$agency_id        = $wpdb->get_results( "SELECT `post_id` FROM {$wpdb->postmeta} WHERE 'meta_key' =  'agency_owner' AND 'meta_value' = '{$current_user->ID}'" );
+$agency_id        = new WP_Query(
+	array(
+		'post_type'      => 'agency',
+		'posts_per_page' => 1,
+		'meta_query'     => array(
+			array(
+				'key'     => 'agency_owner',
+				'value'   => $current_user->ID,
+				'compare' => '=',
+			)
+		),
+	)
+);
 
-echo "SELECT `post_id` FROM {$wpdb->postmeta} WHERE 'meta_key' =  'agency_owner' AND 'meta_value' = '{$current_user->ID}'";
 debug( $agency_id );
-var_dump( get_post_meta( 229519 ) );
 
 // $show_agency_signup_form = false;
 // $linked_agency           = get_user_meta( $current_user->ID, 'linked_agency', true );
