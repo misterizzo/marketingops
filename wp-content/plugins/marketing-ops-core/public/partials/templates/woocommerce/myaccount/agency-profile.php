@@ -9,10 +9,12 @@
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
-global $current_user;
+global $current_user, $wpdb;
 
 $is_agency_member = mops_is_user_agency_partner( $current_user->ID );
-var_dump( $is_agency_member );
+$agency_id        = $wpdb->get_results( "SELECT `post_id` FROM {$wpdb->postmeta} WHERE 'meta_key' =  'agency_owner' AND 'meta_value' = '{$current_user->ID}'" );
+
+debug( $agency_id );
 
 // $show_agency_signup_form = false;
 // $linked_agency           = get_user_meta( $current_user->ID, 'linked_agency', true );
