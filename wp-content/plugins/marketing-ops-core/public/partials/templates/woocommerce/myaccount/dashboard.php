@@ -21,6 +21,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+global $current_user;
+
 $allowed_html       = array(
 	'a' => array(
 		'href' => array(),
@@ -49,8 +51,8 @@ $downloads       = WC()->customer->get_downloadable_products();
 $downloads_count = ( ! empty( $downloads ) && is_array( $downloads ) ) ? count( $downloads ) : 0;
 
 // Learndash certificates.
-$courses              = get_user_meta( $user_id, '_sfwd-course_progress', true );
-$certificates         = ( function_exists( 'mops_get_user_learndash_certificates' ) ) ? mops_get_user_learndash_certificates( $courses ) : array();
+$courses              = get_user_meta( $current_user->ID, '_sfwd-course_progress', true );
+$certificates         = ( function_exists( 'mops_get_user_learndash_certificates' ) ) ? mops_get_user_learndash_certificates( $courses, $current_user->ID ) : array();
 $certificates_message = ( ! empty( $certificates ) && is_array( $certificates ) ) ? sprintf( __( '%1$d earned', 'marketingops' ), count( $certificates ) ) : __( 'You don\'t have any certificates yet', 'marketngops' );
 
 // Customer orders.
@@ -125,6 +127,8 @@ $payment_methods_temp  = array();
 
 foreach ( $saved_payment_methods as $payment_method_type => $methods ) {
 	foreach ( $methods as $payment_method ) {
+		$is_default_method = false;
+
 		if ( 'cc' === $payment_method_type ) {
 			$brand                   = ( ! empty( $payment_method['method']['brand'] ) ) ? $payment_method['method']['brand'] : '';
 			$last4_digits            = ( ! empty( $payment_method['method']['last4'] ) ) ? $payment_method['method']['last4'] : '';

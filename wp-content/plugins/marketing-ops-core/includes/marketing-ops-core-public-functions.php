@@ -9629,7 +9629,7 @@ if ( ! function_exists( 'mops_get_user_learndash_certificates' ) ) {
 	 *
 	 * @since 1.0.0
 	 */
-	function mops_get_user_learndash_certificates( $courses ) {
+	function mops_get_user_learndash_certificates( $courses, $user_id ) {
 		$certificates = array();
 
 		if ( ! empty( $courses ) && is_array( $courses ) ) {
@@ -9767,5 +9767,26 @@ if ( ! function_exists( 'mops_is_user_agency_partner' ) ) {
 		}
 
 		return false;
+	}
+}
+
+/**
+ * Check if the function exists.
+ */
+if ( ! function_exists( 'mops_get_required_asterisk' ) ) {
+	/**
+	 * Return the html for required asterisk.
+	 *
+	 * @return string
+	 *
+	 * @since 1.0.0
+	 */
+	function mops_get_required_asterisk() {
+		ob_start();
+		?>
+		<i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i>
+		<?php
+
+		return ob_get_clean();
 	}
 }

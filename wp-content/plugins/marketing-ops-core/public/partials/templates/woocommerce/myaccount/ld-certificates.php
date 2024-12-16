@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 $user_id      = get_current_user_id();
 $courses      = get_user_meta( $user_id, '_sfwd-course_progress', true );
 $bg_img_index = 1;
-$certificates = ( function_exists( 'mops_get_user_learndash_certificates' ) ) ? mops_get_user_learndash_certificates( $courses ) : array();
+$certificates = ( function_exists( 'mops_get_user_learndash_certificates' ) ) ? mops_get_user_learndash_certificates( $courses, $user_id ) : array();
 ?>
 <div class="box_about_content box_content certification_section moc_purchased_courses_section">
 	<?php if ( ! empty( $certificates ) && is_array( $certificates ) ) { ?>

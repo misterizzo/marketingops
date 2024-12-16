@@ -5251,19 +5251,20 @@ jQuery( document ).ready( function( $ ) {
 			var data_text = $(this).find('a').data('text');	
 			$('.profile_links ul .tubelight').css('left', left_position);	
 			$('.profile_links .profile_links_text .links_text_box span').text(data_text);	
-		});	
+		} );
+
 		$('.profile_links ul').mouseleave(function() {	
 			$('.profile_links ul').removeClass('active_hover');	
 			$('.profile_links ul a').removeClass('active_hover');	
 			$('.profile_links .profile_links_text .links_text_box span').text('Profile');	
-		});	
+		} );
+
 		$('.profile_name .gradient-title .profile_more_icon_bar').click(function() {	
 			$(this).toggleClass('clicked_icon');	
 			$('.profile_links').toggleClass('hover_div');	
-		})	
-			
+		} );
 	}	
-	profile_links_box ();
+	profile_links_box();
 
 	$.fn.inputFilter = function(callback, errMsg) {
 		return this.on("input keydown keyup mousedown mouseup select contextmenu drop focusout", function(e) {
@@ -5320,10 +5321,7 @@ jQuery( document ).ready( function( $ ) {
 			}
 			});
 		});
-	});
-
-
-
+	} );
 
 	/* exapnd card */
 	var $cell = $('.card');
@@ -5392,6 +5390,41 @@ jQuery( document ).ready( function( $ ) {
 			}
 		} );
 	}
+
+	// Agency profile: customer dashbord.
+	if ( true === current_page_url.includes( 'my-account/agency-profile' ) ) {
+		// Agency description character count.
+		$( document ).on( 'keyup', '.agencyformgroup #description', function() {
+			var description = $( this ).val();
+
+			// If the description crosses the 400 limit, restrict the user from entering more content.
+			if ( 400 <= description.length ) {
+				$( this ).val( description.substring( 0, 399 ) );
+			}
+
+			// Update the counter.
+			$( 'small.agency-description-characters-count' ).text( description.length + ' of 400 characters' );
+		} );
+	}
+
+	// Add new taxonomy term.
+	$( document ).on( 'click', '.add-new-taxonomy-term', function() {
+		var taxonomy      = $( this ).data( 'taxonomy' );
+		var type          = $( this ).data( 'type' );
+		var new_term_html = '<div class="region">';
+		new_term_html    += '<input type="text" placeholder="Enter ' + type + '">';
+		new_term_html    += '<i class="save save-new-taxonomy-term fa fa-check-circle" data-taxonomy="' + taxonomy + '"></i>';
+		new_term_html    += '<i class="close close-new-taxonomy-term fa fa-times-circle"></i>';
+		new_term_html    += '</div>';
+		$( '#' + type + 's-container' ).html( new_term_html );
+	} );
+
+	// Close new taxonomy term.
+	$( document ).on( 'click', '.close-new-taxonomy-term', function() {
+		$( this ).parent( '.region' ).remove();
+	} );
+
+	// Video preview.
 } );
 
 
@@ -5482,27 +5515,6 @@ jQuery( document ).ready( function( $ ) {
         }
     });
 });
-
-jQuery(document).ready(function ($) {
-  const $addRegionButton = $('.addregion'); 
-  const $regionsContainer = $('#regions-container'); 
-  function createRegion() {
-    const $newRegion = $('<div class="region"></div>');
-    const $inputField = $('<input type="text" placeholder="Enter region">');
-    const $saveIcon = $('<i class="save fa fa-check-circle"></i>');
-    const $closeIcon = $('<i class="close fa fa-times-circle"></i>');
-    $closeIcon.on('click', function () {
-      $newRegion.remove();
-    });
-    $newRegion.append($inputField, $saveIcon, $closeIcon);
-    return $newRegion;
-  }
-  $addRegionButton.on('click', function () {
-    const $newRegion = createRegion();
-    $regionsContainer.append($newRegion);
-  });
-});
-
 
 jQuery(document).ready(function ($) {
   let personCounter = 1;

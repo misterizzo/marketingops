@@ -42,16 +42,12 @@ if ( false === $agency_id || false === $is_agency_member ) {
 		<section class="agencyformone">
 			<h1><?php esc_html_e( 'General', 'marketingops' ); ?></h1>
 			<div class="agencyformgroup">
-				<label><?php esc_html_e( 'Agency name', 'marketingops' ); ?> <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></label>
+				<label><?php esc_html_e( 'Agency name', 'marketingops' ); ?><?php echo mops_get_required_asterisk(); ?></label>
 				<input type="text" class="agancyinputbox" id="agencyname" name="agencyname" value="<?php echo wp_kses_post( $agency_title ); ?>">
 				<small><?php esc_html_e( 'This will be how your name will be displayed in the account section', 'marketingops' ); ?></small>
 			</div>
-
-			<?php esc_html_e( '', 'marketingops' ); ?>
-
 			<div class="agencyformgroup logoupload">
-				<label><?php esc_html_e( 'Logo', 'marketingops' ); ?> <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></label>
-
+				<label><?php esc_html_e( 'Logo', 'marketingops' ); ?><?php echo mops_get_required_asterisk(); ?></label>
 				<div class="upload-btn-wrapper image-upload-container">
 					<button class="btn"><?php esc_html_e( 'Select an image', 'marketingops' ); ?></button>
 					<p><?php esc_html_e( 'For the best results, upload horizontal version, 560 x 240px max', 'marketingops' ); ?></p>
@@ -62,236 +58,143 @@ if ( false === $agency_id || false === $is_agency_member ) {
   						</div>
 				</div>
 			</div>
-
 			<div class="agencyformgroup">
 				<label><?php esc_html_e( 'Description', 'marketingops' ); ?></label>
 				<textarea id="description" name="description" rows="4" cols="50"><?php echo wp_kses_post( $agency_description ); ?></textarea>
-				<small><?php esc_html_e( '0 of 400 max character', 'marketingops' ); ?></small>
+				<small class="agency-description-characters-count"><?php echo sprintf( __( '%1$d of 400 characters', 'marketingops' ), strlen( $agency_description ) ); ?></small>
 			</div>
 
-			<h2>Contact</h2>
+			<h2><?php esc_html_e( 'Contact', 'marketingops' ); ?></h2>
+			<?php
+			$agency_user_name    = get_field( 'agency_user_name', $agency_id );
+			$agency_user_email   = get_field( 'agency_user_email', $agency_id );
+			$agency_user_website = get_field( 'agency_user_website', $agency_id );
+			?>
 			<div class="agencyformgroups">
 				<div class="agencyfirstblock">
-					<label>Name</label>
-					<input type="text" class="agancyinputbox" id="name" name="name">
+					<label><?php esc_html_e( 'Name', 'marketingops' ); ?><?php echo mops_get_required_asterisk(); ?></label>
+					<input type="text" class="agancyinputbox" id="name" name="name" value="<?php echo wp_kses_post( $agency_user_name ); ?>">
 				</div> 
 				<div class="agencyfirstblock">
-					<label>E-mail</label>
-					<input type="email" class="agancyinputbox" id="email" name="email">
+					<label><?php esc_html_e( 'E-mail', 'marketingops' ); ?><?php echo mops_get_required_asterisk(); ?></label>
+					<input type="email" class="agancyinputbox" id="email" name="email" value="<?php echo esc_html( $agency_user_email ); ?>">
 				</div>    
 			</div>
 			<div class="agencyformgroup">
-				<label>Agency Website <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></label>
-				<input type="text" class="agancyinputbox" id="agencywebsite" name="agencywebsite">
+				<label><?php esc_html_e( 'Agency Website', 'marketingops' ); ?><?php echo mops_get_required_asterisk(); ?></label>
+				<input type="text" class="agancyinputbox" id="agencywebsite" name="agencywebsite" value="<?php echo esc_url( $agency_user_website ); ?>">
 			</div>
 		</section>
 
+		<?php
+		$agency_types      = wp_get_object_terms( $agency_id, 'agency_type', array( 'fields' => 'ids' ) );
+		$agency_type_terms = get_terms(
+			array(
+				'taxonomy'   => 'agency_type',
+				'hide_empty' => false,
+			)
+		);
+		$year_founded      = (int) get_field( 'agency_year_founded', $agency_id );
+		$employees_list    = array( '1-10', '10-25', '25-50', '50-100', '100-250', '250-500', '500-1000', '1000-2000', 'More than 2000' );
+		$agency_employees  = get_field( 'agency_employees', $agency_id );
+		?>
 		<section class="agencyformone detailsblock">
-			<h3>Details</h3>
-			<h5>Agency type <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></h5>
-			<p>
-				<input type="radio" id="affiliate" name="radio-group" checked>
-				<label for="affiliate">Affiliate/OPM
-					<small>Affiliate is the primary service provided by the agency</small>
-				</label>
-			</p>
-			<p>
-				<input type="radio" id="consultant" name="radio-group">
-				<label for="consultant">Consultant
-					<small>Martech strategy, product selection and stack implementation</small>
-				</label>
-			</p>
-			<p>
-				<input type="radio" id="digital" name="radio-group">
-				<label for="digital">Digital
-					<small>Full suite of digital marketing services</small>
-				</label>
-			</p>
-			<p>
-				<input type="radio" id="holding" name="radio-group">
-				<label for="holding">Holding company
-					<small>Agency is part of a global collection of agencies</small>
-				</label>
-			</p>
-			<p>
-				<input type="radio" id="influencer" name="radio-group">
-				<label for="influencer">Influencer / Creator agency
-					<small>Influencer / creator is the primary service</small>
-				</label>
-			</p>
-			<p>
-				<input type="radio" id="PR" name="radio-group">
-				<label for="PR">PR agency
-					<small>PR & performance PR is the primary service provided by the agency</small>
-				</label>
-			</p>
-			<p>
-				<input type="radio" id="Reddit" name="radio-group">
-				<label for="Reddit">Reddit agency
-					<small>What is this?</small>
-				</label>
-			</p>
-			<p>
-				<input type="radio" id="Search" name="radio-group">
-				<label for="Search">Search/social
-					<small>Search & social are the primary services</small>
-				</label>
-			</p>
+			<h3><?php esc_html_e( 'Details', 'marketingops' ); ?></h3>
+			<h5><?php esc_html_e( 'Agency type', 'marketingops' ); ?><?php echo mops_get_required_asterisk(); ?></h5>
+			<?php if ( ! empty( $agency_type_terms ) && is_array( $agency_type_terms ) ) { ?>
+				<?php foreach ( $agency_type_terms as $agency_type_term ) { ?>
+					<p>
+						<input type="radio" id="affiliate" name="radio-group" <?php echo esc_attr( ( in_array( $agency_type_term->term_id, $agency_types, true ) ) ? 'checked' : '' ); ?>>
+						<label for="affiliate"><?php echo wp_kses_post( $agency_type_term->name ); ?>
+							<small><?php echo wp_kses_post( $agency_type_term->description ); ?></small>
+						</label>
+					</p>
+				<?php } ?>
+			<?php } ?>
+
 			<div class="agencyformgroups">
 				<div class="agencyfirstblock">
-					<label>Year founded</label>
+					<label><?php esc_html_e( 'Year founded', 'marketingops' ); ?></label>
 					<select class="marketingops-selectbox">
-						<option value="1">Option 1</option>
-						<option value="2">Option 2</option>
-						<option value="3">Option 3</option>
+						<?php for ( $i = 1900; $i <= gmdate( 'Y' ); $i++ ) { ?>
+							<option value="<?php echo esc_attr( $i ); ?>" <?php echo esc_attr( ( ! empty( $year_founded ) && $year_founded === $i ) ? 'selected' : '' ); ?>><?php echo esc_attr( $i ); ?></option>
+						<?php } ?>
 					</select>
 				</div> 
 				<div class="agencyfirstblock">
-					<label>Employees</label>
+					<label><?php esc_html_e( 'Employees', 'marketingops' ); ?></label>
 					<select class="marketingops-selectbox">
-						<option value="1">Option 1</option>
-						<option value="2">Option 2</option>
-						<option value="3">Option 3</option>
+						<?php foreach ( $employees_list as $employees_list_item ) { ?>
+							<option value="<?php echo esc_html( $employees_list_item ); ?>" <?php echo esc_attr( ( ! empty( $agency_employees ) && $agency_employees === $employees_list_item ) ? 'selected' : '' ); ?>><?php echo esc_html( $employees_list_item ); ?></option>
+						<?php } ?>
 					</select>
 				</div>    
 			</div>
 
-			<h5>Which regions do you have full time employees in?  <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></h5>
-			<div class="agencyformgroup form-group">
-				<input type="checkbox" id="APAC">
-				<label for="APAC">APAC</label>
-			</div>
-			<div class="agencyformgroup form-group">
-				<input type="checkbox" id="northamerica">
-				<label for="northamerica">North America</label>
-			</div>
-			<div class="agencyformgroup form-group">
-				<input type="checkbox" id="US">
-				<label for="US">US</label>
-			</div>
-			<div class="agencyformgroup form-group">
-				<input type="checkbox" id="EMEA">
-				<label for="EMEA">EMEA</label>
-			</div>
-			<div class="agencyformgroup form-group">
-				<input type="checkbox" id="southamerica">
-				<label for="southamerica">South America</label>
-			</div>
-			<div class="agencyformgroup form-group"id="regions-container"></div>
-			<button class="addregion">Add another region</button>
+			<?php
+			$agency_regions      = wp_get_object_terms( $agency_id, 'agency_region', array( 'fields' => 'ids' ) );
+			$agency_region_terms = get_terms(
+				array(
+					'taxonomy'   => 'agency_region',
+					'hide_empty' => false,
+				)
+			);
+			?>
+			<h5><?php esc_html_e( 'Which regions do you have full time employees in?', 'marketingops' ); ?><?php echo mops_get_required_asterisk(); ?></h5>
+			<?php if ( ! empty( $agency_region_terms ) && is_array( $agency_region_terms ) ) { ?>
+				<?php foreach ( $agency_region_terms as $agency_region_term ) { ?>
+					<div class="agencyformgroup form-group">
+						<input type="checkbox" id="region-<?php echo esc_html( sanitize_title( $agency_region_term->name ) ); ?>" value="<?php echo esc_html( $agency_region_term->name ); ?>" <?php echo esc_attr( ( ! empty( $agency_regions ) && in_array( $agency_region_term->term_id, $agency_regions, true ) ) ? 'checked' : '' ); ?>>
+						<label for="region-<?php echo esc_html( sanitize_title( $agency_region_term->name ) ); ?>"><?php echo esc_html( $agency_region_term->name ); ?></label>
+					</div>
+				<?php } ?>
+			<?php } ?>
+			<div class="agencyformgroup form-group" id="regions-container"></div>
+			<button style="display: none;" class="addregion add-new-taxonomy-term" data-taxonomy="agency_region" data-type="region"><?php esc_html_e( 'Add another region', 'marketingops' ); ?></button>
 
-			
-
+			<?php
+			$agency_primary_verticals      = wp_get_object_terms( $agency_id, 'agency_primary_vertical', array( 'fields' => 'ids' ) );
+			$agency_primary_vertical_terms = get_terms(
+				array(
+					'taxonomy'   => 'agency_primary_vertical',
+					'hide_empty' => false,
+				)
+			);
+			?>
 			<div class="agencyformgroups">
 				<div class="agencyfirstblock">
-					<label>Primary Verticals <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></label>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="Automotive">
-						<label for="Automotive">Automotive</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="ConsumerPackageGoods">
-						<label for="ConsumerPackageGoods">Consumer Packaged Goods</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="Education">
-						<label for="Education">Education</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="FinancialServices">
-						<label for="FinancialServices">Financial Services</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="Healthcare">
-						<label for="Healthcare">Healthcare</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="Retail">
-						<label for="Retail">Retail</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="Subscription">
-						<label for="Subscription">Subscription</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="Travel">
-						<label for="Travel">Travel</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="B2B">
-						<label for="B2B">B2B</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="DTC">
-						<label for="DTC">DTC</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="Entertainment">
-						<label for="Entertainment">Entertainment</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="Caming">
-						<label for="Caming">Caming</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="Real Estate">
-						<label for="Real Estate">Real Estate</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="SMB">
-						<label for="SMB">SMB</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="Telecom">
-						<label for="Telecom">Telecom</label>
-					</div>
-					<button class="addregion">Add new vertical</button>
+					<label><?php esc_html_e( 'Primary Verticals', 'marketingops' ); ?><?php echo mops_get_required_asterisk(); ?></label>
+					<?php if ( ! empty( $agency_primary_vertical_terms ) && is_array( $agency_primary_vertical_terms ) ) { ?>
+						<?php foreach ( $agency_primary_vertical_terms as $agency_primary_vertical_term ) { ?>
+							<div class="agencyformgroup form-group">
+								<input type="checkbox" id="region-<?php echo esc_html( sanitize_title( $agency_primary_vertical_term->name ) ); ?>" value="<?php echo esc_html( $agency_primary_vertical_term->name ); ?>" <?php echo esc_attr( ( ! empty( $agency_primary_verticals ) && in_array( $agency_primary_vertical_term->term_id, $agency_primary_verticals, true ) ) ? 'checked' : '' ); ?>>
+								<label for="region-<?php echo esc_html( sanitize_title( $agency_primary_vertical_term->name ) ); ?>"><?php echo esc_html( $agency_primary_vertical_term->name ); ?></label>
+							</div>
+						<?php } ?>
+					<?php } ?>
+					<button class="addregion" style="display: none;">Add new vertical</button>
 				</div>
 
-
+				<?php
+				$agency_services      = wp_get_object_terms( $agency_id, 'agency_service', array( 'fields' => 'ids' ) );
+				$agency_service_terms = get_terms(
+					array(
+						'taxonomy'   => 'agency_service',
+						'hide_empty' => false,
+					)
+				);
+				?>
 				<div class="agencyfirstblock">
-					<label>What services do you provide? <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></label>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="Affiliate Marketing">
-						<label for="Affiliate Marketing">Affiliate Marketing</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="Database Acquisition">
-						<label for="Database Acquisition">Database Acquisition</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="Influencer Marketing">
-						<label for="Influencer Marketing">Influencer Marketing</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="Programmatic">
-						<label for="Programmatic">Programmatic</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="SEO">
-						<label for="SEO">SEO</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="Branded Content">
-						<label for="Branded Content">Branded Content</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="Email Marketing">
-						<label for="Email Marketing">Email Marketing</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="Performance PR">
-						<label for="Performance PR">Performance PR</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="SEM">
-						<label for="SEM">SEM</label>
-					</div>
-					<div class="agencyformgroup form-group">
-						<input type="checkbox" id="Social media">
-						<label for="Social media">Social media</label>
-					</div>
-					<button class="addregion">Add new service</button>
+				<label><?php esc_html_e( 'What services do you provide?', 'marketingops' ); ?><?php echo mops_get_required_asterisk(); ?></label>
+					<?php if ( ! empty( $agency_service_terms ) && is_array( $agency_service_terms ) ) { ?>
+						<?php foreach ( $agency_service_terms as $agency_service_term ) { ?>
+							<div class="agencyformgroup form-group">
+								<input type="checkbox" id="region-<?php echo esc_html( sanitize_title( $agency_service_term->name ) ); ?>" value="<?php echo esc_html( $agency_service_term->name ); ?>" <?php echo esc_attr( ( ! empty( $agency_services ) && in_array( $agency_service_term->term_id, $agency_services, true ) ) ? 'checked' : '' ); ?>>
+								<label for="region-<?php echo esc_html( sanitize_title( $agency_service_term->name ) ); ?>"><?php echo esc_html( $agency_service_term->name ); ?></label>
+							</div>
+						<?php } ?>
+					<?php } ?>
+					<button class="addregion" style="display: none;">Add new service</button>
 				</div>
 			</div>
 		</section>
@@ -382,33 +285,26 @@ if ( false === $agency_id || false === $is_agency_member ) {
 				<div id="dynamicContainer"></div>
 			</div>  
 			
-			
+			<?php $agency_video = get_field( 'agency_video', $agency_id ); ?>
 			<div class="agencyformgroup videogroup">
-			<h6 class="jbtitle">Video</h6>
-				<label>Youtube / Vimeo link </label>
-				<input type="text" class="agancyinputbox" id="Video" name="Video">
+			<h6 class="jbtitle"><?php esc_html_e( 'Video', 'marketingops' ); ?></h6>
+				<label><?php esc_html_e( 'Youtube / Vimeo link', 'marketingops' ); ?></label>
+				<input type="text" class="agancyinputbox" id="Video" name="Video" value="<?php echo esc_url( $agency_video ); ?>">
 				<div id="videoPreview" style="margin-top: 20px;"></div>
 			</div>
 
-			<h6 class="jbtitle">Jobs</h6>
+			<?php $include_jobs = get_field( 'agency_include_jobs', $agency_id ); ?>
+			<h6 class="jbtitle"><?php esc_html_e( 'Jobs', 'marketingops' ); ?></h6>
 			<div class="agencyformgroup form-group">
-				<input type="checkbox" id="jobs">
-				<label for="jobs">Include jobs posted by me to this page</label>
+				<input type="checkbox" id="include-jobs" <?php echo esc_attr( ( ! empty( $include_jobs ) && true === $include_jobs ) ? 'checked' : '' ); ?>>
+				<label for="include-jobs"><?php esc_html_e( 'Include jobs posted by me to this page', 'marketingops' ); ?></label>
 			</div>
 		</section> 
 
 		<section class="agencyformone">
 			<ul>
-				<li>
-					<a href="javascript:void(0);" class="savedratbtn">
-						Save Draft
-					</a>
-				</li>
-				<li>
-					<a href="javascript:void(0);" class="profilebtn">
-						Create Profile
-					</a>
-				</li>
+				<li><a href="javascript:void(0);" class="savedratbtn"><?php esc_html_e( 'Save Draft', 'marketingops' ); ?></a></li>
+				<li><a href="javascript:void(0);" class="profilebtn"><?php esc_html_e( 'Create Profile', 'marketingops' ); ?></a></li>
 			</ul>
 		</section>
 	</div>
