@@ -14,6 +14,7 @@ global $current_user, $wpdb;
 $is_agency_member = mops_is_user_agency_partner( $current_user->ID );
 $agency_id        = $wpdb->get_results( "SELECT `post_id` FROM {$wpdb->postmeta} WHERE 'meta_key' =  'agency_owner' AND 'meta_value' = '{$current_user->ID}'" );
 
+echo "SELECT `post_id` FROM {$wpdb->postmeta} WHERE 'meta_key' =  'agency_owner' AND 'meta_value' = '{$current_user->ID}'";
 debug( $agency_id );
 
 // $show_agency_signup_form = false;
