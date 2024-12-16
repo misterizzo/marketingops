@@ -34,6 +34,9 @@ if ( false === $agency_id || false === $is_agency_member ) {
 	echo do_shortcode( '[elementor-template id="231177"]' );
 } else {
 	$agency_title = get_the_title( $agency_id );
+	$agency_image = wp_get_attachment_image_src( get_post_thumbnail_id( $agency_id ), 'full-image' );
+
+	var_dump( $agency_image );
 	?>
 	<!-- <form name="agency-signup-form" method="GET" enctype="multipart/form-data"> -->
 		<div name="agency-signup-form">
