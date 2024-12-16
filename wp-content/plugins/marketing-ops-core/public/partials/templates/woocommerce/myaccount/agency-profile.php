@@ -35,8 +35,6 @@ if ( false === $agency_id || false === $is_agency_member ) {
 } else {
 	$agency_title = get_the_title( $agency_id );
 	$agency_image = wp_get_attachment_image_src( get_post_thumbnail_id( $agency_id ), 'full-image' );
-
-	var_dump( $agency_image );
 	?>
 	<!-- <form name="agency-signup-form" method="GET" enctype="multipart/form-data"> -->
 		<div name="agency-signup-form">
@@ -56,7 +54,7 @@ if ( false === $agency_id || false === $is_agency_member ) {
 					<p>For the best results, upload horizontal version, 560 x 240px max</p>
 					<input type="file" class="imageInput" name="myfile" onchange="readURL(this)" accept="image/*" />
 						<div id="previewContainer" class="preview-container" style="display: none;">
-    						<img class="preview-image" src="#" alt="Image Preview" />
+    						<img class="preview-image" src="<?php echo ( ! empty( $agency_image[0] ) ? $agency_image[0] : '' ); ?>" alt="<?php esc_html_e( 'Image Preview', 'marketingops' ); ?>" />
     						<button class="removePreview remove-preview-btn" id="removePreview"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="15.35" stroke="white" stroke-width="1.3"></circle><path d="M11 11L16 16L11 21" stroke="white" stroke-width="1.3"></path><path d="M21 11L16 16L21 21" stroke="white" stroke-width="1.3"></path></svg></button>
   						</div>
 				</div>
