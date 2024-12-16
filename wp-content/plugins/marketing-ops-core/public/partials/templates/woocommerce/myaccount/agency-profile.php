@@ -10,12 +10,9 @@
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 global $current_user;
-$user_memberships = wc_memberships_get_user_memberships(
-	$current_user->ID,
-	array( 'status' => array( 'active' ) )
-);
 
-debug( $user_memberships );
+$is_agency_member = mops_is_user_agency_partner( $current_user->ID );
+var_dump( $is_agency_member );
 
 // $show_agency_signup_form = false;
 // $linked_agency           = get_user_meta( $current_user->ID, 'linked_agency', true );

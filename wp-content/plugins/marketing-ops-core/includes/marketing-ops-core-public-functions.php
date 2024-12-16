@@ -9726,3 +9726,40 @@ if ( ! function_exists( 'mops_is_user_ambassador' ) ) {
 		return ( false === $is_ambassador_in_badges ) ? false : true;
 	}
 }
+
+/**
+ * Check if the function exists.
+ */
+if ( ! function_exists( 'mops_is_user_agency_partner' ) ) {
+	/**
+	 * Check if the current user is agency partner.
+	 *
+	 * @param int $user_id User ID.
+	 *
+	 * @return boolean
+	 *
+	 * @since 1.0.0
+	 */
+	function mops_is_user_agency_partner( $user_id ) {
+		// If the function is not defined.
+		if ( ! function_exists( 'wc_memberships_get_user_memberships' ) ) {
+			return false;
+		}
+
+		// Get the user memberships.
+		$user_active_memberships = wc_memberships_get_user_active_memberships( $user_id );
+
+		// If there are no active memberships.
+		if ( empty( $user_active_memberships ) || ! is_array( $user_active_memberships ) ) {
+			return false;
+		}
+
+		// Loop through the active memberships.
+		foreach ( $user_active_memberships as $membership_data ) {
+			debug( $membership_data->plan->slug );
+		}
+		die;
+
+		return ( false === $is_ambassador_in_badges ) ? false : true;
+	}
+}
