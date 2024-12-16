@@ -27,13 +27,13 @@ $agency_id        = new WP_Query(
 		),
 	)
 );
-$agency_id        = ( ! empty( $agency_id[0] ) ) ? $agency_id[0] : false; 
+$agency_id        = ( ! empty( $agency_id->posts[0] ) ) ? $agency_id->posts[0] : false; 
 
 // If the linked agency is not available, show the registration page.
 if ( false === $agency_id || false === $is_agency_member ) {
 	echo do_shortcode( '[elementor-template id="231177"]' );
 } else {
-	// $agency_title = get_the_title( $agency_id );
+	$agency_title = get_the_title( $agency_id );
 	?>
 	<!-- <form name="agency-signup-form" method="GET" enctype="multipart/form-data"> -->
 		<div name="agency-signup-form">
@@ -41,7 +41,7 @@ if ( false === $agency_id || false === $is_agency_member ) {
 			<h1><?php esc_html_e( 'General', 'marketingops' ); ?></h1>
 			<div class="agencyformgroup">
 				<label><?php esc_html_e( 'Agency name', 'marketingops' ); ?> <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></label>
-				<input type="text" class="agancyinputbox" id="agencyname" name="agencyname" value="<?php // echo wp_kses_post( $agency_title ); ?>">
+				<input type="text" class="agancyinputbox" id="agencyname" name="agencyname" value="<?php echo wp_kses_post( $agency_title ); ?>">
 				<small><?php esc_html_e( 'This will be how your name will be displayed in the account section', 'marketingops' ); ?></small>
 			</div> 
 
