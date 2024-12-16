@@ -44,16 +44,18 @@ if ( false === $agency_id || false === $is_agency_member ) {
 				<label><?php esc_html_e( 'Agency name', 'marketingops' ); ?> <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></label>
 				<input type="text" class="agancyinputbox" id="agencyname" name="agencyname" value="<?php echo wp_kses_post( $agency_title ); ?>">
 				<small><?php esc_html_e( 'This will be how your name will be displayed in the account section', 'marketingops' ); ?></small>
-			</div> 
+			</div>
+
+			<?php esc_html_e( '', 'marketingops' ); ?>
 
 			<div class="agencyformgroup logoupload">
-				<label>Logo <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></label>
+				<label><?php esc_html_e( 'Logo', 'marketingops' ); ?> <i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i></label>
 
 				<div class="upload-btn-wrapper image-upload-container">
-					<button class="btn">Select an image</button>
-					<p>For the best results, upload horizontal version, 560 x 240px max</p>
+					<button class="btn"><?php esc_html_e( 'Select an image', 'marketingops' ); ?></button>
+					<p><?php esc_html_e( 'For the best results, upload horizontal version, 560 x 240px max', 'marketingops' ); ?></p>
 					<input type="file" class="imageInput" name="myfile" onchange="readURL(this)" accept="image/*" />
-						<div id="previewContainer" class="preview-container" style="display: none;">
+						<div id="previewContainer" class="preview-container" style="<?php echo ( empty( $agency_image[0] ) ? 'display: none;' : '' ); ?>">
     						<img class="preview-image" src="<?php echo ( ! empty( $agency_image[0] ) ? $agency_image[0] : '' ); ?>" alt="<?php esc_html_e( 'Image Preview', 'marketingops' ); ?>" />
     						<button class="removePreview remove-preview-btn" id="removePreview"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="15.35" stroke="white" stroke-width="1.3"></circle><path d="M11 11L16 16L11 21" stroke="white" stroke-width="1.3"></path><path d="M21 11L16 16L21 21" stroke="white" stroke-width="1.3"></path></svg></button>
   						</div>
