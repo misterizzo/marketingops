@@ -33,8 +33,9 @@ $agency_id        = ( ! empty( $agency_id->posts[0] ) ) ? $agency_id->posts[0] :
 if ( false === $agency_id || false === $is_agency_member ) {
 	echo do_shortcode( '[elementor-template id="231177"]' );
 } else {
-	$agency_title = get_the_title( $agency_id );
-	$agency_image = wp_get_attachment_image_src( get_post_thumbnail_id( $agency_id ), 'full-image' );
+	$agency_title       = get_the_title( $agency_id );
+	$agency_image       = wp_get_attachment_image_src( get_post_thumbnail_id( $agency_id ), 'full-image' );
+	$agency_description = get_post_field( 'post_content', $agency_id );
 	?>
 	<!-- <form name="agency-signup-form" method="GET" enctype="multipart/form-data"> -->
 		<div name="agency-signup-form">
@@ -63,9 +64,9 @@ if ( false === $agency_id || false === $is_agency_member ) {
 			</div>
 
 			<div class="agencyformgroup">
-				<label>Description </label>
-				<textarea id="description" name="description" rows="4" cols="50"></textarea>
-				<small>0 of 400 max character</small>    
+				<label><?php esc_html_e( 'Description', 'marketingops' ); ?></label>
+				<textarea id="description" name="description" rows="4" cols="50"><?php echo wp_kses_post( $agency_description ); ?></textarea>
+				<small><?php esc_html_e( '0 of 400 max character', 'marketingops' ); ?></small>
 			</div>
 
 			<h2>Contact</h2>
