@@ -9756,7 +9756,7 @@ if ( ! function_exists( 'mops_is_user_agency_partner' ) ) {
 
 		// Loop through the active memberships.
 		foreach ( $user_active_memberships as $membership_data ) {
-			debug( $membership_data->plan->slug );
+			debug( $membership_data );
 		}
 		die;
 
