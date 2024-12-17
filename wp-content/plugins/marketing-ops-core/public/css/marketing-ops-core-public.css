@@ -2612,6 +2612,9 @@ background-size: cover;
 @media (max-width:767px)
 {
 	.gradient_btn.doller_number_new.open_accelevents_purchase_tickets_modal.mpza2025btns a{position:relative;left:-55%;}
+	div#videoPreview iframe {
+		width: 100%;
+	}
 }
 
 
