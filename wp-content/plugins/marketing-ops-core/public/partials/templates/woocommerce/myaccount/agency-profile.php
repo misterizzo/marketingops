@@ -34,8 +34,8 @@ if ( false === $agency_id || false === $is_agency_member ) {
 	?><div class="bluredpage">
 		<h5>Coming soon</h5>
 		<div class="bluredpageinner">
-		<?php echo do_shortcode( '[elementor-template id="231177"]' ); ?>
-</div>
+				<?php echo do_shortcode( '[elementor-template id="231177"]' ); ?>
+		</div>
 	</div><?	
 } else {
 	$agency_title       = get_the_title( $agency_id );
