@@ -269,17 +269,16 @@ if ( false === $agency_id || false === $is_agency_member ) {
 				<textarea id="Text" name="Text" rows="4" cols="50"></textarea>
 				<small> Please list one award per line to create a list</small>    
 			</div>
-			
 
 			<div class="agencyformgroup videogroup articals">
-				<h6 class="jbtitle">Articles & Press Releses</h6>
+				<h6 class="jbtitle"><?php esc_html_e( 'Articles & Press Releases', 'marketingops' ); ?></h6>
 				<div class="fromgops">
 					<div class="agencyformgroup form-group">
 						<input type="checkbox" id="articles">
-						<label for="articles">Publish articles & press releases posted by me</label>
+						<label for="articles"><?php esc_html_e( 'Publish articles & press releases posted by me', 'marketingops' ); ?></label>
 					</div>
 					<button id="toggleButton">
-						Select <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_102_2793)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="white"/></g><defs><clipPath id="clip0_102_2793"><rect width="15" height="11" fill="white"/></clipPath></defs></svg></i>
+					<?php esc_html_e( 'Select', 'marketingops' ); ?> <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_102_2793)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="white"/></g><defs><clipPath id="clip0_102_2793"><rect width="15" height="11" fill="white"/></clipPath></defs></svg></i>
 					</button>
 				</div>
 				<div id="dynamicContainer"></div>
@@ -289,8 +288,8 @@ if ( false === $agency_id || false === $is_agency_member ) {
 			<div class="agencyformgroup videogroup">
 			<h6 class="jbtitle"><?php esc_html_e( 'Video', 'marketingops' ); ?></h6>
 				<label><?php esc_html_e( 'Youtube / Vimeo link', 'marketingops' ); ?></label>
-				<input type="text" class="agancyinputbox" id="Video" name="Video" value="<?php echo esc_url( $agency_video ); ?>">
-				<div id="videoPreview" style="margin-top: 20px;"></div>
+				<input type="text" class="agancyinputbox" id="agency-video" name="Video" value="<?php echo esc_url( $agency_video ); ?>">
+				<div id="videoPreview"></div>
 			</div>
 
 			<?php $include_jobs = get_field( 'agency_include_jobs', $agency_id ); ?>

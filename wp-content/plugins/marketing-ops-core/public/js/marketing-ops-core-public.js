@@ -5425,6 +5425,60 @@ jQuery( document ).ready( function( $ ) {
 	} );
 
 	// Video preview.
+	var agency_video_url = $( '#agency-video' ).val();
+	if ( '' !== agency_video_url ) show_agency_video_preview( agency_video_url );
+	$( document ).on( 'keyup change', '#agency-video', function() {
+		var video_url = $( this ).val();
+
+		show_agency_video_preview( video_url );
+	} );
+
+	/**
+	 * Show the video preview.
+	 *
+	 * @param {*} video_url 
+	 */
+	function show_agency_video_preview( video_url ) {
+		var video_id     = extract_youtube_video_id( video_url ) || extract_vimeo_video_id( video_url );
+		var preview_html = '';
+
+		if ( null === video_id ) {
+			preview_html = '<p style="color: red;">Invalid YouTube or Vimeo URL</p>';
+		} else {
+			const video_embed_url = ( 'youtube' === video_id.type ) ? `https://www.youtube.com/embed/${video_id.id}` : `https://player.vimeo.com/video/${video_id.id}`;
+			preview_html          = `<iframe width="560" height="315" src="${video_embed_url}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+		}
+
+		$( '#videoPreview' ).html( preview_html );
+	}
+
+	/**
+	 * Extract the video ID from youtube video url.
+	 *
+	 * @param {string} video_url Video URL.
+	 *
+	 * @return {string}
+	 */
+	function extract_youtube_video_id( video_url ) {
+		const regex = /(?:https?:\/\/)?(?:www\.)?youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/|live\/)?([a-zA-Z0-9_-]{11})|(?:https?:\/\/)?(?:www\.)?youtu\.be\/([a-zA-Z0-9_-]{11})/;
+		const match = video_url.match( regex );
+
+		return match ? { id: match[1] || match[2], type: 'youtube' } : null;
+	}
+
+	/**
+	 * Extract the video ID from vimeo video url.
+	 *
+	 * @param {string} video_url Video URL.
+	 *
+	 * @return {string}
+	 */
+	function extract_vimeo_video_id( video_url ) {
+		const regex = /(?:https?:\/\/)?(?:www\.)?vimeo\.com\/(?:video\/)?(\d+)/;
+		const match = video_url.match( regex );
+
+		return match ? { id: match[1], type: 'vimeo' } : null;
+	}
 } );
 
 
@@ -5455,42 +5509,7 @@ jQuery(document).ready(function ($) {
     inputFile.val('');
   });
 });
-/* image preview */     
-
-/* youtube preview */   
-  const videoInput = document.getElementById('Video');
-  const videoPreview = document.getElementById('videoPreview');
-  videoInput.addEventListener('input', () => {
-    const url = videoInput.value;
-    const videoId = extractYouTubeVideoId(url) || extractVimeoVideoId(url);
-    if (videoId) {
-      const embedUrl = videoId.type === 'youtube'
-        ? `https://www.youtube.com/embed/${videoId.id}`
-        : `https://player.vimeo.com/video/${videoId.id}`;
-      videoPreview.innerHTML = `
-        <iframe 
-          width="560" 
-          height="315" 
-          src="${embedUrl}" 
-          frameborder="0" 
-          allow="autoplay; fullscreen; picture-in-picture" 
-          allowfullscreen>
-        </iframe>`;
-    } else {
-      videoPreview.innerHTML = `<p style="color: red;">Invalid YouTube or Vimeo URL</p>`;
-    }
-  });
-  function extractYouTubeVideoId(url) {
-    const regex = /(?:https?:\/\/)?(?:www\.)?youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/|live\/)?([a-zA-Z0-9_-]{11})|(?:https?:\/\/)?(?:www\.)?youtu\.be\/([a-zA-Z0-9_-]{11})/;
-    const match = url.match(regex);
-    return match ? { id: match[1] || match[2], type: 'youtube' } : null;
-  }
-  function extractVimeoVideoId(url) {
-    const regex = /(?:https?:\/\/)?(?:www\.)?vimeo\.com\/(?:video\/)?(\d+)/;
-    const match = url.match(regex);
-    return match ? { id: match[1], type: 'vimeo' } : null;
-  }
-/* youtube preview */     
+/* image preview */
 
 /* toggle */  
 jQuery( document ).ready( function( $ ) {
