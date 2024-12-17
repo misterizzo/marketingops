@@ -31,7 +31,10 @@ $agency_id        = ( ! empty( $agency_id->posts[0] ) ) ? $agency_id->posts[0] :
 
 // If the linked agency is not available, show the registration page.
 if ( false === $agency_id || false === $is_agency_member ) {
-	echo do_shortcode( '[elementor-template id="231177"]' );
+	?><div class="bluredpage">
+		<h5>Coming soon</h5>
+		<?php echo do_shortcode( '[elementor-template id="231177"]' ); ?>
+	</div><?	
 } else {
 	$agency_title       = get_the_title( $agency_id );
 	$agency_image       = wp_get_attachment_image_src( get_post_thumbnail_id( $agency_id ), 'full-image' );
