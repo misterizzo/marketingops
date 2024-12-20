@@ -9836,9 +9836,9 @@ if ( ! function_exists( 'mops_get_agency_person_html_block' ) ) {
 				<div class="upload-btn-wrapper image-upload-container">
 					<button class="btn"><?php esc_html_e( 'Select an image', 'marketingops' ); ?></button>
 					<p><?php esc_html_e( 'For the best results, crop your photo to 640 x 380px before uploading.', 'marketingops' ); ?></p>
-					<input type="file" class="imageInput" onchange="readURL(this)" accept="image/*"/>
+					<input type="file" class="imageInput displaypicture" accept="image/*"/>
 					<div id="previewContainer" class="preview-container" style="<?php echo ( empty( $display_picture[0] ) ? 'display: none;' : '' ); ?>">
-						<input type="hidden" class="displaypicture" value="<?php echo ( ! empty( $person_data['display_picture'] ) ? $person_data['display_picture'] : '' ); ?>" />
+						<input type="hidden" class="displaypicture_id" value="<?php echo ( ! empty( $person_data['display_picture'] ) ? $person_data['display_picture'] : '' ); ?>" />
 						<img class="preview-image" src="<?php echo ( ! empty( $display_picture[0] ) ? $display_picture[0] : '' ); ?>" alt="Image Preview" />
 						<button class="removePreview remove-preview-btn" id="removePreview"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="15.35" stroke="white" stroke-width="1.3"></circle><path d="M11 11L16 16L11 21" stroke="white" stroke-width="1.3"></path><path d="M21 11L16 16L21 21" stroke="white" stroke-width="1.3"></path></svg></button>
 					</div>
@@ -9848,5 +9848,52 @@ if ( ! function_exists( 'mops_get_agency_person_html_block' ) ) {
 		<?php
 
 		return ob_get_clean();
+	}
+}
+
+/**
+ * Check if the function exists.
+ */
+if ( ! function_exists( 'mops_upload_media' ) ) {
+	/**
+	 * Upload the media to WordPress media folder and return the attachment ID.
+	 *
+	 * @return int
+	 *
+	 * @since 1.0.0
+	 */
+	function mops_upload_media( $media_file, $post_id = 0 ) {
+		$filename      = $media_file['name'];
+		$upload_file   = wp_upload_bits( $filename, null, file_get_contents( $media_file['tmp_name'] ) );
+		$attachment_id = 0;
+
+		if ( ! $upload_file['error'] ) {
+			$wp_filetype   = wp_check_filetype( $filename, null );
+			$attachment    = array(
+				'post_mime_type' => $wp_filetype['type'],
+				'post_parent'    => 0,
+				'post_title'     => preg_replace('/\.[^.]+$/', '', $filename),
+				'post_content'   => '',
+				'post_status'    => 'inherit',
+			);
+
+			if ( 0 === $post_id ) {
+				$attachment_id = wp_insert_attachment( $attachment, $upload_file['file'] );
+			} else {
+				$attachment_id = wp_insert_attachment( $attachment, $upload_file['file'], $post_id );
+			}
+
+			if ( ! is_wp_error( $attachment_id ) ) {
+				require_once( ABSPATH . 'wp-admin' . '/includes/image.php' );
+				$attachment_data = wp_generate_attachment_metadata( $attachment_id, $upload_file['file'] );
+				wp_update_attachment_metadata( $attachment_id, $attachment_data );
+			}
+
+			if ( 0 !== $post_id ) {
+				set_post_thumbnail( $post_id, $attachment_id );
+			}
+		}
+
+		return $attachment_id;
 	}
 }

@@ -5717,8 +5717,10 @@ class Marketing_Ops_Core_Public {
 				}
 
 				// Add the "agency-profile" endpoint.
-				if ( ! array_key_exists( 'agency-profile', $endpoints ) ) {
-					$new_endpoints['agency-profile'] = __( 'Agency Profile', 'marketingops' );
+				if ( current_user_can( 'administrator' ) ) {
+					if ( ! array_key_exists( 'agency-profile', $endpoints ) ) {
+						$new_endpoints['agency-profile'] = __( 'Agency Profile', 'marketingops' );
+					}
 				}
 
 				// Add the "platform-profile" endpoint.
@@ -6557,40 +6559,45 @@ class Marketing_Ops_Core_Public {
 	 * @since 1.0.0
 	 */
 	public function mops_update_agency_callback() {
-		$posted_array               = filter_input_array( INPUT_POST );
-		$agency_name                = ( ! empty( $posted_array['agency_name'] ) ) ? $posted_array['agency_name'] : '';
-		$agency_status              = ( ! empty( $posted_array['status'] ) ) ? $posted_array['status'] : '';
-		$agency_desc                = ( ! empty( $posted_array['agency_desc'] ) ) ? $posted_array['agency_desc'] : '';
-		$agency_contact_name        = ( ! empty( $posted_array['agency_contact_name'] ) ) ? $posted_array['agency_contact_name'] : '';
-		$agency_contact_email       = ( ! empty( $posted_array['agency_contact_email'] ) ) ? $posted_array['agency_contact_email'] : '';
-		$agency_contact_website     = ( ! empty( $posted_array['agency_contact_website'] ) ) ? $posted_array['agency_contact_website'] : '';
-		$agency_year_founded        = ( ! empty( $posted_array['agency_year_founded'] ) ) ? $posted_array['agency_year_founded'] : '';
-		$agency_employees           = ( ! empty( $posted_array['agency_employees'] ) ) ? $posted_array['agency_employees'] : '';
-		$agency_people              = ( ! empty( $posted_array['agency_people'] ) ) ? $posted_array['agency_people'] : array();
-		$agency_people_data         = array();
-		$agency_type                = ( ! empty( $posted_array['agency_type'] ) ) ? (int) $posted_array['agency_type'] : false;
-		$agency_regions             = ( ! empty( $posted_array['agency_regions'] ) ) ? $posted_array['agency_regions'] : false;
-		$agency_regions             = ( false !== $agency_regions ) ? array_map( 'intval', $agency_regions ) : false;
-		$agency_primary_verticals   = ( ! empty( $posted_array['agency_primary_verticals'] ) ) ? $posted_array['agency_primary_verticals'] : false;
-		$agency_primary_verticals   = ( false !== $agency_primary_verticals ) ? array_map( 'intval', $agency_primary_verticals ) : false;
-		$agency_services            = ( ! empty( $posted_array['agency_services'] ) ) ? $posted_array['agency_services'] : false;
-		$agency_services            = ( false !== $agency_services ) ? array_map( 'intval', $agency_services ) : false;
-		$agency_testimonial_text    = ( ! empty( $posted_array['agency_testimonial_text'] ) ) ? $posted_array['agency_testimonial_text'] : '';
-		$agency_testimonial_author  = ( ! empty( $posted_array['agency_testimonial_author'] ) ) ? $posted_array['agency_testimonial_author'] : '';
-		$agency_testimonial         = array( // Set the testimonial.
+		$posted_array                  = filter_input_array( INPUT_POST );
+		$posted_array['agency_id']     = (int) $posted_array['agency_id'];
+		$agency_featured_image         = ( ! empty( $_FILES['agency_featured_image'] ) ) ? $_FILES['agency_featured_image'] : '';
+		$agency_name                   = ( ! empty( $posted_array['agency_name'] ) ) ? $posted_array['agency_name'] : '';
+		$agency_status                 = ( ! empty( $posted_array['status'] ) ) ? $posted_array['status'] : '';
+		$agency_desc                   = ( ! empty( $posted_array['agency_desc'] ) ) ? $posted_array['agency_desc'] : '';
+		$agency_contact_name           = ( ! empty( $posted_array['agency_contact_name'] ) ) ? $posted_array['agency_contact_name'] : '';
+		$agency_contact_email          = ( ! empty( $posted_array['agency_contact_email'] ) ) ? $posted_array['agency_contact_email'] : '';
+		$agency_contact_website        = ( ! empty( $posted_array['agency_contact_website'] ) ) ? $posted_array['agency_contact_website'] : '';
+		$agency_year_founded           = ( ! empty( $posted_array['agency_year_founded'] ) ) ? $posted_array['agency_year_founded'] : '';
+		$agency_employees              = ( ! empty( $posted_array['agency_employees'] ) ) ? $posted_array['agency_employees'] : '';
+		$agency_people                 = ( ! empty( $posted_array['agency_people'] ) ) ? $posted_array['agency_people'] : array();
+		$agency_people_data            = array();
+		$agency_type                   = ( ! empty( $posted_array['agency_type'] ) ) ? (int) $posted_array['agency_type'] : false;
+		$agency_regions                = ( ! empty( $posted_array['agency_regions'] ) ) ? $posted_array['agency_regions'] : false;
+		$agency_regions                = ( false !== $agency_regions ) ? array_map( 'intval', explode( ',', $agency_regions ) ) : false;
+		$agency_primary_verticals      = ( ! empty( $posted_array['agency_primary_verticals'] ) ) ? $posted_array['agency_primary_verticals'] : false;
+		$agency_primary_verticals      = ( false !== $agency_primary_verticals ) ? array_map( 'intval', explode( ',', $agency_primary_verticals ) ) : false;
+		$agency_services               = ( ! empty( $posted_array['agency_services'] ) ) ? $posted_array['agency_services'] : false;
+		$agency_services               = ( false !== $agency_services ) ? array_map( 'intval', explode( ',', $agency_services ) ) : false;
+		$agency_testimonial_text       = ( ! empty( $posted_array['agency_testimonial_text'] ) ) ? $posted_array['agency_testimonial_text'] : '';
+		$agency_testimonial_author     = ( ! empty( $posted_array['agency_testimonial_author'] ) ) ? $posted_array['agency_testimonial_author'] : '';
+		$agency_testimonial            = array( // Set the testimonial.
 			'text'                      => $agency_testimonial_text,
 			'name_of_the_person_quoted' => $agency_testimonial_author,
 		);
-		$agency_clients             = ( ! empty( $posted_array['agency_clients'] ) ) ? $posted_array['agency_clients'] : '';
-		$agency_clients_data        = array();
-		$agency_certifications      = ( ! empty( $posted_array['agency_certifications'] ) ) ? $posted_array['agency_certifications'] : '';
-		$agency_certifications_data = array();
-		$agency_awards              = ( ! empty( $posted_array['agency_awards'] ) ) ? $posted_array['agency_awards'] : '';
-		$agency_awards_data         = array();
-		$include_articles           = ( ! empty( $posted_array['include_articles'] ) && 'yes' === $posted_array['include_articles'] ) ? true : false;
-		$agency_articles            = ( ! empty( $posted_array['agency_articles'] ) ) ? $posted_array['agency_articles'] : array();
-		$include_jobs               = ( ! empty( $posted_array['include_jobs'] ) && 'yes' === $posted_array['include_jobs'] ) ? true : false;
-		$agency_video               = ( ! empty( $posted_array['agency_video'] ) ) ? $posted_array['agency_video'] : '';
+		$agency_clients                = ( ! empty( $posted_array['agency_clients'] ) ) ? $posted_array['agency_clients'] : '';
+		$agency_clients_data           = array();
+		$agency_certifications         = ( ! empty( $posted_array['agency_certifications'] ) ) ? $posted_array['agency_certifications'] : '';
+		$agency_certifications_data    = array();
+		$agency_awards                 = ( ! empty( $posted_array['agency_awards'] ) ) ? $posted_array['agency_awards'] : '';
+		$agency_awards_data            = array();
+		$include_articles              = ( ! empty( $posted_array['include_articles'] ) && 'yes' === $posted_array['include_articles'] ) ? true : false;
+		$agency_articles               = ( ! empty( $posted_array['agency_articles'] ) ) ? $posted_array['agency_articles'] : array();
+		$include_jobs                  = ( ! empty( $posted_array['include_jobs'] ) && 'yes' === $posted_array['include_jobs'] ) ? true : false;
+		$agency_video                  = ( ! empty( $posted_array['agency_video'] ) ) ? $posted_array['agency_video'] : '';
+
+		// Upload the featured image.
+		mops_upload_media( $agency_featured_image, $posted_array['agency_id'] );
 
 		// Loop through the agency clients.
 		if ( ! empty( $agency_clients ) && is_array( $agency_clients ) ) {

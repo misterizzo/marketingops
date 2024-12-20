@@ -35,8 +35,7 @@ if ( false === $agency_id || false === $is_agency_member ) {
 	<div class="bluredpage">
 		<h5><?php echo wp_kses_post( 'This page will be available soon. In the meantime if you would like to create an agency listing please use our <a href="/contact/">contact us form</a> and our team can add you to the directory. Thank you!', 'marketingops' ); ?></h5>
 		<div class="bluredpageinner"><?php echo do_shortcode( '[elementor-template id="231177"]' ); ?></div>
-	</div>
-	<?php
+	</div><?
 } else {
 	$agency_post_status = get_post_status( $agency_id );
 	$agency_title       = get_the_title( $agency_id );
@@ -57,7 +56,7 @@ if ( false === $agency_id || false === $is_agency_member ) {
 				<div class="upload-btn-wrapper image-upload-container">
 					<button class="btn"><?php esc_html_e( 'Select an image', 'marketingops' ); ?></button>
 					<p><?php esc_html_e( 'For the best results, upload horizontal version, 560 x 240px max', 'marketingops' ); ?></p>
-					<input type="file" class="imageInput" name="myfile" onchange="readURL(this)" accept="image/*" />
+					<input type="file" class="imageInput" id="agency-featured-image" name="myfile" accept="image/*" />
 					<div id="previewContainer" class="preview-container" style="<?php echo ( empty( $agency_image[0] ) ? 'display: none;' : '' ); ?>">
 						<input type="hidden" class="agency-featured-image-id" value="<?php echo ( ! empty( $agency_image_id ) ? $agency_image_id : '' ); ?>" />
 						<img class="preview-image" src="<?php echo ( ! empty( $agency_image[0] ) ? $agency_image[0] : '' ); ?>" alt="<?php esc_html_e( 'Image Preview', 'marketingops' ); ?>" />

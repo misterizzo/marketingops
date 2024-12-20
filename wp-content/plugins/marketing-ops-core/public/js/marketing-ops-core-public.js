@@ -5457,7 +5457,9 @@ jQuery( document ).ready( function( $ ) {
 				var video_id     = extract_youtube_video_id( video_url ) || extract_vimeo_video_id( video_url );
 				var preview_html = '';
 
-				if ( null === video_id ) {
+				if ( -1 === video_id ) {
+					preview_html = '';
+				} else if ( null === video_id ) {
 					preview_html = '<p style="color: red;">Invalid YouTube or Vimeo URL</p>';
 				} else {
 					const video_embed_url = ( 'youtube' === video_id.type ) ? `https://www.youtube.com/embed/${video_id.id}` : `https://player.vimeo.com/video/${video_id.id}`;
@@ -5475,6 +5477,8 @@ jQuery( document ).ready( function( $ ) {
 			 * @return {string}
 			 */
 			function extract_youtube_video_id( video_url ) {
+				if (  '' === video_url ) return -1;
+
 				const regex = /(?:https?:\/\/)?(?:www\.)?youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/|live\/)?([a-zA-Z0-9_-]{11})|(?:https?:\/\/)?(?:www\.)?youtu\.be\/([a-zA-Z0-9_-]{11})/;
 				const match = video_url.match( regex );
 
@@ -5489,6 +5493,8 @@ jQuery( document ).ready( function( $ ) {
 			 * @return {string}
 			 */
 			function extract_vimeo_video_id( video_url ) {
+				if (  '' === video_url ) return -1;
+
 				const regex = /(?:https?:\/\/)?(?:www\.)?vimeo\.com\/(?:video\/)?(\d+)/;
 				const match = video_url.match( regex );
 
@@ -5533,7 +5539,6 @@ jQuery( document ).ready( function( $ ) {
 		// Agency actions.
 		$( document ).on( 'click', '.agency-actions li a', function() {
 			var this_button               = $( this );
-			var this_button_text          = this_button.html();
 			var status                    = this_button.data( 'status' );
 			var agency_name               = $( '#agency-name' ).val();
 			var agency_desc               = $( '#agency-description' ).val();
@@ -5560,6 +5565,8 @@ jQuery( document ).ready( function( $ ) {
 			var include_jobs              = ( $( '#include-jobs' ).is( ':checked' ) ) ? 'yes' : 'no';
 			var agency_video              = $( '#agency-video' ).val();
 			var agency_articles           = [];
+			var agency_featured_image     = $( '#agency-featured-image' ).prop( 'files' )[0];
+			var agency_form_data          = new FormData();
 
 			// Loop through the regions.
 			$( '.agency-region' ).each( function() {
@@ -5587,17 +5594,19 @@ jQuery( document ).ready( function( $ ) {
 
 			// Loop through the agency people.
 			$( '.agency-main-people-container .person-data' ).each( function() {
-				var this_person    = $( this );
-				var fullname       = this_person.find( '.fullname' ).val();
-				var position       = this_person.find( '.position' ).val();
-				var linkedin       = this_person.find( '.linkedin' ).val();
-				var displaypicture = this_person.find( '.displaypicture' ).val();
+				var this_person       = $( this );
+				var fullname          = this_person.find( '.fullname' ).val();
+				var position          = this_person.find( '.position' ).val();
+				var linkedin          = this_person.find( '.linkedin' ).val();
+				var displaypicture    = this_person.find( '.displaypicture' ).prop( 'files' )[0];
+				var displaypicture_id = this_person.find( '.displaypicture_id' ).val();
 
 				agency_people.push( {
 					'fullname': fullname,
 					'position': position,
 					'linkedin': linkedin,
 					'displaypicture': displaypicture,
+					'displaypicture_id': displaypicture_id,
 				} );
 			} );
 
@@ -5606,41 +5615,43 @@ jQuery( document ).ready( function( $ ) {
 				if ( $( this ).is( ':checked' ) ) {
 					agency_articles.push( parseInt( $( this ).val() ) );
 				}
-
 			} );
+
+			agency_form_data.append( 'action', 'update_agency' );
+			agency_form_data.append( 'agency_featured_image', agency_featured_image );
+			agency_form_data.append( 'status', status );
+			agency_form_data.append( 'agency_id', $( '#agency-id' ).val() );
+			agency_form_data.append( 'agency_name', agency_name );
+			agency_form_data.append( 'agency_desc', agency_desc );
+			agency_form_data.append( 'agency_featured_image_id', agency_featured_image_id );
+			agency_form_data.append( 'agency_contact_name', contact_name );
+			agency_form_data.append( 'agency_contact_email', contact_email );
+			agency_form_data.append( 'agency_contact_website', contact_website );
+			agency_form_data.append( 'agency_type', agency_type );
+			agency_form_data.append( 'agency_year_founded', agency_year_founded );
+			agency_form_data.append( 'agency_employees', agency_employees );
+			agency_form_data.append( 'agency_regions', agency_regions );
+			agency_form_data.append( 'agency_primary_verticals', agency_primary_verticals );
+			agency_form_data.append( 'agency_services', agency_services );
+			agency_form_data.append( 'agency_people', agency_people );
+			agency_form_data.append( 'agency_testimonial_text', agency_testimonial_text );
+			agency_form_data.append( 'agency_testimonial_author', agency_testimonial_author );
+			agency_form_data.append( 'agency_clients', agency_clients );
+			agency_form_data.append( 'agency_certifications', agency_certifications );
+			agency_form_data.append( 'agency_awards', agency_awards );
+			agency_form_data.append( 'include_articles', include_articles );
+			agency_form_data.append( 'agency_articles', agency_articles );
+			agency_form_data.append( 'include_jobs', include_jobs );
+			agency_form_data.append( 'agency_video', agency_video );
 
 			// Send the AJAX request for updating the agency details.
 			$.ajax({
 				dataType: 'JSON',
 				url: ajaxurl,
 				type: 'POST',
-				data: {
-					action: 'update_agency',
-					status: status,
-					agency_id: $( '#agency-id' ).val(),
-					agency_name: agency_name,
-					agency_desc: agency_desc,
-					agency_featured_image_id: agency_featured_image_id,
-					agency_contact_name: contact_name,
-					agency_contact_email: contact_email,
-					agency_contact_website: contact_website,
-					agency_type: agency_type,
-					agency_year_founded: agency_year_founded,
-					agency_employees: agency_employees,
-					agency_regions: agency_regions,
-					agency_primary_verticals: agency_primary_verticals,
-					agency_services: agency_services,
-					agency_people: agency_people,
-					agency_testimonial_text: agency_testimonial_text,
-					agency_testimonial_author: agency_testimonial_author,
-					agency_clients: agency_clients,
-					agency_certifications: agency_certifications,
-					agency_awards: agency_awards,
-					include_articles: include_articles,
-					agency_articles: agency_articles,
-					include_jobs: include_jobs,
-					agency_video: agency_video,
-				},
+				data: agency_form_data,
+				contentType: false,
+				processData: false,
 				beforeSend: function() {
 					this_button.text( 'Updating...' );
 				},
@@ -5667,56 +5678,56 @@ jQuery( document ).ready( function( $ ) {
 /* image preview */
 jQuery(document).ready(function ($) {
   $('.imageInput').on('change', function () {
-    const container = $(this).closest('.image-upload-container');
-    const previewContainer = container.find('.preview-container');
-    const img = container.find('.preview-image');
-    if (this.files && this.files[0]) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        img.attr('src', e.target.result);
-        previewContainer.show();
-      };
-      reader.readAsDataURL(this.files[0]);
-    }
+	const container = $(this).closest('.image-upload-container');
+	const previewContainer = container.find('.preview-container');
+	const img = container.find('.preview-image');
+	if (this.files && this.files[0]) {
+	  const reader = new FileReader();
+	  reader.onload = function (e) {
+		img.attr('src', e.target.result);
+		previewContainer.show();
+	  };
+	  reader.readAsDataURL(this.files[0]);
+	}
   });
   $('.remove-preview-btn').on('click', function () {
-    const container = $(this).closest('.image-upload-container');
-    const previewContainer = container.find('.preview-container');
-    const inputFile = container.find('.imageInput');
-    const img = container.find('.preview-image');
-    img.attr('src', '');
-    previewContainer.hide();
-    inputFile.val('');
+	const container = $(this).closest('.image-upload-container');
+	const previewContainer = container.find('.preview-container');
+	const inputFile = container.find('.imageInput');
+	const img = container.find('.preview-image');
+	img.attr('src', '');
+	previewContainer.hide();
+	inputFile.val('');
   });
 });
 /* image preview */
 
 jQuery(document).ready(function ($) {
   $("#dynamicContent").on("click", ".remove-person", function () {
-    const personId = $(this).data("person-id");
-    $(`#personBlock${personId}`).remove();
+	const personId = $(this).data("person-id");
+	$(`#personBlock${personId}`).remove();
   });
   $("#dynamicContent").on("change", ".imageInput", function () {
-    const container = $(this).closest('.image-upload-container');
-    const previewContainer = container.find('.preview-container');
-    const img = container.find('.preview-image');
-    if (this.files && this.files[0]) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        img.attr('src', e.target.result);
-        previewContainer.show();
-      };
-      reader.readAsDataURL(this.files[0]);
-    }
+	const container = $(this).closest('.image-upload-container');
+	const previewContainer = container.find('.preview-container');
+	const img = container.find('.preview-image');
+	if (this.files && this.files[0]) {
+	  const reader = new FileReader();
+	  reader.onload = function (e) {
+		img.attr('src', e.target.result);
+		previewContainer.show();
+	  };
+	  reader.readAsDataURL(this.files[0]);
+	}
   });
   $("#dynamicContent").on("click", ".remove-preview-btn", function () {
-    const container = $(this).closest('.image-upload-container');
-    const previewContainer = container.find('.preview-container');
-    const inputFile = container.find('.imageInput');
-    const img = container.find('.preview-image');
-    img.attr('src', '');
-    previewContainer.hide();
-    inputFile.val('');
+	const container = $(this).closest('.image-upload-container');
+	const previewContainer = container.find('.preview-container');
+	const inputFile = container.find('.imageInput');
+	const img = container.find('.preview-image');
+	img.attr('src', '');
+	previewContainer.hide();
+	inputFile.val('');
   });
 });
 /* toggle */
