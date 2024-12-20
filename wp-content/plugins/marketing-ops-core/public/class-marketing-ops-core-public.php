@@ -6561,7 +6561,7 @@ class Marketing_Ops_Core_Public {
 	public function mops_update_agency_callback() {
 		$posted_array                  = filter_input_array( INPUT_POST );
 		$posted_array['agency_id']     = (int) $posted_array['agency_id'];
-		$agency_featured_image         = ( ! empty( $_FILES['agency_featured_image'] ) ) ? $_FILES['agency_featured_image'] : '';
+		$agency_featured_image         = ( ! empty( $_FILES['agency_featured_image'] ) ) ? $_FILES['agency_featured_image'] : false;
 		$agency_name                   = ( ! empty( $posted_array['agency_name'] ) ) ? $posted_array['agency_name'] : '';
 		$agency_status                 = ( ! empty( $posted_array['status'] ) ) ? $posted_array['status'] : '';
 		$agency_desc                   = ( ! empty( $posted_array['agency_desc'] ) ) ? $posted_array['agency_desc'] : '';
@@ -6597,7 +6597,9 @@ class Marketing_Ops_Core_Public {
 		$agency_video                  = ( ! empty( $posted_array['agency_video'] ) ) ? $posted_array['agency_video'] : '';
 
 		// Upload the featured image.
-		mops_upload_media( $agency_featured_image, $posted_array['agency_id'] );
+		if ( false !== $agency_featured_image ) {
+			mops_upload_media( $agency_featured_image, $posted_array['agency_id'] );
+		}
 
 		// Loop through the agency clients.
 		if ( ! empty( $agency_clients ) && is_array( $agency_clients ) ) {
@@ -6679,5 +6681,16 @@ class Marketing_Ops_Core_Public {
 			200
 		);
 		wp_die();
+	}
+
+	/**
+	 * Filter the agencies.
+	 *
+	 * @since 1.0.0
+	 */
+	public function mops_filter_agencies_callback() {
+		$posted_array = filter_input_array( INPUT_POST );
+		debug( $posted_array );
+		die;
 	}
 }

@@ -16,715 +16,122 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 get_header();
+
+global $post, $current_user;
+
+// Fetch the agencies.
+$is_agency_member         = mops_is_user_agency_partner( $current_user->ID );
+$agency_query             = new WP_Query( moc_posts_query_args( 'agency', 1, -1 ) );
+$agency_ids               = ( ! empty( $agency_query->posts ) && is_array( $agency_query->posts ) ) ? $agency_query->posts : array();
+$page_excerpt             = get_post_field( 'post_excerpt', $post->ID );
+$agency_types             = get_terms( // Get the agency types.
+	array(
+		'taxonomy'   => 'agency_type',
+		'hide_empty' => false,
+	)
+);
+$agency_regions           = get_terms( // Get the agency regions.
+	array(
+		'taxonomy'   => 'agency_region',
+		'hide_empty' => false,
+	)
+);
+$agency_primary_verticals = get_terms( // Get the agency primary verticals.
+	array(
+		'taxonomy'   => 'agency_primary_vertical',
+		'hide_empty' => false,
+	)
+);
+$agency_services          = get_terms( // Get the agency services.
+	array(
+		'taxonomy'   => 'agency_service',
+		'hide_empty' => false,
+	)
+);
 ?>
 <section class="agenctdirectoryblock">
-	<div class="leftbgbar">
-		<img src="/wp-content/themes/marketingops/images/agencypages/blurcircle1.png" alt="img" />
-	</div>
-	<div class="leftbgbar_two">
-		<img src="/wp-content/themes/marketingops/images/agencypages/blur3.png" alt="img" />
-	</div>
-	<div class="rightbgbar">
-		<img src="/wp-content/themes/marketingops/images/agencypages/blur2.png" alt="img" />
-	</div>
-	<div class="rightbgbar_two">
-		<img src="/wp-content/themes/marketingops/images/agencypages/blur33.png" alt="img" />
-	</div>
+	<div class="leftbgbar"><img src="/wp-content/themes/marketingops/images/agencypages/blurcircle1.png" alt="img" /></div>
+	<!-- <div class="leftbgbar_two"><img src="/wp-content/themes/marketingops/images/agencypages/blur3.png" alt="img" /></div>
+	<div class="rightbgbar"><img src="/wp-content/themes/marketingops/images/agencypages/blur2.png" alt="img" /></div>
+	<div class="rightbgbar_two"><img src="/wp-content/themes/marketingops/images/agencypages/blur33.png" alt="img" /></div> -->
 	<div class="agency-container">
-		<h1>Agency Directory</h1>
-		<h2>Curated list of Wubba Lubba dub-dub agencies, top of the line. </h2>
-		<div id="container" class="agency-containe">
-			<select id="normal-select-1" placeholder-text="Email Marketing" style="display:none;">
-				<option value="1" class="select-dropdown__list-item">All Services</option>
-				<option value="2" class="select-dropdown__list-item">Affiliate Marketing</option>
-				<option value="3" class="select-dropdown__list-item">Branded Content</option>
-				<option value="4" class="select-dropdown__list-item">Database Acquisition</option>
-				<option value="4" class="select-dropdown__list-item">Email Marketing</option>
-				<option value="4" class="select-dropdown__list-item">Performance Pr</option>
-				<option value="4" class="select-dropdown__list-item">Programmatic</option>
-				<option value="4" class="select-dropdown__list-item">SEM</option>
-				<option value="4" class="select-dropdown__list-item">SEO</option>
-				<option value="4" class="select-dropdown__list-item">Social Media</option>
-			</select>
-			
-			<select id="normal-select-2" placeholder-text="DTC" style="display:none;">
-			<option value="1" class="select-dropdown__list-item">All Services</option>
-				<option value="2" class="select-dropdown__list-item">Affiliate Marketing</option>
-				<option value="3" class="select-dropdown__list-item">Branded Content</option>
-				<option value="4" class="select-dropdown__list-item">Database Acquisition</option>
-				<option value="4" class="select-dropdown__list-item">Email Marketing</option>
-				<option value="4" class="select-dropdown__list-item">Performance Pr</option>
-				<option value="4" class="select-dropdown__list-item">Programmatic</option>
-				<option value="4" class="select-dropdown__list-item">SEM</option>
-				<option value="4" class="select-dropdown__list-item">SEO</option>
-				<option value="4" class="select-dropdown__list-item">Social Media</option>
-			</select>
+		<h1><?php echo wp_kses_post( get_the_title( $post->ID ) ); ?></h1>
+		<?php if ( ! empty( $page_excerpt ) ) { ?>
+			<h2><?php echo esc_html( $page_excerpt ); ?></h2>
+		<?php } ?>
 
-			<select id="normal-select-3" placeholder-text="Holding company" style="display:none;">
-				<option value="1" class="select-dropdown__list-item">All Services</option>
-				<option value="2" class="select-dropdown__list-item">Affiliate Marketing</option>
-				<option value="3" class="select-dropdown__list-item">Branded Content</option>
-				<option value="4" class="select-dropdown__list-item">Database Acquisition</option>
-				<option value="4" class="select-dropdown__list-item">Email Marketing</option>
-				<option value="4" class="select-dropdown__list-item">Performance Pr</option>
-				<option value="4" class="select-dropdown__list-item">Programmatic</option>
-				<option value="4" class="select-dropdown__list-item">SEM</option>
-				<option value="4" class="select-dropdown__list-item">SEO</option>
-				<option value="4" class="select-dropdown__list-item">Social Media</option>
-			</select>
-			
-			<select id="normal-select-4" placeholder-text="South America" style="display:none;">
-			<option value="1" class="select-dropdown__list-item">All Services</option>
-				<option value="2" class="select-dropdown__list-item">Affiliate Marketing</option>
-				<option value="3" class="select-dropdown__list-item">Branded Content</option>
-				<option value="4" class="select-dropdown__list-item">Database Acquisition</option>
-				<option value="4" class="select-dropdown__list-item">Email Marketing</option>
-				<option value="4" class="select-dropdown__list-item">Performance Pr</option>
-				<option value="4" class="select-dropdown__list-item">Programmatic</option>
-				<option value="4" class="select-dropdown__list-item">SEM</option>
-				<option value="4" class="select-dropdown__list-item">SEO</option>
-				<option value="4" class="select-dropdown__list-item">Social Media</option>
-			</select>
-		</div>
+		<!-- if the agencies are available, filter them -->
+		<?php if ( ! empty( $agency_ids ) && is_array( $agency_ids ) ) { ?>
+			<div id="container" class="agency-containe agency-directory-filters" style="">
+				<!-- agency types -->
+				<?php if ( ! empty( $agency_types ) && is_array( $agency_types ) ) { ?>
+					<select id="normal-select-1" class="agency-type agency-filter-field" placeholder-text="<?php esc_html_e( 'Type', 'marketingops' ); ?>" style="display:none;">
+						<option value="-1" class="select-dropdown__list-item"><?php esc_html_e( 'All Types', 'marketingops' ); ?></option>
+						<?php foreach ( $agency_types as $agency_type ) { ?>
+							<option value="<?php echo esc_attr( $agency_type->term_id ); ?>" class="select-dropdown__list-item"><?php echo wp_kses_post( $agency_type->name ); ?></option>
+						<?php } ?>
+					</select>
+				<?php } ?>
 
-		<div class="agency-mainlistboxs">
-			<ul class="innermainlistboxs">
-				<li>
-					<div class="inneragencylistbox">
-						<h4>PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/acelleration.png" alt="img" />
-						<h3>Acceleration Partners</h3>
-						<ul>
-							<li> Affiliate Marketing </li>
-							<li> Influencer Marketing </li>
-							<li> Performance PR </li>
-							<li> Outcome-focused Influencer Marketing </li>
-							<li> Content </li>
-							<li> Brand Partnerships </li>
-							<li> B2B </li>
-							<li> Mobile </li>
-							<li> Affiliate Search: TM+ </li>
-							<li> +6 more </li>
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>	
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>
-				</li>
+				<!-- agency primary verticals -->
+				<?php if ( ! empty( $agency_primary_verticals ) && is_array( $agency_primary_verticals ) ) { ?>
+					<select id="normal-select-2" class="agency-primary-verticals agency-filter-field" placeholder-text="<?php esc_html_e( 'Vertical', 'marketingops' ); ?>" style="display:none;">
+						<option value="-1" class="select-dropdown__list-item"><?php esc_html_e( 'All Primary Verticals', 'marketingops' ); ?></option>
+						<?php foreach ( $agency_primary_verticals as $agency_primary_vertical ) { ?>
+							<option value="<?php echo esc_attr( $agency_primary_vertical->term_id ); ?>" class="select-dropdown__list-item"><?php echo wp_kses_post( $agency_primary_vertical->name ); ?></option>
+						<?php } ?>
+					</select>
+				<?php } ?>
 
-				<li>
-					<div class="inneragencylistbox">
-						<h4>PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/allinclusive.png" alt="img" />
-						<h3>All Inclusive Marketing Inc.</h3>
-						<ul>
-							<li> Affiliate Marketing </li>
-							<li> Influencer Marketing </li>
-							<li> B2B Lead Generation </li>
-							<li> Analytics & Attribution </li>
-							<li> Program Migration </li>
-							<li> Program Set-up & Launch </li>
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>	
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>
-				</li>
+				<!-- agency service -->
+				<?php if ( ! empty( $agency_services ) && is_array( $agency_services ) ) { ?>
+					<select id="normal-select-3" class="agency-services agency-filter-field" placeholder-text="<?php esc_html_e( 'Service', 'marketingops' ); ?>" style="display:none;">
+						<option value="-1" class="select-dropdown__list-item"><?php esc_html_e( 'All Services', 'marketingops' ); ?></option>
+						<?php foreach ( $agency_services as $agency_service ) { ?>
+							<option value="<?php echo esc_attr( $agency_service->term_id ); ?>" class="select-dropdown__list-item"><?php echo wp_kses_post( $agency_service->name ); ?></option>
+						<?php } ?>
+					</select>
+				<?php } ?>
 
-				<li>
-					<div class="inneragencylistbox">
-						<h4>PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/dmipartners.png" alt="img" />
-						<h3>DMi Partners</h3>
-						<ul>
+				<!-- agency regions -->
+				<?php if ( ! empty( $agency_regions ) && is_array( $agency_regions ) ) { ?>
+					<select id="normal-select-4" class="agency-regions agency-filter-field" placeholder-text="<?php esc_html_e( 'Region', 'marketingops' ); ?>" style="display:none;">
+						<option value="-1" class="select-dropdown__list-item"><?php esc_html_e( 'All Regions', 'marketingops' ); ?></option>
+						<?php foreach ( $agency_regions as $agency_region ) { ?>
+							<option value="<?php echo esc_attr( $agency_region->term_id ); ?>" class="select-dropdown__list-item"><?php echo wp_kses_post( $agency_region->name ); ?></option>
+						<?php } ?>
+					</select>
+				<?php } ?>
+			</div>
+		<?php } ?>
 
-							<li> Affiliate Marketing </li>
-							<li> Database Acquisition </li>
-							<li> Email Marketing </li>
-							<li> Influencer Marketing </li>
-							<li> Performance PR </li>
-							<li> SEM </li>
-							<li> SEO </li>
-							<li> Social media </li>
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>	
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>
-				</li>
+		<!-- agency listing -->
+		<?php if ( ! empty( $agency_ids ) && is_array( $agency_ids ) ) { ?>
+			<div class="agency-mainlistboxs">
+				<ul class="innermainlistboxs">
+					<?php
+					// Loop through the agencies.
+					foreach ( $agency_ids as $agency_id ) {
+						echo mops_agency_list_item( $agency_id, $is_agency_member );
+					}
+					?>
+				</ul>
+			</div>
 
-				<li>
-					<div class="inneragencylistbox">
-						<h4>PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/allison.png" alt="img" />
-						<h3>Allison</h3>
-						<ul>
-
-							<li> Affiliate Marketing </li>
-							<li> Branded Content </li>
-							<li> Email Marketing </li>
-							<li> Influencer Marketing </li>
-							<li> Performance PR </li>
-							<li> SEM </li>
-							<li> Social media </li>
-							
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>	
-				</li>
-
-				<li>
-					<div class="inneragencylistbox">
-						<h4>PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/eaccountable.png" alt="img" />
-						<h3>eAccountable</h3>
-						<ul>
-						
-							<li> Affiliate Marketing </li>
-							<li> Branded Content </li>
-							<li> Email Marketing </li>
-							<li> Influencer Marketing </li>
-							<li> Performance PR </li>
-							<li> SEM </li>
-							<li> SEO </li>
-							<li> Social media </li>
-							<li> Something </li>
-							<li> +2 more </li>
-							
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>	
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>
-				</li>
-
-				<li>
-					<div class="inneragencylistbox">
-						<h4>PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/LTPartners1.png" alt="img" />
-						<h3>LT Partners</h3>
-						<ul>
-						
-							<li> Affiliate Marketing </li>
-							
-							
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>	
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>
-				</li>
-
-				<li>
-					<div class="inneragencylistbox">
-						<h4 style="visibility:hidden">PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/LTPartners1.png" alt="img" />
-						<h3>LT Partners</h3>
-						<ul>
-						
-							<li> Affiliate Marketing </li>
-							
-							
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>	
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>
-				</li>
-
-				<li>
-					<div class="inneragencylistbox">
-						<h4 style="visibility:hidden">PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/thedigitalvoice.png" alt="img" />
-						<h3>The Digital Voice</h3>
-						<ul>
-						
-							<li> Programmatic </li>
-							<li> Ad tech </li>
-							
-							
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>	
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>
-				</li>
-
-				<li>
-					<div class="inneragencylistbox">
-						<h4 style="visibility:hidden">PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/thepartneragency.png" alt="img" />
-						<h3>The Partner Agency - B2B Affiliate</h3>
-						<ul>
-						
-							<li> Affiliate Marketing </li>
-							<li> Email Marketing </li>
-							<li> Influencer Marketing </li>
-							<li> Performance  </li>
-							<li> SEM </li>
-							<li> Social media </li>
-							
-							
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>	
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>
-				</li>
-
-				<li>
-					<div class="inneragencylistbox">
-						<h4 style="visibility:hidden">PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/amdx.png" alt="img" />
-						<h3>Affiliate Marketing Dynamics</h3>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>	
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>
-				</li>
-
-				<li>
-					<div class="inneragencylistbox">
-						<h4 style="visibility:hidden">PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/affiverse.png" alt="img" />
-						<h3>Affiverse</h3>
-						<ul>
-						
-							<li> Affiliate Marketing </li>
-							<li> Branded Content </li>
-							<li> Email Marketing </li>
-							<li> Influencer Marketing </li>
-							<li> Performance PR  </li>
-							<li> Social media </li>
-							
-							
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>	
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>
-				</li>
-
-				<li>
-					<div class="inneragencylistbox">
-						<h4 style="visibility:hidden">PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/acelleration.png" alt="img" />
-						<h3>affprogramhub</h3>
-						<ul>
-						
-							<li> Affiliate Marketing </li>
-							
-							
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>	
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>
-				</li>
-
-				<li>
-					<div class="inneragencylistbox">
-						<h4 style="visibility:hidden">PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/roundbarn.png" alt="img" />
-						<h3>ROUND BARN LABS</h3>
-						<ul>
-						
-							<li> Affiliate Marketing </li>
-							
-							
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>	
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>
-				</li>
-
-
-				<li>
-					<div class="inneragencylistbox">
-						<h4 style="visibility:hidden">PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/LTPartners1.png" alt="img" />
-						<h3>LT Partners</h3>
-						<ul>
-						
-							<li> Affiliate Marketing </li>
-							
-							
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>	
-				</li>
-
-				<li>
-					<div class="inneragencylistbox">
-						<h4 style="visibility:hidden">PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/eaccountable.png" alt="img" />
-						<h3>eAccountable</h3>
-						<ul>
-						
-							<li> Affiliate Marketing </li>
-							<li> Branded Content </li>
-							<li> Email Marketing </li>
-							<li> Influencer Marketing </li>
-							<li> Performance PR </li>
-							<li> SEM </li>
-							<li> SEO </li>
-							<li> Social media </li>
-							<li> Something </li>
-							<li> +2 more </li>
-							
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>	
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>
-				</li>
-
-				<li>
-					<div class="inneragencylistbox">
-						<h4 style="visibility:hidden">PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/thedigitalvoice.png" alt="img" />
-						<h3>The Digital Voice</h3>
-						<ul>
-						
-							<li> Programmatic </li>
-							<li> Ad tech </li>
-							
-							
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>	
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>
-				</li>
-
-				<li>
-					<div class="inneragencylistbox">
-						<h4 style="visibility:hidden">PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/acelleration.png" alt="img" />
-						<h3>Acceleration Partners</h3>
-						<ul>
-							<li> Affiliate Marketing </li>
-							<li> Influencer Marketing </li>
-							<li> Performance PR </li>
-							<li> Outcome-focused Influencer Marketing </li>
-							<li> Content </li>
-							<li> Brand Partnerships </li>
-							<li> B2B </li>
-							<li> Mobile </li>
-							<li> Affiliate Search: TM+ </li>
-							<li> +6 more </li>
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>	
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>
-				</li>
-
-				<li>
-					<div class="inneragencylistbox">
-						<h4 style="visibility:hidden">PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/allinclusive.png" alt="img" />
-						<h3>All Inclusive Marketing Inc.</h3>
-						<ul>
-							<li> Affiliate Marketing </li>
-							<li> Influencer Marketing </li>
-							<li> B2B Lead Generation </li>
-							<li> Analytics & Attribution </li>
-							<li> Program Migration </li>
-							<li> Program Set-up & Launch </li>
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>	
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>
-				</li>
-
-				<li>
-					<div class="inneragencylistbox">
-						<h4 style="visibility:hidden">PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/dmipartners.png" alt="img" />
-						<h3>DMi Partners</h3>
-						<ul>
-
-							<li> Affiliate Marketing </li>
-							<li> Database Acquisition </li>
-							<li> Email Marketing </li>
-							<li> Influencer Marketing </li>
-							<li> Performance PR </li>
-							<li> SEM </li>
-							<li> SEO </li>
-							<li> Social media </li>
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>	
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>
-				</li>
-
-				<li>
-					<div class="inneragencylistbox">
-						<h4 style="visibility:hidden">PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/allison.png" alt="img" />
-						<h3>Allison</h3>
-						<ul>
-
-							<li> Affiliate Marketing </li>
-							<li> Branded Content </li>
-							<li> Email Marketing </li>
-							<li> Influencer Marketing </li>
-							<li> Performance PR </li>
-							<li> SEM </li>
-							<li> Social media </li>
-							
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>	
-				</li>
-
-
-				<li>
-					<div class="inneragencylistbox">
-						<h4 style="visibility:hidden">PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/acelleration.png" alt="img" />
-						<h3>Acceleration Partners</h3>
-						<ul>
-							<li> Affiliate Marketing </li>
-							<li> Influencer Marketing </li>
-							<li> Performance PR </li>
-							<li> Outcome-focused Influencer Marketing </li>
-							<li> Content </li>
-							<li> Brand Partnerships </li>
-							<li> B2B </li>
-							<li> Mobile </li>
-							<li> Affiliate Search: TM+ </li>
-							<li> +6 more </li>
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>	
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>
-				</li>
-
-				<li>
-					<div class="inneragencylistbox">
-						<h4 style="visibility:hidden">PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/allinclusive.png" alt="img" />
-						<h3>All Inclusive Marketing Inc.</h3>
-						<ul>
-							<li> Affiliate Marketing </li>
-							<li> Influencer Marketing </li>
-							<li> B2B Lead Generation </li>
-							<li> Analytics & Attribution </li>
-							<li> Program Migration </li>
-							<li> Program Set-up & Launch </li>
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>	
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>
-				</li>
-
-				<li>
-					<div class="inneragencylistbox">
-						<h4 style="visibility:hidden">PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/dmipartners.png" alt="img" />
-						<h3>DMi Partners</h3>
-						<ul>
-
-							<li> Affiliate Marketing </li>
-							<li> Database Acquisition </li>
-							<li> Email Marketing </li>
-							<li> Influencer Marketing </li>
-							<li> Performance PR </li>
-							<li> SEM </li>
-							<li> SEO </li>
-							<li> Social media </li>
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>	
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>
-				</li>
-
-				<li>
-					<div class="inneragencylistbox">
-						<h4 style="visibility:hidden">PARTNER</h4>
-						<img src="/wp-content/themes/marketingops/images/agencypages/allison.png" alt="img" />
-						<h3>Allison</h3>
-						<ul>
-
-							<li> Affiliate Marketing </li>
-							<li> Branded Content </li>
-							<li> Email Marketing </li>
-							<li> Influencer Marketing </li>
-							<li> Performance PR </li>
-							<li> SEM </li>
-							<li> Social media </li>
-							
-						</ul>
-						<a href="javascript:void(0);" class="learnmorebtnagency">
-							Learn more <i class="lernmoresvg"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_53_583)"><path d="M10.5262 3.99457C10.2892 3.98546 10.0693 4.12103 9.97249 4.3375C9.87452 4.55396 9.91667 4.80688 10.0807 4.98005L11.8728 6.91682H0.592831C0.382065 6.9134 0.187248 7.02391 0.0812957 7.20619C-0.0257965 7.38734 -0.0257965 7.61292 0.0812957 7.79406C0.187248 7.97634 0.382065 8.08685 0.592831 8.08344H11.8728L10.0807 10.0202C9.9349 10.1729 9.88363 10.3916 9.94515 10.5933C10.0067 10.7949 10.1719 10.9476 10.3769 10.9931C10.5831 11.0387 10.7973 10.9692 10.9375 10.8131L14.001 7.50013L10.9375 4.18711C10.8326 4.0709 10.6834 4.00027 10.5262 3.99457Z" fill="#45474F"/></g><defs><clipPath id="clip0_53_583"><rect width="15" height="11" fill="white"/></clipPath></defs></svg> </i>	
-						</a>
-					</div>	
-					<div class="overlayonhover">
-							<h2>Apply for an agency profile at no charge.</h2>
-							<p>Share your story with the MarketingOPS community:</p>
-							<a href="javascript:void(0);" class="apllyfreebtns">Apply  for free <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
-					</div>
-				</li>
-			</ul>
-		</div>	
-
-
-		<div class="agancypagination">
-			<ul>
-				<li>
-					<a href="javascript:void(0);" class="active">
-						<span>1</spann>
-					</a>
-				</li>
-				<li>
-					<a href="javascript:void(0);">
-						<span>2</spann>
-					</a>
-				</li>
-				<li>
-					<a href="javascript:void(0);">
-						<span>3</spann>
-					</a>
-				</li>
-				<li>
-					<a href="javascript:void(0);">
-						<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none">
-							<circle cx="25" cy="25" r="25" fill="#F1F3F4"/>
-							<path d="M22 18L29 26L22 34" stroke="#45474F" stroke-width="1.3"/>
-						</svg>
-					</a>
-				</li>
-			</ul>
-		</div>
+			<!-- pagination -->
+			<?php if ( ! empty( $agency_query->max_num_pages ) && 1 < $agency_query->max_num_pages ) { ?>
+				<div class="agancypagination">
+					<ul>
+						<li><a href="javascript:void(0);" class="active"><span>1</spann></a></li>
+						<li><a href="javascript:void(0);"><span>2</span></a></li>
+						<li><a href="javascript:void(0);"><span>3</span></a></li>
+						<li><a href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="25" fill="#F1F3F4"/><path d="M22 18L29 26L22 34" stroke="#45474F" stroke-width="1.3"/></svg></a></li>
+					</ul>
+				</div>
+			<?php } ?>
+		<?php } else { ?>
+			<p><?php echo sprintf( __( 'There are no agencies registered with us yet! If you are the owner of an agency and want to partner with us, please signup for FREE %1$shere%2$s.', 'marketingops' ), '<a href="/subscribe/agency/" title="' . __( 'Agency Signup', 'marketingops' ) . '">', '</a>' ); ?></p>
+		<?php } ?>
 	</div>
 </section>
 

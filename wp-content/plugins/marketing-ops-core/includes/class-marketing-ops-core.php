@@ -392,6 +392,8 @@ class Marketing_Ops_Core {
 		$this->loader->add_shortcode( 'mopza24_sessions', $plugin_public, 'mops_mopza24_sessions_callback' );
 		$this->loader->add_action( 'wp_ajax_add_agency_person_html', $plugin_public, 'mops_add_agency_person_html_callback' );
 		$this->loader->add_action( 'wp_ajax_update_agency', $plugin_public, 'mops_update_agency_callback' );
+		$this->loader->add_action( 'wp_ajax_filter_agencies', $plugin_public, 'mops_filter_agencies_callback' );
+		$this->loader->add_action( 'wp_ajax_nopriv_filter_agencies', $plugin_public, 'mops_filter_agencies_callback' );
 	}
 
 	/**

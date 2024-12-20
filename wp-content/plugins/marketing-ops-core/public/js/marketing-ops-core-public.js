@@ -5670,6 +5670,42 @@ jQuery( document ).ready( function( $ ) {
 			} );
 		} );
 	}
+
+	// Agency listing page.
+	if ( true === current_page_url.includes( 'marketing-operations-agency-directory' ) ) {
+		// Filter the agencies.
+		$( document ).on( 'change', '.agency-filter-field', function() {
+			var agency_type             = $( '.agency-type' ).val();
+			var agency_primary_vertical = $( '.agency-primary-verticals' ).val();
+			var agency_services         = $( '.agency-services' ).val();
+			var agency_region           = $( '.agency-regions' ).val();
+
+			// Send the AJAX request for filtering the agencies.
+			$.ajax({
+				dataType: 'JSON',
+				url: ajaxurl,
+				type: 'POST',
+				data: {
+					action: 'filter_agencies',
+					agency_type: agency_type,
+					agency_primary_vertical: agency_primary_vertical,
+					agency_services: agency_services,
+					agency_region: agency_region,
+				},
+				beforeSend: function() {
+					console.log( 'enable the filter loader' );
+				},
+				success: function( response ) {
+					if ( 'agency-updated' === response.data.code ) {
+						moc_show_toast( 'bg-success', 'fa-check-circle', toast_success_heading, response.data.toast_message );
+					}
+				},
+				complete: function() {
+					console.log( 'disable the filter loader' );
+				},
+			} );
+		} );
+	}
 } );
 
 

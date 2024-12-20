@@ -1852,6 +1852,8 @@ a#enrollbtns {color:#fff;cursor:pointer;}
 .elementor-column.elementor-col-25.elementor-top-column.elementor-element.elementor-element-241a8774.membershipbox_one.elementor-hidden-mobile {width: 25% !important;}
 .mainpricebox .innermainpricebox .innerboxprice h2 {background: linear-gradient(to bottom,#FD4B7A 0%,#4D00AE 166.67%);-webkit-background-clip: text;-moz-background-clip: text;background-clip: text;-webkit-text-fill-color: transparent;font-size: 20px;text-align: center;margin: 30px 0 0;font-weight: 400;}
 .mainpricebox .innermainpricebox {max-width: 560px;}
+.mops_marketing-operations-agency-directory_page .page-header {display: none;}
+.mops_agency_page .page-header {display: none;}
 
 @media screen and ( max-width:767px ) {
 	.mainpricebox .innermainpricebox{width:90%;}
