@@ -29,7 +29,7 @@ $agency_id        = new WP_Query(
 );
 $agency_id        = ( ! empty( $agency_id->posts[0] ) ) ? $agency_id->posts[0] : false;
 
-var_dump( $agency_id, $is_agency_member )
+var_dump( $agency_id, $is_agency_member );
 
 // If the linked agency is not available, show the registration page.
 if ( false === $agency_id || false === $is_agency_member ) {
