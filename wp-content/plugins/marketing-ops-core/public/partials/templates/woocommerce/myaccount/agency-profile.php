@@ -38,7 +38,6 @@ if ( false === $agency_id || false === $is_agency_member ) {
 	</div>
 	<?php
 } else {
-	echo 'here else';
 	$agency_post_status = get_post_status( $agency_id );
 	$agency_title       = get_the_title( $agency_id );
 	$agency_image_id    = get_post_thumbnail_id( $agency_id );
