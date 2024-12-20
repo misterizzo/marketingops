@@ -1007,8 +1007,8 @@ jQuery( document ).ready( function( $ ) {
 			data: data,
 			success: function( response ) {
 				if ('marketinops-save-user-general-info' === response.data.code) {
-					moc_show_toast('bg-success', 'fa-check-circle', toast_success_heading, response.data.toast_message);
 					this_btn.closest('.moc_not_changable_container').find('.box_about_content').removeClass('moc_doing_edit_section');
+					moc_show_toast('bg-success', 'fa-check-circle', toast_success_heading, response.data.toast_message);
 					$('.moc_general_user_info').html(response.data.html);
 					$('.profile_name .gradient-title').text(response.data.user_name);
 					setTimeout(function() {
@@ -5394,7 +5394,7 @@ jQuery( document ).ready( function( $ ) {
 	// Agency profile: customer dashbord.
 	if ( true === current_page_url.includes( 'my-account/agency-profile' ) ) {
 		// Agency description character count.
-		$( document ).on( 'keyup', '.agencyformgroup #description', function() {
+		$( document ).on( 'keyup', '.agencyformgroup #agency-description', function() {
 			var description = $( this ).val();
 
 			// If the description crosses the 400 limit, restrict the user from entering more content.
@@ -5405,79 +5405,259 @@ jQuery( document ).ready( function( $ ) {
 			// Update the counter.
 			$( 'small.agency-description-characters-count' ).text( description.length + ' of 400 characters' );
 		} );
-	}
 
-	// Add new taxonomy term.
-	$( document ).on( 'click', '.add-new-taxonomy-term', function() {
-		var taxonomy      = $( this ).data( 'taxonomy' );
-		var type          = $( this ).data( 'type' );
-		var new_term_html = '<div class="region">';
-		new_term_html    += '<input type="text" placeholder="Enter ' + type + '">';
-		new_term_html    += '<i class="save save-new-taxonomy-term fa fa-check-circle" data-taxonomy="' + taxonomy + '"></i>';
-		new_term_html    += '<i class="close close-new-taxonomy-term fa fa-times-circle"></i>';
-		new_term_html    += '</div>';
-		$( '#' + type + 's-container' ).html( new_term_html );
-	} );
+		// Agency testimonial text character count.
+		$( document ).on( 'keyup', '.agencyformone.mentions #agency-testimonial-text', function() {
+			var testimonial_text = $( this ).val();
 
-	// Close new taxonomy term.
-	$( document ).on( 'click', '.close-new-taxonomy-term', function() {
-		$( this ).parent( '.region' ).remove();
-	} );
+			// If the testimonial text crosses the 400 limit, restrict the user from entering more content.
+			if ( 400 <= testimonial_text.length ) {
+				$( this ).val( testimonial_text.substring( 0, 399 ) );
+			}
 
-	// Video preview.
-	var agency_video_url = $( '#agency-video' ).val();
-	if ( '' !== agency_video_url ) show_agency_video_preview( agency_video_url );
-	$( document ).on( 'keyup change', '#agency-video', function() {
-		var video_url = $( this ).val();
+			// Update the counter.
+			$( 'small.agency-testimonial-text-characters-count' ).text( testimonial_text.length + ' of 400 characters' );
+		} );
 
-		show_agency_video_preview( video_url );
-	} );
+		// Add new taxonomy term.
+		$( document ).on( 'click', '.add-new-taxonomy-term', function() {
+			var taxonomy      = $( this ).data( 'taxonomy' );
+			var type          = $( this ).data( 'type' );
+			var new_term_html = '<div class="region">';
+			new_term_html    += '<input type="text" placeholder="Enter ' + type + '">';
+			new_term_html    += '<i class="save save-new-taxonomy-term fa fa-check-circle" data-taxonomy="' + taxonomy + '"></i>';
+			new_term_html    += '<i class="close close-new-taxonomy-term fa fa-times-circle"></i>';
+			new_term_html    += '</div>';
+			$( '#' + type + 's-container' ).html( new_term_html );
+		} );
 
-	/**
-	 * Show the video preview.
-	 *
-	 * @param {*} video_url 
-	 */
-	function show_agency_video_preview( video_url ) {
-		var video_id     = extract_youtube_video_id( video_url ) || extract_vimeo_video_id( video_url );
-		var preview_html = '';
+		// Close new taxonomy term.
+		$( document ).on( 'click', '.close-new-taxonomy-term', function() {
+			$( this ).parent( '.region' ).remove();
+		} );
 
-		if ( null === video_id ) {
-			preview_html = '<p style="color: red;">Invalid YouTube or Vimeo URL</p>';
-		} else {
-			const video_embed_url = ( 'youtube' === video_id.type ) ? `https://www.youtube.com/embed/${video_id.id}` : `https://player.vimeo.com/video/${video_id.id}`;
-			preview_html          = `<iframe width="560" height="315" src="${video_embed_url}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+		// Video preview.
+		if ( $( '#agency-video' ).length ) {
+			var agency_video_url = $( '#agency-video' ).val();
+
+			if ( '' !== agency_video_url ) show_agency_video_preview( agency_video_url );
+
+			$( document ).on( 'keyup change', '#agency-video', function() {
+				var video_url = $( this ).val();
+
+				show_agency_video_preview( video_url );
+			} );
+
+			/**
+			 * Show the video preview.
+			 *
+			 * @param {*} video_url 
+			 */
+			function show_agency_video_preview( video_url ) {
+				var video_id     = extract_youtube_video_id( video_url ) || extract_vimeo_video_id( video_url );
+				var preview_html = '';
+
+				if ( null === video_id ) {
+					preview_html = '<p style="color: red;">Invalid YouTube or Vimeo URL</p>';
+				} else {
+					const video_embed_url = ( 'youtube' === video_id.type ) ? `https://www.youtube.com/embed/${video_id.id}` : `https://player.vimeo.com/video/${video_id.id}`;
+					preview_html          = `<iframe width="560" height="315" src="${video_embed_url}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+				}
+
+				$( '#videoPreview' ).html( preview_html );
+			}
+
+			/**
+			 * Extract the video ID from youtube video url.
+			 *
+			 * @param {string} video_url Video URL.
+			 *
+			 * @return {string}
+			 */
+			function extract_youtube_video_id( video_url ) {
+				const regex = /(?:https?:\/\/)?(?:www\.)?youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/|live\/)?([a-zA-Z0-9_-]{11})|(?:https?:\/\/)?(?:www\.)?youtu\.be\/([a-zA-Z0-9_-]{11})/;
+				const match = video_url.match( regex );
+
+				return match ? { id: match[1] || match[2], type: 'youtube' } : null;
+			}
+
+			/**
+			 * Extract the video ID from vimeo video url.
+			 *
+			 * @param {string} video_url Video URL.
+			 *
+			 * @return {string}
+			 */
+			function extract_vimeo_video_id( video_url ) {
+				const regex = /(?:https?:\/\/)?(?:www\.)?vimeo\.com\/(?:video\/)?(\d+)/;
+				const match = video_url.match( regex );
+
+				return match ? { id: match[1], type: 'vimeo' } : null;
+			}
 		}
 
-		$( '#videoPreview' ).html( preview_html );
-	}
+		// Toggle agency articles.
+		$( document ).on( 'click', '.toggle-agency-articles', function() {
+			$( '.user-agency-articles' ).slideToggle( 1500 );
+		} );
 
-	/**
-	 * Extract the video ID from youtube video url.
-	 *
-	 * @param {string} video_url Video URL.
-	 *
-	 * @return {string}
-	 */
-	function extract_youtube_video_id( video_url ) {
-		const regex = /(?:https?:\/\/)?(?:www\.)?youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/|live\/)?([a-zA-Z0-9_-]{11})|(?:https?:\/\/)?(?:www\.)?youtu\.be\/([a-zA-Z0-9_-]{11})/;
-		const match = video_url.match( regex );
+		// Add person.
+		$( document ).on( 'click', '.addpersone', function() {
+			var this_button          = $( this );
+			var this_button_text     = this_button.text();
+			var current_people_count = $( '.agency-main-people-container .person-data' ).length;
 
-		return match ? { id: match[1] || match[2], type: 'youtube' } : null;
-	}
+			// Send the AJAX request for adding a new person html.
+			$.ajax({
+				dataType: 'JSON',
+				url: ajaxurl,
+				type: 'POST',
+				data: {
+					action: 'add_agency_person_html',
+					current_people_count: current_people_count,
+				},
+				beforeSend: function() {
+					this_button.text( 'Adding...' );
+				},
+				success: function( response ) {
+					if ( 'new-person-html' === response.data.code ) {
+						$( '.agency-main-people-container' ).append( response.data.html );
+					}
+				},
+				complete: function() {
+					this_button.text( this_button_text );
+				},
+			} );
+		} );
 
-	/**
-	 * Extract the video ID from vimeo video url.
-	 *
-	 * @param {string} video_url Video URL.
-	 *
-	 * @return {string}
-	 */
-	function extract_vimeo_video_id( video_url ) {
-		const regex = /(?:https?:\/\/)?(?:www\.)?vimeo\.com\/(?:video\/)?(\d+)/;
-		const match = video_url.match( regex );
+		// Agency actions.
+		$( document ).on( 'click', '.agency-actions li a', function() {
+			var this_button               = $( this );
+			var this_button_text          = this_button.html();
+			var status                    = this_button.data( 'status' );
+			var agency_name               = $( '#agency-name' ).val();
+			var agency_desc               = $( '#agency-description' ).val();
+			var agency_featured_image_id  = $( '.agency-featured-image-id' ).val();
+			var contact_name              = $( '#agency-contact-name' ).val();
+			var contact_email             = $( '#agency-contact-email' ).val();
+			var contact_website           = $( '#agency-contact-website' ).val();
+			var agency_type               = $( 'input[name="agency-type"]:checked' ).val();
+			var agency_year_founded       = $( '#agency-year-founded' ).val();
+			var agency_employees          = $( '#agency-employees' ).val();
+			var agency_regions            = [];
+			var agency_primary_verticals  = [];
+			var agency_services           = [];
+			var agency_people             = [];
+			var agency_testimonial_text   = $( '#agency-testimonial-text' ).val();
+			var agency_testimonial_author = $( '#agency-testimonial-author' ).val();
+			var agency_clients            = $( '#agency-clients' ).val();
+			agency_clients                = ( -1 !== is_valid_string( agency_clients ) ) ? agency_clients.split( "\n" ) : [];
+			var agency_certifications     = $( '#agency-certifications' ).val();
+			agency_certifications         = ( -1 !== is_valid_string( agency_certifications ) ) ? agency_certifications.split( "\n" ) : [];
+			var agency_awards             = $( '#agency-awards' ).val();
+			agency_awards                 = ( -1 !== is_valid_string( agency_awards ) ) ? agency_awards.split( "\n" ) : [];
+			var include_articles          = ( $( '#include-articles' ).is( ':checked' ) ) ? 'yes' : 'no';
+			var include_jobs              = ( $( '#include-jobs' ).is( ':checked' ) ) ? 'yes' : 'no';
+			var agency_video              = $( '#agency-video' ).val();
+			var agency_articles           = [];
 
-		return match ? { id: match[1], type: 'vimeo' } : null;
+			// Loop through the regions.
+			$( '.agency-region' ).each( function() {
+				if ( $( this ).is( ':checked' ) ) {
+					agency_regions.push( parseInt( $( this ).val() ) );
+				}
+
+			} );
+
+			// Loop through the primary verticals.
+			$( '.agency-primary-vertical' ).each( function() {
+				if ( $( this ).is( ':checked' ) ) {
+					agency_primary_verticals.push( parseInt( $( this ).val() ) );
+				}
+
+			} );
+
+			// Loop through the services.
+			$( '.agency-service' ).each( function() {
+				if ( $( this ).is( ':checked' ) ) {
+					agency_services.push( parseInt( $( this ).val() ) );
+				}
+
+			} );
+
+			// Loop through the agency people.
+			$( '.agency-main-people-container .person-data' ).each( function() {
+				var this_person    = $( this );
+				var fullname       = this_person.find( '.fullname' ).val();
+				var position       = this_person.find( '.position' ).val();
+				var linkedin       = this_person.find( '.linkedin' ).val();
+				var displaypicture = this_person.find( '.displaypicture' ).val();
+
+				agency_people.push( {
+					'fullname': fullname,
+					'position': position,
+					'linkedin': linkedin,
+					'displaypicture': displaypicture,
+				} );
+			} );
+
+			// Loop through the article ids.
+			$( '.agency-article-id' ).each( function() {
+				if ( $( this ).is( ':checked' ) ) {
+					agency_articles.push( parseInt( $( this ).val() ) );
+				}
+
+			} );
+
+			// Send the AJAX request for updating the agency details.
+			$.ajax({
+				dataType: 'JSON',
+				url: ajaxurl,
+				type: 'POST',
+				data: {
+					action: 'update_agency',
+					status: status,
+					agency_id: $( '#agency-id' ).val(),
+					agency_name: agency_name,
+					agency_desc: agency_desc,
+					agency_featured_image_id: agency_featured_image_id,
+					agency_contact_name: contact_name,
+					agency_contact_email: contact_email,
+					agency_contact_website: contact_website,
+					agency_type: agency_type,
+					agency_year_founded: agency_year_founded,
+					agency_employees: agency_employees,
+					agency_regions: agency_regions,
+					agency_primary_verticals: agency_primary_verticals,
+					agency_services: agency_services,
+					agency_people: agency_people,
+					agency_testimonial_text: agency_testimonial_text,
+					agency_testimonial_author: agency_testimonial_author,
+					agency_clients: agency_clients,
+					agency_certifications: agency_certifications,
+					agency_awards: agency_awards,
+					include_articles: include_articles,
+					agency_articles: agency_articles,
+					include_jobs: include_jobs,
+					agency_video: agency_video,
+				},
+				beforeSend: function() {
+					this_button.text( 'Updating...' );
+				},
+				success: function( response ) {
+					if ( 'agency-updated' === response.data.code ) {
+						moc_show_toast( 'bg-success', 'fa-check-circle', toast_success_heading, response.data.toast_message );
+					}
+				},
+				complete: function() {
+					if ( 'draft' === status ) {
+						this_button.html( 'Save Draft' );
+					} else if ( 'publish' === status ) {
+						this_button.html( 'Publish Profile' );
+					}
+				},
+			} );
+		} );
 	}
 } );
 
@@ -5511,70 +5691,7 @@ jQuery(document).ready(function ($) {
 });
 /* image preview */
 
-/* toggle */  
-jQuery( document ).ready( function( $ ) {
-    let isContentVisible = false;
-    $('#toggleButton').on('click', function() {
-        if (!isContentVisible) {
-            const toggleContent = `
-                <div class="toggelecheckselct">
-                    <div class="agencyformgroup form-group">
-                        <input type="checkbox" id="articles">
-                        <label for="articles">Publish articles & press releases posted by me</label>
-                    </div>
-                    <button id="closeButton">Close</button>
-                </div>
-            `;
-            $('#dynamicContainer').append(toggleContent);
-            isContentVisible = true;
-            $('#closeButton').on('click', function() {
-                $('.toggelecheckselct').remove();
-                isContentVisible = false;
-            });
-        }
-    });
-});
-
 jQuery(document).ready(function ($) {
-  let personCounter = 1;
-  $(".addpersone").on("click", function () {
-    personCounter++;
-    const newPersonHTML = `
-      <div class="person-block" id="personBlock${personCounter}">
-        <h4>Person ${personCounter} 
-          <button class="remove-person" data-person-id="${personCounter}">Remove</button>
-        </h4>
-        <div class="agencyformgroups">
-          <div class="agencyfirstblock">
-            <label>Full Name</label>
-            <input type="text" class="agancyinputbox" id="fullnmame${personCounter}" name="fullnmame${personCounter}">
-          </div> 
-          <div class="agencyfirstblock">
-            <label>Position</label>
-            <input type="text" class="agancyinputbox" id="position${personCounter}" name="position${personCounter}">
-          </div>    
-        </div>
-        <div class="agencyformgroup bottomtext">
-          <label>LinkedIn URL</label>
-          <input type="text" class="agancyinputbox" id="linkedin${personCounter}" name="linkedin${personCounter}">
-        </div>
-        <div class="agencyformgroup">
-          <label>Image</label>
-          <div class="upload-btn-wrapper image-upload-container">
-            <button class="btn">Select an image</button>
-            <p>For the best results, crop your photo to 640 x 380px before uploading.</p>
-            <input type="file" class="imageInput" id="image${personCounter}" accept="image/*" />
-            <div id="previewContainer${personCounter}" class="preview-container" style="display: none;">
-              <img class="preview-image" src="#" alt="Image Preview" />
-              <button type="button" class="remove-preview-btn removePreview " data-preview-id="${personCounter}">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="15.35" stroke="white" stroke-width="1.3"></circle><path d="M11 11L16 16L11 21" stroke="white" stroke-width="1.3"></path><path d="M21 11L16 16L21 21" stroke="white" stroke-width="1.3"></path></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>`;
-    $("#dynamicContent").append(newPersonHTML);
-  });
   $("#dynamicContent").on("click", ".remove-person", function () {
     const personId = $(this).data("person-id");
     $(`#personBlock${personId}`).remove();

@@ -5089,7 +5089,7 @@ class Marketing_Ops_Core_Public {
 	 * @param int   $comment_id Comment ID.
 	 * @return array
 	 */
-	function mops_comment_moderation_recipients_callback( $emails = array(), $comment_id ) {
+	function mops_comment_moderation_recipients_callback( $emails = array(), $comment_id = 0 ) {
 		/**
 		 * Reset the mail recipients and just the admin should receive the moderation email.
 		 * This request is made upon request from Mike Rizzo on the mail thread dated April 28, 2023.
@@ -6531,5 +6531,148 @@ class Marketing_Ops_Core_Public {
 		require_once MOC_PLUGIN_PATH . 'public/partials/templates/mopsapalooza/2024/sessions.php';
 
 		return ob_get_clean();
+	}
+
+	/**
+	 * Add person html to the agency people section.
+	 *
+	 * @since 1.0.0 
+	 */
+	public function mops_add_agency_person_html_callback() {
+		$current_people_count = filter_input( INPUT_POST, 'current_people_count', FILTER_SANITIZE_NUMBER_INT );
+		$new_person_html      = mops_get_agency_person_html_block( $current_people_count, array() );
+
+		// Send the AJAX response.
+		wp_send_json_success(
+			array(
+				'code' => 'new-person-html',
+				'html' => $new_person_html,
+			),
+			200
+		);
+		wp_die();
+	}
+
+	/**
+	 * Update agency.
+	 *
+	 * @since 1.0.0
+	 */
+	public function mops_update_agency_callback() {
+		$posted_array               = filter_input_array( INPUT_POST );
+		$agency_name                = ( ! empty( $posted_array['agency_name'] ) ) ? $posted_array['agency_name'] : '';
+		$agency_status              = ( ! empty( $posted_array['status'] ) ) ? $posted_array['status'] : '';
+		$agency_desc                = ( ! empty( $posted_array['agency_desc'] ) ) ? $posted_array['agency_desc'] : '';
+		$agency_contact_name        = ( ! empty( $posted_array['agency_contact_name'] ) ) ? $posted_array['agency_contact_name'] : '';
+		$agency_contact_email       = ( ! empty( $posted_array['agency_contact_email'] ) ) ? $posted_array['agency_contact_email'] : '';
+		$agency_contact_website     = ( ! empty( $posted_array['agency_contact_website'] ) ) ? $posted_array['agency_contact_website'] : '';
+		$agency_year_founded        = ( ! empty( $posted_array['agency_year_founded'] ) ) ? $posted_array['agency_year_founded'] : '';
+		$agency_employees           = ( ! empty( $posted_array['agency_employees'] ) ) ? $posted_array['agency_employees'] : '';
+		$agency_people              = ( ! empty( $posted_array['agency_people'] ) ) ? $posted_array['agency_people'] : array();
+		$agency_people_data         = array();
+		$agency_type                = ( ! empty( $posted_array['agency_type'] ) ) ? (int) $posted_array['agency_type'] : false;
+		$agency_regions             = ( ! empty( $posted_array['agency_regions'] ) ) ? $posted_array['agency_regions'] : false;
+		$agency_regions             = ( false !== $agency_regions ) ? array_map( 'intval', $agency_regions ) : false;
+		$agency_primary_verticals   = ( ! empty( $posted_array['agency_primary_verticals'] ) ) ? $posted_array['agency_primary_verticals'] : false;
+		$agency_primary_verticals   = ( false !== $agency_primary_verticals ) ? array_map( 'intval', $agency_primary_verticals ) : false;
+		$agency_services            = ( ! empty( $posted_array['agency_services'] ) ) ? $posted_array['agency_services'] : false;
+		$agency_services            = ( false !== $agency_services ) ? array_map( 'intval', $agency_services ) : false;
+		$agency_testimonial_text    = ( ! empty( $posted_array['agency_testimonial_text'] ) ) ? $posted_array['agency_testimonial_text'] : '';
+		$agency_testimonial_author  = ( ! empty( $posted_array['agency_testimonial_author'] ) ) ? $posted_array['agency_testimonial_author'] : '';
+		$agency_testimonial         = array( // Set the testimonial.
+			'text'                      => $agency_testimonial_text,
+			'name_of_the_person_quoted' => $agency_testimonial_author,
+		);
+		$agency_clients             = ( ! empty( $posted_array['agency_clients'] ) ) ? $posted_array['agency_clients'] : '';
+		$agency_clients_data        = array();
+		$agency_certifications      = ( ! empty( $posted_array['agency_certifications'] ) ) ? $posted_array['agency_certifications'] : '';
+		$agency_certifications_data = array();
+		$agency_awards              = ( ! empty( $posted_array['agency_awards'] ) ) ? $posted_array['agency_awards'] : '';
+		$agency_awards_data         = array();
+		$include_articles           = ( ! empty( $posted_array['include_articles'] ) && 'yes' === $posted_array['include_articles'] ) ? true : false;
+		$agency_articles            = ( ! empty( $posted_array['agency_articles'] ) ) ? $posted_array['agency_articles'] : array();
+		$include_jobs               = ( ! empty( $posted_array['include_jobs'] ) && 'yes' === $posted_array['include_jobs'] ) ? true : false;
+		$agency_video               = ( ! empty( $posted_array['agency_video'] ) ) ? $posted_array['agency_video'] : '';
+
+		// Loop through the agency clients.
+		if ( ! empty( $agency_clients ) && is_array( $agency_clients ) ) {
+			foreach ( $agency_clients as $agency_client ) {
+				$agency_clients_data[] = array(
+					'client_name' => $agency_client,
+				);
+			}
+		}
+
+		// Loop through the agency certifications.
+		if ( ! empty( $agency_certifications ) && is_array( $agency_certifications ) ) {
+			foreach ( $agency_certifications as $agency_certification ) {
+				$agency_certifications_data[] = array(
+					'certification_name' => $agency_certification,
+				);
+			}
+		}
+
+		// Loop through the agency awards.
+		if ( ! empty( $agency_awards ) && is_array( $agency_awards ) ) {
+			foreach ( $agency_awards as $agency_award ) {
+				$agency_awards_data[] = array(
+					'award_name' => $agency_award,
+				);
+			}
+		}
+
+		// Loop through the agency people and update the details.
+		if ( ! empty( $agency_people ) && is_array( $agency_people ) ) {
+			foreach ( $agency_people as $agency_person ) {
+				$agency_people_data[] = array(
+					'full_name'        => ( ! empty( $agency_person['fullname'] ) ) ? $agency_person['fullname'] : '',
+					'position'         => ( ! empty( $agency_person['position'] ) ) ? $agency_person['position'] : '',
+					'linkedin_profile' => ( ! empty( $agency_person['linkedin'] ) ) ? $agency_person['linkedin'] : '',
+					'display_picture'  => ( ! empty( $agency_person['displaypicture'] ) ) ? $agency_person['displaypicture'] : '',
+				);
+			}
+		}
+
+		// Update the agency post.
+		wp_update_post(
+			array(
+				'ID'           => $posted_array['agency_id'],
+				'post_title'   => $agency_name,
+				'post_status'  => $agency_status,
+				'post_content' => $agency_desc,
+			)
+		);
+
+		// Update the taxonomy terms.
+		wp_set_object_terms( $posted_array['agency_id'], $agency_type, 'agency_type', false );
+		wp_set_object_terms( $posted_array['agency_id'], $agency_regions, 'agency_region', false );
+		wp_set_object_terms( $posted_array['agency_id'], $agency_primary_verticals, 'agency_primary_vertical', false );
+		wp_set_object_terms( $posted_array['agency_id'], $agency_services, 'agency_service', false );
+
+		// Update the meta details.
+		update_field( 'agency_user_name', $agency_contact_name, $posted_array['agency_id'] );
+		update_field( 'agency_user_email', $agency_contact_email, $posted_array['agency_id'] );
+		update_field( 'agency_user_website', $agency_contact_website, $posted_array['agency_id'] );
+		update_field( 'agency_year_founded', $agency_year_founded, $posted_array['agency_id'] );
+		update_field( 'agency_employees', $agency_employees, $posted_array['agency_id'] );
+		update_field( 'agency_people', $agency_people_data, $posted_array['agency_id'] );
+		update_field( 'agency_testimonial', $agency_testimonial, $posted_array['agency_id'] );
+		update_field( 'agency_clients', $agency_clients_data, $posted_array['agency_id'] );
+		update_field( 'agency_certifications', $agency_certifications_data, $posted_array['agency_id'] );
+		update_field( 'agency_awards', $agency_awards_data, $posted_array['agency_id'] );
+		update_field( 'agency_include_articles', $include_articles, $posted_array['agency_id'] );
+		update_field( 'agency_articles', $agency_articles, $posted_array['agency_id'] );
+		update_field( 'agency_include_jobs', $include_jobs, $posted_array['agency_id'] );
+		update_field( 'agency_video', $agency_video, $posted_array['agency_id'] );
+
+		// Send the AJAX response.
+		wp_send_json_success(
+			array(
+				'code'          => 'agency-updated',
+				'toast_message' => ( 'draft' === $agency_status ) ? __( 'Profile has been drafted. Your profile will be visible publicly once you publish it.', 'marketingops' ) : sprintf( __( 'Profile has been published and is visible %1$shere%2$s.', 'marketingops' ), '<a target="_blank" title="' . $agency_name . '" href="' . get_permalink( $posted_array['agency_id'] ) . '">', '</a>' ),
+			),
+			200
+		);
+		wp_die();
 	}
 }

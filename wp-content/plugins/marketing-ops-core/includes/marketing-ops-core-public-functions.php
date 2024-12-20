@@ -177,7 +177,7 @@ if ( ! function_exists( 'moc_posts_query_by_author' ) ) {
 	 * @return object
 	 * @since 1.0.0
 	 */
-	function moc_posts_query_by_author( $post_type = 'post', $paged = 1, $posts_per_page = '', $author_id, $post_status ) {
+	function moc_posts_query_by_author( $post_type = 'post', $paged = 1, $posts_per_page = '', $author_id = 1, $post_status = 'publish' ) {
 		// Prepare the arguments array.
 		$args = array(
 			'post_type'      => $post_type,
@@ -217,7 +217,7 @@ if ( ! function_exists( 'moc_posts_by_meta_query' ) ) {
 	 * @return object
 	 * @since 1.0.0
 	 */
-	function moc_posts_by_meta_query( $post_type = 'post', $paged = 1, $posts_per_page = '', $meta_key ) {
+	function moc_posts_by_meta_query( $post_type = 'post', $paged = 1, $posts_per_page = '', $meta_key = '' ) {
 		// Prepare the arguments array.
 		$args = array(
 			'post_type'      => $post_type,
@@ -280,7 +280,7 @@ if ( ! function_exists( 'moc_posts_by_meta_key_value' ) ) {
 	 * @return object
 	 * @since 1.0.0
 	 */
-	function moc_posts_by_meta_key_value( $post_type = 'post', $paged = 1, $posts_per_page = '', $meta_key, $meta_value, $compare ) {
+	function moc_posts_by_meta_key_value( $post_type = 'post', $paged = 1, $posts_per_page = '', $meta_key = '', $meta_value = '', $compare = '' ) {
 		// Prepare the arguments array.
 		$args = array(
 			'post_type'      => $post_type,
@@ -326,7 +326,7 @@ if ( ! function_exists( 'moc_posts_query_post_not_in' ) ) {
 	 * @return object
 	 * @since 1.0.0
 	 */
-	function moc_posts_query_post_not_in( $post_type = 'post', $paged = 1, $posts_per_page = '', $post_not_in ) {
+	function moc_posts_query_post_not_in( $post_type = 'post', $paged = 1, $posts_per_page = '', $post_not_in = array() ) {
 		// Prepare the arguments array.
 		$args = array(
 			'post_type'      => $post_type,
@@ -367,7 +367,7 @@ if ( ! function_exists( 'moc_posts_query_post_in' ) ) {
 	 * @return object
 	 * @since 1.0.0
 	 */
-	function moc_posts_query_post_in( $post_type = 'post', $paged = 1, $posts_per_page = '', $post_in ) {
+	function moc_posts_query_post_in( $post_type = 'post', $paged = 1, $posts_per_page = '', $post_in = array() ) {
 		// Prepare the arguments array.
 		$args = array(
 			'post_type'      => $post_type,
@@ -407,7 +407,7 @@ if ( ! function_exists( 'moc_posts_query_post_in_by_taxonomy' ) ) {
 	 * @return object
 	 * @since 1.0.0
 	 */
-	function moc_posts_query_post_in_by_taxonomy( $post_type = 'post', $paged = 1, $posts_per_page = '', $categories_ids ) {
+	function moc_posts_query_post_in_by_taxonomy( $post_type = 'post', $paged = 1, $posts_per_page = '', $categories_ids = array() ) {
 		// Prepare the arguments array.
 		$args = array(
 			'post_type'      => $post_type,
@@ -477,7 +477,7 @@ if ( ! function_exists( 'moc_get_posts_query_by_dynamic_conditions' ) ) {
 	 * @return object
 	 * @since 1.0.0
 	 */
-	function moc_get_posts_query_by_dynamic_conditions( $post_type = 'post', $paged = 1, $posts_per_page = '', $selected_sorting_by = 'date', $selected_sorting_order = 'DESC', $taxonomy, $categories = array(), $author_id, $exclude = '', $include = array() ) {
+	function moc_get_posts_query_by_dynamic_conditions( $post_type = 'post', $paged = 1, $posts_per_page = '', $selected_sorting_by = 'date', $selected_sorting_order = 'DESC', $taxonomy = '', $categories = array(), $author_id = '', $exclude = '', $include = array() ) {
 		
 		// Prepare the arguments array.
 		if ( 'podcast' !== $post_type ) {
@@ -1142,7 +1142,7 @@ if ( ! function_exists( 'moc_posts_by_search_keyword_query_args' ) ) {
 	 * @return object
 	 * @since 1.0.0
 	 */
-	function moc_posts_by_search_keyword_query_args( $post_type = 'post', $posts_per_page = -1, $search_keyword, $min_salary, $max_salary ) {
+	function moc_posts_by_search_keyword_query_args( $post_type = 'post', $posts_per_page = -1, $search_keyword = '', $min_salary = '', $max_salary = '' ) {
 		// Prepare the arguments array.
 		$args = array(
 			'post_type'              => $post_type,
@@ -3985,7 +3985,7 @@ if ( ! function_exists( 'moc_training_products_listing_html' ) ) {
 	 *
 	 * @since 1.0.0
 	 */
-	function moc_training_products_listing_html( $search_keyword = '', $post_type = 'post', $paged = 1, $posts_per_page = '', $selected_sorting_by = 'date', $selected_sorting_order = 'DESC', $category, $taxonomy, $meta_key, $meta_value, $compare, $type, $professor_id ) {
+	function moc_training_products_listing_html( $search_keyword = '', $post_type = 'post', $paged = 1, $posts_per_page = '', $selected_sorting_by = 'date', $selected_sorting_order = 'DESC', $category = '', $taxonomy = '', $meta_key = '', $meta_value = '', $compare = '', $type = '', $professor_id = '' ) {
 		global $wpdb;
 
 		ob_start();
@@ -4197,7 +4197,7 @@ if ( ! function_exists( 'moc_training_products_featured_course' ) ) {
 	 *
 	 * @since 1.0.0
 	 */
-	function moc_training_products_featured_course( $search_keyword = '', $post_type = 'post', $paged = 1, $posts_per_page = '', $selected_sorting_by = 'date', $selected_sorting_order = 'DESC', $category, $taxonomy, $meta_key, $meta_value, $compare, $type, $professor_id ) {
+	function moc_training_products_featured_course( $search_keyword = '', $post_type = 'post', $paged = 1, $posts_per_page = '', $selected_sorting_by = 'date', $selected_sorting_order = 'DESC', $category = '', $taxonomy = '', $meta_key = '', $meta_value = '', $compare = '', $type = '', $professor_id = '' ) {
 		ob_start();
 		$count_posts_query = moc_get_courses_by_search_keyword( $search_keyword, $post_type, $paged, -1, $selected_sorting_by, $selected_sorting_order, $category, $taxonomy, $meta_key, $meta_value, $compare, $type, $professor_id );
 		$count_posts       = count( $count_posts_query->posts );
@@ -4228,8 +4228,9 @@ if ( ! function_exists( 'moc_training_products_featured_course' ) ) {
 							$i = 1;
 							$class = "moc_training_index_{$i}";
 						}
-						$title = get_the_title( $get_post_id );
-						$permalink = get_the_permalink( $get_post_id );
+
+						$title                      = get_the_title( $get_post_id );
+						$permalink                  = get_the_permalink( $get_post_id );
 						$default_author_img         = get_field( 'moc_user_default_image', 'option' );
 						// $professior_id              = get_post_meta( $get_post_id, '_moc_selected_professors', true );
 						$professior_id              = get_post_meta( $get_post_id, 'course_author', true );
@@ -4251,23 +4252,24 @@ if ( ! function_exists( 'moc_training_products_featured_course' ) ) {
 						$author_url                 = site_url() . '/profile/' . $post_author_username;
 						$moc_post_excerpt           = strip_tags( get_the_excerpt( $get_post_id ) );
 						$platform_terms_obj         = get_the_terms ( $get_post_id, 'training_platform' );
-						$platform_id                = $platform_terms_obj[0]->term_id;
+						$platform_id                = ( false !== $platform_terms_obj ) ? $platform_terms_obj[0]->term_id : '';
 						$platform_icon_id           = get_term_meta( $platform_id, 'product_icons', true );
 						$platform_icon_src          = ! empty( $platform_icon_id ) ? wp_get_attachment_image_src( $platform_icon_id, 'single-post-thumbnail' ) : array();
 						$related_groups             = ! empty( get_post_meta( $get_post_id, '_related_group', true ) ) ? get_post_meta( $get_post_id, '_related_group', true ) : array();
 						$related_courses            = ! empty( get_post_meta( $get_post_id, '_related_course', true ) ) ? get_post_meta( $get_post_id, '_related_course', true ) : array();
 						$authors_ids                = array();
+						$authors_names_exp          = array();
 						if ( ! empty( $related_groups ) && is_array( $related_groups ) ) {
 							foreach ( $related_groups as $related_group ) {
-								$course_id                       = $related_group;
-								$authors_names_data              = get_post_meta( $course_id, 'ppma_authors_name', true );
+								$course_id           = $related_group;
+								$authors_names_data  = get_post_meta( $course_id, 'ppma_authors_name', true );
 								$authors_names_exp[] = explode( ', ', $authors_names_data );
 							}
 							$authors_name = $authors_names_exp[0];
 							foreach ( $authors_name as $author_name ) {
 								global $wpdb;
 								$multi_author_query = $wpdb->get_results( $wpdb->prepare( 'SELECT ID FROM ' . $wpdb->prefix . 'users WHERE display_name = %s', array( $author_name ) ), ARRAY_A );
-								$authors_ids[]          = ! empty( $multi_author_query ) ? (int) $multi_author_query[0]['ID'] : 0;
+								$authors_ids[]      = ! empty( $multi_author_query ) ? (int) $multi_author_query[0]['ID'] : 0;
 							}
 						} else {
 							foreach ( $related_courses as $related_course ) {
@@ -4275,7 +4277,7 @@ if ( ! function_exists( 'moc_training_products_featured_course' ) ) {
 								$authors_names_data              = get_post_meta( $course_id, 'ppma_authors_name', true );
 								$authors_names_exp[] = explode( ', ', $authors_names_data );
 							}
-							$authors_name = $authors_names_exp[0];
+							$authors_name = ( ! empty( $authors_names_exp[0] ) ) ? $authors_names_exp[0] : array();
 							foreach ( $authors_name as $author_name ) {
 								global $wpdb;
 								$multi_author_query = $wpdb->get_results( $wpdb->prepare( 'SELECT ID FROM ' . $wpdb->prefix . 'users WHERE display_name = %s', array( $author_name ) ), ARRAY_A );
@@ -7324,6 +7326,8 @@ if ( ! function_exists( 'moc_get_courses_by_search_keyword' ) ) {
 		$name             = preg_split( '/\s+/', trim( $str_name ) );
 		$first_name       = $name[0];
 		$last_name        = isset( $name[1] ) ? $name[1] : null;
+		$user_arguments   = array();
+
 		if ( ! empty( $search_keyword ) ) {
 			if ( is_null( $last_name ) ) {
 				$user_arguments['meta_query'][] = array(
@@ -9785,6 +9789,62 @@ if ( ! function_exists( 'mops_get_required_asterisk' ) ) {
 		ob_start();
 		?>
 		<i><svg xmlns="http://www.w3.org/2000/svg" width="9" height="21" viewBox="0 0 9 21" fill="none"><path d="M3.2 6H5.45L5.325 8.675L7.55 7.275L8.675 9.175L6.3 10.425L8.65 11.725L7.525 13.6L5.325 12.175L5.425 14.7H3.175L3.325 12.2L1.2 13.55L0.075 11.65L2.325 10.4L0 9.125L1.15 7.225L3.325 8.6L3.2 6Z" fill="url(#paint0_linear_34_3644)"/><defs><linearGradient id="paint0_linear_34_3644" x1="-0.204631" y1="10.371" x2="13.798" y2="10.371" gradientUnits="userSpaceOnUse"><stop stop-color="#FD4B7A"/><stop offset="1" stop-color="#4D00AE"/></linearGradient></defs></svg></i>
+		<?php
+
+		return ob_get_clean();
+	}
+}
+
+/**
+ * Check if the function exists.
+ */
+if ( ! function_exists( 'mops_get_agency_person_html_block' ) ) {
+	/**
+	 * Return the html for required asterisk.
+	 *
+	 * @return string
+	 *
+	 * @since 1.0.0
+	 */
+	function mops_get_agency_person_html_block( $person_index = 0, $person_data = array() ) {
+		$full_name        = ( ! empty( $person_data['full_name'] ) ) ? $person_data['full_name'] : '';
+		$position         = ( ! empty( $person_data['position'] ) ) ? $person_data['position'] : '';
+		$linkedin_profile = ( ! empty( $person_data['linkedin_profile'] ) ) ? $person_data['linkedin_profile'] : '';
+		$display_picture  = ( ! empty( $person_data['display_picture'] ) ) ? wp_get_attachment_image_src( $person_data['display_picture'], 'full-image' ) : 0;
+
+		ob_start();
+		?>
+		<div class="person-data">
+			<h4><?php echo esc_html( sprintf( __( 'Person %1$d', 'marketingops' ), ( $person_index + 1) ) ); ?></h4>
+			<div class="agencyformgroups">
+				<div class="agencyfirstblock">
+					<label><?php esc_html_e( 'Full Name', 'marketingops' ); ?></label>
+					<input type="text" class="agancyinputbox fullname" name="fullname" value="<?php echo wp_kses_post( $full_name ); ?>">
+				</div> 
+				<div class="agencyfirstblock">
+					<label><?php esc_html_e( 'Position', 'marketingops' ); ?></label>
+					<input type="text" class="agancyinputbox position" name="position" value="<?php echo wp_kses_post( $position ); ?>">
+				</div>
+			</div>
+			<div class="agencyformgroup bottomtext">
+				<label><?php esc_html_e( 'LinkedIn URL', 'marketingops' ); ?></label>
+				<input type="text" class="agancyinputbox linkedin" name="linkedin" value="<?php echo wp_kses_post( $linkedin_profile ); ?>">
+			</div>
+
+			<div class="agencyformgroup">
+				<label><?php esc_html_e( 'Display picture', 'marketingops' ); ?></label>
+				<div class="upload-btn-wrapper image-upload-container">
+					<button class="btn"><?php esc_html_e( 'Select an image', 'marketingops' ); ?></button>
+					<p><?php esc_html_e( 'For the best results, crop your photo to 640 x 380px before uploading.', 'marketingops' ); ?></p>
+					<input type="file" class="imageInput" onchange="readURL(this)" accept="image/*"/>
+					<div id="previewContainer" class="preview-container" style="<?php echo ( empty( $display_picture[0] ) ? 'display: none;' : '' ); ?>">
+						<input type="hidden" class="displaypicture" value="<?php echo ( ! empty( $person_data['display_picture'] ) ? $person_data['display_picture'] : '' ); ?>" />
+						<img class="preview-image" src="<?php echo ( ! empty( $display_picture[0] ) ? $display_picture[0] : '' ); ?>" alt="Image Preview" />
+						<button class="removePreview remove-preview-btn" id="removePreview"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="15.35" stroke="white" stroke-width="1.3"></circle><path d="M11 11L16 16L11 21" stroke="white" stroke-width="1.3"></path><path d="M21 11L16 16L21 21" stroke="white" stroke-width="1.3"></path></svg></button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<?php
 
 		return ob_get_clean();
