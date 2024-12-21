@@ -2565,3 +2565,24 @@ line-height: normal;
 @media  screen and (max-width: 1921px) {
 	.bannersprinimg .elementor-container {min-height: 70vh;}
 }
+
+
+
+
+
+.springfaqsection p a, .springfaqsection a {
+    color: #3E34F5;
+    text-decoration: underline;
+}
+.springfaqsection .elementor-widget-heading {
+    margin-bottom: 10px;
+}
+.springtitle {
+    color: #1A1A1A;
+    font-family: "Open Sans" !important;
+    font-size: 35.862px;
+    font-style: normal;
+    font-weight: 500 !important;
+    line-height: 122.293%;
+    margin: 25px 0 20px;
+}
