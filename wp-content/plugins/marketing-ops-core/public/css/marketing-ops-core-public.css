@@ -2584,5 +2584,8 @@ line-height: normal;
     font-style: normal;
     font-weight: 700 !important;
     line-height: 122.293%;
-    margin: 0px 0 20px;
+    margin: 0px 0 30px;
+}
+.springfaqsection .elementor-widget:not(:last-child) {
+    margin-block-end: 10px;
 }
