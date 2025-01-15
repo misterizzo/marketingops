@@ -11,6 +11,8 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 global $current_user, $wpdb;
 
+echo 'i am here';
+
 $is_agency_member = mops_is_user_agency_partner( $current_user->ID );
 $agency_id        = new WP_Query(
 	array(
