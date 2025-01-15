@@ -11,9 +11,8 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 global $current_user, $wpdb;
 
-echo 'i am here';
-
 $is_agency_member = mops_is_user_agency_partner( $current_user->ID );
+var_dump( $is_agency_member );
 $agency_id        = new WP_Query(
 	array(
 		'post_type'      => 'agency',
@@ -30,6 +29,9 @@ $agency_id        = new WP_Query(
 	)
 );
 $agency_id        = ( ! empty( $agency_id->posts[0] ) ) ? $agency_id->posts[0] : false;
+
+var_dump( $agency_id );
+
 
 // If the linked agency is not available, show the registration page.
 if ( false === $agency_id || false === $is_agency_member ) {
