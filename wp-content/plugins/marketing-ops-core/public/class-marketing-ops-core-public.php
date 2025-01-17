@@ -2703,6 +2703,10 @@ class Marketing_Ops_Core_Public {
 			$classes[] = 'moc_slack_invite_request';
 		}
 
+		if ( is_page( 'subscribe-new' ) ) {
+			$classes[] = 'mops_subscribe_page';
+		}
+
 		return $classes;
 	}
 
