@@ -2601,4 +2601,5 @@ line-height: normal;
 .mops_subscribe_page .background_color_sec .elementor-container.elementor-column-gap-default {background: #FBFBFB;max-width: 777px !important;border-radius: 5px;}
 .mops_subscribe_page .topsubscriptbox .elementor-widget-container p {margin: 0;}
 .mops_subscribe_page .elementor-container .membershipbox_one {width: 54% !important;}
+.mops_subscribe_page .elementor-container .topsubscriptbox .membershipbox_one {width: 60% !important;}
 /* subscribe new */
