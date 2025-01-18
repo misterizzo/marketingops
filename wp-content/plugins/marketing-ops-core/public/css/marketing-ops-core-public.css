@@ -2589,3 +2589,13 @@ line-height: normal;
 .springfaqsection .elementor-widget:not(:last-child) {
     margin-block-end: 10px;
 }
+
+
+/* subscribe new */
+.mops_subscribe_page header.page-header {display: none;}
+.mops_subscribe_page .membership-container .customwidthtile h2{background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}
+.mops_subscribe_page .membership-container .customwidthtile {margin-bottom: 0;}
+.mops_subscribe_page .membership-container .customwidthtile .elementor-widget-text-editor i {position: relative;top: 5px;}
+.mops_subscribe_page span.collegegrads{color: #45474F;font-family: "Open Sans";font-size: 14px;font-style: normal;font-weight: 400;line-height: normal;}
+
+/* subscribe new */
