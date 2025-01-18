@@ -2602,7 +2602,8 @@ line-height: normal;
 .mops_subscribe_page .topsubscriptbox .elementor-widget-container p {margin: 0;}
 .mops_subscribe_page .elementor-container .membershipbox_one {width: 55% !important;}
 .mops_subscribe_page .elementor-container .topsubscriptbox .membershipbox_one {width: 69% !important;}
-.mops_subscribe_page .elementor-container .topsubscriptbox .membershipbox_other{width: 130px;}
+.mops_subscribe_page .elementor-container .topsubscriptbox .membershipbox_other{width: 150px;}
+.mops_subscribe_page .elementor-container .member_plan.membershipbox_other {width: 150px !important;}
 /* subscribe new */
 
 
