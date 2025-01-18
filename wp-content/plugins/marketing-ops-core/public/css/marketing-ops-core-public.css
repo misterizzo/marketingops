@@ -2605,6 +2605,25 @@ line-height: normal;
 .mops_subscribe_page .elementor-container .topsubscriptbox .membershipbox_other{width: 150px;}
 .mops_subscribe_page .elementor-container .member_plan.membershipbox_other {width: 150px !important;}
 .mops_subscribe_page #anualprice .elementor-widget.elementor-widget-heading{margin-bottom: 0;}
+
+@media (min-width: 992px) and (max-width: 1199px) 
+{
+
+		.mops_subscribe_page .elementor-container .membershipbox_one {width: 53% !important;}
+		.mops_subscribe_page .elementor-container .topsubscriptbox .membershipbox_one {width: 64% !important;}
+
+}
+
+@media (min-width: 768px) and (max-width: 991px) 
+{
+		.mops_subscribe_page .elementor-container .topsubscriptbox .membershipbox_one {width: 64% !important;}
+		.mops_subscribe_page .elementor-container .membershipbox_one {width: 52% !important;}
+}
+@media (max-width:767px) 
+{
+	
+}
+
 /* subscribe new */
 
 
