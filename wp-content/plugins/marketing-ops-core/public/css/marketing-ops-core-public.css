@@ -2606,6 +2606,23 @@ line-height: normal;
 .mops_subscribe_page .elementor-container .member_plan.membershipbox_other {width: 150px !important;}
 .mops_subscribe_page #anualprice .elementor-widget.elementor-widget-heading{margin-bottom: 0;}
 
+
+ .newmopsbox {
+    position: relative;
+}
+.springboxbanner {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    z-index: 99;
+    max-width: 200px;
+    width: 100%;
+    transform: translateY(-0%);
+}
+.springboxbanner p {
+    margin-bottom: 6px;
+}
+
 @media (min-width: 992px) and (max-width: 1199px) 
 {
 
