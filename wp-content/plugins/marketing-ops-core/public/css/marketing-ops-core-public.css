@@ -2611,7 +2611,7 @@ line-height: normal;
     position: relative;
 }
 .springboxbanner {
-    position: absolute;
+    position: absolute !important;
     right: 0;
     top: 50%;
     z-index: 99;
