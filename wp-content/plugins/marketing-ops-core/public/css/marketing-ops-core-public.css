@@ -2611,6 +2611,12 @@ line-height: normal;
 
 		.mops_subscribe_page .elementor-container .membershipbox_one {width: 53% !important;}
 		.mops_subscribe_page .elementor-container .topsubscriptbox .membershipbox_one {width: 64% !important;}
+		.mops_subscribe_page #anualprice .elementor-container .topsubscriptbox .membershipbox_one {
+    width: 60% !important;
+}
+.mops_subscribe_page .elementor-section-content-top.titlesubscribse.subscribe_plan_section.selectmember.sectionone.elementor-hidden-mobile.elementor-section-boxed.elementor-section-height-default.elementor-section-height-default .elementor-container .topsubscriptbox .membershipbox_one {
+    width: 60% !important;
+}
 
 }
 
