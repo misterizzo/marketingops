@@ -2625,6 +2625,7 @@ line-height: normal;
 		body.mops_subscribe_page .background_color_sec .elementor-container .elementor-column:nth-child(1) {width: 50px !important;display: none;}
 		.mops_subscribe_page .background_color_sec .elementor-container .elementor-column {width: 90% !important;}
 		.mops_subscribe_page .elementor-container .member_plan.membershipbox_other {width: 100px !important;}
+		#notmobile{display: none !important;}
 }
 
 /* subscribe new */
