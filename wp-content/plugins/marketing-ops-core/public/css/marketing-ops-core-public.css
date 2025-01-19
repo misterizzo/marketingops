@@ -2655,7 +2655,7 @@ line-height: normal;
 		.mops_subscribe_page .thretabmobile:after {bottom: 20px;left: 20px;z-index: -1;}
 		.mops_subscribe_page .topsubscriptbox .elementor-widget-container p {padding-bottom: 10px;}
 		#onlymobile .elementor-widget-wrap.elementor-element-populated {padding: 0 10px;}
-		.springboxbanner {right: 10%;top: 33%;}
+		.springboxbanner {right: 1vw;top:16vh;}
 }
 
 /* subscribe new */
