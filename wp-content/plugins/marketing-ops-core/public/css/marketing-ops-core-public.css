@@ -2621,7 +2621,9 @@ line-height: normal;
 }
 @media (max-width:767px) 
 {
-	
+		.mops_subscribe_page .background_color_sec .elementor-container.elementor-column-gap-default {max-width: 777px !important;width:calc(100% - 20px);}
+		body.mops_subscribe_page .background_color_sec .elementor-container .elementor-column:nth-child(1) {width: 50px !important;}
+		.mops_subscribe_page .background_color_sec .elementor-container .elementor-column {width: 60% !important;}
 }
 
 /* subscribe new */
