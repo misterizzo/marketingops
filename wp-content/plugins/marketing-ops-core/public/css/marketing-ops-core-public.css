@@ -2623,9 +2623,10 @@ line-height: normal;
 {
 		.mops_subscribe_page .background_color_sec .elementor-container.elementor-column-gap-default {max-width: 777px !important;width:calc(100% - 20px);}
 		body.mops_subscribe_page .background_color_sec .elementor-container .elementor-column:nth-child(1) {width: 50px !important;display: none;}
-		.mops_subscribe_page .background_color_sec .elementor-container .elementor-column {width: 90% !important;}
-		.mops_subscribe_page .elementor-container .member_plan.membershipbox_other {width: 100px !important;}
+		.mops_subscribe_page .background_color_sec .elementor-container .elementor-column {width: 70% !important;}
+		.mops_subscribe_page .elementor-container .member_plan.membershipbox_other {width: 40% !important;}
 		#notmobile{display: none !important;}
+		.mops_subscribe_page .background_color_sec  .elementor-widget-image {text-align: right !important;}
 }
 
 /* subscribe new */
