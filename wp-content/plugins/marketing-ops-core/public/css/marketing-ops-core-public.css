@@ -2658,6 +2658,36 @@ line-height: normal;
 		.springboxbanner {right: 1vw;top:16vh;}
 }
 
+
+
+
+.textmember {
+    display: flex;
+}
+.anytime:hover .membershiptooltip{opacity:1;}
+.membershiptooltip{width:448px;
+    border-radius: 12px;
+border: 1px solid #E7EFEF;
+background: var(--pure-white, #FFF);padding: 20px 20px 0;
+position: absolute;
+z-index: 999;
+opacity: 0
+}
+.membershiptooltip p{color: #242730);
+font-family: "Open Sans";
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;margin-bottom:10px;}
+
+.membershiptooltip p:last-child{margin-bottom: 0;}
+
+.membershiptooltip p span{color: #242730);
+font-family: "Open Sans";
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;}
 /* subscribe new */
 
 
