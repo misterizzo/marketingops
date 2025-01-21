@@ -1004,17 +1004,17 @@ class Marketing_Ops_Core_Public {
 			$templates = MOC_PLUGIN_PATH . 'public/partials/templates/prj-templates/list.php';
 		}
 
-		// If it's the conference vault page.
-		if ( is_page( 'conference-vault' ) ) {
+		// If it's the member vault page.
+		if ( is_page( 'member-vault' ) ) {
 			$templates = MOC_PLUGIN_PATH . 'public/partials/templates/conference-vault/conference-vault-main.php';
 		}
 
-		// Check if it's the conference vault details page.
+		// Check if it's the member vault details page.
 		if ( is_singular( 'conference_vault' ) ) {
 			$templates = MOC_PLUGIN_PATH . 'public/partials/templates/conference-vault/conference-vault-single.php';
 		}
 
-		// Check if it's the conference vault taxonomy archive page.
+		// Check if it's the member vault taxonomy archive page.
 		if ( is_tax( 'pillar' ) || is_tax( 'conference' ) || is_tax( 'conference_skill_level' ) ) {
 			$templates = MOC_PLUGIN_PATH . 'public/partials/templates/conference-vault/conference-vault-taxonomy-archive.php';
 		}
@@ -1409,7 +1409,7 @@ class Marketing_Ops_Core_Public {
 		}
 
 		// Add the video to only the taxonomy pages.
-		if ( is_tax( 'pillar' ) || is_tax( 'conference' ) || is_tax( 'conference_skill_level' ) || is_page( 'conference-vault' ) || is_singular( 'conference_vault' ) ) {
+		if ( is_tax( 'pillar' ) || is_tax( 'conference' ) || is_tax( 'conference_skill_level' ) || is_page( 'member-vault' ) || is_singular( 'conference_vault' ) ) {
 			require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-conference-vault-video.php';
 		}
 
@@ -1422,7 +1422,7 @@ class Marketing_Ops_Core_Public {
 		}
 
 		// Add the restricted content modal for pro-plus members.
-		if ( is_page( 'conference-vault' ) || is_singular( 'conference_vault' ) || is_tax( 'conference' ) || ( is_post_type_archive( 'template' ) ) ) {
+		if ( is_page( 'member-vault' ) || is_singular( 'conference_vault' ) || is_tax( 'conference' ) || ( is_post_type_archive( 'template' ) ) ) {
 			require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content-pro-plus-members.php';
 		}
 
