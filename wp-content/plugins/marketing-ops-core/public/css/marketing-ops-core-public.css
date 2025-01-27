@@ -1966,6 +1966,8 @@ section.profile_setup .content_boxed label:after{content: "";position: absolute;
 
 /* agecy */
 
+
+
 .mops_marketing-operations-agency-directory_page header.page-header{display:none;}
 .agenctdirectoryblock .agency-container{max-width:1190px;margin-right:auto;margin-left:auto;position:relative;}
 .agenctdirectoryblock .agency-container h1{text-align:center;font-family:"Futura LT";font-size:34px;font-style:normal;font-weight:700;line-height:normal;background:var(--horizontal-grad-1,linear-gradient(90deg,#FD4B7A -2.36%,#4D00AE 159.05%));background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:20px 0 10px;}
@@ -2611,6 +2613,41 @@ line-height: normal;
 .springboxbanner p {margin-bottom: 6px;}
 
 .textmember {display: flex;}
+
+
+.textmember .iconmss {
+    width: 18px;
+    height: 18px;
+    margin: 0px 2px;
+    cursor: pointer;
+}
+
+.textmember {
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+
+.mops_subscribe_page abbr svg {
+    position: relative;
+    top: 3px;
+}
+
+
+.membershiptooltip.top:after {
+    content: '';
+    height: 10px;
+    width: 10px;
+    position: absolute;
+    background-color: #fff;
+    top: -5px;
+    left: 80%;
+    border-top: #E7EFEF solid 2px;
+    border-left: #E7EFEF solid 2px;
+    transform: rotate(45deg);
+}
+
+
 .iconmss:hover .membershiptooltip{display:block;}
 .membershiptooltip{max-width:448px;border-radius: 12px;border: 1px solid #E7EFEF;background: var(--pure-white, #FFF);padding: 20px 20px;position: absolute;z-index: 999;display: none;width:100%;left:0;}
 .membershiptooltip p{color: #242730;font-family: "Open Sans";font-size: 14px;font-style: normal;font-weight: 400;line-height: normal;margin-bottom:10px;}
