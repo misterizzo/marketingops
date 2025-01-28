@@ -21,6 +21,7 @@ global $post, $current_user;
 
 // Fetch the agencies.
 $is_agency_member         = mops_is_user_agency_partner( $current_user->ID );
+$is_administrator         = ( ! empty( $current_user->roles ) && in_array( 'administrator', $current_user->roles, true ) ) ? true : false;
 $agency_query             = new WP_Query( moc_posts_query_args( 'agency', 1, -1 ) );
 $agency_ids               = ( ! empty( $agency_query->posts ) && is_array( $agency_query->posts ) ) ? $agency_query->posts : array();
 $page_excerpt             = get_post_field( 'post_excerpt', $post->ID );
@@ -112,7 +113,7 @@ $agency_services          = get_terms( // Get the agency services.
 					<?php
 					// Loop through the agencies.
 					foreach ( $agency_ids as $agency_id ) {
-						echo mops_agency_list_item( $agency_id, $is_agency_member );
+						echo mops_agency_list_item( $agency_id, $is_agency_member, $is_administrator );
 					}
 					?>
 				</ul>

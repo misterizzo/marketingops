@@ -9909,7 +9909,7 @@ if ( ! function_exists( 'mops_agency_list_item' ) ) {
 	 *
 	 * @since 1.0.0
 	 */
-	function mops_agency_list_item( $agency_id = 0, $is_agency_member = false ) {
+	function mops_agency_list_item( $agency_id = 0, $is_agency_member = false, $is_administrator = false ) {
 		// Return, if the agency ID is 0.
 		if ( 0 === $agency_id ) {
 			return;
@@ -9948,7 +9948,7 @@ if ( ! function_exists( 'mops_agency_list_item' ) ) {
 			</div>
 
 			<!-- show the overlay if the current user is not agency member -->
-			<?php if ( false === $is_agency_member ) { ?>
+			<?php if ( ! ( true === $is_agency_member || true === $is_administrator ) ) { ?>
 				<div class="overlayonhover">
 					<h2><?php esc_html_e( 'Apply for an agency profile at no charge.', 'marketingops' ); ?></h2>
 					<p><?php esc_html_e( 'Share your story with the MarketingOPS community:', 'marketingops' ); ?></p>
