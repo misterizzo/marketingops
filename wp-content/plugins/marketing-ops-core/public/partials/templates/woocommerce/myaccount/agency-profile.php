@@ -101,7 +101,7 @@ if ( false === $agency_id || false === $is_agency_member ) {
 			)
 		);
 		$year_founded      = (int) get_field( 'agency_year_founded', $agency_id );
-		$employees_list    = array( '1-10', '10-25', '25-50', '50-100', '100-250', '250-500', '500-1000', '1000-2000', 'More than 2000' );
+		$employees_list    = array( '1', '2-5', '6-10', '11-25', '26-50', '51-200', '201-1000', '1001-10000', '10001 or more' );
 		$agency_employees  = get_field( 'agency_employees', $agency_id );
 		?>
 		<section class="agencyformone detailsblock">
