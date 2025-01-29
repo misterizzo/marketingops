@@ -2695,3 +2695,99 @@ line-height: normal;
 
 
 
+.mops_road-to-mopza25_page .page-header {
+    display: none;
+}
+
+
+
+.mops_road-to-mopza25_page .mopza25 h2.elementor-heading-title{
+color: var(--Accent-text, #242730);
+
+font-family: "Futura LT";
+font-size: 34px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
+
+.mops_road-to-mopza25_page .mopza25 h2.elementor-heading-title span{
+background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));
+background-clip: text;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+
+font-family: "Futura LT";
+font-size: 34px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
+.location h2.elementor-heading-title {
+text-align: center;
+font-family: "Futura LT";
+font-size: 34px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));
+background-clip: text;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+
+}
+
+.expert h2.elementor-heading-title{
+text-align: center;
+font-family: "Futura LT";
+font-size: 25px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));
+background-clip: text;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+
+
+
+
+#membershiptopbannersss
+ {
+    background-image: url(/wp-content/uploads/2024/06/subscribeleft.png);
+    left: 0;
+    top: 25rem;
+    width: 352px;
+    height: 546px;
+}
+
+#experthost:before 
+ {
+    background-image: url(/wp-content/uploads/2025/01/Frame-1537-2.png);
+    left: 0;
+    top: 25rem;
+    width: 352px;
+    height: 546px;
+}
+
+#experthost:after 
+ {
+    background-image: url(/wp-content/uploads/2025/01/Frame-1537-1.png);
+    left: 0;
+    top: 25rem;
+    width: 352px;
+    height: 546px;
+}
+
+#membershiptopbanners:before {
+    background-image: url(/wp-content/uploads/2024/06/subscribeleft.png);
+    left: 0;
+    top: 25rem;
+    width: 352px;
+    height: 546px;
+}
+
+
