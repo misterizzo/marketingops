@@ -2784,6 +2784,16 @@ background-clip: text;
     height: 546px;
 }
 
+
+#membershiptopbanners:after
+ {
+    background-image: url(/wp-content/uploads/2025/01/blur2-1.png);
+    left: 0;
+    top: 25rem;
+    width: 352px;
+    height: 546px;
+}
+
 #experthost{position: relative;}
 
 
