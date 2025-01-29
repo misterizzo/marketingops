@@ -2753,6 +2753,26 @@ background-clip: text;
 }
 
 
+#membershiptopbannersss{position: relative;}
+
+
+#membershiptopbannersss:before, #membershiptopbannersss:after {
+    content: "";
+    background-repeat: no-repeat;
+    background-position: top left;
+    position: absolute;
+    z-index: -1;
+}
+
+
+
+#experthost:before, #experthost:after {
+    content: "";
+    background-repeat: no-repeat;
+    background-position: top left;
+    position: absolute;
+    z-index: -1;
+}
 
 
 #membershiptopbannersss:after
@@ -2763,6 +2783,8 @@ background-clip: text;
     width: 352px;
     height: 546px;
 }
+
+#experthost{position: relative;}
 
 #experthost:before 
  {
@@ -2790,4 +2812,13 @@ background-clip: text;
     height: 546px;
 }
 
+
+#membershiptopbanners{position: relative;}
+#membershiptopbanners:before, #membershiptopbanners:after {
+    content: "";
+    background-repeat: no-repeat;
+    background-position: top left;
+    position: absolute;
+    z-index: -1;
+}
 
