@@ -2786,30 +2786,23 @@ background-clip: text;
 
 #experthost{position: relative;}
 
-#experthost:before 
- {
-    background-image: url(/wp-content/uploads/2025/01/Frame-1537-2.png);
-    left: 0;
-    top: 25rem;
-    width: 352px;
-    height: 546px;
-}
 
-#experthost:after 
- {
+
+#experthost:after {
     background-image: url(/wp-content/uploads/2025/01/Frame-1537-1.png);
     left: 0;
-    top: 25rem;
+    top: -45rem;
     width: 352px;
     height: 546px;
 }
 
-#membershiptopbanners:before {
-    background-image: url(/wp-content/uploads/2024/06/subscribeleft.png);
-    left: 0;
-    top: 25rem;
-    width: 352px;
-    height: 546px;
+#experthost:before {
+    background-image: url(/wp-content/uploads/2025/01/Frame-1537-2.png);
+    left: inherit;
+    top: 15rem;
+    width: 223px;
+    height: 463px;
+    right: 0;
 }
 
 
@@ -2822,3 +2815,10 @@ background-clip: text;
     z-index: -1;
 }
 
+@media (max-width: 767px) 
+{
+		#membershiptopbanners:before, #membershiptopbanners:after,
+		#experthost:before, #experthost:after,
+		#membershiptopbannersss:before, #membershiptopbannersss:after{display: none;}
+		
+}
