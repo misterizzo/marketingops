@@ -2785,14 +2785,23 @@ background-clip: text;
 }
 
 
-#membershiptopbanners:after
- {
+#membershiptopbanners:after {
     background-image: url(/wp-content/uploads/2025/01/blur2-1.png);
     left: 0;
-    top: 25rem;
+    top: 148rem;
     width: 352px;
     height: 546px;
 }
+
+
+.mops_road-to-mopza25_page #membershiptopbanner:before {
+    background-image: url(/wp-content/uploads/2024/06/subscribeleft.png);
+    left: 0;
+    top: -50rem;
+    width: 352px;
+    height: 546px;
+}
+
 
 #experthost{position: relative;}
 
