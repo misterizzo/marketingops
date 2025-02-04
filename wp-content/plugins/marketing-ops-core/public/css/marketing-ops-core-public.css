@@ -2841,6 +2841,21 @@ background-clip: text;
     margin-bottom: 10px;
 }
 
+
+.elementor-location-popup .elementor-tab-title.elementor-tab-desktop-title.elementor-active {
+    background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.elementor-location-popup .elementor-widget-tabs .elementor-tab-desktop-title {
+    padding: 10px 25px 10px 0px;
+}
+.elementor-location-popup .elementor-widget-tabs .elementor-tab-content {
+    padding: 10px 0;
+}
+
 @media (max-width: 767px) 
 {
 		#membershiptopbanners:before, #membershiptopbanners:after,
