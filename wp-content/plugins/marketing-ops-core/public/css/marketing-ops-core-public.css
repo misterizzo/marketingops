@@ -2834,6 +2834,13 @@ background-clip: text;
     z-index: -1;
 }
 
+.locationsection .elementor-widget-container p strong {
+    font-weight: 600;
+}
+.locationsection .elementor-widget-container p {
+    margin-bottom: 10px;
+}
+
 @media (max-width: 767px) 
 {
 		#membershiptopbanners:before, #membershiptopbanners:after,
