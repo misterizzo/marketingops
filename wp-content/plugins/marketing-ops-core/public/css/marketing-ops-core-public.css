@@ -2856,6 +2856,25 @@ background-clip: text;
     padding: 10px 0;
 }
 
+
+#elementor-popup-modal-235138 .dialog-widget-content {
+    box-shadow: 2px 8px 23px 3px rgba(0,0,0,0.2);
+    border-radius: 15px;
+}
+#elementor-popup-modal-235138 .dialog-close-button {
+    display: flex;
+    border: solid 1px #fff;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    color: #fff;
+    top: -40px;
+    right: -40px;
+}
+
 @media (max-width: 767px) 
 {
 		#membershiptopbanners:before, #membershiptopbanners:after,
