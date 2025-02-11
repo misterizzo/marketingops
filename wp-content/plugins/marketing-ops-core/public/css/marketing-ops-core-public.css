@@ -2841,6 +2841,9 @@ background-clip: text;
     margin-bottom: 5px;
 }
 
+#experthost .elementor-widget-container p {
+    margin-bottom: 0;
+}
 
 .elementor-location-popup .elementor-tab-title.elementor-tab-desktop-title.elementor-active {
     background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));
