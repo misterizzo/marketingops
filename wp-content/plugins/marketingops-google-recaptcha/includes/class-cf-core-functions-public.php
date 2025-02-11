@@ -34,6 +34,7 @@ class Cf_Core_Functions_Public {
 		add_action( 'woocommerce_register_form', array( $this, 'cf_woocommerce_register_form_callback' ) );
 		add_action( 'woocommerce_lostpassword_form', array( $this, 'cf_woocommerce_lostpassword_form_callback' ) );
 		// add_action( 'woocommerce_review_order_before_payment', array( $this, 'cf_woocommerce_review_order_before_payment_callback' ) );
+		add_action( 'woocommerce_review_order_before_submit', array( $this, 'cf_woocommerce_review_order_before_payment_callback' ) );
 		add_action( 'woocommerce_register_post', array( $this, 'cf_woocommerce_register_post_callback' ), 99, 3 );
 		add_action( 'authenticate', array( $this, 'cf_authenticate_callback' ), 99, 3 );
 		add_action( 'lostpassword_post', array( $this, 'cf_lostpassword_post_callback' ), 99 );
@@ -43,6 +44,7 @@ class Cf_Core_Functions_Public {
 		add_action( 'woocommerce_thankyou', array( $this, 'cf_woocommerce_thankyou_callback' ), 99 );
 		add_action( 'mops_log_in_form', array( $this, 'cf_mops_log_in_form_callback' ) );
 		add_action( 'mops_forgot_password_form', array( $this, 'cf_mops_forgot_password_form_callback' ) );
+		// add_action( 'woocommerce_review_order_before_submit', array( $this, 'cf_woocommerce_review_order_before_submit_callback' ) );
 	}
 
 	/**
@@ -461,4 +463,6 @@ class Cf_Core_Functions_Public {
 
 		echo ob_get_clean();
 	}
+
+	// cf_woocommerce_review_order_before_submit_callback
 }
