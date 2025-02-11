@@ -715,6 +715,8 @@ div#moc_apaloza_workshop.popup .popup_container .popup_content .box_content .box
 	.applychapter {position: relative!important;padding: 50px 0 0;margin-bottom: -70px !important;}
 	/* chapter */
 	.sp_column_three.sp_column.forthsocialproofinner{max-width:957px;margin-left:auto;margin-right:0px;}
+
+	
 }    
 
 @media (min-width: 768px) and (max-width: 991px) 
@@ -743,6 +745,10 @@ div#moc_apaloza_workshop.popup .popup_container .popup_content .box_content .box
 
 	.fourimageboxs figure.elementor-image-box-img{flex:0 0 90px;}
 	.fourimageboxs .elementor-image-box-content{width:100%!important;}
+
+	.sanjosetextbox{margin-top: 0px;}
+		.atlantatextbox{    margin-left: 0%;margin-top: 0px;}
+		.atlantaimgbox{position: relative; !important;right: inherit;top: inherit;}
 	
 }
 
@@ -2894,5 +2900,8 @@ background-clip: text;
 		.mops_road-to-mopza25_page .mopza25 h2.elementor-heading-title {max-width: 80%;}
 		.mops_road-to-mopza25_page .mopza25 h2.elementor-heading-title span,
 		.mops_road-to-mopza25_page .mopza25 h2.elementor-heading-title{font-size: 28px !important;}
+		.sanjosetextbox{margin-top: 0px;}
+		.atlantatextbox{    margin-left: 0%;margin-top: 0px;}
+		.atlantaimgbox{position: relative; !important;right: inherit;top: inherit;}
 		
 }
