@@ -2906,6 +2906,6 @@ background-clip: text;
 		.atlantaimgbox{position: relative !important;right: inherit;top: inherit;}
 		.mops_subscribe_page .membership-container .customwidthtile h2{margin-top: 0;}
 
-		.mops_subscribe_page .footer-newsletter{margin-top: 20px;}
+		.mops_subscribe_page .footer-newsletter{margin-top: 20px!important;}
 		
 }
