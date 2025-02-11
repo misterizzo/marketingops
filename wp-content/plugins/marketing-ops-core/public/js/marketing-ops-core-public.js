@@ -2672,7 +2672,7 @@ jQuery( document ).ready( function( $ ) {
 		'google-recaptcha-checkbox',
 		{
 			'sitekey' : '6LeKbKcqAAAAAKObwIyMaqz3UTNVVf8j_Ryt15De',
-			'theme': 'dark',
+			'theme': 'light',
 		}
 	);
 
