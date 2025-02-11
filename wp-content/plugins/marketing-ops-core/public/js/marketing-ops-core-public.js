@@ -2673,11 +2673,11 @@ jQuery( document ).ready( function( $ ) {
 	 */
 	render_google_recaptcha();
 
-	if ( '/checkut/' === window.location.pathname ) {
-		setTimeout( function() {
-			render_google_recaptcha();
-		}, 3000 );
-	}
+	// if ( '/checkut/' === window.location.pathname ) {
+	// 	setTimeout( function() {
+	// 		render_google_recaptcha();
+	// 	}, 3000 );
+	// }
 
 	/**
 	 * Function to render google recaptcha.

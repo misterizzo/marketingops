@@ -40,7 +40,7 @@ class Cf_Core_Functions_Public {
 		// add_action( 'woocommerce_checkout_process', array( $this, 'cf_woocommerce_checkout_process_callback' ), 99 );
 		add_action( 'mops_log_in_form', array( $this, 'cf_mops_log_in_form_callback' ) );
 		add_action( 'mops_forgot_password_form', array( $this, 'cf_mops_forgot_password_form_callback' ) );
-		add_action( 'woocommerce_review_order_before_submit', array( $this, 'cf_woocommerce_review_order_before_submit_callback' ) );
+		// add_action( 'woocommerce_review_order_before_submit', array( $this, 'cf_woocommerce_review_order_before_submit_callback' ) );
 	}
 
 	/**
