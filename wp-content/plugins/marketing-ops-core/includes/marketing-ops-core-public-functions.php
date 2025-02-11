@@ -5525,9 +5525,6 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 		ob_start();
 		// $grecaptcha_site_key = get_field( 'grecaptcha_site_key', 'option' );
 
-		// Enqueue google recaptcha script.
-		wp_enqueue_script( 'marketingops-core-google-recaptcha-script' );
-
 		if ( ! is_user_logged_in() ) {
 			?>
 			<div class="elementor-column elementor-col-100 elementor-top-column elementor-element register_content login_content moc_login_form_section">

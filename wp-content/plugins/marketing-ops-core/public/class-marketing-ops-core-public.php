@@ -197,7 +197,7 @@ class Marketing_Ops_Core_Public {
 		);
 
 		// Enqueue google recaptcha script.
-		wp_register_script(
+		wp_enqueue_script(
 			'marketingops-core-google-recaptcha-script',
 			'https://www.google.com/recaptcha/api.js?explicit&hl=' . get_locale()
 		);
