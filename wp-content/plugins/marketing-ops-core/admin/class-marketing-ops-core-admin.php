@@ -1521,4 +1521,20 @@ class Marketing_Ops_Core_Admin {
 
 		return home_url( '/forgot-password/' );
 	}
+
+	/**
+	 * Update the URL for the registration page.
+	 *
+	 * @param string $url Holds the user registration URL.
+	 *
+	 * @return string
+	 *
+	 * @since 1.0.0
+	 *
+	 * @see https://developer.wordpress.org/reference/hooks/register_url/
+	 */
+	public function moc_register_url_callback( $url ) {
+
+		return home_url( '/subscribe/' );
+	}
 }
