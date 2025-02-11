@@ -3682,6 +3682,12 @@ class Marketing_Ops_Core_Public {
 				echo $setting['moc_header_script'];
 			}
 		}
+
+		// Add a redirect to the login page if the customer is not logged in.
+		if ( is_account_page() && ! is_user_logged_in() ) {
+			wp_safe_redirect( site_url( 'log-in?redirect_to=/my-account/' ) );
+			exit(0);
+		}
 	}
 
 	/**
