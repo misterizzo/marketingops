@@ -2906,11 +2906,7 @@ background-clip: text;
     display: none !important;
 }
 
-.login .g-recaptcha {
-    transform: scale(0.89);
-    transform-origin: left;
-    margin: 0 0 15px;
-}
+
 
 @media (max-width: 767px) 
 {
