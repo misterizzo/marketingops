@@ -2666,6 +2666,16 @@ jQuery( document ).ready( function( $ ) {
 	}
 
 	/**
+	 * Render Google Recaptcha on the login form.
+	 */
+	if ( $( '#google-recaptcha' ).length ) {
+		grecaptcha.render( 'google-recaptcha', {
+			'sitekey' : '6LeKbKcqAAAAAKObwIyMaqz3UTNVVf8j_Ryt15De',
+			'theme': 'light',
+		} );
+	}
+
+	/**
 	 * jQuery to run ajax for user login process.
 	 */
 	$( document ).on( 'click', '.moc-login-submit-form', function( event ) {
@@ -2675,7 +2685,7 @@ jQuery( document ).ready( function( $ ) {
 		var email            = this_button.closest( '.moc_login_form_section' ).find('.moc-email').val();
 		var password         = this_button.closest( '.moc_login_form_section' ).find('.moc-password').val();
 		var previous_url     = (false !== moc_get_url_vars()) ? moc_get_url_vars()['redirect_to'] : '';
-		// var captcha_response = grecaptcha.getResponse();
+		var captcha_response = grecaptcha.getResponse();
 
 		$('.moc_error span').text('');
 
@@ -2694,6 +2704,12 @@ jQuery( document ).ready( function( $ ) {
 		// check password input is valid or not.
 		if ('' === password) {
 			this_button.closest( '.moc_login_form_section' ).find('.moc_password_err span').text(user_bio_empty_err_msg);
+			process_execute = false;
+		}
+
+		// check password input is valid or not.
+		if ( '' === captcha_response ) {
+			this_button.closest( '.moc_login_form_section' ).find('.moc_captcha_err span').text( 'Please prove that you are not a robot.' );
 			process_execute = false;
 		}
 

@@ -195,6 +195,15 @@ class Marketing_Ops_Core_Public {
 			filemtime( MOC_PLUGIN_PATH . 'public/js/slick.min.js' ),
 			true
 		);
+
+		// Enqueue google recaptcha script.
+		if ( is_page( 'log-in' ) ) {
+			wp_enqueue_script(
+				$this->plugin_name . '-google-recaptcha-script',
+				'https://www.google.com/recaptcha/api.js?explicit&hl=' . get_locale()
+			);
+		}
+
 		wp_enqueue_script(
 			$this->plugin_name,
 			plugin_dir_url( __FILE__ ) . 'js/marketing-ops-core-public.js',

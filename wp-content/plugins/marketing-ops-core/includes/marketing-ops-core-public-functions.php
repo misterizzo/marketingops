@@ -5577,11 +5577,12 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 												</div>
 											</div>
 											<div class="moc-form-field-wrap moc-custom-html fw-full fda-standard fld-above">
-												<?php // if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) { ?>
-													<!-- <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-													<input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
-													<div class="g-recaptcha" data-sitekey="<?php // echo esc_attr( $grecaptcha_site_key ); ?>"></div> -->
-												<?php // } ?>
+												<div class="moc-form-field-input-textarea-wrap">
+													<div id="google-recaptcha"></div>
+													<div class="moc_error moc_captcha_err">
+														<span></span>
+													</div>
+												</div>
 											</div>
 											<div class="moc-form-submit-button-wrap">
 												<button name="reg_login__submit" type="submit" class="moc-login-submit-form ppform-submit-button"><?php esc_html_e( 'Login', 'marketingops' ); ?></button>
