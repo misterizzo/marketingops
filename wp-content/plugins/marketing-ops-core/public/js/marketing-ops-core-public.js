@@ -2763,12 +2763,19 @@ jQuery( document ).ready( function( $ ) {
 		var process_execute = true;
 		var this_button     = $( this );
 		var email           = this_button.closest( '.moc-registration' ).find( '.moc-email' ).val();
+		var captcha_response = grecaptcha.getResponse();
 
 		this_button.closest( '.moc-registration' ).find( '.moc_error span' ).text( '' );
 
 		// check email input is empty or not.
 		if ( -1 === is_valid_string( email ) ) {
 			this_button.closest( '.moc-registration' ).find( '.moc_email_err span' ).text( user_bio_empty_err_msg );
+			process_execute = false;
+		}
+
+		// check password input is valid or not.
+		if ( '' === captcha_response ) {
+			this_button.closest( '.moc-registration' ).find( '.moc_email_err span' ).text( 'Please prove that you are not a robot.' );
 			process_execute = false;
 		}
 
