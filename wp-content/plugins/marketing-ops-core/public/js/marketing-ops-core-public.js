@@ -2720,19 +2720,19 @@ jQuery( document ).ready( function( $ ) {
 		}
 
 		var closest_loader = this_button.closest( '.moc_login_form_section' ).find( 'div.loader_bg' );
-		block_element( closest_loader );
-		var data = {
-			action: 'moc_user_login_process',
-			email: email,
-			password: password,
-			previous_url: previous_url,
-			// captcha_response: captcha_response,
-		};
 		$.ajax({
 			dataType: 'json',
 			url: ajaxurl,
 			type: 'POST',
-			data: data,
+			data: {
+				action: 'moc_user_login_process',
+				email: email,
+				password: password,
+				previous_url: previous_url,
+			},
+			beforeSend: function() {
+				block_element( closest_loader ); // Show the loader.
+			},
 			success: function( response ) {
 				if ('moc-failure-login' === response.data.code) {
 					moc_show_toast( 'bg-danger', 'fa-skull-crossbones', toast_error_heading, response.data.user_response_msg );
@@ -2750,7 +2750,11 @@ jQuery( document ).ready( function( $ ) {
 					}
 				}
 				unblock_element($('.loader_bg'));
-			}
+			},
+			complete: function() {
+				unblock_element( closest_loader ); // Hide the loader.
+				grecaptcha.reset(); // Reset the google recaptcha.
+			},
 		} );
 	} );
 
@@ -2807,16 +2811,14 @@ jQuery( document ).ready( function( $ ) {
 							window.location.href = response.data.redirect_url;
 						}, 2000 );
 					}
-					
-					
 				} else {
 					moc_show_toast( 'bg-danger', 'fa-skull-crossbones', toast_error_heading, response.data.user_response_msg );
 					this_button.closest( '.moc-registration' ).find('.moc-email').val( '' );
 				}
 			},
 			complete: function() {
-				// Hide the loader.
-				unblock_element( $( '.moc_forgot_password_form_section .loader_bg' ) );
+				unblock_element( $( '.moc_forgot_password_form_section .loader_bg' ) ); // Hide the loader.
+				grecaptcha.reset(); // Reset the google recaptcha.
 			},
 		} );
 	} );
