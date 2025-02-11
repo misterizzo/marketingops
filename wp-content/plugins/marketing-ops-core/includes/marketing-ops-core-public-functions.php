@@ -5542,7 +5542,7 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 						</div>
 						<div class="elementor-element profilesubheading elementor-widget elementor-widget-text-editor">
 							<div class="elementor-widget-container">
-								<p><?php esc_html_e( 'Login to manage your account', 'marketingops' ); ?></p>
+								<p><?php esc_html_e( 'Login to manage your account!', 'marketingops' ); ?></p>
 							</div>
 						</div>
 						<?php
