@@ -2896,8 +2896,6 @@ background-clip: text;
 		#membershiptopbanners:before, #membershiptopbanners:after,
 		#experthost:before, #experthost:after,
 		#membershiptopbannersss:before, #membershiptopbannersss:after{display: none;}
-
-		.mops_road-to-mopza25_page .mopza25 h2.elementor-heading-title {max-width: 80%;}
 		.mops_road-to-mopza25_page .mopza25 h2.elementor-heading-title span,
 		.mops_road-to-mopza25_page .mopza25 h2.elementor-heading-title{font-size: 28px !important;}
 		.sanjosetextbox{margin-top: 0px;}
