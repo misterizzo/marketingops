@@ -2890,6 +2890,9 @@ background-clip: text;
     top: -40px;
     right: -40px;
 }
+.nopadding .elementor-widget-wrap.elementor-element-populated {
+    padding: 5px 5px;
+}
 
 @media (max-width: 767px) 
 {
