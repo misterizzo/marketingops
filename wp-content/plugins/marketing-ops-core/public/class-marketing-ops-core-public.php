@@ -197,12 +197,10 @@ class Marketing_Ops_Core_Public {
 		);
 
 		// Enqueue google recaptcha script.
-		if ( is_page( 'log-in' ) ) {
-			wp_enqueue_script(
-				$this->plugin_name . '-google-recaptcha-script',
-				'https://www.google.com/recaptcha/api.js?explicit&hl=' . get_locale()
-			);
-		}
+		wp_register_script(
+			'marketingops-core-google-recaptcha-script',
+			'https://www.google.com/recaptcha/api.js?explicit&hl=' . get_locale()
+		);
 
 		wp_enqueue_script(
 			$this->plugin_name,
