@@ -2775,7 +2775,7 @@ jQuery( document ).ready( function( $ ) {
 
 		// check password input is valid or not.
 		if ( '' === captcha_response ) {
-			this_button.closest( '.moc-registration' ).find( '.moc_email_err span' ).text( 'Please prove that you are not a robot.' );
+			this_button.closest( '.moc-registration' ).find( '.moc_captcha_err span' ).text( 'Please prove that you are not a robot.' );
 			process_execute = false;
 		}
 
