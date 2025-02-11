@@ -178,6 +178,7 @@ class Marketing_Ops_Core {
 		$this->loader->add_action( 'manage_page_posts_custom_column', $plugin_admin, 'moc_manage_page_posts_custom_column_callback', 10, 2 );
 		$this->loader->add_action( 'restrict_manage_posts', $plugin_admin, 'moc_restrict_manage_posts_callback' );
 		$this->loader->add_filter( 'parse_query', $plugin_admin, 'moc_parse_query_callback' );
+		$this->loader->add_filter( 'lostpassword_url', $plugin_admin, 'moc_lostpassword_url_callback', 99 );
 	}
 
 	/**

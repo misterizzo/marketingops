@@ -1505,4 +1505,20 @@ class Marketing_Ops_Core_Admin {
 			}
 		}
 	}
+
+	/**
+	 * Update the URL for the forgot password page.
+	 *
+	 * @param string $url Holds the lost password URL.
+	 *
+	 * @return string
+	 *
+	 * @since 1.0.0
+	 *
+	 * @see https://developer.wordpress.org/reference/hooks/lostpassword_url/
+	 */
+	public function moc_lostpassword_url_callback( $url ) {
+
+		return home_url( '/forgot-password/' );
+	}
 }
