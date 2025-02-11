@@ -2669,7 +2669,7 @@ jQuery( document ).ready( function( $ ) {
 	 * Render Google Recaptcha on the login form.
 	 */
 	grecaptcha.render(
-		$( '.google-recaptcha-checkbox' ),
+		'google-recaptcha-checkbox',
 		{
 			'sitekey' : '6LeKbKcqAAAAAKObwIyMaqz3UTNVVf8j_Ryt15De',
 			'theme': 'light',
