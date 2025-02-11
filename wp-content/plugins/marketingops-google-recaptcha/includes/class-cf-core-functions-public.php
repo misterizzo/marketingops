@@ -33,7 +33,7 @@ class Cf_Core_Functions_Public {
 		add_action( 'woocommerce_login_form', array( $this, 'cf_woocommerce_login_form_callback' ) );
 		add_action( 'woocommerce_register_form', array( $this, 'cf_woocommerce_register_form_callback' ) );
 		add_action( 'woocommerce_lostpassword_form', array( $this, 'cf_woocommerce_lostpassword_form_callback' ) );
-		add_action( 'woocommerce_review_order_before_payment', array( $this, 'cf_woocommerce_review_order_before_payment_callback' ) );
+		// add_action( 'woocommerce_review_order_before_payment', array( $this, 'cf_woocommerce_review_order_before_payment_callback' ) );
 		add_action( 'woocommerce_register_post', array( $this, 'cf_woocommerce_register_post_callback' ), 99, 3 );
 		add_action( 'authenticate', array( $this, 'cf_authenticate_callback' ), 99, 3 );
 		add_action( 'lostpassword_post', array( $this, 'cf_lostpassword_post_callback' ), 99 );
