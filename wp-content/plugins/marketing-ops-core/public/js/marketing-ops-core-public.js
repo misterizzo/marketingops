@@ -2675,9 +2675,8 @@ jQuery( document ).ready( function( $ ) {
 
 	if ( '/checkut/' === window.location.pathname ) {
 		setTimeout( function() {
-			$( '<div id="google-recaptcha-checkbox"></div>' ).insertBefore( 'button[name="woocommerce_checkout_place_order"]' );
 			render_google_recaptcha();
-		}, 2000 );
+		}, 3000 );
 	}
 
 	/**
