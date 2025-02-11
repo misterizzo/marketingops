@@ -3932,7 +3932,7 @@ class Marketing_Ops_Core_Public {
 					</ul>
 					<?php
 				} else {
-					echo '<div class="menu_hover">' . moc_render_login_form_html( 'header' ) . '</div>';
+					// echo '<div class="menu_hover">' . moc_render_login_form_html( 'header' ) . '</div>';
 				}
 				?>
 			</div>
