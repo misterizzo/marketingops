@@ -5578,7 +5578,7 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 											</div>
 											<div class="moc-form-field-wrap moc-custom-html fw-full fda-standard fld-above">
 												<div class="moc-form-field-input-textarea-wrap">
-													<div id="google-recaptcha"></div>
+													<div id="google-recaptcha-checkbox"></div>
 													<div class="moc_error moc_captcha_err">
 														<span></span>
 													</div>
