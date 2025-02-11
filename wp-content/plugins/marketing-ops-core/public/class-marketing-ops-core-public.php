@@ -3567,20 +3567,10 @@ class Marketing_Ops_Core_Public {
 	 * @since 1.0.0
 	 */
 	public function moc_user_login_process_callback() {
-		$email                 = filter_input( INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-		$email                 = filter_var( $email, FILTER_SANITIZE_EMAIL );
-		$password              = filter_input( INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-		$ref_url               = filter_input( INPUT_POST, 'previous_url', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-		$captcha_response      = filter_input( INPUT_POST, 'captcha_response', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-		$grecaptcha_secret_key = get_field( 'grecaptcha_secret_key', 'option' );
-
-		// As the first verification, let's verify the captcha.
-		// $grecaptcha_verified = mops_verify_google_recaptcha( $captcha_response, $grecaptcha_secret_key );
-
-		// if ( '183.82.160.85' === $_SERVER['REMOTE_ADDR'] ) {
-		// 	var_dump( $grecaptcha_verified );
-		// 	die;
-		// }
+		$email    = filter_input( INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$email    = filter_var( $email, FILTER_SANITIZE_EMAIL );
+		$password = filter_input( INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$ref_url  = filter_input( INPUT_POST, 'previous_url', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 		if ( ! empty( $email ) && is_email( $email ) ) {
 			if ( $user = get_user_by_email( $email ) ) {

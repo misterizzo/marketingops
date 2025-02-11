@@ -2686,7 +2686,7 @@ jQuery( document ).ready( function( $ ) {
 		var email            = this_button.closest( '.moc_login_form_section' ).find('.moc-email').val();
 		var password         = this_button.closest( '.moc_login_form_section' ).find('.moc-password').val();
 		var previous_url     = (false !== moc_get_url_vars()) ? moc_get_url_vars()['redirect_to'] : '';
-		var captcha_response = grecaptcha.getResponse();
+		// var captcha_response = grecaptcha.getResponse();
 
 		$('.moc_error span').text('');
 
@@ -2709,10 +2709,10 @@ jQuery( document ).ready( function( $ ) {
 		}
 
 		// check password input is valid or not.
-		if ( '' === captcha_response ) {
-			this_button.closest( '.moc_login_form_section' ).find('.moc_captcha_err span').text( 'Please prove that you are not a robot.' );
-			process_execute = false;
-		}
+		// if ( '' === captcha_response ) {
+		// 	this_button.closest( '.moc_login_form_section' ).find('.moc_captcha_err span').text( 'Please prove that you are not a robot.' );
+		// 	process_execute = false;
+		// }
 
 		if (false === process_execute) {
 			moc_show_toast('bg-danger', 'fa-skull-crossbones', toast_error_heading, invalid_empty_message);
