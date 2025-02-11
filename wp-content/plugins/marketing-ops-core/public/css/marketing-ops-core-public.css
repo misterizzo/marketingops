@@ -2848,7 +2848,7 @@ background-clip: text;
 .sanjosetextbox{margin-top: 60px;}
 .atlantatextbox{    margin-left: 15%;
     margin-top: 25px;}
-.atlantaimgbox{position: absolute;
+.atlantaimgbox{position: absolute !important;
     right: 0;
     top: -65%;}
 
