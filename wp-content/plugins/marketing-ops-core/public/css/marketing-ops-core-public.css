@@ -2903,7 +2903,7 @@ background-clip: text;
     background: transparent;
 }
 .cart_page_box div#wc-stripe-payment-request-wrapper {
-    display: none;
+    display: none !important;
 }
 
 .login .g-recaptcha {
