@@ -2673,6 +2673,14 @@ jQuery( document ).ready( function( $ ) {
 	 */
 	render_google_recaptcha();
 
+	console.log( 'window.location.pathname', window.location.pathname );
+
+	// if ( 'yes' === is_checkout_page ) {
+
+	// }
+
+	// $("<span>Hello world!</span>").insertBefore("p");
+
 	/**
 	 * Function to render google recaptcha.
 	 *

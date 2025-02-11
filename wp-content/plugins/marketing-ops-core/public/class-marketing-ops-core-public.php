@@ -287,8 +287,8 @@ class Marketing_Ops_Core_Public {
 			array(
 				'ajaxurl'                         => admin_url( 'admin-ajax.php' ),
 				'plugin_url'                      => MOC_PLUGIN_URL,
-				'read_text_article'               => ! empty ( get_field( 'artilcle_read_time_text', 'option' ) ) ? get_field( 'artilcle_read_time_text', 'option' ) : esc_html__( 'min read', 'marketingops' ),
-				'read_text_workshop'              => ! empty ( get_field( 'read_time_workshop', 'option' ) ) ? get_field( 'read_time_workshop', 'option' ) : esc_html__( 'min read', 'marketingops' ),
+				'read_text_article'               => ! empty ( get_field( 'artilcle_read_time_text', 'option' ) ) ? get_field( 'artilcle_read_time_text', 'option' ) : __( 'min read', 'marketingops' ),
+				'read_text_workshop'              => ! empty ( get_field( 'read_time_workshop', 'option' ) ) ? get_field( 'read_time_workshop', 'option' ) : __( 'min read', 'marketingops' ),
 				'moc_post_type'                   => ! empty( $post->ID ) ? get_post_type( $post->ID ) : '',
 				'theme_path'                      => get_stylesheet_directory_uri(), 
 				'current_user_id'                 => ( is_user_logged_in() ) ? get_current_user_id() : 0,
