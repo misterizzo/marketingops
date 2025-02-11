@@ -38,9 +38,6 @@ class Cf_Core_Functions_Public {
 		add_action( 'authenticate', array( $this, 'cf_authenticate_callback' ), 99, 3 );
 		add_action( 'lostpassword_post', array( $this, 'cf_lostpassword_post_callback' ), 99 );
 		// add_action( 'woocommerce_checkout_process', array( $this, 'cf_woocommerce_checkout_process_callback' ), 99 );
-		add_action( 'wp_ajax_save_payment_data', array( $this, 'cf_save_payment_data_callback' ) );
-		add_action( 'wp_ajax_nopriv_save_payment_data', array( $this, 'cf_save_payment_data_callback' ) );
-		add_action( 'woocommerce_thankyou', array( $this, 'cf_woocommerce_thankyou_callback' ), 99 );
 		add_action( 'mops_log_in_form', array( $this, 'cf_mops_log_in_form_callback' ) );
 		add_action( 'mops_forgot_password_form', array( $this, 'cf_mops_forgot_password_form_callback' ) );
 		add_action( 'woocommerce_review_order_before_submit', array( $this, 'cf_woocommerce_review_order_before_submit_callback' ) );
@@ -310,97 +307,6 @@ class Cf_Core_Functions_Public {
 		if ( 'yes' === $admin_google_recaptcha_verification && false === $google_recaptcha_success ) {
 			wc_add_notice( __( 'Please complete the reCAPTCHA to verify that you are not a robot.', 'core-functions' ), 'error' );
 		}
-	}
-
-	/**
-	 * Ajax callback to save the payment data temporarily in cart session.
-	 *
-	 * @since 1.0.0
-	 */
-	public function cf_save_payment_data_callback() {
-		$cardinity_data    = filter_input( INPUT_POST, 'cardinity_data', FILTER_SANITIZE_STRING );
-		$cart_session_data = WC()->session->get( 'cf_cardinity_data' );
-
-		/**
-		 * If the cart session is null.
-		 * This is the first time storage.
-		 */
-		if ( is_null( $cart_session_data ) ) {
-			$cart_session_data = array( $cardinity_data );
-
-			// Update the cart session.
-			WC()->session->set( 'cf_cardinity_data', $cart_session_data );
-
-			// Send the ajax response.
-			wp_send_json_success(
-				array(
-					'code' => 'payment-saved',
-				),
-				200
-			);
-			wp_die();
-		}
-
-		// Check if the unique cards usage limit is reached.
-		$lockout_for_unique_cards_usage = get_option( 'cf_lockout_for_unique_cards_usage' );
-		$lockout_for_unique_cards_usage = ( false === $lockout_for_unique_cards_usage || empty( $lockout_for_unique_cards_usage ) ) ? 3 : $lockout_for_unique_cards_usage;
-
-		// If the unique cards usage limit is reached.
-		if ( $lockout_for_unique_cards_usage === count( $cart_session_data ) ) {
-			// Send the ajax response.
-			wp_send_json_error(
-				array(
-					'code' => 'unique-cards-usage-limit-reached',
-				),
-				200
-			);
-			wp_die();
-		}
-
-		/**
-		 * If the cart session is not null.
-		 * Check if the cart details sent match the ones in the session.
-		 */
-		$cardinity_data_exists = array_search( $cardinity_data, $cart_session_data );
-
-		// If the cardinity data already exists in the session.
-		if ( false !== $cardinity_data_exists ) {
-			// Send the ajax response.
-			wp_send_json_success(
-				array(
-					'code' => 'payment-exists',
-				),
-				200
-			);
-			wp_die();
-		}
-
-		// Add the new cardinity data to the session.
-		$cart_session_data[] = $cardinity_data;
-
-		// Update the cart session.
-		WC()->session->set( 'cf_cardinity_data', $cart_session_data );
-
-		// Send the ajax response.
-		wp_send_json_success(
-			array(
-				'code' => 'payment-saved',
-			),
-			200
-		);
-		wp_die();
-	}
-
-	/**
-	 * Clear the cardinity data from the session after the order is placed.
-	 *
-	 * @param int $order_id The order ID.
-	 *
-	 * @since 1.0.0
-	 */
-	public function cf_woocommerce_thankyou_callback( $order_id ) {
-		// Clear the cardinity data from the session.
-		WC()->session->__unset( 'cf_cardinity_data' );
 	}
 
 	/**

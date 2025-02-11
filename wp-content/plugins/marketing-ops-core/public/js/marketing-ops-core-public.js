@@ -2668,15 +2668,25 @@ jQuery( document ).ready( function( $ ) {
 	}
 
 	/**
-	 * Render Google Recaptcha on the login form.
+	 * Render Google Recaptcha on the login and forgot password form.
+	 * On the checkout form, the google recaptcha is rendered after a couple of seconds.
 	 */
-	grecaptcha.render(
-		'google-recaptcha-checkbox',
-		{
-			'sitekey' : google_recaptcha_sitekey,
-			'theme': google_recaptcha_theme,
-		}
-	);
+	render_google_recaptcha();
+
+	/**
+	 * Function to render google recaptcha.
+	 *
+	 * @return void
+	 */
+	function render_google_recaptcha() {
+		grecaptcha.render(
+			'google-recaptcha-checkbox',
+			{
+				'sitekey' : google_recaptcha_sitekey,
+				'theme': google_recaptcha_theme,
+			}
+		);
+	}
 
 	/**
 	 * jQuery to run ajax for user login process.
