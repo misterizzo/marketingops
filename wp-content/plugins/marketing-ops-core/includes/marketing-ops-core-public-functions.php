@@ -5576,14 +5576,14 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 													</div>
 												</div>
 											</div>
-											<div class="moc-form-field-wrap moc-custom-html fw-full fda-standard fld-above">
-												<div class="moc-form-field-input-textarea-wrap">
-													<div id="google-recaptcha-checkbox"></div>
-													<div class="moc_error moc_captcha_err">
-														<span></span>
-													</div>
-												</div>
-											</div>
+											<?php
+											/**
+											 * Hook that fires on the custom login page.
+											 *
+											 * This hook helps in adding custom assets to the marketingops.com login screen.
+											 */
+											do_action( 'mops_log_in_form' );
+											?>
 											<div class="moc-form-submit-button-wrap">
 												<button name="reg_login__submit" type="submit" class="moc-login-submit-form ppform-submit-button"><?php esc_html_e( 'Login', 'marketingops' ); ?></button>
 											</div>

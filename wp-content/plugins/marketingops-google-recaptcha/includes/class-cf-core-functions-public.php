@@ -414,6 +414,19 @@ class Cf_Core_Functions_Public {
 			return;
 		}
 
-		echo self::cf_display_google_recaptcha_field();
+		// Prepare the HTML for google recaptcha field.
+		ob_start();
+		?>
+		<div class="moc-form-field-wrap moc-custom-html fw-full fda-standard fld-above">
+			<div class="moc-form-field-input-textarea-wrap">
+				<div id="google-recaptcha-checkbox" class="google-recaptcha"></div>
+				<div class="moc_error moc_captcha_err">
+					<span></span>
+				</div>
+			</div>
+		</div>
+		<?php
+
+		echo ob_get_clean();
 	}
 }
