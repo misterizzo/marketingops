@@ -2673,13 +2673,12 @@ jQuery( document ).ready( function( $ ) {
 	 */
 	render_google_recaptcha();
 
-	console.log( 'window.location.pathname', window.location.pathname );
-
-	// if ( 'yes' === is_checkout_page ) {
-
-	// }
-
-	// $("<span>Hello world!</span>").insertBefore("p");
+	if ( '/checkut/' === window.location.pathname ) {
+		setTimeout( function() {
+			$( '<div id="google-recaptcha-checkbox"></div>' ).insertBefore( 'button[name="woocommerce_checkout_place_order"]' );
+			render_google_recaptcha();
+		}, 2000 );
+	}
 
 	/**
 	 * Function to render google recaptcha.
