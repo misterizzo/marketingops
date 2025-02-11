@@ -5650,15 +5650,22 @@ if ( ! function_exists( 'moc_render_forgot_password_link_html' ) ) {
 							<form>
 								<div id="moc-registration-1-wrap" class="moc-form-container moc-registration-form-wrapper">
 									<div id="moc-registration-1" class="moc-form-wrapper moc-registration moc-registration-1 ppBuildScratch ppfl-flat ppsbl-pill ppsbw-full-width ppf-remove-frame ppfs-medium ppfia-right">
-
 										<div class="moc-form-field-wrap reg-email fw-full fda-standard fld-above">
 											<div class="moc-form-field-input-textarea-wrap">
-												<input name="reg_email" type="email" placeholder="Username or Email" class="moc-form-field reg-email moc-email" required="required">
+												<input name="reg_email" type="email" placeholder="<?php esc_html_e( 'Username or Email Address', 'marketing-ops-core' ); ?>" class="moc-form-field reg-email moc-email">
 												<div class="moc_error moc_email_err">
 													<span></span>
 												</div>
 											</div>
 										</div>
+										<?php
+										/**
+										 * Hook that fires on the custom login page.
+										 *
+										 * This hook helps in adding custom assets to the marketingops.com login screen.
+										 */
+										do_action( 'mops_forgot_password_form' );
+										?>
 										<div class="moc-form-submit-button-wrap">
 											<button name="moc_forgot_password_submit" type="submit" class="moc-forgot-password-form ppform-submit-button"><?php esc_html_e( 'Send Request', 'marketingops' ); ?></button>
 										</div>

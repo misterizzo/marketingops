@@ -42,6 +42,7 @@ class Cf_Core_Functions_Public {
 		add_action( 'wp_ajax_nopriv_save_payment_data', array( $this, 'cf_save_payment_data_callback' ) );
 		add_action( 'woocommerce_thankyou', array( $this, 'cf_woocommerce_thankyou_callback' ), 99 );
 		add_action( 'mops_log_in_form', array( $this, 'cf_mops_log_in_form_callback' ) );
+		add_action( 'mops_forgot_password_form', array( $this, 'cf_mops_forgot_password_form_callback' ) );
 	}
 
 	/**
@@ -419,7 +420,38 @@ class Cf_Core_Functions_Public {
 		?>
 		<div class="moc-form-field-wrap moc-custom-html fw-full fda-standard fld-above">
 			<div class="moc-form-field-input-textarea-wrap">
-				<div id="google-recaptcha-checkbox" class="google-recaptcha"></div>
+				<div id="google-recaptcha-checkbox"></div>
+				<div class="moc_error moc_captcha_err">
+					<span></span>
+				</div>
+			</div>
+		</div>
+		<?php
+
+		echo ob_get_clean();
+	}
+
+	/**
+	 * Add google recaptcha field to the mops forgot password form.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	public function cf_mops_forgot_password_form_callback() {
+		$is_google_recaptcha_enabled = get_option( 'cf_google_recaptcha_enabled' );
+
+		// Return, if google recaptcha is not enabled.
+		if ( 'yes' !== $is_google_recaptcha_enabled ) {
+			return;
+		}
+
+		// Prepare the HTML for google recaptcha field.
+		ob_start();
+		?>
+		<div class="moc-form-field-wrap moc-custom-html fw-full fda-standard fld-above">
+			<div class="moc-form-field-input-textarea-wrap">
+				<div id="google-recaptcha-checkbox"></div>
 				<div class="moc_error moc_captcha_err">
 					<span></span>
 				</div>
