@@ -5615,9 +5615,9 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 						<div class="elementor-widget-container">
 							<a href="<?php echo esc_url( home_url( 'profile' ) ); ?>" class="elementor-button elementor-size-default"><?php esc_html_e( 'Go to my profile', 'marketingops' ); ?></a>
 						</div>
-						<!-- <div class="elementor-widget-container">
+						<div class="elementor-widget-container">
 							<a href="<?php echo esc_url( home_url( 'profile' ) ); ?>" class="elementor-button elementor-size-default"><?php esc_html_e( 'Logout?', 'marketingops' ); ?></a>
-						</div> -->
+						</div>
 					</div>
 				</div>
 			</div>
