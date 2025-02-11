@@ -62,6 +62,8 @@ jQuery( document ).ready( function( $ ) {
 	var moc_signup_url                  = Moc_Public_JS_Obj.moc_signup_url;
 	var post_new_page                   = Moc_Public_JS_Obj.post_new_page;
 	var member_plan_slug                = Moc_Public_JS_Obj.member_plan_slug;
+	var google_recaptcha_sitekey        = Moc_Public_JS_Obj.google_recaptcha_sitekey;
+	var google_recaptcha_theme          = Moc_Public_JS_Obj.google_recaptcha_theme;
 	var member_plan                     = ( 0 === member_plan_slug.length ) ? 'inactive' : ( ( 1 === member_plan_slug.length && -1 !== $.inArray( 'free-membership', member_plan_slug ) ) ? 'free' : 'pro' );
 	var crop_modal                      = $('#cropModal');
 	// var image                           = document.getElementById('crop_profile_image');
@@ -2671,8 +2673,8 @@ jQuery( document ).ready( function( $ ) {
 	grecaptcha.render(
 		'google-recaptcha-checkbox',
 		{
-			'sitekey' : '6LeKbKcqAAAAAKObwIyMaqz3UTNVVf8j_Ryt15De',
-			'theme': 'light',
+			'sitekey' : google_recaptcha_sitekey,
+			'theme': google_recaptcha_theme,
 		}
 	);
 

@@ -337,6 +337,8 @@ class Marketing_Ops_Core_Public {
 				'moc_signup_url'                  => home_url( 'subscribe' ),
 				'post_new_page'                   => is_page( 'post-new' ) ? 'yes' : 'no',
 				'member_plan_slug'                => moc_get_membership_plan_slug(),
+				'google_recaptcha_sitekey'        => get_option( 'cf_google_recaptcha_site_key' ),
+				'google_recaptcha_theme'          => get_option( 'cf_google_recaptcha_theme' ),
 			)
 		);
 	}

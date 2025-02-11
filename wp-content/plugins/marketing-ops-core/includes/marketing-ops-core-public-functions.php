@@ -5523,7 +5523,6 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 	 */
 	function moc_render_login_form_html( $section ) {
 		ob_start();
-		// $grecaptcha_site_key = get_field( 'grecaptcha_site_key', 'option' );
 
 		if ( ! is_user_logged_in() ) {
 			?>
@@ -5615,15 +5614,12 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 						<div class="elementor-widget-container">
 							<a href="<?php echo esc_url( home_url( 'profile' ) ); ?>" class="elementor-button elementor-size-default"><?php esc_html_e( 'Go to my profile', 'marketingops' ); ?></a>
 						</div>
-						<div class="elementor-widget-container">
-							<a href="<?php echo esc_url( home_url( 'profile' ) ); ?>" class="elementor-button elementor-size-default"><?php esc_html_e( 'Logout?', 'marketingops' ); ?></a>
-						</div>
 					</div>
 				</div>
 			</div>
 			<?php
 		}
-		// die( "testtt" );
+
 		return ob_get_clean();
 	}
 }
