@@ -2894,6 +2894,20 @@ background-clip: text;
     padding: 5px 5px !important;
 }
 
+.cart_page_box .cart_page_container .cart_page_box .box_content .cart-collaterals .cart_totals .wc-proceed-to-checkout a:hover{text-decoration: none;}
+.cart_page_box .cart_page_container .cart_page_box .box_content .cart-collaterals .cart_totals .wc-proceed-to-checkout a span {
+    color: #fff;
+    text-decoration: none;
+}
+.mops_my-account_page .woocommerce-MyAccount-navigation ul li a {
+    background: transparent;
+}
+.cart_page_box div#wc-stripe-payment-request-wrapper {
+    display: none !important;
+}
+
+
+
 @media (max-width: 767px) 
 {
 		#membershiptopbanners:before, #membershiptopbanners:after,
