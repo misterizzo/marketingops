@@ -3588,8 +3588,6 @@ class Marketing_Ops_Core_Public {
 		);
 		$user_signon_response = $user_signon->errors;
 
-		debug( $user_signon_response ); die;
-
 		if ( empty( $user_signon_response )  ) {
 			$user_response_msg = __( 'You are successfully logged in.', 'marketingops' );
 			$message           = 'moc-successfully-login';
