@@ -2671,7 +2671,9 @@ jQuery( document ).ready( function( $ ) {
 	 * Render Google Recaptcha on the login and forgot password form.
 	 * On the checkout form, the google recaptcha is rendered after a couple of seconds.
 	 */
-	render_google_recaptcha();
+	if ( $( '#google-recaptcha-checkbox' ).length ) {
+		render_google_recaptcha();
+	}
 
 	// if ( '/checkut/' === window.location.pathname ) {
 	// 	setTimeout( function() {
