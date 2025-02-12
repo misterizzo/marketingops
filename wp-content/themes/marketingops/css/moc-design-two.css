@@ -15329,3 +15329,4 @@ body .learndash-wrapper .ld-focus .ld-focus-header .ld-user-menu .ld-user-menu-i
 .job_listing-template-default .job_banner {margin-bottom: 50px;margin-top: 50px;}
 .job_listing .single_job_listing .job_description {border-radius: 60px;padding: 20px 40px 20px;margin-bottom: 0;}
 body.job_listing-template-default .job_listing {max-width: 100%;overflow: initial;padding: 0 15px;}
+.eachjobdetail .moc_job_apply_btn.button {text-decoration: none;}
