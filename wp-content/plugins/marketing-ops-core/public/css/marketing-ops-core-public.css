@@ -2598,7 +2598,8 @@ line-height: normal;
 .springfaqsection .elementor-widget:not(:last-child) {
     margin-block-end: 10px;
 }
-
+.page-id-222339.mops_subscribe_page .background_color_sec .elementor-container.elementor-column-gap-default {background: #FBFBFB;max-width: 668px !important;border-radius: 5px;}
+.page-id-222339.mops_subscribe_page .elementor-container .membershipbox_one {width: 63% !important;}
 
 /* subscribe new */
 .mops_subscribe_page .page-header {display: none;}
