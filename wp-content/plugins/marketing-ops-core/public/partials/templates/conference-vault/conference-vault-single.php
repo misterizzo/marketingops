@@ -130,7 +130,7 @@ if ( false === $user_memberships ) {
 			<?php } ?>
 			
 			<!-- attechment section -->
-			<section class="attechmentwithtext">	
+			<section class="attechmentwithtext" style="display: none;">	
 				<h3>Attachments:</h3>
 				<ul>
 					<li>
