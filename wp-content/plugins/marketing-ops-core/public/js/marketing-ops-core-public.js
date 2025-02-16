@@ -3979,14 +3979,16 @@ jQuery( document ).ready( function( $ ) {
 			var this_element = $( this );
 			var file         = this_element.data( 'attachment-url' );
 
+			console.log( 'file downloaded' );
+
 			// Download the file.
-			var filename = file.substring( file.lastIndexOf( '/' ) + 1 );
-			var link     = document.createElement( 'a' );
-			link.setAttribute( 'download', filename );
-			link.href = file;
-			document.body.appendChild( link );
-			link.click();
-			link.remove();
+			// var filename = file.substring( file.lastIndexOf( '/' ) + 1 );
+			// var link     = document.createElement( 'a' );
+			// link.setAttribute( 'download', filename );
+			// link.href = file;
+			// document.body.appendChild( link );
+			// link.click();
+			// link.remove();
 		} );
 	}
 
