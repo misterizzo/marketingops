@@ -3973,13 +3973,13 @@ jQuery( document ).ready( function( $ ) {
 	/**
 	 * Video attachment download.
 	 */
-	if (  $( '.vault-video-attachment' ).length ) {
+	if ( $( '.vault-video-attachment' ).length ) {
 		$( document ).on( 'click', '.vault-video-attachment', function( evt ) {
 			evt.preventDefault();
 			var this_element = $( this );
 			var file         = this_element.data( 'attachment-url' );
 
-			console.log( 'file downloaded' );
+			console.log( 'file downloaded', file );
 
 			// Download the file.
 			// var filename = file.substring( file.lastIndexOf( '/' ) + 1 );
