@@ -2924,3 +2924,38 @@ background-clip: text;
 		.mops_subscribe_page .footer-newsletter{margin-top: 20px!important;}
 		
 }
+
+
+
+section.attechmentwithtext h3 {
+    text-align: left;
+}
+section.conferencevaultevent section.attechmentwithtext ul {
+    justify-content: left;
+    margin: 5px 0;
+    flex-wrap: wrap;
+}
+section.conferencevaultevent section.attechmentwithtext ul li {
+    display: flex;
+    width: 100%;
+    margin: 5px 0 0;
+}
+section.conferencevaultevent section.attechmentwithtext ul li a {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    position: relative;
+}
+section.conferencevaultevent section.attechmentwithtext ul li a i.attechmenticon {
+    margin-right: 10px;
+}
+
+section.conferencevaultevent section.attechmentwithtext ul li a:after {
+    content: '';
+    width: calc(100% - 27px);
+    position: absolute;
+    height: 1px;
+    background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));
+    bottom: 0;
+    right: 0;
+}
