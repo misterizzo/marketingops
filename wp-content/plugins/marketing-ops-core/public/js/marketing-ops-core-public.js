@@ -3974,7 +3974,7 @@ jQuery( document ).ready( function( $ ) {
 	 * Video attachment download.
 	 */
 	if (  $( '.vault-video-attachment' ).length ) {
-		$( document ).on( 'click', '.template-download', function( evt ) {
+		$( document ).on( 'click', '.vault-video-attachment', function( evt ) {
 			evt.preventDefault();
 			var this_element = $( this );
 			var file         = this_element.data( 'attachment-url' );
