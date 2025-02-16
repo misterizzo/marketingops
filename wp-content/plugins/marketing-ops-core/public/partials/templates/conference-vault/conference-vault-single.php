@@ -30,10 +30,6 @@ $session_content    = get_the_content();
 $session_chatscript = get_field( 'session_chatscript', $session_id );
 $video_attachments  = get_field( 'attachments', $session_id );
 
-if ( '183.82.162.218' === $_SERVER['REMOTE_ADDR'] ) {
-	debug( $video_attachments );
-}
-
 // Get more sessions from the same conference.
 if ( ! empty( $conference_term[0]->taxonomy ) ) {
 	$same_conference_videos_query = moc_get_conference_videos(
@@ -141,7 +137,17 @@ if ( false === $user_memberships ) {
 						<h3><?php esc_html_e( 'Attachments', 'marketingops' ); ?>:</h3>
 						<ul>
 							<?php foreach ( $video_attachments as $video_attachment ) {
-								debug( $video_attachment );
+								$attachment_file_id = ( ! empty( $video_attachment['video_attachment'] ) ) ? $video_attachment['video_attachment'] : '';
+
+								// Skip, if the file ID is not available.
+								if ( empty( $attachment_file_id ) ) {
+									continue;
+								}
+
+								$attachment_file_url  = wp_get_attachment_url( $attachment_file_id );
+								$attachment_file_name = basename( get_attached_file( $attachment_id ) );
+
+								var_dump( $attachment_file_url, $attachment_file_name );
 								?>
 								<li>
 									<a href="javascript:void(0);">
