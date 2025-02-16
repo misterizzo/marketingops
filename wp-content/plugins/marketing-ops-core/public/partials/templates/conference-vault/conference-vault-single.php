@@ -145,7 +145,7 @@ if ( false === $user_memberships ) {
 								}
 
 								$attachment_file_url  = wp_get_attachment_url( $attachment_file_id );
-								$attachment_file_name = basename( get_attached_file( $attachment_id ) );
+								$attachment_file_name = basename( get_attached_file( $attachment_file_id ) );
 
 								var_dump( $attachment_file_url, $attachment_file_name );
 								?>
