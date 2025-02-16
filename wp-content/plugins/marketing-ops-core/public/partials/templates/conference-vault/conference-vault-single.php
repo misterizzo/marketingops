@@ -28,6 +28,11 @@ $conference         = ( ! empty( $conference_term[0]->name ) ) ? $conference_ter
 $back_link          = ( ! empty( $conference_term[0]->term_id ) ) ? get_term_link( $conference_term[0]->term_id ) : '';
 $session_content    = get_the_content();
 $session_chatscript = get_field( 'session_chatscript', $session_id );
+$video_attachments  = get_field( 'attachments', $session_id );
+
+if ( '183.82.162.218' === $_SERVER['REMOTE_ADDR'] ) {
+	debug( $video_attachments );
+}
 
 // Get more sessions from the same conference.
 if ( ! empty( $conference_term[0]->taxonomy ) ) {
