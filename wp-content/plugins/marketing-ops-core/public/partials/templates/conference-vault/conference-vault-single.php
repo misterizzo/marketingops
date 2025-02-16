@@ -142,7 +142,7 @@ if ( false === $user_memberships ) {
 					<li>
 						<a href="">
 							<i class="attechmenticon">
-							AMPP cheat sheet.xls
+							AMPP cheat sheet.xls 
 						</a>
 					</li>
 				</ul>
