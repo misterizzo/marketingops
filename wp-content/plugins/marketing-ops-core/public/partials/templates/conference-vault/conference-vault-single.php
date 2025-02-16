@@ -128,6 +128,26 @@ if ( false === $user_memberships ) {
 					<iframe class="elementor-video-iframe" allowfullscreen="" allow="clipboard-write" title="vimeo Video Player" src="<?php echo esc_url( $session_link ); ?>?color&amp;autopause=0&amp;loop=0&amp;muted=0&amp;title=1&amp;portrait=1&amp;byline=1&amp;h=427b06ed1e#t="></iframe> 
 				</div>
 			<?php } ?>
+			
+			<!-- attechment section -->
+			<section class="attechmentwithtext">	
+				<h3>Attachments:</h3>
+				<ul>
+					<li>
+						<a href="">
+							<i class="attechmenticon">
+							Annual Marketing Plan Pipeline 2024.pdf
+						</a>
+					</li>
+					<li>
+						<a href="">
+							<i class="attechmenticon">
+							AMPP cheat sheet.xls
+						</a>
+					</li>
+				</ul>
+			</section>
+			<!-- attechment section -->
 
 			<!-- CHAT SCRIPT -->
 			<?php if ( ! empty( $session_chatscript ) ) { ?>
