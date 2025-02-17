@@ -418,15 +418,21 @@ class Marketing_Ops_Core_Admin {
 				<?php
 				$community_badges = get_field( 'community_badges', 'option' );
 				$user_badges      = get_user_meta( $user->ID, 'moc_community_badges', true );
-
-				debug( $user_badges );
 				?>
 				<tr>
 					<th><?php esc_html_e( 'Community Badges', 'marketingops' ); ?></th>
 					<td>
-						<?php foreach ( $community_badges as $community_badge ) { ?>
+						<?php foreach ( $community_badges as $community_badge ) {
+							$badge_title = $community_badge['community_badges_title'];
+
+							if ( empty( $badge_title ) ) {
+								continue;
+							}
+
+							$selected_badge = ( in_array( $badge_title, $user_badges, true ) ) ? 'checked' : '';
+							?>
 							<div class="user-community-badge">
-								<input type="checkbox" name="community_badges[]" value="<?php echo esc_html( $community_badge['community_badges_title'] ); ?>" />
+								<input type="checkbox" name="community_badges[]" value="<?php echo esc_html( $community_badge['community_badges_title'] ); ?>" <?php echo esc_attr( $selected_badge ); ?> />
 								<img width="10%" src="<?php echo esc_url( $community_badge['community_badges_images'] ); ?>" alt="<?php echo esc_html( $community_badge['community_badges_title'] ); ?>">
 								<label><?php echo esc_html( $community_badge['community_badges_title'] ); ?></label>
 							</div>
