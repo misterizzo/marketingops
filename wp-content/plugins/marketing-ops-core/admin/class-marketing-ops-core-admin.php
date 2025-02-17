@@ -202,6 +202,7 @@ class Marketing_Ops_Core_Admin {
 			<button class="tablinks" data-src="tab_3"><?php esc_html_e( 'Skills', 'marketingops' ); ?></button>
 			<button class="tablinks" data-src="tab_4"><?php esc_html_e( 'Work History', 'marketingops' ); ?></button>
 			<button class="tablinks" data-src="tab_5"><?php esc_html_e( 'Selected Certificates', 'marketingops' ); ?></button>
+			<button class="tablinks" data-src="tab_6"><?php esc_html_e( 'Community Badges', 'marketingops' ); ?></button>
 		</div>
 
 		<div id="tab_1" class="tabcontent active">
@@ -405,6 +406,24 @@ class Marketing_Ops_Core_Admin {
 					<td>
 						<select name="moc_certificate[]" id="moc_certificate" multiple>
 							<?php foreach ( $certificates_ids as $certificates_id ) { ?>
+								<option value="<?php echo esc_html( $certificates_id ); ?>" <?php echo ( in_array( $certificates_id, $update_value_arr, true  ) ) ? 'selected' : ''; ?> ><?php echo esc_html( get_the_title( $certificates_id ) ); ?></option>
+							<?php } ?>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="tab_6" class="tabcontent">
+			<table class="form-table">
+				<?php
+				$community_badges = get_field( 'community_badges', 'option' );
+				debug( $community_badges );
+				?>
+				<tr>
+					<th><?php esc_html_e( 'Community Badges', 'marketingops' ); ?></th>
+					<td>
+						<select name="community_badges[]" id="community_badges" multiple>
+							<?php foreach ( $community_badges as $certificates_id ) { ?>
 								<option value="<?php echo esc_html( $certificates_id ); ?>" <?php echo ( in_array( $certificates_id, $update_value_arr, true  ) ) ? 'selected' : ''; ?> ><?php echo esc_html( get_the_title( $certificates_id ) ); ?></option>
 							<?php } ?>
 						</select>
