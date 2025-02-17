@@ -75,7 +75,10 @@ jQuery( document ).ready( function( $ ) {
 	// Remove the free column from the pricing table.
 	$( '.subscribe_table .table_head .head_colum.free_colum, .subscribe_table .table_body .table_tr.btn_tr .body_colum.free_colum, .subscribe_table .table_body .table_tr.odd .body_colum.free_colum, .subscribe_table .table_body .table_tr.even .body_colum.free_colum' ).remove();
 
-	console.log( 'window.location.pathname', window.location.pathname );
+	/**
+	 * Task: https://app.clickup.com/t/868ckjtgh
+	 * Update the slack invite request form to be open for only paid members.
+	 */
 	if (  -1 !== current_page_url.indexOf( '/slack-invite-request/' ) ) {
 		// If the user is a FREE member.
 		if ( 'free' === member_plan ) {
