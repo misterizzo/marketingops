@@ -450,14 +450,18 @@ class Marketing_Ops_Core_Admin {
 	 * @param    string $avatar_defaults This variable holds src of default image.
 	 */
 	public function moc_user_add_extra_field_update_callback ( $user_id ) {
-		$user_all_info       = ( ! empty( get_user_meta( $user_id, 'user_all_info', true ) ) ) ? get_user_meta( $user_id, 'user_all_info', true ) : array();
-		$user_basic_info     = ( ! empty( $user_all_info['user_basic_info'] ) ) ? $user_all_info['user_basic_info'] : array();
-		$posted_array        = filter_input_array( INPUT_POST );
-		$moc_social_links    = ( ! empty( $posted_array['moc_social_links'] ) && is_array( $posted_array['moc_social_links'] ) ) ? $posted_array['moc_social_links'] : array();
-		$moc_social_tags     = ( ! empty( $posted_array['moc_social_tags'] ) && is_array( $posted_array['moc_social_tags'] ) ) ? $posted_array['moc_social_tags'] : array();
-		$user_website        = ( ! empty( $posted_array['url'] ) ) ? $posted_array['url'] : '';
-		$user_bio            = ( ! empty( $posted_array['description'] ) ) ? $posted_array['description'] : '';
-		$cheked_industries   = ( ! empty( $posted_array['industry_experience'] ) ) ? $posted_array['industry_experience'] : array();
+		$user_all_info            = ( ! empty( get_user_meta( $user_id, 'user_all_info', true ) ) ) ? get_user_meta( $user_id, 'user_all_info', true ) : array();
+		$user_basic_info          = ( ! empty( $user_all_info['user_basic_info'] ) ) ? $user_all_info['user_basic_info'] : array();
+		$posted_array             = filter_input_array( INPUT_POST );
+		$moc_social_links         = ( ! empty( $posted_array['moc_social_links'] ) && is_array( $posted_array['moc_social_links'] ) ) ? $posted_array['moc_social_links'] : array();
+		$moc_social_tags          = ( ! empty( $posted_array['moc_social_tags'] ) && is_array( $posted_array['moc_social_tags'] ) ) ? $posted_array['moc_social_tags'] : array();
+		$user_website             = ( ! empty( $posted_array['url'] ) ) ? $posted_array['url'] : '';
+		$user_bio                 = ( ! empty( $posted_array['description'] ) ) ? $posted_array['description'] : '';
+		$cheked_industries        = ( ! empty( $posted_array['industry_experience'] ) ) ? $posted_array['industry_experience'] : array();
+		$checked_community_badges =  ( ! empty( $posted_array['community_badges'] ) ) ? $posted_array['community_badges'] : array();
+
+		debug( $checked_community_badges );
+		die;
 
 		// Social Links
 		foreach ( $moc_social_tags as $index => $moc_social_tag ) {
