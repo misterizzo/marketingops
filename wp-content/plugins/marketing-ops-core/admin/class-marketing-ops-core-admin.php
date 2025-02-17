@@ -417,7 +417,9 @@ class Marketing_Ops_Core_Admin {
 			<table class="form-table">
 				<?php
 				$community_badges = get_field( 'community_badges', 'option' );
-				debug( $community_badges );
+				$user_badges      = get_user_meta( $user->ID, 'moc_community_badges', true );
+
+				debug( $user_badges );
 				?>
 				<tr>
 					<th><?php esc_html_e( 'Community Badges', 'marketingops' ); ?></th>
