@@ -460,9 +460,6 @@ class Marketing_Ops_Core_Admin {
 		$cheked_industries        = ( ! empty( $posted_array['industry_experience'] ) ) ? $posted_array['industry_experience'] : array();
 		$checked_community_badges =  ( ! empty( $posted_array['community_badges'] ) ) ? $posted_array['community_badges'] : array();
 
-		debug( $checked_community_badges );
-		die;
-
 		// Social Links
 		foreach ( $moc_social_tags as $index => $moc_social_tag ) {
 			if ( empty( $moc_social_links[ $index ] ) ) continue;
@@ -543,6 +540,9 @@ class Marketing_Ops_Core_Admin {
 		$final_array_update        = array_merge( $updated_user_array, $updated_martech_array, $updated_skill_array, $updated_work_array, $updated_certificate_array );
 
 		update_user_meta( $user_id, 'user_all_info', $final_array_update );
+
+		// Update user's community badges.
+		update_user_meta( $user_id, 'moc_community_badges', $checked_community_badges );
 	}
 
 	/**
