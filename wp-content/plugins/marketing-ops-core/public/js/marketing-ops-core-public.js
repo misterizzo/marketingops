@@ -212,8 +212,11 @@ jQuery( document ).ready( function( $ ) {
 				return false;
 			}
 
+			// Redirect the user to the video page.
+			window.location.href = this_button.parents( 'li' ).data( 'url' );
+
 			// If the video link is available.
-			if ( '' !== video_link ) {
+			/*if ( '' !== video_link ) {
 				// Put the AJAX to fetch the video in the iframe.
 				$.ajax( {
 					dataType: 'json',
@@ -246,7 +249,7 @@ jQuery( document ).ready( function( $ ) {
 				} );
 			} else {
 				console.warn( 'video link not found.' );
-			}
+			}*/
 		} );
 
 		// Close the video popup.
