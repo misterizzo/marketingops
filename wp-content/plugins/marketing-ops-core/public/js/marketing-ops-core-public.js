@@ -81,6 +81,7 @@ jQuery( document ).ready( function( $ ) {
 	 */
 	if (  -1 !== current_page_url.indexOf( '/slack-invite-request/' ) ) {
 		// If the user is a FREE member.
+		console.log( 'member_plan', member_plan, member_plan_slug, member_plan_slug.length );
 		if ( 'free' === member_plan ) {
 			// Open the restriction modal.
 			$( '.moc_paid_content_restriction_modal' ).addClass( 'active blog_popup' );
