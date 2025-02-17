@@ -3979,8 +3979,6 @@ jQuery( document ).ready( function( $ ) {
 			var this_element = $( this );
 			var file         = this_element.data( 'attachment-url' );
 
-			console.log( 'file downloaded', file );
-
 			// Download the file.
 			var filename = file.substring( file.lastIndexOf( '/' ) + 1 );
 			var link     = document.createElement( 'a' );
