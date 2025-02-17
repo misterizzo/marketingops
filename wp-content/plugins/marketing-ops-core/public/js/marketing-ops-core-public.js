@@ -77,13 +77,13 @@ jQuery( document ).ready( function( $ ) {
 
 	console.log( 'window.location.pathname', window.location.pathname );
 	if (  -1 !== current_page_url.indexOf( '/slack-invite-request/' ) ) {
-		console.log( 'member_plan_slug', member_plan_slug, member_plan );
+		// If the user is a FREE member.
+		if ( 'free' === member_plan ) {
+			// Open the restriction modal.
+			$( '.moc_paid_content_restriction_modal' ).addClass( 'active blog_popup' );
+			$( '.moc_paid_content_restriction_modal .moc_popup_close' ).remove();
+		}
 	}
-	// Open the restriction modal.
-	// if ( 1 === is_valid_string( container_user_subscription_class ) && 'is-pro-plus-member' !== container_user_subscription_class ) {
-	// 	$( '.moc_paid_content_restriction_modal' ).addClass( 'active blog_popup' );
-	// 	return false;
-	// }
 
 	// Conference load more.
 	if ( $( '.confernceloadmore' ).length ) {
