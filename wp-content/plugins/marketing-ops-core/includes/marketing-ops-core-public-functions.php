@@ -8668,36 +8668,36 @@ if ( ! function_exists( 'moc_conference_vault_custom_post_type_and_category_taxo
 		register_post_type(
 			'conference_vault',
 			array(
-				'label'               => __( 'Conference Vault', 'marketingops' ),
-				'description'         => __( 'Its custom post type for marketingops conference vault.', 'marketingops' ),
+				'label'               => __( 'Member Vault', 'marketingops' ),
+				'description'         => __( 'Its custom post type for marketingops Member Vault.', 'marketingops' ),
 				'labels'              => array(
-					'name'                  => _x( 'Conference Vault', 'Template General Name', 'marketingops' ),
-					'singular_name'         => _x( 'Conference Vault', 'Template Singular Name', 'marketingops' ),
-					'menu_name'             => __( 'Conference Vault', 'marketingops' ),
-					'name_admin_bar'        => __( 'Conference Vault', 'marketingops' ),
-					'archives'              => __( 'Conference Vault Archives', 'marketingops' ),
-					'attributes'            => __( 'Conference Vault Attributes', 'marketingops' ),
-					'parent_item_colon'     => __( 'Parent Conference Vault:', 'marketingops' ),
-					'all_items'             => __( 'All Conference Vault', 'marketingops' ),
-					'add_new_item'          => __( 'Add New Conference Vault Video', 'marketingops' ),
+					'name'                  => _x( 'Member Vault', 'Template General Name', 'marketingops' ),
+					'singular_name'         => _x( 'Member Vault', 'Template Singular Name', 'marketingops' ),
+					'menu_name'             => __( 'Member Vault', 'marketingops' ),
+					'name_admin_bar'        => __( 'Member Vault', 'marketingops' ),
+					'archives'              => __( 'Member Vault Archives', 'marketingops' ),
+					'attributes'            => __( 'Member Vault Attributes', 'marketingops' ),
+					'parent_item_colon'     => __( 'Parent Member Vault:', 'marketingops' ),
+					'all_items'             => __( 'All Member Vault', 'marketingops' ),
+					'add_new_item'          => __( 'Add New Member Vault Video', 'marketingops' ),
 					'add_new'               => __( 'Add New Video', 'marketingops' ),
-					'new_item'              => __( 'New Conference Vault Video', 'marketingops' ),
-					'edit_item'             => __( 'Edit Conference Vault Video', 'marketingops' ),
-					'update_item'           => __( 'Update Conference Vault Video', 'marketingops' ),
-					'view_item'             => __( 'View Conference Vault Video', 'marketingops' ),
-					'view_items'            => __( 'View Conference Vault Videos', 'marketingops' ),
-					'search_items'          => __( 'Search Conference Vault Video', 'marketingops' ),
-					'not_found'             => __( 'No Conference Vault Video found', 'marketingops' ),
-					'not_found_in_trash'    => __( 'No Conference Vault Video found in trash', 'marketingops' ),
+					'new_item'              => __( 'New Member Vault Video', 'marketingops' ),
+					'edit_item'             => __( 'Edit Member Vault Video', 'marketingops' ),
+					'update_item'           => __( 'Update Member Vault Video', 'marketingops' ),
+					'view_item'             => __( 'View Member Vault Video', 'marketingops' ),
+					'view_items'            => __( 'View Member Vault Videos', 'marketingops' ),
+					'search_items'          => __( 'Search Member Vault Video', 'marketingops' ),
+					'not_found'             => __( 'No Member Vault Video found', 'marketingops' ),
+					'not_found_in_trash'    => __( 'No Member Vault Video found in trash', 'marketingops' ),
 					'featured_image'        => __( 'Featured Image', 'marketingops' ),
 					'set_featured_image'    => __( 'Set featured image', 'marketingops' ),
 					'remove_featured_image' => __( 'Remove featured image', 'marketingops' ),
 					'use_featured_image'    => __( 'Use as featured image', 'marketingops' ),
-					'insert_into_item'      => __( 'Insert into Conference Vault Video', 'marketingops' ),
-					'uploaded_to_this_item' => __( 'Uploaded to this Conference Vault Video', 'marketingops' ),
-					'items_list'            => __( 'Conference Vault Videos list', 'marketingops' ),
-					'items_list_navigation' => __( 'Conference Vault Videos list navigation', 'marketingops' ),
-					'filter_items_list'     => __( 'Filter Conference Vault Videos list', 'marketingops' ),
+					'insert_into_item'      => __( 'Insert into Member Vault Video', 'marketingops' ),
+					'uploaded_to_this_item' => __( 'Uploaded to this Member Vault Video', 'marketingops' ),
+					'items_list'            => __( 'Member Vault Videos list', 'marketingops' ),
+					'items_list_navigation' => __( 'Member Vault Videos list navigation', 'marketingops' ),
+					'filter_items_list'     => __( 'Filter Member Vault Videos list', 'marketingops' ),
 				),
 				'supports'            => array( 'title', 'editor', 'author', 'excerpt', 'thumbnail' ),
 				'hierarchical'        => true,
@@ -9105,7 +9105,7 @@ if ( ! function_exists( 'moc_conference_vault_video_box_html' ) ) {
  */
 if ( ! function_exists( 'moc_get_conference_videos' ) ) {
 	/**
-	 * Get the conference vault videos.
+	 * Get the Member Vault videos.
 	 *
 	 * @param string $post_type Post type.
 	 * @param int    $paged Paged value.
@@ -9154,7 +9154,7 @@ if ( ! function_exists( 'moc_get_conference_videos' ) ) {
  */
 if ( ! function_exists( 'moc_conference_vault_main_html' ) ) {
 	/**
-	 * Get the HTML for the conference vault main page.
+	 * Get the HTML for the Member Vault main page.
 	 *
 	 * @param array $term_ids Array of term ids.
 	 *
