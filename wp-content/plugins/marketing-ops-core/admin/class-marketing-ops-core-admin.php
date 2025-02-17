@@ -422,11 +422,13 @@ class Marketing_Ops_Core_Admin {
 				<tr>
 					<th><?php esc_html_e( 'Community Badges', 'marketingops' ); ?></th>
 					<td>
-						<select name="community_badges[]" id="community_badges" multiple>
-							<?php foreach ( $community_badges as $certificates_id ) { ?>
-								<option value="<?php echo esc_html( $certificates_id ); ?>" <?php echo ( in_array( $certificates_id, $update_value_arr, true  ) ) ? 'selected' : ''; ?> ><?php echo esc_html( get_the_title( $certificates_id ) ); ?></option>
-							<?php } ?>
-						</select>
+						<?php foreach ( $community_badges as $	 ) { ?>
+							<div class="user-community-badge">
+								<input type="checkbox" name="community_badges[]" value="<?php echo esc_html( $community_badge['community_badges_title'] ); ?>" />
+								<img src="<?php echo esc_url( $community_badge['community_badges_images'] ); ?>" alt="<?php echo esc_html( $community_badge['community_badges_title'] ); ?>">
+								<label><?php echo esc_html( $community_badge['community_badges_title'] ); ?></label>
+							</div>
+						<?php } ?>
 					</td>
 				</tr>
 			</table>
