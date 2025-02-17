@@ -425,7 +425,7 @@ class Marketing_Ops_Core_Admin {
 						<?php foreach ( $community_badges as $community_badge ) { ?>
 							<div class="user-community-badge">
 								<input type="checkbox" name="community_badges[]" value="<?php echo esc_html( $community_badge['community_badges_title'] ); ?>" />
-								<img src="<?php echo esc_url( $community_badge['community_badges_images'] ); ?>" alt="<?php echo esc_html( $community_badge['community_badges_title'] ); ?>">
+								<img width="10%" src="<?php echo esc_url( $community_badge['community_badges_images'] ); ?>" alt="<?php echo esc_html( $community_badge['community_badges_title'] ); ?>">
 								<label><?php echo esc_html( $community_badge['community_badges_title'] ); ?></label>
 							</div>
 						<?php } ?>
