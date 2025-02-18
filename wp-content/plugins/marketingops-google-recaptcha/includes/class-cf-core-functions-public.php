@@ -271,6 +271,11 @@ class Cf_Core_Functions_Public {
 	 * @since 1.0.0
 	 */
 	public function cf_lostpassword_post_callback( $validation_errors ) {
+		// If it's admin, return.
+		if ( is_admin() ) {
+			return;
+		}
+
 		// Check google recaptcha response.
 		$check_google_recaptcha   = cf_check_google_recaptcha_response();
 		$google_recaptcha_success = ( ! empty( $check_google_recaptcha['success'] ) ) ? $check_google_recaptcha['success'] : false;
