@@ -3687,6 +3687,15 @@ class Marketing_Ops_Core_Public {
 
 		// Add a redirect to the login page if the customer is not logged in.
 		if ( is_account_page() && ! is_user_logged_in() ) {
+			// Check if it's not the forgot password request url.
+			$key   = filter_input( INPUT_GET, 'key', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+			$id    = filter_input( INPUT_GET, 'key', FILTER_SANITIZE_NUMBER_INT );
+			$login = filter_input( INPUT_GET, 'login', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+			if ( ! is_null( $key ) && ! is_null( $id ) && ! is_null( $login ) ) {
+				return;
+			}
+
+			// Redirect the user to the login page.
 			wp_safe_redirect( site_url( 'log-in?redirect_to=/my-account/' ) );
 			exit(0);
 		}
