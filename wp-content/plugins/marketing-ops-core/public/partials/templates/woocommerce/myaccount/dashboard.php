@@ -292,7 +292,7 @@ $profile_points      = ( ! empty( $customer_profile_info['moc_certificates'] ) &
 
 		<!-- orders -->
 		<li>
-			<a href="<?php echo esc_url( $customer_order->get_view_order_url() ); ?>">
+			<a href="<?php echo esc_url( ( false !== $customer_order ) ? $customer_order->get_view_order_url() : '#' ); ?>">
 				<div class="innerdashbordlist">
 					<div class="innsersubdashbordlist">
 						<div class="iconwithtitledashbord">
