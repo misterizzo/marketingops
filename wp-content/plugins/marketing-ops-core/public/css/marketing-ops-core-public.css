@@ -2947,6 +2947,31 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {content: 
 }
 
 
-.agenda{position: relative;}
+.agenda>.elementor-container{position: relative;}
 
-.agenda:after{background-image: url('/wp-content/uploads/2025/02/rightroundhalff.png');position: absolute;content: "";}
+.agenda>.elementor-container:after {
+    background-image: url('/wp-content/uploads/2025/02/rightroundhalff.png');
+    position: absolute;
+    content: "";
+    top: -53%;
+    right: -44%;
+    width: 650px;
+    height: 650px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transform: rotate(-5deg);
+}
+
+
+.agenda>.elementor-container:before {
+    background-image: url('/wp-content/uploads/2025/02/leftroundhalff.png');
+    position: absolute;
+    content: "";
+    top: -5%;
+    left: -38%;
+    width: 505px;
+    height: 423px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transform: rotate(-5deg);
+}
