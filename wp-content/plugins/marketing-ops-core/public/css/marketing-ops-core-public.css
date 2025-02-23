@@ -2975,3 +2975,20 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {content: 
     background-size: contain;
     transform: rotate(-5deg);
 }
+
+
+@media only screen and (max-width: 767px) {
+
+.agenda>.elementor-container:after,
+.agenda>.elementor-container:before{display: none;}
+
+.spekermobile .elementor-image-box-wrapper {
+    display: flex;
+}
+
+.spekermobile .elementor-image-box-wrapper .elementor-image-box-content {
+    text-align: left;
+    margin-left: 15px;
+}
+
+}	
