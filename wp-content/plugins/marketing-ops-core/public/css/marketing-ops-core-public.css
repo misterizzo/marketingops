@@ -2945,3 +2945,8 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {content: 
 	.user_profile_blog .user_profile_right_side .blog_box_container .right_side_box_tabbing_content .tabbing_content_container .column_box.column_btn {padding: 0;margin: 15px 0;margin-left: 0;width: 100% !important;}
 	.user_profile_blog .user_profile_right_side .blog_box_container .right_side_box_tabbing_content .tabbing_content_container .column_box.column_btn a.moc_write_post.elementor-button-link.elementor-button.elementor-size-lg{justify-content: center;}
 }
+
+
+.agenda{position: relative;}
+
+.agenda:after{background-image: url('/wp-content/uploads/2025/02/rightroundhalff.png');position: absolute;content: "";}
