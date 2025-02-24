@@ -37,10 +37,10 @@ class Cf_Core_Functions_Public {
 		add_action( 'woocommerce_register_post', array( $this, 'cf_woocommerce_register_post_callback' ), 99, 3 );
 		add_action( 'authenticate', array( $this, 'cf_authenticate_callback' ), 99, 3 );
 		add_action( 'lostpassword_post', array( $this, 'cf_lostpassword_post_callback' ), 99 );
-		// add_action( 'woocommerce_checkout_process', array( $this, 'cf_woocommerce_checkout_process_callback' ), 99 );
+		add_action( 'woocommerce_checkout_process', array( $this, 'cf_woocommerce_checkout_process_callback' ), 99 );
 		add_action( 'mops_log_in_form', array( $this, 'cf_mops_log_in_form_callback' ) );
 		add_action( 'mops_forgot_password_form', array( $this, 'cf_mops_forgot_password_form_callback' ) );
-		// add_action( 'woocommerce_review_order_before_submit', array( $this, 'cf_woocommerce_review_order_before_submit_callback' ) );
+		add_action( 'woocommerce_review_order_before_submit', array( $this, 'cf_woocommerce_review_order_before_submit_callback' ) );
 	}
 
 	/**
@@ -292,22 +292,11 @@ class Cf_Core_Functions_Public {
 	 * @since 1.0.0
 	 */
 	public function cf_woocommerce_checkout_process_callback() {
-		$cardinity_data = WC()->session->get( 'cf_cardinity_data' );
-		$cardinity_data = ( is_null( $cardinity_data ) ) ? array() : $cardinity_data;
-
 		// Check google recaptcha response.
 		$check_google_recaptcha              = cf_check_google_recaptcha_response();
 		$google_recaptcha_success            = ( ! empty( $check_google_recaptcha['success'] ) ) ? $check_google_recaptcha['success'] : false;
 		$google_recaptcha_message            = ( ! empty( $check_google_recaptcha['message'] ) ) ? $check_google_recaptcha['message'] : __( 'There is an unknown error, kindly contact site administrator.', 'core-functions' );
 		$admin_google_recaptcha_verification = get_option( 'cf_google_recaptcha_enabled' );
-
-		// Check if the unique cards usage limit is reached.
-		$lockout_for_unique_cards_usage = get_option( 'cf_lockout_for_unique_cards_usage' );
-		$lockout_for_unique_cards_usage = ( false === $lockout_for_unique_cards_usage || empty( $lockout_for_unique_cards_usage ) ) ? 3 : $lockout_for_unique_cards_usage;
-
-		if ( $lockout_for_unique_cards_usage === count( $cardinity_data ) ) {
-			wc_add_notice( sprintf( __( 'You have reached the limit for using unique cards. Please try again later or %1$scontact the site administrator%2$s.', 'core-functions' ), '<a href="/contact-us/" target="_blank" title="Contact Us">', '</a>' ), 'error' );
-		}
 
 		if ( 'yes' === $admin_google_recaptcha_verification && false === $google_recaptcha_success ) {
 			wc_add_notice( __( 'Please complete the reCAPTCHA to verify that you are not a robot.', 'core-functions' ), 'error' );
