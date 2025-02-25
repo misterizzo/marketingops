@@ -3001,16 +3001,16 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {content: 
 
 #elementor-popup-modal-235138 .dialog-close-button {
     display: flex;
-    border: solid 1px #000;
+    border: solid 1px #fff;
     border-radius: 50%;
     width: 30px;
     height: 30px;
     align-items: center;
     align-content: center;
     justify-content: center;
-    color: #000;
+    color: #fff;
     top: 5px;
-    right: 5px;
+    right: -40px;
     z-index: 9;
 }
 
