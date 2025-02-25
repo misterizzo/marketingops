@@ -3018,10 +3018,35 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {content: 
 }
 
 .elementor-location-popup .elementor-widget-tabs.elementor-tabs-view-horizontal .elementor-tab-content {
-       padding: 15px;
-    border: solid 1px #c3c3c3 !important;
+    padding: 15px;
+    border: solid;
     border-radius: 0px 0px 10px 10px;
-    margin-top: -1px;
+    margin-top: 0px;
+    border-color: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%)) !important;
+    border-top: none;
+    border-width: 2px !important;
+}
+
+
+.elementor-location-popup .elementor-widget-tabs.elementor-tabs-view-horizontal .elementor-tab-title {
+    font-family: "Futura LT", Open Sans;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 24px;
+    border: solid 1px #c3c3c3;
+    margin: 0 5px !important;
+    border-radius: 10px 10px 0px 0px;
+}
+
+
+.elementor-location-popup .elementor-tab-title.elementor-tab-desktop-title.elementor-active {
+    background: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border-radius: 10px 10px 1px 0px;
+    border-color: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%)) !important;
+    border-width: 2px !important;
 }
 
 .legal-consent-container {
