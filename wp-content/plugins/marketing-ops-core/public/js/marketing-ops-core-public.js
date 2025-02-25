@@ -4848,7 +4848,7 @@ jQuery( document ).ready( function( $ ) {
 
 				// Scroll the user to the top of the screen.
 				if ( $( '.training_content' ).length ) {
-					$( 'html, body' ).animate( { scrollTop: $( '.training_content' ).offset().top - 200 }, 1000 );
+					$( 'html, body' ).animate( { scrollTop: $( '.training_content' ).offset().top - 200 }, 3000 );
 				}
 			},
 		} );
