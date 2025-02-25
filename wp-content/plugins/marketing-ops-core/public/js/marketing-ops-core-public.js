@@ -2173,7 +2173,6 @@ jQuery( document ).ready( function( $ ) {
 		 */
 		$( document ).on( 'click', '.moc_training_pagination .blog-directory-pagination ul li a', function( event ) {
 			event.preventDefault();
-			console.log( 'hello3' );
 			var search_training = ( false !== moc_get_query_variable( 'search_keywords' ) ) ? moc_get_query_variable( 'search_keywords' ) : '';
 			var category        = ( false !== moc_get_query_variable( 'cat' ) ) ? moc_get_query_variable( 'cat' ) : '';
 			var paged           = $( this ).data( 'page' );
@@ -2689,6 +2688,7 @@ jQuery( document ).ready( function( $ ) {
 	 * On the checkout form, the google recaptcha is rendered after a couple of seconds.
 	 */
 	if ( $( '#google-recaptcha-checkbox' ).length ) {
+		console.log( 'hello' );
 		render_google_recaptcha();
 	}
 
