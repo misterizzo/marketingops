@@ -3036,6 +3036,7 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {content: 
     border: solid 1px #c3c3c3;
     margin: 0 5px !important;
     border-radius: 10px 10px 0px 0px;
+    border-bottom-color: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%)) !important;
 }
 
 
@@ -3057,6 +3058,29 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {content: 
     border-color: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%)) !important;
 }
 
+
+.elementor-location-popup .elementor-widget-tabs .elementor-tabs-content-wrapper {
+    border: 1px solid !important;
+    border-color: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%)) !important;
+}
+
+
+.elementor-location-popup .elementor-element.elementor-element-fd4fb1a .elementor-tab-mobile-title, 
+.elementor-location-popup .elementor-element.elementor-element-fd4fb1a .elementor-tab-desktop-title.elementor-active, 
+.elementor-location-popup .elementor-element.elementor-element-fd4fb1a .elementor-tab-title:before, 
+.elementor-location-popup .elementor-element.elementor-element-fd4fb1a .elementor-tab-title:after, 
+.elementor-location-popup .elementor-element.elementor-element-fd4fb1a .elementor-tab-content, 
+.elementor-location-popup .elementor-element.elementor-element-fd4fb1a .elementor-tabs-content-wrapper {
+    border-color: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%)) !important;
+}
+
+.elementor-location-popup .elementor-element.elementor-element-fd4fb1a .elementor-tab-title, 
+.elementor-location-popup .elementor-element.elementor-element-fd4fb1a .elementor-tab-title:before, 
+.elementor-location-popup .elementor-element.elementor-element-fd4fb1a .elementor-tab-title:after, 
+.elementor-location-popup .elementor-element.elementor-element-fd4fb1a .elementor-tab-content, 
+.elementor-location-popup .elementor-element.elementor-element-fd4fb1a .elementor-tabs-content-wrapper {
+    border-width: 2px !important;
+}
 
 .legal-consent-container {
     margin: 15px 0;
