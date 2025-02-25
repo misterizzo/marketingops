@@ -3020,38 +3020,60 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {content: 
     border-radius: 15px;
 }
 
-#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_firstname.hs-firstname.hs-fieldtype-text.field.hs-form-field {
+.legal-consent-container {
+    margin: 15px 0;
+}
+
+#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_firstname.hs-firstname.hs-fieldtype-text.field.hs-form-field,
+#hsForm_bc40d6ba-9cf7-46f4-a3eb-de2e35604e7e .hs_firstname.hs-firstname.hs-fieldtype-text.field.hs-form-field,
+#hsForm_116de497-c8b4-426e-9216-143cb2d40f43 .hs_firstname.hs-firstname.hs-fieldtype-text.field.hs-form-field,
+#hsForm_7993519d-db5f-42c9-b7ba-c1ccb866788f .hs_firstname.hs-firstname.hs-fieldtype-text.field.hs-form-field {
     width: 49% !important;
     float: left;
     margin: 5px 0;
 }
 
-#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_lastname.hs-lastname.hs-fieldtype-text.field.hs-form-field {
+#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_lastname.hs-lastname.hs-fieldtype-text.field.hs-form-field,
+#hsForm_bc40d6ba-9cf7-46f4-a3eb-de2e35604e7e .hs_lastname.hs-lastname.hs-fieldtype-text.field.hs-form-field,
+#hsForm_116de497-c8b4-426e-9216-143cb2d40f43 .hs_lastname.hs-lastname.hs-fieldtype-text.field.hs-form-field,
+#hsForm_7993519d-db5f-42c9-b7ba-c1ccb866788f .hs_lastname.hs-lastname.hs-fieldtype-text.field.hs-form-field {
     width: 49%;
     float: right;
     margin: 5px 0;
 }
 
-#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_email.hs-email.hs-fieldtype-text.field.hs-form-field {
+#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_email.hs-email.hs-fieldtype-text.field.hs-form-field,
+#hsForm_bc40d6ba-9cf7-46f4-a3eb-de2e35604e7e .hs_email.hs-email.hs-fieldtype-text.field.hs-form-field,
+#hsForm_116de497-c8b4-426e-9216-143cb2d40f43 .hs_email.hs-email.hs-fieldtype-text.field.hs-form-field,
+#hsForm_7993519d-db5f-42c9-b7ba-c1ccb866788f .hs_email.hs-email.hs-fieldtype-text.field.hs-form-field {
     width: 49%;
     float: left;
     margin: 5px 0;
 }
 
 
-#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_jobtitle.hs-jobtitle.hs-fieldtype-text.field.hs-form-field {
+#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_jobtitle.hs-jobtitle.hs-fieldtype-text.field.hs-form-field,
+#hsForm_bc40d6ba-9cf7-46f4-a3eb-de2e35604e7e .hs_jobtitle.hs-jobtitle.hs-fieldtype-text.field.hs-form-field,
+#hsForm_116de497-c8b4-426e-9216-143cb2d40f43 .hs_jobtitle.hs-jobtitle.hs-fieldtype-text.field.hs-form-field,
+#hsForm_7993519d-db5f-42c9-b7ba-c1ccb866788f .hs_jobtitle.hs-jobtitle.hs-fieldtype-text.field.hs-form-field {
     width: 49%;
     float: right;
     margin: 5px 0;
 }
 
-#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_company.hs-company.hs-fieldtype-text.field.hs-form-field {
+#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_company.hs-company.hs-fieldtype-text.field.hs-form-field,
+#hsForm_bc40d6ba-9cf7-46f4-a3eb-de2e35604e7e .hs_company.hs-company.hs-fieldtype-text.field.hs-form-field,
+#hsForm_116de497-c8b4-426e-9216-143cb2d40f43 .hs_company.hs-company.hs-fieldtype-text.field.hs-form-field,
+#hsForm_7993519d-db5f-42c9-b7ba-c1ccb866788f .hs_company.hs-company.hs-fieldtype-text.field.hs-form-field {
     width: 49%;
     float: left;
     margin: 5px 0;
 }
 
-#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_numemployees.hs-numemployees.hs-fieldtype-select.field.hs-form-field {
+#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_numemployees.hs-numemployees.hs-fieldtype-select.field.hs-form-field,
+#hsForm_bc40d6ba-9cf7-46f4-a3eb-de2e35604e7e .hs_numemployees.hs-numemployees.hs-fieldtype-select.field.hs-form-field,
+#hsForm_116de497-c8b4-426e-9216-143cb2d40f43 .hs_numemployees.hs-numemployees.hs-fieldtype-select.field.hs-form-field,
+#hsForm_7993519d-db5f-42c9-b7ba-c1ccb866788f .hs_numemployees.hs-numemployees.hs-fieldtype-select.field.hs-form-field {
     width: 49%;
     float: right;
     margin: 5px 0;
@@ -3060,38 +3082,56 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {content: 
 @media (max-width: 767px) 
 {
 
-    #hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_firstname.hs-firstname.hs-fieldtype-text.field.hs-form-field {
+    #hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_firstname.hs-firstname.hs-fieldtype-text.field.hs-form-field,
+    #hsForm_bc40d6ba-9cf7-46f4-a3eb-de2e35604e7e .hs_firstname.hs-firstname.hs-fieldtype-text.field.hs-form-field,
+    #hsForm_116de497-c8b4-426e-9216-143cb2d40f43 .hs_firstname.hs-firstname.hs-fieldtype-text.field.hs-form-field,
+    #hsForm_7993519d-db5f-42c9-b7ba-c1ccb866788f .hs_firstname.hs-firstname.hs-fieldtype-text.field.hs-form-field {
     width: 100% !important;
     float: left;
     margin: 5px 0;
 }
 
-#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_lastname.hs-lastname.hs-fieldtype-text.field.hs-form-field {
+#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_lastname.hs-lastname.hs-fieldtype-text.field.hs-form-field,
+#hsForm_bc40d6ba-9cf7-46f4-a3eb-de2e35604e7e .hs_lastname.hs-lastname.hs-fieldtype-text.field.hs-form-field,
+#hsForm_116de497-c8b4-426e-9216-143cb2d40f43 .hs_lastname.hs-lastname.hs-fieldtype-text.field.hs-form-field,
+#hsForm_7993519d-db5f-42c9-b7ba-c1ccb866788f .hs_lastname.hs-lastname.hs-fieldtype-text.field.hs-form-field {
     width: 100%;
     float: right;
     margin: 5px 0;
 }
 
-#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_email.hs-email.hs-fieldtype-text.field.hs-form-field {
+#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_email.hs-email.hs-fieldtype-text.field.hs-form-field,
+#hsForm_bc40d6ba-9cf7-46f4-a3eb-de2e35604e7e .hs_email.hs-email.hs-fieldtype-text.field.hs-form-field,
+#hsForm_116de497-c8b4-426e-9216-143cb2d40f43 .hs_email.hs-email.hs-fieldtype-text.field.hs-form-field,
+#hsForm_7993519d-db5f-42c9-b7ba-c1ccb866788f .hs_email.hs-email.hs-fieldtype-text.field.hs-form-field {
     width: 100%;
     float: left;
     margin: 5px 0;
 }
 
 
-#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_jobtitle.hs-jobtitle.hs-fieldtype-text.field.hs-form-field {
+#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_jobtitle.hs-jobtitle.hs-fieldtype-text.field.hs-form-field,
+#hsForm_bc40d6ba-9cf7-46f4-a3eb-de2e35604e7e .hs_jobtitle.hs-jobtitle.hs-fieldtype-text.field.hs-form-field,
+#hsForm_116de497-c8b4-426e-9216-143cb2d40f43 .hs_jobtitle.hs-jobtitle.hs-fieldtype-text.field.hs-form-field,
+#hsForm_7993519d-db5f-42c9-b7ba-c1ccb866788f .hs_jobtitle.hs-jobtitle.hs-fieldtype-text.field.hs-form-field {
     width: 100%;
     float: right;
     margin: 5px 0;
 }
 
-#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_company.hs-company.hs-fieldtype-text.field.hs-form-field {
+#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_company.hs-company.hs-fieldtype-text.field.hs-form-field,
+#hsForm_bc40d6ba-9cf7-46f4-a3eb-de2e35604e7e .hs_company.hs-company.hs-fieldtype-text.field.hs-form-field,
+#hsForm_116de497-c8b4-426e-9216-143cb2d40f43 .hs_company.hs-company.hs-fieldtype-text.field.hs-form-field,
+#hsForm_7993519d-db5f-42c9-b7ba-c1ccb866788f .hs_company.hs-company.hs-fieldtype-text.field.hs-form-field {
     width: 100%;
     float: left;
     margin: 5px 0;
 }
 
-#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_numemployees.hs-numemployees.hs-fieldtype-select.field.hs-form-field {
+#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_numemployees.hs-numemployees.hs-fieldtype-select.field.hs-form-field,
+#hsForm_bc40d6ba-9cf7-46f4-a3eb-de2e35604e7e .hs_numemployees.hs-numemployees.hs-fieldtype-select.field.hs-form-field,
+#hsForm_116de497-c8b4-426e-9216-143cb2d40f43 .hs_numemployees.hs-numemployees.hs-fieldtype-select.field.hs-form-field,
+#hsForm_7993519d-db5f-42c9-b7ba-c1ccb866788f .hs_numemployees.hs-numemployees.hs-fieldtype-select.field.hs-form-field {
     width: 100%;
     float: right;
     margin: 5px 0;
