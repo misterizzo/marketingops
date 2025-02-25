@@ -3049,6 +3049,15 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {content: 
     border-width: 2px !important;
 }
 
+
+
+
+.elementor-location-popup .elementor-widget-tabs .elementor-tabs-content-wrapper {
+    border: 1px #d5d8dc;
+    border-color: var(--horizontal-grad-1, linear-gradient(90deg, #FD4B7A -2.36%, #4D00AE 159.05%)) !important;
+}
+
+
 .legal-consent-container {
     margin: 15px 0;
 }
