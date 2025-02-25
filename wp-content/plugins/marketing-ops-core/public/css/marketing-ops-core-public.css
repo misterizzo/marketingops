@@ -2992,3 +2992,110 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {content: 
 }
 
 }	
+
+
+
+
+
+
+
+#elementor-popup-modal-235138 .dialog-close-button {
+    display: flex;
+    border: solid 1px #000;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    color: #000;
+    top: 5px;
+    right: 5px;
+    z-index: 9;
+}
+
+.elementor-location-popup .elementor-widget-tabs.elementor-tabs-view-horizontal .elementor-tab-content {
+    padding: 15px;
+    border: solid 1px #c3c3c3 !important;
+    border-radius: 15px;
+}
+
+#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_firstname.hs-firstname.hs-fieldtype-text.field.hs-form-field {
+    width: 49% !important;
+    float: left;
+    margin: 5px 0;
+}
+
+#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_lastname.hs-lastname.hs-fieldtype-text.field.hs-form-field {
+    width: 49%;
+    float: right;
+    margin: 5px 0;
+}
+
+#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_email.hs-email.hs-fieldtype-text.field.hs-form-field {
+    width: 49%;
+    float: left;
+    margin: 5px 0;
+}
+
+
+#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_jobtitle.hs-jobtitle.hs-fieldtype-text.field.hs-form-field {
+    width: 49%;
+    float: right;
+    margin: 5px 0;
+}
+
+#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_company.hs-company.hs-fieldtype-text.field.hs-form-field {
+    width: 49%;
+    float: left;
+    margin: 5px 0;
+}
+
+#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_numemployees.hs-numemployees.hs-fieldtype-select.field.hs-form-field {
+    width: 49%;
+    float: right;
+    margin: 5px 0;
+}
+
+@media (max-width: 767px) 
+{
+
+    #hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_firstname.hs-firstname.hs-fieldtype-text.field.hs-form-field {
+    width: 100% !important;
+    float: left;
+    margin: 5px 0;
+}
+
+#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_lastname.hs-lastname.hs-fieldtype-text.field.hs-form-field {
+    width: 100%;
+    float: right;
+    margin: 5px 0;
+}
+
+#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_email.hs-email.hs-fieldtype-text.field.hs-form-field {
+    width: 100%;
+    float: left;
+    margin: 5px 0;
+}
+
+
+#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_jobtitle.hs-jobtitle.hs-fieldtype-text.field.hs-form-field {
+    width: 100%;
+    float: right;
+    margin: 5px 0;
+}
+
+#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_company.hs-company.hs-fieldtype-text.field.hs-form-field {
+    width: 100%;
+    float: left;
+    margin: 5px 0;
+}
+
+#hsForm_6609b966-7cf4-4ceb-8e7b-4c1432612919 .hs_numemployees.hs-numemployees.hs-fieldtype-select.field.hs-form-field {
+    width: 100%;
+    float: right;
+    margin: 5px 0;
+}
+
+
+}
