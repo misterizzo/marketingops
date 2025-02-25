@@ -2173,6 +2173,7 @@ jQuery( document ).ready( function( $ ) {
 		 */
 		$(document).on("click", ".moc_training_pagination .blog-directory-pagination ul li a", function(event) {
 			event.preventDefault();
+			console.log( 'hello3' );
 			var search_training = (false !== moc_get_query_variable('search_keywords')) ? moc_get_query_variable('search_keywords') : '';
 			var category = (false !== moc_get_query_variable('cat')) ? moc_get_query_variable('cat') : '';
 			var paged = $(this).data('page');
@@ -3349,6 +3350,7 @@ jQuery( document ).ready( function( $ ) {
 	
 		$(document).on("click", ".moc_pagination_for_posts_listings .moc_training_pagination .blog-directory-pagination ul li a", function(event) {
 			event.preventDefault();
+			console.log( 'hello1' );
 			var paged     = $(this).data('page');
 			var post_type = $( '.tabbing_content_container .tab_box.active_tab a' ).data( 'post' );
 			var tab_id    = $( '.tabbing_content_container .tab_box.active_tab a' ).data( 'tab' );
@@ -3536,6 +3538,7 @@ jQuery( document ).ready( function( $ ) {
 		moc_get_courses_callback( '' );
 		$(document).on("click", ".moc_courses_pagination .moc_training_pagination .blog-directory-pagination ul li a", function(event) {
 			event.preventDefault();
+			console.log( 'hello2' );
 			var paged     = $(this).data('page');
 			moc_get_courses_callback( paged );
 		});
