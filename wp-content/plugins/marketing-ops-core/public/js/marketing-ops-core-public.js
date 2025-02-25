@@ -2689,14 +2689,10 @@ jQuery( document ).ready( function( $ ) {
 	 */
 	if ( $( '#google-recaptcha-checkbox' ).length ) {
 		console.log( 'hello' );
-		render_google_recaptcha();
+		setTimeout( function() {
+			render_google_recaptcha();
+		}, 2000 );
 	}
-
-	// if ( '/checkut/' === window.location.pathname ) {
-	// 	setTimeout( function() {
-	// 		render_google_recaptcha();
-	// 	}, 3000 );
-	// }
 
 	/**
 	 * Function to render google recaptcha.
