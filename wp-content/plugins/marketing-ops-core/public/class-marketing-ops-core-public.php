@@ -4519,81 +4519,72 @@ class Marketing_Ops_Core_Public {
 			$taxonomy = 'workshop_category';
 		}
 
-		if ( ! empty( $post_id ) ) {
-			$args = array(
-				'ID'            => $post_id,
-				'post_title'    => $post_title,
-			   	'post_content'  => $post_description,
-			   	'post_status'   => $status,
-			   	'post_author'   => $user_id,
-			   	'post_type'     => $post_type,
-				'post_date'     => $date,
-				'post_name'     => $post_permalink,
-				'post_date_gmt' => $date,
-			);
-			wp_update_post( $args );
-			wp_set_object_terms( $post_id, $post_categories, $taxonomy, true );
-			wp_set_object_terms( $post_id, $post_tags, 'post_tag', true );
-		} else {
-			$args = array(
-				'post_title'    => $post_title,
-			   	'post_content'  => $post_description,
-			   	'post_status'   => $status,
-			   	'post_author'   => $user_id,
-			   	'post_type'     => $post_type,
-				'post_date'     => $date,
-				'post_name'     => $post_permalink,
-				'post_date_gmt' => $date,
-			);
-			$new_post_id = wp_insert_post( $args );
-			wp_set_object_terms( $new_post_id, $post_categories, $taxonomy, true );
-			wp_set_object_terms( $new_post_id, $post_tags, 'post_tag', true );
-			$post_name              = ( 'post' === $post_type ) ? __( 'Article', 'marketingops' ) : ucfirst( $post_type );
-			$site_title             = get_option( 'blogname' );
-			$admin_email            = get_option('admin_email');
-			$admin_user             = get_user_by( 'email', $admin_email );
-			$admin_user_id          = $admin_user->ID;
-			$all_admin_meta         = get_user_meta( $admin_user_id );
-			$admin_firstname        = ( ! empty( $all_admin_meta['first_name'] ) ) ? $all_admin_meta['first_name'][0] : '';
-			$admin_lastname         = ( ! empty( $all_admin_meta['last_name'] ) ) ? $all_admin_meta['last_name'][0] : '';
-			$admin_display_name     = ( ! empty( $admin_firstname ) ) ? "{$admin_firstname} {$admin_lastname}" : $all_admin_meta['nickname'][0];
-			$user_info              = get_userdata( $user_id );
-			$user_email             = $user_info->user_email;
-			$all_user_meta          = get_user_meta( $user_id );
-			$firstname              = ( ! empty( $all_user_meta['first_name'] ) ) ? $all_user_meta['first_name'][0] : '';
-			$lastname               = ( ! empty( $all_user_meta['last_name'] ) ) ? $all_user_meta['last_name'][0] : '';
-			$user_display_name      = ( ! empty( $firstname ) ) ? $firstname . ' ' . $lastname : $all_user_meta['nickname'][0];
-			$headers                = 'From:' . $site_title . '<' . $admin_email . "> \r\n";
-			$headers               .= 'Reply-To:' . $user_email . "\r\n";
-			$headers               .= "X-Priority: 1\r\n";
-			$headers               .= 'MIME-Version: 1.0' . "\n";
-			$headers               .= 'Content-type: text/html; charset=utf-8' . "\r\n";
-			$get_email_template     = get_field( 'write_a_post_submission_email_template', 'option' );
-			$get_email_subject      = $get_email_template['subject'];
-			$get_email_body_content = $get_email_template['message'];
-			$subject_to_text        = str_replace( '[user_name]', $user_display_name, $get_email_subject );
-			$subject_to_text        = str_replace( '[post_type]', $post_name, $subject_to_text );
-			$body_content_to_text   = str_replace( '[admin]', $admin_display_name, $get_email_body_content );
-			$body_content_to_text   = str_replace( '[user_name]', $user_display_name, $body_content_to_text );
-			$body_content_to_text   = str_replace( '[user_email]', $user_email, $body_content_to_text );
-			$body_content_to_text   = str_replace( '[post_type]', $post_name, $body_content_to_text );
-			$body_content_to_text   = str_replace( '[post_name]', $post_title, $body_content_to_text );
-			$body_content_to_text   = str_replace( '[post_link]', get_edit_post_link( $new_post_id ), $body_content_to_text );
+		// Create the post arguments.
+		$post_arguments = array(
+			'post_title'    => $post_title,
+			'post_content'  => $post_description,
+			'post_status'   => $status,
+			'post_author'   => $user_id,
+			'post_type'     => $post_type,
+			'post_date'     => $date,
+			'post_name'     => $post_permalink,
+			'post_date_gmt' => $date,
+		);
 
-			// Send the email regarding the new post.
-			wp_mail(
-				array(
-					$admin_email,
-					'audrey@marketingops.com',
-					'grace@marketingops.com',
-					'adarsh.srmcem@gmail.com',
-				),
-				$subject_to_text,
-				$body_content_to_text,
-				$headers
-			);
+		// If the post ID is available, update, otherwise, create new post.
+		if ( ! empty( $post_id ) ) {
+			$post_arguments['ID'] = $post_id;
+			wp_update_post( $post_arguments );
+		} else {
+			$post_id = wp_insert_post( $post_arguments );
 		}
 
+		// Set the post categories and tags.
+		wp_set_object_terms( $post_id, $post_categories, $taxonomy, true );
+		wp_set_object_terms( $post_id, $post_tags, 'post_tag', true );
+
+		$post_name              = ( 'post' === $post_type ) ? __( 'Article', 'marketingops' ) : ucfirst( $post_type );
+		$site_title             = get_option( 'blogname' );
+		$admin_email            = get_option('admin_email');
+		$admin_user             = get_user_by( 'email', $admin_email );
+		$admin_user_id          = $admin_user->ID;
+		$all_admin_meta         = get_user_meta( $admin_user_id );
+		$admin_firstname        = ( ! empty( $all_admin_meta['first_name'] ) ) ? $all_admin_meta['first_name'][0] : '';
+		$admin_lastname         = ( ! empty( $all_admin_meta['last_name'] ) ) ? $all_admin_meta['last_name'][0] : '';
+		$admin_display_name     = ( ! empty( $admin_firstname ) ) ? "{$admin_firstname} {$admin_lastname}" : $all_admin_meta['nickname'][0];
+		$user_info              = get_userdata( $user_id );
+		$user_email             = $user_info->user_email;
+		$all_user_meta          = get_user_meta( $user_id );
+		$firstname              = ( ! empty( $all_user_meta['first_name'] ) ) ? $all_user_meta['first_name'][0] : '';
+		$lastname               = ( ! empty( $all_user_meta['last_name'] ) ) ? $all_user_meta['last_name'][0] : '';
+		$user_display_name      = ( ! empty( $firstname ) ) ? $firstname . ' ' . $lastname : $all_user_meta['nickname'][0];
+		$headers                = 'From:' . $site_title . '<' . $admin_email . "> \r\n";
+		$headers               .= 'Reply-To:' . $user_email . "\r\n";
+		$headers               .= "X-Priority: 1\r\n";
+		$headers               .= 'MIME-Version: 1.0' . "\n";
+		$headers               .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+		$get_email_template     = get_field( 'write_a_post_submission_email_template', 'option' );
+		$get_email_subject      = $get_email_template['subject'];
+		$get_email_body_content = $get_email_template['message'];
+		$subject_to_text        = str_replace( '[user_name]', $user_display_name, $get_email_subject );
+		$subject_to_text        = str_replace( '[post_type]', $post_name, $subject_to_text );
+		$body_content_to_text   = str_replace( '[admin]', $admin_display_name, $get_email_body_content );
+		$body_content_to_text   = str_replace( '[user_name]', $user_display_name, $body_content_to_text );
+		$body_content_to_text   = str_replace( '[user_email]', $user_email, $body_content_to_text );
+		$body_content_to_text   = str_replace( '[post_type]', $post_name, $body_content_to_text );
+		$body_content_to_text   = str_replace( '[post_name]', $post_title, $body_content_to_text );
+		$body_content_to_text   = str_replace( '[post_link]', get_edit_post_link( $new_post_id ), $body_content_to_text );
+		$email_recipients       = array(
+			$admin_email,
+			'audrey@marketingops.com',
+			'grace@marketingops.com',
+			'adarsh.srmcem@gmail.com',
+		);
+
+		// Send the email regarding the new post.
+		wp_mail( 'adarsh.srmcem@gmail.com', $subject_to_text, $body_content_to_text, $headers );
+
+		// Send the AJAX response.
 		wp_send_json_success(
 			array(
 				'code' => 'moc-successfully-saved-data'

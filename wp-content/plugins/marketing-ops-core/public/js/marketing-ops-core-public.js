@@ -2688,7 +2688,6 @@ jQuery( document ).ready( function( $ ) {
 	 * On the checkout form, the google recaptcha is rendered after a couple of seconds.
 	 */
 	if ( $( '#google-recaptcha-checkbox' ).length ) {
-		console.log( 'hello' );
 		setTimeout( function() {
 			render_google_recaptcha();
 		}, 2000 );
