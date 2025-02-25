@@ -2997,7 +2997,10 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {content: 
 
 
 
-
+.woocommerce #payment #place_order, .woocommerce-page #payment #place_order {
+    float: left;
+    margin: 20px 0 0;
+}
 
 #elementor-popup-modal-235138 .dialog-close-button {
     display: flex;
@@ -3081,7 +3084,28 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {content: 
 
 #elementor-popup-modal-235138 label {
     margin: 5px 0;
+    float: left;
+    text-align: left;
 }
+
+
+#elementor-popup-modal-235138 input[type=date], 
+#elementor-popup-modal-235138 input[type=email], 
+#elementor-popup-modal-235138 input[type=number], 
+#elementor-popup-modal-235138 input[type=password], 
+#elementor-popup-modal-235138 input[type=search], 
+#elementor-popup-modal-235138 input[type=tel], 
+#elementor-popup-modal-235138 input[type=text], 
+#elementor-popup-modal-235138 input[type=url], 
+#elementor-popup-modal-235138 select, 
+#elementor-popup-modal-235138 textarea{padding: 8px 15px !important;
+    background: #FBFBFB;
+    border: 1px solid #E7EFEF;
+    border-radius: 6px;
+    width: 100%;
+    max-width: 100% !important;
+    font-size: 16px;}
+
 
 @media (max-width: 767px) 
 {
