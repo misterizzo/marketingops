@@ -4574,15 +4574,22 @@ class Marketing_Ops_Core_Public {
 		$body_content_to_text   = str_replace( '[post_type]', $post_name, $body_content_to_text );
 		$body_content_to_text   = str_replace( '[post_name]', $post_title, $body_content_to_text );
 		$body_content_to_text   = str_replace( '[post_link]', get_edit_post_link( $new_post_id ), $body_content_to_text );
-		$email_recipients       = array(
-			$admin_email,
-			'audrey@marketingops.com',
-			'grace@marketingops.com',
-			'adarsh.srmcem@gmail.com',
-		);
+
+		if ( '119.252.195.254' === $_SERVER['REMOTE_ADDR'] ) {
+			$email_recipients = 'adarsh.srmcem@gmail.com';
+
+			echo $body_content_to_text; die;
+		} else {
+			$email_recipients = array(
+				$admin_email,
+				'audrey@marketingops.com',
+				'grace@marketingops.com',
+				'adarsh.srmcem@gmail.com',
+			);
+		}
 
 		// Send the email regarding the new post.
-		wp_mail( 'adarsh.srmcem@gmail.com', $subject_to_text, $body_content_to_text, $headers );
+		wp_mail( $email_recipients, $subject_to_text, $body_content_to_text, $headers );
 
 		// Send the AJAX response.
 		wp_send_json_success(
