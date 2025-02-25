@@ -2163,22 +2163,22 @@ jQuery( document ).ready( function( $ ) {
 
 	}
 
-	if ('yes' === is_training_seach_page) {
-		var search_training = (false !== moc_get_query_variable('search_keywords')) ? moc_get_query_variable('search_keywords') : '';
-		var category = (false !== moc_get_query_variable('cat')) ? moc_get_query_variable('cat') : '';
-		get_products_by_search_keyword(search_training, category);
+	if ( 'yes' === is_training_seach_page ) {
+		var search_training = ( false !== moc_get_query_variable( 'search_keywords' ) ) ? moc_get_query_variable( 'search_keywords' ) : '';
+		var category        = ( false !== moc_get_query_variable( 'cat' ) ) ? moc_get_query_variable( 'cat' ) : '';
+		get_products_by_search_keyword( search_training, category );
 
 		/**
 		 * Function to ajax call for load products based on filters.
 		 */
-		$(document).on("click", ".moc_training_pagination .blog-directory-pagination ul li a", function(event) {
+		$( document ).on( 'click', '.moc_training_pagination .blog-directory-pagination ul li a', function( event ) {
 			event.preventDefault();
 			console.log( 'hello3' );
-			var search_training = (false !== moc_get_query_variable('search_keywords')) ? moc_get_query_variable('search_keywords') : '';
-			var category = (false !== moc_get_query_variable('cat')) ? moc_get_query_variable('cat') : '';
-			var paged = $(this).data('page');
-			get_products_by_search_keyword(search_training, category, paged);
-		});
+			var search_training = ( false !== moc_get_query_variable( 'search_keywords' ) ) ? moc_get_query_variable( 'search_keywords' ) : '';
+			var category        = ( false !== moc_get_query_variable( 'cat' ) ) ? moc_get_query_variable( 'cat' ) : '';
+			var paged           = $( this ).data( 'page' );
+			get_products_by_search_keyword( search_training, category, paged );
+		} );
 
 		/**
 		 * Function to ajax call for load products.
@@ -3350,7 +3350,6 @@ jQuery( document ).ready( function( $ ) {
 	
 		$(document).on("click", ".moc_pagination_for_posts_listings .moc_training_pagination .blog-directory-pagination ul li a", function(event) {
 			event.preventDefault();
-			console.log( 'hello1' );
 			var paged     = $(this).data('page');
 			var post_type = $( '.tabbing_content_container .tab_box.active_tab a' ).data( 'post' );
 			var tab_id    = $( '.tabbing_content_container .tab_box.active_tab a' ).data( 'tab' );
@@ -3538,7 +3537,6 @@ jQuery( document ).ready( function( $ ) {
 		moc_get_courses_callback( '' );
 		$(document).on("click", ".moc_courses_pagination .moc_training_pagination .blog-directory-pagination ul li a", function(event) {
 			event.preventDefault();
-			console.log( 'hello2' );
 			var paged     = $(this).data('page');
 			moc_get_courses_callback( paged );
 		});
@@ -4806,35 +4804,32 @@ jQuery( document ).ready( function( $ ) {
 	 *
 	 */
 	function get_products_by_search_keyword(search_training, category, paged) {
-		var professor_name = (false !== moc_get_query_variable('professor')) ? moc_get_query_variable('professor') : '';
-		var paged = (paged > 1) ? paged : 1;
-		var moc_free_products = '';
-		if ($('.moc_training_search_page').is(':checked')) {
-			moc_free_products = 'yes';
-		} else {
-			moc_free_products = 'no';
-		}
-		block_element($('.moc_product_container .loader_bg'));
-		var data = {
-			action: 'moc_search_training',
-			dataType: 'json',
-			search_training: search_training,
-			category: category,
-			paged: paged,
-			moc_free_products: moc_free_products,
-			professor_name: professor_name,
-		};
+		var professor_name    = ( false !== moc_get_query_variable( 'professor' ) ) ? moc_get_query_variable( 'professor' ) : '';
+		var paged             = ( paged > 1 ) ? paged : 1;
+		var moc_free_products = ( $( '.moc_training_search_page' ).is( ':checked' ) ) ? 'yes' : 'no' ;
+
+		// Shoot the ajax now.
 		$.ajax({
 			url: ajaxurl,
 			type: 'POST',
-			data: data,
+			data: {
+				action: 'moc_search_training',
+				dataType: 'json',
+				search_training: search_training,
+				category: category,
+				paged: paged,
+				moc_free_products: moc_free_products,
+				professor_name: professor_name,
+			},
+			beforeSend: function() {
+				block_element( $( '.moc_product_container .loader_bg' ) );
+			},
 			success: function( response ) {
-				if ('marketing-change-products-by-search-keyword' === response.data.code) {
-					$('.moc_product_inner_section').html(response.data.html);
-					$('.moc_training_results').html(response.data.post_result_html);
-					unblock_element($('.loader_bg'));
+				if ( 'marketing-change-products-by-search-keyword' === response.data.code ) {
+					$( '.moc_product_inner_section' ).html( response.data.html );
+					$( '.moc_training_results' ).html( response.data.post_result_html );
 					setTimeout( function() {
-						var slickopts = {
+						$( '.custom_slider_ajax' ).slick( {
 							slidesToShow: 1,
 							slidesToScroll: 1,
 							dots: true,
@@ -4843,9 +4838,17 @@ jQuery( document ).ready( function( $ ) {
 							infinite: false,
 							autoplaySpeed: 3000,
 							rows: 1,
-						};
-						$('.custom_slider_ajax').slick(slickopts);
+						} );
 					}, 500 );
+				}
+			},
+			complete: function() {
+				// Unblock the loader.
+				unblock_element( $( '.loader_bg' ) );
+
+				// Scroll the user to the top of the screen.
+				if ( $( '.training_content' ).length ) {
+					$( 'html, body' ).animate( { scrollTop: $( '.training_content' ).offset().top - 200 }, 1000 );
 				}
 			},
 		} );
