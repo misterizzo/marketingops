@@ -12144,7 +12144,7 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
 
 .sessionpopup {
     position: fixed;
-    display: block;
+    display: none;
     top: 0;
     left: 0;
     bottom: 0;
@@ -12223,7 +12223,7 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
 }
 
 
-.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupleft h3{
+.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupleft h3 {
     background: linear-gradient(90deg, #FE3A77 0%, #FF7462 72.52%);
     background: linear-gradient(90deg, #FE3A77 0%, #FF7462 72.52%);
     background: linear-gradient(90deg, #FE3A77 0%, #FF7462 72.52%);
@@ -12232,14 +12232,15 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
     background-clip: text;
     -webkit-text-fill-color: transparent;
     text-fill-color: transparent;
-    margin: 0 0 5px;
+    margin: 0 0 10px;
     font-size: 18px;
     font-family: Inter;
     font-weight: 700;
     line-height: 21.6px;
+    width: 86%;
 }
 
-.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupleft .roundbnt{
+.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupleft .roundbnt {
     border: solid 1px #D9DFE7;
     border-radius: 20px;
     color: #242730;
@@ -12249,10 +12250,14 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
     line-height: 12px;
     padding: 6px;
     display: block;
+    width: 100%;
+    max-width: 230px;
+    margin-bottom: 10px;
 }
 
 .sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupright .poprightpicturebox {
     display: flex;
+    margin: 0 0 15px;
 }
 
 .sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupright .poprightpicturebox .poprightpictureboximg {
@@ -12262,7 +12267,9 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
     margin-right: 15px;
     display: block;
     overflow: hidden;
+    border-radius: 8px;
 }
+
 .sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupright .poprightpicturebox .poprightpictureboximg img {
     width: 100%;
     height: 100%;
@@ -12281,5 +12288,33 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
     font-weight: 700;
     margin: 0;
     color: #3E34F5;
+}
+
+
+@media (max-width: 767px) {
+.sessionpopup .sessionpopupinner .innersessionpopup {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupleft {
+    width: 100%;
+    flex: 0 0 100%;
+}
+
+.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupright {
+    width: 100%;
+    flex: 0 0 100%;
+    margin-bottom: 15px;
+}
+
+.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupright .poprightpicturebox.desktop {
+    display: none;
+}
+
+.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupright .poprightpicturebox.mobile {
+    display: flex;
+}
+
 }
 /* popup */
