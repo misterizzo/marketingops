@@ -12119,3 +12119,167 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
         z-index: 9;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* popup */
+
+.sessionpopup {
+    position: fixed;
+    display: block;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    backdrop-filter: blur(2px);
+}
+.closeseesionpopup {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+}
+.sessionpopup .sessionpopupinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 100%;
+    max-width: 710px;
+    background: #F8F8F8;
+    border: solid 1px #D9DFE7;
+    padding: 30px;
+    border-radius: 6px;
+}
+
+.sessionpopup .sessionpopupinner .innersessionpopup {
+    display: flex;
+    justify-content: space-between;
+}
+.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupleft {
+    width: 49%;
+    flex: 0 0 49%;
+}
+
+.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupright {
+    width: 49%;
+    flex: 0 0 49%;
+}
+
+.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupleft h5,
+.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupright h5 {
+    color: #242730;
+    font-size: 12px;
+    font-family: Inter;
+    margin: 5px 0;
+}
+
+.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupleft p {
+    color: #6B6B6B;
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14.4px;
+    margin: 0 0 5px;
+}
+.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupleft ul {
+    padding: 0;
+    list-style-position: inside;
+    margin: 0 0 5px;
+}
+.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupright ul {
+    padding: 0;
+    list-style-type: none;
+    margin: 0 0 5px;
+}
+.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupleft ul li,
+.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupright ul li {
+    color: #6B6B6B;
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14.4px;
+}
+
+
+.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupleft h3{
+    background: linear-gradient(90deg, #FE3A77 0%, #FF7462 72.52%);
+    background: linear-gradient(90deg, #FE3A77 0%, #FF7462 72.52%);
+    background: linear-gradient(90deg, #FE3A77 0%, #FF7462 72.52%);
+    background: linear-gradient(90deg, #FE3A77 0%, #FF7462 72.52%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+    margin: 0 0 5px;
+    font-size: 18px;
+    font-family: Inter;
+    font-weight: 700;
+    line-height: 21.6px;
+}
+
+.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupleft .roundbnt{
+    border: solid 1px #D9DFE7;
+    border-radius: 20px;
+    color: #242730;
+    font-size: 12px;
+    font-family: Inter;
+    font-weight: 400;
+    line-height: 12px;
+    padding: 6px;
+    display: block;
+}
+
+.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupright .poprightpicturebox {
+    display: flex;
+}
+
+.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupright .poprightpicturebox .poprightpictureboximg {
+    width: 80px;
+    height: auto;
+    border: solid 1px #D9DFE7;
+    margin-right: 15px;
+    display: block;
+    overflow: hidden;
+}
+.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupright .poprightpicturebox .poprightpictureboximg img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupright .poprightpicturebox .poprightpictureboxtext p {
+    font-size: 12px;
+    font-family: Inter;
+    line-height: 14.4px;
+    margin: 5px 0;
+}
+.sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupright .poprightpicturebox .poprightpictureboxtext a {
+    font-size: 17px;
+    font-family: Inter;
+    font-weight: 700;
+    margin: 0;
+    color: #3E34F5;
+}
+/* popup */
