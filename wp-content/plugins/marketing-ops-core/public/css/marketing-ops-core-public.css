@@ -12171,6 +12171,25 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
     height: 463px;
     right: 0;
 }
+
+.flightbostom{position: relative;}
+.flightbostom:before, .flightbostom:after {
+    content: "";
+    background-repeat: no-repeat;
+    background-position: top left;
+    position: absolute;
+    z-index: -1;
+}
+
+.flightbostom:before
+{
+    background-image: url(/wp-content/uploads/2025/03/blurcircle1-1.png);
+    left: inherit;
+    top: 0rem;
+    width: 223px;
+    height: 463px;
+    right: 0;
+}
 /* popup */
 
 .sessionpopup {
