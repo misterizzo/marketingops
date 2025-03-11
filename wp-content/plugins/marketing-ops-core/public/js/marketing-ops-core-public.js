@@ -79,7 +79,7 @@ jQuery( document ).ready( function( $ ) {
 	 * Task: https://app.clickup.com/t/868ckjtgh
 	 * Update the slack invite request form to be open for only paid members.
 	 */
-	if (  -1 !== current_page_url.indexOf( '/slack-invite-request/' ) ) {
+	if ( -1 !== current_page_url.indexOf( '/slack-invite-request/' ) || -1 !== current_page_url.indexOf( '/profile-success/' ) ) {
 		// If the user is a FREE or INACTIVE member.
 		if ( 'free' === member_plan || 'inactive' === member_plan ) {
 			// Open the restriction modal.
