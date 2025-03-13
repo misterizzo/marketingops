@@ -12203,13 +12203,26 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
     height: 100%;
     z-index: 999;
     backdrop-filter: blur(2px);
+    background: rgba(236,236,236,0.6);
 }
 .closeseesionpopup {
     position: absolute;
-    right: 15px;
-    top: 15px;
+    right: 30px;
+    top: 30px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+}
+
+.spekerpopup {
     cursor: pointer;
 }
+
+.closeseesionpopup svg{
+    width: 100%;
+    height: 100%;
+}
+
 .sessionpopup .sessionpopupinner {
     position: absolute;
     top: 50%;
