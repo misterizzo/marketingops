@@ -12378,6 +12378,15 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
     flex: 0 0 100%;
 }
 
+.closeseesionpopup {
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+}
+
 .sessionpopup .sessionpopupinner .innersessionpopup .innersessionpopupright {
     width: 100%;
     flex: 0 0 100%;
