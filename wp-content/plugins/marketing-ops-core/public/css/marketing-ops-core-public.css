@@ -12428,6 +12428,7 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
     justify-content: space-between;
     flex-wrap: wrap;
     overflow: auto;
+    height: 100%;
 }
 
 .closeseesionpopup {
