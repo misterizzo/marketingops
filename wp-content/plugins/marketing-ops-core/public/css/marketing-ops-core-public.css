@@ -12221,8 +12221,8 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
 
 .closeseesionpopup {
     position: absolute;
-    right: -40px;
-    top: -50px;
+    right: -15px;
+    top: -15px;
     cursor: pointer;
     width: 30px;
     height: 30px;
@@ -12425,10 +12425,10 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
 
 .sessionpopup .sessionpopupinner .innersessionpopup {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    overflow: auto;
-    height: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        overflow: scroll;
+        height: 100%
 }
 
 .closeseesionpopup {
