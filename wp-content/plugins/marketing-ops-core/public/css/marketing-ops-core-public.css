@@ -12418,8 +12418,9 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
     border: solid 1px #D9DFE7;
     padding: 30px;
     border-radius: 6px;
-    height: 90%;
+    height: 100%;
     overflow: visible;
+    max-height: 60%;
 }
 
 .sessionpopup .sessionpopupinner .innersessionpopup {
@@ -12427,7 +12428,6 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
     justify-content: space-between;
     flex-wrap: wrap;
     overflow: auto;
-    height: 100%;
 }
 
 .closeseesionpopup {
