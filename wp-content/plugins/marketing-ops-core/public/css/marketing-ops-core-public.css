@@ -3126,6 +3126,7 @@ div#moc_apaloza_workshop.popup .popup_container .popup_content .box_content .box
 }
 
 @media (max-width: 767px) {
+
     .broughtmainbox .broughtmainboxcolumn {
         max-width: 672px;
         margin-left: 0;
@@ -12215,16 +12216,17 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
     height: 100%;
     z-index: 999;
     backdrop-filter: blur(2px);
-    background: rgba(236, 236, 236, 0.6);
+    background: rgba(236, 236, 236, 0.8);
 }
 
 .closeseesionpopup {
     position: absolute;
-    right: 30px;
-    top: 30px;
+    right: -40px;
+    top: -50px;
     cursor: pointer;
     width: 30px;
     height: 30px;
+    pointer-events: none;
 }
 
 .spekerpopup {
@@ -12401,6 +12403,42 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
     display: flex;
 }
 .flightbostom:after{display: none;}
+
+
+
+
+.sessionpopup .sessionpopupinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 90%;
+    max-width: 710px;
+    background: #F8F8F8;
+    border: solid 1px #D9DFE7;
+    padding: 30px;
+    border-radius: 6px;
+    height: 90%;
+    overflow: visible;
+}
+
+.sessionpopup .sessionpopupinner .innersessionpopup {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    overflow: auto;
+    height: 100%;
+}
+
+.closeseesionpopup {
+    position: absolute;
+    right: -10px;
+    top: -36px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    pointer-events: none;
+}
 
 }
 /* popup */
