@@ -12441,5 +12441,12 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
     pointer-events: none;
 }
 
+.poprightpicturebox.mobile .poprightpictureboximg img {
+    width: 60px;
+    height: 60px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
 }
 /* popup */
