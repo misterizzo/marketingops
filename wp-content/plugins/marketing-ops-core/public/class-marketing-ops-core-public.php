@@ -1433,6 +1433,17 @@ class Marketing_Ops_Core_Public {
 			require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content.php';
 		}
 
+		// Add the restricted content modal - with dynamic values.
+		$enable_restriction = get_field( 'enable_restriction', $post->ID );
+		
+		if ( '103.77.2.234' === $_SERVER['REMOTE_ADDR'] ) {
+			var_dump( $enable_restriction );
+			die;
+		}
+		if ( is_page( 'slack-invite-request' ) ) {
+			require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content.php';
+		}
+
 		// Add the restricted content modal for pro-plus members.
 		if ( is_page( 'member-vault' ) || is_singular( 'conference_vault' ) || is_tax( 'conference' ) || ( is_post_type_archive( 'template' ) ) ) {
 			require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content-pro-plus-members.php';
