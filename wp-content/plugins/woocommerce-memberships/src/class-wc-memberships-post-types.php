@@ -132,6 +132,8 @@ class WC_Memberships_Post_Types {
 				'rewrite'             => false,
 				'query_var'           => false,
 				'supports'            => array( 'title' ),
+				'enable_rest_api'     => true,
+				'rest_base'           => 'wc_membership_plans',
 			)
 		);
 
