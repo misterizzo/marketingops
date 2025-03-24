@@ -78,7 +78,7 @@ jQuery( document ).ready( function( $ ) {
 	// Remove the free column from the pricing table.
 	$( '.subscribe_table .table_head .head_colum.free_colum, .subscribe_table .table_body .table_tr.btn_tr .body_colum.free_colum, .subscribe_table .table_body .table_tr.odd .body_colum.free_colum, .subscribe_table .table_body .table_tr.even .body_colum.free_colum' ).remove();
 
-	console.log( 'restricted_for', restricted_for, 'enable_restriction', enable_restriction );
+	console.log( 'restricted_for', restricted_for, 'enable_restriction', enable_restriction, typeof enable_restriction );
 
 	/**
 	 * Task: https://app.clickup.com/t/868ckjtgh
