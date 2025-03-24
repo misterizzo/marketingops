@@ -6702,15 +6702,4 @@ class Marketing_Ops_Core_Public {
 		debug( $posted_array );
 		die;
 	}
-
-	/**
-	 * Register custom REST route for the post type.
-	 */
-	public function mops_rest_route_for_post_callback( $route, $post ) {
-		if ( $post->post_type === 'wc_membership_plan' ) {
-			$route = '/wp/v2/wc_membership_plans/' . $post->ID;
-		}
-
-		return $route;
-	}
 }

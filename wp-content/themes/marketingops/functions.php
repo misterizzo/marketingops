@@ -670,3 +670,16 @@ add_filter('show_admin_bar', '__return_false');
 
 
 /******************** End Profile page */
+
+/**
+ * Register custom REST route for the post type.
+ */
+function mops_rest_route_for_post_callback( $route, $post ) {
+	if ( $post->post_type === 'wc_membership_plan' ) {
+		$route = '/wp/v2/wc_membership_plans/' . $post->ID;
+	}
+
+	return $route;
+}
+
+add_filter( 'rest_route_for_post', 'mops_rest_route_for_post_callback', 99, 2 );
