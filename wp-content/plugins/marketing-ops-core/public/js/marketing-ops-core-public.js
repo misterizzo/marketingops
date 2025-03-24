@@ -86,25 +86,22 @@ jQuery( document ).ready( function( $ ) {
 		var woocommerce_membership_level = restricted_for['woocommerce_membership_level'];
 		console.log( 'restricted_for', restricted_for );
 		console.log( 'woocommerce_membership_level', woocommerce_membership_level );
+		console.log( 'origin', window.location.origin );
 
 		// Loop through the membership levels.
 		$.each( woocommerce_membership_level, function( index, level ) {
 			console.log( 'index', index );
 			console.log( 'level', level );
-			
-
-			// $.getJSON( "example.json", function() {
+			// Hit the API to get the membership level data.
+			// $.getJSON( 'example.json', function() {
 			// 	console.log( "success" );
-			//   })
-			// 	.done(function() {
-			// 	  console.log( "second success" );
-			// 	})
-			// 	.fail(function() {
-			// 	  console.log( "error" );
-			// 	})
-			// 	.always(function() {
-			// 	  console.log( "complete" );
-			// 	});
+			// } ).done( function() {
+			// 	console.log( "second success" );
+			// } ).fail( function() {
+			// 	console.log( "error" );
+			// } ).always( function() {
+			// 	console.log( "complete" );
+			// } );
 		} );
 
 		// https://marketingops.com/wp-json/wp/v2/posts/?filter[p]=163406
