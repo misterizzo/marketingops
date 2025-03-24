@@ -88,19 +88,14 @@ jQuery( document ).ready( function( $ ) {
 
 		// Loop through the membership levels.
 		$.each( woocommerce_membership_level, function( index, level ) {
-			var api_url = window.location.origin + '/wp-json/wp/v2/posts/?filter[p]=' + level;
+			var api_url = window.location.origin + '/wp-json/wp/v2/posts/?filter[posts__in]=' + level;
 
 			// Hit the API to get the membership level data.
 			$.getJSON( api_url, function( data ) {
 				console.log( data );
 				console.log( "success" );
-			} ).done( function( data ) {
-				console.log( data );
-				console.log( "second success" );
 			} ).fail( function() {
 				console.log( "error" );
-			} ).always( function() {
-				console.log( "complete" );
 			} );
 		} );
 	}
