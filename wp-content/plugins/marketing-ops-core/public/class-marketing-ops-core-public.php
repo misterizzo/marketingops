@@ -340,6 +340,7 @@ class Marketing_Ops_Core_Public {
 				'google_recaptcha_sitekey'        => get_option( 'cf_google_recaptcha_site_key' ),
 				'google_recaptcha_theme'          => get_option( 'cf_google_recaptcha_theme' ),
 				'restricted_for'                  => get_field( 'restricted_for', ( ! empty( $post->ID ) ) ? $post->ID : 0 ),
+				'enable_restriction'              => get_field( 'enable_restriction', ( ! empty( $post->ID ) ) ? $post->ID : 0 ),
 			)
 		);
 	}
@@ -1435,13 +1436,9 @@ class Marketing_Ops_Core_Public {
 
 		// Add the restricted content modal - with dynamic values.
 		$enable_restriction = get_field( 'enable_restriction', $post->ID );
-		
-		if ( '103.77.2.234' === $_SERVER['REMOTE_ADDR'] ) {
-			var_dump( $enable_restriction );
-			die;
-		}
-		if ( is_page( 'slack-invite-request' ) ) {
-			require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content.php';
+
+		if ( is_bool( $enable_restriction ) && true === $enable_restriction ) {
+			require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content-dynamic.php';
 		}
 
 		// Add the restricted content modal for pro-plus members.
