@@ -64,6 +64,7 @@ jQuery( document ).ready( function( $ ) {
 	var member_plan_slug                = Moc_Public_JS_Obj.member_plan_slug;
 	var google_recaptcha_sitekey        = Moc_Public_JS_Obj.google_recaptcha_sitekey;
 	var google_recaptcha_theme          = Moc_Public_JS_Obj.google_recaptcha_theme;
+	var restricted_for                  = Moc_Public_JS_Obj.restricted_for;
 	var member_plan                     = ( 0 === member_plan_slug.length ) ? 'inactive' : ( ( 1 === member_plan_slug.length && -1 !== $.inArray( 'free-membership', member_plan_slug ) ) ? 'free' : 'pro' );
 	var crop_modal                      = $('#cropModal');
 	// var image                           = document.getElementById('crop_profile_image');
@@ -74,6 +75,8 @@ jQuery( document ).ready( function( $ ) {
 
 	// Remove the free column from the pricing table.
 	$( '.subscribe_table .table_head .head_colum.free_colum, .subscribe_table .table_body .table_tr.btn_tr .body_colum.free_colum, .subscribe_table .table_body .table_tr.odd .body_colum.free_colum, .subscribe_table .table_body .table_tr.even .body_colum.free_colum' ).remove();
+
+	console.log( 'restricted_for', restricted_for );
 
 	/**
 	 * Task: https://app.clickup.com/t/868ckjtgh

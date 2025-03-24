@@ -339,6 +339,7 @@ class Marketing_Ops_Core_Public {
 				'member_plan_slug'                => moc_get_membership_plan_slug(),
 				'google_recaptcha_sitekey'        => get_option( 'cf_google_recaptcha_site_key' ),
 				'google_recaptcha_theme'          => get_option( 'cf_google_recaptcha_theme' ),
+				'restricted_for'                  => get_field( 'restricted_for', ( ! empty( $post->ID ) ) ? $post->ID : 0 ),
 			)
 		);
 	}
