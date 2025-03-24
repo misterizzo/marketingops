@@ -86,6 +86,28 @@ jQuery( document ).ready( function( $ ) {
 		var woocommerce_membership_level = restricted_for['woocommerce_membership_level'];
 		console.log( 'restricted_for', restricted_for );
 		console.log( 'woocommerce_membership_level', woocommerce_membership_level );
+
+		// Loop through the membership levels.
+		$.each( woocommerce_membership_level, function( index, level ) {
+			console.log( 'index', index );
+			console.log( 'level', level );
+			
+
+			// $.getJSON( "example.json", function() {
+			// 	console.log( "success" );
+			//   })
+			// 	.done(function() {
+			// 	  console.log( "second success" );
+			// 	})
+			// 	.fail(function() {
+			// 	  console.log( "error" );
+			// 	})
+			// 	.always(function() {
+			// 	  console.log( "complete" );
+			// 	});
+		} );
+
+		// https://marketingops.com/wp-json/wp/v2/posts/?filter[p]=163406
 	}
 
 	if ( -1 !== current_page_url.indexOf( '/slack-invite-request/' ) || -1 !== current_page_url.indexOf( '/profile-success/' ) ) {
