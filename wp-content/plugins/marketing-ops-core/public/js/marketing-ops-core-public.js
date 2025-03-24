@@ -88,7 +88,7 @@ jQuery( document ).ready( function( $ ) {
 
 		// Loop through the membership levels.
 		$.each( woocommerce_membership_level, function( index, level ) {
-			var api_url = window.location.origin + '/wp-json/wp/v2/wc_membership_plans/' + level;
+			var api_url = window.location.origin + '/wp-json/wp/v2/woocommerce_membership_plans/' + level;
 
 			// Hit the API to get the membership level data.
 			$.getJSON( api_url, function( data ) {
