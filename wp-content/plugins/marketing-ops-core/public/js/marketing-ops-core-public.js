@@ -81,6 +81,8 @@ jQuery( document ).ready( function( $ ) {
 	 * Update the slack invite request form to be open for only paid members.
 	 */
 	if ( '1' === enable_restriction ) {
+		$( '.moc_paid_content_dynamic_restriction_modal' ).addClass( 'active blog_popup' );
+		$( '.moc_paid_content_dynamic_restriction_modal .moc_popup_close' ).remove();
 	}
 
 	if ( -1 !== current_page_url.indexOf( '/slack-invite-request/' ) || -1 !== current_page_url.indexOf( '/profile-success/' ) ) {
