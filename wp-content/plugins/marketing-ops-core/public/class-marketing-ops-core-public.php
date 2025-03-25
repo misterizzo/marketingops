@@ -1394,8 +1394,10 @@ class Marketing_Ops_Core_Public {
 	 */
 	public function moc_wp_footer_callback() {
 		global $post, $wp_query;
+
 		// Include the notification html.
 		require_once MOC_PLUGIN_PATH . 'public/partials/templates/notifications/notification.php';
+
 		if ( is_user_logged_in() ) {
 			require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-be-a-guest-on-ops-cast-template.php';
 			require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-add-custom-certificate-template.php';
@@ -1438,7 +1440,21 @@ class Marketing_Ops_Core_Public {
 		$enable_restriction = get_field( 'enable_restriction', $post->ID );
 
 		if ( is_bool( $enable_restriction ) && true === $enable_restriction ) {
-			require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content-dynamic.php';
+			if ( is_user_logged_in() ) {
+				$current_user_membership = moc_get_membership_plan_slug();
+				$restricted_for          = get_field( 'restricted_for', $post->ID );
+				$restricted_for_wc_memberships = ( ! empty( $restricted_for['woocommerce_membership_level'] ) && is_array( $restricted_for['woocommerce_membership_level'] ) ) ? $restricted_for['woocommerce_membership_level'] : array();
+
+				// If the memberships are restricted.
+				if ( ! empty( $restricted_for_wc_memberships ) && ! in_array( $current_user_membership, $restricted_for_wc_memberships ) ) {
+					debug( $restricted_for_wc_memberships );
+					debug(  $current_user_membership );
+					die;
+					require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content-dynamic.php';
+				}
+			} else {
+				require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content-dynamic.php';
+			}
 		}
 
 		// Add the restricted content modal for pro-plus members.
