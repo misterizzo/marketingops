@@ -1446,19 +1446,20 @@ class Marketing_Ops_Core_Public {
 
 				// If the memberships are restricted.
 				if ( ! empty( $restricted_for_wc_memberships ) && ! in_array( $current_user_membership, $restricted_for_wc_memberships ) ) {
-					$restricted_for_wc_membership_slugs = array();
+					$restriction_open_for_wc_membership_slugs = array();
 
 					// Loop through the array to collect the restricted memberships.
 					foreach ( $restricted_for_wc_memberships as $restricted_for_wc_membership_id ) {
-						$restricted_for_wc_membership_slugs[] = get_post_field( 'post_name', $restricted_for_wc_membership_id );
+						$restriction_open_for_wc_membership_slugs[] = get_post_field( 'post_name', $restricted_for_wc_membership_id );
 					}
 
-					debug( $restricted_for_wc_membership_slugs );
-					debug( $current_user_membership );
-					debug( array_diff( $restricted_for_wc_membership_slugs, $current_user_membership ) );
-					debug( array_diff( $current_user_membership, $restricted_for_wc_membership_slugs ) );
-					die;
-					require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content-dynamic.php';
+					// Check if the content is open for the current user.
+					$diff = array_diff( $restriction_open_for_wc_membership_slugs, $current_user_membership );
+
+					// If there are membership levels available, then the content should be restricted.
+					if ( ! empty( $diff ) && is_array( $diff ) ) {
+						require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content-dynamic.php';
+					}
 				}
 			} else {
 				require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content-dynamic.php';
