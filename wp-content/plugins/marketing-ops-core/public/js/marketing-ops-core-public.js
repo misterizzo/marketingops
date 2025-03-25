@@ -85,7 +85,7 @@ jQuery( document ).ready( function( $ ) {
 		$( '.moc_paid_content_dynamic_restriction_modal .moc_popup_close' ).remove();
 	}
 
-	if ( -1 !== current_page_url.indexOf( '/slack-invite-request/' ) || -1 !== current_page_url.indexOf( '/profile-success/' ) ) {
+	if ( -1 !== current_page_url.indexOf( '/profile-success/' ) ) {
 		// If the user is a FREE or INACTIVE member.
 		if ( 'free' === member_plan || 'inactive' === member_plan ) {
 			// Open the restriction modal.
