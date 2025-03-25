@@ -1,3 +1,19 @@
+<?php
+/**
+ * Popup template for restricted content.
+ *
+ * @package Marketing_Ops
+ *
+ * @since 1.0.0
+ *
+ * @version 1.0.0
+ */
+global $post;
+
+$restricted_for = get_field( 'restricted_for', $post->ID );
+debug( $restricted_for );
+die;
+?>
 <div class="moc_post_content_main_container moc_is_user_non_member moc_paid_content_restriction_modal moc_paid_content_dynamic_restriction_modal">
 	<div class="container">
 		<div class="moc_popup_close popup_close">

@@ -351,10 +351,7 @@ class Marketing_Ops_Core_Public {
 	 * @since      1.0.0
 	 */
 	public function moc_init_callback() {
-		global $wp_rewrite, $pagenow, $wp_post_types;
-
-		$wp_post_types['wc_membership_plan']->show_in_rest = true;
-		$wp_post_types['wc_membership_plan']->rest_base    = 'woocommerce_membership_plans';
+		global $wp_rewrite, $pagenow;
 
 		remove_action( 'woocommerce_cart_collaterals', 'woocommerce_cross_sell_display' );
 		remove_action( 'woocommerce_review_before', 'woocommerce_review_display_gravatar' );
