@@ -1447,8 +1447,15 @@ class Marketing_Ops_Core_Public {
 
 				// If the memberships are restricted.
 				if ( ! empty( $restricted_for_wc_memberships ) && ! in_array( $current_user_membership, $restricted_for_wc_memberships ) ) {
-					debug( $restricted_for_wc_memberships );
-					debug(  $current_user_membership );
+					$restricted_for_wc_membership_slugs = array();
+
+					// Loop through the array to collect the restricted memberships.
+					foreach ( $restricted_for_wc_memberships as $restricted_for_wc_membership_id ) {
+						$restricted_for_wc_membership_slugs[] = get_post_field( 'post_name', $restricted_for_wc_membership_id );
+					}
+
+					debug( $restricted_for_wc_membership_slugs );
+					debug( $current_user_membership );
 					die;
 					require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content-dynamic.php';
 				}
