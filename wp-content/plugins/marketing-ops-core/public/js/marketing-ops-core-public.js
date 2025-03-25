@@ -85,15 +85,6 @@ jQuery( document ).ready( function( $ ) {
 		$( '.moc_paid_content_dynamic_restriction_modal .moc_popup_close' ).remove();
 	}
 
-	if ( -1 !== current_page_url.indexOf( '/profile-success/' ) ) {
-		// If the user is a FREE or INACTIVE member.
-		if ( 'free' === member_plan || 'inactive' === member_plan ) {
-			// Open the restriction modal.
-			$( '.moc_paid_content_restriction_modal' ).addClass( 'active blog_popup' );
-			$( '.moc_paid_content_restriction_modal .moc_popup_close' ).remove();
-		}
-	}
-
 	// Conference load more.
 	if ( $( '.confernceloadmore' ).length ) {
 		// Click on load more to fetch more videos.

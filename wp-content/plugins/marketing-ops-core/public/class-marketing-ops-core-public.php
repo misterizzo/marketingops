@@ -1428,7 +1428,6 @@ class Marketing_Ops_Core_Public {
 		// Add the restricted content modal.
 		if (
 			is_page( 'premium-event-with-darrell-alfonso' ) ||
-			is_page( 'profile-success' ) ||
 			is_page( 'member-only-partner-offers' )
 		) {
 			require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content.php';
