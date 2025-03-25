@@ -339,7 +339,6 @@ class Marketing_Ops_Core_Public {
 				'member_plan_slug'                => moc_get_membership_plan_slug(),
 				'google_recaptcha_sitekey'        => get_option( 'cf_google_recaptcha_site_key' ),
 				'google_recaptcha_theme'          => get_option( 'cf_google_recaptcha_theme' ),
-				'restricted_for'                  => get_field( 'restricted_for', ( ! empty( $post->ID ) ) ? $post->ID : 0 ),
 				'enable_restriction'              => get_field( 'enable_restriction', ( ! empty( $post->ID ) ) ? $post->ID : 0 ),
 			)
 		);
@@ -1456,6 +1455,8 @@ class Marketing_Ops_Core_Public {
 
 					debug( $restricted_for_wc_membership_slugs );
 					debug( $current_user_membership );
+					debug( array_diff( $restricted_for_wc_membership_slugs, $current_user_membership ) );
+					debug( array_diff( $current_user_membership, $restricted_for_wc_membership_slugs ) );
 					die;
 					require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content-dynamic.php';
 				}

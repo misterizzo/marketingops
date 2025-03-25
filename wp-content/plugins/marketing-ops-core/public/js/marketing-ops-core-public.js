@@ -64,9 +64,7 @@ jQuery( document ).ready( function( $ ) {
 	var member_plan_slug                = Moc_Public_JS_Obj.member_plan_slug;
 	var google_recaptcha_sitekey        = Moc_Public_JS_Obj.google_recaptcha_sitekey;
 	var google_recaptcha_theme          = Moc_Public_JS_Obj.google_recaptcha_theme;
-	var restricted_for                  = Moc_Public_JS_Obj.restricted_for;
 	var enable_restriction              = Moc_Public_JS_Obj.enable_restriction;
-
 	var member_plan                     = ( 0 === member_plan_slug.length ) ? 'inactive' : ( ( 1 === member_plan_slug.length && -1 !== $.inArray( 'free-membership', member_plan_slug ) ) ? 'free' : 'pro' );
 	var crop_modal                      = $('#cropModal');
 	// var image                           = document.getElementById('crop_profile_image');
@@ -83,21 +81,6 @@ jQuery( document ).ready( function( $ ) {
 	 * Update the slack invite request form to be open for only paid members.
 	 */
 	if ( '1' === enable_restriction ) {
-		var woocommerce_membership_level = restricted_for['woocommerce_membership_level'];
-		console.log( 'restricted_for', restricted_for );
-
-		// Loop through the membership levels.
-		$.each( woocommerce_membership_level, function( index, level ) {
-			var api_url = window.location.origin + '/wp-json/wp/v2/woocommerce_membership_plans/' + level;
-
-			// Hit the API to get the membership level data.
-			$.getJSON( api_url, function( data ) {
-				console.log( data );
-				console.log( "success" );
-			} ).fail( function() {
-				console.log( "error" );
-			} );
-		} );
 	}
 
 	if ( -1 !== current_page_url.indexOf( '/slack-invite-request/' ) || -1 !== current_page_url.indexOf( '/profile-success/' ) ) {
