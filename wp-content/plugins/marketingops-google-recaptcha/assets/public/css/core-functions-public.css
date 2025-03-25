@@ -20,6 +20,7 @@ body.woocommerce-account form.woocommerce-form-login .woocommerce .col2-set::aft
 body.woocommerce-account form.woocommerce-form-login .u-column2.col-2 {display: flex;flex-direction: column;width: calc(50% - 20px);}
 body.woocommerce-account form.woocommerce-form-login p.woocommerce-LostPassword.lost_password {margin: 0;}
 body.woocommerce-account form.woocommerce-form-login div.g-recaptcha {margin-bottom: 10px;}
+body.woocommerce-checkout .g-recaptcha {margin-bottom: 10px;}
 @media(max-width:768px){
 	body.woocommerce-account form.woocommerce-form-login .u-column2.col-2,
 	body.woocommerce-account form.woocommerce-form-login .u-column1.col-1 {width: 100%;}
