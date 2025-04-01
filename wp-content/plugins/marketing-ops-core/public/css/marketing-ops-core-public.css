@@ -12450,3 +12450,12 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
 
 }
 /* popup */
+
+.woocommerce .woocommerce-MyAccount-content a.button, .woocommerce .woocommerce-MyAccount-content .button, .woocommerce .woocommerce-MyAccount-content table a.button, .woocommerce-checkout .woocommerce #order_review #payment .form-row .button {
+    color: #fff;
+    border-radius: 100px;
+    margin: 0 5px;
+    font-weight: normal;
+    padding: 10px 20px;
+    text-decoration: none;
+}
