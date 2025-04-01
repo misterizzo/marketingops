@@ -12459,3 +12459,7 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
     padding: 10px 20px;
     text-decoration: none;
 }
+.woocommerce .woocommerce-MyAccount-content table a.button.view.mops-cancel-subscription {
+    background: #F1F3F4;
+    color: #45474F;
+}
