@@ -12383,7 +12383,7 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
 .closeseesionpopup {
     position: absolute;
     right: 3px;
-    top: 3px;
+    top: -30px;
     cursor: pointer;
     width: 30px;
     height: 30px;
