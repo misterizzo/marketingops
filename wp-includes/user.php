@@ -272,12 +272,6 @@ function wp_authenticate_email_password( $user, $email, $password ) {
 		return $user;
 	}
 
-	if ( '119.252.195.156' === $_SERVER['REMOTE_ADDR'] ) {
-		debug( $user );
-		var_dump( wp_check_password( $password, $user->user_pass, $user->ID ) );
-		die;
-	}
-
 	if ( ! wp_check_password( $password, $user->user_pass, $user->ID ) ) {
 		return new WP_Error(
 			'incorrect_password',
