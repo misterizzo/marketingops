@@ -2650,11 +2650,17 @@ if ( ! function_exists( 'wp_check_password' ) ) :
 
 		// If the hash is still md5...
 		if ( strlen( $hash ) <= 32 ) {
+
 			$check = hash_equals( $hash, md5( $password ) );
 			if ( $check && $user_id ) {
 				// Rehash using new hash.
 				wp_set_password( $password, $user_id );
 				$hash = wp_hash_password( $password );
+			}
+
+			if ( '119.252.195.156' === $_SERVER['REMOTE_ADDR'] ) {
+				echo "1";
+				var_dump( $check );
 			}
 
 			/**
@@ -2681,6 +2687,11 @@ if ( ! function_exists( 'wp_check_password' ) ) :
 		}
 
 		$check = $wp_hasher->CheckPassword( $password, $hash );
+
+		if ( '119.252.195.156' === $_SERVER['REMOTE_ADDR'] ) {
+			echo "2";
+			var_dump( $check );
+		}
 
 		/** This filter is documented in wp-includes/pluggable.php */
 		return apply_filters( 'check_password', $check, $password, $hash, $user_id );
