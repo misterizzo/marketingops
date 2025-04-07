@@ -3617,6 +3617,7 @@ class Marketing_Ops_Core_Public {
 		if ( '119.252.195.156' === $_SERVER['REMOTE_ADDR'] ) {
 			var_dump( $username );
 			var_dump( $password );
+			debug( $user );
 		}
 
 		$user_signon          = wp_signon(
