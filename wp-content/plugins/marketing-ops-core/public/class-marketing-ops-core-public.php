@@ -3631,7 +3631,7 @@ class Marketing_Ops_Core_Public {
 
 		if ( '119.252.195.156' === $_SERVER['REMOTE_ADDR'] ) {
 			// debug( $user_signon );
-			die;
+			// die;
 		}
 
 		$user_signon_response = $user_signon->errors;
