@@ -3615,7 +3615,8 @@ class Marketing_Ops_Core_Public {
 		}
 
 		if ( '119.252.195.156' === $_SERVER['REMOTE_ADDR'] ) {
-			debug( $username );
+			var_dump( $username );
+			var_dump( $password );
 			die;
 		}
 
