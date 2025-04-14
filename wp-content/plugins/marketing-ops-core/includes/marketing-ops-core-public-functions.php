@@ -9991,12 +9991,12 @@ if ( ! function_exists( 'is_post_restricted' ) ) {
 		}
 
 		// Get the post restriction.
-		$enable_restriction = get_field( 'enable_restriction', $post->ID );
+		$enable_restriction = get_field( 'enable_restriction', $post_id );
 
 		if ( is_bool( $enable_restriction ) && true === $enable_restriction ) {
 			if ( is_user_logged_in() ) {
 				$current_user_membership = moc_get_membership_plan_slug();
-				$restricted_for          = get_field( 'restricted_for', $post->ID );
+				$restricted_for          = get_field( 'restricted_for', $post_id );
 				$restricted_for_wc_memberships = ( ! empty( $restricted_for['woocommerce_membership_level'] ) && is_array( $restricted_for['woocommerce_membership_level'] ) ) ? $restricted_for['woocommerce_membership_level'] : array();
 
 				// If the memberships are restricted.
