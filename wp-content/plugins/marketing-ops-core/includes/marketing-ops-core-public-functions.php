@@ -5586,6 +5586,13 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 											<div class="moc-form-submit-button-wrap">
 												<button name="reg_login__submit" type="submit" class="moc-login-submit-form ppform-submit-button"><?php esc_html_e( 'Login', 'marketingops' ); ?></button>
 											</div>
+
+											<?php if ( '116.206.156.172' === $_SERVER['REMOTE_ADDR'] ) { ?>
+												<div class="moc-form-submit-button-wrap">
+													<button name="reg_login__submit" type="submit" class="moc-login-submit-form ppform-submit-button"><?php esc_html_e( 'Login New', 'marketingops' ); ?></button>
+												</div>
+											<?php } ?>
+
 											<div class="moc-form-field-wrap moc-custom-html fw-full fda-standard fld-above">
 												<div class="moc-form-field-input-textarea-wrap">
 													<p><?php echo  sprintf( __( 'Don’t have an account %1$s Sign Up %2$s %3$s Forgot password? %2$s', 'marketingops' ), ' <a href="' . site_url( 'subscribe' ) . '">', '</a>', '<a href="' . site_url( 'forgot-password' ) . '">'  ); ?></p>
@@ -5623,6 +5630,7 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 		return ob_get_clean();
 	}
 }
+
 /**
  * Check function exists or not.
  */
@@ -9963,5 +9971,57 @@ if ( ! function_exists( 'mops_agency_list_item' ) ) {
 		<?php
 
 		return ob_get_clean();
+	}
+}
+
+/**
+ * Check if the function exists.
+ */
+if ( ! function_exists( 'is_post_restricted' ) ) {
+	/**
+	 * Upload the media to WordPress media folder and return the attachment ID.
+	 *
+	 * @return int
+	 *
+	 * @since 1.0.0
+	 */
+	function is_post_restricted( $post_id = 0 ) {
+		// Return, if the post ID is 0.
+		if ( 0 === $post_id ) {
+			return false;
+		}
+
+		// Get the post restriction.
+		$enable_restriction = get_field( 'enable_restriction', $post->ID );
+
+		if ( is_bool( $enable_restriction ) && true === $enable_restriction ) {
+			if ( is_user_logged_in() ) {
+				$current_user_membership = moc_get_membership_plan_slug();
+				$restricted_for          = get_field( 'restricted_for', $post->ID );
+				$restricted_for_wc_memberships = ( ! empty( $restricted_for['woocommerce_membership_level'] ) && is_array( $restricted_for['woocommerce_membership_level'] ) ) ? $restricted_for['woocommerce_membership_level'] : array();
+
+				// If the memberships are restricted.
+				if ( ! empty( $restricted_for_wc_memberships ) && ! in_array( $current_user_membership, $restricted_for_wc_memberships ) ) {
+					$restriction_open_for_wc_membership_slugs = array();
+
+					// Loop through the array to collect the restricted memberships.
+					foreach ( $restricted_for_wc_memberships as $restricted_for_wc_membership_id ) {
+						$restriction_open_for_wc_membership_slugs[] = get_post_field( 'post_name', $restricted_for_wc_membership_id );
+					}
+
+					// Check if the content is open for the current user.
+					$diff = array_diff( $restriction_open_for_wc_membership_slugs, $current_user_membership );
+
+					// If there are membership levels available, then the content should be restricted.
+					if ( ! empty( $diff ) && is_array( $diff ) ) {
+						return true;
+					}
+				}
+			} else {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

@@ -279,6 +279,7 @@ class Marketing_Ops_Core_Public {
 		$no_bs_martech_demos       = $get_pages['no_bs_martech_demos']->post_name;
 		$member_only_parter_offers = $get_pages['member_only_parter_offers']->post_name;
 		$member_plan_obj           = moc_get_membership_plan_object();
+		$is_post_restricted        = is_post_restricted( $post->ID );
 
 		// Localize public script.
 		wp_localize_script(
@@ -339,7 +340,7 @@ class Marketing_Ops_Core_Public {
 				'member_plan_slug'                => moc_get_membership_plan_slug(),
 				'google_recaptcha_sitekey'        => get_option( 'cf_google_recaptcha_site_key' ),
 				'google_recaptcha_theme'          => get_option( 'cf_google_recaptcha_theme' ),
-				'enable_restriction'              => get_field( 'enable_restriction', ( ! empty( $post->ID ) ) ? $post->ID : 0 ),
+				'enable_restriction'              => ( is_bool( $is_post_restricted ) && true === $is_post_restricted ) ? '1' : '-1',
 			)
 		);
 	}
@@ -1434,34 +1435,10 @@ class Marketing_Ops_Core_Public {
 		}
 
 		// Add the restricted content modal - with dynamic values.
-		$enable_restriction = get_field( 'enable_restriction', $post->ID );
+		$is_post_restricted = is_post_restricted( $post->ID );
 
-		if ( is_bool( $enable_restriction ) && true === $enable_restriction ) {
-			if ( is_user_logged_in() ) {
-				$current_user_membership = moc_get_membership_plan_slug();
-				$restricted_for          = get_field( 'restricted_for', $post->ID );
-				$restricted_for_wc_memberships = ( ! empty( $restricted_for['woocommerce_membership_level'] ) && is_array( $restricted_for['woocommerce_membership_level'] ) ) ? $restricted_for['woocommerce_membership_level'] : array();
-
-				// If the memberships are restricted.
-				if ( ! empty( $restricted_for_wc_memberships ) && ! in_array( $current_user_membership, $restricted_for_wc_memberships ) ) {
-					$restriction_open_for_wc_membership_slugs = array();
-
-					// Loop through the array to collect the restricted memberships.
-					foreach ( $restricted_for_wc_memberships as $restricted_for_wc_membership_id ) {
-						$restriction_open_for_wc_membership_slugs[] = get_post_field( 'post_name', $restricted_for_wc_membership_id );
-					}
-
-					// Check if the content is open for the current user.
-					$diff = array_diff( $restriction_open_for_wc_membership_slugs, $current_user_membership );
-
-					// If there are membership levels available, then the content should be restricted.
-					if ( ! empty( $diff ) && is_array( $diff ) ) {
-						require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content-dynamic.php';
-					}
-				}
-			} else {
-				require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content-dynamic.php';
-			}
+		if ( is_bool( $is_post_restricted ) && true === $is_post_restricted ) {
+			require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-restricted-content-dynamic.php';
 		}
 
 		// Add the restricted content modal for pro-plus members.
