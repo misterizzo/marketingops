@@ -10009,6 +10009,12 @@ if ( ! function_exists( 'is_post_restricted' ) ) {
 						$restriction_open_for_wc_membership_slugs[] = get_post_field( 'post_name', $restricted_for_wc_membership_id );
 					}
 
+					if ( '116.206.156.172' === $_SERVER['REMOTE_ADDR'] ) {
+						debug( $restriction_open_for_wc_membership_slugs );
+						debug( $current_user_membership );
+						die;
+					}
+
 					// Check if the content is open for the current user.
 					$diff = array_diff( $restriction_open_for_wc_membership_slugs, $current_user_membership );
 
