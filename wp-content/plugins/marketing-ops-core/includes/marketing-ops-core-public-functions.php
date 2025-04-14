@@ -10015,15 +10015,8 @@ if ( ! function_exists( 'is_post_restricted' ) ) {
 					 */
 					$common_membership_levels = array_intersect( $restriction_open_for_wc_membership_slugs, $current_user_membership );
 
-					if ( '116.206.156.172' === $_SERVER['REMOTE_ADDR'] ) {
-						debug( $restriction_open_for_wc_membership_slugs );
-						debug( $current_user_membership );
-						debug( $common_membership_levels );
-						die;
-					}
-
 					// If there are membership levels available, then the content should be restricted.
-					if ( ! empty( $diff ) && is_array( $diff ) ) {
+					if ( empty( $common_membership_levels ) && is_array( $common_membership_levels ) && 0 === count( $common_membership_levels ) ) {
 						return true;
 					}
 				}
