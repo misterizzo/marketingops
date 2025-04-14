@@ -67,11 +67,10 @@ jQuery( document ).ready( function( $ ) {
 	var enable_restriction              = Moc_Public_JS_Obj.enable_restriction;
 	var member_plan                     = ( 0 === member_plan_slug.length ) ? 'inactive' : ( ( 1 === member_plan_slug.length && -1 !== $.inArray( 'free-membership', member_plan_slug ) ) ? 'free' : 'pro' );
 	var crop_modal                      = $('#cropModal');
-	// var image                           = document.getElementById('crop_profile_image');
 	var current_page_url                = window.location.origin + window.location.pathname;
-	var cropBoxData;
-	var canvasData;
-	var cropper;
+	var cropBoxData, canvasData, cropper;
+
+	console.log( 'enable_restriction', enable_restriction );
 
 	// Remove the free column from the pricing table.
 	$( '.subscribe_table .table_head .head_colum.free_colum, .subscribe_table .table_body .table_tr.btn_tr .body_colum.free_colum, .subscribe_table .table_body .table_tr.odd .body_colum.free_colum, .subscribe_table .table_body .table_tr.even .body_colum.free_colum' ).remove();
