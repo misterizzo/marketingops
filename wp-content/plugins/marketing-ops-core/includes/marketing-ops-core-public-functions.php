@@ -5553,7 +5553,6 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 								<form>
 									<div id="moc-registration-1-wrap" class="moc-form-container moc-registration-form-wrapper">
 										<div id="moc-registration-1" class="moc-form-wrapper moc-registration moc-registration-1 ppBuildScratch ppfl-flat ppsbl-pill ppsbw-full-width ppf-remove-frame ppfs-medium ppfia-right">
-
 											<div class="moc-form-field-wrap reg-email fw-full fda-standard fld-above">
 												<div class="moc-form-field-input-textarea-wrap">
 													<input name="reg_email" type="email" placeholder="E-mail Address" class="moc-form-field reg-email moc-email" required="required">
@@ -5589,7 +5588,7 @@ if ( ! function_exists( 'moc_render_login_form_html' ) ) {
 
 											<?php if ( '116.206.156.172' === $_SERVER['REMOTE_ADDR'] ) { ?>
 												<div class="moc-form-submit-button-wrap">
-													<button name="reg_login__submit" type="submit" class="moc-login-submit-form ppform-submit-button"><?php esc_html_e( 'Login New', 'marketingops' ); ?></button>
+													<button name="reg_login__submit" type="submit" class="moc-login-submit-form ppform-submit-button"><?php esc_html_e( 'Login2', 'marketingops' ); ?></button>
 												</div>
 											<?php } ?>
 
