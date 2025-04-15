@@ -1035,6 +1035,11 @@ class Marketing_Ops_Core_Public {
 			$templates = MOC_PLUGIN_PATH . 'public/partials/templates/agency/single.php';
 		}
 
+		// Check if it's the login page.
+		if ( is_page( 'login' ) ) {
+			$templates = MOC_PLUGIN_PATH . 'public/partials/templates/users/login.php';
+		}
+
 		return $templates;
 	}
 
