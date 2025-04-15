@@ -12490,7 +12490,8 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
 
 section.loginformnew .register_page.login_page{ padding: 85px 0px 50px 0px;}    
 
-section.loginformnew form#loginform input {
+section.loginformnew form#loginform input#user_login,
+section.loginformnew form#loginform input#user_pass {
     padding: 23px 70px 23px 20px !important;
     border: 1px solid #E7EFEF !important;
     border-radius: 6px;
@@ -12500,7 +12501,8 @@ section.loginformnew form#loginform input {
     position: relative;
 }
 
-section.loginformnew form#loginform input.input:after {
+section.loginformnew form#loginform input#user_login:after,
+section.loginformnew form#loginform input#user_pass:after {
     content: "";
     background-image: url('/wp-content/themes/marketingops/images/svg/star.svg') !important;
     width: 9px;
@@ -12521,9 +12523,10 @@ section.loginformnew form#loginform input#user_login {
 
 section.loginformnew form#loginform input#user_pass {
     background-image: url('/wp-content/plugins/marketing-ops-core/public/images/password_unhide_icon.svg') !important;
-    background-position: top 20px right 20px !important;
+    background-position: top 23px right 20px !important;
     background-repeat: no-repeat !important;
     padding-right: 0;
     padding-bottom: 0;
     margin-bottom: 25px;
+    background-size: 40px 40px !important;
 }
