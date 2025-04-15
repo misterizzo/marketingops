@@ -35,6 +35,7 @@ if ( is_user_logged_in() ) {
 	<?php
 } else {
 	?>
+	<section class="loginformnew">
 	<div class="elementor-column elementor-col-100 elementor-top-column elementor-element register_content login_content moc_login_form_section register_page login_page elementor-section elementor-section-boxed">
 		<div class="elementor-widget-wrap elementor-element-populated moc-register-container elementor-container elementor-column-gap-default">
 			<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-715834fb register_content">
@@ -56,7 +57,7 @@ if ( is_user_logged_in() ) {
 					<div class="elementor-widget-container"><?php wp_login_form(); ?></div>
 				</div>
 			</div>
-			
+
 			</div>	
 			<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-ea2a0bd register_img">
 				<div class="elementor-widget-wrap elementor-element-populated">
@@ -68,6 +69,7 @@ if ( is_user_logged_in() ) {
 			</div>	
 		</div>
 	</div>
+</section>
 	<?php
 }
 

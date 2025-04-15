@@ -12485,3 +12485,7 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
     -webkit-text-fill-color: transparent;
     text-fill-color: transparent;
 }
+
+section.loginformnew{    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 85px 0px 50px 0px;}
