@@ -12520,7 +12520,7 @@ section.loginformnew form#loginform input#user_login {
 }
 
 section.loginformnew form#loginform input#user_pass {
-    background-image: url('/wp-content/themes/marketingops/images/svg/at_icon.svg') !important;
+    background-image: url('/wp-content/plugins/marketing-ops-core/public/images/password_unhide_icon.svg') !important;
     background-position: top 20px right 20px !important;
     background-repeat: no-repeat !important;
     padding-right: 0;
