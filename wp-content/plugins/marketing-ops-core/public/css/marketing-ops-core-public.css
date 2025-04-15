@@ -12499,6 +12499,7 @@ section.loginformnew form#loginform input#user_pass {
     font-size: 16px !important;
     background: rgba(246, 247, 247, 0.5) !important;
     position: relative;
+    margin-bottom: 0 !important;
 }
 
 section.loginformnew form#loginform input#user_login:after,
