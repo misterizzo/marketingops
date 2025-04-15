@@ -8721,7 +8721,7 @@ section.profile_setup .content_boxed label:after {
     list-style: none;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .agency-mainlistboxs ul.innermainlistboxs>li {
@@ -8736,7 +8736,7 @@ section.profile_setup .content_boxed label:after {
 
 .agency-mainlistboxs ul li .inneragencylistbox img {
     width: 80%;
-    margin: 0 auto;
+    margin: 30px auto;
 }
 
 .agency-mainlistboxs ul li .inneragencylistbox h4 {
@@ -8857,9 +8857,19 @@ section.profile_setup .content_boxed label:after {
     visibility: hidden;
 }
 
-.agency-mainlistboxs ul.innermainlistboxs>li:hover .overlayonhover {
+/*.agency-mainlistboxs ul.innermainlistboxs>li:hover .overlayonhover {
     opacity: 1;
     visibility: visible;
+}*/
+
+
+.agency-mainlistboxs ul.innermainlistboxs>li:hover .inneragencylistbox .learnmorebtnagency {
+    background: var(--horizontal-grad-1,linear-gradient(90deg,#FD4B7A -2.36%,#4D00AE 159.05%));
+    color: #fff;
+}
+
+.agency-mainlistboxs ul.innermainlistboxs>li:hover .inneragencylistbox .learnmorebtnagency svg path {
+    fill: #fff;
 }
 
 .agenctdirectoryblock .agency-container .overlayonhover h2 {
