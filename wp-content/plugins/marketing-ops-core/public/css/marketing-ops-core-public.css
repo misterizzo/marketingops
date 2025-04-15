@@ -12510,7 +12510,7 @@ section.loginformnew form#loginform input.input:after {
     right: 6px;
 }
 
-section.loginformnew form#loginform input.input {
+section.loginformnew form#loginform input#user_login {
     background-image: url('/wp-content/themes/marketingops/images/svg/at_icon.svg') !important;
     background-position: top 20px right 20px !important;
     background-repeat: no-repeat !important;
