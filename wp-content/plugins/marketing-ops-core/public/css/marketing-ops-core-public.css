@@ -8776,7 +8776,7 @@ section.profile_setup .content_boxed label:after {
 .agency-mainlistboxs ul li .inneragencylistbox ul {
     list-style: none;
     padding: 0;
-    margin: 0 30px 10px;
+    margin: 0 30px 25px;
     display: flex;
     flex-direction: column;
     gap: 0;
