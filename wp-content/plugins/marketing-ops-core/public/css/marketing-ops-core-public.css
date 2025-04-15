@@ -12489,3 +12489,32 @@ section.conferencevaultevent section.attechmentwithtext ul li a:after {
 
 
 section.loginformnew .register_page.login_page{ padding: 85px 0px 50px 0px;}    
+
+section.loginformnew form#loginform input {
+    padding: 23px 70px 23px 20px !important;
+    border: 1px solid #E7EFEF !important;
+    border-radius: 6px;
+    color: #45474F !important;
+    font-size: 16px !important;
+    background: rgba(246, 247, 247, 0.5) !important;
+    position: relative;
+}
+
+section.loginformnew form#loginform input.input:after {
+    content: "";
+    background-image: url('/wp-content/themes/marketingops/images/svg/star.svg') !important;
+    width: 9px;
+    height: 9px;
+    position: absolute;
+    top: 6px;
+    right: 6px;
+}
+
+section.loginformnew form#loginform input.input {
+    background-image: url('/wp-content/themes/marketingops/images/svg/at_icon.svg') !important;
+    background-position: top 20px right 20px !important;
+    background-repeat: no-repeat !important;
+    padding-right: 0;
+    padding-bottom: 0;
+    margin-bottom: 25px;
+}
