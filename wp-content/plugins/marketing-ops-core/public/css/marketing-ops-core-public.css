@@ -12561,3 +12561,9 @@ section.loginformnew input#wp-submit {
     border: none;
     background-position: top 26px right 48px !important;
 }
+
+.register_page section.loginformnew .register_content.login_content .elementor-widget-heading h2 {
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 34px;
+}
