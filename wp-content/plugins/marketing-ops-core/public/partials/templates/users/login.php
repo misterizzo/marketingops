@@ -40,22 +40,16 @@ if ( is_user_logged_in() ) {
 			<div class="loader_bg">
 				<div class="loader"></div>  
 			</div>
-			<?php
-			if ( 'header' !== $section ) {
-				?>
-				<div class="elementor-element profileheading gradient-title elementor-widget elementor-widget-heading">
-					<div class="elementor-widget-container">
-						<h2 class="elementor-heading-title elementor-size-default"><?php esc_html_e( 'Welcome back!', 'marketingops' ); ?></h2>
-					</div>
+			<div class="elementor-element profileheading gradient-title elementor-widget elementor-widget-heading">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default"><?php esc_html_e( 'Welcome back!', 'marketingops' ); ?></h2>
 				</div>
-				<div class="elementor-element profilesubheading elementor-widget elementor-widget-text-editor">
-					<div class="elementor-widget-container">
-						<p><?php esc_html_e( 'Login to manage your account!', 'marketingops' ); ?></p>
-					</div>
+			</div>
+			<div class="elementor-element profilesubheading elementor-widget elementor-widget-text-editor">
+				<div class="elementor-widget-container">
+					<p><?php esc_html_e( 'Login to manage your account!', 'marketingops' ); ?></p>
 				</div>
-				<?php
-			}
-			?>
+			</div>
 			<div class="elementor-element profilfrm elementor-widget elementor-widget-shortcode">
 				<div class="elementor-widget-container"><?php wp_login_form(); ?></div>
 			</div>
