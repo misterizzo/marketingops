@@ -8737,6 +8737,9 @@ section.profile_setup .content_boxed label:after {
 .agency-mainlistboxs ul li .inneragencylistbox img {
     width: 80%;
     margin: 30px auto;
+    height: 100px;
+    object-fit: contain;
+    object-position: center center;
 }
 
 .agency-mainlistboxs ul li .inneragencylistbox h4 {
