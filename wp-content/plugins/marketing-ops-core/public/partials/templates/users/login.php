@@ -35,8 +35,8 @@ if ( is_user_logged_in() ) {
 	<?php
 } else {
 	?>
-	<div class="elementor-column elementor-col-100 elementor-top-column elementor-element register_content login_content moc_login_form_section">
-		<div class="elementor-widget-wrap elementor-element-populated moc-register-container">
+	<div class="elementor-column elementor-col-100 elementor-top-column elementor-element register_content login_content moc_login_form_section register_page login_page">
+		<div class="elementor-widget-wrap elementor-element-populated moc-register-container elementor-container elementor-column-gap-default">
 			<div class="loader_bg">
 				<div class="loader"></div>  
 			</div>
