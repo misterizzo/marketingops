@@ -12518,3 +12518,12 @@ section.loginformnew form#loginform input.input {
     padding-bottom: 0;
     margin-bottom: 25px;
 }
+
+section.loginformnew form#loginform input#user_pass {
+    background-image: url('/wp-content/themes/marketingops/images/svg/at_icon.svg') !important;
+    background-position: top 20px right 20px !important;
+    background-repeat: no-repeat !important;
+    padding-right: 0;
+    padding-bottom: 0;
+    margin-bottom: 25px;
+}
