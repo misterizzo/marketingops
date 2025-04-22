@@ -1570,4 +1570,55 @@ class Marketing_Ops_Core_Admin {
 
 		return home_url( '/subscribe/' );
 	}
+
+	/**
+	 * Add custom columns to the 'agency' posts.
+	 *
+	 * @param array $default_cols Columns array.
+	 *
+	 * @return arra
+	 *
+	 * @since 1.0.0
+	 */
+	public function moc_manage_edit_agency_columns_callback( $cols = array() ) {
+		// If the array key doesn't exist for agency owner.
+		if ( ! array_key_exists( 'agency_owner', $cols ) ) {
+			$cols['agency_owner'] = __( 'Agency Owner', 'marketingops' );
+		}
+
+		return $cols;
+	}
+
+	/**
+	 * Add custom column data to the 'agency' posts.
+	 *
+	 * @param string $column_name Column name.
+	 * @param int    $post_id Post ID.
+	 *
+	 * @since 1.0.0
+	 */
+	public function moc_manage_agency_posts_custom_column_callback( $column_name, $post_id ) {
+		// Print the content for "template file" column name.
+		if ( 'agency_owner' === $column_name ) {
+			$agency_owner = get_field( 'agency_owner', $post_id );
+
+			var_dump( $agency_owner ); die;
+
+			// If the guests are available.
+			if ( ! empty( $guests ) && is_array( $guests ) ) {
+				// Loop through the guests array.
+				foreach ( $guests as $guest_id ) {
+					$first_name     = get_user_meta( $guest_id, 'first_name', true );
+					$last_name      = get_user_meta( $guest_id, 'last_name', true );
+					$guest_edit     = get_edit_user_link( $guest_id );
+					$print_guests[] = '<a href="' . $guest_edit . '" title="' . $first_name . ' ' . $last_name . '">' . $first_name . ' ' . $last_name . '</a>';
+				}
+
+				// Print the guests.
+				echo wp_kses_post( implode( ', ', $print_guests ) );
+			} else {
+				echo wp_kses_post( sprintf( __( '%1$sNo guests added.%2$s', 'marketingops' ), '<p>', '</p>' ) );
+			}
+		}
+	}
 }
