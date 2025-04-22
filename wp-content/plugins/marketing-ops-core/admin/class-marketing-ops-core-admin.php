@@ -1602,22 +1602,15 @@ class Marketing_Ops_Core_Admin {
 		if ( 'agency_owner' === $column_name ) {
 			$agency_owner = get_field( 'agency_owner', $post_id );
 
-			var_dump( $agency_owner ); die;
-
 			// If the guests are available.
-			if ( ! empty( $guests ) && is_array( $guests ) ) {
-				// Loop through the guests array.
-				foreach ( $guests as $guest_id ) {
-					$first_name     = get_user_meta( $guest_id, 'first_name', true );
-					$last_name      = get_user_meta( $guest_id, 'last_name', true );
-					$guest_edit     = get_edit_user_link( $guest_id );
-					$print_guests[] = '<a href="' . $guest_edit . '" title="' . $first_name . ' ' . $last_name . '">' . $first_name . ' ' . $last_name . '</a>';
-				}
-
-				// Print the guests.
-				echo wp_kses_post( implode( ', ', $print_guests ) );
+			if ( ! empty( $agency_owner ) && is_int( $agency_owner ) ) {
+				$agency_owner_first_name = get_user_meta( $agency_owner, 'first_name', true );
+				$agency_owner_last_name  = get_user_meta( $agency_owner, 'last_name', true );
+				$agency_owner_edit       = get_edit_user_link( $agency_owner );
+				$agency_owner_email      = get_user_field( 'user_email', $user_id );
+				echo '<a href="' . $agency_owner_edit . '" title="' . $first_name . ' ' . $last_name . '">' . $first_name . ' ' . $last_name . ' (' . $agency_owner_email . ')</a>';
 			} else {
-				echo wp_kses_post( sprintf( __( '%1$sNo guests added.%2$s', 'marketingops' ), '<p>', '</p>' ) );
+				echo wp_kses_post( sprintf( __( '%1$sNo agency owner added.%2$s', 'marketingops' ), '<p>', '</p>' ) );
 			}
 		}
 	}
