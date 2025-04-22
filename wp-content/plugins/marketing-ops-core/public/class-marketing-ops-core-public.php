@@ -2826,6 +2826,7 @@ class Marketing_Ops_Core_Public {
 		$coupon_html = $discount_amount_html . ' <a href="' . esc_url( add_query_arg( 'remove_coupon', rawurlencode( $coupon->get_code() ), defined( 'WOOCOMMERCE_CHECKOUT' ) ? wc_get_checkout_url() : wc_get_cart_url() ) ) . '" class="woocommerce-remove-coupon" data-coupon="' . esc_attr( $coupon->get_code() ) . '">' . __( $updated_remove_html, 'woocommerce' ) . '</a>';
 		return $coupon_html;
 	}
+
 	/**
 	 * Change Coupon HTML.
 	 *
@@ -2833,9 +2834,11 @@ class Marketing_Ops_Core_Public {
 	 */
 	public function moc_register_form_html_shortcode_callback() {
 		ob_start();
-		echo moc_register_form_html();
+		include MOC_PLUGIN_PATH . 'public/partials/templates/users/signup.php';
+
 		return ob_get_clean();
 	}
+
 	/**
 	 * Function to return call ajax for user creation first step.
 	 *
