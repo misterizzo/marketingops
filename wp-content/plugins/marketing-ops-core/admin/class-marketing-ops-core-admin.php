@@ -1606,9 +1606,9 @@ class Marketing_Ops_Core_Admin {
 			if ( ! empty( $agency_owner ) && is_int( $agency_owner ) ) {
 				$agency_owner_first_name = get_user_meta( $agency_owner, 'first_name', true );
 				$agency_owner_last_name  = get_user_meta( $agency_owner, 'last_name', true );
-				$agency_owner_edit       = get_edit_user_link( $agency_owner );
 				$agency_owner_user_data  = get_user_by( 'ID', $agency_owner );
 				$agency_owner_email      = ( ! empty( $agency_owner_user_data->user_email ) ) ? $agency_owner_user_data->user_email : '';
+				$agency_owner_edit       = admin_url( 'wp-admin/edit.php?s=' . $agency_owner_email . '&post_type=wc_user_membership&action=-1&paged=1' );
 				echo '<a target="_blank" href="' . $agency_owner_edit . '" title="' . $agency_owner_first_name . ' ' . $agency_owner_last_name . '">' . $agency_owner_first_name . ' ' . $agency_owner_last_name . ' (' . $agency_owner_email . ')</a>';
 			} else {
 				echo wp_kses_post( sprintf( __( '%1$sNo agency owner added.%2$s', 'marketingops' ), '<p>', '</p>' ) );
