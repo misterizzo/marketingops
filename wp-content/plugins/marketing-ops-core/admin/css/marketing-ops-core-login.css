@@ -32,6 +32,10 @@ body.login div#login h1 a {background-image: url('/wp-content/uploads/2022/08/cr
     background-repeat: no-repeat;
     background-size: contain;
     overflow: initial;
+
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 85px 0px 50px 0px;
 }
 
 section.loginformnew .register_page.login_page{ padding: 85px 0px 50px 0px;}    
@@ -113,4 +117,12 @@ section.loginformnew .register_page .register_content.login_content .elementor-w
     font-size: 25px;
     line-height: 34px;
     margin-bottom: 15px;
+}
+
+.elementor-column.elementor-col-50.elementor-top-column.elementor-element.elementor-element-ea2a0bd.register_img {
+    order: 2;
+}
+
+div#login {
+    max-width: 402px;
 }
