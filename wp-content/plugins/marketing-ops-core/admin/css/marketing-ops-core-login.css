@@ -123,6 +123,56 @@ section.loginformnew .register_page .register_content.login_content .elementor-w
     order: 2;
 }
 
-div#login {
+.loginformnew div#login {
     max-width: 402px;
+    width: 100% !important;
+    padding: 0 !important;
+}
+
+.loginformnew .login form {
+    margin-top: 0;
+    margin-left: 0;
+    padding: 0;
+    font-weight: 400;
+    overflow: hidden;
+    background: transparent;
+    border: 1px solid transparent;
+    box-shadow: none;
+}
+
+section.loginformnew form#loginform label {
+    margin: 10px 0 15px;
+    color: #6D7B83;
+    font-size: 16px;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.user-pass-wrap.google-recaptcha-wrap {
+    margin: 20px 0;
+}
+
+.login form .forgetmenot,
+.login #backtoblog, .login #nav,
+.privacy-policy-page-link{display: none !important;}
+
+#login form p.submit {
+    text-align: left;
+    margin: 0;
+    width: 100%;
+    display: flex;
+}
+
+#login form p.submit {
+    text-align: left;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    max-width: 180px;
+    width: 100%;
+    margin-bottom: 25px;
+    padding: 20px;
+    background: #F8F9F9;
+    border: 1px solid rgba(231, 239, 239, 0.75);
+    border-radius: 100px;
 }
