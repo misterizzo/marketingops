@@ -1,2 +1,87 @@
 body.login div#login h1 a {background-image: url('/wp-content/uploads/2022/08/cropped-cropped-logo_inst.png');width: 200px;background-size: contain;background-position: center;}
 .login .g-recaptcha {transform: scale(0.89);transform-origin: left;margin: 0 0 15px;}
+
+
+
+
+
+section.loginformnew .register_page.login_page{ padding: 85px 0px 50px 0px;}    
+
+section.loginformnew form#loginform input#user_login,
+section.loginformnew form#loginform input#user_pass {
+    padding: 23px 70px 23px 20px !important;
+    border: 1px solid #E7EFEF !important;
+    border-radius: 6px;
+    color: #45474F !important;
+    font-size: 16px !important;
+    background: rgba(246, 247, 247, 0.5) !important;
+    position: relative;
+    margin-bottom: 0 !important;
+}
+
+section.loginformnew form#loginform input#user_login:after,
+section.loginformnew form#loginform input#user_pass:after {
+    content: "";
+    background-image: url('/wp-content/themes/marketingops/images/svg/star.svg') !important;
+    width: 9px;
+    height: 9px;
+    position: absolute;
+    top: 6px;
+    right: 6px;
+}
+
+section.loginformnew form#loginform input#user_login {
+    background-image: url('/wp-content/themes/marketingops/images/svg/at_icon.svg') !important;
+    background-position: top 20px right 20px !important;
+    background-repeat: no-repeat !important;
+    padding-right: 0;
+    padding-bottom: 0;
+    margin-bottom: 25px;
+}
+
+section.loginformnew form#loginform input#user_pass {
+    background-image: url('/wp-content/plugins/marketing-ops-core/public/images/password_unhide_icon.svg') !important;
+    background-position: top 23px right 20px !important;
+    background-repeat: no-repeat !important;
+    padding-right: 0;
+    padding-bottom: 0;
+    margin-bottom: 25px;
+    background-size: 40px 40px !important;
+}
+section.loginformnew form#loginform label {
+    margin: 0 0 15px;
+}
+
+section.loginformnew p.login-submit {
+    max-width: 220px;
+    width: 100%;
+    margin-bottom: 25px;
+    padding: 20px;
+    background: #F8F9F9;
+    border: 1px solid rgba(231, 239, 239, 0.75);
+    border-radius: 100px;
+    margin: 0;
+    display: inline-block;
+}
+section.loginformnew input#wp-submit {
+    padding: 18px 51px 18px 33px;
+    border-radius: 100px !important;
+    background: #292A30 !important;
+    max-width: 180px;
+    width: 100% !important;
+    position: relative !important;
+    background-image: url(/wp-content/themes/marketingops/images/svg/right_arrow.svg) !important;
+    background-repeat: no-repeat !important;
+    background-position: top 26px right 23px !important;
+    text-indent: -5px;
+    color: #fff;
+    border: none;
+    background-position: top 26px right 48px !important;
+}
+
+section.loginformnew .register_page .register_content.login_content .elementor-widget-heading h2 {
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 34px;
+    margin-bottom: 15px;
+}
