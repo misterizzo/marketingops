@@ -182,6 +182,14 @@ section.loginformnew form#loginform label {
     width: 100%;
 }
 
+.login .button.wp-hide-pw {
+    border: solid 1px red;
+    position: absolute;
+    top: 23px;
+    right: 22px;
+    opacity: 0;
+}
+
 #login form input[type=checkbox]:focus, 
 #login form input[type=color]:focus, 
 #login form input[type=date]:focus, 
