@@ -152,7 +152,7 @@ section.loginformnew form#loginform label {
     margin: 20px 0;
 }
 
-.login form .forgetmenot,
+
 .login #backtoblog, .login #nav,
 .privacy-policy-page-link{display: none !important;}
 
@@ -175,6 +175,11 @@ section.loginformnew form#loginform label {
     background: #F8F9F9;
     border: 1px solid rgba(231, 239, 239, 0.75);
     border-radius: 100px;
+}
+
+.login form .forgetmenot {
+    display: block;
+    width: 100%;
 }
 
 #login form input[type=checkbox]:focus, 
