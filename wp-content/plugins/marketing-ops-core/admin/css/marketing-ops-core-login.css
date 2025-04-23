@@ -176,3 +176,25 @@ section.loginformnew form#loginform label {
     border: 1px solid rgba(231, 239, 239, 0.75);
     border-radius: 100px;
 }
+
+#login form input[type=checkbox]:focus, 
+#login form input[type=color]:focus, 
+#login form input[type=date]:focus, 
+#login form input[type=datetime-local]:focus, 
+#login form input[type=datetime]:focus, 
+#login form input[type=email]:focus, 
+#login form input[type=month]:focus, 
+#login form input[type=number]:focus, 
+#login form input[type=password]:focus, 
+#login form input[type=radio]:focus, 
+#login form input[type=search]:focus, 
+#login form input[type=tel]:focus, 
+#login form input[type=text]:focus, 
+#login form input[type=time]:focus, 
+#login form input[type=url]:focus, 
+#login form input[type=week]:focus, 
+#login form select:focus, textarea:focus {
+    border-color:transparent !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
