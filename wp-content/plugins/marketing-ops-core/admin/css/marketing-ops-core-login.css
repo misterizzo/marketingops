@@ -35,7 +35,7 @@ body.login div#login h1 a {background-image: url('/wp-content/uploads/2022/08/cr
 
     margin-top: 0px;
     margin-bottom: 0px;
-    padding: 85px 0px 50px 0px;
+   padding: 13% 0;
 }
 
 section.loginformnew .register_page.login_page{ padding: 85px 0px 50px 0px;}    
@@ -129,15 +129,15 @@ section.loginformnew .register_page .register_content.login_content .elementor-w
     padding: 0 !important;
 }
 
-.loginformnew .login form {
-    margin-top: 0;
-    margin-left: 0;
-    padding: 0;
-    font-weight: 400;
+.login form {
+    margin-top: 0 !important;
+    margin-left: 0 !important;
+    padding: 0 !important;
+    font-weight: 400 !important;
     overflow: hidden;
     background: transparent;
-    border: 1px solid transparent;
-    box-shadow: none;
+    border: 1px solid transparent !important;;
+    box-shadow: none !important;
 }
 
 section.loginformnew form#loginform label {
