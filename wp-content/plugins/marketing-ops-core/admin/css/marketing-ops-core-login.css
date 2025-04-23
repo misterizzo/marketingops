@@ -4,6 +4,35 @@ body.login div#login h1 a {background-image: url('/wp-content/uploads/2022/08/cr
 
 
 
+@media only screen and (min-width: 1200px) {
+    .register_page.elementor-section.elementor-section-boxed > .elementor-container {
+        max-width: 990px;
+    }
+    .elementor-section .elementor-container {
+    display: flex;
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+}
+}
+
+@media (min-width: 768px) {
+    .elementor-column.elementor-col-50, .elementor-column[data-col="50"] {
+        width: 50%;
+    }
+    .elementor-column {
+    position: relative;
+    min-height: 1px;
+    display: flex;
+}
+}
+.register_page.login_page{
+    background-image: url('/wp-content/themes/marketingops/images/login_page/login_bg_blur_image_2.png');
+    background-position: left -30px top -160px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    overflow: initial;
+}
 
 section.loginformnew .register_page.login_page{ padding: 85px 0px 50px 0px;}    
 
