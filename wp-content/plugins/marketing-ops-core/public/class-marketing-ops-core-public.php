@@ -2850,6 +2850,7 @@ class Marketing_Ops_Core_Public {
 		$flag             = '';
 		$html             = '';
 		$username         = filter_input( INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$agencyname       = filter_input( INPUT_POST, 'agencyname', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$email            = filter_input( INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$email            = filter_var( $email, FILTER_SANITIZE_EMAIL );
 		$password         = filter_input( INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
@@ -2864,6 +2865,7 @@ class Marketing_Ops_Core_Public {
 		$event            = filter_input( INPUT_POST, 'evnet', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$who_reffered_you = filter_input( INPUT_POST, 'who_reffered_you', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$click_count      = (int) filter_input( INPUT_POST, 'click_count', FILTER_SANITIZE_NUMBER_INT );
+
 		if ( 'moc_resend_callback_event' !== $event ) {
 			if ( username_exists( $username ) == null && email_exists( $email ) === false ) {
 				// Create the new user
@@ -2882,7 +2884,7 @@ class Marketing_Ops_Core_Public {
 				$body_content_to_text = moc_email_template_html( $_nonce_array );
 				wp_mail( $email, $subject_to_text, $body_content_to_text, $headers );
 			} else {
-				if (  email_exists( $email ) !== false ) {
+				if ( email_exists( $email ) !== false ) {
 					$toast_message .= __( 'User with this email address already exists.', 'marketingops' );
 					$flag          .= 'email';
 				} else {
@@ -2908,21 +2910,25 @@ class Marketing_Ops_Core_Public {
 			$body_content_to_text = moc_email_template_html( $_nonce_array );
 			wp_mail( $email, $subject_to_text, $body_content_to_text, $headers );
 		}
-		$response      = array(
-			'code'             => $message,
-			'toast_message'    => $toast_message,
-			'username'         => $username,
-			'email'            => $email,
-			'password'         => $password,
-			'flag'             => $flag,
-			'plan'             => $plan,
-			'who_reffered_you' => $who_reffered_you,
-			'html'			   => $html,
-		);
-		wp_send_json_success( $response );
-		wp_die();
 
+		// Send the AJAX response.
+		wp_send_json_success(
+			array(
+				'code'             => $message,
+				'toast_message'    => $toast_message,
+				'username'         => $username,
+				'agencyname'       => $agencyname,
+				'email'            => $email,
+				'password'         => $password,
+				'flag'             => $flag,
+				'plan'             => $plan,
+				'who_reffered_you' => $who_reffered_you,
+				'html'			   => $html,
+			)
+		);
+		wp_die();
 	}
+
 	/**
 	 * Function to return call ajax for user creation.
 	 *
@@ -2933,6 +2939,7 @@ class Marketing_Ops_Core_Public {
 		$toast_message    = '';
 		$redirect_url     = '';
 		$username         = filter_input( INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$agencyname       = filter_input( INPUT_POST, 'agencyname', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$email            = filter_input( INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$password         = filter_input( INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$enter_otp        = filter_input( INPUT_POST, 'enter_otp', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
@@ -2943,8 +2950,10 @@ class Marketing_Ops_Core_Public {
 		$add_to_cart      = filter_input( INPUT_POST, 'add_to_cart', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$plan             = ( 0 !== $plan ) ? $plan : 163406;
 		$who_reffered_you = filter_input( INPUT_POST, 'who_reffered_you', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		
 		if ( ( ! empty( $_nonce_ ) || ! empty( $enter_otp ) ) && ( $enter_otp === $_nonce_ ) ) {
 			WC()->cart->empty_cart();
+
 			if ( username_exists( $username ) == null && email_exists( $email ) === false ) {
 				$user_id                      = wp_create_user( $username, $password, $email );
 				$user                         = get_user_by( 'id', $user_id ); 
@@ -2952,15 +2961,15 @@ class Marketing_Ops_Core_Public {
 				$posted_info['user_login']    = $username;
 				$posted_info['user_password'] = $password;
 				$posted_info['remember']      = true;
-
-				$user_signon = wp_signon( $posted_info, false );
-				$user_signon_response = $user_signon->errors;
+				$user_signon                  = wp_signon( $posted_info, false );
+				$user_signon_response         = $user_signon->errors;
 				clean_user_cache( $user_id );
 				wp_clear_auth_cookie();
 				wp_set_current_user( $user_id );
 				wp_set_auth_cookie( $user_id, true, true );
 				$user = get_user_by( 'id', $user_id );
 				update_user_caches( $user );
+
 				if ( ! empty( $email ) && is_email( $email ) ) {
 					if ( $user = get_user_by_email( $email ) ) {
 						$username = $user->user_login;
@@ -2969,34 +2978,60 @@ class Marketing_Ops_Core_Public {
 
 				update_user_meta( $user_id, 'who_referred_you', $who_reffered_you );
 				update_user_meta( $user_id, 'moc_show_in_frontend', 'yes' );
-				
-				if ( 163406 === $plan ) {
-					$args = array(
-						// Enter the ID (post ID) of the plan to grant at registration
-						'plan_id'   => $plan,
-						'user_id'   => $user_id,
+
+				// If the agency name is provided, create an agency.
+				if ( ! empty( $agencyname ) ) {
+					$agency_id = wp_insert_post(
+						array(
+							'post_title'   => $agencyname,
+							'post_type'    => 'agency',
+							'post_status'  => 'publish',
+							'post_author'  => $user_id,
+							'meta_input'   => array(
+								'agency_owner'      => $user_id,
+								'agency_user_email' => $email,
+							),
+						)
 					);
-					wc_memberships_create_user_membership( $args );
-					if ( ! empty( $add_to_cart ) ) {
-						$redirect_url  .= home_url( 'profile-setup?add_to_cart='.$add_to_cart );
-					} else {
-						$redirect_url  .= home_url( 'profile-setup' );
-					}
+				}
+
+				// Assign the appropriate membership to the user.
+				if ( 163406 === $plan ) {
+					wc_memberships_create_user_membership(
+						array(
+							'plan_id' => $plan, // Enter the ID (post ID) of the plan to grant at registration
+							'user_id' => $user_id,
+						)
+					);
+
+					// Setup the redirect URL.
+					$redirect_url .= ( ! empty( $add_to_cart ) ) ? home_url( 'profile-setup?add_to_cart='.$add_to_cart ) : home_url( 'profile-setup' );
+				} elseif ( 232396 === $plan ) {
+					wc_memberships_create_user_membership(
+						array(
+							'plan_id' => $plan, // Enter the ID (post ID) of the plan to grant at registration
+							'user_id' => $user_id,
+						)
+					);
+
+					// Setup the redirect URL.
+					$redirect_url .= ( ! empty( $add_to_cart ) ) ? home_url( 'profile-setup?add_to_cart='.$add_to_cart ) : home_url( 'my-account/agency-profile/' );
 				} else {
 					$plan_id = moc_get_membership_plan_object();
 					if ( empty( $plan_id ) ) {
-						$args = array(
-							// Enter the ID (post ID) of the plan to grant at registration
-							'plan_id'   => 163406,
-							'user_id'   => $user_id,
+						wc_memberships_create_user_membership(
+							array(
+								'plan_id' => 163406, // Enter the ID (post ID) of the plan to grant at registration
+								'user_id' => $user_id,
+							)
 						);
-						wc_memberships_create_user_membership( $args );
 					}
 					$member_access_method = get_post_meta( 163758, '_access_method', true );
 
 					if ( 'purchase' === $member_access_method ) {
 						$member_product_ids   = get_post_meta( $plan, '_product_ids', true );
-						if ( 163758 === $plan ) {
+
+						if ( 163758 === $plan ) { // MO Pros Yearly Membership
 							$member_product_sku   = moc_get_products_slug( $member_product_ids );
 							foreach ( $member_product_sku as $product_sku ) {
 								if ( 'mo-pros-variation-yearly-membership' === $product_sku ) {
@@ -3004,7 +3039,7 @@ class Marketing_Ops_Core_Public {
 									WC()->cart->add_to_cart( $product_id_need_to_add_cart ,1, 0, array(), array( 'first_signup_flow' => array( 'yes' ) ) );
 								}
 							}
-						} elseif ( 163757 === $plan ) {
+						} elseif ( 163757 === $plan ) { // MO Pros Monthly Membership
 							$member_product_sku   = moc_get_products_slug( $member_product_ids );
 							foreach ( $member_product_sku as $product_sku ) {
 								if ( 'mo-pros-variation-monthly-membership' === $product_sku ) {
@@ -3012,7 +3047,15 @@ class Marketing_Ops_Core_Public {
 									WC()->cart->add_to_cart( $product_id_need_to_add_cart ,1, 0, array(), array( 'first_signup_flow' => array( 'yes' ) ) );
 								}
 							}
-						} elseif ( 224418 === $plan ) {
+						} elseif ( 224418 === $plan ) { // Pro Plus Membership
+							$member_product_sku   = moc_get_products_slug( $member_product_ids );
+							foreach ( $member_product_sku as $product_sku ) {
+								if ( 'mo-pros-variation-pro-plus-membership' === $product_sku ) {
+									$product_id_need_to_add_cart = wc_get_product_id_by_sku( $product_sku );
+									WC()->cart->add_to_cart( $product_id_need_to_add_cart ,1, 0, array(), array( 'first_signup_flow' => array( 'yes' ) ) );
+								}
+							}
+						} elseif ( 237665 === $plan ) { // MO Pros Agency Monthly Membership
 							$member_product_sku   = moc_get_products_slug( $member_product_ids );
 							foreach ( $member_product_sku as $product_sku ) {
 								if ( 'mo-pros-variation-pro-plus-membership' === $product_sku ) {
@@ -3025,12 +3068,12 @@ class Marketing_Ops_Core_Public {
 						}
 						$redirect_url .= site_url( 'checkout' );
 					}
-					
 				}
 			} else {
 				$message       .= 'marketingops-not-verified-otp';
 				$toast_message .= __( 'A user already exists in our records.', 'marketingops' );
 			}
+
 			// wp_new_user_notification( $user_id );
 			$message       .= 'marketingops-verified-otp';
 			$toast_message .= __( 'OTP is verified and registration process initiated.', 'marketingops' );
@@ -3038,17 +3081,20 @@ class Marketing_Ops_Core_Public {
 			$message       .= 'marketingops-not-verified-otp';
 			$toast_message .= __( 'OTP invalid.', 'marketingops' );
 		}
-		$response      = array(
-			'code'             => $message,
-			'toast_message'    => $toast_message,
-			'username'         => $username,
-			'email'            => $email,
-			'password'         => $password,
-			'user_id'          => $user_id,
-			'who_reffered_you' => $who_reffered_you,
-			'redirect_url'     => $redirect_url,
+
+		// Send the AJAX response.
+		wp_send_json_success(
+			array(
+				'code'             => $message,
+				'toast_message'    => $toast_message,
+				'username'         => $username,
+				'email'            => $email,
+				'password'         => $password,
+				'user_id'          => $user_id,
+				'who_reffered_you' => $who_reffered_you,
+				'redirect_url'     => $redirect_url,
+			)
 		);
-		wp_send_json_success( $response );
 		wp_die();
 	}
 	/**
@@ -3203,20 +3249,21 @@ class Marketing_Ops_Core_Public {
 	 * @param integer $order_id This variable holds for order id. 
 	 */
 	public function moc_redirect_after_checkout( $order_id ) {
-		$order              = wc_get_order( $order_id );
-		$items              = $order->get_items();
+		$order = wc_get_order( $order_id );
+		$items = $order->get_items();
+
 		foreach ( $items as $item ) {
 			$product_id                   = $item->get_product_id();
 			$subcription_product_status[] = ( WC_Subscriptions_Product::is_subscription( $product_id ) ) ? 'yes' : 'no';
 			$product_ids               [] = $item->get_product_id();
 		}
+
 		foreach ( $product_ids as $wc_product_id ) {
 			$wc_product           = wc_get_product( $wc_product_id );
 			$wc_course_id         = get_post_meta( $wc_product_id, '_related_course', true );
 			$course_permalink     = ( ! empty( $wc_course_id ) ) ? get_the_permalink( $wc_course_id[0] ) : '';
 			$wc_product_type      = $wc_product->product_type;
 			if ( 'course' === $wc_product_type ) {
-				
 				?>
 				<script>
 				jQuery(function($){
@@ -3241,9 +3288,9 @@ class Marketing_Ops_Core_Public {
 				});
 				</script>
 				<?php
-				
 			}
 		}
+
 		if ( is_user_logged_in() ) {
 			$get_profile_status   = get_user_meta( get_current_user_id(), 'profile-setup-completed', true );
 			$all_user_meta        = get_user_meta( get_current_user_id() );

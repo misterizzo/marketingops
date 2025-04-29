@@ -2845,76 +2845,98 @@ jQuery( document ).ready( function( $ ) {
 			},
 		} );
 	} );
+
 	/**
 	 * Ajax to serve user profile first step process.
 	 */
-	$(document).on('click', '.moc-submit-form', function(event) {
+	$( document ).on( 'click', '.moc-submit-form', function( event ) {
 		event.preventDefault();
-		var plan = (false !== moc_get_url_vars()) ? moc_get_url_vars()['plan'] : '';	
-		var add_to_cart = (false !== moc_get_url_vars()) ? moc_get_url_vars()['add_to_cart'] : '';
-		var this_button = $(this);
-		this_button.text('profile creating');
-		var process_execute = true;
-		var username = this_button.closest( '.moc_signup_form' ).find('.moc-username').val();
-		var email = this_button.closest( '.moc_signup_form' ).find('.moc-email').val();
-		var password = this_button.closest( '.moc_signup_form' ).find('.moc-password').val();
-		var confirm_password = this_button.closest( '.moc_signup_form' ).find('.moc-confirm-password').val();
-		var random_otp = moc_make_otp(4, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
-		var _nonce_ = '@A9@' + random_otp + '#2A#';
-		var who_reffered_you = $('input[name="who_referred_you"]').val();
-		$('.moc_error span').text('');
-		// validations.
 
-		// check username input is empty or not.
-		if ('' === username) {
-			this_button.closest( '.moc_signup_form' ).find('.moc_username_err span').text(user_bio_empty_err_msg);
+		var registration_type = $( 'input[type="hidden"][name="reg_type"]' ).val();
+		var plan              = ( false !== moc_get_url_vars() ) ? moc_get_url_vars()['plan'] : '';	
+		var add_to_cart       = ( false !== moc_get_url_vars() ) ? moc_get_url_vars()['add_to_cart'] : '';
+		var this_button       = $( this );
+		this_button.text( 'profile creating' );
+		var process_execute  = true;
+		var email            = this_button.closest( '.moc_signup_form' ).find( '.moc-email' ).val();
+		var password         = this_button.closest( '.moc_signup_form' ).find( '.moc-password' ).val();
+		var confirm_password = this_button.closest( '.moc_signup_form' ).find( '.moc-confirm-password' ).val();
+		var random_otp       = moc_make_otp( 4, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' );
+		var _nonce_          = '@A9@' + random_otp + '#2A#';
+		var who_reffered_you = $( 'input[name="who_referred_you"]' ).val();
+
+		// If this is agency registration.
+		if ( 1 === is_valid_string( registration_type ) ) {
+			if ( 'agency' === registration_type ) {
+				var agencyname = this_button.closest( '.moc_signup_form' ).find( '.moc-agencyname' ).val();
+				var username   = email.substring( 0, email.indexOf( '@' ) );
+			} else {
+				var username = this_button.closest( '.moc_signup_form' ).find( '.moc-username' ).val();
+			}
+		}
+		
+		$( '.moc_error span' ).text( '' );
+
+		/**
+		 * Validations.
+		 *
+		 * Check username input is empty or not.
+		 */
+		if ( '' === username ) {
+			this_button.closest( '.moc_signup_form' ).find( '.moc_username_err span' ).text( user_bio_empty_err_msg );
 			process_execute = false;
 		}
 		if ( '' !== username && -1 === is_valid_string( username ) ) {
-			this_button.closest( '.moc_signup_form' ).find('.moc_username_err span').text(moc_valid_username_error);
+			this_button.closest( '.moc_signup_form' ).find( '.moc_username_err span' ).text( moc_valid_username_error );
+			process_execute = false;
+		}
+
+		// check the agency name.
+		if ( '' === agencyname ) {
+			this_button.closest( '.moc_signup_form' ).find( '.moc_agencyname_err span' ).text( user_bio_empty_err_msg );
 			process_execute = false;
 		}
 
 		// check email input is empty or not.
-		if ('' === email) {
-			this_button.closest( '.moc_signup_form' ).find('.moc_email_err span').text(user_bio_empty_err_msg);
+		if ( '' === email ) {
+			this_button.closest( '.moc_signup_form' ).find( '.moc_email_err span' ).text( user_bio_empty_err_msg );
 			process_execute = false;
 		}
 
 		// check email input is valid or not.
-		if ('' !== email && -1 === is_valid_email(email)) {
-			this_button.closest( '.moc_signup_form' ).find('.moc_email_err span').text( moc_valid_email_error );
+		if ( '' !== email && -1 === is_valid_email( email ) ) {
+			this_button.closest( '.moc_signup_form' ).find( '.moc_email_err span' ).text( moc_valid_email_error );
 			process_execute = false;
 		}
 
 		// check password input is valid or not.
-		if ('' === password) {
-			this_button.closest( '.moc_signup_form' ).find('.moc_password_err span').text(user_bio_empty_err_msg);
+		if ( '' === password ) {
+			this_button.closest( '.moc_signup_form' ).find( '.moc_password_err span' ).text( user_bio_empty_err_msg );
 			process_execute = false;
 		}
-		if (-1 === is_valid_password(password)) {
-			this_button.closest( '.moc_signup_form' ).find('.moc_password_err span').text( password_strength_error );
+		if ( -1 === is_valid_password( password ) ) {
+			this_button.closest( '.moc_signup_form' ).find( '.moc_password_err span' ).text( password_strength_error );
 			process_execute = false;
 		}
 		// check password input is match with confirm password.
-		if ('' !== password && password !== confirm_password) {
-			this_button.closest( '.moc_signup_form' ).find('.moc_confirm_password_err span').text( not_match_password_err );
+		if ( '' !== password && password !== confirm_password ) {
+			this_button.closest( '.moc_signup_form' ).find( '.moc_confirm_password_err span').text( not_match_password_err );
 			process_execute = false;
 		}
 
 		// check confirm_password input is empty or not.
-		if ('' === confirm_password) {
-			this_button.closest( '.moc_signup_form' ).find('.moc_confirm_password_err span').text(user_bio_empty_err_msg);
+		if ( '' === confirm_password ) {
+			this_button.closest( '.moc_signup_form' ).find( '.moc_confirm_password_err span' ).text( user_bio_empty_err_msg );
 			process_execute = false;
 		}
-		if (false === process_execute) {
-			moc_show_toast('bg-danger', 'fa-skull-crossbones', toast_error_heading, invalid_empty_message);
-			this_button.text('Create Profile');
+		if ( false === process_execute ) {
+			moc_show_toast( 'bg-danger', 'fa-skull-crossbones', toast_error_heading, invalid_empty_message );
+			this_button.text( 'Create Profile' );
 			return false;
 		} else {
-			moc_ajax_callback_verification_otp('moc_register_user', username, email, password, confirm_password, plan, add_to_cart, _nonce_, 'moc_first_time_event', 'moc-register-container', who_reffered_you, this_button, 0);
+			moc_ajax_callback_verification_otp( 'moc_register_user', username, agencyname, email, password, confirm_password, plan, add_to_cart, _nonce_, 'moc_first_time_event', 'moc-register-container', who_reffered_you, this_button, 0 );
 		}
-	});
+	} );
 
 	/**
 	 * Focus to next input on otp input.
@@ -2934,58 +2956,67 @@ jQuery( document ).ready( function( $ ) {
 	 */
 	$(document).on('click', '.email_submit_btn', function(event) {
 		event.preventDefault();
-		var this_button = $(this);
-		this_button.text('Verifying');
-		var first_input_val = $('#digit-1').val();
-		var second_input_val = $('#digit-2').val();
-		var third_input_val = $('#digit-3').val();
-		var fourth_input_val = $('#digit-4').val();
-		var enter_otp = first_input_val + second_input_val + third_input_val + fourth_input_val;
-		var random_otp = $('input[name="moc_emailded_otp"]').val();
-		var remove_nonce = random_otp.replace('@A9@', '');
-		var final_nonce = remove_nonce.replace('#2A#', '');
-		var username = $('input[name="moc_username"]').val();
-		var password = $('input[name="moc_password"]').val();
-		var email = $('input[name="moc_email"]').val();
-		var plan = (false !== moc_get_url_vars()) ? moc_get_url_vars()['plan'] : '';	
-		var add_to_cart = (false !== moc_get_url_vars()) ? moc_get_url_vars()['add_to_cart'] : '';
+		var this_button = $( this );
+		this_button.text( 'Verifying' );
+		var first_input_val  = $( '#digit-1' ).val();
+		var second_input_val = $( '#digit-2' ).val();
+		var third_input_val  = $( '#digit-3' ).val();
+		var fourth_input_val = $( '#digit-4' ).val();
+		var enter_otp        = first_input_val + second_input_val + third_input_val + fourth_input_val;
+		var random_otp       = $( 'input[name="moc_emailded_otp"]' ).val();
+		var remove_nonce     = random_otp.replace( '@A9@', '' );
+		var final_nonce      = remove_nonce.replace( '#2A#', '' );
+		var username         = $('input[name="moc_username"]').val();
+		var agencyname       = $('input[name="moc_agencyname"]').val();
+		var password         = $('input[name="moc_password"]').val();
+		var email            = $('input[name="moc_email"]').val();
+		var plan             = (false !== moc_get_url_vars()) ? moc_get_url_vars()['plan'] : '';	
+		var add_to_cart      = (false !== moc_get_url_vars()) ? moc_get_url_vars()['add_to_cart'] : '';
 		var who_reffered_you = $('input[name="moc_who_reffered_you"]').val();
-		var process_execute = true;
-		$('.moc_error span').text('');
-		if ('' === enter_otp) {
-			$('.moc_wrong_otp span').text(user_bio_empty_err_msg);
+		var process_execute  = true;
+
+		// Vacate the error messages.
+		$( '.moc_error span' ).text('');
+
+		// if the login passcode is not provided.
+		if ( '' === enter_otp ) {
+			$( '.moc_wrong_otp span' ).text( user_bio_empty_err_msg );
 			process_execute = false;
 		}
-		if (final_nonce !== enter_otp) {
-			$('.moc_wrong_otp span').text('Please enter valid OTP');
+
+		// if the login passcode doesn't match the passcode provided.
+		if ( final_nonce !== enter_otp ) {
+			$( '.moc_wrong_otp span' ).text( 'Please enter valid OTP' );
 			process_execute = false;
 		}
-		if (false === process_execute) {
+
+		if ( false === process_execute ) {
 			$( '.otp-backspace .svg_icon img' ).attr( 'src', plugin_url + '/public/images/Vector-1.svg' );
-			moc_show_toast('bg-danger', 'fa-skull-crossbones', toast_error_heading, invalid_empty_message);
+			moc_show_toast( 'bg-danger', 'fa-skull-crossbones', toast_error_heading, invalid_empty_message );
 			$( '.moc-email-otp-initial-stage .form-container' ).addClass( 'moc-failure' );
 			this_button.text( 'Failure :(' );
-			
+
 			return false;
 		} else {
-			block_element($('.moc-otp-section .loader_bg'));
-			var data = {
-				username,
-				username,
-				password: password,
-				email: email,
-				enter_otp: enter_otp,
-				_nonce_: random_otp,
-				plan: plan,
-				who_reffered_you: who_reffered_you,
-				add_to_cart: add_to_cart,
-				action: 'moc_verify_create_user',
-			};
 			$.ajax({
 				dataType: 'json',
 				url: ajaxurl,
 				type: 'POST',
-				data: data,
+				data: {
+					username: username,
+					agencyname: agencyname,
+					password: password,
+					email: email,
+					enter_otp: enter_otp,
+					_nonce_: random_otp,
+					plan: plan,
+					who_reffered_you: who_reffered_you,
+					add_to_cart: add_to_cart,
+					action: 'moc_verify_create_user',
+				},
+				beforeSend: function() {
+					block_element($('.moc-otp-section .loader_bg'));
+				},
 				success: function( response ) {
 					if ('marketingops-verified-otp' === response.data.code) {
 						$( '.otp-backspace .svg_icon img' ).attr( 'src', plugin_url + '/public/images/Vector.svg' );
@@ -3017,20 +3048,25 @@ jQuery( document ).ready( function( $ ) {
 	var count = 0;
 	$(document).on('click', '.moc_resend_btn', function() {
 		count++;
+
 		$( 'input[name="moc_resend_count_bind"]' ).val( count );
-		var click_count = $( 'input[name="moc_resend_count_bind"]' ).val();
-		var username = $('input[name="moc_username"]').val();
-		var email = $('input[name="moc_email"]').val();
-		var password = $('input[name="moc_password"]').val();
+		var click_count      = $( 'input[name="moc_resend_count_bind"]' ).val();
+		var username         = $('input[name="moc_username"]').val();
+		var agencyname       = $('input[name="moc_agencyname"]').val();
+		var email            = $('input[name="moc_email"]').val();
+		var password         = $('input[name="moc_password"]').val();
 		var confirm_password = $('input[name="moc_password"]').val();
 		var who_reffered_you = $('input[name="moc_who_reffered_you"]').val();
-		var plan = (false !== moc_get_url_vars()) ? moc_get_url_vars()['plan'] : '';
-		var add_to_cart = (false !== moc_get_url_vars()) ? moc_get_url_vars()['add_to_cart'] : '';
-		var random_otp = moc_make_otp(4, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
-		var _nonce_ = '@A9@' + random_otp + '#2A#';
-		$('.moc_error span').text('');
-		moc_ajax_callback_verification_otp('moc_register_user', username, email, password, confirm_password, plan, add_to_cart, _nonce_, 'moc_resend_callback_event', 'moc-otp-section', who_reffered_you, '', click_count);
-	});
+		var plan             = (false !== moc_get_url_vars()) ? moc_get_url_vars()['plan'] : '';
+		var add_to_cart      = (false !== moc_get_url_vars()) ? moc_get_url_vars()['add_to_cart'] : '';
+		var random_otp       = moc_make_otp(4, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+		var _nonce_          = '@A9@' + random_otp + '#2A#';
+
+		$( '.moc_error span' ).text( '' );
+
+		// Shoot the ajax for user or agency registration.
+		moc_ajax_callback_verification_otp( 'moc_register_user', username, agencyname, email, password, confirm_password, plan, add_to_cart, _nonce_, 'moc_resend_callback_event', 'moc-otp-section', who_reffered_you, '', click_count );
+	} );
 
 	/**
 	 * Ajax to serve for save profile final steps data.
@@ -4466,29 +4502,32 @@ jQuery( document ).ready( function( $ ) {
 	/**
 	 * Function to return ajax call for sending otp to email.
 	 */
-	function moc_ajax_callback_verification_otp(action, username, email, password, confirm_password, plan, add_to_cart, _nonce_, evnet, moc_block_element, who_reffered_you, this_button, click_count) {
-		block_element($('.' + moc_block_element + ' .loader_bg'));
-		var data = {
-			action: action,
-			username: username,
-			email: email,
-			password: password,
-			confirm_password: confirm_password,
-			plan: plan,
-			_nonce_: _nonce_,
-			evnet: evnet,
-			who_reffered_you: who_reffered_you,
-			click_count: click_count,
-			add_to_cart:add_to_cart,
-		};
-		$.ajax({
+	function moc_ajax_callback_verification_otp( action, username, agencyname = '', email, password, confirm_password, plan, add_to_cart, _nonce_, evnet, moc_block_element, who_reffered_you, this_button, click_count ) {
+		// Send the ajax for individual or agency registration.
+		$.ajax( {
 			dataType: 'json',
 			url: ajaxurl,
 			type: 'POST',
-			data: data,
+			data: {
+				action: action,
+				username: username,
+				agencyname: agencyname,
+				email: email,
+				password: password,
+				confirm_password: confirm_password,
+				plan: plan,
+				_nonce_: _nonce_,
+				evnet: evnet,
+				who_reffered_you: who_reffered_you,
+				click_count: click_count,
+				add_to_cart:add_to_cart,
+			},
+			beforeSend: function() {
+				block_element( $( '.' + moc_block_element + ' .loader_bg' ) );
+			},
 			success: function( response ) {
-				if ('marketingops=already-email-exist' === response.data.code) {
-					moc_show_toast('bg-danger', 'fa-skull-crossbones', toast_error_heading, invalid_empty_message);
+				if ( 'marketingops=already-email-exist' === response.data.code ) {
+					moc_show_toast( 'bg-danger', 'fa-skull-crossbones', toast_error_heading, invalid_empty_message );
 					if ('username' === response.data.flag) {
 						this_button.closest( '.moc_signup_form' ).find('.moc_username_err span').text(response.data.toast_message);
 					} else {
@@ -4500,6 +4539,7 @@ jQuery( document ).ready( function( $ ) {
 						$('#moc_register_page').html(response.data.html);
 						$('input[name="moc_emailded_otp"]').val(_nonce_);
 						$('input[name="moc_username"]').val(username);
+						$('input[name="moc_agencyname"]').val(agencyname);
 						$('input[name="moc_password"]').val(password);
 						$('input[name="moc_email"]').val(email);
 						$('input[name="moc_who_reffered_you"]').val(who_reffered_you);

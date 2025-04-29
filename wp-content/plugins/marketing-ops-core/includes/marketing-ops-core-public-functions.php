@@ -4560,6 +4560,7 @@ if ( ! function_exists( 'moc_otp_varification_html' ) ) {
 								</a>
 								<input type="hidden" name="moc_emailded_otp">
 								<input type="hidden" name="moc_username">
+								<input type="hidden" name="moc_agencyname">
 								<input type="hidden" name="moc_password">
 								<input type="hidden" name="moc_email">
 								<input type="hidden" name="moc_who_reffered_you">

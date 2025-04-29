@@ -1600,10 +1600,10 @@ class Marketing_Ops_Core_Admin {
 	public function moc_manage_agency_posts_custom_column_callback( $column_name, $post_id ) {
 		// Print the content for "template file" column name.
 		if ( 'agency_owner' === $column_name ) {
-			$agency_owner = get_field( 'agency_owner', $post_id );
+			$agency_owner = (int) get_field( 'agency_owner', $post_id );
 
 			// If the guests are available.
-			if ( ! empty( $agency_owner ) && is_int( $agency_owner ) ) {
+			if ( ! empty( $agency_owner ) && 0 !== $agency_owner ) {
 				$agency_owner_first_name = get_user_meta( $agency_owner, 'first_name', true );
 				$agency_owner_last_name  = get_user_meta( $agency_owner, 'last_name', true );
 				$agency_owner_user_data  = get_user_by( 'ID', $agency_owner );

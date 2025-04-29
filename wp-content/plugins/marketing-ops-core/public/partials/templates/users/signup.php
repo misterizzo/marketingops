@@ -16,6 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly.
 
 get_header();
 
+$type    = filter_input( INPUT_GET, 'type', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+$heading = ( ! is_null( $type ) && 'agency' === $type ) ? __( 'Create Your Free Agency Profile', 'marketingops' ) : __( 'Create Your Free Profile', 'marketingops' );
+
 if ( is_user_logged_in() ) {
 	?>
 	<div class="elementor-column elementor-col-100 elementor-top-column elementor-element register_content">
@@ -42,7 +45,7 @@ if ( is_user_logged_in() ) {
 			</div>
 			<div class="elementor-element profileheading gradient-title elementor-widget elementor-widget-heading">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default"><?php esc_html_e( 'Create Your Free Profile', 'marketingops' ); ?></h2>
+					<h2 class="elementor-heading-title elementor-size-default"><?php echo esc_html( $heading ); ?></h2>
 				</div>
 			</div>
 			<div class="elementor-element profilesubheading elementor-widget elementor-widget-text-editor">
@@ -56,14 +59,26 @@ if ( is_user_logged_in() ) {
 							<div id="moc-registration-1" class="moc-form-wrapper moc-registration moc-registration-1 ppBuildScratch ppfl-flat ppsbl-pill ppsbw-full-width ppf-remove-frame ppfs-medium ppfia-right">
 								<div class="ppbs-headline"><?php esc_html_e( 'Create Your Free Profile', 'marketingops' ); ?></div>
 								
-								<div class="moc-form-field-wrap reg-username fw-full fda-standard fld-above">
-									<div class="moc-form-field-input-textarea-wrap">
-										<input name="reg_username" type="text" placeholder="Preferred Profile Handle*" class="moc-form-field reg-username moc-username" required="required">
-										<div class="moc_error moc_username_err">
-											<span></span>
+								<!-- If the registration is of agency type -->
+								<?php if ( ! is_null( $type ) && 'agency' === $type ) { ?>
+									<div class="moc-form-field-wrap reg-agencyname reg-username fw-full fda-standard fld-above">
+										<div class="moc-form-field-input-textarea-wrap">
+											<input name="reg_agencyname" type="text" placeholder="<?php esc_html_e( 'Your Agency Name*', 'marketingops' ); ?>" class="moc-form-field reg-agencyname moc-agencyname" required="required">
+											<div class="moc_error moc_agencyname_err">
+												<span></span>
+											</div>
 										</div>
 									</div>
-								</div>
+								<?php } else { ?>
+									<div class="moc-form-field-wrap reg-username fw-full fda-standard fld-above">
+										<div class="moc-form-field-input-textarea-wrap">
+											<input name="reg_username" type="text" placeholder="Preferred Profile Handle*" class="moc-form-field reg-username moc-username" required="required">
+											<div class="moc_error moc_username_err">
+												<span></span>
+											</div>
+										</div>
+									</div>
+								<?php } ?>
 								<div class="moc-form-field-wrap reg-email fw-full fda-standard fld-above">
 									<div class="moc-form-field-input-textarea-wrap">
 										<input name="reg_email" type="email" placeholder="E-mail Address" class="moc-form-field reg-email moc-email" required="required">
@@ -109,6 +124,7 @@ if ( is_user_logged_in() ) {
 								</div>
 								<div class="moc-form-submit-button-wrap">
 									<button name="reg_submit" type="submit" class="moc-submit-form ppform-submit-button"><?php esc_html_e( 'Create Profile', 'marketingops' ); ?></button>
+									<input type="hidden" name="reg_type" value="<?php echo esc_attr( ( ! is_null( $type ) && 'agency' === $type ) ? 'agency' : 'individual' ); ?>" />
 								</div>
 							</div>
 						</div>
