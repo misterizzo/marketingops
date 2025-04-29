@@ -5797,10 +5797,8 @@ class Marketing_Ops_Core_Public {
 				}
 
 				// Add the "agency-profile" endpoint.
-				if ( current_user_can( 'administrator' ) ) {
-					if ( ! array_key_exists( 'agency-profile', $endpoints ) ) {
-						$new_endpoints['agency-profile'] = __( 'Agency Profile', 'marketingops' );
-					}
+				if ( ! array_key_exists( 'agency-profile', $endpoints ) ) {
+					$new_endpoints['agency-profile'] = __( 'Agency Profile', 'marketingops' );
 				}
 
 				// Add the "platform-profile" endpoint.

@@ -9652,7 +9652,7 @@ if ( ! function_exists( 'mops_is_user_agency_partner' ) ) {
 		foreach ( $user_active_memberships as $membership_data ) {
 			// If the appropriate memberhsip is assigned.
 			if ( ! empty( $membership_data->plan->slug ) ) {
-				if ( 'mo-pros-agency-yearly-member' === $membership_data->plan->slug ) {
+				if ( 'mo-pros-agency-monthly-membership' === $membership_data->plan->slug ) {
 					return true;
 				} elseif ( 'free-agency-membership' === $membership_data->plan->slug ) {
 					return true;

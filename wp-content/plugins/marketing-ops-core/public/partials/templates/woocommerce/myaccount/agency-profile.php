@@ -17,7 +17,7 @@ $agency_id        = new WP_Query(
 		'post_type'      => 'agency',
 		'posts_per_page' => 1,
 		'fields'         => 'ids',
-		'post_status'    => array( 'publish', 'draft' ),
+		'post_status'    => array( 'publish' ),
 		'meta_query'     => array(
 			array(
 				'key'     => 'agency_owner',
@@ -31,11 +31,11 @@ $agency_id        = ( ! empty( $agency_id->posts[0] ) ) ? $agency_id->posts[0] :
 
 // If the linked agency is not available, show the registration page.
 if ( false === $agency_id || false === $is_agency_member ) {
-	?>
-	<div class="bluredpage">
-		<h5><?php echo wp_kses_post( 'This page will be available soon. In the meantime if you would like to create an agency listing please use our <a href="/contact/">contact us form</a> and our team can add you to the directory. Thank you!', 'marketingops' ); ?></h5>
-		<div class="bluredpageinner"><?php echo do_shortcode( '[elementor-template id="231177"]' ); ?></div>
-	</div><?php
+	$agency_subscription_page = get_page_by_path( 'subscribe/agency' );
+
+	echo $agency_subscription_page->post_content;
+
+	// echo do_shortcode( '[elementor-template id="231177"]' );
 } else {
 	$agency_post_status = get_post_status( $agency_id );
 	$agency_title       = get_the_title( $agency_id );
