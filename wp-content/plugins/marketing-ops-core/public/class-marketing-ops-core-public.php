@@ -2950,8 +2950,13 @@ class Marketing_Ops_Core_Public {
 		$add_to_cart      = filter_input( INPUT_POST, 'add_to_cart', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$plan             = ( 0 !== $plan ) ? $plan : 163406;
 		$who_reffered_you = filter_input( INPUT_POST, 'who_reffered_you', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-		
+
 		if ( ( ! empty( $_nonce_ ) || ! empty( $enter_otp ) ) && ( $enter_otp === $_nonce_ ) ) {
+
+			/**
+			 * Vacate the cart for any item already present in the cart.
+			 * We will be adding new subscriptions to the cart.
+			 */
 			WC()->cart->empty_cart();
 
 			if ( username_exists( $username ) == null && email_exists( $email ) === false ) {
@@ -3005,7 +3010,7 @@ class Marketing_Ops_Core_Public {
 					);
 
 					// Setup the redirect URL.
-					$redirect_url .= ( ! empty( $add_to_cart ) ) ? home_url( 'profile-setup?add_to_cart='.$add_to_cart ) : home_url( 'profile-setup' );
+					$redirect_url .= ( ! empty( $add_to_cart ) ) ? home_url( 'profile-setup?add_to_cart=' . $add_to_cart ) : home_url( 'profile-setup' );
 				} elseif ( 232396 === $plan ) {
 					wc_memberships_create_user_membership(
 						array(
@@ -3015,9 +3020,12 @@ class Marketing_Ops_Core_Public {
 					);
 
 					// Setup the redirect URL.
-					$redirect_url .= ( ! empty( $add_to_cart ) ) ? home_url( 'profile-setup?add_to_cart='.$add_to_cart ) : home_url( 'my-account/agency-profile/' );
+					$redirect_url .= ( ! empty( $add_to_cart ) ) ? home_url( 'profile-setup?add_to_cart=' . $add_to_cart ) : home_url( 'my-account/agency-profile/' );
 				} else {
+					// Get the plans the user is already a member of.
 					$plan_id = moc_get_membership_plan_object();
+
+					// If nothing, assign him FREE membership.
 					if ( empty( $plan_id ) ) {
 						wc_memberships_create_user_membership(
 							array(
@@ -3026,47 +3034,53 @@ class Marketing_Ops_Core_Public {
 							)
 						);
 					}
-					$member_access_method = get_post_meta( 163758, '_access_method', true );
+
+					$member_access_method = get_post_meta( $plan, '_access_method', true );
 
 					if ( 'purchase' === $member_access_method ) {
-						$member_product_ids   = get_post_meta( $plan, '_product_ids', true );
-
-						if ( 163758 === $plan ) { // MO Pros Yearly Membership
-							$member_product_sku   = moc_get_products_slug( $member_product_ids );
+						$member_product_ids = get_post_meta( $plan, '_product_ids', true );
+				
+						if ( 163758 === $plan ) { // MO Pros Yearly Membership.
+							$member_product_sku = moc_get_products_slug( $member_product_ids );
 							foreach ( $member_product_sku as $product_sku ) {
 								if ( 'mo-pros-variation-yearly-membership' === $product_sku ) {
 									$product_id_need_to_add_cart = wc_get_product_id_by_sku( $product_sku );
-									WC()->cart->add_to_cart( $product_id_need_to_add_cart ,1, 0, array(), array( 'first_signup_flow' => array( 'yes' ) ) );
+									WC()->cart->add_to_cart( $product_id_need_to_add_cart, 1, 0, array(), array( 'first_signup_flow' => array( 'yes' ) ) );
 								}
 							}
-						} elseif ( 163757 === $plan ) { // MO Pros Monthly Membership
-							$member_product_sku   = moc_get_products_slug( $member_product_ids );
+						} elseif ( 163757 === $plan ) { // MO Pros Monthly Membership.
+							$member_product_sku = moc_get_products_slug( $member_product_ids );
 							foreach ( $member_product_sku as $product_sku ) {
 								if ( 'mo-pros-variation-monthly-membership' === $product_sku ) {
 									$product_id_need_to_add_cart = wc_get_product_id_by_sku( $product_sku );
-									WC()->cart->add_to_cart( $product_id_need_to_add_cart ,1, 0, array(), array( 'first_signup_flow' => array( 'yes' ) ) );
+									WC()->cart->add_to_cart( $product_id_need_to_add_cart, 1, 0, array(), array( 'first_signup_flow' => array( 'yes' ) ) );
 								}
 							}
-						} elseif ( 224418 === $plan ) { // Pro Plus Membership
-							$member_product_sku   = moc_get_products_slug( $member_product_ids );
+						} elseif ( 224418 === $plan ) { // Pro Plus Membership.
+							$member_product_sku = moc_get_products_slug( $member_product_ids );
 							foreach ( $member_product_sku as $product_sku ) {
 								if ( 'mo-pros-variation-pro-plus-membership' === $product_sku ) {
 									$product_id_need_to_add_cart = wc_get_product_id_by_sku( $product_sku );
-									WC()->cart->add_to_cart( $product_id_need_to_add_cart ,1, 0, array(), array( 'first_signup_flow' => array( 'yes' ) ) );
+									WC()->cart->add_to_cart( $product_id_need_to_add_cart, 1, 0, array(), array( 'first_signup_flow' => array( 'yes' ) ) );
 								}
 							}
-						} elseif ( 237665 === $plan ) { // MO Pros Agency Monthly Membership
-							$member_product_sku   = moc_get_products_slug( $member_product_ids );
+						} elseif ( 237665 === $plan ) { // MO Pros Agency Monthly Membership.
+							$member_product_sku = moc_get_products_slug( $member_product_ids );
+				
 							foreach ( $member_product_sku as $product_sku ) {
-								if ( 'mo-pros-variation-pro-plus-membership' === $product_sku ) {
+								if ( 'mo-pros-variation-agency-monthly-membership' === $product_sku ) {
 									$product_id_need_to_add_cart = wc_get_product_id_by_sku( $product_sku );
-									WC()->cart->add_to_cart( $product_id_need_to_add_cart ,1, 0, array(), array( 'first_signup_flow' => array( 'yes' ) ) );
+									WC()->cart->add_to_cart( $product_id_need_to_add_cart, 1, 0, array(), array( 'first_signup_flow' => array( 'yes' ) ) );
 								}
 							}
 						} else {
-							WC()->cart->add_to_cart( $member_product_ids[0] ,1, 0, array(), array('first_signup_flow' => array('yes') ) );
+							if ( ! empty( $member_product_ids[0] ) ) {
+								WC()->cart->add_to_cart( $member_product_ids[0], 1, 0, array(), array( 'first_signup_flow' => array( 'yes' ) ) );
+							}
 						}
-						$redirect_url .= site_url( 'checkout' );
+
+						// Set the redirection to the checkout, so the purchase can be completed.
+						$redirect_url = wc_get_checkout_url();
 					}
 				}
 			} else {
@@ -3253,75 +3267,65 @@ class Marketing_Ops_Core_Public {
 		$items = $order->get_items();
 
 		foreach ( $items as $item ) {
-			$product_id                   = $item->get_product_id();
-			$subcription_product_status[] = ( WC_Subscriptions_Product::is_subscription( $product_id ) ) ? 'yes' : 'no';
-			$product_ids               [] = $item->get_product_id();
-		}
+			$product_id         = $item->get_product_id();
+			$subcription_status = ( WC_Subscriptions_Product::is_subscription( $product_id ) ) ? 'yes' : 'no';
+			$wc_product         = wc_get_product( $product_id );
+			$course_id          = get_post_meta( $product_id, '_related_course', true );
+			$course_permalink   = ( ! empty( $course_id ) ) ? get_the_permalink( $course_id[0] ) : '';
+			$product_type       = $wc_product->get_type();
+			$product_slug       = $wc_product->get_slug();
 
-		foreach ( $product_ids as $wc_product_id ) {
-			$wc_product           = wc_get_product( $wc_product_id );
-			$wc_course_id         = get_post_meta( $wc_product_id, '_related_course', true );
-			$course_permalink     = ( ! empty( $wc_course_id ) ) ? get_the_permalink( $wc_course_id[0] ) : '';
-			$wc_product_type      = $wc_product->product_type;
-			if ( 'course' === $wc_product_type ) {
+			// If it's the course purchase.
+			if ( 'course' === $product_type ) {
 				?>
 				<script>
-				jQuery(function($){
-					// Redirect with a delay of 3 seconds
-					setTimeout(function(){
-						// Courses Loader HTML Append
-						var courses_loader_html = '<div class="courses_loader loader_bg hide"><span><?php esc_html_e( 'Taking you to the course…', 'marketingops' ); ?> </span><div class="loader"></div></div>'
-						$('body').append(courses_loader_html);
-						$('.courses_loader').addClass('show').removeClass('hide');
-					}, 3000);
-					// Redirect with a delay of 5 seconds
-					setTimeout(function(){
-						// Courses Loader Append with Transition
-						$('html, body').addClass('fixed');
-						$('.courses_loader').addClass('animated');
-					}, 5000);
-					// Redirect with a delay of 8 seconds
-					setTimeout(function(){
-						// Redirect to Courses Page
+				jQuery( function( $ ) {
+					// Redirect with a delay of 3 seconds.
+					setTimeout( function() {
+						// Courses Loader HTML Append.
+						$( 'body' ).append( '<div class="courses_loader loader_bg hide"><span><?php esc_html_e( 'Taking you to the course…', 'marketingops' ); ?> </span><div class="loader"></div></div>' );
+						$( '.courses_loader' ).addClass( 'show' ).removeClass( 'hide' );
+					}, 3000 );
+
+					// Redirect with a delay of 5 seconds.
+					setTimeout( function() {
+						// Courses Loader Append with Transition.
+						$( 'html, body' ).addClass( 'fixed' );
+						$( '.courses_loader' ).addClass( 'animated' );
+					}, 5000 );
+
+					// Redirect with a delay of 8 seconds.
+					setTimeout( function() {
+						// Redirect to Courses Page.
 						window.location.href = '<?php echo $course_permalink; ?>';
-					}, 8000);
-				});
+					}, 8000 );
+				} );
 				</script>
 				<?php
-			}
-		}
-
-		if ( is_user_logged_in() ) {
-			$get_profile_status   = get_user_meta( get_current_user_id(), 'profile-setup-completed', true );
-			$all_user_meta        = get_user_meta( get_current_user_id() );
-			$first_name           = ! empty ( $all_user_meta['first_name'][0] ) ? $all_user_meta['first_name'][0] : '';
-			$lastname             = ! empty( $all_user_meta['last_name'][0] ) ? $all_user_meta['last_name'][0] : '';
-			$location             = ! empty( $all_user_meta['country'][0] ) ? $all_user_meta['country'][0] : '';
-			$array_data           = array(
-				$first_name,
-				$lastname,
-				$location,
-			);
-
-			if ( in_array( 'yes', $subcription_product_status, true ) ) {
-				if (  in_array( '', $array_data, true ) ) {
-					$redirect_url = site_url( 'profile-setup' );
-					if ( ! $order->has_status( 'failed' ) ) {
-						wp_safe_redirect( $redirect_url );
-						exit;
-					}
-				} else {
-					$redirect_url = site_url( 'profile' );
-					if ( ! $order->has_status( 'failed' ) ) {
-						wp_safe_redirect( $redirect_url );
-						exit;
+			} elseif ( 'variable-subscription' === $product_type ) { // If a subscription has been purchased.
+				if ( ! $order->has_status( 'failed' ) ) {
+					if ( 'mo-pros-agency-membership' === $product_slug ) {
+						?>
+						<script>
+						jQuery( function( $ ) {
+							window.location.href = '<?php echo site_url( 'my-account/agency-profile/' ); ?>'; // Do the needful redirection.
+						} );
+						</script>
+						<?php
+					} elseif ( 'mopros-membership' === $product_slug ) {
+						?>
+						<script>
+						jQuery( function( $ ) {
+							window.location.href = '<?php echo site_url( 'profile-setup' ); ?>'; // Do the needful redirection.
+						} );
+						</script>
+						<?php
 					}
 				}
-				
 			}
 		}
-		
 	}
+
 	/**
 	 * Function to return unset additional tabs.
 	 *
