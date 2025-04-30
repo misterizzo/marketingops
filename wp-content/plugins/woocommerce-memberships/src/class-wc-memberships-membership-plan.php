@@ -17,7 +17,7 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2025, SkyVerge, Inc. (info@skyverge.com)
+ * @copyright Copyright (c) 2014-2024, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -1832,7 +1832,7 @@ class WC_Memberships_Membership_Plan {
 	 * @since 1.0.0
 	 *
 	 * @param array $args optional arguments to pass to `get_posts()` with defaults
-	 * @return int[]|WC_Memberships_User_Membership[] array of user memberships or user membership IDs
+	 * @return int[]|\WC_Memberships_User_Membership[] array of user memberships or user membership IDs
 	 */
 	public function get_memberships( $args = array() ) {
 
@@ -1921,33 +1921,6 @@ class WC_Memberships_Membership_Plan {
 		return $this->get_memberships_count( 'active' ) > 0;
 	}
 
-	/**
-	 * Gets an existing membership of this plan for the provided user.
-	 * This is to be used when checking if there's an existing membership that can be renewed, but it does not _guarantee_
-	 * that the returned membership _will_ be renewed.
-	 *
-	 * @since 1.26.11
-	 */
-	protected function getExistingMembershipForGrantingAccessFromPurchase(int $userId, int $productId) : ?WC_Memberships_User_Membership
-	{
-		$existingMembership = null;
-
-		if (wc_memberships_is_user_member($userId, $this->id, false)) {
-			$existingMembership = wc_memberships_get_user_membership($userId, $this->id);
-		}
-
-		/**
-		 * Filters the membership that may be used for a _potential_ renewal in {@see static::grant_access_from_purchase()}.
-		 *
-		 * @since 1.26.11
-		 *
-		 * @param ?WC_Memberships_User_Membership $existingMembership
-		 * @param int $userId
-		 * @param int $planId
-		 * @param int $productId
-		 */
-		return apply_filters('wc_memberships_existing_membership_for_potential_renewal', $existingMembership, $userId, $this->id, $productId);
-	}
 
 	/**
 	 * Grants a user access to this plan from a purchase.
@@ -1976,7 +1949,8 @@ class WC_Memberships_Membership_Plan {
 		$access_granted = wc_memberships_get_order_access_granted_memberships( $order_id );
 
 		// check if user is perhaps a member, but membership is expired/cancelled
-		if ($existing_membership = $this->getExistingMembershipForGrantingAccessFromPurchase($user_id, $product_id)) {
+		if (    wc_memberships_is_user_member( $user_id, $this->id, false )
+		     && ( $existing_membership = wc_memberships_get_user_membership( $user_id, $this->id ) ) ) {
 
 			$user_membership_id  = $existing_membership->get_id();
 			$past_order_id       = $existing_membership->get_order_id();

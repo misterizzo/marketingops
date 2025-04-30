@@ -17,7 +17,7 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2025, SkyVerge, Inc. (info@skyverge.com)
+ * @copyright Copyright (c) 2014-2024, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -41,9 +41,6 @@ abstract class Courseware {
 
 	/** @var string membership plan rule meta key for setting an option whether to auto-enroll members of the plan in a given course */
 	const COURSE_AUTO_ENROLL_PLAN_RULE_META_KEY = 'course_auto_enroll';
-
-	/** @var string name of the Action Scheduler job for handling un-enrollment */
-	const UN_ENROLL_AS_JOB_NAME = 'wc_memberships_maybe_un_enroll_from_membership_courses';
 
 
 	/** @var string course plugin ID */
@@ -80,7 +77,6 @@ abstract class Courseware {
 
 		add_action( 'wc_memberships_user_membership_status_changed', [ $this, 'handle_user_membership_status_changed' ] );
 		add_action( 'wc_memberships_user_membership_saved', [ $this, 'handle_user_membership_saved' ], 10, 2 );
-		add_action(static::UN_ENROLL_AS_JOB_NAME, [$this, 'handleAsyncCourseUnEnrollment']);
 	}
 
 
@@ -148,7 +144,7 @@ abstract class Courseware {
 		if ($this->isMembershipActive($userMembership)) {
 			$this->maybe_start_courses_associated_with_membership($userMembership);
 		} else {
-			$this->dispatchJobToMaybeUnEnrollFromCourses($userMembership);
+			$this->maybeUnEnrollFromCoursesAssociatedWithMembership($userMembership);
 		}
 	}
 
@@ -175,48 +171,9 @@ abstract class Courseware {
 		}
 	}
 
-	/**
-	 * Dispatches a background job to maybe handle un-enrollment from associated courses.
-	 *
-	 * We do this via a background job because when a subscription transitions out of trial to active, it might end
-	 * up in a "paused" state for just a few seconds (e.g. go from trial => paused => active all within 1 minute).
-	 * We don't want to un-enroll from courses during that tiny "paused" period, so we delay the un-enroll check
-	 * slightly later. At that point we'll un-enroll only if the membership still isn't active.
-	 *
-	 * @see static::handleAsyncCourseUnEnrollment() -- job callback
-	 *
-	 * @param WC_Memberships_User_Membership $userMembership
-	 * @return void
-	 */
-	protected function dispatchJobToMaybeUnEnrollFromCourses(WC_Memberships_User_Membership $userMembership) : void
-	{
-		as_schedule_single_action(
-			time() + HOUR_IN_SECONDS,
-			static::UN_ENROLL_AS_JOB_NAME,
-			[$userMembership->get_id()],
-			'woocommerce-memberships'
-		);
-	}
-
-	/**
-	 * Callback for the {@see static::UN_ENROLL_AS_JOB_NAME} background job.
-	 *
-	 * This triggers course un-enrollment if the membership is still inactive.
-	 *
-	 * @param int|mixed $userMembershipId
-	 * @return void
-	 */
-	public function handleAsyncCourseUnEnrollment($userMembershipId): void
-	{
-		$membership = wc_memberships_get_user_membership($userMembershipId);
-		if ($membership instanceof WC_Memberships_User_Membership && ! $this->isMembershipActive($membership)) {
-			$this->maybeUnEnrollFromCoursesAssociatedWithMembership($membership);
-		}
-	}
-
 	protected function maybeUnEnrollFromCoursesAssociatedWithMembership(WC_Memberships_User_Membership $userMembership): void
 	{
-		foreach ($this->get_user_membership_courses($userMembership) as $course) {
+		foreach($this->get_user_membership_courses($userMembership) as $course) {
 			$this->autoUnEnrollCourse((int) $course->ID, $userMembership);
 		}
 	}
