@@ -5,11 +5,13 @@
  * @package HelloElementor
  */
 
+use Elementor\WPNotificationsPackage\V110\Notifications as ThemeNotifications;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'HELLO_ELEMENTOR_VERSION', '3.1.1' );
+define( 'HELLO_ELEMENTOR_VERSION', '3.3.0' );
 
 if ( ! isset( $content_width ) ) {
 	$content_width = 800; // Pixels.
@@ -60,16 +62,14 @@ if ( ! function_exists( 'hello_elementor_setup' ) ) {
 					'flex-width'  => true,
 				]
 			);
-
-			/*
-			 * Editor Style.
-			 */
-			add_editor_style( 'classic-editor.css' );
-
-			/*
-			 * Gutenberg wide images.
-			 */
 			add_theme_support( 'align-wide' );
+			add_theme_support( 'responsive-embeds' );
+
+			/*
+			 * Editor Styles
+			 */
+			add_theme_support( 'editor-styles' );
+			add_editor_style( 'editor-styles.css' );
 
 			/*
 			 * WooCommerce.
@@ -263,3 +263,21 @@ if ( ! function_exists( 'hello_elementor_body_open' ) ) {
 		wp_body_open();
 	}
 }
+
+function hello_elementor_get_theme_notifications(): ThemeNotifications {
+	static $notifications = null;
+
+	if ( null === $notifications ) {
+		require get_template_directory() . '/vendor/autoload.php';
+
+		$notifications = new ThemeNotifications(
+			'hello-elementor',
+			HELLO_ELEMENTOR_VERSION,
+			'theme'
+		);
+	}
+
+	return $notifications;
+}
+
+hello_elementor_get_theme_notifications();

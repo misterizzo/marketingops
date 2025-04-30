@@ -1,5 +1,4 @@
 <?php
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -104,6 +103,59 @@ function hello_elementor_settings_page_scripts() {
 function hello_elementor_settings_page_render() {
 	?>
 	<div id="hello-elementor-settings"></div>
+	<?php
+
+	add_action( 'admin_footer', 'hello_elementor_settings_page_footer' );
+}
+
+function hello_elementor_settings_page_footer() {
+	$notifications = hello_elementor_get_theme_notifications()->get_notifications_by_conditions();
+	?>
+	<style>
+		#hello-elementor-notifications-dialog {
+			max-height: 80vh;
+			padding: 20px;
+			border: 1px solid #ccc;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+		}
+		#hello-elementor-notifications-dialog::backdrop {
+			background-color: rgba(0, 0, 0, 0.5);
+		}
+		#hello-elementor-notifications-dialog h2 {
+			font-size: 1.5em;
+		}
+		#hello-elementor-notifications-dialog h3 {
+			font-size: 1.1em;
+		}
+		#hello-elementor-notifications-dialog .close-notifications-dialog {
+			position: absolute;
+			inset-block-start: 20px;
+			inset-inline-end: 20px;
+			font-size: 26px;
+			background: none;
+			border: none;
+			aspect-ratio: 1;
+			cursor: pointer;
+		}
+	</style>
+	<script>
+		document.addEventListener( 'DOMContentLoaded', function() {
+			const closeDialogBtn = document.querySelector( '#hello-elementor-notifications-dialog button.close-notifications-dialog' );
+			const dialog = document.getElementById( 'hello-elementor-notifications-dialog' );
+
+			closeDialogBtn.addEventListener( 'click', function() {
+				dialog.close();
+			} );
+		} );
+	</script>
+	<dialog id="hello-elementor-notifications-dialog" aria-labelledby="hello-elementor-notifications-dialog-heading">
+		<button autofocus class="close-notifications-dialog" aria-label="<?php echo esc_attr__( 'Close changelog', 'hello-elementor' ); ?>"> &times; </button>
+		<h2 id="hello-elementor-notifications-dialog-heading"><?php echo esc_html__( 'Changelog:', 'hello-elementor' ); ?></h2>
+		<?php foreach ( $notifications as $item ) : ?>
+			<h3><?php echo esc_html( $item['title'] ); ?></h3>
+			<p><?php echo wp_kses_post( $item['description'] ); ?></p>
+		<?php endforeach; ?>
+	</dialog>
 	<?php
 }
 

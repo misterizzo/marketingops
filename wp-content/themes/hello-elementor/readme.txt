@@ -2,9 +2,9 @@
 
 Contributors: elemntor, KingYes, ariel.k, bainternet
 Requires at least: 6.0
-Tested up to: 6.5
-Stable tag: 3.1.1
-Version: 3.1.1
+Tested up to: 6.7
+Stable tag: 3.3.0
+Version: 3.3.0
 Requires PHP: 7.4
 License: GNU General Public License v3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -35,6 +35,22 @@ License: CC0 1.0 Universal (CC0 1.0)
 Source: https://stocksnap.io/photo/4B83RD7BV9
 
 == Changelog ==
+
+= 3.3.0 - 2025-01-21 =
+* Tweak: Added changelog link in theme settings
+* Tweak: Updated minimum required Safari version to 15.5
+* Tweak: Update autoprefixer to latest versions
+
+= 3.2.1 - 2024-12-16 =
+* Fix: Gutenberg editor expanded disproportionately after adding support for `theme.json` ([#430](https://github.com/elementor/hello-theme/issues/430))
+* Fix: Use CSS logical properties in the theme
+* Fix: Add ARIA attributes to header nav menu
+
+= 3.2.0 - 2024-12-15 =
+* Tweak: Convert classic to hybrid theme with block-editor support
+* Tweak: Added new design options to header/footer
+* Tweak: Update `Tested up to 6.7`
+* Fix: Minify JS files ([#419](https://github.com/elementor/hello-theme/issues/419))
 
 = 3.1.1 - 2024-07-30 =
 * Fix: Use consistent `<h2>` for comments title and comment form

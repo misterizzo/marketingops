@@ -11,14 +11,15 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.ActionLinks = void 0;
-const ActionLinks = ({
-  image,
-  alt,
-  title,
-  message,
-  button,
-  link
-}) => {
+const ActionLinks = _ref => {
+  let {
+    image,
+    alt,
+    title,
+    message,
+    button,
+    link
+  } = _ref;
   return /*#__PURE__*/React.createElement("div", {
     className: "hello_elementor__action_links"
   }, /*#__PURE__*/React.createElement("img", {
@@ -137,7 +138,16 @@ const SettingsPage = () => {
     className: "hello_elementor__container"
   }, /*#__PURE__*/React.createElement("div", {
     className: "hello_elementor__title"
-  }, /*#__PURE__*/React.createElement("h1", null, (0, _i18n.__)('Hello Theme Settings', 'hello-elementor'))))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h1", null, (0, _i18n.__)('Hello Theme Settings', 'hello-elementor')), /*#__PURE__*/React.createElement(_components.Button, {
+    size: 'small',
+    variant: 'link',
+    onClick: () => {
+      const dialog = document.getElementById('hello-elementor-notifications-dialog');
+      if (dialog) {
+        dialog.showModal();
+      }
+    }
+  }, (0, _i18n.__)('Changelog', 'hello-elementor'))))), /*#__PURE__*/React.createElement("div", {
     className: "hello_elementor__main"
   }, /*#__PURE__*/React.createElement(_components.Panel, null, /*#__PURE__*/React.createElement(_settingsPanel.SettingsPanel, {
     SETTINGS,
@@ -222,11 +232,12 @@ Object.defineProperty(exports, "__esModule", ({
 exports.SettingsPanel = void 0;
 var _i18n = __webpack_require__(723);
 var _components = __webpack_require__(427);
-const SettingsPanel = ({
-  SETTINGS,
-  settingsData,
-  updateSettings
-}) => {
+const SettingsPanel = _ref => {
+  let {
+    SETTINGS,
+    settingsData,
+    updateSettings
+  } = _ref;
   const protocol = window.location.protocol || 'https:';
   const hostname = window.location.hostname || 'example.com';
   const prefix = protocol + '//' + hostname;
@@ -356,9 +367,9 @@ module.exports = window["wp"]["notices"];
 /***/ 994:
 /***/ ((module) => {
 
-function _interopRequireDefault(e) {
-  return e && e.__esModule ? e : {
-    "default": e
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    "default": obj
   };
 }
 module.exports = _interopRequireDefault, module.exports.__esModule = true, module.exports["default"] = module.exports;

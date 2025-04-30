@@ -15,8 +15,8 @@ exports["default"] = void 0;
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(693));
 var _controlsHook = _interopRequireDefault(__webpack_require__(239));
 class _default extends $e.modules.ComponentBase {
-  constructor(...args) {
-    super(...args);
+  constructor() {
+    super(...arguments);
     (0, _defineProperty2.default)(this, "pages", {});
   }
   getNamespace() {
@@ -222,7 +222,8 @@ class ControlsHook extends $e.modules.hookUI.After {
    */
   toggleLayoutClass(element, classPrefix, inputOptions, inputValue) {
     // Loop through the possible classes and remove the one that's not in use
-    Object.entries(inputOptions).forEach(([key]) => {
+    Object.entries(inputOptions).forEach(_ref => {
+      let [key] = _ref;
       element.removeClass(classPrefix + key);
     });
 
@@ -276,13 +277,19 @@ exports["default"] = ControlsHook;
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var toPropertyKey = __webpack_require__(736);
-function _defineProperty(e, r, t) {
-  return (r = toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
-    value: t,
-    enumerable: !0,
-    configurable: !0,
-    writable: !0
-  }) : e[r] = t, e;
+function _defineProperty(obj, key, value) {
+  key = toPropertyKey(key);
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
 }
 module.exports = _defineProperty, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
@@ -291,9 +298,9 @@ module.exports = _defineProperty, module.exports.__esModule = true, module.expor
 /***/ 994:
 /***/ ((module) => {
 
-function _interopRequireDefault(e) {
-  return e && e.__esModule ? e : {
-    "default": e
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    "default": obj
   };
 }
 module.exports = _interopRequireDefault, module.exports.__esModule = true, module.exports["default"] = module.exports;
