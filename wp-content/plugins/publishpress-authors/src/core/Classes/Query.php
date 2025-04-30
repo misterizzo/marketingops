@@ -191,11 +191,11 @@ class Query
 
         $maybe_both_query = $maybe_both ? '$0 OR ' : '';
 
-        $query->authors_having_terms = ' ' . $wpdb->term_taxonomy . '.term_id = \'' . (int)$term->term_id . '\' ';
+        $query->authors_having_terms = ' ppmaq2.term_id = \'' . (int)$term->term_id . '\' ';
 
         /**
          * Regex for Post Author + Post Status solution for private and custom post status
-         * (wp_term_taxonomy.term_id = 2 AND wp_posts.post_status = 'private')
+         * (ppmaq2.term_id = 2 AND wp_posts.post_status = 'private')
          * https://github.com/publishpress/PublishPress-Authors/issues/1398
          */
         $current_user_id   = get_current_user_id();
@@ -211,7 +211,7 @@ class Query
         }
         $where = preg_replace(
             '/\(?\b(?:' . $wpdb->posts . '\.)?post_author\s*(?:=|IN)\s*\(?(\d+)\)? AND (?:' . $wpdb->posts . '\.)?post_status = \'(\w+)\'/',
-            '(' . $maybe_both_query . ' ' . $wpdb->term_taxonomy . '.term_id = \'' . (int)$current_user_term_id . '\' AND ' . $wpdb->posts . '.post_status = \'$2\'',
+            '(' . $maybe_both_query . ' ppmaq2.term_id = \'' . (int)$current_user_term_id . '\' AND ' . $wpdb->posts . '.post_status = \'$2\'',
             $where,
             -1
         );
@@ -221,12 +221,15 @@ class Query
          */
         $where = preg_replace(
             '/\(?\b(?:' . $wpdb->posts . '\.)?post_author\s*(?:=|IN)\s*\(?(\d+)\)?/',
-            '(' . $maybe_both_query . ' ' . '(' . $wpdb->term_taxonomy . '.term_id = \'' . (int)$term->term_id . '\') ' . ')',
+            '(' . $maybe_both_query . ' (ppmaq2.term_id = \'' . (int)$term->term_id . '\') ' . ')',
             $where,
             -1
         );
-
-        $where = static::add_custom_post_types_to_query($where);
+        
+        // Add post type only if it's not an admin main query
+        if ( ! ( is_admin() && $query->is_main_query() ) ) {
+            $where = static::add_custom_post_types_to_query($where);
+        }
 
         return apply_filters('publishpress_authors_filter_posts_list_where', $where, $query, $term);
     }
@@ -247,18 +250,19 @@ class Query
             return $join;
         }
 
-        // Check to see that JOIN hasn't already been added. Props michaelingp and nbaxley.
-        $term_relationship_inner_join = " INNER JOIN {$wpdb->term_relationships} ON ({$wpdb->posts}.ID = {$wpdb->term_relationships}.object_id)";
-        $term_relationship_left_join  = " LEFT JOIN {$wpdb->term_relationships} ON ({$wpdb->posts}.ID = {$wpdb->term_relationships}.object_id)";
-        $term_taxonomy_join           = " INNER JOIN {$wpdb->term_taxonomy} ON ( {$wpdb->term_relationships}.term_taxonomy_id = {$wpdb->term_taxonomy}.term_taxonomy_id )";
+        // Check to see that JOIN hasn't already been added.
+        $term_relationship_inner_join = " INNER JOIN {$wpdb->term_relationships} AS ppmaq1 ON ({$wpdb->posts}.ID = ppmaq1.object_id)";
+        $term_relationship_left_join  = " LEFT JOIN {$wpdb->term_relationships} AS ppmaq1 ON ({$wpdb->posts}.ID = ppmaq1.object_id)";
+        $term_taxonomy_join           = " INNER JOIN {$wpdb->term_taxonomy} AS ppmaq2 ON ( ppmaq1.term_taxonomy_id = ppmaq2.term_taxonomy_id )";
 
-        // 4.6+ uses a LEFT JOIN for tax queries so we need to check for both.
+        // Use LEFT JOIN for tax queries, so check for both types.
         if (false === strpos($join, trim($term_relationship_inner_join))
             && false === strpos($join, trim($term_relationship_left_join))) {
             $join .= $term_relationship_left_join;
         }
 
         if (false === strpos($join, trim($term_taxonomy_join))) {
+            // Ensure the join uses a LEFT JOIN if needed.
             $join .= str_replace('INNER JOIN', 'LEFT JOIN', $term_taxonomy_join);
         }
 
@@ -281,14 +285,14 @@ class Query
             return $groupby;
         }
 
-        $having  = 'MAX( IF ( ' . $wpdb->term_taxonomy . '.taxonomy = "author", IF ( ' . $query->authors_having_terms . ',2,1 ),0 ) ) <> 1 ';
+        $having  = 'MAX( IF ( ppmaq2.taxonomy = "author", IF ( ' . $query->authors_having_terms . ',2,1 ),0 ) ) <> 1 ';
         $groupby = $wpdb->posts . '.ID HAVING ' . $having;
 
         return $groupby;
     }
 
     /**
-     * Modify the WHERE clause on author queries.
+     * Modify the WHERE clause on author queries for the admin posts list.
      *
      * @param string $where Existing WHERE clause.
      * @param WP_Query $query Query object.
@@ -330,11 +334,11 @@ class Query
             return $where;
         }
 
-        $terms_implode = '(' . $wpdb->term_taxonomy . '.term_id = \'' . (int)$author->getTerm()->term_id . '\') ';
+        $terms_implode = '(ppmaq2.term_id = \'' . (int)$author->getTerm()->term_id . '\') ';
 
         /**
          * Regex for Post Author + Post Status solution for private and custom post status
-         * (wp_term_taxonomy.term_id = 2 AND wp_posts.post_status = 'private')
+         * (ppmaq2.term_id = 2 AND wp_posts.post_status = 'private')
          * https://github.com/publishpress/PublishPress-Authors/issues/1398
          */
         $current_user_id   = get_current_user_id();
@@ -350,14 +354,14 @@ class Query
         }
         $where = preg_replace(
             '/\(?\b(?:' . $wpdb->posts . '\.)?post_author\s*(?:=|IN)\s*\(?(\d+)\)? AND (?:' . $wpdb->posts . '\.)?post_status = \'(\w+)\'/',
-            '(' . $wpdb->term_taxonomy . '.term_id = \'' . (int)$current_user_term_id . '\' AND ' . $wpdb->posts . '.post_status = \'$2\'',
+            '(' . 'ppmaq2.term_id = \'' . (int)$current_user_term_id . '\' AND ' . $wpdb->posts . '.post_status = \'$2\'',
             $where,
             -1
         );
 
         $where = preg_replace(
             '/\(?\b(?:' . $wpdb->posts . '\.)?post_author\s*(?:=|IN|NOT IN)\s*\(?(\d+)\)?/',
-            '(' . ' ' . $terms_implode . ')',
+            '(' . $terms_implode . ')',
             $where,
             -1
         );
@@ -411,7 +415,7 @@ class Query
     }
 
     /**
-     * Modify the JOIN clause on author queries.
+     * Modify the JOIN clause on author queries for the admin posts list.
      *
      * @param string $join Existing JOIN clause.
      * @param WP_Query $query Query object.
@@ -449,12 +453,11 @@ class Query
             return $join;
         }
 
-        // Check to see that JOIN hasn't already been added. Props michaelingp and nbaxley.
-        $term_relationship_inner_join = " INNER JOIN {$wpdb->term_relationships} ON ({$wpdb->posts}.ID = {$wpdb->term_relationships}.object_id)";
-        $term_relationship_left_join  = " LEFT JOIN {$wpdb->term_relationships} ON ({$wpdb->posts}.ID = {$wpdb->term_relationships}.object_id)";
-        $term_taxonomy_join           = " INNER JOIN {$wpdb->term_taxonomy} ON ( {$wpdb->term_relationships}.term_taxonomy_id = {$wpdb->term_taxonomy}.term_taxonomy_id )";
+        // Check to see that JOIN hasn't already been added.
+        $term_relationship_inner_join = " INNER JOIN {$wpdb->term_relationships} AS ppmaq1 ON ({$wpdb->posts}.ID = ppmaq1.object_id)";
+        $term_relationship_left_join  = " LEFT JOIN {$wpdb->term_relationships} AS ppmaq1 ON ({$wpdb->posts}.ID = ppmaq1.object_id)";
+        $term_taxonomy_join           = " INNER JOIN {$wpdb->term_taxonomy} AS ppmaq2 ON ( ppmaq1.term_taxonomy_id = ppmaq2.term_taxonomy_id )";
 
-        // 4.6+ uses a LEFT JOIN for tax queries so we need to check for both.
         if (false === strpos($join, trim($term_relationship_inner_join))
             && false === strpos($join, trim($term_relationship_left_join))) {
             $join .= $term_relationship_left_join;
@@ -469,7 +472,7 @@ class Query
     }
 
     /**
-     * Modify the GROUP BY clause on author queries.
+     * Modify the GROUP BY clause on author queries for the admin posts list.
      *
      * @param string $groupby Existing GROUP BY clause.
      * @param WP_Query $query Query object.

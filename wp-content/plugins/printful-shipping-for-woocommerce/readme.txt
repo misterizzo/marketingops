@@ -2,9 +2,9 @@
 Contributors: girts_u, kievins, kberzins
 Tags: woocommerce, printful, drop shipping, shipping, shipping rates, fulfillment, printing, fedex, carriers, checkout, t-shirts
 Requires at least: 5.3
-Tested up to: 6.5.4
+Tested up to: 6.7.1
 Requires PHP: 5.6
-Stable tag: 2.2.10
+Stable tag: 2.2.11
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -62,6 +62,10 @@ Go to https://www.printful.com/dashboard/store , select your WooCommerce store, 
 5. Support page
 
 == Upgrade Notice ==
+= 2.2.11 =
+WordPress compatibility raised to 6.7.1
+Woocommerce compatibility raised to 9.6.1
+
 = 2.2.10 =
 QIT changes V2
 

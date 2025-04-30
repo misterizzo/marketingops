@@ -104,6 +104,7 @@ class MA_Author_Categories extends Module
         add_action('wp_ajax_reorder_ppma_author_category', [$this, 'handleReOrderCategory']);
         add_filter('removable_query_args', [$this, 'removableQueryArgs']);
         add_action('delete_post', [$this, 'deleteAuthorCategoryRelation']);
+        add_action('publishpress_author_categories_flush_cache', [$this, 'flush_cache'], 15);
     }
 
     /**
@@ -171,6 +172,13 @@ class MA_Author_Categories extends Module
             ]
         );
 
+    }
+
+    /**
+     * Flush author category cache
+     */
+    public function flush_cache($category_id) {
+        wp_cache_flush_group('author_categories_results_cache');
     }
 
     /**
@@ -412,26 +420,43 @@ class MA_Author_Categories extends Module
      */
     private function addAuthorCategory($insert_args) {
         global $wpdb;
-
-        $table_name     = AuthorCategoriesSchema::tableName();
-
+    
+        $table_name = AuthorCategoriesSchema::tableName();
+    
         $meta_data = [];
         if (isset($insert_args['meta_data'])) {
             $meta_data = $insert_args['meta_data'];
             unset($insert_args['meta_data']);
         }
-
-        $wpdb->insert(
-            $table_name,
-            $insert_args
-        );
-
+    
+        // Check if the slug already exists
+        if (isset($insert_args['slug'])) {
+            $slug = $insert_args['slug'];
+            $existing_id = $wpdb->get_var($wpdb->prepare(
+                "SELECT id FROM $table_name WHERE slug = %s",
+                $slug
+            ));
+    
+            if ($existing_id) {
+                // Return existing category if found
+                return get_ppma_author_categories(['id' => $existing_id]);
+            }
+        }
+    
+        // Proceed with insertion if slug doesn't exist
+        $result = $wpdb->insert($table_name, $insert_args);
+    
+        if ($result === false) {
+            return false;
+        }
+    
         $category_id = $wpdb->insert_id;
-
+    
         if ((int) $category_id > 0) {
             foreach ($meta_data as $meta_data_key => $meta_data_value) {
                 self::updateAuthorCategoryMeta($category_id, $meta_data_key, $meta_data_value);
             }
+            do_action('publishpress_author_categories_flush_cache', $category_id);
             return get_ppma_author_categories(['id' => $category_id]);
         } else {
             return false;
@@ -472,6 +497,8 @@ class MA_Author_Categories extends Module
         foreach ($meta_data as $meta_data_key => $meta_data_value) {
             self::updateAuthorCategoryMeta($id, $meta_data_key, $meta_data_value);
         }
+
+        do_action('publishpress_author_categories_flush_cache', $id);
 
         return get_ppma_author_categories(['id' => $id]);
     }

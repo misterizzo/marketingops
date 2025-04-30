@@ -21,6 +21,11 @@
                 } else {
                     $('.ppma-author-list-editor-tab-content.ppma-editor-group_by').hide();
                 }
+                if ($(this).val() == 'authors_recent') {
+                    $('.ppma-author-list-editor-tab-content.ppma-editor-featured_image_size').show();
+                } else {
+                    $('.ppma-author-list-editor-tab-content.ppma-editor-featured_image_size').hide();
+                }
             }
         });
 
@@ -66,6 +71,11 @@
             if (!isEmptyOrSpaces(layout_columns)) {
                 if (layout === 'authors_recent') {
                     shortcode += ' authors_recent_col="' + layout_columns + '"';
+                    // add featured_image_size
+                    var featured_image_size = $('.author-list-tab-content .input #featured_image_size').val();
+                    if (!isEmptyOrSpaces(featured_image_size)) {
+                        shortcode += ' featured_image_size="' + featured_image_size + '"';
+                    }
                 } else {
                     shortcode += ' layout_columns="' + layout_columns + '"';
                 }
@@ -75,18 +85,27 @@
             if (!isEmptyOrSpaces(group_by)) {
                 shortcode += ' group_by="' + group_by + '"';
             }
-            // add user roles, authors or term_id
+            // add user roles, authors, term_id or category_id
             var author_type = $('.author-list-tab-content .input input[name="author_list[author_type]"]:checked').val();
             var roles = $('.author-list-tab-content .input #author_type-roles').val();
             var authors = $('.author-list-tab-content .input #author_type-authors').val();
             var term_id = $('.author-list-tab-content .input #author_type-term_id').val();
+            var category_id = $('.author-list-tab-content .input #author_type-category_id').val();
             if (author_type == 'roles' && roles.length > 0) {
                 shortcode += ' roles="' + roles.join(',') + '"';
             } else if (author_type == 'authors' && authors.length > 0) {
                 shortcode += ' authors="' + authors.join(',') + '"';
             } else if (author_type == 'term_id' && term_id.length > 0) {
                 shortcode += ' term_id="' + term_id.join(',') + '"';
+            } else if (author_type == 'category_id' && category_id.length > 0) {
+                shortcode += ' category_id="' + category_id.join(',') + '"';
             }
+            // add exclude_term_id
+            var exclude_term_id = $('.author-list-tab-content .input #exclude_term_id-exclude_term_id').val();
+            if (exclude_term_id.length > 0) {
+                shortcode += ' exclude_term_id="' + exclude_term_id.join(',') + '"';
+            }
+
             // add limit_per_page
             var limit_per_page = $('.author-list-tab-content .input #limit_per_page').val();
             if (pro_active && !isEmptyOrSpaces(limit_per_page)) {

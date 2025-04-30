@@ -1,5 +1,9 @@
 *** Printful shipping for WooCommerce Changelog ***
 
+2025-02-06 - version 2.2.11
+* Updated - WordPress compatibility raised to 6.7.1
+* Updated - Woocommerce compatibility raised to 9.6.1
+
 2023-07-10 - version 2.2.10
 * Updated - QIT changes V2
 

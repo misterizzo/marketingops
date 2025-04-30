@@ -91,10 +91,12 @@ class AuthorBoxesDefault
         $editor_data['name_html_tag'] = 'div';
         //bio default
         $editor_data['author_bio_show'] = 1;
+        $editor_data['author_bio_link'] = 0;
         $editor_data['author_bio_html_tag'] = 'p';
         //meta default
-        $editor_data['meta_view_all_show'] = 1;
+        $editor_data['meta_view_all_show'] = 0;
         $editor_data['meta_html_tag'] = 'span';
+        $editor_data['meta_label'] = __('View all posts', 'publishpress-authors');
         $editor_data['meta_background_color'] = '#655997';
         $editor_data['meta_color'] = '#ffffff';
         $editor_data['meta_link_hover_color'] = '#ffffff';
@@ -175,6 +177,7 @@ class AuthorBoxesDefault
         $editor_data['name_color'] = '#000000';
         $editor_data['name_html_tag'] = 'p';
         //bio default
+        $editor_data['avatar_border_radius'] = 50;
         $editor_data['author_bio_show'] = 1;
         $editor_data['author_bio_html_tag'] = 'p';
         // email default
@@ -228,6 +231,13 @@ class AuthorBoxesDefault
         $editor_data['profile_fields_twitter_display_icon_background_color'] = '#655997';
         $editor_data['profile_fields_twitter_color'] = '#ffffff';
         $editor_data['profile_fields_twitter_display_icon_border_radius'] = 100;
+        // x default
+        $editor_data['profile_fields_x_html_tag'] = 'a';
+        $editor_data['profile_fields_x_display'] = 'icon';
+        $editor_data['profile_fields_x_display_icon'] = '<span class="dashicons dashicons-twitter"></span>';
+        $editor_data['profile_fields_x_display_icon_background_color'] = '#655997';
+        $editor_data['profile_fields_x_color'] = '#ffffff';
+        $editor_data['profile_fields_x_display_icon_border_radius'] = 100;
         // facebook default
         $editor_data['profile_fields_facebook_html_tag'] = 'a';
         $editor_data['profile_fields_facebook_display'] = 'icon';
@@ -244,6 +254,7 @@ class AuthorBoxesDefault
         //meta default
         $editor_data['meta_view_all_show'] = 0;
         $editor_data['meta_html_tag'] = 'span';
+        $editor_data['meta_label'] = __('View all posts', 'publishpress-authors');
         $editor_data['meta_background_color'] = '#655997';
         $editor_data['meta_color'] = '#ffffff';
         $editor_data['meta_link_hover_color'] = '#ffffff';
@@ -318,7 +329,7 @@ class AuthorBoxesDefault
         // hide non essential author fields
         $profile_fields   = apply_filters('multiple_authors_author_fields', [], false);
         foreach ($profile_fields as $key => $data) {
-            if (!in_array($key, ['user_email', 'user_url', 'tiktok', 'youtube', 'linkedin', 'instagram', 'twitter', 'facebook', 'job_title'])) {
+            if (!in_array($key, ['user_email', 'user_url', 'tiktok', 'youtube', 'linkedin', 'instagram', 'twitter', 'x', 'facebook', 'job_title'])) {
                 $editor_data['profile_fields_hide_' . $key] = 1;
             }
         }
@@ -350,11 +361,13 @@ class AuthorBoxesDefault
         $editor_data['name_show'] = 1;
         $editor_data['name_html_tag'] = 'div';
         //bio default
+        $editor_data['avatar_border_radius'] = 50;
         $editor_data['author_bio_show'] = 1;
         $editor_data['author_bio_html_tag'] = 'p';
         //meta default
-        $editor_data['meta_view_all_show'] = 1;
+        $editor_data['meta_view_all_show'] = 0;
         $editor_data['meta_html_tag'] = 'span';
+        $editor_data['meta_label'] = __('View all posts', 'publishpress-authors');
         $editor_data['meta_background_color'] = '#655997';
         $editor_data['meta_color'] = '#ffffff';
         $editor_data['meta_link_hover_color'] = '#ffffff';
@@ -432,6 +445,7 @@ class AuthorBoxesDefault
         //meta default
         $editor_data['meta_view_all_show'] = 0;
         $editor_data['meta_html_tag'] = 'span';
+        $editor_data['meta_label'] = __('View all posts', 'publishpress-authors');
         $editor_data['meta_background_color'] = '#655997';
         $editor_data['meta_color'] = '#ffffff';
         $editor_data['meta_link_hover_color'] = '#ffffff';
@@ -515,6 +529,7 @@ class AuthorBoxesDefault
         //meta default
         $editor_data['meta_view_all_show'] = 0;
         $editor_data['meta_html_tag'] = 'span';
+        $editor_data['meta_label'] = __('View all posts', 'publishpress-authors');
         $editor_data['meta_background_color'] = '#655997';
         $editor_data['meta_color'] = '#ffffff';
         $editor_data['meta_link_hover_color'] = '#ffffff';
@@ -602,6 +617,7 @@ class AuthorBoxesDefault
         //meta default
         $editor_data['meta_view_all_show'] = 0;
         $editor_data['meta_html_tag'] = 'span';
+        $editor_data['meta_label'] = __('View all posts', 'publishpress-authors');
         $editor_data['meta_background_color'] = '#655997';
         $editor_data['meta_color'] = '#ffffff';
         $editor_data['meta_link_hover_color'] = '#ffffff';
@@ -666,7 +682,7 @@ class AuthorBoxesDefault
      */
     public static function addEditorDataDefaultValues($editor_data) {
         $profile_fields   = apply_filters('multiple_authors_author_fields', [], false);
-        $social_fields   = ['facebook', 'twitter', 'instagram', 'linkedin', 'youtube', 'user_url', 'user_email', 'tiktok'];
+        $social_fields   = ['facebook', 'twitter', 'x', 'instagram', 'linkedin', 'youtube', 'user_url', 'user_email', 'tiktok'];
 
         foreach ($profile_fields as $key => $data) {
             if ($data['type'] === 'url' && !in_array($key, $social_fields)) {

@@ -96,7 +96,7 @@
                 var searchTerm = $(this).val().toLowerCase();
                 $('.author-field-icons-tab-contents .icon-item').each(function() {
                     var iconName = $(this).data('name');
-                    if (iconName.includes(searchTerm)) {
+                    if (String(iconName).includes(searchTerm)) {
                         $(this).removeClass('hidden');
                     } else {
                         $(this).addClass('hidden');
@@ -609,12 +609,14 @@
                 'name_show',
                 'name_author_categories',
                 'name_author_categories_divider',
+                'name_author_categories_position',
                 'display_name_position',
                 'display_name_prefix',
                 'display_name_suffix'
             ];
             var bio_refresh_trigger = [
                 'author_bio_show',
+                'author_bio_link',
                 'author_bio_limit'
             ];
             var avatar_refresh_trigger = [
@@ -622,7 +624,8 @@
                 'avatar_link'
             ];
             var meta_refresh_trigger = [
-                'meta_view_all_show'
+                'meta_view_all_show',
+                'meta_label'
             ];
             var layout_refresh_trigger = [
                 'box_tab_layout_author_separator',

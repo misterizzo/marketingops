@@ -6,8 +6,8 @@ Author URI: https://publishpress.com
 Tags: multiple authors, authors, guest authors, author bio, author layouts
 Requires at least: 5.5
 Requires PHP: 7.2.5
-Tested up to: 6.6
-Stable tag: 4.7.2
+Tested up to: 6.8
+Stable tag: 4.7.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,7 +25,7 @@ Here are the some most important features of PublishPress Authors:
 * **Author Categories**. Categorize your authors as Coauthors, Reviews, Editors, Photographers, and more.
 * **Author Fields**. Customize the user details for each author with fields for social media, job details, and more.
 * **Author Lists**. Create a custom display of all your authors. You can sort, order, and filter to show only the authors you want.
-* **Author Pages**. Showcase the work of each individual author with customizable author pages where you decide which post information is displayed. 
+* **Author Pages**. Showcase the work of each individual author with customizable author pages where you decide which post information is displayed.
 
 
 ## PublishPress Authors Pro ##
@@ -105,7 +105,7 @@ PublishPress Authors Pro enables you to create author fields and enhance your au
 
 The Pro versions of the PublishPress plugins are well worth your investment. The Pro versions have extra features and faster support. [Click here to join PublishPress](https://publishpress.com/pricing/).
 
-Join PublishPress and you'll get access to these Pro plugins:
+Join PublishPress and you'll get access to these ten Pro plugins:
 
 * [PublishPress Authors Pro](https://publishpress.com/authors) allows you to add multiple authors and guest authors to WordPress posts.
 * [PublishPress Blocks Pro](https://publishpress.com/blocks) has everything you need to build professional websites with the WordPress block editor.
@@ -115,7 +115,8 @@ Join PublishPress and you'll get access to these Pro plugins:
 * [PublishPress Permissions Pro](https://publishpress.com/permissions)  is the plugin for advanced WordPress permissions.
 * [PublishPress Planner Pro](https://publishpress.com/publishpress) is the plugin for managing and scheduling WordPress content.
 * [PublishPress Revisions Pro](https://publishpress.com/revisions) allows you to update your published pages with teamwork and precision.
-* [PublishPress Series Pro](https://publishpress.com/series) enables you to group content together into a series
+* [PublishPress Series Pro](https://publishpress.com/series) enables you to group content together into a series.
+* [PublishPress Statuses Pro](https://publishpress.com/series) enables you to create additional publishing steps for your posts.
 
 Together, these plugins are a suite of powerful publishing tools for WordPress. If you need to create a professional workflow in WordPress, with moderation, revisions, permissions and more... then you should try PublishPress.
 
@@ -221,7 +222,7 @@ Author bios can be a tricky area in WordPress because many themes try to add the
 
 = How does PublishPress Authors Compare With Other Author Plugins? =
 
-There are other plugins available such as Co-Authors Plus, Simple Author Box, Molongui, Starbox and more. These are all really good plugins. PublishPress Authors stands out because of the advanced features and flexibility. 
+There are other plugins available such as Co-Authors Plus, Simple Author Box, Molongui, Starbox and more. These are all really good plugins. PublishPress Authors stands out because of the advanced features and flexibility.
 
 == Installation ==
 
@@ -245,6 +246,74 @@ There are two ways to install the PublishPress Authors plugin:
 5. Activate the PublishPress Authors plugin.
 
 == Changelog ==
+
+= [4.7.6] - 22 April 2025 =
+
+* Fixes: Limit Author boxes custom template to theme directory, #2034
+* Update: Authors FREE Translation Updates_v.4.7.5, #2033
+
+= [4.7.5] - 07 April 2025 =
+
+* Update: Add field to assign Authors to default Author Category from Author Edit screen, #1808
+* Update: Add Authors to their assigned defauly category on new post, #1808
+* Update: Add option to show Authors belonging to same category in Author List User tab, #1809
+* Update: Add Exclude Users options on Author List, #1882
+* Update: Add a settings to enable profile checkbox field that exclude authors from Author Boxes and public display, #1973
+* Fixed: Post not showing on Authors page for some sites, #2011
+* Fixed: Conflict with Jetpack Social, #2010
+* Update: Allow to modify Author Boxes "View All Post" label, #2009
+* Fixed: Trying to access array offset on value of type bool, #2008
+* Fixed: Missing field "mainEntity" in rankmath integration, #2007
+* Update: Allow biographic information and other details in Categories boxes, #1897
+* Update: Change Authors "Name" column to "Display name publicly as", #1887
+* Fixed: Deprecated: Creation of dynamic property MA_Author_Pages, #1883
+* Update: Change author biographical information to rich editor, #1877
+* Update: Disable "View all posts" by default, #1807
+* Update: Authors Translation Updates v.4.7.4, #2004
+* Update: Translation pt_BR, #2005
+
+= [4.7.4] - 20 Feb 2025 =
+
+* Fixed: Fix data sanitization on author categories
+* Fixed: PHP Warning with Rank Math, #1970
+* Fixed: Conflict between Polylang and Authors, #1931
+* Update: Add sub headings to Author Boxes > Author Fields, #1889
+* Update: Allow Display Name Author Categories to be in front, #1894
+* Fixed: PHP Fatal error: Uncaught Error: Call to a member function get_user_object() on bool, #1997
+* Update: Add settings to show Author profile above the content, #1929
+* Fixed: Post Filter Not Working when filtering on Author and Category together, #1933
+* Fixed: Admin "Mine" tab count is incorrect, and also including post from all post types instead of current post type, #1989
+* Fixed: "Mine" not showing when author is a secondary author on posts, #1939
+* Fixed: Undefined property: WP_Error::$count, #1974
+* Fixed: Author Categories Errors on installs, #1972
+* Fixed: Redundant repeated CSS and move Author box styling from content to footer(filtereable), #1976
+* Fixed: Fatal error: "Class "MultipleAuthors\WP_Error" not found", #1971
+* Update: Update "Twitter" for "X" on new installation, #1955
+* Update: Update text for bulk edit, #1978
+* Update: Authors Translation Updates v.4.7.3, #1966
+
+= [4.7.3] - 16 Dec 2024 =
+
+* Fixed: Can't change the layout for new Author Lists, #1892
+* Fixed: HTML Title Issue with AIO SEO, #1899
+* Fixed: Schema Issue with RankMath, #1901
+* Fixed: Wrong Author name on Yoast Description, #1898
+* Fixed: Missing Schema on Page, #1926
+* Update: Add Author Recent featured image size settings in Authors Lists, #1891
+* Update: Add twitter icon and bluesky from, FA #1920
+* Update: Update FontAwesome to 6.7.1, #1930
+* Fixed: Prevented mid-word cuts for readability, #1922
+* Fixed: Small typo with the Display Name, #1895
+* Update: Move the Author Pages warning, #1893
+* Fixed: Deprecated: Dynamic properties MA_Author_Pages::$module_url and $module, #1946
+* Update: Add option for hyperlink in author bio box, #1938
+* Fixed: 4.7.0 introduced a slow query from avatar alt text, Add option to filter avatar alt 'multiple_authors_avatar_alt_text', #1923
+* Fixed: Refactor flush_cache Method, #1952
+* Update: Add margin to warnings on the Authors screen, #1909
+* Update: Use Alt text on Avatar Author Box, #1880
+* Fixed: Author category filter returning all Authors when none is found, #1878
+* Fixed: Moving Authors to new category is not reflecting after saving and reloading post, #1932
+* Update: Authors Translation Updates v.4.7.2, #1919
 
 = [4.7.2] - 15 Oct 2024 =
 

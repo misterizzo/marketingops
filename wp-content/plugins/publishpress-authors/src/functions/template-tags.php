@@ -321,12 +321,28 @@ if (!function_exists('publishpress_authors_get_all_authors')) {
         $exclude_real_user = false;
         $per_page    = 0;
         $term_counts = 0;
+        $can_exclude = true;
 
         // limit to term ids
         if (isset($instance['term_id']) && !empty($instance['term_id'])) {
+            $can_exclude = false;
             $term_ids  = explode(',', $instance['term_id']);
         } else {
             $term_ids = [];
+        }
+
+        // author category ids
+        if (isset($instance['category_id']) && !empty($instance['category_id'])) {
+            $category_ids = array_map('intval', explode(',', $instance['category_id']));
+        } else {
+            $category_ids = [];
+        }
+
+        // exclude ids
+        if ($can_exclude && isset($instance['exclude_term_id']) && !empty($instance['exclude_term_id'])) {
+            $exclude_term_ids  = explode(',', $instance['exclude_term_id']);
+        } else {
+            $exclude_term_ids = [];
         }
 
         // limit to roles
@@ -418,6 +434,19 @@ if (!function_exists('publishpress_authors_get_all_authors')) {
 
         if (!empty($term_ids)) {
             $args['include'] = array_values($term_ids);
+        } elseif (!empty($exclude_term_ids)) {
+            $args['exclude'] = array_values($exclude_term_ids);
+        }
+
+        // Add author_category meta query to args
+        if (!empty($category_ids)) {
+            $args['meta_query'] = [
+                [
+                    'key' => 'author_category',
+                    'value' => $category_ids,
+                    'compare' => 'IN',
+                ]
+            ];
         }
 
         /**
@@ -427,6 +456,13 @@ if (!function_exists('publishpress_authors_get_all_authors')) {
          * @param array $instance Original passed instance.
          */
         $args = apply_filters('pp_multiple_authors_get_all_authors_args', $args, $instance);
+
+        $args['orderby'] = sanitize_sql_orderby($args['orderby'] ?? 'name');
+        if (empty($args['orderby'])) {
+            $args['orderby'] = 'name';
+        }
+
+        $args['order'] = strtoupper($args['order'] ?? 'ASC') === 'DESC' ? 'DESC' : 'ASC';
 
         if (!empty($args['orderby']) && !in_array($args['orderby'], ['name', 'count'])) {
             $meta_order = true;
@@ -459,12 +495,24 @@ if (!function_exists('publishpress_authors_get_all_authors')) {
                 $term_query .= "LEFT JOIN {$wpdb->users} u ON u.ID = tm.meta_value ";
                 $term_query .= "LEFT JOIN {$wpdb->usermeta} um ON u.ID = um.user_id ";
             }
+
+            // Add author_category filtering to custom query
+            if (!empty($category_ids)) {
+                $term_query .= "LEFT JOIN {$wpdb->termmeta} AS tm_cat ON (t.term_id = tm_cat.term_id AND tm_cat.meta_key = 'author_category') ";
+            }
             
             $term_query .= "WHERE tt.taxonomy = 'author' ";
+
+            if (!empty($category_ids)) {
+                $term_query .= "AND tm_cat.meta_value IN (" . implode(',', $category_ids) . ") ";
+            }
 
             if (!empty($term_ids)) {
                 $term_ids_string = implode(',', array_map('intval', $term_ids));
                 $term_query .= "AND t.term_id IN ({$term_ids_string}) ";
+            } elseif (!empty($exclude_term_ids)) {
+                $exclude_term_ids_string = implode(',', array_map('intval', $exclude_term_ids));
+                $term_query .= "AND t.term_id NOT IN ({$exclude_term_ids_string}) ";
             }
 
             if ($guests_only) {
@@ -566,7 +614,9 @@ if (!function_exists('publishpress_authors_get_all_authors')) {
             } else {
                 $sql_order_by = "tm.meta_value";
             }
-            $term_query .= "ORDER BY {$sql_order_by} {$args['order']}";
+            $sql_order_by = $sql_order_by . ' ' . $args['order'];
+
+            $term_query .= "ORDER BY {$sql_order_by}";
             //add limit if it's a paginated request
             if ($paged) {
                 $term_query .= " LIMIT {$offset}, {$per_page}";
@@ -608,6 +658,7 @@ if (!function_exists('publishpress_authors_get_all_authors')) {
             } elseif ($result_type === 'recent') {
                 //query recent post by authors
                 $author_recent_posts = multiple_authors_get_author_recent_posts($author);
+                $featured_image_size = isset($instance['featured_image_size']) ? $instance['featured_image_size'] : '';
 
                 //add recent posts
                 $author_recent    = '';
@@ -620,7 +671,11 @@ if (!function_exists('publishpress_authors_get_all_authors')) {
                         if ($post_index === 1) {
                             $featured_image = PP_AUTHORS_ASSETS_URL . 'img/no-image.jpeg';
                             if (has_post_thumbnail($author_recent_post)) {
-                                $featured_image_data = wp_get_attachment_image_src(get_post_thumbnail_id($author_recent_post));
+                                if (!empty($featured_image_size)) {
+                                    $featured_image_data = wp_get_attachment_image_src(get_post_thumbnail_id($author_recent_post), $featured_image_size);
+                                } else {
+                                    $featured_image_data = wp_get_attachment_image_src(get_post_thumbnail_id($author_recent_post));
+                                }
                                 if ($featured_image_data && is_array($featured_image_data)) {
                                     $featured_image = $featured_image_data[0];
                                 }
@@ -1479,11 +1534,14 @@ if (!function_exists('get_ppma_author_categories')) {
         $slug            = sanitize_text_field($args['slug']);
         $category_name   = sanitize_text_field($args['category_name']);
         $plural_name     = sanitize_text_field($args['plural_name']);
-        $orderby         = sanitize_text_field($args['orderby']);
         $search          = sanitize_text_field($args['search']);
-        $order           = strtoupper(sanitize_text_field($args['order']));
+        $orderby         = sanitize_sql_orderby($args['orderby'] . ' ' . strtoupper($args['order']));
         $category_status = sanitize_text_field($args['category_status']);
         $count_only      = boolval($args['count_only']);
+
+        if (empty($orderby)) {
+            $orderby = 'category_order ASC';
+        }
 
         $field_search = $field_value = false;
         if (!empty($id)) {
@@ -1512,7 +1570,7 @@ if (!function_exists('get_ppma_author_categories')) {
                     FROM {$table_name}
                     LEFT JOIN {$meta_table_name} ON {$table_name}.id = {$meta_table_name}.category_id
                     WHERE {$table_name}.{$field_search} = %s
-                    ORDER BY {$orderby} {$order}
+                    ORDER BY {$orderby}
                     LIMIT 1",
                     $field_value
                 );
@@ -1553,7 +1611,7 @@ if (!function_exists('get_ppma_author_categories')) {
                 }
         
                 $query .= $wpdb->prepare(
-                    " ORDER BY {$orderby} {$order} LIMIT %d OFFSET %d",
+                    " ORDER BY {$orderby} LIMIT %d OFFSET %d",
                     $limit,
                     $offset
                 );
@@ -1604,7 +1662,7 @@ if (!function_exists('ppma_get_grouped_post_authors')) {
 
         $post_id = (int)$post;
 
-        if (empty($post_id) ) {
+        if (empty($post_id) && !$authors ) {
             return [];
         }
         
@@ -1612,6 +1670,11 @@ if (!function_exists('ppma_get_grouped_post_authors')) {
             $authors = get_post_authors($post_id);
         }
 
+        $authors = \MA_Author_Boxes::removeExcludedAuthors($authors);
+
+        if (empty($authors)) {
+            return [];
+        }
         // make sure there's a default grouping
         $author_categories_data = [];
         $author_categories_data[] = [
