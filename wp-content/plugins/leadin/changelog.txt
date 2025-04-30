@@ -1,3 +1,24 @@
+= 11.3.6 (2025-04-22) =
+* Have default embedVersion for elementor
+
+= 11.3.0 (2025-04-07) =
+* Add v4 forms support
+
+= 11.2.8 (2025-03-17) =
+* Move cron schedule action to proxy mapping class
+
+= 11.2.0 (2025-03-05) =
+* Add reverse proxy to HubSpot domain feature
+
+= 11.1.83 (2025-01-24) =
+* Validate refreshToken value before starting app
+
+= 11.1.82 (2025-01-23) =
+* Change Raven URL for error capture
+
+= 11.1.75 (2024-11-29) =
+* Add Salt/key config global to avoid disconnection in case secret changes
+
 = 11.1.73 (2024-11-19) =
 * Remove unknow wp_json_decode function
 
@@ -279,25 +300,4 @@
 
 = 8.11.221 (2022-05-24) =
 * Update dependencies
-
-= 8.11.150 (2022-05-13) =
-* Update build steps
-
-= 8.11.0 (2022-04-27) =
-* Add option to disable HS analytics tracking for internal WP users
-
-= 8.10.25 (2022-04-25) =
-* Fix Gutenberg block breaking after user disconnects plugin
-
-= 8.10.0 (2022-04-21) =
-* Add templates options to gutenberg form
-
-= 8.9.22 (2022-04-13) =
-* Prevent script to be loaded while Elementor Edit mode is on/or admin
-
-= 8.9.20 (2022-04-13) =
-* Fix security issue related to sanitizing inputs
-
-= 8.9.14 (2022-04-12) =
-* Fix security issue related to form inputs
 

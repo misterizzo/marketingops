@@ -12,6 +12,7 @@ import {
 import { ProxyMessages } from '../../iframe/integratedMessages';
 import LoadingBlock from '../Common/LoadingBlock';
 import { getOrCreateBackgroundApp } from '../../utils/backgroundAppUtils';
+import { isRefreshTokenAvailable } from '../../utils/isRefreshTokenAvailable';
 
 interface IFormEditProps extends IFormBlockProps {
   preview: boolean;
@@ -27,17 +28,22 @@ function FormEdit({
   origin = 'gutenberg',
   fullSiteEditor,
 }: IFormEditProps) {
-  const { formId, formName } = attributes;
+  const { formId, formName, embedVersion } = attributes;
   const formSelected = portalId && formId;
 
   const isBackgroundAppReady = useBackgroundAppContext();
   const monitorFormPreviewRender = usePostBackgroundMessage();
 
-  const handleChange = (selectedForm: { value: string; label: string }) => {
+  const handleChange = (selectedForm: {
+    value: string;
+    label: string;
+    embedVersion?: string;
+  }) => {
     setAttributes({
       portalId,
       formId: selectedForm.value,
       formName: selectedForm.label,
+      embedVersion: selectedForm.embedVersion,
     });
   };
 
@@ -60,6 +66,7 @@ function FormEdit({
           formName={formName}
           handleChange={handleChange}
           origin={origin}
+          embedVersion={embedVersion}
         />
       )}
       {formSelected && (
@@ -70,6 +77,7 @@ function FormEdit({
               portalId={portalId}
               formId={formId}
               fullSiteEditor={fullSiteEditor}
+              embedVersion={embedVersion}
             />
           )}
         </Fragment>
@@ -81,7 +89,9 @@ function FormEdit({
 export default function FormEditContainer(props: IFormEditProps) {
   return (
     <BackgroudAppContext.Provider
-      value={refreshToken && getOrCreateBackgroundApp(refreshToken)}
+      value={
+        isRefreshTokenAvailable() && getOrCreateBackgroundApp(refreshToken)
+      }
     >
       <FormEdit {...props} />
     </BackgroudAppContext.Provider>

@@ -2,7 +2,7 @@
 namespace Leadin\data;
 
 use Leadin\data\Portal_Options;
-
+use Leadin\Proxy_Mappings;
 
 /**
  * Class containing all the custom filters defined to be used instead of constants.
@@ -92,6 +92,16 @@ class Filters {
 	}
 
 	/**
+	 * Apply leadin_forms_v4_script_url filter.
+	 *
+	 * @param string $portal_id The portal ID.
+	 */
+	public static function apply_forms_v4_script_url_filters( $portal_id ) {
+		$hublet_domain = self::resolve_hublet( 'js' );
+		return apply_filters( LEADIN_PREFIX . '_forms_v4_script_url', "https://$hublet_domain.hsforms.net/forms/embed/$portal_id.js" );
+	}
+
+	/**
 	 * Apply leadin_meetings_script_url filter.
 	 */
 	public static function apply_meetings_script_url_filters() {
@@ -111,6 +121,13 @@ class Filters {
 	 */
 	public static function apply_forms_payload_filters() {
 		return apply_filters( LEADIN_PREFIX . '_forms_payload', '' );
+	}
+
+	/**
+	 * Apply leadin_forms_v4_payload filter.
+	 */
+	public static function apply_forms_v4_payload_filters() {
+		return apply_filters( LEADIN_PREFIX . '_forms_v4_payload', '' );
 	}
 
 	/**
@@ -168,6 +185,40 @@ class Filters {
 			$result = "$prefix-$hublet";
 		}
 		return $result;
+	}
+
+	/**
+	 * Add swimlane to the prefix when hublet is NA1.
+	 *
+	 * @param String $prefix Prefix to add the swimlane.
+	 */
+	private static function resolve_swimlane_for_na1( $prefix ) {
+		$hublet = self::apply_hublet_filters();
+		$result = $prefix;
+		if ( ! empty( $hublet ) && 'na1' === $hublet ) {
+			// phpcs:ignore PHPCompatibility.FunctionUse.NewFunctions.intdivFound
+			$swimlane = intdiv( Portal_Options::get_portal_id(), 10 ) % 5;
+			$result   = $prefix . $swimlane . '0';
+		}
+		return $result;
+	}
+
+	/**
+	 * Apply filter to get the get all proxy mapping url.
+	 */
+	public static function apply_plugin_mappings_api_url() {
+		$base_url = self::apply_base_api_url_filters( false );
+		return apply_filters( LEADIN_PREFIX . '_plugin_mappings_api_url', "$base_url/cos-domains/v1/wp-plugin-mappings/get-all" );
+	}
+
+
+	/**
+	 * Apply leadin_sites_proxy_cdn filter.
+	 */
+	public static function apply_sites_proxy_cdn_filters() {
+		$portal_id = Portal_Options::get_portal_id();
+		$domain    = self::resolve_swimlane_for_na1( self::resolve_hublet( 'sites-proxy.hscoscdn' ) );
+		return apply_filters( LEADIN_PREFIX . '_sites_proxy_cdn', "https://$portal_id.$domain.net" );
 	}
 
 }

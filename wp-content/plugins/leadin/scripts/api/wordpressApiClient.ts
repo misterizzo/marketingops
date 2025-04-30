@@ -80,3 +80,15 @@ export function setBusinessUnitId(businessUnitId: number) {
 export function getBusinessUnitId() {
   return makeRequest('get', '/business-unit');
 }
+
+export function refreshProxyMappingsCache() {
+  return makeRequest('post', '/wp-mappings-cache-reset');
+}
+
+export function fetchProxyMappingsEnabled() {
+  return makeRequest('get', '/wp-mappings-proxy-enabled');
+}
+
+export function toggleProxyMappingsEnabled(value: boolean) {
+  return makeRequest('put', '/wp-mappings-proxy-enabled', value);
+}

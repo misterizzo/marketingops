@@ -1,4 +1,4 @@
-# Copyright (C) 2024 HubSpot
+# Copyright (C) 2025 HubSpot
 # This file is distributed under the GPL v3.
 msgid ""
 msgstr ""
@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-19T10:31:24+00:00\n"
+"POT-Creation-Date: 2025-04-22T08:44:51+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: leadin\n"
@@ -87,7 +87,7 @@ msgid "Skip & deactivate"
 msgstr ""
 
 #: public/admin/class-leadinadmin.php:72
-#: public/class-leadin.php:41
+#: public/class-leadin.php:43
 msgid "Hubspot"
 msgstr ""
 
@@ -202,10 +202,14 @@ msgstr ""
 msgid "Leave us a review | link opens in a new tab"
 msgstr ""
 
-#: public/admin/widgets/class-elementorform.php:85
+#: public/admin/widgets/class-elementorform.php:99
 msgid "Form"
 msgstr ""
 
 #: public/admin/widgets/class-elementormeeting.php:84
 msgid "Meetings Scheduler"
+msgstr ""
+
+#: public/class-proxy-mappings.php:47
+msgid "Fetch Proxy Maps Schedule"
 msgstr ""

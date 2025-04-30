@@ -12,6 +12,7 @@ interface IFormSelectProps {
   formName: string;
   handleChange: Function;
   origin: 'gutenberg' | 'elementor';
+  embedVersion?: string;
 }
 
 export default function FormSelect({
@@ -19,6 +20,7 @@ export default function FormSelect({
   formName,
   handleChange,
   origin = 'gutenberg',
+  embedVersion,
 }: IFormSelectProps) {
   const { search, formApiError, reset } = useForms();
   const {
@@ -33,6 +35,7 @@ export default function FormSelect({
       ? {
           label: formName,
           value: formId,
+          embedVersion,
         }
       : null;
 
@@ -42,6 +45,7 @@ export default function FormSelect({
         handleChange({
           value: guid,
           label: name,
+          embedVersion: 'v4',
         });
       });
     } else {

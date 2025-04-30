@@ -6,6 +6,9 @@ import {
   getBusinessUnitId,
   setBusinessUnitId,
   skipReview,
+  refreshProxyMappingsCache,
+  fetchProxyMappingsEnabled,
+  toggleProxyMappingsEnabled,
 } from '../api/wordpressApiClient';
 import { removeQueryParamFromLocation } from '../utils/queryParams';
 import { startActivation, startInstall } from '../utils/contentEmbedInstaller';
@@ -146,6 +149,60 @@ const messageMapper: Map<MessageType, Function> = new Map([
         .catch(payload => {
           embedder.postMessage({
             key: PluginMessages.ContentEmbedActivationError,
+            payload,
+          });
+        });
+    },
+  ],
+  [
+    PluginMessages.RefreshProxyMappingsRequest,
+    (__message: Message, embedder: any) => {
+      refreshProxyMappingsCache()
+        .then(() => {
+          embedder.postMessage({
+            key: PluginMessages.RefreshProxyMappingsResponse,
+            payload: {},
+          });
+        })
+        .catch(payload => {
+          embedder.postMessage({
+            key: PluginMessages.RefreshProxyMappingsError,
+            payload,
+          });
+        });
+    },
+  ],
+  [
+    PluginMessages.ProxyMappingsEnabledRequest,
+    (__message: Message, embedder: any) => {
+      fetchProxyMappingsEnabled()
+        .then(payload => {
+          embedder.postMessage({
+            key: PluginMessages.ProxyMappingsEnabledResponse,
+            payload,
+          });
+        })
+        .catch(payload => {
+          embedder.postMessage({
+            key: PluginMessages.ProxyMappingsEnabledError,
+            payload,
+          });
+        });
+    },
+  ],
+  [
+    PluginMessages.ProxyMappingsEnabledChangeRequest,
+    ({ payload }: Message, embedder: any) => {
+      toggleProxyMappingsEnabled(payload)
+        .then(() => {
+          embedder.postMessage({
+            key: PluginMessages.ProxyMappingsEnabledResponse,
+            payload,
+          });
+        })
+        .catch(payload => {
+          embedder.postMessage({
+            key: PluginMessages.ProxyMappingsEnabledChangeError,
             payload,
           });
         });

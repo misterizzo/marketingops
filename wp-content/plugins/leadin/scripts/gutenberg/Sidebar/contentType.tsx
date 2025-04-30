@@ -11,6 +11,7 @@ import { BackgroudAppContext } from '../../iframe/useBackgroundApp';
 import { refreshToken } from '../../constants/leadinConfig';
 import { getOrCreateBackgroundApp } from '../../utils/backgroundAppUtils';
 import { isFullSiteEditor } from '../../utils/withMetaData';
+import { isRefreshTokenAvailable } from '../../utils/isRefreshTokenAvailable';
 
 export function registerHubspotSidebar() {
   const ContentTypeLabelStyle = styled.div`
@@ -41,7 +42,10 @@ export function registerHubspotSidebar() {
       >
         <PanelBody title={__('HubSpot Analytics', 'leadin')} initialOpen={true}>
           <BackgroudAppContext.Provider
-            value={refreshToken && getOrCreateBackgroundApp(refreshToken)}
+            value={
+              isRefreshTokenAvailable() &&
+              getOrCreateBackgroundApp(refreshToken)
+            }
           >
             <UISidebarSelectControl
               metaKey="content-type"

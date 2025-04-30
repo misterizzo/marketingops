@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-19T10:31:24+00:00\n"
+"POT-Creation-Date: 2025-04-22T08:44:51+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Language: \n"
 "X-Generator: WP-CLI 2.11.0\n"
@@ -86,7 +86,7 @@ msgid "Skip & deactivate"
 msgstr "Überspringen und deaktivieren"
 
 #: public/admin/class-leadinadmin.php:72
-#: public/class-leadin.php:41
+#: public/class-leadin.php:43
 msgid "Hubspot"
 msgstr "HubSpot"
 
@@ -199,12 +199,16 @@ msgstr "Danke,"
 
 #: public/admin/class-reviewbanner.php:63
 msgid "Leave us a review | link opens in a new tab"
-msgstr "Hinterlassen Sie uns eine Bewertung | Link wird in einem neuen Tab geöffnet"
+msgstr "Hinterlassen Sie uns eine Bewertung | Link wird in neuem Tab geöffnet"
 
-#: public/admin/widgets/class-elementorform.php:85
+#: public/admin/widgets/class-elementorform.php:99
 msgid "Form"
 msgstr "Formular"
 
 #: public/admin/widgets/class-elementormeeting.php:84
 msgid "Meetings Scheduler"
 msgstr "Meeting-Planer"
+
+#: public/class-proxy-mappings.php:47
+msgid "Fetch Proxy Maps Schedule"
+msgstr "Zeitplan für das Abrufen von Proxy-Karten"

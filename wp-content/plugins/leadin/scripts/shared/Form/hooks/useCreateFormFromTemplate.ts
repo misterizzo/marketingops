@@ -25,7 +25,10 @@ export default function useCreateFormFromTemplate(origin = 'gutenberg') {
 
     return proxy({
       key: ProxyMessages.CreateFormFromTemplate,
-      payload: type,
+      payload: {
+        type,
+        embedVersion: 'v4',
+      },
     })
       .then(form => {
         setLoadState(LoadState.Idle);

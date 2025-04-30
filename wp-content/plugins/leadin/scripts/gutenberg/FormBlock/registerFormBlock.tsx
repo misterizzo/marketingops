@@ -17,6 +17,7 @@ export interface IFormBlockAttributes {
     formId: string;
     preview?: boolean;
     formName: string;
+    embedVersion?: string;
   };
 }
 
@@ -67,6 +68,9 @@ export default function registerFormBlock() {
         type: 'string',
       } as WpBlocksApi.BlockAttribute<string>,
       formName: {
+        type: 'string',
+      } as WpBlocksApi.BlockAttribute<string>,
+      embedVersion: {
         type: 'string',
       } as WpBlocksApi.BlockAttribute<string>,
       preview: {

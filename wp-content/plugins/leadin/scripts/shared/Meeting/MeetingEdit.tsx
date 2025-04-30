@@ -11,6 +11,7 @@ import { refreshToken } from '../../constants/leadinConfig';
 import { ProxyMessages } from '../../iframe/integratedMessages';
 import LoadingBlock from '../Common/LoadingBlock';
 import { getOrCreateBackgroundApp } from '../../utils/backgroundAppUtils';
+import { isRefreshTokenAvailable } from '../../utils/isRefreshTokenAvailable';
 
 interface IMeetingEditProps extends IMeetingBlockProps {
   preview?: boolean;
@@ -61,7 +62,9 @@ function MeetingEdit({
 export default function MeetingsEditContainer(props: IMeetingEditProps) {
   return (
     <BackgroudAppContext.Provider
-      value={refreshToken && getOrCreateBackgroundApp(refreshToken)}
+      value={
+        isRefreshTokenAvailable() && getOrCreateBackgroundApp(refreshToken)
+      }
     >
       <MeetingEdit {...props} />
     </BackgroudAppContext.Provider>

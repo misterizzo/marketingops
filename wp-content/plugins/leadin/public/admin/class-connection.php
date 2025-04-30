@@ -162,5 +162,6 @@ class Connection {
 		Portal_Options::delete_hublet();
 		Portal_Options::delete_disable_internal_tracking();
 		Portal_Options::delete_business_unit_id();
+		Portal_Options::delete_proxy_mappings_enabled();
 	}
 }

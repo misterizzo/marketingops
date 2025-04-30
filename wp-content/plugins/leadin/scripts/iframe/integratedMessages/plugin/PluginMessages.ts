@@ -22,6 +22,14 @@ export const PluginMessages = {
   ContentEmbedActivationRequest: 'CONTENT_EMBED_ACTIVATION_REQUEST',
   ContentEmbedActivationResponse: 'CONTENT_EMBED_ACTIVATION_RESPONSE',
   ContentEmbedActivationError: 'CONTENT_EMBED_ACTIVATION_ERROR',
+  ProxyMappingsEnabledRequest: 'PROXY_MAPPINGS_ENABLED_REQUEST',
+  ProxyMappingsEnabledResponse: 'PROXY_MAPPINGS_ENABLED_RESPONSE',
+  ProxyMappingsEnabledError: 'PROXY_MAPPINGS_ENABLED_ERROR',
+  ProxyMappingsEnabledChangeRequest: 'PROXY_MAPPINGS_ENABLED_CHANGE_REQUEST',
+  ProxyMappingsEnabledChangeError: 'PROXY_MAPPINGS_ENABLED_CHANGE_ERROR',
+  RefreshProxyMappingsRequest: 'REFRESH_PROXY_MAPPINGS_REQUEST',
+  RefreshProxyMappingsResponse: 'REFRESH_PROXY_MAPPINGS_RESPONSE',
+  RefreshProxyMappingsError: 'REFRESH_PROXY_MAPPINGS_ERROR',
 } as const;
 
 export type PluginMessageType = typeof PluginMessages[keyof typeof PluginMessages];

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { portalId, refreshToken } from '../../constants/leadinConfig';
 import ElementorBanner from '../Common/ElementorBanner';
 import UISpinner from '../../shared/UIComponents/UISpinner';
@@ -9,6 +9,7 @@ import {
 } from '../../iframe/useBackgroundApp';
 import useForms from './hooks/useForms';
 import { getOrCreateBackgroundApp } from '../../utils/backgroundAppUtils';
+import { isRefreshTokenAvailable } from '../../utils/isRefreshTokenAvailable';
 
 interface IElementorFormSelectProps {
   formId: string;
@@ -41,6 +42,7 @@ function ElementorFormSelect({
             portalId,
             formId: selectedForm.value,
             formName: selectedForm.label,
+            embedVersion: selectedForm.embedVersion,
           });
         }
       }}
@@ -78,7 +80,9 @@ export default function ElementorFormSelectContainer(
 ) {
   return (
     <BackgroudAppContext.Provider
-      value={refreshToken && getOrCreateBackgroundApp(refreshToken)}
+      value={
+        isRefreshTokenAvailable() && getOrCreateBackgroundApp(refreshToken)
+      }
     >
       <ElementorFormSelectWrapper {...props} />
     </BackgroudAppContext.Provider>

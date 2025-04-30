@@ -4,13 +4,13 @@ namespace Leadin;
 
 require_once LEADIN_PLUGIN_DIR . '/public/includes/api-loader.php';
 
-use \Leadin\AssetsManager;
 use \Leadin\PageHooks;
-use \Leadin\admin\LeadinAdmin;
+use Leadin\admin\LeadinAdmin;
 use Leadin\admin\widgets\ElementorForm;
 use Leadin\admin\widgets\ElementorMeeting;
 use Leadin\admin\widgets\ElementorFormSelect;
 use Leadin\admin\widgets\ElementorMeetingSelect;
+use Leadin\Proxy_Mappings;
 
 /**
  * Main class of the plugin.
@@ -24,6 +24,8 @@ class Leadin {
 		add_action( 'elementor/elements/categories_registered', array( $this, 'add_elementor_widget_categories' ) );
 		add_action( 'elementor/controls/register', array( $this, 'register_hsselectors_control' ) );
 		add_action( 'elementor/widgets/register', array( $this, 'register_elementor_widgets' ) );
+		new Proxy_Mappings();
+
 		if ( is_admin() ) {
 			new LeadinAdmin();
 		}
@@ -63,6 +65,4 @@ class Leadin {
 		$controls_manager->register( new ElementorFormSelect() );
 		$controls_manager->register( new ElementorMeetingSelect() );
 	}
-
 }
-

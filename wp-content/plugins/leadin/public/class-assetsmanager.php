@@ -20,6 +20,7 @@ class AssetsManager {
 	const GUTENBERG          = 'leadin-gutenberg';
 	const MEETINGS_GUTENBERG = 'leadin-meetings-gutenberg';
 	const FORMS_SCRIPT       = 'leadin-forms-v2';
+	const FORMS_V4_SCRIPT    = 'leadin-forms-v4';
 	const MEETINGS_SCRIPT    = 'leadin-meeting';
 	const LEADIN_CONFIG      = 'leadinConfig';
 	const LEADIN_I18N        = 'leadinI18n';
@@ -116,6 +117,21 @@ class AssetsManager {
 	}
 
 	/**
+	 * Register and enqueue forms v4 script
+	 *
+	 * @param string $portal_id The portal ID.
+	 */
+	public static function enqueue_form_v4_script( $portal_id ) {
+		wp_enqueue_script(
+			self::FORMS_V4_SCRIPT,
+			Filters::apply_forms_v4_script_url_filters( $portal_id ),
+			array(),
+			LEADIN_PLUGIN_VERSION,
+			true
+		);
+	}
+
+	/**
 	 * Register and enqueue meetings script
 	 */
 	public static function enqueue_meetings_script() {
@@ -132,9 +148,11 @@ class AssetsManager {
 	 * Register and localize the Gutenberg scripts.
 	 */
 	public static function localize_gutenberg() {
+		$portal_id    = Portal_Options::get_portal_id();
 		$embed_domain = Filters::apply_js_base_url_filters();
 		wp_enqueue_script( self::APP_EMBEDDER, "$embed_domain/integrated-app-embedder/v1.js", array(), LEADIN_PLUGIN_VERSION, true );
 		self::enqueue_forms_script();
+		self::enqueue_form_v4_script( $portal_id );
 		self::enqueue_meetings_script();
 		wp_register_style( self::GUTENBERG, LEADIN_JS_BASE_PATH . '/gutenberg.css', array(), LEADIN_PLUGIN_VERSION );
 		wp_enqueue_style( self::GUTENBERG );

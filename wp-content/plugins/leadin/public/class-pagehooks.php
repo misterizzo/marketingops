@@ -131,7 +131,7 @@ class PageHooks {
 	 * @param String $handle handle.
 	 */
 	public function add_defer_to_forms_script( $tag, $handle ) {
-		if ( AssetsManager::FORMS_SCRIPT === $handle ) {
+		if ( AssetsManager::FORMS_SCRIPT === $handle || AssetsManager::FORMS_V4_SCRIPT === $handle ) {
 			$tag = str_replace( 'src', 'defer src', $tag );
 		}
 		return $tag;

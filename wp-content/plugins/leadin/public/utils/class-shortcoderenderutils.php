@@ -41,15 +41,16 @@ class ShortcodeRenderUtils {
 	private static function render_form( $attrs ) {
 		$parsed_attributes = shortcode_atts(
 			array(
-				'portal' => null,
-				'id'     => null,
+				'portal'  => null,
+				'id'      => null,
+				'version' => null,
 			),
 			$attrs
 		);
 
 		$portal_id = $parsed_attributes['portal'];
 		$id        = $parsed_attributes['id'];
-
+		$version   = $parsed_attributes['version'];
 		if ( ! isset( $portal_id ) || ! isset( $id ) || ! is_numeric( $portal_id ) ||
 		! ( self::is_valid_uuid( $id ) || is_numeric( $id ) ) ) {
 			return;
@@ -57,20 +58,34 @@ class ShortcodeRenderUtils {
 
 		$form_div_uuid = self::generate_div_uuid();
 		$hublet        = Filters::apply_hublet_filters();
-		AssetsManager::enqueue_forms_script();
-		return '
-					<script>
-						window.hsFormsOnReady = window.hsFormsOnReady || [];
-						window.hsFormsOnReady.push(()=>{
-							hbspt.forms.create({
-								portalId: ' . $portal_id . ',
-								formId: "' . $id . '",
-								target: "#hbspt-form-' . $form_div_uuid . '",
-								region: "' . $hublet . '",
-								' . Filters::apply_forms_payload_filters() . '
-						})});
-					</script>
-					<div class="hbspt-form" id="hbspt-form-' . $form_div_uuid . '"></div>';
+
+		if ( isset( $version ) && 'v4' === $version ) {
+			AssetsManager::enqueue_form_v4_script( $portal_id );
+			return '
+			<div
+			class="hs-form-frame"
+			data-region="' . $hublet . '"
+			data-form-id="' . $id . '"
+			data-portal-id="' . $portal_id . '"
+			' . Filters::apply_forms_v4_payload_filters() . ' >
+			</div>
+			';
+		} else {
+			AssetsManager::enqueue_forms_script();
+			return '
+						<script>
+							window.hsFormsOnReady = window.hsFormsOnReady || [];
+							window.hsFormsOnReady.push(()=>{
+								hbspt.forms.create({
+									portalId: ' . $portal_id . ',
+									formId: "' . $id . '",
+									target: "#hbspt-form-' . $form_div_uuid . '",
+									region: "' . $hublet . '",
+									' . Filters::apply_forms_payload_filters() . '
+							})});
+						</script>
+						<div class="hbspt-form" id="hbspt-form-' . $form_div_uuid . '"></div>';
+		}
 	}
 
 	/**

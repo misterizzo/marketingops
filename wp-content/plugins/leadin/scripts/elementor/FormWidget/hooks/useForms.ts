@@ -7,6 +7,7 @@ import { IForm } from '../../../shared/types';
 interface FormOption {
   label: string;
   value: string;
+  embedVersion: string;
 }
 
 export default function useForms() {
@@ -30,6 +31,7 @@ export default function useForms() {
             data.map((form: IForm) => ({
               label: form.name,
               value: form.guid,
+              embedVersion: form.embedVersion,
             }))
           );
           setLoadState(LoadState.Loaded);

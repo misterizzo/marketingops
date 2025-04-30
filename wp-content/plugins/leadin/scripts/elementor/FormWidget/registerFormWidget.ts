@@ -6,6 +6,7 @@ export interface IFormAttributes {
   formId: string;
   formName: string;
   portalId: string;
+  embedVersion: string;
 }
 
 export default class registerFormWidget {

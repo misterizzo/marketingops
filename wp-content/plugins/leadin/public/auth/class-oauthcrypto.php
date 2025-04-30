@@ -12,8 +12,8 @@ class OAuthCrypto {
 	 * Return the key to use in encrypting/decrypting OAuth credentials
 	 */
 	private static function get_key() {
-		if ( defined( 'LOGGED_IN_KEY' ) ) {
-			return LOGGED_IN_KEY;
+		if ( defined( 'LEADIN_KEY' ) ) {
+			return LEADIN_KEY;
 		}
 
 		return '';
@@ -23,8 +23,8 @@ class OAuthCrypto {
 	 * Return the salt to use in encrypting/decrypting OAuth credentials
 	 */
 	private static function get_salt() {
-		if ( defined( 'LOGGED_IN_SALT' ) ) {
-			return LOGGED_IN_SALT;
+		if ( defined( 'LEADIN_SALT' ) ) {
+			return LEADIN_SALT;
 		}
 
 		return '';

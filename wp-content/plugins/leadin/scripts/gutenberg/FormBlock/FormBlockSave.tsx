@@ -6,13 +6,13 @@ import useCustomCssBlockProps from '../Common/useCustomCssBlockProps';
 const DefaultCssClasses = 'wp-block-leadin-hubspot-form-block';
 
 export default function FormSaveBlock({ attributes }: IFormBlockAttributes) {
-  const { portalId, formId } = attributes;
+  const { portalId, formId, embedVersion } = attributes;
   const blockProps = useCustomCssBlockProps(DefaultCssClasses);
 
   if (portalId && formId) {
     return (
       <RawHTML {...blockProps}>
-        {`[hubspot portal="${portalId}" id="${formId}" type="form"]`}
+        {`[hubspot portal="${portalId}" id="${formId}" version="${embedVersion}" type="form"]`}
       </RawHTML>
     );
   }

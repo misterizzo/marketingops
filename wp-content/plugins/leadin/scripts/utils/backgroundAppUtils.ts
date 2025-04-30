@@ -35,7 +35,7 @@ export const getOrCreateBackgroundApp = (refreshToken = '') => {
     .setLocale(locale)
     .setDeviceId(deviceId)
     .setLeadinConfig(getLeadinConfig())
-    .setRefreshToken(refreshToken);
+    .setRefreshToken(refreshToken.trim());
 
   const embedder = new IntegratedAppEmbedder(
     'integrated-plugin-proxy',

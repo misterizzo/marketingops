@@ -9,12 +9,12 @@ import {
 } from '../constants/leadinConfig';
 
 export function configureRaven() {
-  if (hubspotBaseUrl.indexOf('app.hubspot.com') === -1) {
+  if (hubspotBaseUrl.indexOf('local') !== -1) {
     return;
   }
-
+  const domain = hubspotBaseUrl.replace(/https?:\/\/app/, '');
   Raven.config(
-    'https://e9b8f382cdd130c0d415cd977d2be56f@exceptions.hubspot.com/1',
+    `https://a9f08e536ef66abb0bf90becc905b09e@exceptions${domain}/v2/1`,
     {
       instrument: {
         tryCatch: false,

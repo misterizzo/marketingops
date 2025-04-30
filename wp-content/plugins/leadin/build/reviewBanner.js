@@ -246,7 +246,15 @@ var PluginMessages = {
   ContentEmbedInstallError: 'CONTENT_EMBED_INSTALL_ERROR',
   ContentEmbedActivationRequest: 'CONTENT_EMBED_ACTIVATION_REQUEST',
   ContentEmbedActivationResponse: 'CONTENT_EMBED_ACTIVATION_RESPONSE',
-  ContentEmbedActivationError: 'CONTENT_EMBED_ACTIVATION_ERROR'
+  ContentEmbedActivationError: 'CONTENT_EMBED_ACTIVATION_ERROR',
+  ProxyMappingsEnabledRequest: 'PROXY_MAPPINGS_ENABLED_REQUEST',
+  ProxyMappingsEnabledResponse: 'PROXY_MAPPINGS_ENABLED_RESPONSE',
+  ProxyMappingsEnabledError: 'PROXY_MAPPINGS_ENABLED_ERROR',
+  ProxyMappingsEnabledChangeRequest: 'PROXY_MAPPINGS_ENABLED_CHANGE_REQUEST',
+  ProxyMappingsEnabledChangeError: 'PROXY_MAPPINGS_ENABLED_CHANGE_ERROR',
+  RefreshProxyMappingsRequest: 'REFRESH_PROXY_MAPPINGS_REQUEST',
+  RefreshProxyMappingsResponse: 'REFRESH_PROXY_MAPPINGS_RESPONSE',
+  RefreshProxyMappingsError: 'REFRESH_PROXY_MAPPINGS_ERROR'
 };
 
 /***/ }),
@@ -266,6 +274,7 @@ var ProxyMessages = {
   FetchForms: 'FETCH_FORMS',
   FetchForm: 'FETCH_FORM',
   CreateFormFromTemplate: 'CREATE_FORM_FROM_TEMPLATE',
+  GetTemplateAvailability: 'GET_TEMPLATE_AVAILABILITY',
   FetchAuth: 'FETCH_AUTH',
   FetchMeetingsAndUsers: 'FETCH_MEETINGS_AND_USERS',
   FetchContactsCreateSinceActivation: 'FETCH_CONTACTS_CREATED_SINCE_ACTIVATION',
@@ -302,10 +311,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function configureRaven() {
-  if (_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_1__.hubspotBaseUrl.indexOf('app.hubspot.com') === -1) {
+  if (_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_1__.hubspotBaseUrl.indexOf('local') !== -1) {
     return;
   }
-  raven_js__WEBPACK_IMPORTED_MODULE_0___default().config('https://e9b8f382cdd130c0d415cd977d2be56f@exceptions.hubspot.com/1', {
+  var domain = _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_1__.hubspotBaseUrl.replace(/https?:\/\/app/, '');
+  raven_js__WEBPACK_IMPORTED_MODULE_0___default().config("https://a9f08e536ef66abb0bf90becc905b09e@exceptions".concat(domain, "/v2/1"), {
     instrument: {
       tryCatch: false
     },
@@ -401,7 +411,7 @@ var getOrCreateBackgroundApp = function getOrCreateBackgroundApp() {
   var _window = window,
     IntegratedAppEmbedder = _window.IntegratedAppEmbedder,
     IntegratedAppOptions = _window.IntegratedAppOptions;
-  var options = new IntegratedAppOptions().setLocale(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.locale).setDeviceId(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.deviceId).setLeadinConfig(getLeadinConfig()).setRefreshToken(refreshToken);
+  var options = new IntegratedAppOptions().setLocale(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.locale).setDeviceId(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.deviceId).setLeadinConfig(getLeadinConfig()).setRefreshToken(refreshToken.trim());
   var embedder = new IntegratedAppEmbedder('integrated-plugin-proxy', _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.portalId, _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.hubspotBaseUrl, function () {}).setOptions(options);
   embedder.attachTo(document.body, false);
   embedder.postStartAppMessage(); // lets the app know all all data has been passed to it

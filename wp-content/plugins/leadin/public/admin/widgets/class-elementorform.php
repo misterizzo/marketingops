@@ -2,6 +2,7 @@
 namespace Leadin\admin\widgets;
 
 use Leadin\data\Filters;
+use Leadin\data\Portal_Options;
 use Elementor\Plugin;
 use Elementor\Widget_Base;
 
@@ -72,7 +73,20 @@ class ElementorForm extends Widget_Base {
 			LEADIN_PLUGIN_VERSION,
 			true
 		);
-		return array( 'leadin-forms-v2' );
+
+		$scopes    = array( 'leadin-forms-v2' );
+		$portal_id = Portal_Options::get_portal_id();
+		if ( $portal_id ) {
+			wp_register_script(
+				'leadin-forms-v4',
+				Filters::apply_forms_v4_script_url_filters( $portal_id ),
+				array(),
+				LEADIN_PLUGIN_VERSION,
+				true
+			);
+			$scopes[] = 'leadin-forms-v4';
+		}
+		return $scopes;
 	}
 
 	/**
@@ -123,7 +137,8 @@ class ElementorForm extends Widget_Base {
 		if ( ! empty( $content ) ) {
 				$portal_id = $content['portalId'];
 				$form_id   = $content['formId'];
-				echo do_shortcode( '[hubspot portal="' . $portal_id . '" id="' . $form_id . '" type="form"]' );
+				$version   = isset( $content['embedVersion'] ) ? $content['embedVersion'] : '';
+				echo do_shortcode( '[hubspot portal="' . $portal_id . '" id="' . $form_id . '" type="form" version="' . $version . '"]' );
 		}
 	}
 }

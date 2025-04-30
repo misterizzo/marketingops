@@ -2,6 +2,7 @@
 
 namespace Leadin;
 
+use Leadin\admin\api\WP_Mappings_Api_Controller;
 use Leadin\api\Healthcheck_Api_Controller;
 
 use Leadin\admin\api\Internal_Tracking_Api_Controller;
@@ -24,4 +25,5 @@ function leadin_register_routes() {
 	new Hublet_Api_Controller();
 	new User_Meta_Api_Controller();
 	new Portal_Api_Controller();
+	new WP_Mappings_Api_Controller();
 }

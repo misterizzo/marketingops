@@ -192,32 +192,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
 
-var REGISTRATION_FORM = 'REGISTRATION_FORM';
-var CONTACT_US_FORM = 'CONTACT_US_FORM';
-var NEWSLETTER_FORM = 'NEWSLETTER_FORM';
-var SUPPORT_FORM = 'SUPPORT_FORM';
-var EVENT_FORM = 'EVENT_FORM';
+var BLANK_FORM = 'BLANK';
+var NEWSLETTER_FORM = 'NEWSLETTER';
+var CONTACT_US_FORM = 'CONTACT_US';
+var EVENT_REGISTRATION_FORM = 'EVENT_REGISTRATION';
+var TALK_TO_AN_EXPERT_FORM = 'TALK_TO_AN_EXPERT';
+var BOOK_A_MEETING_FORM = 'BOOK_A_MEETING';
+var GATED_CONTENT_FORM = 'GATED_CONTENT';
 var DEFAULT_OPTIONS = {
   label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Templates', 'leadin'),
   options: [{
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Registration Form', 'leadin'),
-    value: REGISTRATION_FORM
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Blank Form', 'leadin'),
+    value: BLANK_FORM
   }, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Contact us Form', 'leadin'),
-    value: CONTACT_US_FORM
-  }, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Newsletter sign-up Form', 'leadin'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Newsletter Form', 'leadin'),
     value: NEWSLETTER_FORM
   }, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Support Form', 'leadin'),
-    value: SUPPORT_FORM
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Contact Us Form', 'leadin'),
+    value: CONTACT_US_FORM
   }, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Event Registration Form', 'leadin'),
-    value: EVENT_FORM
+    value: EVENT_REGISTRATION_FORM
+  }, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Talk to an Expert Form', 'leadin'),
+    value: TALK_TO_AN_EXPERT_FORM
+  }, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Book a Meeting Form', 'leadin'),
+    value: BOOK_A_MEETING_FORM
+  }, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Gated Content Form', 'leadin'),
+    value: GATED_CONTENT_FORM
   }]
 };
 function isDefaultForm(value) {
-  return value === REGISTRATION_FORM || value === CONTACT_US_FORM || value === NEWSLETTER_FORM || value === SUPPORT_FORM || value === EVENT_FORM;
+  return value === BLANK_FORM || value === NEWSLETTER_FORM || value === CONTACT_US_FORM || value === EVENT_REGISTRATION_FORM || value === TALK_TO_AN_EXPERT_FORM || value === BOOK_A_MEETING_FORM || value === GATED_CONTENT_FORM;
 }
 
 /***/ }),
@@ -536,11 +544,12 @@ var DefaultCssClasses = 'wp-block-leadin-hubspot-form-block';
 function FormSaveBlock(_ref) {
   var attributes = _ref.attributes;
   var portalId = attributes.portalId,
-    formId = attributes.formId;
+    formId = attributes.formId,
+    embedVersion = attributes.embedVersion;
   var blockProps = (0,_Common_useCustomCssBlockProps__WEBPACK_IMPORTED_MODULE_2__["default"])(DefaultCssClasses);
   if (portalId && formId) {
     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.RawHTML, _objectSpread(_objectSpread({}, blockProps), {}, {
-      children: "[hubspot portal=\"".concat(portalId, "\" id=\"").concat(formId, "\" type=\"form\"]")
+      children: "[hubspot portal=\"".concat(portalId, "\" id=\"").concat(formId, "\" version=\"").concat(embedVersion, "\" type=\"form\"]")
     }));
   }
   return null;
@@ -654,6 +663,9 @@ function registerFormBlock() {
         type: 'string'
       },
       formName: {
+        type: 'string'
+      },
+      embedVersion: {
         type: 'string'
       },
       preview: {
@@ -860,13 +872,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _UIComponents_UISidebarSelectControl__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../UIComponents/UISidebarSelectControl */ "./scripts/gutenberg/UIComponents/UISidebarSelectControl.tsx");
 /* harmony import */ var _Common_SidebarSprocketIcon__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Common/SidebarSprocketIcon */ "./scripts/gutenberg/Common/SidebarSprocketIcon.tsx");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _iframe_useBackgroundApp__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../iframe/useBackgroundApp */ "./scripts/iframe/useBackgroundApp.ts");
 /* harmony import */ var _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../constants/leadinConfig */ "./scripts/constants/leadinConfig.ts");
 /* harmony import */ var _utils_backgroundAppUtils__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../utils/backgroundAppUtils */ "./scripts/utils/backgroundAppUtils.ts");
 /* harmony import */ var _utils_withMetaData__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../utils/withMetaData */ "./scripts/utils/withMetaData.ts");
+/* harmony import */ var _utils_isRefreshTokenAvailable__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../utils/isRefreshTokenAvailable */ "./scripts/utils/isRefreshTokenAvailable.ts");
 var _templateObject;
 function _taggedTemplateLiteral(e, t) { return t || (t = e.slice(0)), Object.freeze(Object.defineProperties(e, { raw: { value: Object.freeze(t) } })); }
 
@@ -882,8 +895,9 @@ function _taggedTemplateLiteral(e, t) { return t || (t = e.slice(0)), Object.fre
 
 
 
+
 function registerHubspotSidebar() {
-  var ContentTypeLabelStyle = styled_components__WEBPACK_IMPORTED_MODULE_12__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    white-space: normal;\n    text-transform: none;\n  "])));
+  var ContentTypeLabelStyle = styled_components__WEBPACK_IMPORTED_MODULE_13__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    white-space: normal;\n    text-transform: none;\n  "])));
   var ContentTypeLabel = (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(ContentTypeLabelStyle, {
     children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Select the content type HubSpot Analytics uses to track this page', 'leadin')
   });
@@ -900,7 +914,7 @@ function registerHubspotSidebar() {
         title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('HubSpot Analytics', 'leadin'),
         initialOpen: true,
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_iframe_useBackgroundApp__WEBPACK_IMPORTED_MODULE_8__.BackgroudAppContext.Provider, {
-          value: _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_9__.refreshToken && (0,_utils_backgroundAppUtils__WEBPACK_IMPORTED_MODULE_10__.getOrCreateBackgroundApp)(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_9__.refreshToken),
+          value: (0,_utils_isRefreshTokenAvailable__WEBPACK_IMPORTED_MODULE_12__.isRefreshTokenAvailable)() && (0,_utils_backgroundAppUtils__WEBPACK_IMPORTED_MODULE_10__.getOrCreateBackgroundApp)(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_9__.refreshToken),
           children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_UIComponents_UISidebarSelectControl__WEBPACK_IMPORTED_MODULE_5__["default"], {
             metaKey: "content-type",
             className: "select-content-type",
@@ -1150,7 +1164,15 @@ var PluginMessages = {
   ContentEmbedInstallError: 'CONTENT_EMBED_INSTALL_ERROR',
   ContentEmbedActivationRequest: 'CONTENT_EMBED_ACTIVATION_REQUEST',
   ContentEmbedActivationResponse: 'CONTENT_EMBED_ACTIVATION_RESPONSE',
-  ContentEmbedActivationError: 'CONTENT_EMBED_ACTIVATION_ERROR'
+  ContentEmbedActivationError: 'CONTENT_EMBED_ACTIVATION_ERROR',
+  ProxyMappingsEnabledRequest: 'PROXY_MAPPINGS_ENABLED_REQUEST',
+  ProxyMappingsEnabledResponse: 'PROXY_MAPPINGS_ENABLED_RESPONSE',
+  ProxyMappingsEnabledError: 'PROXY_MAPPINGS_ENABLED_ERROR',
+  ProxyMappingsEnabledChangeRequest: 'PROXY_MAPPINGS_ENABLED_CHANGE_REQUEST',
+  ProxyMappingsEnabledChangeError: 'PROXY_MAPPINGS_ENABLED_CHANGE_ERROR',
+  RefreshProxyMappingsRequest: 'REFRESH_PROXY_MAPPINGS_REQUEST',
+  RefreshProxyMappingsResponse: 'REFRESH_PROXY_MAPPINGS_RESPONSE',
+  RefreshProxyMappingsError: 'REFRESH_PROXY_MAPPINGS_ERROR'
 };
 
 /***/ }),
@@ -1170,6 +1192,7 @@ var ProxyMessages = {
   FetchForms: 'FETCH_FORMS',
   FetchForm: 'FETCH_FORM',
   CreateFormFromTemplate: 'CREATE_FORM_FROM_TEMPLATE',
+  GetTemplateAvailability: 'GET_TEMPLATE_AVAILABILITY',
   FetchAuth: 'FETCH_AUTH',
   FetchMeetingsAndUsers: 'FETCH_MEETINGS_AND_USERS',
   FetchContactsCreateSinceActivation: 'FETCH_CONTACTS_CREATED_SINCE_ACTIVATION',
@@ -1242,10 +1265,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function configureRaven() {
-  if (_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_1__.hubspotBaseUrl.indexOf('app.hubspot.com') === -1) {
+  if (_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_1__.hubspotBaseUrl.indexOf('local') !== -1) {
     return;
   }
-  raven_js__WEBPACK_IMPORTED_MODULE_0___default().config('https://e9b8f382cdd130c0d415cd977d2be56f@exceptions.hubspot.com/1', {
+  var domain = _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_1__.hubspotBaseUrl.replace(/https?:\/\/app/, '');
+  raven_js__WEBPACK_IMPORTED_MODULE_0___default().config("https://a9f08e536ef66abb0bf90becc905b09e@exceptions".concat(domain, "/v2/1"), {
     instrument: {
       tryCatch: false
     },
@@ -1723,12 +1747,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../iframe/integratedMessages */ "./scripts/iframe/integratedMessages/index.ts");
 /* harmony import */ var _Common_LoadingBlock__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Common/LoadingBlock */ "./scripts/shared/Common/LoadingBlock.tsx");
 /* harmony import */ var _utils_backgroundAppUtils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../utils/backgroundAppUtils */ "./scripts/utils/backgroundAppUtils.ts");
+/* harmony import */ var _utils_isRefreshTokenAvailable__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../utils/isRefreshTokenAvailable */ "./scripts/utils/isRefreshTokenAvailable.ts");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 
 
 
@@ -1749,7 +1775,8 @@ function FormEdit(_ref) {
     origin = _ref$origin === void 0 ? 'gutenberg' : _ref$origin,
     fullSiteEditor = _ref.fullSiteEditor;
   var formId = attributes.formId,
-    formName = attributes.formName;
+    formName = attributes.formName,
+    embedVersion = attributes.embedVersion;
   var formSelected = _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.portalId && formId;
   var isBackgroundAppReady = (0,_iframe_useBackgroundApp__WEBPACK_IMPORTED_MODULE_6__.useBackgroundAppContext)();
   var monitorFormPreviewRender = (0,_iframe_useBackgroundApp__WEBPACK_IMPORTED_MODULE_6__.usePostBackgroundMessage)();
@@ -1757,7 +1784,8 @@ function FormEdit(_ref) {
     setAttributes({
       portalId: _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.portalId,
       formId: selectedForm.value,
-      formName: selectedForm.label
+      formName: selectedForm.label,
+      embedVersion: selectedForm.embedVersion
     });
   };
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
@@ -1773,19 +1801,21 @@ function FormEdit(_ref) {
       formId: formId,
       formName: formName,
       handleChange: handleChange,
-      origin: origin
+      origin: origin,
+      embedVersion: embedVersion
     }), formSelected && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
       children: [isSelected && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_UIComponents_UISpacer__WEBPACK_IMPORTED_MODULE_3__["default"], {}), preview && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_PreviewForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
         portalId: _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.portalId,
         formId: formId,
-        fullSiteEditor: fullSiteEditor
+        fullSiteEditor: fullSiteEditor,
+        embedVersion: embedVersion
       })]
     })]
   });
 }
 function FormEditContainer(props) {
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_iframe_useBackgroundApp__WEBPACK_IMPORTED_MODULE_6__.BackgroudAppContext.Provider, {
-    value: _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.refreshToken && (0,_utils_backgroundAppUtils__WEBPACK_IMPORTED_MODULE_9__.getOrCreateBackgroundApp)(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.refreshToken),
+    value: (0,_utils_isRefreshTokenAvailable__WEBPACK_IMPORTED_MODULE_10__.isRefreshTokenAvailable)() && (0,_utils_backgroundAppUtils__WEBPACK_IMPORTED_MODULE_9__.getOrCreateBackgroundApp)(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_2__.refreshToken),
     children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(FormEdit, _objectSpread({}, props))
   });
 }
@@ -1825,7 +1855,8 @@ function FormSelect(_ref) {
     formName = _ref.formName,
     handleChange = _ref.handleChange,
     _ref$origin = _ref.origin,
-    origin = _ref$origin === void 0 ? 'gutenberg' : _ref$origin;
+    origin = _ref$origin === void 0 ? 'gutenberg' : _ref$origin,
+    embedVersion = _ref.embedVersion;
   var _useForms = (0,_hooks_useForms__WEBPACK_IMPORTED_MODULE_4__["default"])(),
     search = _useForms.search,
     formApiError = _useForms.formApiError,
@@ -1838,7 +1869,8 @@ function FormSelect(_ref) {
     createApiError = _useCreateFormFromTem.formApiError;
   var value = formId && formName ? {
     label: formName,
-    value: formId
+    value: formId,
+    embedVersion: embedVersion
   } : null;
   var handleLocalChange = function handleLocalChange(option) {
     if ((0,_constants_defaultFormOptions__WEBPACK_IMPORTED_MODULE_6__.isDefaultForm)(option.value)) {
@@ -1847,7 +1879,8 @@ function FormSelect(_ref) {
           name = _ref2.name;
         handleChange({
           value: guid,
-          label: name
+          label: name,
+          embedVersion: 'v4'
         });
       });
     } else {
@@ -1954,23 +1987,37 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 function PreviewForm(_ref) {
   var portalId = _ref.portalId,
     formId = _ref.formId,
-    fullSiteEditor = _ref.fullSiteEditor;
+    fullSiteEditor = _ref.fullSiteEditor,
+    embedVersion = _ref.embedVersion;
+  var isFormV4 = embedVersion === 'v4';
   var inputEl = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     if (inputEl.current) {
       //@ts-expect-error Hubspot global
       var hbspt = window.parent.hbspt || window.hbspt;
-      var additionalParams = _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_3__.formsScriptPayload.includes('qa') ? {
-        env: 'qa'
-      } : {};
-      hbspt.forms.create(_objectSpread({
-        portalId: portalId,
-        formId: formId,
-        region: _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_3__.hublet,
-        target: "#".concat(inputEl.current.id)
-      }, additionalParams));
+      inputEl.current.innerHTML = '';
+      var isQa = _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_3__.formsScriptPayload.includes('qa');
+      if (isFormV4) {
+        var container = document.createElement('div');
+        container.classList.add('hs-form-frame');
+        container.dataset.region = _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_3__.hublet;
+        container.dataset.formId = formId;
+        container.dataset.portalId = portalId.toString();
+        container.dataset.env = isQa ? 'qa' : '';
+        inputEl.current.appendChild(container);
+      } else {
+        var additionalParams = isQa ? {
+          env: 'qa'
+        } : {};
+        hbspt.forms.create(_objectSpread({
+          portalId: portalId,
+          formId: formId,
+          region: _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_3__.hublet,
+          target: "#".concat(inputEl.current.id)
+        }, additionalParams));
+      }
     }
-  }, [formId, portalId, inputEl]);
+  }, [formId, portalId, inputEl, isFormV4]);
   if (fullSiteEditor) {
     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_Common_PreviewDisabled__WEBPACK_IMPORTED_MODULE_4__["default"], {});
   }
@@ -2031,7 +2078,10 @@ function useCreateFormFromTemplate() {
     });
     return proxy({
       key: _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_3__.ProxyMessages.CreateFormFromTemplate,
-      payload: type
+      payload: {
+        type: type,
+        embedVersion: 'v4'
+      }
     }).then(function (form) {
       setLoadState(_enums_loadState__WEBPACK_IMPORTED_MODULE_2__["default"].Idle);
       return form;
@@ -2075,8 +2125,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash/debounce */ "./node_modules/lodash/debounce.js");
 /* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_debounce__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _iframe_useBackgroundApp__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../iframe/useBackgroundApp */ "./scripts/iframe/useBackgroundApp.ts");
-/* harmony import */ var _constants_defaultFormOptions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../constants/defaultFormOptions */ "./scripts/constants/defaultFormOptions.ts");
-/* harmony import */ var _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../iframe/integratedMessages */ "./scripts/iframe/integratedMessages/index.ts");
+/* harmony import */ var _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../iframe/integratedMessages */ "./scripts/iframe/integratedMessages/index.ts");
+/* harmony import */ var _useGetTemplateAvailability__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./useGetTemplateAvailability */ "./scripts/shared/Form/hooks/useGetTemplateAvailability.ts");
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
@@ -2098,19 +2148,26 @@ function useForms() {
     _useState2 = _slicedToArray(_useState, 2),
     formApiError = _useState2[0],
     setFormApiError = _useState2[1];
+  var _useGetTemplateAvaila = (0,_useGetTemplateAvailability__WEBPACK_IMPORTED_MODULE_4__["default"])(),
+    availabilityPromise = _useGetTemplateAvaila.availabilityPromise;
   var search = lodash_debounce__WEBPACK_IMPORTED_MODULE_1___default()(function (search, callback) {
-    return proxy({
-      key: _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_4__.ProxyMessages.FetchForms,
+    return Promise.all([availabilityPromise, proxy({
+      key: _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_3__.ProxyMessages.FetchForms,
       payload: {
         search: search
       }
-    }).then(function (forms) {
+    })]).then(function (_ref) {
+      var _ref2 = _slicedToArray(_ref, 2),
+        templateAvailabilityResponse = _ref2[0],
+        forms = _ref2[1];
+      var TEMPLATE_OPTIONS = (0,_useGetTemplateAvailability__WEBPACK_IMPORTED_MODULE_4__.getTemplateOptions)(templateAvailabilityResponse.templateAvailability);
       callback([].concat(_toConsumableArray(forms.map(function (form) {
         return {
           label: form.name,
-          value: form.guid
+          value: form.guid,
+          embedVersion: form.embedVersion
         };
-      })), [_constants_defaultFormOptions__WEBPACK_IMPORTED_MODULE_3__.DEFAULT_OPTIONS]));
+      })), [TEMPLATE_OPTIONS]));
     })["catch"](function (error) {
       setFormApiError(error);
     });
@@ -2124,6 +2181,84 @@ function useForms() {
       return setFormApiError(null);
     }
   };
+}
+
+/***/ }),
+
+/***/ "./scripts/shared/Form/hooks/useGetTemplateAvailability.ts":
+/*!*****************************************************************!*\
+  !*** ./scripts/shared/Form/hooks/useGetTemplateAvailability.ts ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ useGetTemplateAvailability),
+/* harmony export */   "getTemplateOptions": () => (/* binding */ getTemplateOptions),
+/* harmony export */   "isDefaultForm": () => (/* binding */ isDefaultForm)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _iframe_useBackgroundApp__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../iframe/useBackgroundApp */ "./scripts/iframe/useBackgroundApp.ts");
+/* harmony import */ var _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../iframe/integratedMessages */ "./scripts/iframe/integratedMessages/index.ts");
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../types */ "./scripts/shared/types.ts");
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
+
+
+
+
+function useGetTemplateAvailability() {
+  var proxy = (0,_iframe_useBackgroundApp__WEBPACK_IMPORTED_MODULE_2__.usePostAsyncBackgroundMessage)();
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState2 = _slicedToArray(_useState, 2),
+    templateAvailability = _useState2[0],
+    setTemplateAvailability = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(function () {
+      return new Promise(function (resolve) {
+        proxy({
+          key: _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_3__.ProxyMessages.GetTemplateAvailability,
+          payload: {}
+        }).then(function (data) {
+          setTemplateAvailability(data.templateAvailability);
+          resolve(data);
+        });
+      });
+    }),
+    _useState4 = _slicedToArray(_useState3, 1),
+    availabilityPromise = _useState4[0];
+  return {
+    templateAvailability: templateAvailability,
+    availabilityPromise: availabilityPromise
+  };
+}
+var getTemplateOptions = function getTemplateOptions(templateAvailability) {
+  if (!templateAvailability) {
+    return {};
+  }
+  return {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Templates', 'leadin'),
+    options: Object.keys(templateAvailability).filter(function (templateId) {
+      var hubspotFormTemplateAvailability = templateAvailability[templateId];
+      return (hubspotFormTemplateAvailability.canCreateWithMissingScopes || !hubspotFormTemplateAvailability.missingScopes.length) && !Object.values(_types__WEBPACK_IMPORTED_MODULE_4__.ExcludedTemplateAvailabilityKeys).includes(templateId);
+    }).map(function (templateId) {
+      return {
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)(_types__WEBPACK_IMPORTED_MODULE_4__.TemplateLabels[templateId], 'leadin'),
+        value: _types__WEBPACK_IMPORTED_MODULE_4__.TemplateValues[templateId]
+      };
+    })
+  };
+};
+function isDefaultForm(value) {
+  return Object.values(_types__WEBPACK_IMPORTED_MODULE_4__.TemplateValues).includes(value);
 }
 
 /***/ }),
@@ -2243,12 +2378,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _iframe_integratedMessages__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../iframe/integratedMessages */ "./scripts/iframe/integratedMessages/index.ts");
 /* harmony import */ var _Common_LoadingBlock__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Common/LoadingBlock */ "./scripts/shared/Common/LoadingBlock.tsx");
 /* harmony import */ var _utils_backgroundAppUtils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../utils/backgroundAppUtils */ "./scripts/utils/backgroundAppUtils.ts");
+/* harmony import */ var _utils_isRefreshTokenAvailable__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../utils/isRefreshTokenAvailable */ "./scripts/utils/isRefreshTokenAvailable.ts");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 
 
 
@@ -2294,7 +2431,7 @@ function MeetingEdit(_ref) {
 }
 function MeetingsEditContainer(props) {
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_iframe_useBackgroundApp__WEBPACK_IMPORTED_MODULE_4__.BackgroudAppContext.Provider, {
-    value: _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_5__.refreshToken && (0,_utils_backgroundAppUtils__WEBPACK_IMPORTED_MODULE_8__.getOrCreateBackgroundApp)(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_5__.refreshToken),
+    value: (0,_utils_isRefreshTokenAvailable__WEBPACK_IMPORTED_MODULE_9__.isRefreshTokenAvailable)() && (0,_utils_backgroundAppUtils__WEBPACK_IMPORTED_MODULE_8__.getOrCreateBackgroundApp)(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_5__.refreshToken),
     children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(MeetingEdit, _objectSpread({}, props))
   });
 }
@@ -3040,6 +3177,46 @@ var LoadState = {
 
 /***/ }),
 
+/***/ "./scripts/shared/types.ts":
+/*!*********************************!*\
+  !*** ./scripts/shared/types.ts ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ExcludedTemplateAvailabilityKeys": () => (/* binding */ ExcludedTemplateAvailabilityKeys),
+/* harmony export */   "HubSpotFormTemplateAvailabilityKeys": () => (/* binding */ HubSpotFormTemplateAvailabilityKeys),
+/* harmony export */   "TemplateLabels": () => (/* binding */ TemplateLabels),
+/* harmony export */   "TemplateValues": () => (/* binding */ TemplateValues)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var HubSpotFormTemplateAvailabilityKeys;
+(function (HubSpotFormTemplateAvailabilityKeys) {
+  HubSpotFormTemplateAvailabilityKeys["AI_GENERATED"] = "ai-generated";
+  HubSpotFormTemplateAvailabilityKeys["BLANK"] = "blank";
+  HubSpotFormTemplateAvailabilityKeys["NEWSLETTER"] = "newsletter";
+  HubSpotFormTemplateAvailabilityKeys["CONTACT_US"] = "contact-us";
+  HubSpotFormTemplateAvailabilityKeys["EVENT_REGISTRATION"] = "event-registration";
+  HubSpotFormTemplateAvailabilityKeys["TALK_TO_AN_EXPERT"] = "talk-to-an-expert";
+  HubSpotFormTemplateAvailabilityKeys["BOOK_A_MEETING"] = "book-a-meeting";
+  HubSpotFormTemplateAvailabilityKeys["GATED_CONTENT"] = "gated-content";
+  HubSpotFormTemplateAvailabilityKeys["SUPPORT"] = "support";
+})(HubSpotFormTemplateAvailabilityKeys || (HubSpotFormTemplateAvailabilityKeys = {}));
+var ExcludedTemplateAvailabilityKeys;
+(function (ExcludedTemplateAvailabilityKeys) {
+  ExcludedTemplateAvailabilityKeys["SUPPORT"] = "support";
+  ExcludedTemplateAvailabilityKeys["AI_GENERATED"] = "ai-generated";
+})(ExcludedTemplateAvailabilityKeys || (ExcludedTemplateAvailabilityKeys = {}));
+var TemplateLabels = _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty({}, HubSpotFormTemplateAvailabilityKeys.BLANK, 'Blank Form'), HubSpotFormTemplateAvailabilityKeys.NEWSLETTER, 'Newsletter Form'), HubSpotFormTemplateAvailabilityKeys.CONTACT_US, 'Contact Us Form'), HubSpotFormTemplateAvailabilityKeys.EVENT_REGISTRATION, 'Event Registration Form'), HubSpotFormTemplateAvailabilityKeys.TALK_TO_AN_EXPERT, 'Talk to an Expert Form'), HubSpotFormTemplateAvailabilityKeys.BOOK_A_MEETING, 'Book a Meeting Form'), HubSpotFormTemplateAvailabilityKeys.GATED_CONTENT, 'Gated Content Form');
+var TemplateValues = _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty({}, HubSpotFormTemplateAvailabilityKeys.BLANK, 'BLANK'), HubSpotFormTemplateAvailabilityKeys.NEWSLETTER, 'NEWSLETTER'), HubSpotFormTemplateAvailabilityKeys.CONTACT_US, 'CONTACT_US'), HubSpotFormTemplateAvailabilityKeys.EVENT_REGISTRATION, 'EVENT_REGISTRATION'), HubSpotFormTemplateAvailabilityKeys.TALK_TO_AN_EXPERT, 'TALK_TO_AN_EXPERT'), HubSpotFormTemplateAvailabilityKeys.BOOK_A_MEETING, 'BOOK_A_MEETING'), HubSpotFormTemplateAvailabilityKeys.GATED_CONTENT, 'GATED_CONTENT');
+
+/***/ }),
+
 /***/ "./scripts/utils/appUtils.ts":
 /*!***********************************!*\
   !*** ./scripts/utils/appUtils.ts ***!
@@ -3111,13 +3288,32 @@ var getOrCreateBackgroundApp = function getOrCreateBackgroundApp() {
   var _window = window,
     IntegratedAppEmbedder = _window.IntegratedAppEmbedder,
     IntegratedAppOptions = _window.IntegratedAppOptions;
-  var options = new IntegratedAppOptions().setLocale(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.locale).setDeviceId(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.deviceId).setLeadinConfig(getLeadinConfig()).setRefreshToken(refreshToken);
+  var options = new IntegratedAppOptions().setLocale(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.locale).setDeviceId(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.deviceId).setLeadinConfig(getLeadinConfig()).setRefreshToken(refreshToken.trim());
   var embedder = new IntegratedAppEmbedder('integrated-plugin-proxy', _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.portalId, _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.hubspotBaseUrl, function () {}).setOptions(options);
   embedder.attachTo(document.body, false);
   embedder.postStartAppMessage(); // lets the app know all all data has been passed to it
   window.LeadinBackgroundApp = embedder;
   return window.LeadinBackgroundApp;
 };
+
+/***/ }),
+
+/***/ "./scripts/utils/isRefreshTokenAvailable.ts":
+/*!**************************************************!*\
+  !*** ./scripts/utils/isRefreshTokenAvailable.ts ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "isRefreshTokenAvailable": () => (/* binding */ isRefreshTokenAvailable)
+/* harmony export */ });
+/* harmony import */ var _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/leadinConfig */ "./scripts/constants/leadinConfig.ts");
+
+function isRefreshTokenAvailable() {
+  return !!(_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.refreshToken && _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_0__.refreshToken.trim());
+}
 
 /***/ }),
 

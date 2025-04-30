@@ -4,9 +4,9 @@ License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Tags: CRM, Marketing, Live Chat, Forms, Analytics, popups, newsletter, contact management, chat, contact form, marketing automation
 Requires at least: 5.8
-Tested up to: 6.7
+Tested up to: 6.7.1
 Requires PHP: 7.2
-Stable tag: 11.1.73
+Stable tag: 11.3.6
 
 The CRM, Sales, and Marketing WordPress plugin to grow your business better.
 
@@ -113,7 +113,6 @@ First, get familiar with our different form types:
 
 ✅ Embedded
 ✅ Standalone page
-✅ Pop-up box
 ✅ Dropdown banner
 ✅ Slide in left/right box
 
@@ -121,9 +120,10 @@ Then, when you're ready to go, pick a custom template:
 
 ✅ Contact us
 ✅ Newsletter sign up form template
-✅ Support template
-✅ eBook download template
 ✅ Event registration template
+✅ Talk to an expert template
+✅ Book a meeting template
+✅ Gated content template
 ✅ More coming soon
 
 Choose from a variety of settings, color schemes, and fonts — or start from scratch. HubSpot comes with an intuitive form and popup builder that simplifies the process, no matter what type of form you have in mind.
@@ -418,12 +418,12 @@ Please visit the <a href="https://community.hubspot.com/?utm_source=wordpress-pl
 == Changelog ==
 
 <a href="http://plugins.svn.wordpress.org/leadin/trunk/changelog.txt" target="_blank">Full changelog here</a>
-- Current version: 11.1.73
-- Version release date: 2024-11-19
+- Current version: 11.3.6
+- Version release date: 2025-04-22
 
-= 11.1.73 (2024-11-19) =
-* Remove unknow wp_json_decode function
+= 11.3.6 (2025-04-22) =
+* Have default embedVersion for elementor
 
-= 11.1.66 (2024-10-23) =
-* Register gutenberg blocks at PHP side
+= 11.3.0 (2025-04-07) =
+* Add v4 forms support
 

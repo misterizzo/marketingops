@@ -13,6 +13,7 @@ import {
 } from '../../iframe/useBackgroundApp';
 import { refreshToken } from '../../constants/leadinConfig';
 import { getOrCreateBackgroundApp } from '../../utils/backgroundAppUtils';
+import { isRefreshTokenAvailable } from '../../utils/isRefreshTokenAvailable';
 
 interface IElementorMeetingSelectProps {
   url: string;
@@ -114,7 +115,9 @@ export default function ElementorMeetingsSelectContainer(
 ) {
   return (
     <BackgroudAppContext.Provider
-      value={refreshToken && getOrCreateBackgroundApp(refreshToken)}
+      value={
+        isRefreshTokenAvailable() && getOrCreateBackgroundApp(refreshToken)
+      }
     >
       <ElementorMeetingSelectWrapper {...props} />
     </BackgroudAppContext.Provider>

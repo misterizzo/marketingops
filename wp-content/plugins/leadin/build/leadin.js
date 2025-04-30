@@ -68,10 +68,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "disableInternalTracking": () => (/* binding */ disableInternalTracking),
 /* harmony export */   "fetchDisableInternalTracking": () => (/* binding */ fetchDisableInternalTracking),
+/* harmony export */   "fetchProxyMappingsEnabled": () => (/* binding */ fetchProxyMappingsEnabled),
 /* harmony export */   "getBusinessUnitId": () => (/* binding */ getBusinessUnitId),
 /* harmony export */   "healthcheckRestApi": () => (/* binding */ healthcheckRestApi),
+/* harmony export */   "refreshProxyMappingsCache": () => (/* binding */ refreshProxyMappingsCache),
 /* harmony export */   "setBusinessUnitId": () => (/* binding */ setBusinessUnitId),
 /* harmony export */   "skipReview": () => (/* binding */ skipReview),
+/* harmony export */   "toggleProxyMappingsEnabled": () => (/* binding */ toggleProxyMappingsEnabled),
 /* harmony export */   "trackConsent": () => (/* binding */ trackConsent),
 /* harmony export */   "updateHublet": () => (/* binding */ updateHublet)
 /* harmony export */ });
@@ -149,6 +152,15 @@ function setBusinessUnitId(businessUnitId) {
 }
 function getBusinessUnitId() {
   return makeRequest('get', '/business-unit');
+}
+function refreshProxyMappingsCache() {
+  return makeRequest('post', '/wp-mappings-cache-reset');
+}
+function fetchProxyMappingsEnabled() {
+  return makeRequest('get', '/wp-mappings-proxy-enabled');
+}
+function toggleProxyMappingsEnabled(value) {
+  return makeRequest('put', '/wp-mappings-proxy-enabled', value);
 }
 
 /***/ }),
@@ -473,7 +485,15 @@ var PluginMessages = {
   ContentEmbedInstallError: 'CONTENT_EMBED_INSTALL_ERROR',
   ContentEmbedActivationRequest: 'CONTENT_EMBED_ACTIVATION_REQUEST',
   ContentEmbedActivationResponse: 'CONTENT_EMBED_ACTIVATION_RESPONSE',
-  ContentEmbedActivationError: 'CONTENT_EMBED_ACTIVATION_ERROR'
+  ContentEmbedActivationError: 'CONTENT_EMBED_ACTIVATION_ERROR',
+  ProxyMappingsEnabledRequest: 'PROXY_MAPPINGS_ENABLED_REQUEST',
+  ProxyMappingsEnabledResponse: 'PROXY_MAPPINGS_ENABLED_RESPONSE',
+  ProxyMappingsEnabledError: 'PROXY_MAPPINGS_ENABLED_ERROR',
+  ProxyMappingsEnabledChangeRequest: 'PROXY_MAPPINGS_ENABLED_CHANGE_REQUEST',
+  ProxyMappingsEnabledChangeError: 'PROXY_MAPPINGS_ENABLED_CHANGE_ERROR',
+  RefreshProxyMappingsRequest: 'REFRESH_PROXY_MAPPINGS_REQUEST',
+  RefreshProxyMappingsResponse: 'REFRESH_PROXY_MAPPINGS_RESPONSE',
+  RefreshProxyMappingsError: 'REFRESH_PROXY_MAPPINGS_ERROR'
 };
 
 /***/ }),
@@ -493,6 +513,7 @@ var ProxyMessages = {
   FetchForms: 'FETCH_FORMS',
   FetchForm: 'FETCH_FORM',
   CreateFormFromTemplate: 'CREATE_FORM_FROM_TEMPLATE',
+  GetTemplateAvailability: 'GET_TEMPLATE_AVAILABILITY',
   FetchAuth: 'FETCH_AUTH',
   FetchMeetingsAndUsers: 'FETCH_MEETINGS_AND_USERS',
   FetchContactsCreateSinceActivation: 'FETCH_CONTACTS_CREATED_SINCE_ACTIVATION',
@@ -616,6 +637,43 @@ var messageMapper = new Map([[_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.P
   })["catch"](function (payload) {
     embedder.postMessage({
       key: _integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.ContentEmbedActivationError,
+      payload: payload
+    });
+  });
+}], [_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.RefreshProxyMappingsRequest, function (__message, embedder) {
+  (0,_api_wordpressApiClient__WEBPACK_IMPORTED_MODULE_1__.refreshProxyMappingsCache)().then(function () {
+    embedder.postMessage({
+      key: _integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.RefreshProxyMappingsResponse,
+      payload: {}
+    });
+  })["catch"](function (payload) {
+    embedder.postMessage({
+      key: _integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.RefreshProxyMappingsError,
+      payload: payload
+    });
+  });
+}], [_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.ProxyMappingsEnabledRequest, function (__message, embedder) {
+  (0,_api_wordpressApiClient__WEBPACK_IMPORTED_MODULE_1__.fetchProxyMappingsEnabled)().then(function (payload) {
+    embedder.postMessage({
+      key: _integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.ProxyMappingsEnabledResponse,
+      payload: payload
+    });
+  })["catch"](function (payload) {
+    embedder.postMessage({
+      key: _integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.ProxyMappingsEnabledError,
+      payload: payload
+    });
+  });
+}], [_integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.ProxyMappingsEnabledChangeRequest, function (_ref2, embedder) {
+  var payload = _ref2.payload;
+  (0,_api_wordpressApiClient__WEBPACK_IMPORTED_MODULE_1__.toggleProxyMappingsEnabled)(payload).then(function () {
+    embedder.postMessage({
+      key: _integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.ProxyMappingsEnabledResponse,
+      payload: payload
+    });
+  })["catch"](function (payload) {
+    embedder.postMessage({
+      key: _integratedMessages__WEBPACK_IMPORTED_MODULE_0__.PluginMessages.ProxyMappingsEnabledChangeError,
       payload: payload
     });
   });
@@ -862,10 +920,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function configureRaven() {
-  if (_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_1__.hubspotBaseUrl.indexOf('app.hubspot.com') === -1) {
+  if (_constants_leadinConfig__WEBPACK_IMPORTED_MODULE_1__.hubspotBaseUrl.indexOf('local') !== -1) {
     return;
   }
-  raven_js__WEBPACK_IMPORTED_MODULE_0___default().config('https://e9b8f382cdd130c0d415cd977d2be56f@exceptions.hubspot.com/1', {
+  var domain = _constants_leadinConfig__WEBPACK_IMPORTED_MODULE_1__.hubspotBaseUrl.replace(/https?:\/\/app/, '');
+  raven_js__WEBPACK_IMPORTED_MODULE_0___default().config("https://a9f08e536ef66abb0bf90becc905b09e@exceptions".concat(domain, "/v2/1"), {
     instrument: {
       tryCatch: false
     },
