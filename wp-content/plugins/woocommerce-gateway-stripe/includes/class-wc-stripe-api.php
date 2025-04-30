@@ -54,8 +54,8 @@ class WC_Stripe_API {
 		$secret_key      = $options['secret_key'] ?? '';
 		$test_secret_key = $options['test_secret_key'] ?? '';
 
-		if ( is_null( $mode ) || ! in_array( $mode, [ 'test', 'live' ] ) ) {
-			$mode = isset( $options['testmode'] ) && 'yes' === $options['testmode'] ? 'test' : 'live';
+		if ( ! in_array( $mode, [ 'test', 'live' ], true ) ) {
+			$mode = WC_Stripe_Mode::is_test() ? 'test' : 'live';
 		}
 
 		self::set_secret_key( 'test' === $mode ? $test_secret_key : $secret_key );
@@ -111,6 +111,28 @@ class WC_Stripe_API {
 	}
 
 	/**
+	 * Generates the idempotency key for the request.
+	 *
+	 * @param string $api The API endpoint.
+	 * @param string $method The HTTP method.
+	 * @param array  $request The request parameters.
+	 * @return string|null The idempotency key.
+	 */
+	public static function get_idempotency_key( $api, $method, $request ) {
+		if ( 'charges' === $api && 'POST' === $method ) {
+			$customer = ! empty( $request['customer'] ) ? $request['customer'] : '';
+			$source   = ! empty( $request['source'] ) ? $request['source'] : $customer;
+			return $request['metadata']['order_id'] . '-' . $source;
+		} elseif ( 'payment_intents' === $api && 'POST' === $method ) {
+			// https://docs.stripe.com/api/idempotent_requests suggests using
+			// v4 uuids for idempotency keys.
+			return wp_generate_uuid4();
+		}
+
+		return null;
+	}
+
+	/**
 	 * Send the request to Stripe's API
 	 *
 	 * @since 3.1.0
@@ -125,14 +147,10 @@ class WC_Stripe_API {
 	public static function request( $request, $api = 'charges', $method = 'POST', $with_headers = false ) {
 		WC_Stripe_Logger::log( "{$api} request: " . print_r( $request, true ) );
 
-		$headers         = self::get_headers();
-		$idempotency_key = '';
+		$headers = self::get_headers();
 
-		if ( 'charges' === $api && 'POST' === $method ) {
-			$customer        = ! empty( $request['customer'] ) ? $request['customer'] : '';
-			$source          = ! empty( $request['source'] ) ? $request['source'] : $customer;
-			$idempotency_key = apply_filters( 'wc_stripe_idempotency_key', $request['metadata']['order_id'] . '-' . $source, $request );
-
+		$idempotency_key = apply_filters( 'wc_stripe_idempotency_key', self::get_idempotency_key( $api, $method, $request ), $request );
+		if ( $idempotency_key ) {
 			$headers['Idempotency-Key'] = $idempotency_key;
 		}
 
@@ -225,7 +243,7 @@ class WC_Stripe_API {
 		// 2. Do not add level3 data if there's a transient indicating that level3 was
 		// not accepted by Stripe in the past for this account.
 		// 3. Do not try to add level3 data if merchant is not based in the US.
-		// https://stripe.com/docs/level3#level-iii-usage-requirements
+		// https://docs.stripe.com/level3#level-iii-usage-requirements
 		// (Needs to be authenticated with a level3 gated account to see above docs).
 		if (
 			empty( $level3_data ) ||
@@ -245,6 +263,15 @@ class WC_Stripe_API {
 			$request,
 			$api
 		);
+
+		// Check for amount_too_small error - if found, return immediately without retrying
+		if (
+			isset( $result->error ) &&
+			isset( $result->error->code ) &&
+			'amount_too_small' === $result->error->code
+		) {
+			return $result;
+		}
 
 		$is_level3_param_not_allowed = (
 			isset( $result->error )
@@ -389,11 +416,8 @@ class WC_Stripe_API {
 	 * @return bool True if the payment should be detached, false otherwise.
 	 */
 	public static function should_detach_payment_method_from_customer() {
-		$options   = WC_Stripe_Helper::get_stripe_settings();
-		$test_mode = isset( $options['testmode'] ) && 'yes' === $options['testmode'];
-
 		// If we are in test mode, we can always detach the payment method.
-		if ( $test_mode ) {
+		if ( WC_Stripe_Mode::is_test() ) {
 			return true;
 		}
 

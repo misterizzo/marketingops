@@ -43,7 +43,7 @@ final class WC_Stripe_Blocks_Support extends AbstractPaymentMethodType {
 	public function __construct( $payment_request_configuration = null, $express_checkout_configuration = null ) {
 		add_action( 'woocommerce_rest_checkout_process_payment_with_context', [ $this, 'add_payment_request_order_meta' ], 8, 2 );
 		add_action( 'woocommerce_rest_checkout_process_payment_with_context', [ $this, 'add_stripe_intents' ], 9999, 2 );
-		$this->payment_request_configuration = null !== $payment_request_configuration ? $payment_request_configuration : new WC_Stripe_Payment_Request();
+		$this->payment_request_configuration  = null !== $payment_request_configuration ? $payment_request_configuration : new WC_Stripe_Payment_Request();
 		$this->express_checkout_configuration = null !== $express_checkout_configuration ? $express_checkout_configuration : new WC_Stripe_Express_Checkout_Element();
 	}
 
@@ -178,7 +178,7 @@ final class WC_Stripe_Blocks_Support extends AbstractPaymentMethodType {
 	 * @return array
 	 */
 	public function get_payment_method_data() {
-		$js_params = WC_Stripe_Feature_Flags::is_stripe_ece_enabled()
+		$js_params = WC_Stripe_Feature_Flags::is_upe_checkout_enabled() && WC_Stripe_Feature_Flags::is_stripe_ece_enabled()
 			? $this->get_express_checkout_javascript_params()
 			: $this->get_payment_request_javascript_params();
 		// We need to call array_merge_recursive so the blocks 'button' setting doesn't overwrite
@@ -189,6 +189,7 @@ final class WC_Stripe_Blocks_Support extends AbstractPaymentMethodType {
 			// Blocks-specific options
 			[
 				'icons'                           => $this->get_icons(),
+				'plugin_url'                      => WC_STRIPE_PLUGIN_URL,
 				'supports'                        => $this->get_supported_features(),
 				'showSavedCards'                  => $this->get_show_saved_cards(),
 				'showSaveOption'                  => $this->get_show_save_option(),
@@ -198,6 +199,8 @@ final class WC_Stripe_Blocks_Support extends AbstractPaymentMethodType {
 				'button'                          => [
 					'customLabel' => $this->payment_request_configuration->get_button_label(),
 				],
+				'style'                           => $this->get_style(),
+				'baseLocation'                    => wc_get_base_location(),
 			]
 		);
 	}
@@ -248,6 +251,19 @@ final class WC_Stripe_Blocks_Support extends AbstractPaymentMethodType {
 		}
 
 		return $this->payment_request_configuration->should_show_payment_request_button();
+	}
+
+	/**
+	 * Returns an array of style properties supported by the payment method.
+	 * This method is used only when rendering the payment method in the editor.
+	 *
+	 * @return array Array of style properties.
+	 */
+	private function get_style() {
+		return [
+			'height',
+			'borderRadius',
+		];
 	}
 
 	/**

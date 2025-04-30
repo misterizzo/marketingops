@@ -57,11 +57,15 @@ abstract class WSAL_AbstractView {
 	 *
 	 * @param WpSecurityAuditLog $plugin - Instance of WpSecurityAuditLog.
 	 */
-	public function __construct( WpSecurityAuditLog $plugin ) {
-		$this->plugin = $plugin;
+	public function __construct() {
+		global $wsal_class;
+		if ( null === $wsal_class ) {
+			$wsal_class = WpSecurityAuditLog::get_instance();
+		}
+		$this->plugin = $wsal_class;
 
 		// Handle admin notices.
-		add_action( 'wp_ajax_AjaxDismissNotice', array( $this, 'ajax_dismiss_notice' ) );
+		\add_action( 'wp_ajax_AjaxDismissNotice', array( $this, 'ajax_dismiss_notice' ) );
 
 		\add_action( 'in_admin_footer', array( __CLASS__, 'in_admin_footer' ) );
 		\add_action( 'in_admin_header', array( __CLASS__, 'in_admin_header' ) );
@@ -86,7 +90,7 @@ abstract class WSAL_AbstractView {
 			die( 'Notice name expected as "notice" parameter.' );
 		}
 
-		$this->dismiss_notice( $post_array['notice'] );
+		$this->dismiss_notice( \sanitize_text_field( \wp_unslash( $post_array['notice'] ) ) );
 	}
 
 	/**

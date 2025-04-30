@@ -19,6 +19,7 @@ use WSAL\Helpers\WP_Helper;
 use WSAL\Helpers\User_Helper;
 use WSAL\Controllers\Connection;
 use WSAL\Helpers\Settings_Helper;
+use WSAL\Extensions\Views\Reports;
 use WSAL\Entities\Occurrences_Entity;
 use WSAL\ListAdminEvents\List_Events;
 
@@ -69,8 +70,8 @@ if ( ! class_exists( '\WSAL\Writers\CSV_Writer' ) ) {
 		 * @since 5.0.0
 		 */
 		public static function init() {
-			if ( \class_exists( '\WSAL\Extensions\Views\Reports', false ) ) {
-				\add_action( 'wp_ajax_wsal_report_download', array( '\WSAL\Extensions\Views\Reports', 'process_report_download' ) );
+			if ( \class_exists( '\WSAL\Extensions\Views\Reports', true ) ) {
+				\add_action( 'wp_ajax_wsal_report_download', array( Reports::class, 'process_report_download' ) );
 			}
 		}
 
@@ -235,7 +236,15 @@ if ( ! class_exists( '\WSAL\Writers\CSV_Writer' ) ) {
 				wp_send_json_error( esc_html_e( 'query is not provided or incorrect', 'wp-security-audit-log' ) );
 				die();
 			} else {
-				$query = unserialize( \base64_decode( \sanitize_text_field( \wp_unslash( $_POST['query'] ) ) ) );
+				$query = \unserialize( \base64_decode( \sanitize_text_field( \wp_unslash( $_POST['query'] ) ) ), array( 'allowed_classes' => false ) );
+
+				if ( ! \is_array( $query ) ) {
+					wp_send_json_error( esc_html_e( 'Unrecognized format', 'wp-security-audit-log' ) );
+					die();
+				}
+
+				array_walk_recursive( $query, 'wp_unslash' );
+				array_walk_recursive( $query, 'sanitize_text_field' );
 			}
 
 			if ( ! array_key_exists( 'order', $_POST ) ) {

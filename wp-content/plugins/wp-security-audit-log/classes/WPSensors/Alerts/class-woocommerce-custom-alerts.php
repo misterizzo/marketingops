@@ -18,6 +18,7 @@ declare(strict_types=1);
 namespace WSAL\WP_Sensors\Alerts;
 
 use WSAL\MainWP\MainWP_Addon;
+use WSAL\Controllers\Constants;
 use WSAL\WP_Sensors\Helpers\Woocommerce_Helper;
 
 // Exit if accessed directly.
@@ -43,6 +44,8 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 				return array(
 					esc_html__( 'WooCommerce', 'wp-security-audit-log' ) => array(
 						esc_html__( 'Products', 'wp-security-audit-log' ) => self::get_products_array(),
+
+						esc_html__( 'Products Reviews', 'wp-security-audit-log' ) => self::get_products_reviews_array(),
 
 						esc_html__( 'Store', 'wp-security-audit-log' ) => self::get_store_array(),
 
@@ -75,6 +78,7 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 		 */
 		public static function get_alerts_array(): array {
 			return self::get_products_array() +
+			self::get_products_reviews_array() +
 			self::get_store_array() +
 			self::get_payment_getaways_array() +
 			self::get_tax_settings_array() +
@@ -555,7 +559,7 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 					9042,
 					WSAL_INFORMATIONAL,
 					esc_html__( 'User changed the catalog visibility of a product', 'wp-security-audit-log' ),
-					esc_html__( 'Changed the product visibility of the product %ProductTitle% to %NewVisibility%.', 'wp-security-audit-log' ),
+					esc_html__( 'Changed the product catalog visibility of the product %ProductTitle% to %NewVisibility%..', 'wp-security-audit-log' ),
 					array(
 						esc_html__( 'Product ID', 'wp-security-audit-log' ) => '%PostID%',
 						esc_html__( 'Product SKU', 'wp-security-audit-log' ) => '%SKU%',
@@ -970,6 +974,149 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 					'woocommerce-product',
 					'modified',
 				),
+				9138 => array(
+					9138,
+					\WSAL_MEDIUM,
+					esc_html__( 'Copied the product', 'wp-security-audit-log' ),
+					esc_html__( 'Copied the product %OriginalProductTitle% to a new draft.', 'wp-security-audit-log' ),
+					array(
+						esc_html__( 'New Product name', 'wp-security-audit-log' ) => '%ProductTitle%',
+						esc_html__( 'Product ID', 'wp-security-audit-log' ) => '%ProductID%',
+						esc_html__( 'Product SKU', 'wp-security-audit-log' ) => '%SKU%',
+						esc_html__( 'Product status', 'wp-security-audit-log' ) => '%ProductStatus%',
+					),
+					array(
+						esc_html__( 'View product in editor', 'wp-security-audit-log' ) => '%EditorLinkProduct%',
+					),
+					'woocommerce-product',
+					'modified',
+				),
+			);
+		}
+
+
+		/**
+		 * Returns the array with products alerts.
+		 *
+		 * @since 5.3.0
+		 */
+		private static function get_products_reviews_array(): array {
+			return array(
+				9160 => array(
+					9160,
+					WSAL_INFORMATIONAL,
+					esc_html__( 'A new review was posted for the product ', 'wp-security-audit-log' ),
+					esc_html__( 'A new review was posted for the product %ProductTitle%.', 'wp-security-audit-log' ),
+					array(
+						esc_html__( 'Product ID', 'wp-security-audit-log' )     => '%ProductID%',
+						esc_html__( 'Product SKU', 'wp-security-audit-log' ) => '%SKU%',
+						esc_html__( 'Product status', 'wp-security-audit-log' ) => '%ProductStatus%',
+						esc_html__( 'Review Author', 'wp-security-audit-log' ) => '%CommentAuthor%',
+						esc_html__( 'Rating', 'wp-security-audit-log' ) => '%Rating%',
+						esc_html__( 'Comment ID', 'wp-security-audit-log' )  => '%CommentID%',
+					),
+					Constants::wsaldefaults_build_links( array( 'CommentLink', 'PostUrlIfPublished' ) ),
+					'woocommerce-product-review',
+					'created',
+				),
+				9161 => array(
+					9161,
+					WSAL_INFORMATIONAL,
+					esc_html__( 'Unapproved a review that was posted for the product', 'wp-security-audit-log' ),
+					esc_html__( 'Unapproved a review that was posted for the product %ProductTitle%.', 'wp-security-audit-log' ),
+					array(
+						esc_html__( 'Review Author', 'wp-security-audit-log' ) => '%CommentAuthor%',
+						esc_html__( 'Rating', 'wp-security-audit-log' ) => '%Rating%',
+						esc_html__( 'Comment ID', 'wp-security-audit-log' )  => '%CommentID%',
+					),
+					Constants::wsaldefaults_build_links( array( 'CommentLink', 'PostUrlIfPublished' ) ),
+					'woocommerce-product-review',
+					'unapproved',
+				),
+				9162 => array(
+					9162,
+					WSAL_INFORMATIONAL,
+					esc_html__( 'Approved a review that was posted for the product', 'wp-security-audit-log' ),
+					esc_html__( 'Approved a review that was posted for the product %ProductTitle%.', 'wp-security-audit-log' ),
+					array(
+						esc_html__( 'Review Author', 'wp-security-audit-log' ) => '%CommentAuthor%',
+						esc_html__( 'Rating', 'wp-security-audit-log' ) => '%Rating%',
+						esc_html__( 'Comment ID', 'wp-security-audit-log' )  => '%CommentID%',
+					),
+					Constants::wsaldefaults_build_links( array( 'CommentLink', 'PostUrlIfPublished' ) ),
+					'woocommerce-product-review',
+					'approved',
+				),
+				9163 => array(
+					9163,
+					WSAL_INFORMATIONAL,
+					esc_html__( 'Marked a review that was posted for the product as spam.', 'wp-security-audit-log' ),
+					esc_html__( 'Marked a review that was posted for the product %ProductTitle% as spam.', 'wp-security-audit-log' ),
+					array(
+						esc_html__( 'Review Author', 'wp-security-audit-log' ) => '%CommentAuthor%',
+						esc_html__( 'Rating', 'wp-security-audit-log' ) => '%Rating%',
+						esc_html__( 'Comment ID', 'wp-security-audit-log' )  => '%CommentID%',
+					),
+					Constants::wsaldefaults_build_links( array( 'CommentLink', 'PostUrlIfPublished' ) ),
+					'woocommerce-product-review',
+					'unapproved',
+				),
+				9164 => array(
+					9164,
+					WSAL_INFORMATIONAL,
+					esc_html__( 'Moved a review that was posted for the product to trash.', 'wp-security-audit-log' ),
+					esc_html__( 'Moved a review that was posted for the product %ProductTitle% to trash.', 'wp-security-audit-log' ),
+					array(
+						esc_html__( 'Review Author', 'wp-security-audit-log' ) => '%CommentAuthor%',
+						esc_html__( 'Rating', 'wp-security-audit-log' ) => '%Rating%',
+						esc_html__( 'Comment ID', 'wp-security-audit-log' )  => '%CommentID%',
+					),
+					Constants::wsaldefaults_build_links( array( 'CommentLink', 'PostUrlIfPublished' ) ),
+					'woocommerce-product-review',
+					'deleted',
+				),
+				9165 => array(
+					9165,
+					WSAL_INFORMATIONAL,
+					esc_html__( 'Restored a review that was posted for the product from trash.', 'wp-security-audit-log' ),
+					esc_html__( 'Restored a review that was posted for the product %ProductTitle% from trash.', 'wp-security-audit-log' ),
+					array(
+						esc_html__( 'Review Author', 'wp-security-audit-log' ) => '%CommentAuthor%',
+						esc_html__( 'Rating', 'wp-security-audit-log' ) => '%Rating%',
+						esc_html__( 'Comment ID', 'wp-security-audit-log' )  => '%CommentID%',
+					),
+					Constants::wsaldefaults_build_links( array( 'CommentLink', 'PostUrlIfPublished' ) ),
+					'woocommerce-product-review',
+					'restored',
+				),
+				9166 => array(
+					9166,
+					WSAL_INFORMATIONAL,
+					esc_html__( 'Permanently deleted a review that was posted for the product.', 'wp-security-audit-log' ),
+					esc_html__( 'Permanently deleted a review that was posted for the product %ProductTitle%.', 'wp-security-audit-log' ),
+					array(
+						esc_html__( 'Review Author', 'wp-security-audit-log' ) => '%CommentAuthor%',
+						esc_html__( 'Rating', 'wp-security-audit-log' ) => '%Rating%',
+						esc_html__( 'Comment ID', 'wp-security-audit-log' )  => '%CommentID%',
+					),
+					array(),
+					'woocommerce-product-review',
+					'deleted',
+				),
+				9167 => array(
+					9167,
+					WSAL_INFORMATIONAL,
+					esc_html__( 'Edited a review that was posted for the product.', 'wp-security-audit-log' ),
+					esc_html__( 'Edited a review that was posted for the product %ProductTitle%.', 'wp-security-audit-log' ),
+					array(
+						esc_html__( 'Review Author', 'wp-security-audit-log' ) => '%CommentAuthor%',
+						esc_html__( 'Rating', 'wp-security-audit-log' ) => '%Rating%',
+						esc_html__( 'Comment ID', 'wp-security-audit-log' )  => '%CommentID%',
+					),
+					Constants::wsaldefaults_build_links( array( 'CommentLink', 'PostUrlIfPublished' ) ),
+					'woocommerce-product-review',
+					'modified',
+				),
 			);
 		}
 
@@ -1082,7 +1229,7 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 					9145,
 					WSAL_MEDIUM,
 					esc_html__( 'User enabled/disabled the store setting Allow customers to create an account during checkout', 'wp-security-audit-log' ),
-					__( 'Changed the status of the store setting <strong>Changed the status of the store setting Allow customers to create an account during checkout.</strong>', 'wp-security-audit-log' ),
+					__( 'Changed the status of the store setting <strong>Allow customers to create an account during checkout.</strong>', 'wp-security-audit-log' ),
 					array(),
 					array(),
 					'woocommerce-store',
@@ -1465,6 +1612,18 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 					'woocommerce-store',
 					'enabled',
 				),
+				9159 => array(
+					9159,
+					WSAL_MEDIUM,
+					esc_html__( 'Changed the visibility status of the store', 'wp-security-audit-log' ),
+					__( 'Changed the <strong>Site visibility status</strong> to %new_status%.', 'wp-security-audit-log' ),
+					array(
+						esc_html__( 'Previous status', 'wp-security-audit-log' ) => '%old_status%',
+					),
+					array(),
+					'woocommerce-store',
+					'modified',
+				),
 			);
 		}
 
@@ -1637,7 +1796,7 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 					9055,
 					WSAL_INFORMATIONAL,
 					esc_html__( 'User changed the display type of a product category', 'wp-security-audit-log' ),
-					esc_html__( 'Changed the display type of the product category %name% to %NewDisplayType%.', 'wp-security-audit-log' ),
+					esc_html__( 'Changed the display type of the product category %CategoryName% to %NewDisplayType%.', 'wp-security-audit-log' ),
 					array(
 						esc_html__( 'Category slug', 'wp-security-audit-log' ) => '%CategorySlug%',
 						esc_html__( 'Previous display type', 'wp-security-audit-log' ) => '%OldDisplayType%',
@@ -2047,6 +2206,7 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 					esc_html__( 'A new order has been placed.', 'wp-security-audit-log' ),
 					array(
 						esc_html__( 'Order name', 'wp-security-audit-log' ) => '%OrderTitle%',
+						esc_html__( 'Order ID', 'wp-security-audit-log' ) => '%OrderID%',
 					),
 					array(
 						esc_html__( 'View order', 'wp-security-audit-log' ) => '%EditorLinkOrder%',
@@ -2059,7 +2219,9 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 					WSAL_INFORMATIONAL,
 					esc_html__( 'WooCommerce order status changed', 'wp-security-audit-log' ),
 					esc_html__( 'Marked the order %OrderTitle% as %OrderStatus%.', 'wp-security-audit-log' ),
-					array(),
+					array(
+						esc_html__( 'Order ID', 'wp-security-audit-log' ) => '%OrderID%',
+					),
 					array(
 						esc_html__( 'View order', 'wp-security-audit-log' ) => '%EditorLinkOrder%',
 					),
@@ -2071,7 +2233,9 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 					WSAL_MEDIUM,
 					esc_html__( 'User moved a WooCommerce order to trash', 'wp-security-audit-log' ),
 					esc_html__( 'Moved the order %OrderTitle% to trash', 'wp-security-audit-log' ),
-					array(),
+					array(
+						esc_html__( 'Order ID', 'wp-security-audit-log' ) => '%OrderID%',
+					),
 					array(),
 					'woocommerce-order',
 					'deleted',
@@ -2081,7 +2245,9 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 					WSAL_LOW,
 					esc_html__( 'User moved a WooCommerce order out of trash', 'wp-security-audit-log' ),
 					esc_html__( 'Restored the order %OrderTitle% out of the trash.', 'wp-security-audit-log' ),
-					array(),
+					array(
+						esc_html__( 'Order ID', 'wp-security-audit-log' ) => '%OrderID%',
+					),
 					array(
 						esc_html__( 'View order', 'wp-security-audit-log' ) => '%EditorLinkOrder%',
 					),
@@ -2093,7 +2259,9 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 					WSAL_LOW,
 					esc_html__( 'User permanently deleted a WooCommerce order', 'wp-security-audit-log' ),
 					esc_html__( 'Permanently deleted the order %OrderTitle%.', 'wp-security-audit-log' ),
-					array(),
+					array(
+						esc_html__( 'Order ID', 'wp-security-audit-log' ) => '%OrderID%',
+					),
 					array(),
 					'woocommerce-order',
 					'deleted',
@@ -2103,7 +2271,9 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 					WSAL_MEDIUM,
 					esc_html__( 'User edited a WooCommerce order', 'wp-security-audit-log' ),
 					esc_html__( 'Changed the details in order %OrderTitle%.', 'wp-security-audit-log' ),
-					array(),
+					array(
+						esc_html__( 'Order ID', 'wp-security-audit-log' ) => '%OrderID%',
+					),
 					array(
 						esc_html__( 'View order', 'wp-security-audit-log' ) => '%EditorLinkOrder%',
 					),
@@ -2120,6 +2290,7 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 						esc_html__( 'Order date', 'wp-security-audit-log' ) => '%OrderDate%',
 						esc_html__( 'Refund amount', 'wp-security-audit-log' ) => '%RefundedAmount%',
 						esc_html__( 'Refund reason', 'wp-security-audit-log' ) => '%Reason%',
+						esc_html__( 'Order ID', 'wp-security-audit-log' ) => '%OrderID%',
 					),
 					array(
 						esc_html__( 'View order', 'wp-security-audit-log' ) => '%EditorLinkOrder%',
@@ -2135,6 +2306,7 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 					array(
 						esc_html__( 'Product ID', 'wp-security-audit-log' ) => '%ProductID%',
 						esc_html__( 'Product SKU', 'wp-security-audit-log' ) => '%SKU%',
+						esc_html__( 'Order ID', 'wp-security-audit-log' ) => '%OrderID%',
 					),
 					array(
 						esc_html__( 'View order', 'wp-security-audit-log' ) => '%EditorLinkOrder%',
@@ -2152,6 +2324,7 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 						esc_html__( 'Previous quantity', 'wp-security-audit-log' ) => '%OldQuantity%',
 						esc_html__( 'Product ID', 'wp-security-audit-log' ) => '%ProductID%',
 						esc_html__( 'Product SKU', 'wp-security-audit-log' ) => '%SKU%',
+						esc_html__( 'Order ID', 'wp-security-audit-log' ) => '%OrderID%',
 					),
 					array(
 						esc_html__( 'View order', 'wp-security-audit-log' ) => '%EditorLinkOrder%',
@@ -2166,6 +2339,7 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 					esc_html__( 'Added/Removed a fee in order %OrderTitle%.', 'wp-security-audit-log' ),
 					array(
 						esc_html__( 'Fee amount', 'wp-security-audit-log' ) => '%FeeAmount%',
+						esc_html__( 'Order ID', 'wp-security-audit-log' ) => '%OrderID%',
 					),
 					array(
 						esc_html__( 'View order', 'wp-security-audit-log' ) => '%EditorLinkOrder%',
@@ -2181,6 +2355,7 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 					array(
 						esc_html__( 'New fee amount', 'wp-security-audit-log' ) => '%FeeAmount%',
 						esc_html__( 'Previous fee amount', 'wp-security-audit-log' ) => '%OldFeeAmount%',
+						esc_html__( 'Order ID', 'wp-security-audit-log' ) => '%OrderID%',
 					),
 					array(
 						esc_html__( 'View order', 'wp-security-audit-log' ) => '%EditorLinkOrder%',
@@ -2193,7 +2368,9 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 					WSAL_HIGH,
 					esc_html__( 'User added/removed a coupon from an order', 'wp-security-audit-log' ),
 					esc_html__( 'Added/Removed a coupon %CouponName% in order %OrderTitle%.', 'wp-security-audit-log' ),
-					array(),
+					array(
+						esc_html__( 'Order ID', 'wp-security-audit-log' ) => '%OrderID%',
+					),
 					array(
 						esc_html__( 'View order', 'wp-security-audit-log' ) => '%EditorLinkOrder%',
 					),
@@ -2206,7 +2383,9 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 					WSAL_HIGH,
 					esc_html__( 'User added/removed a tax from an order', 'wp-security-audit-log' ),
 					esc_html__( 'Added/Removed the tax %TaxName% in order %OrderTitle%.', 'wp-security-audit-log' ),
-					array(),
+					array(
+						esc_html__( 'Order ID', 'wp-security-audit-log' ) => '%OrderID%',
+					),
 					array(
 						esc_html__( 'View order', 'wp-security-audit-log' ) => '%EditorLinkOrder%',
 					),
@@ -2234,7 +2413,9 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 					WSAL_HIGH,
 					esc_html__( 'User added/removed shipping from an order', 'wp-security-audit-log' ),
 					esc_html__( 'Added/Removed shipping in order %OrderTitle%.', 'wp-security-audit-log' ),
-					array(),
+					array(
+						esc_html__( 'Order ID', 'wp-security-audit-log' ) => '%OrderID%',
+					),
 					array(
 						esc_html__( 'View order', 'wp-security-audit-log' ) => '%EditorLinkOrder%',
 					),
@@ -2260,9 +2441,10 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 					9155,
 					WSAL_LOW,
 					esc_html__( 'Order note is added', 'wp-security-audit-log' ),
-					esc_html__( 'Added a comment in order %OrderTitle%.', 'wp-security-audit-log' ),
+					esc_html__( 'Added a note in order %OrderTitle%.', 'wp-security-audit-log' ),
 					array(
 						esc_html__( 'Note Type', 'wp-security-audit-log' ) => '%NoteType%',
+						esc_html__( 'Order ID', 'wp-security-audit-log' ) => '%OrderID%',
 					),
 					array(
 						esc_html__( 'View order', 'wp-security-audit-log' ) => '%EditorLinkOrder%',
@@ -2277,12 +2459,37 @@ if ( ! class_exists( '\WSAL\WP_Sensors\Alerts\WooCommerce_Custom_Alerts' ) ) {
 					esc_html__( 'Removed a note in order %OrderTitle%.', 'wp-security-audit-log' ),
 					array(
 						esc_html__( 'Note Type', 'wp-security-audit-log' ) => '%NoteType%',
+						esc_html__( 'Order ID', 'wp-security-audit-log' ) => '%OrderID%',
 					),
 					array(
 						esc_html__( 'View order', 'wp-security-audit-log' ) => '%EditorLinkOrder%',
 					),
 					'woocommerce-order',
 					'removed',
+				),
+				9157 => array(
+					9157,
+					WSAL_LOW,
+					esc_html__( 'One item per product is enabled', 'wp-security-audit-log' ),
+					esc_html__( 'Enabled the setting to limit purchase to 1 item per order in the product %ProductTitle%.', 'wp-security-audit-log' ),
+					array(),
+					array(
+						esc_html__( 'View order', 'wp-security-audit-log' ) => '%EditorLinkOrder%',
+					),
+					'woocommerce-product',
+					'enabled',
+				),
+				9158 => array(
+					9158,
+					WSAL_LOW,
+					esc_html__( 'One item per product is disabled', 'wp-security-audit-log' ),
+					esc_html__( 'Disabled the setting to limit purchase to 1 item per order in the product %ProductTitle%.', 'wp-security-audit-log' ),
+					array(),
+					array(
+						esc_html__( 'View order', 'wp-security-audit-log' ) => '%EditorLinkOrder%',
+					),
+					'woocommerce-product',
+					'disabled',
 				),
 			);
 		}
