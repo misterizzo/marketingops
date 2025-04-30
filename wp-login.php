@@ -528,14 +528,14 @@ if ( defined( 'RELOCATE' ) && RELOCATE ) { // Move flag is set.
 
 // Set a cookie now to see if they are supported by the browser.
 $secure = ( 'https' === parse_url( wp_login_url(), PHP_URL_SCHEME ) );
-setcookie( TEST_COOKIE, 'WP Cookie check', 0, COOKIEPATH, COOKIE_DOMAIN, $secure );
+setcookie( TEST_COOKIE, 'WP Cookie check', 0, COOKIEPATH, COOKIE_DOMAIN, $secure, true );
 
 if ( SITECOOKIEPATH !== COOKIEPATH ) {
-	setcookie( TEST_COOKIE, 'WP Cookie check', 0, SITECOOKIEPATH, COOKIE_DOMAIN, $secure );
+	setcookie( TEST_COOKIE, 'WP Cookie check', 0, SITECOOKIEPATH, COOKIE_DOMAIN, $secure, true );
 }
 
 if ( isset( $_GET['wp_lang'] ) ) {
-	setcookie( 'wp_lang', sanitize_text_field( $_GET['wp_lang'] ), 0, COOKIEPATH, COOKIE_DOMAIN, $secure );
+	setcookie( 'wp_lang', sanitize_text_field( $_GET['wp_lang'] ), 0, COOKIEPATH, COOKIE_DOMAIN, $secure, true );
 }
 
 /**
@@ -764,8 +764,10 @@ switch ( $action ) {
 		break;
 
 	case 'postpass':
+		$redirect_to = $_POST['redirect_to'] ?? wp_get_referer();
+
 		if ( ! isset( $_POST['post_password'] ) || ! is_string( $_POST['post_password'] ) ) {
-			wp_safe_redirect( wp_get_referer() );
+			wp_safe_redirect( $redirect_to );
 			exit;
 		}
 
@@ -782,18 +784,17 @@ switch ( $action ) {
 		 *
 		 * @param int $expires The expiry time, as passed to setcookie().
 		 */
-		$expire  = apply_filters( 'post_password_expires', time() + 10 * DAY_IN_SECONDS );
-		$referer = wp_get_referer();
+		$expire = apply_filters( 'post_password_expires', time() + 10 * DAY_IN_SECONDS );
 
-		if ( $referer ) {
-			$secure = ( 'https' === parse_url( $referer, PHP_URL_SCHEME ) );
+		if ( $redirect_to ) {
+			$secure = ( 'https' === parse_url( $redirect_to, PHP_URL_SCHEME ) );
 		} else {
 			$secure = false;
 		}
 
 		setcookie( 'wp-postpass_' . COOKIEHASH, $hasher->HashPassword( wp_unslash( $_POST['post_password'] ) ), $expire, COOKIEPATH, COOKIE_DOMAIN, $secure );
 
-		wp_safe_redirect( wp_get_referer() );
+		wp_safe_redirect( $redirect_to );
 		exit;
 
 	case 'logout':
@@ -1648,37 +1649,3 @@ switch ( $action ) {
 		login_footer();
 		break;
 } // End action switch.
-
-
-?>
-<script>
-const loginDiv = document.querySelector('#login');
-const section = document.createElement('section');
-section.className = 'loginformnew elementor-section elementor-top-section elementor-element elementor-element-44abb172 register_page login_page elementor-section-boxed elementor-section-height-default elementor-section-height-default';
-const parentContainer = document.createElement('div');
-parentContainer.className = 'elementor-container elementor-column-gap-default';
-const imageColumn = document.createElement('div');
-imageColumn.innerHTML = `
-  <div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-ea2a0bd register_img" data-id="ea2a0bd" data-element_type="column">
-    <div class="elementor-widget-wrap elementor-element-populated">
-      <div class="elementor-element elementor-element-5dd7f05 elementor-widget elementor-widget-image" data-id="5dd7f05" data-element_type="widget" data-widget_type="image.default">
-        <div class="elementor-widget-container">
-          <img fetchpriority="high" decoding="async" width="455" height="455" src="https://marketingops.com/wp-content/uploads/2022/04/Asset-1-3.png" class="attachment-large size-large wp-image-165577" alt="Asset 1 3" srcset="https://marketingops.com/wp-content/uploads/2022/04/Asset-1-3.png 455w, https://marketingops.com/wp-content/uploads/2022/04/Asset-1-3-300x300.png 300w, https://marketingops.com/wp-content/uploads/2022/04/Asset-1-3-150x150.png 150w, https://marketingops.com/wp-content/uploads/2022/04/Asset-1-3-100x100.png 100w" sizes="(max-width: 455px) 100vw, 455px" title="Log In">
-        </div>
-      </div>
-    </div>
-  </div>
-`;
-const loginColumn = document.createElement('div');
-loginColumn.className = 'elementor-column elementor-col-50 elementor-top-column elementor-element';
-loginColumn.setAttribute('data-element_type', 'column');
-const loginWrap = document.createElement('div');
-loginWrap.className = 'elementor-widget-wrap elementor-element-populated';
-loginWrap.appendChild(loginDiv);
-loginColumn.appendChild(loginWrap);
-parentContainer.appendChild(imageColumn.firstElementChild);
-parentContainer.appendChild(loginColumn);
-section.appendChild(parentContainer);
-document.body.prepend(section);
-
-</script>
