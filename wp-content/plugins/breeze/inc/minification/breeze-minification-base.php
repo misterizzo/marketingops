@@ -337,7 +337,7 @@ abstract class Breeze_MinificationBase {
 		//delete minify
 		Breeze_MinificationCache::clear_minification();
 		//clear normal cache
-		Breeze_PurgeCache::breeze_cache_flush();
+		Breeze_PurgeCache::breeze_cache_flush( false, false, true );
 
 		//Breeze_PurgeCache::factory();
 		//clear varnish cache

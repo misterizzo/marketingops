@@ -69,6 +69,10 @@ class Breeze_Lazy_Load {
 				'lazy-slider-img',
 				'data-srcset',
 				'data-spai',
+				'data-src-webp',
+				'data-srcset-webp',
+				'data-src-img',
+				'data-srcset-img',
 			)
 		);
 

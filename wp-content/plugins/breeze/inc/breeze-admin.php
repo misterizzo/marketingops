@@ -89,7 +89,8 @@ class Breeze_Admin {
 			add_action( 'wpmu_new_blog', array( &$this, 'create_new_blog_items' ), 10, 6 );
 		}
 
-		add_action( 'admin_init',
+		add_action(
+			'admin_init',
 			function () {
 				// When permalinks are reset, we also reset the config files.
 				if ( isset( $_POST['permalink_structure'] ) || isset( $_POST['category_base'] ) ) {
@@ -646,6 +647,7 @@ INLINEJS;
 			'breeze-gzip-compression'  => '1',
 			'breeze-desktop-cache'     => '1',
 			'breeze-mobile-cache'      => '1',
+			'breeze-b-ttl'             => 1440,
 			'breeze-browser-cache'     => '1',
 			'breeze-lazy-load'         => '0',
 			'breeze-lazy-load-native'  => '0',
@@ -658,11 +660,44 @@ INLINEJS;
 
 		// Default File
 		$file = breeze_get_option( 'file_settings' );
-		if ( empty( $advanced ) ) {
+		if ( empty( $file ) ) {
 			$file = array();
 		}
-
-		$default_file = array(
+		$breeze_delay_js_scripts = array(
+			'gtag',
+			'document.write',
+			'html5.js',
+			'show_ads.js',
+			'google_ad',
+			'blogcatalog.com/w',
+			'tweetmeme.com/i',
+			'mybloglog.com/',
+			'histats.com/js',
+			'ads.smowtion.com/ad.js',
+			'statcounter.com/counter/counter.js',
+			'widgets.amung.us',
+			'ws.amazon.com/widgets',
+			'media.fastclick.net',
+			'/ads/',
+			'comment-form-quicktags/quicktags.php',
+			'edToolbar',
+			'intensedebate.com',
+			'scripts.chitika.net/',
+			'_gaq.push',
+			'jotform.com/',
+			'admin-bar.min.js',
+			'GoogleAnalyticsObject',
+			'plupload.full.min.js',
+			'syntaxhighlighter',
+			'adsbygoogle',
+			'gist.github.com',
+			'_stq',
+			'nonce',
+			'post_id',
+			'data-noptimize',
+			'googletagmanager',
+		);
+		$default_file            = array(
 			'breeze-minify-html'       => '0',
 			// --
 			'breeze-minify-css'        => '0',
@@ -679,6 +714,7 @@ INLINEJS;
 			'breeze-enable-js-delay'   => '0',
 			'no-breeze-no-delay-js'    => array(),
 			'breeze-delay-all-js'      => '0',
+			'breeze-delay-js-scripts'  => $breeze_delay_js_scripts,
 		);
 
 		$default_data['file'] = array_merge( $default_file, $file );
@@ -688,7 +724,7 @@ INLINEJS;
 		if ( empty( $advanced ) ) {
 			$advanced = array();
 		}
-		$default_advanced = array(
+		$default_advanced         = array(
 			'breeze-exclude-urls'                  => array(),
 			'cached-query-strings'                 => array(),
 			'breeze-wp-emoji'                      => '0',
@@ -700,6 +736,7 @@ INLINEJS;
 			'breeze-secure-api'                    => '0',
 			'breeze-api-token'                     => $token,
 		);
+		$default_data['advanced'] = array_merge( $default_advanced, $advanced );
 
 		$heartbeat = breeze_get_option( 'heartbeat_settings' );
 		if ( empty( $heartbeat ) ) {
@@ -713,48 +750,6 @@ INLINEJS;
 			'breeze-heartbeat-backend'  => '',
 		);
 		$default_data['heartbeat'] = array_merge( $default_heartbeat, $heartbeat );
-
-		$is_advanced = get_option( 'breeze_advanced_settings_120' );
-
-		if ( empty( $is_advanced ) ) {
-			$breeze_delay_js_scripts = array(
-				'gtag',
-				'document.write',
-				'html5.js',
-				'show_ads.js',
-				'google_ad',
-				'blogcatalog.com/w',
-				'tweetmeme.com/i',
-				'mybloglog.com/',
-				'histats.com/js',
-				'ads.smowtion.com/ad.js',
-				'statcounter.com/counter/counter.js',
-				'widgets.amung.us',
-				'ws.amazon.com/widgets',
-				'media.fastclick.net',
-				'/ads/',
-				'comment-form-quicktags/quicktags.php',
-				'edToolbar',
-				'intensedebate.com',
-				'scripts.chitika.net/',
-				'_gaq.push',
-				'jotform.com/',
-				'admin-bar.min.js',
-				'GoogleAnalyticsObject',
-				'plupload.full.min.js',
-				'syntaxhighlighter',
-				'adsbygoogle',
-				'gist.github.com',
-				'_stq',
-				'nonce',
-				'post_id',
-				'data-noptimize',
-				'googletagmanager',
-			);
-			breeze_update_option( 'advanced_settings_120', 'yes', true );
-		}
-
-		$default_data['advanced'] = array_merge( $default_advanced, $advanced );
 
 		//CDN default
 		$cdn = breeze_get_option( 'cdn_integration' );
@@ -856,17 +851,7 @@ INLINEJS;
 
 				$blog_file = get_blog_option( (int) $blog->blog_id, 'breeze_file_settings', '' );
 				if ( empty( $blog_file ) || empty( $is_advanced ) ) {
-					$save_file = $file;
-
-					if ( isset( $breeze_delay_js_scripts ) ) {
-						if ( empty( $blog_file ) ) {
-							$save_file['breeze-delay-js-scripts'] = $breeze_delay_js_scripts;
-						} else {
-							$save_file                            = $blog_file;
-							$save_file['breeze-delay-js-scripts'] = $breeze_delay_js_scripts;
-						}
-					}
-					update_blog_option( (int) $blog->blog_id, 'breeze_file_settings', $save_file );
+					update_blog_option( (int) $blog->blog_id, 'breeze_file_settings', $file );
 				}
 
 				$blog_cdn = get_blog_option( (int) $blog->blog_id, 'breeze_cdn_integration', '' );
@@ -903,18 +888,7 @@ INLINEJS;
 
 				$network_file = breeze_get_option( 'file_settings' );
 				if ( ! $network_file || empty( $is_advanced ) ) {
-					$save_advanced = $file;
-
-					if ( isset( $breeze_delay_js_scripts ) ) {
-						if ( empty( $network_file ) ) {
-							$save_advanced['breeze-delay-js-scripts'] = $breeze_delay_js_scripts;
-						} else {
-							$save_advanced                            = $network_file;
-							$save_advanced['breeze-delay-js-scripts'] = $breeze_delay_js_scripts;
-						}
-					}
-
-					breeze_update_option( 'file_settings', $save_advanced, true );
+					breeze_update_option( 'file_settings', $file, true );
 				}
 
 				$network_cdn = breeze_get_option( 'cdn_integration' );
@@ -952,18 +926,7 @@ INLINEJS;
 
 			$singe_network_file = breeze_get_option( 'file_settings' );
 			if ( ! $singe_network_file || empty( $is_advanced ) ) {
-				$save_advanced = $advanced;
-
-				if ( isset( $breeze_delay_js_scripts ) ) {
-					if ( empty( $singe_network_file ) ) {
-						$save_advanced['breeze-delay-js-scripts'] = $breeze_delay_js_scripts;
-					} else {
-						$save_advanced                            = $singe_network_file;
-						$save_advanced['breeze-delay-js-scripts'] = $breeze_delay_js_scripts;
-					}
-				}
-
-				breeze_update_option( 'file_settings', $save_advanced, true );
+				breeze_update_option( 'file_settings', $file, true );
 			}
 
 			$singe_network_cdn = breeze_get_option( 'cdn_integration' );
@@ -988,6 +951,19 @@ INLINEJS;
 		}
 	}
 
+	/**
+	 * Unschedules the 'breeze_purge_cache' event if it is scheduled.
+	 *
+	 * Identifies the next scheduled occurrence of the 'breeze_purge_cache' event
+	 * and removes it from the WordPress cron schedule.
+	 *
+	 * @return void
+	 */
+	public static function unschedule_events() {
+		$timestamp = wp_next_scheduled( 'breeze_purge_cache' );
+		wp_unschedule_event( $timestamp, 'breeze_purge_cache' );
+	}
+
 	/*
 	 * Register deactivate plugin hook.
 	 */
@@ -999,10 +975,14 @@ INLINEJS;
 		if ( ! class_exists( 'Breeze_Configuration' ) ) {
 			require_once( BREEZE_PLUGIN_DIR . 'inc/breeze-configuration.php' );
 		}
+
 		Breeze_ConfigCache::factory()->clean_up();
+		self::unschedule_events();
 		//Breeze_ConfigCache::factory()->clean_config();
 		Breeze_ConfigCache::factory()->toggle_caching( false );
 		Breeze_Configuration::update_htaccess( true );
+
+		Breeze_Store_Files::cleanup_all_extra_folder();
 
 		$check_varnish = is_varnish_cache_started();
 		if ( $check_varnish ) {
@@ -1010,6 +990,7 @@ INLINEJS;
 				$sites = get_sites();
 				foreach ( $sites as $site ) {
 					switch_to_blog( $site->blog_id );
+					self::unschedule_events();
 					do_action( 'breeze_clear_varnish' );
 					restore_current_blog();
 				}
@@ -1063,6 +1044,9 @@ INLINEJS;
 				delete_site_option( 'breeze_hide_notice' );
 				delete_site_option( 'breeze_version' );
 
+				// Delete transients.
+				delete_transient( 'breeze_custom_varnish_server_active' );
+
 				// Delete options for each sub-blog.
 				foreach ( $sites as $blog_id ) {
 					switch_to_blog( $blog_id );
@@ -1102,6 +1086,9 @@ INLINEJS;
 				delete_option( 'breeze_exclude_url_pages' );
 				delete_option( 'breeze_hide_notice' );
 				delete_option( 'breeze_version' );
+
+				// Delete transients.
+				delete_transient( 'breeze_custom_varnish_server_active' );
 			}
 		}
 	}
@@ -1195,7 +1182,7 @@ INLINEJS;
 				//delete minify
 				Breeze_MinificationCache::clear_minification();
 				//clear normal cache
-				Breeze_PurgeCache::breeze_cache_flush( $flush_cache );
+				Breeze_PurgeCache::breeze_cache_flush( $flush_cache, true, true );
 				//clear varnish cache
 				$this->breeze_clear_varnish();
 				Breeze_PurgeCache::__flush_object_cache();
@@ -1207,7 +1194,7 @@ INLINEJS;
 			// for current blog.
 			$current_blog_id = get_current_blog_id();
 			Breeze_MinificationCache::clear_minification( $current_blog_id );
-			Breeze_PurgeCache::breeze_cache_flush( $flush_cache );
+			Breeze_PurgeCache::breeze_cache_flush( $flush_cache, true, true );
 			$main     = new Breeze_PurgeVarnish();
 			$homepage = home_url() . '/?breeze';
 			$main->purge_cache( $homepage );
@@ -1223,7 +1210,7 @@ INLINEJS;
 			}
 			Breeze_MinificationCache::clear_minification( $current_blog_id );
 			//clear normal cache
-			Breeze_PurgeCache::breeze_cache_flush( $flush_cache );
+			Breeze_PurgeCache::breeze_cache_flush( $flush_cache, true, true );
 			//clear varnish cache
 			$this->breeze_clear_varnish();
 			$url            = get_home_url();
@@ -1241,18 +1228,25 @@ INLINEJS;
 		$main = new Breeze_PurgeVarnish();
 
 		$is_network = ( is_network_admin() || ( ! empty( $_POST['is_network'] ) && 'true' === $_POST['is_network'] ) );
+		$response   = null;
 
 		if ( is_multisite() && $is_network ) {
 			$sites = get_sites();
 			foreach ( $sites as $site ) {
 				switch_to_blog( $site->blog_id );
 				$homepage = home_url() . '/?breeze';
-				$main->purge_cache( $homepage );
+				$response = $main->purge_cache( $homepage );
 				restore_current_blog();
 			}
 		} else {
 			$homepage = home_url() . '/?breeze';
-			$main->purge_cache( $homepage );
+			$response = $main->purge_cache( $homepage );
+		}
+
+		if ( is_wp_error( $response ) || 200 !== $response['response']['code'] ) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 }

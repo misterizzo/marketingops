@@ -934,3 +934,31 @@ if ( ! function_exists( 'is_woocommerce_active' ) ) {
 		}
 	}
 }
+
+/**
+ * Check if the directory is empty or not.
+ *
+ * @param string $dir Directory to check string absolute path.
+ *
+ * @return bool
+ */
+function breeze_is_folder_empty( string $dir = '' ): bool {
+	if ( empty( $dir ) ) {
+		return false;
+	}
+
+	if ( ! is_dir( $dir ) ) {
+		return false;// folder does not exist.
+	}
+
+	global $wp_filesystem;
+	if ( empty( $wp_filesystem ) ) {
+		require_once ABSPATH . '/wp-admin/includes/file.php';
+		WP_Filesystem();
+	}
+
+	// This will return an array with the contents or empty.
+	$files = $wp_filesystem->dirlist( $dir );
+
+	return empty( $files );  // True if the dirlist is empty, false otherwise
+}

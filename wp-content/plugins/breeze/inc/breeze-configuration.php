@@ -1622,7 +1622,7 @@ class Breeze_Configuration {
 		//delete minify file
 		Breeze_MinificationCache::clear_minification();
 		//delete all cache
-		Breeze_PurgeCache::breeze_cache_flush();
+		Breeze_PurgeCache::breeze_cache_flush( true, true, true );
 
 		return $result;
 	}

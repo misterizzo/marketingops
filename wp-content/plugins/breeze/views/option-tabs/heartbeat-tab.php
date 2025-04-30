@@ -69,10 +69,10 @@ $icon = BREEZE_PLUGIN_URL . 'assets/images/heartbeat-active.png';
 			<?php
 			$heartbeat_options = array(
 				'default' => __( 'Default', 'breeze' ),
-				'120'     => __( 'Every 2 minutes', 'breeze' ),
-				'180'     => __( 'Every 3 minutes', 'breeze' ),
-				'240'     => __( 'Every 4 minutes', 'breeze' ),
-				'300'     => __( 'Every 5 minutes', 'breeze' ),
+				'30'      => __( 'Every 30 seconds', 'breeze' ),
+				'60'      => __( 'Every 60 seconds', 'breeze' ),
+				'90'      => __( 'Every 90 seconds', 'breeze' ),
+				'120'     => __( 'Every 120 seconds', 'breeze' ),
 				'disable' => __( 'Disable', 'breeze' ),
 			);
 

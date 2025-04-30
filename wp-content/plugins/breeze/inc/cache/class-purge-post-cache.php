@@ -117,6 +117,8 @@ class Purge_Post_Cache {
 				$this->sendback_url( $post_id )
 			)
 		);
+
+		Breeze_PurgeCache::clear_op_cache_for_posts($post_id);
 		exit;
 	}
 

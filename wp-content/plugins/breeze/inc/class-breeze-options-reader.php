@@ -63,7 +63,9 @@ class Breeze_Options_Reader {
 			if ( ! empty( $read_data ) ) {
 				if ( false === $hierarchy ) {
 					foreach ( $read_data as $option_key => $option_value ) {
-						self::$options[ $option_key ] = $option_value;
+						if ( false === array_key_exists( $option_key, self::$options ) || empty( self::$options[ $option_key ] ) ) {
+							self::$options[ $option_key ] = $option_value;
+						}
 					}
 				} else {
 					self::$options[ $group ] = $read_data;

@@ -96,7 +96,6 @@ class Breeze_WP_Cli_Core extends \WP_CLI_Command {
 						__( 'Breeze all cache has been purged.', 'breeze' )
 					);
 				}
-
 			}
 
 			if ( 'varnish' === $assoc_args['cache'] ) {
@@ -166,7 +165,7 @@ class Breeze_WP_Cli_Core extends \WP_CLI_Command {
 						//delete minify
 						Breeze_MinificationCache::clear_minification();
 						//clear normal cache
-						Breeze_PurgeCache::breeze_cache_flush();
+						Breeze_PurgeCache::breeze_cache_flush( true, true, true );
 						restore_current_blog();
 					}
 
@@ -180,7 +179,7 @@ class Breeze_WP_Cli_Core extends \WP_CLI_Command {
 					//delete minify
 					Breeze_MinificationCache::clear_minification();
 					//clear normal cache
-					Breeze_PurgeCache::breeze_cache_flush();
+					Breeze_PurgeCache::breeze_cache_flush( true, true, true );
 
 					if ( ! empty( $level ) ) {
 						restore_current_blog();
@@ -190,10 +189,7 @@ class Breeze_WP_Cli_Core extends \WP_CLI_Command {
 						__( 'Breeze local cache has been purged.', 'breeze' )
 					);
 				}
-
 			}
-
-
 		} else {
 			Breeze_Cli_Helpers::cache_helper_display();
 			WP_CLI::error(
@@ -326,7 +322,6 @@ class Breeze_WP_Cli_Core extends \WP_CLI_Command {
 					__( 'Error importing remote JSON file', 'breeze' ) . ' : ' . $contents->get_error_message()
 				);
 			}
-
 		} else {
 			if ( ! file_exists( $file_path ) || ! is_readable( $file_path ) ) {
 				WP_CLI::error(
@@ -340,7 +335,6 @@ class Breeze_WP_Cli_Core extends \WP_CLI_Command {
 			$contents = fread( $handle, filesize( $file_path ) );
 			fclose( $handle );
 		}
-
 
 		$contents = trim( $contents );
 
@@ -396,7 +390,6 @@ class Breeze_WP_Cli_Core extends \WP_CLI_Command {
 			} else {
 				$settings_action = Breeze_Settings_Import_Export::replace_options_cli( $json, $level );
 			}
-
 
 			if ( true === $settings_action ) {
 				WP_CLI::success(

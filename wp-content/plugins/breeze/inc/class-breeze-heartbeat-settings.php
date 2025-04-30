@@ -2,12 +2,14 @@
 
 /**
  * Handle Heartbeat options.
+ *
  * @since 2.0.2
  */
 class Breeze_Heartbeat_Settings {
 
 	/**
 	 * Front-end Heartbeat option.
+	 *
 	 * @var string
 	 * @access private
 	 * @since 2.0.2
@@ -16,6 +18,7 @@ class Breeze_Heartbeat_Settings {
 
 	/**
 	 * Post Editor Heartbeat option.
+	 *
 	 * @var string
 	 * @access private
 	 * @since 2.0.2
@@ -24,6 +27,7 @@ class Breeze_Heartbeat_Settings {
 
 	/**
 	 * Back-end Heartbeat option.
+	 *
 	 * @var string
 	 * @access private
 	 * @since 2.0.2
@@ -32,12 +36,14 @@ class Breeze_Heartbeat_Settings {
 
 	/**
 	 * Whether the option is enabled in Breeze plugin.
+	 *
 	 * @var bool
 	 */
 	private $heartbeat_active = false;
 
 	function __construct() {
-		$options                  = $this->fetch_heartbeat_options();
+		$options = $this->fetch_heartbeat_options();
+
 		$this->heartbeat_frontend = $options['front-end'];
 		$this->heartbeat_editor   = $options['editor'];
 		$this->heartbeat_backend  = $options['back-end'];
@@ -49,6 +55,33 @@ class Breeze_Heartbeat_Settings {
 		add_action( 'wp_enqueue_scripts', array( &$this, 'deregister_heartbeat_script' ), 99 );
 		// Change the timer for heartbeat.
 		add_filter( 'heartbeat_settings', array( &$this, 'change_heartbeat_interval' ), 99, 1 );
+
+		add_action( 'enqueue_block_editor_assets', array( $this, 'interval_fix_for_gutenberg' ) );
+	}
+
+	/**
+	 * Modify the heartbeat interval for Gutenberg editor only.
+	 *
+	 * @return void
+	 */
+	public function interval_fix_for_gutenberg() {
+		// If the option is not enabled in Breeze, skip this step.
+		if ( false === $this->heartbeat_active ) {
+			return;
+		}
+
+		if (
+			'disable' === $this->heartbeat_editor ||
+			'default' === $this->heartbeat_editor
+		) {
+			return;
+		}
+
+		// Add inline script
+		$inline_script = <<<INLINE_ALTER
+document.addEventListener("DOMContentLoaded",(function(){setTimeout((function(){var t=function(){if(void 0!==wp.heartbeat.interval&&"undefined"!=typeof heartbeatSettings&&void 0!==heartbeatSettings.interval){var t=parseInt(heartbeatSettings.interval,10);isNaN(t)||wp.heartbeat.interval(t)}};"undefined"!=typeof jQuery?jQuery(document).on("heartbeat-tick",(function(){t()})):document.addEventListener("heartbeat-tick",(function(){t()})),t()}),1)}));
+INLINE_ALTER;
+		wp_add_inline_script( 'heartbeat', $inline_script );
 	}
 
 	/**
@@ -94,6 +127,7 @@ class Breeze_Heartbeat_Settings {
 
 	/**
 	 * Disable Heartbeat scrip if setting is set to disable.
+	 *
 	 * @return void
 	 * @access public
 	 * @since 2.0.2
@@ -151,13 +185,12 @@ class Breeze_Heartbeat_Settings {
 			$the_current_url = $_SERVER['REQUEST_URI'];
 			preg_match( '/\/wp-admin\/post(-new)?\.php/', $the_current_url, $output_array );
 
-			if ( !empty( $output_array ) ) {
+			if ( ! empty( $output_array ) ) {
 				return 'editor';
 			} else {
 				return 'back-end';
 			}
 		}
-
 	}
 
 	/**
@@ -167,7 +200,7 @@ class Breeze_Heartbeat_Settings {
 	 * @access private
 	 * @since 2.0.2
 	 */
-	private function fetch_heartbeat_options() {
+	private function fetch_heartbeat_options(): array {
 
 		if ( is_multisite() ) {
 			$get_inherit = get_option( 'breeze_inherit_settings', '1' );

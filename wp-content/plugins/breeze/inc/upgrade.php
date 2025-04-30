@@ -36,8 +36,56 @@ class Breeze_Upgrade {
 			$this->v2119_upgrades();
 		}
 
+		// Making sure that "Purge Cache After" value is set in Basic tab option.
+		if ( $is_older_than_v2118 || version_compare( $this->breeze_version, '2.2.8', '<' ) ) {
+			$this->v228_upgrades();
+		}
+
 		do_action( 'breeze_after_existing_upgrade_routine', $this->breeze_version );
 		update_option( 'breeze_version_upgraded_from', $this->breeze_version );
+	}
+
+	/**
+	 * Performs the necessary upgrades for version 2.2.8.
+	 *
+	 * This function updates the "Purge Cache After" setting in Basic tab.
+	 * Ensures that the 'breeze-b-ttl' key is present in both multisite and single-site configurations.
+	 * For multisite setups, it handles both network options and individual blog options.
+	 *
+	 * @return void
+	 */
+	public function v228_upgrades() {
+
+		if ( is_multisite() ) {
+			// Handle network options.
+			$breeze_basic_network = get_site_option( 'breeze_basic_settings', array() );
+			if ( ! array_key_exists( 'breeze-b-ttl', $breeze_basic_network ) ) {
+				$breeze_basic_network['breeze-b-ttl'] = 1440;
+				update_site_option( 'breeze_basic_settings', $breeze_basic_network );
+			}
+
+			// Handle check and update for multisite blogs.
+			$blogs = get_sites(
+				array(
+					'number' => 0,
+				)
+			);
+
+			foreach ( $blogs as $blog ) {
+				$basic = get_blog_option( (int) $blog->blog_id, 'breeze_basic_settings', array() );
+				if ( ! array_key_exists( 'breeze-b-ttl', $basic ) ) {
+					$basic['breeze-b-ttl'] = 1440;
+					update_blog_option( (int) $blog->blog_id, 'breeze_basic_settings', $basic );
+				}
+			}
+		} else {
+			// Handle check for single site.
+			$basic = breeze_get_option( 'basic_settings', true );
+			if ( ! array_key_exists( 'breeze-b-ttl', $basic ) ) {
+				$basic['breeze-b-ttl'] = 1440;
+				breeze_update_option( 'basic_settings', $basic, true );
+			}
+		}
 	}
 
 	public function v2119_upgrades() {

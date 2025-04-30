@@ -217,8 +217,6 @@ final class Breeze_CloudFlare_Helper {
 	private function remove_not_url_elements( array $url_list = array() ): array {
 		// Remove any white spaces from URL list.
 		$url_list = array_map( 'trim', $url_list );
-		// Making sure the urls have the "/" ar the end.
-		$url_list = array_map( 'trailingslashit', $url_list );
 		// Making sure there are no duplicates.
 		$url_list = array_unique( $url_list );
 

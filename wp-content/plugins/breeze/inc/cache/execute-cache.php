@@ -218,6 +218,7 @@ if ( ! $check_exclude ) {
 	breeze_serve_cache( $filename, $breeze_current_url_path, $X1, $devices );
 	\ob_start( 'Breeze_Cache_Init\breeze_cache' );
 } else {
+
 	header( 'Cache-Control: no-cache' );
 }
 
@@ -316,7 +317,7 @@ function breeze_cache( $buffer, $flags ) {
 		}
 		// Regular expression pattern to match anchor (a) tags
 		$pattern = '/<a\s+(.*?)>/si';
-		$buffer = preg_replace_callback(
+		$buffer  = preg_replace_callback(
 			$pattern,
 			function ( $matches ) {
 				return breeze_cc_process_match( $matches );
@@ -619,9 +620,13 @@ function check_exclude_page( $opts_config, $current_url ) {
 					}
 				} else { // Whole path
 
+
 					$exclude_url = ltrim( $exclude_url, 'https:' );
 					$current_url = ltrim( $current_url, 'https:' );
-					if ( mb_strtolower( $exclude_url ) === mb_strtolower( $current_url ) ) {
+					if (
+						mb_strtolower( $exclude_url ) === mb_strtolower( $current_url ) ||
+						br_trailingslashit( mb_strtolower( $exclude_url ) ) === br_trailingslashit( mb_strtolower( $current_url ) )
+					) {
 						return true;
 					}
 				}
@@ -632,7 +637,12 @@ function check_exclude_page( $opts_config, $current_url ) {
 	return false;
 }
 
-
+function br_trailingslashit( $value ): string {
+	return br_untrailingslashit( $value ) . '/';
+}
+function br_untrailingslashit( $value ): string {
+	return rtrim( $value, '/\\' );
+}
 /**
  * Used to check for regexp exclude pages
  *

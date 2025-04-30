@@ -11,20 +11,58 @@ class Breeze_File_Permissions {
 	 */
 	private static $errors = array();
 
-	function __construct() {
+	private static $is_cache = null;
 
+	function __construct() {
+		// When Cache System is set to ON.
 		add_action( 'admin_notices', array( &$this, 'display_the_errors' ) );
 		add_action( 'network_admin_notices', array( &$this, 'display_the_errors' ) );
 
+		// Whe the Cache System is set to OFF.
+		add_action( 'admin_notices', array( &$this, 'display_cache_system_notice' ) );
+		add_action( 'network_admin_notices', array( &$this, 'display_cache_system_notice' ) );
+
 		add_action( 'wp_ajax_breeze_file_permission_check', array( &$this, 'breeze_check_the_files_permission' ) );
+
+		// Add an AJAX action with nonce verification to handle dismissing the notice
+		add_action( 'wp_ajax_breeze_dismiss_cache_notice', array( $this, 'breeze_dismiss_cache_notice' ) );
 	}
 
+	/**
+	 * Determines the cache activation status for the Breeze plugin.
+	 *
+	 * @return bool The cache activation status, true/false.
+	 */
+	private function is_cache() {
+		if ( is_bool( self::$is_cache ) ) {
+			return self::$is_cache;
+		} else {
+			self::$is_cache = filter_var( Breeze_Options_Reader::get_option_value( 'breeze-active' ), FILTER_VALIDATE_BOOLEAN );
+			return self::$is_cache;
+		}
+	}
+
+	/**
+	 * Checks file and folder permissions and handles associated errors.
+	 *
+	 * This method verifies the permissions of specific files and folders required
+	 * by the Breeze plugin. If there is a cache issue or any permission errors,
+	 * it constructs a message detailing the issues and terminates execution using
+	 * wp_die() to display the message. If no issues are found, it indicates so.
+	 *
+	 * @return void This method does not return a value but terminates script execution
+	 *              and outputs a message regarding file permission issues or a no-issue status.
+	 */
 	public function breeze_check_the_files_permission() {
 		$this->check_specific_files_folders();
 		$message_display = '';
+		if ( false === self::is_cache() ) {
+			wp_die( $message_display );
+		}
+
 		if ( ! empty( self::$errors ) ) {
 			$message_display .= '<div class="notice notice-error is-dismissible breeze-per" style="margin-left:2px">';
-			$message_display .= '<p><strong>' . __( 'Breeze settings will not reflect because there is file permission issue', 'breeze' ) . '</strong></p>';
+			$message_display .= '<p><strong>' . __( 'Breeze plugin functionality may be affected due to missing config file(s) or folder(s), or issues with file permissions preventing proper operation.', 'breeze' ) . '</strong></p>';
 			foreach ( self::$errors as $message ) {
 				$message_display .= '<p>' . $message . '</p>';
 			}
@@ -45,9 +83,17 @@ class Breeze_File_Permissions {
 		wp_die( $message_display );
 	}
 
-	// The object is created from within the class itself
-	// only if the class has no instance.
-	public static function get_instance() {
+	/**
+	 * Retrieves the singleton instance of the Breeze_File_Permissions class.
+	 *
+	 * This method ensures that only one instance of the Breeze_File_Permissions
+	 * class is created. If the instance does not exist, it initializes the instance
+	 * and returns it. Subsequent calls will return the existing instance.
+	 *
+	 * @return Breeze_File_Permissions|null The singleton instance of Breeze_File_Permissions,
+	 *                                      or null if the instance could not be created.
+	 */
+	public static function get_instance(): ?Breeze_File_Permissions {
 		if ( null === self::$instance ) {
 			self::$instance = new Breeze_File_Permissions();
 		}
@@ -55,7 +101,14 @@ class Breeze_File_Permissions {
 		return self::$instance;
 	}
 
-	public static function append_permission_error( $message = '' ) {
+	/**
+	 * Appends a permission error message to the list of errors.
+	 *
+	 * @param string $message The error message to be appended. Defaults to an empty string.
+	 *
+	 * @return void
+	 */
+	public static function append_permission_error( string $message = '' ) {
 		if ( ! empty( $message ) ) {
 			self::$errors[] = $message;
 		}
@@ -81,7 +134,7 @@ class Breeze_File_Permissions {
 
 		if ( ! file_exists( $file ) ) {
 			self::append_permission_error( $file . __( ' file does not exist. Save Breeze settings to create the file.', 'breeze' ) );
-		} else if ( ! is_writable( $file ) ) {
+		} elseif ( ! is_writable( $file ) ) {
 			self::append_permission_error( $file . __( ' file is not writable.', 'breeze' ) );
 		}
 
@@ -158,7 +211,6 @@ class Breeze_File_Permissions {
 					self::append_permission_error( $folder_min . __( ' folder is not writable.', 'breeze' ) );
 				}
 
-
 				$file = $wp_content_dir . 'breeze-config/breeze-config-' . $the_blog_id . '.php';
 				if ( false === $inherit_option && ! file_exists( $file ) ) {
 					self::append_permission_error( $file . __( ' file does not exist. Save Breeze settings to create the file.', 'breeze' ) );
@@ -216,24 +268,107 @@ class Breeze_File_Permissions {
 
 	}
 
+	/**
+	 * Displays error messages related to file permission issues.
+	 *
+	 * @return void
+	 */
 	public function display_the_errors() {
-
-		$this->check_specific_files_folders();
-		if ( ! empty( self::$errors ) ) {
-			echo '<div class="notice notice-error is-dismissible breeze-per" style="margin-left:2px">';
-			echo '<p><strong>' . __( 'Breeze settings will not reflect because there is file permission issue', 'breeze' ) . '</strong></p>';
-			foreach ( self::$errors as $message ) {
-				echo '<p>' . $message . '</p>';
+		if ( false === self::is_cache() ) {
+			echo '';
+		} else {
+			$this->check_specific_files_folders();
+			if ( ! empty( self::$errors ) ) {
+				echo '<div class="notice notice-error is-dismissible breeze-per" style="margin-left:2px">';
+				echo '<p><strong>' . __( 'Breeze plugin functionality may be affected due to missing config file(s) or folder(s), or issues with file permissions preventing proper operation.', 'breeze' ) . '</strong></p>';
+				foreach ( self::$errors as $message ) {
+					echo '<p>' . $message . '</p>';
+				}
+				echo '<p>';
+				printf(
+					'<a href="%s" target="_blank">%s</a>',
+					esc_url( 'https://support.cloudways.com/en/articles/5126387-how-can-i-reset-file-and-folder-permissions' ),
+					esc_html__( 'For reference please click on the KB', 'breeze' )
+				);
+				echo '</p>';
+				echo '</div>';
 			}
-			echo '<p>';
-			printf(
-				'<a href="%s" target="_blank">%s</a>',
-				esc_url( 'https://support.cloudways.com/en/articles/5126387-how-can-i-reset-file-and-folder-permissions' ),
-				esc_html__( 'For reference please click on the KB', 'breeze' )
-			);
-			echo '</p>';
-			echo '</div>';
 		}
+
+	}
+
+	/**
+	 * Displays a system notice for the Breeze Cache System if caching is disabled.
+	 *
+	 * This function checks whether the cache notice has been dismissed or if the cache
+	 * is enabled. If neither condition is met, it outputs a warning notice indicating
+	 * that the cache system is disabled, which might negatively affect website performance,
+	 * providing a link to enable it in the settings. It includes a nonce for verifying
+	 * the AJAX request when the notice is dismissed.
+	 *
+	 * @return void
+	 */
+	public function display_cache_system_notice() {
+
+		// Check if the notice has been dismissed
+		if ( get_transient( 'breeze_cache_notice_dismissed' ) ) {
+			return;
+		}
+
+		if ( true === self::is_cache() ) {
+			return;
+		}
+
+		$message = __( 'The Breeze Cache System is disabled in the settings</strong>, the website performance might drop. You can enable the cache system in the Breeze settings ', 'breeze' );
+
+		$is_network   = is_multisite() && is_network_admin();
+		$settings_url = $is_network ? network_admin_url( 'settings.php?page=breeze' ) : admin_url( 'options-general.php?page=breeze' );
+
+		$notice  = '<div class="notice notice-warning is-dismissible breeze-cs" style="margin-left:2px">';
+		$notice .= '<p><strong>' . $message . '<a href="%s" id="breeze-cache-on">%s</a>.</p>';
+		$notice .= '</div>';
+
+		printf(
+			$notice,
+			esc_url( $settings_url ),
+			esc_html__( 'here', 'breeze' )
+		);
+
+		// Output the JavaScript to handle the dismissal of the notice with nonce verification
+		wp_nonce_field( 'breeze_dismiss_cache_notice_nonce', 'breeze_dismiss_cache_notice_nonce' );
+		?>
+		<script>
+		   jQuery( function ( $ ) {
+			   $( document ).on( 'click', '.breeze-cs .notice-dismiss', function () {
+				   var data = {
+					   action: 'breeze_dismiss_cache_notice',
+					   nonce: $( '#breeze_dismiss_cache_notice_nonce' ).val()
+				   };
+
+				   $.post( ajaxurl, data, function ( response ) {
+					   // Handle response if needed
+				   } );
+				   $( '.breeze-cs' ).remove();
+			   } );
+		   } );
+		</script>
+		<?php
+	}
+
+	/**
+	 * Dismisses the cache notice by verifying the AJAX request and setting a transient.
+	 *
+	 * This function checks the AJAX referer for security purposes, sets a transient
+	 * to remember the dismissal of the cache notice, and then terminates the request.
+	 *
+	 * @return void
+	 */
+	function breeze_dismiss_cache_notice() {
+		check_ajax_referer( 'breeze_dismiss_cache_notice_nonce', 'nonce' );
+
+		set_transient( 'breeze_cache_notice_dismissed', true, DAY_IN_SECONDS );
+
+		wp_die();
 	}
 }
 
