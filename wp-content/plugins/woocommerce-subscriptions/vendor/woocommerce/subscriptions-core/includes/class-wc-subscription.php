@@ -1295,18 +1295,29 @@ class WC_Subscription extends WC_Order {
 	 * @param string $date_type 'date_created', 'trial_end', 'next_payment', 'last_order_date_created', 'end' or 'end_of_prepaid_term'
 	 */
 	public function get_date_to_display( $date_type = 'next_payment' ) {
-
-		$date_type = wcs_normalise_date_type_key( $date_type, true );
-
+		$date_type     = wcs_normalise_date_type_key( $date_type, true );
 		$timestamp_gmt = $this->get_time( $date_type, 'gmt' );
 
+		return $this->format_date_to_display( $timestamp_gmt, $date_type );
+	}
+
+	/**
+	 * Formats a subscription date timestamp for display.
+	 *
+	 * @param int    $timestamp The subscription date in a timestamp format.
+	 * @param string $date_type The subscription date type to display. @see WC_Subscription::get_valid_date_types()
+	 *
+	 * @return string The formatted date to display.
+	 */
+	public function format_date_to_display( $timestamp_gmt, $date_type ) {
+		$date_type = wcs_normalise_date_type_key( $date_type, true );
+
 		// Don't display next payment date when the subscription is inactive
-		if ( 'next_payment' == $date_type && ! $this->has_status( 'active' ) ) {
+		if ( 'next_payment' === $date_type && ! $this->has_status( 'active' ) ) {
 			$timestamp_gmt = 0;
 		}
 
 		if ( $timestamp_gmt > 0 ) {
-
 			$time_diff = $timestamp_gmt - current_time( 'timestamp', true );
 
 			if ( $time_diff > 0 && $time_diff < WEEK_IN_SECONDS ) {
@@ -1316,7 +1327,7 @@ class WC_Subscription extends WC_Order {
 				// translators: placeholder is human time diff (e.g. "3 weeks")
 				$date_to_display = sprintf( __( '%s ago', 'woocommerce-subscriptions' ), human_time_diff( current_time( 'timestamp', true ), $timestamp_gmt ) );
 			} else {
-				$date_to_display = date_i18n( wc_date_format(), $this->get_time( $date_type, 'site' ) );
+				$date_to_display = date_i18n( wc_date_format(), $timestamp_gmt + wc_timezone_offset() );
 			}
 		} else {
 			switch ( $date_type ) {
@@ -1514,7 +1525,14 @@ class WC_Subscription extends WC_Order {
 	/**
 	 * Calculate a given date for the subscription in GMT/UTC.
 	 *
-	 * @param string $date_type 'trial_end', 'next_payment', 'end_of_prepaid_term' or 'end'
+	 * This function is primarily used when the date needs to be recalculated (e.g., after a renewal or if the date has already passed).
+	 * If you need to retrieve the currently scheduled date, use get_date() or get_time() instead.
+	 *
+	 * @see WC_Subscription::calculate_next_payment_date() for more details about how the next payment date is calculated.
+	 *
+	 * @param string $date_type 'trial_end', 'next_payment', 'end_of_prepaid_term' or 'end'.
+	 *
+	 * @return string|int The calculated date in MySQL format (`YYYY-MM-DD HH:MM:SS`), or `0` if undefined.
 	 */
 	public function calculate_date( $date_type ) {
 
@@ -1550,19 +1568,61 @@ class WC_Subscription extends WC_Order {
 				break;
 		}
 
+		/**
+		 * Filter the calculated date for a subscription.
+		 *
+		 * The filter hook is dynamic. 'woocommerce_subscription_calculated_{date_type}_date' where {date_type} is the date type passed to the function.
+		 * For example:
+		 *  - 'woocommerce_subscription_calculated_next_payment_date'
+		 *  - 'woocommerce_subscription_calculated_trial_end_date'
+		 *  - 'woocommerce_subscription_calculated_end_of_prepaid_term_date'
+		 *
+		 * @param string|int      $date         The calculated date in MySQL format (`YYYY-MM-DD HH:MM:SS`), or `0` if undefined.
+		 * @param WC_Subscription $subscription The subscription object.
+		 */
 		return apply_filters( 'woocommerce_subscription_calculated_' . $date_type . '_date', $date, $this );
 	}
 
 	/**
 	 * Calculates the next payment date for a subscription.
 	 *
-	 * Although an inactive subscription does not have a next payment date, this function will still calculate the date
-	 * so that it can be used to determine the date the next payment should be charged for inactive subscriptions.
+	 * This function calculates the next valid renewal date. This could be the currently scheduled next payment date if it's still valid or
+	 * it could be a newly calculated date based on specific conditions. It is primarily used when the next payment date needs to be
+	 * recalculated (e.g., after a renewal or if the next payment date has already passed).
 	 *
-	 * @return int | string Zero if the subscription has no next payment date, or a MySQL formatted date time if there is a next payment date
+	 * How it calculates the next payment date:
+	 * - If the subscription has a trial period, and the trial is still active, the next
+	 *   payment returned is the scheduled trial end date.
+	 * - Otherwise, the function selects a base date and adds {interval} {period} to it. The base date is chosen in this order:
+	 *   1. Current next payment date – Used if the subscription has a trial period and there's no first renewal payment yet or it is synced
+	 *      to a fixed billing day.
+	 *   2. Last payment date – This is the most common case. The last order payment date is used to ensure the customer is given a full
+	 *      billing term after they successfully paid the last order. This is important in cases where the last order payment failed and
+	 *      was paid sometime later.
+	 *        - This can be bypassed using the 'wcs_calculate_next_payment_from_last_payment' filter.
+	 *        - @see https://github.com/woocommerce/woocommerce-subscriptions-preserve-billing-schedule
+	 *   3. Next payment date – Used when the filter above is used and the subscription has a valid next payment date. This preserves the
+	 *      subscriptions current billing date. eg if the subscription's payment date occurs on the 10th of every month, it will continue
+	 *      even if the last payment was received late.
+	 *   4. Subscription start date – Used as a last resort if no valid payment dates exist.
+	 *
+	 * Important notes:
+	 * - If the resulting calculated next payment date is less than 2 hours in the future, it will add an additional billing period
+	 *   until it finds a date a least 2 hours in the future. This was originally necessary to combat daylight savings issues. ie if
+	 *   we added 1 billing period to the previous date but there has been a subsequent daylight savings change, the next payment date
+	 *   could be on the same day as the previous payment.
+	 * - If the subscription has an end date, and the calculated next payment occurs after it, the function returns 0. ie there are no
+	 *   more payments to be made.
+	 * - Although an inactive subscription does not have a public facing next payment date, this function will still calculate the date
+	 *   so it can be used when determining what the next date would be if the subscription were to be reactivated.
+	 *
+	 * Filters:
+	 * - wcs_calculate_next_payment_from_last_payment (bool) – Controls whether the function
+	 *   should use the last payment date as the base for calculation. Default is true.
+	 *
+	 * @return int|string Zero if the subscription has no next payment date, or a MySQL formatted date (YYYY-MM-DD HH:MM:SS) if there is a next payment date.
 	 */
 	protected function calculate_next_payment_date() {
-
 		$next_payment_date = 0;
 
 		// If the subscription is not active, there is no next payment date
@@ -2025,25 +2085,31 @@ class WC_Subscription extends WC_Order {
 	 * @return array
 	 */
 	public function get_related_orders( $return_fields = 'ids', $order_types = array( 'parent', 'renewal', 'switch' ) ) {
-
-		$return_fields = ( 'ids' == $return_fields ) ? $return_fields : 'all';
+		$return_fields  = ( 'ids' === $return_fields ) ? $return_fields : 'all';
+		$related_orders = [];
 
 		if ( 'all' === $order_types ) {
 			wcs_deprecated_argument( __METHOD__, '2.3.0', sprintf( __( 'The "all" value for $order_type parameter is deprecated. It was a misnomer, as it did not return resubscribe orders. It was also inconsistent with order type values accepted by wcs_get_subscription_orders(). Use array( "parent", "renewal", "switch" ) to maintain previous behaviour, or "any" to receive all order types, including switch and resubscribe.', 'woocommerce-subscriptions' ), __CLASS__ ) );
 			$order_types = array( 'parent', 'renewal', 'switch' );
 		} elseif ( ! is_array( $order_types ) ) {
-			// Accept either an array or string (to make it more convenient for singular types, like 'parent' or 'any')
+			// Accept either an array or string (to make it more convenient for singular types, like 'parent' or 'any').
 			$order_types = array( $order_types );
 		}
 
-		$related_orders = array();
-		foreach ( $order_types as $order_type ) {
-			$related_orders_for_order_type = array();
-			foreach ( $this->get_related_order_ids( $order_type ) as $order_id ) {
-				if ( 'all' === $return_fields && $order = wc_get_order( $order_id ) ) {
-					$related_orders_for_order_type[ $order_id ] = $order;
-				} elseif ( 'ids' === $return_fields ) {
+		foreach ( $this->get_related_order_ids( $order_types, 'grouped' ) as $order_type => $order_ids ) {
+			$related_orders_for_order_type = [];
+
+			foreach ( $order_ids as $order_id ) {
+				if ( 'ids' === $return_fields ) {
 					$related_orders_for_order_type[ $order_id ] = $order_id;
+					continue;
+				}
+
+				// Handle the "all" return type by fetching the order object.
+				$order = wc_get_order( $order_id );
+
+				if ( $order ) {
+					$related_orders_for_order_type[ $order_id ] = $order;
 				}
 			}
 
@@ -2058,25 +2124,42 @@ class WC_Subscription extends WC_Order {
 	/**
 	 * Get the related order IDs for a subscription based on an order type.
 	 *
-	 * @param string $order_type Can include 'any', 'parent', 'renewal', 'resubscribe' and/or 'switch'. Defaults to 'any'.
-	 * @return array List of related order IDs.
 	 * @since 1.0.0 - Migrated from WooCommerce Subscriptions v2.3.0
+	 * @since 7.2.1 - The $order_type parameter can now be an array of order types and the $return_type parameter was added.
+	 *
+	 * @param string|array $order_type  Can include 'any', 'parent', 'renewal', 'resubscribe' and/or 'switch'. Defaults to 'any'.
+	 * @param string       $return_type The format to return the related order IDs in. Can be 'flat' or 'grouped'. Defaults to 'flat'.
+	 *
+	 * @return array List of related order IDs.
 	 */
-	protected function get_related_order_ids( $order_type = 'any' ) {
+	protected function get_related_order_ids( $order_type = 'any', $return_type = 'flat' ) {
+		$order_types       = is_array( $order_type ) ? $order_type : [ $order_type ];
+		$related_order_ids = [];
 
-		$related_order_ids = array();
-
-		if ( in_array( $order_type, array( 'any', 'parent' ) ) && $this->get_parent_id() ) {
-			$related_order_ids[ $this->get_parent_id() ] = $this->get_parent_id();
+		// For backwards compatibility, replace 'any' with the actual order types.
+		if ( in_array( 'any', $order_types, true ) ) {
+			$order_types = array_diff( $order_types, [ 'any' ] ); // Remove 'any'.
+			$order_types = array_unique( array_merge( $order_types, [ 'parent', 'renewal', 'resubscribe', 'switch' ] ) ); // Add the 'any' order types.
 		}
 
-		if ( 'parent' !== $order_type ) {
+		// Get the parent order ID first.
+		if ( in_array( 'parent', $order_types, true ) ) {
+			// Remove the parent order type from the list of order types.
+			$order_types = array_diff( $order_types, [ 'parent' ] );
+			$parent_id   = $this->get_parent_id();
 
-			$relation_types = ( 'any' === $order_type ) ? array( 'renewal', 'resubscribe', 'switch' ) : array( $order_type );
+			// Because the call requested the parent order, if there is no parent ID, we need to return an empty array.
+			$related_order_ids['parent'] = $parent_id ? [ $parent_id ] : [];
+		}
 
-			foreach ( $relation_types as $relation_type ) {
-				$related_order_ids = array_merge( $related_order_ids, WCS_Related_Order_Store::instance()->get_related_order_ids( $this, $relation_type ) );
-			}
+		if ( ! empty( $order_types ) ) {
+			// Get the related order IDs based on the remaining order types.
+			$related_order_ids += WCS_Related_Order_Store::instance()->get_related_order_ids_by_types( $this, $order_types );
+		}
+
+		if ( 'flat' === $return_type && ! empty( $related_order_ids ) ) {
+			// Flatten the grouped order IDs into a single array.
+			$related_order_ids = array_merge( ...array_values( $related_order_ids ) );
 		}
 
 		return $related_order_ids;

@@ -21,6 +21,19 @@ class WC_Subscriptions_Email_Notifications {
 	public static $switch_setting_string = '_customer_notifications_enabled';
 
 	/**
+	 * List of subscription notification email classes.
+	 *
+	 * @var array
+	 */
+	public static $email_classes = [
+		'WCS_Email_Customer_Notification_Manual_Trial_Expiration' => true,
+		'WCS_Email_Customer_Notification_Auto_Trial_Expiration' => true,
+		'WCS_Email_Customer_Notification_Manual_Renewal' => true,
+		'WCS_Email_Customer_Notification_Auto_Renewal'   => true,
+		'WCS_Email_Customer_Notification_Subscription_Expiration' => true,
+	];
+
+	/**
 	 * Init.
 	 */
 	public static function init() {
@@ -39,9 +52,6 @@ class WC_Subscriptions_Email_Notifications {
 
 		// Add settings UI.
 		add_filter( 'woocommerce_subscription_settings', [ __CLASS__, 'add_settings' ], 20 );
-
-		// Add admin notice.
-		add_action( 'admin_notices', [ __CLASS__, 'maybe_add_admin_notice' ] );
 
 		// Bump settings update time whenever related options change.
 		add_action( 'update_option_' . WC_Subscriptions_Admin::$option_prefix . self::$offset_setting_string, [ __CLASS__, 'set_notification_settings_update_time' ], 10, 3 );
@@ -107,12 +117,9 @@ class WC_Subscriptions_Email_Notifications {
 	 * Add Subscriptions notifications' email classes.
 	 */
 	public static function add_emails( $email_classes ) {
-
-		$email_classes['WCS_Email_Customer_Notification_Auto_Trial_Expiration']   = new WCS_Email_Customer_Notification_Auto_Trial_Expiration();
-		$email_classes['WCS_Email_Customer_Notification_Manual_Trial_Expiration'] = new WCS_Email_Customer_Notification_Manual_Trial_Expiration();
-		$email_classes['WCS_Email_Customer_Notification_Subscription_Expiration'] = new WCS_Email_Customer_Notification_Subscription_Expiration();
-		$email_classes['WCS_Email_Customer_Notification_Manual_Renewal']          = new WCS_Email_Customer_Notification_Manual_Renewal();
-		$email_classes['WCS_Email_Customer_Notification_Auto_Renewal']            = new WCS_Email_Customer_Notification_Auto_Renewal();
+		foreach ( self::$email_classes as $email_class => $_ ) {
+			$email_classes[ $email_class ] = new $email_class();
+		}
 
 		return $email_classes;
 	}
@@ -149,6 +156,9 @@ class WC_Subscriptions_Email_Notifications {
 		switch ( current_action() ) {
 			case 'woocommerce_scheduled_subscription_customer_notification_renewal':
 				$subscription = wcs_get_subscription( $subscription_id );
+				if ( $subscription->get_total() <= 0 ) {
+					break;
+				}
 				if ( $subscription->is_manual() ) {
 					$notification = $emails['WCS_Email_Customer_Notification_Manual_Renewal'];
 				} else {
@@ -168,7 +178,7 @@ class WC_Subscriptions_Email_Notifications {
 				break;
 		}
 
-		if ( $notification ) {
+		if ( $notification && $notification->is_enabled() ) {
 			$notification->trigger( $subscription_id );
 		}
 	}
@@ -241,7 +251,7 @@ class WC_Subscriptions_Email_Notifications {
 			$actions['wcs_customer_notification_subscription_expiration'] = esc_html__( 'Send upcoming subscription expiration notification', 'woocommerce-subscriptions' );
 		}
 
-		if ( in_array( 'next_payment', $valid_notifications, true ) ) {
+		if ( in_array( 'next_payment', $valid_notifications, true ) && $theorder->get_total() > 0 ) {
 			$actions['wcs_customer_notification_renewal'] = esc_html__( 'Send upcoming renewal notification', 'woocommerce-subscriptions' );
 		}
 
@@ -296,59 +306,5 @@ class WC_Subscriptions_Email_Notifications {
 
 		WC_Subscriptions_Admin::insert_setting_after( $settings, WC_Subscriptions_Admin::$option_prefix . '_miscellaneous', $notification_settings, 'multiple_settings', 'sectionend' );
 		return $settings;
-	}
-
-	/**
-	 * Maybe add an admin notice to inform the store manager about the existance of the notifications feature.
-	 */
-	public static function maybe_add_admin_notice() {
-
-		// If the notifications feature is enabled, don't show the notice.
-		if ( self::notifications_globally_enabled() ) {
-			return;
-		}
-
-		// Prevent showing the notice on the Subscriptions settings page.
-		if ( isset( $_GET['page'], $_GET['tab'] ) && 'wc-settings' === $_GET['page'] && 'subscriptions' === $_GET['tab'] ) {
-			return;
-		}
-
-		$option_name = 'wcs_hide_customer_notifications_notice';
-		$nonce       = '_wcsnonce';
-		$action      = 'wcs_hide_customer_notifications_notice_action';
-
-		// First, check if the notice is being dismissed.
-		$nonce_argument = sanitize_text_field( wp_unslash( $_GET[ $nonce ] ?? '' ) );
-		if ( isset( $_GET[ $action ], $nonce_argument ) && wp_verify_nonce( $nonce_argument, $action ) ) {
-			update_option( $option_name, 'yes' );
-			wp_safe_redirect( remove_query_arg( [ $action, $nonce ] ) );
-			return;
-		}
-
-		if ( 'yes' === get_option( $option_name ) ) {
-			return;
-		}
-
-		$admin_notice   = new WCS_Admin_Notice( 'notice', array(), wp_nonce_url( add_query_arg( $action, 'dismiss' ), $action, $nonce ) );
-		$notice_title   = __( 'WooCommerce Subscriptions: Introducing customer email notifications!', 'woocommerce-subscriptions' );
-		$notice_content = __( 'You can now send email notifications for subscription renewals, expirations, and free trials. Go to the "Customer Notifications" settings section to configure when your customers receive these important updates.', 'woocommerce-subscriptions' );
-		$html_content   = sprintf( '<p class="main"><strong>%1$s</strong></p><p>%2$s</p>', $notice_title, $notice_content );
-		$admin_notice->set_html_content( $html_content );
-		$admin_notice->set_actions(
-			array(
-				array(
-					'name'  => __( 'Manage settings', 'woocommerce-subscriptions' ),
-					'url'   => admin_url( 'admin.php?page=wc-settings&tab=subscriptions' ),
-					'class' => 'button button-primary',
-				),
-				array(
-					'name'  => __( 'Learn more', 'woocommerce-subscriptions' ),
-					'url'   => 'https://woocommerce.com/document/subscriptions/subscriptions-notifications/',
-					'class' => 'button',
-				),
-			)
-		);
-
-		$admin_notice->display();
 	}
 }

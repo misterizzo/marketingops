@@ -1,5 +1,18 @@
 *** WooCommerce One Page Checkout Changelog ***
 
+2025-03-18 - version 2.9.5
+* Tweak - WC 9.8 compatibility.
+* Tweak - WP 6.8 compatibility.
+
+2025-01-23 - version 2.9.4
+* Tweak - WC 9.7 compatibility.
+
+2025-01-14 - version 2.9.3
+* Tweak - WC 9.6 compatibility.
+
+2024-12-05 - version 2.9.2
+* Tweak - WC 9.5 compatibility.
+
 2024-10-25 - version 2.9.1
 * Tweak - WP 6.7 compatibility.
 

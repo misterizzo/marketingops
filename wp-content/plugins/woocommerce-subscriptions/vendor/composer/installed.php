@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'woocommerce/woocommerce-subscriptions',
-        'pretty_version' => 'dev-release/6.9.0',
-        'version' => 'dev-release/6.9.0',
-        'reference' => 'a8ffc66efa71aa0598db1c342818a4cdccfc85cb',
+        'pretty_version' => 'dev-release/7.4.0',
+        'version' => 'dev-release/7.4.0',
+        'reference' => 'f038fe29017b9110f7f39251b9c042a8c076125a',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,39 +11,27 @@
     ),
     'versions' => array(
         'composer/installers' => array(
-            'pretty_version' => 'v1.12.0',
-            'version' => '1.12.0.0',
-            'reference' => 'd20a64ed3c94748397ff5973488761b22f6d3f19',
+            'pretty_version' => 'v2.3.0',
+            'version' => '2.3.0.0',
+            'reference' => '12fb2dfe5e16183de69e784a7b84046c43d97e8e',
             'type' => 'composer-plugin',
             'install_path' => __DIR__ . '/./installers',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'roundcube/plugin-installer' => array(
-            'dev_requirement' => false,
-            'replaced' => array(
-                0 => '*',
-            ),
-        ),
-        'shama/baton' => array(
-            'dev_requirement' => false,
-            'replaced' => array(
-                0 => '*',
-            ),
-        ),
         'woocommerce/subscriptions-core' => array(
-            'pretty_version' => '7.7.1',
-            'version' => '7.7.1.0',
-            'reference' => '07bf070a5b2c9716bb20280055c4f3f07d83faed',
+            'pretty_version' => '8.2.0',
+            'version' => '8.2.0.0',
+            'reference' => '442d585955ab048673c765a8afca680b1ea38e07',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../woocommerce/subscriptions-core',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
         'woocommerce/woocommerce-subscriptions' => array(
-            'pretty_version' => 'dev-release/6.9.0',
-            'version' => 'dev-release/6.9.0',
-            'reference' => 'a8ffc66efa71aa0598db1c342818a4cdccfc85cb',
+            'pretty_version' => 'dev-release/7.4.0',
+            'version' => 'dev-release/7.4.0',
+            'reference' => 'f038fe29017b9110f7f39251b9c042a8c076125a',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

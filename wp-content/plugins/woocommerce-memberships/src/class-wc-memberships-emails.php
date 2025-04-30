@@ -17,7 +17,7 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2024, SkyVerge, Inc. (info@skyverge.com)
+ * @copyright Copyright (c) 2014-2025, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -42,7 +42,10 @@ class WC_Memberships_Emails {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
+		$this->addHooks();
+	}
 
+	protected function addHooks() : void{
 		// load email classes
 		add_action( 'woocommerce_loaded', array( $this, 'init_emails' ) );
 
@@ -56,6 +59,26 @@ class WC_Memberships_Emails {
 		foreach ( $this->get_email_class_names() as $email ) {
 			add_action( $email, array( 'WC_Emails', 'send_transactional_email' ), 10, 10 );
 		}
+
+		// support for experimental Email Improvements feature
+		add_filter('woocommerce_prepare_email_for_preview', [$this, 'maybeSetEmailPreviewValues']);
+	}
+
+	/**
+	 * Sets email preview values when rendering "Email Improvements" previews.
+	 *
+	 * {@see EmailPreview::set_email_type()}
+	 *
+	 * @param WC_Email|mixed $email
+	 * @return WC_Email|mixed
+	 */
+	public function maybeSetEmailPreviewValues($email)
+	{
+		if ($email instanceof WC_Memberships_User_Membership_Email && method_exists($email, 'setPreviewValues')) {
+			$email->setPreviewValues();
+		}
+
+		return $email;
 	}
 
 
@@ -75,7 +98,7 @@ class WC_Memberships_Emails {
 		// loads the Memberships Email abstract class
 		if ( ! class_exists( 'WC_Memberships_User_Membership_Email' ) ) {
 
-			require_once( wc_memberships()->get_plugin_path() . '/src/emails/abstract-wc-memberships-user-membership-email.php' );
+			require_once( wc_memberships()->get_plugin_path() . '/src/Emails/abstract-wc-memberships-user-membership-email.php' );
 		}
 
 		// loads and initializes individual Memberships Emails objects
@@ -100,11 +123,11 @@ class WC_Memberships_Emails {
 	public function get_email_class_names( $include_paths = false )  {
 
 		$email_classes = array(
-			'WC_Memberships_User_Membership_Note_Email'             => '/src/emails/class-wc-memberships-user-membership-note-email.php',
-			'WC_Memberships_User_Membership_Ending_Soon_Email'      => '/src/emails/class-wc-memberships-user-membership-ending-soon-email.php',
-			'WC_Memberships_User_Membership_Ended_Email'            => '/src/emails/class-wc-memberships-user-membership-ended-email.php',
-			'WC_Memberships_User_Membership_Renewal_Reminder_Email' => '/src/emails/class-wc-memberships-user-membership-renewal-reminder-email.php',
-			'WC_Memberships_User_Membership_Activated_Email'        => '/src/emails/class-wc-memberships-user-membership-activated-email.php',
+			'WC_Memberships_User_Membership_Note_Email'             => '/src/Emails/class-wc-memberships-user-membership-note-email.php',
+			'WC_Memberships_User_Membership_Ending_Soon_Email'      => '/src/Emails/class-wc-memberships-user-membership-ending-soon-email.php',
+			'WC_Memberships_User_Membership_Ended_Email'            => '/src/Emails/class-wc-memberships-user-membership-ended-email.php',
+			'WC_Memberships_User_Membership_Renewal_Reminder_Email' => '/src/Emails/class-wc-memberships-user-membership-renewal-reminder-email.php',
+			'WC_Memberships_User_Membership_Activated_Email'        => '/src/Emails/class-wc-memberships-user-membership-activated-email.php',
 		);
 
 		return true !== $include_paths ? array_keys( $email_classes ) : $email_classes;
@@ -117,7 +140,7 @@ class WC_Memberships_Emails {
 	 * @since 1.7.0
 	 *
 	 * @param array $emails optional, associative array of email objects
-	 * @return \WC_Email[]|\WC_Memberships_Emails[] associative array with email objects as values
+	 * @return WC_Email[]|\WC_Memberships_Emails[] associative array with email objects as values
 	 */
 	public function get_email_classes( $emails = array() ) {
 
@@ -138,7 +161,7 @@ class WC_Memberships_Emails {
 	 * @since 1.11.0
 	 *
 	 * @param string $which_email email class name
-	 * @return null|\WC_Memberships_User_Membership_Email
+	 * @return null|WC_Memberships_User_Membership_Email
 	 */
 	private function get_email_instance( $which_email ) {
 

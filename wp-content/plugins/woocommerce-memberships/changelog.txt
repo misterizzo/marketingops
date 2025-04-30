@@ -1,5 +1,13 @@
 *** WooCommerce Memberships Changelog ***
 
+2025.02.28 - version 1.26.11
+ * Fix - Errors with "Membership Note" email when using the experimental "Email Improvements" feature
+ * Dev - Add a filter hook on an existing membership found for a purchased plan
+
+2025.01.20 - version 1.26.10
+ * Fix - Prevent members from being un-enrolled from courses when a membership transitions out of trial state
+ * Tweak - Performance improvements with `wc_memberships_get_memberships_from_subscription()` function
+
 2024.10.07 - version 1.26.9
  * Fix - Sensei `is_user_enrolled_in_course()` method not working as expected
  * Fix - In some edge cases, product variations were restricted from purchase when they shouldn't have been
