@@ -82,6 +82,7 @@ if (!class_exists('MCWPPHPErrorMonitoring')) :
 		}
 
 		public static function setPhpErrorHandler() {
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_set_error_handler -- Custom error handling
 			set_error_handler(array(self::class, 'errorHandler'), self::$error_level);
 			register_shutdown_function(array(self::class, 'handleShutdown'));
 		}
@@ -124,6 +125,7 @@ if (!class_exists('MCWPPHPErrorMonitoring')) :
 
 			$serialized_backtrace = '';
 			if (self::$include_backtrace) {
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace -- Needed for stack trace functionality
 				$backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, self::$max_backtrace_frames);
 
 				$keys = array_flip(array('file', 'line', 'function'));
@@ -145,7 +147,10 @@ if (!class_exists('MCWPPHPErrorMonitoring')) :
 			$data["error_message"] = $message;
 			$data["error_line"] = $line;
 			$data["error_file"] = $file;
-			$uri = array_key_exists('REQUEST_URI', $_SERVER) ? $_SERVER['REQUEST_URI'] : '';
+			$uri = MCHelper::getRawParam('SERVER', 'REQUEST_URI');
+			if (!isset($uri)) {
+				$uri = "";
+			}
 			$data["request_path"] = parse_url($uri, PHP_URL_PATH);
 			$data["request_id"] = MCInfo::getRequestID();
 

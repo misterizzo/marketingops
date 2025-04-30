@@ -16,7 +16,7 @@ if (!class_exists('MCWPAction')) :
 		}
 	
 		public function activate() {
-			if (!isset($_REQUEST['blogvaultkey'])) {
+			if (!isset($_REQUEST['blogvaultkey'])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				##BVKEYSLOCATE##
 			}
 			if (MCAccount::isConfigured($this->settings)) {
@@ -73,12 +73,14 @@ if (!class_exists('MCWPAction')) :
 		}
 
 		private function process_deactivation_feedback(&$info) {
+			//phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			if (!isset($_GET['bv_deactivation_assets']) || !is_string($_GET['bv_deactivation_assets'])) {
 				return;
 			}
 
-			$deactivation_assets = $_GET['bv_deactivation_assets'];
+			$deactivation_assets = wp_unslash($_GET['bv_deactivation_assets']);
 			$info['deactivation_feedback'] = base64_encode($deactivation_assets);
+			//phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		}
 
 		public function removeBVPreload() {

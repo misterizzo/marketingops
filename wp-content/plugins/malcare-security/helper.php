@@ -125,9 +125,12 @@ if (!class_exists('MCHelper')) :
 			if (!is_string($fname) || !is_string($pattern)) {
 				return;
 			}
-			if (!file_exists($fname)) return;
 
-			$content = file_get_contents($fname);
+			if (!MCWPFileSystem::getInstance()->exists($fname)) {
+				return;
+			}
+
+			$content = MCWPFileSystem::getInstance()->getContents($fname);
 			if ($content !== false) {
 				if ($is_regex !== false) {
 					$modified_content = preg_replace($pattern, "", $content);
@@ -140,7 +143,8 @@ if (!class_exists('MCHelper')) :
 				}
 
 				if ($content !== $modified_content) {
-					file_put_contents($fname, $modified_content);
+					MCWPFileSystem::getInstance()->putContents($fname, $modified_content,
+							MCWPFileSystem::getInstance()->getchmodOctal($fname));
 				}
 			}
 		}
@@ -221,5 +225,129 @@ if (!class_exists('MCHelper')) :
 
 			return array(true, $decrypted_data);
 		}
+
+		public static function get_direct_filesystem() {
+			require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php';
+			require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php';
+			return new WP_Filesystem_Direct(new StdClass());
+		}
+
+		/**
+		 * Maybe unslash a value if WordPress is loaded
+		 *
+		 * @param string $value The value to potentially unslash
+		 * @return string The unslashed value if WP is loaded, original value otherwise
+		 */
+		public static function maybeUnslashValue($value) {
+			if (function_exists('wp_unslash')) {
+				return wp_unslash($value);
+			}
+			return $value;
+		}
+
+		/**
+		 * Get and sanitize a string parameter from superglobal
+		 *
+		 * @param string $superglobal The superglobal type ('GET', 'POST', etc.)
+		 * @param string $key The parameter key to retrieve
+		 * @param string $context The sanitization context ('text', 'email', 'url')
+		 * @return string|null Sanitized string value or null if invalid or unknown context
+		 */
+		public static function getStringParamSanitized($superglobal, $key, $context) {
+			$raw_value = self::getRawParam($superglobal, $key);
+
+			if (!is_string($raw_value)) {
+				return null;
+			}
+
+			switch ($context) {
+			case 'text':
+				if (!function_exists('sanitize_text_field')) {
+					return null;
+				}
+				return sanitize_text_field($raw_value);
+			case 'email':
+				if (!function_exists('sanitize_email')) {
+					return null;
+				}
+				return sanitize_email($raw_value);
+			case 'url':
+				if (!function_exists('esc_url_raw')) {
+					return null;
+				}
+				return esc_url_raw($raw_value);
+			default:
+				return null;
+			}
+		}
+
+		/**
+		 * Get and escape a string parameter from superglobal
+		 *
+		 * @param string $superglobal The superglobal type ('GET', 'POST', etc.)
+		 * @param string $key The parameter key to retrieve
+		 * @param string $context The escaping context ('attr', 'html', 'url')
+		 * @return string|null Escaped string value or null if invalid or unknown context
+		 */
+		public static function getStringParamEscaped($superglobal, $key, $context) {
+			$raw_value = self::getRawParam($superglobal, $key);
+
+			if (!is_string($raw_value)) {
+				return null;
+			}
+
+			switch ($context) {
+			case 'attr':
+				if (!function_exists('esc_attr')) {
+					return null;
+				}
+				return esc_attr($raw_value);
+			case 'html':
+				if (!function_exists('esc_html')) {
+					return null;
+				}
+				return esc_html($raw_value);
+			case 'url':
+				if (!function_exists('esc_url')) {
+					return null;
+				}
+				return esc_url($raw_value);
+			default:
+				return null;
+			}
+		}
+
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
+		/**
+		 * Get raw parameter value from superglobal
+		 *
+		 * @param string $superglobal The superglobal type ('GET', 'POST', etc.)
+		 * @param string $key The parameter key to retrieve
+		 * @return mixed Raw parameter value or null if not found
+		 */
+		public static function getRawParam($superglobal, $key) {
+			$value = null;
+
+			switch (strtoupper($superglobal)) {
+			case 'GET':
+				$value = isset($_GET[$key]) ? $_GET[$key] : null;
+				break;
+			case 'POST':
+				$value = isset($_POST[$key]) ? $_POST[$key] : null;
+				break;
+			case 'COOKIE':
+				$value = isset($_COOKIE[$key]) ? $_COOKIE[$key] : null;
+				break;
+			case 'REQUEST':
+				$value = isset($_REQUEST[$key]) ? $_REQUEST[$key] : null;
+				break;
+			case 'SERVER':
+				$value = isset($_SERVER[$key]) ? $_SERVER[$key] : null;
+				break;
+			}
+
+			return $value !== null ? self::maybeUnslashValue($value) : null;
+		}
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
 	}
 endif;

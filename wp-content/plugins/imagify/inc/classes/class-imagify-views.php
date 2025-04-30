@@ -76,6 +76,13 @@ class Imagify_Views {
 	 */
 	protected static $_instance;
 
+	/**
+	 * Imagify admin bar menu.
+	 *
+	 * @var bool
+	 */
+	private $admin_menu_is_present = false;
+
 
 	/** ----------------------------------------------------------------------------------------- */
 	/** INSTANCE/INIT =========================================================================== */
@@ -127,6 +134,7 @@ class Imagify_Views {
 		// JS templates in footer.
 		add_action( 'admin_print_footer_scripts', [ $this, 'print_js_templates' ] );
 		add_action( 'admin_footer', [ $this, 'print_modal_payment' ] );
+		add_action( 'wp_before_admin_bar_render', [ $this, 'maybe_print_modal_payment' ] );
 	}
 
 
@@ -537,7 +545,7 @@ class Imagify_Views {
 		$quota = $this->get_quota_percent();
 
 		if ( $quota <= 20 ) {
-			$icon = '<img src="' . IMAGIFY_ASSETS_IMG_URL . 'stormy.svg" width="64" height="63" alt="" />';
+			$icon = '<img src="' . IMAGIFY_ASSETS_IMG_URL . 'stormy.svg" width="40" height="63" alt="" />';
 		} elseif ( $quota <= 50 ) {
 			$icon = '<img src="' . IMAGIFY_ASSETS_IMG_URL . 'cloudy-sun.svg" width="63" height="64" alt="" />';
 		} else {
@@ -635,15 +643,46 @@ class Imagify_Views {
 	}
 
 	/**
+	 * Get imagify user info
+	 *
+	 * @return bool
+	 */
+	private function get_user_info(): bool {
+		$user  = new User();
+		$unconsumed_quota = $user->get_percent_unconsumed_quota();
+
+		return ( ! $user->is_infinite() && $unconsumed_quota <= 20 )
+			|| ( $user->is_free() && $unconsumed_quota > 20 );
+	}
+
+	/**
+	 * Start print the payment modal process.
+	 */
+	public function maybe_print_modal_payment() {
+		if ( $this->get_user_info() ) {
+			global $wp_admin_bar;
+			$this->admin_menu_is_present = $wp_admin_bar && $wp_admin_bar->get_node( 'imagify' );
+
+			return;
+		}
+
+		$this->admin_menu_is_present = false;
+	}
+
+	/**
 	 * Print the payment modal.
+	 *
+	 * @return void
 	 */
 	public function print_modal_payment() {
-		$this->print_template(
-			'modal-payment',
-			[
-				'attachments_number' => $this->get_attachments_number_modal(),
-			]
-		);
+		if ( is_admin_bar_showing() && $this->admin_menu_is_present ) {
+			$this->print_template(
+				'modal-payment',
+				[
+					'attachments_number' => $this->get_attachments_number_modal(),
+				]
+			);
+		}
 	}
 
 	/**

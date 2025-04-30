@@ -1,12 +1,11 @@
 <?php
-
 if (!defined('ABSPATH')) exit;
 if (!class_exists('BVFSWriteCallback')) :
 
 class BVFSWriteCallback extends BVCallbackBase {
 
 	const MEGABYTE = 1048576;
-	const FS_WRITE_WING_VERSION = 1.0;
+	const FS_WRITE_WING_VERSION = 1.1;
 	
 	public function __construct() {
 	}
@@ -53,7 +52,7 @@ class BVFSWriteCallback extends BVCallbackBase {
 				}
 
 			} else {
-
+				// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_mkdir -- Using mkdir() directly as there is no direct suport for recursion
 				$dir_result['status'] = mkdir($dir, $permissions, $recursive);
 				if ($dir_result['status'] === false) {
 					$dir_result['error'] = "MKDIR_FAILED";
@@ -71,29 +70,29 @@ class BVFSWriteCallback extends BVCallbackBase {
 	public function removeDirs($dirs) {
 		$result = array();
 
-		foreach($dirs as $dir) {
+		foreach ($dirs as $dir) {
 			$dir_result = array();
 
-			if (is_dir($dir) && !is_link($dir)) {
-
+			if ((MCWPFileSystem::getInstance()->isDir($dir) === true) && !is_link($dir)) {
 				if ($this->isEmptyDir($dir)) {
-
-					$dir_result['status'] = rmdir($dir);
+					$dir_result['status'] = MCWPFileSystem::getInstance()->rmdir($dir);
 					if ($dir_result['status'] === false) {
 						$dir_result['error'] = "RMDIR_FAILED";
+						$fs_error = MCWPFileSystem::getInstance()->checkForErrors();
+						if (isset($fs_error)) {
+							$dir_result['fs_error'] = $fs_error;
+						}
 					}
-
 				} else {
 					$dir_result['status'] = false;
 					$dir_result['error'] = "NOT_EMPTY";
 				}
-
 			} else {
 				$dir_result['status'] = false;
 				$dir_result['error'] = "NOT_DIR";
 			}
 
-			$result[$dir] = $dir_result; 
+			$result[$dir] = $dir_result;
 		}
 
 		$result['status'] = true;
@@ -117,16 +116,18 @@ class BVFSWriteCallback extends BVCallbackBase {
 	public function doChmod($path_infos) {
 		$result = array();
 
-		foreach($path_infos as $path => $mode) {
+		foreach ($path_infos as $path => $mode) {
 			$path_result = array();
 
-			if (file_exists($path)) {
-
-				$path_result['status'] = chmod($path, $mode);
+			if (MCWPFileSystem::getInstance()->exists($path) === true) {
+				$path_result['status'] = MCWPFileSystem::getInstance()->chmod($path, $mode);
 				if ($path_result['status'] === false) {
 					$path_result['error'] = "CHMOD_FAILED";
+					$fs_error = MCWPFileSystem::getInstance()->checkForErrors();
+					if (isset($fs_error)) {
+						$path_result['fs_error'] = $fs_error;
+					}
 				}
-
 			} else {
 				$path_result['status'] = false;
 				$path_result['error'] = "NOT_FOUND";
@@ -139,6 +140,10 @@ class BVFSWriteCallback extends BVCallbackBase {
 		return $result;
 	}
 
+	// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fopen
+	// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fread
+	// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fwrite
+	// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 	public function concatFiles($ifiles, $ofile, $bsize, $offset) {
 		if (($offset !== 0) && (!file_exists($ofile))) {
 			return array(
@@ -217,21 +222,23 @@ class BVFSWriteCallback extends BVCallbackBase {
 
 		return $result;
 	}
+	// phpcs:enable
 
 	public function renameFiles($path_infos) {
 		$result = array();
 
-		foreach($path_infos as $oldpath => $newpath) {
+		foreach ($path_infos as $oldpath => $newpath) {
 			$action_result = array();
-			$failed = array();
 
-			if (file_exists($oldpath)) {
-
-				$action_result['status'] = rename($oldpath, $newpath);
+			if (MCWPFileSystem::getInstance()->exists($oldpath)) {
+				$action_result['status'] = MCWPFileSystem::getInstance()->move($oldpath, $newpath, true);
 				if ($action_result['status'] === false) {
 					$action_result['error'] = "RENAME_FAILED";
+					$fs_error = MCWPFileSystem::getInstance()->checkForErrors();
+					if (isset($fs_error)) {
+						$action_result['fs_error'] = $fs_error;
+					}
 				}
-
 			} else {
 				$action_result['status'] = false;
 				$action_result['error'] = "NOT_FOUND";
@@ -245,6 +252,7 @@ class BVFSWriteCallback extends BVCallbackBase {
 	}
 
 	public function curlFile($ifile_url, $ofile, $timeout) {
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
 		$fp = fopen($ofile, "wb+");
 		if ($fp === false) {
 			return array(
@@ -253,8 +261,9 @@ class BVFSWriteCallback extends BVCallbackBase {
 		}
 
 		$result = array();
+
+		// phpcs:disable WordPress.WP.AlternativeFunctions.curl_curl_init, WordPress.WP.AlternativeFunctions.curl_curl_exec, WordPress.WP.AlternativeFunctions.curl_curl_setopt, WordPress.WP.AlternativeFunctions.curl_curl_close, WordPress.WP.AlternativeFunctions.curl_curl_error, WordPress.WP.AlternativeFunctions.curl_curl_errno
 		$ch = curl_init($ifile_url);
-		curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
 		curl_setopt($ch, CURLOPT_HEADER, 0);
 		curl_setopt($ch, CURLOPT_FILE, $fp);
@@ -265,13 +274,19 @@ class BVFSWriteCallback extends BVCallbackBase {
 		}
 
 		curl_close($ch);
+
+		// phpcs:enable WordPress.WP.AlternativeFunctions.curl_curl_init, WordPress.WP.AlternativeFunctions.curl_curl_exec, WordPress.WP.AlternativeFunctions.curl_curl_setopt, WordPress.WP.AlternativeFunctions.curl_curl_close, WordPress.WP.AlternativeFunctions.curl_curl_error, WordPress.WP.AlternativeFunctions.curl_curl_errno
+
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 		fclose($fp);
+
 
 		return $result;
 	}
 
 	public function streamCopyFile($ifile_url, $ofile) {
 		$result = array();
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
 		$handle = fopen($ifile_url, "rb");
 
 		if ($handle === false) {
@@ -280,9 +295,10 @@ class BVFSWriteCallback extends BVCallbackBase {
 			);
 		}
 
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
 		$fp = fopen($ofile, "wb+");
 		if ($fp === false) {
-			fclose($handle);
+			fclose($handle); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 
 			return array(
 				'error' => 'FOPEN_FAILED_FOR_OFILE'
@@ -293,8 +309,8 @@ class BVFSWriteCallback extends BVCallbackBase {
 			$result['error'] = "UNABLE_TO_WRITE_TO_TMP_OFILE";
 		}
 
-		fclose($handle);
-		fclose($fp);
+		fclose($handle); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
+		fclose($fp); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 
 		return $result;
 	}
@@ -302,17 +318,13 @@ class BVFSWriteCallback extends BVCallbackBase {
 	public function writeContentToFile($content, $ofile) {
 		$result = array();
 
-		$fp = fopen($ofile, "wb+");
-		if ($fp === false) {
-			return array(
-				'error' => 'FOPEN_FAILED_FOR_TEMP_OFILE'
-			);
+		if (MCWPFileSystem::getInstance()->putContents($ofile, $content) === false) {
+			$result['error'] = 'UNABLE_TO_WRITE_TO_TMP_OFILE';
+			$fs_error = MCWPFileSystem::getInstance()->checkForErrors();
+			if (isset($fs_error)) {
+				$result['fs_error'] = $fs_error;
+			}
 		}
-
-		if (fwrite($fp, $content) === false) {
-			$result['error'] = "UNABLE_TO_WRITE_TO_TMP_OFILE";
-		}
-		fclose($fp);
 
 		return $result;
 	}
@@ -320,7 +332,9 @@ class BVFSWriteCallback extends BVCallbackBase {
 	public function moveUploadedFile($ofile) {
 		$result = array();
 
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
 		if (isset($_FILES['myfile'])) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing -- tmp_name is a path and nonce is ignored here
 			$myfile = $_FILES['myfile'];
 			$is_upload_ok = false;
 

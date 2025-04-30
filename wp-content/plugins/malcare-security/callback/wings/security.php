@@ -8,6 +8,8 @@ if (!class_exists('BVSecurityCallback')) :
 			$this->settings = new MCWPSettings();
 		}
 
+		// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fread
+		// Here we need fread as we are using popen which returns a handler
 		function getCrontab() {
 			$resp = array();
 
@@ -38,6 +40,7 @@ if (!class_exists('BVSecurityCallback')) :
 
 			return $resp;
 		}
+		// phpcs:enable WordPress.WP.AlternativeFunctions.file_system_operations_fread
 
 		public function setupWP2FA($secrets_by_uids, $to_encrypt, $cipher_algo, $enabled) {
 			if (!is_array($secrets_by_uids)) {

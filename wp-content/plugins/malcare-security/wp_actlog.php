@@ -110,13 +110,13 @@ if (!class_exists('BVWPActLog')) :
 			$ip = '127.0.0.1';
 			if ($ipHeader && is_array($ipHeader)) {
 				if (array_key_exists($ipHeader['hdr'], $_SERVER)) {
-					$_ips = preg_split("/(,| |\t)/", $_SERVER[$ipHeader['hdr']]);
+					$_ips = preg_split("/(,| |\t)/", MCHelper::getRawParam('SERVER', $ipHeader['hdr']));
 					if (array_key_exists(intval($ipHeader['pos']), $_ips)) {
 						$ip = $_ips[intval($ipHeader['pos'])];
 					}
 				}
 			} else if (array_key_exists('REMOTE_ADDR', $_SERVER)) {
-				$ip = $_SERVER['REMOTE_ADDR'];
+				$ip = MCHelper::getRawParam('SERVER', 'REMOTE_ADDR');
 			}
 
 			$ip = trim($ip);

@@ -59,7 +59,7 @@ class MCWP2FA {
 		$has_2fa = get_user_meta($user->ID, MCWP2FA::FLAG_META_KEY, true);
 
 		if ('1' === $has_2fa) {
-			if (empty($_POST['twofa_code'])) {
+			if (empty($_POST['twofa_code'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 				wp_send_json_success(array('twofa_enabled' => true));
 				exit;
 			} else {
@@ -70,29 +70,29 @@ class MCWP2FA {
 				$is_secret_encrypted = $secret_info['is_encrypted'];
 
 				if (is_null($secret) || is_null($is_secret_encrypted)) {
-					return new WP_Error('invalid_2fa_configuration', __('Please contact your administrator to login.'));
+					return new WP_Error('invalid_2fa_configuration', 'Please contact your administrator to login.');
 				}
 
 				if (defined('SECURE_AUTH_KEY') && $is_secret_encrypted === true) {
 					$decryption_result = MCHelper::opensslDecrypt($secret, self::$cipher_algo, SECURE_AUTH_KEY);
 					if ($decryption_result[0] === false) {
-						return new WP_Error('2fa_secret_key_decryption_error', __('Please contact your administrator to login.'));
+						return new WP_Error('2fa_secret_key_decryption_error', 'Please contact your administrator to login.');
 					}
 					$secret = $decryption_result[1];
 				}
 
 				if (empty($secret) || !is_string($secret) || 32 !== strlen($secret)) {
-					return new WP_Error('invalid_2fa_configuration', __('Please contact your administrator to login.'));
+					return new WP_Error('invalid_2fa_configuration', 'Please contact your administrator to login.');
 				}
 
-				$submitted_code = sanitize_text_field($_POST['twofa_code']);
+				$submitted_code = MCHelper::getRawParam('POST', 'twofa_code');
 
 				if (is_string($submitted_code) && ctype_digit($submitted_code) &&
 						true === MCWP2FAAuthenticator::verifyCode($secret, $submitted_code)) {
 
 					return $user;
 				} else {
-					return new WP_Error('invalid_2fa_code', __(esc_html($this->invalid_code_message)));
+					return new WP_Error('invalid_2fa_code', esc_html($this->invalid_code_message));
 				}
 			}
 		}
@@ -122,6 +122,7 @@ class MCWP2FA {
 					title="' . esc_attr($tooltip_message) . '"
 					style="' . esc_attr($icon_css) . '"></span>';
 		}
+		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- not the best way
 ?>
 		<style>
 			.wp2fa-progress-bar {

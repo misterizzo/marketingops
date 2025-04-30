@@ -282,16 +282,6 @@ class BVManageCallback extends BVCallbackBase {
 				return array('status' => 'Done');
 			}
 		} else {
-			$resp = array("wp_update_core", function_exists('wp_update_core'));
-			if (function_exists('wp_update_core')) {
-				$result = wp_update_core($to_update);
-				if (is_wp_error($result)) {
-					return array('status' => "Error", "message" => $this->getError($result));
-				} else {
-					return array('status' => 'Done');
-				}
-			}
-
 			$resp = array("WP_Upgrader", class_exists('WP_Upgrader'));
 			if (class_exists('WP_Upgrader')) {
 				$upgrader = new WP_Upgrader();
@@ -342,6 +332,7 @@ class BVManageCallback extends BVCallbackBase {
 	}
 
 	function bv_plugin_bulk_upgrade($upgrader, $_plugins) {
+		global $wp_version;
 		$plugins = array_keys($_plugins);
 		$args = array();
 		$defaults = array(
@@ -373,18 +364,49 @@ class BVManageCallback extends BVCallbackBase {
 			$upgrader->update_current++;
 			$upgrader->skin->plugin_info = get_plugin_data(WP_PLUGIN_DIR . '/' . $plugin, false, true);
 			$upgrader->skin->plugin_active = is_plugin_active($plugin);
-			$result = $upgrader->run(
-				array(
-					'package'           => $_plugins[$plugin],
-					'destination'       => WP_PLUGIN_DIR,
-					'clear_destination' => true,
-					'clear_working'     => true,
-					'is_multi'          => true,
-					'hook_extra'        => array(
-						'plugin' => $plugin,
-					),
-				)
-			);
+			if ( isset( $_plugins[$plugin]['requires'] ) && function_exists('is_wp_version_compatible') && !is_wp_version_compatible( $_plugins[$plugin]['requires'] ) ) {
+				$result = new WP_Error(
+					'incompatible_wp_required_version',
+					sprintf(
+						__( 'Your WordPress version is %1$s, however the new plugin version requires %2$s.' ),
+						$wp_version,
+						$_plugins[$plugin]['requires']
+					)
+				);
+
+				$upgrader->skin->before( $result );
+				$upgrader->skin->error( $result );
+				$upgrader->skin->after();
+			} elseif ( isset( $_plugins[$plugin]['requires_php'] ) && function_exists('is_php_version_compatible') && !is_php_version_compatible( $_plugins[$plugin]['requires_php'] ) ) {
+
+				$result = new WP_Error(
+					'incompatible_php_required_version',
+					sprintf(
+						__( 'The PHP version on your server is %1$s, however the new plugin version requires %2$s.' ),
+						PHP_VERSION,
+						$_plugins[$plugin]['requires_php']
+					)
+				);
+
+				$upgrader->skin->before( $result );
+				$upgrader->skin->error( $result );
+				$upgrader->skin->after();
+			} else {
+				add_filter('upgrader_source_selection', array($upgrader, 'check_package'));
+				$result = $upgrader->run(
+					array(
+						'package'           => $_plugins[$plugin]['package'],
+						'destination'       => WP_PLUGIN_DIR,
+						'clear_destination' => true,
+						'clear_working'     => true,
+						'is_multi'          => true,
+						'hook_extra'        => array(
+							'plugin' => $plugin,
+						),
+					)
+				);
+				remove_filter('upgrader_source_selection', array($upgrader, 'check_package'));
+			}
 			$results[$plugin] = $result;
 			if (false === $result) {
 				break;
@@ -421,7 +443,16 @@ class BVManageCallback extends BVCallbackBase {
 		$_plugins = array();
 		$plugins_by_name = array();
 		foreach ($plugins as $plugin) {
-			$_plugins[$plugin['file']] = $plugin['package'];
+			$_plugins[$plugin['file']] = [
+				'package' => $plugin['package']
+			];
+			if (isset($plugin['requires'])) {
+				$_plugins[$plugin['file']]['requires'] = $plugin['requires'];
+			}
+
+			if (isset($plugin['requires_php'])) {
+				$_plugins[$plugin['file']]['requires_php'] = $plugin['requires_php'];
+			}
 			$plugin_data = get_plugin_data(WP_PLUGIN_DIR . '/' . $plugin['file'], false, true);
 			$plugins_by_name[$plugin_data['Name']] = $plugin['file'];
 		}
@@ -463,6 +494,7 @@ class BVManageCallback extends BVCallbackBase {
 	}
 
 	function bv_theme_bulk_upgrade($upgrader, $_themes) {
+		global $wp_version;
 		$themes = array_keys($_themes);
 		$args = array();
 		$defaults = array(
@@ -495,19 +527,48 @@ class BVManageCallback extends BVCallbackBase {
 		foreach ($themes as $theme) {
 			$upgrader->update_current++;
 			$upgrader->skin->theme_info = $upgrader->theme_info($theme);
-			$result = $upgrader->run(
-				array(
-					'package'           => $_themes[$theme],
-					'destination'       => get_theme_root($theme),
-					'clear_destination' => true,
-					'clear_working'     => true,
-					'is_multi'          => true,
-					'hook_extra'        => array(
-						'theme' => $theme,
-					),
-				)
-			);
+			if ( isset( $_themes[$theme]['requires'] ) && function_exists('is_wp_version_compatible') && !is_wp_version_compatible( $_themes[$theme]['requires'] ) ) {
+				$result = new WP_Error(
+					'incompatible_wp_required_version',
+					sprintf(
+						__( 'Your WordPress version is %1$s, however the new theme version requires %2$s.' ),
+						$wp_version,
+						$_themes[$theme]['requires']
+					)
+				);
 
+				$upgrader->skin->before( $result );
+				$upgrader->skin->error( $result );
+				$upgrader->skin->after();
+			} elseif ( isset( $_themes[$theme]['requires_php'] ) && function_exists('is_php_version_compatible') && !is_php_version_compatible( $_themes[$theme]['requires_php'] ) ) {
+				$result = new WP_Error(
+					'incompatible_php_required_version',
+					sprintf(
+						__( 'The PHP version on your server is %1$s, however the new theme version requires %2$s.' ),
+						PHP_VERSION,
+						$_themes[$theme]['requires_php']
+					)
+				);
+
+				$upgrader->skin->before( $result );
+				$upgrader->skin->error( $result );
+				$upgrader->skin->after();
+			} else {
+				add_filter('upgrader_source_selection', array($upgrader, 'check_package'));
+				$result = $upgrader->run(
+					array(
+						'package'           => $_themes[$theme]['package'],
+						'destination'       => get_theme_root($theme),
+						'clear_destination' => true,
+						'clear_working'     => true,
+						'is_multi'          => true,
+						'hook_extra'        => array(
+							'theme' => $theme,
+						),
+					)
+				);
+				remove_filter('upgrader_source_selection', array($upgrader, 'check_package'));
+			}
 			$results[$theme] = $result;
 			if (false === $result) {
 				break;
@@ -545,7 +606,15 @@ class BVManageCallback extends BVCallbackBase {
 		$result  = array();
 		$_themes = array();
 		foreach ($themes as $theme) {
-			$_themes[$theme['stylesheet']] = $theme['package'];
+			$_themes[$theme['stylesheet']] = [
+				'package' => $theme['package']
+			];
+			if (isset($theme['requires'])) {
+				$_themes[$theme['stylesheet']]['requires'] = $theme['requires'];
+			}
+			if (isset($theme['requires_php'])) {
+				$_themes[$theme['stylesheet']]['requires_php'] = $theme['requires_php'];
+			}
 		}
 		if (empty(array_keys($_themes))) {
 			return $result;

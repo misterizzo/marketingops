@@ -14,7 +14,7 @@
 						<input type='hidden' name='pubkey' value="<?php echo esc_attr($key); ?>" />
 						<tr>
 							<td><?php echo esc_html($value['email']); ?></td>
-							<td><?php echo esc_html(date('Y-m-d H:i:s', $value['lastbackuptime'])); ?></td>
+							<td><?php echo esc_html(gmdate('Y-m-d H:i:s', $value['lastbackuptime'])); ?></td>
 							<td><input type='submit' class="btn btn-primary" style="font-size: 12px" value='Disconnect' name='disconnect' onclick="return confirm('Are you sure?');"></td>
 						</tr>
 					</form>

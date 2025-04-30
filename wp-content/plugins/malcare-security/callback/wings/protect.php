@@ -8,7 +8,7 @@ class BVProtectCallback extends BVCallbackBase {
 	public $db;
 	public $settings;
 
-	const PROTECT_WING_VERSION = 1.2;
+	const PROTECT_WING_VERSION = 1.3;
 
 	public function __construct($callback_handler) {
 		$this->db = $callback_handler->db;
@@ -17,7 +17,7 @@ class BVProtectCallback extends BVCallbackBase {
 
 	public function serverConfig() {
 		return array(
-			'software' => $_SERVER['SERVER_SOFTWARE'],
+			'software' => MCHelper::getRawParam('SERVER', 'SERVER_SOFTWARE'),
 			'sapi' => (function_exists('php_sapi_name')) ? php_sapi_name() : false,
 			'has_apache_get_modules' => function_exists('apache_get_modules'),
 			'posix_getuid' => (function_exists('posix_getuid')) ? posix_getuid() : null,
@@ -40,7 +40,7 @@ class BVProtectCallback extends BVCallbackBase {
 	}
 
 	public function unBlockIP($ip, $attempts, $time) {
-		$transient_name = MCProtectLP_V581::UNBLOCK_IP_TRANSIENT_PREFIX . $ip;
+		$transient_name = MCProtectLP_V593::UNBLOCK_IP_TRANSIENT_PREFIX . $ip;
 		$this->settings->setTransient($transient_name, $attempts, $time);
 		return $this->settings->getTransient($transient_name);
 	}
@@ -57,7 +57,7 @@ class BVProtectCallback extends BVCallbackBase {
 			if ($headers && is_array($headers)) {
 				foreach($headers as $hdr) {
 					if (array_key_exists($hdr, $_SERVER)) {
-						$hdrsinfo[$hdr] = $_SERVER[$hdr];
+						$hdrsinfo[$hdr] = MCHelper::getRawParam('SERVER', $hdr);
 					}
 				}
 			}
@@ -75,7 +75,7 @@ class BVProtectCallback extends BVCallbackBase {
 			$resp = array('conf' => $this->settings->getOption('bvruleset'));
 			break;
 		case "gtraddr":
-			$raddr = array_key_exists('REMOTE_ADDR', $_SERVER) ? $_SERVER['REMOTE_ADDR'] : false;
+			$raddr = MCHelper::getRawParam('SERVER', 'REMOTE_ADDR');
 			$resp = array("raddr" => $raddr);
 			break;
 		case "svrcnf":

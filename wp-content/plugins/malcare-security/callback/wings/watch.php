@@ -7,7 +7,7 @@ class BVWatchCallback extends BVCallbackBase {
 	public $db;
 	public $settings;
 
-	const WATCH_WING_VERSION = 1.5;
+	const WATCH_WING_VERSION = 1.6;
 
 	public function __construct($callback_handler) {
 		$this->db = $callback_handler->db;
@@ -37,36 +37,34 @@ class BVWatchCallback extends BVCallbackBase {
 		return $this->settings->updateOption('bvwatchtime', time());
 	}
 
+	// we use fread to read limited fw_prepend_log, with wp function, we will load entire fw_prepend_log at once which may have perfromance issues
 	public function getFWPrependLog($params) {
 		$result = array();
 		$fname = $params['fname'];
 		$limit = intval($params['limit']);
 
-		if (file_exists($fname)) {
+		if (MCWPFileSystem::getInstance()->exists($fname) === true) {
 
 			$result['exists'] = true;
 			$tmpfname = $fname."tmp";
 
-			if (!@rename($fname, $tmpfname)) {
-
+			if (MCWPFileSystem::getInstance()->move($fname, $tmpfname, true) === false) {
 				$result = array('status' => 'Error', 'message' => 'UNABLE_TO_RENAME_LOGFILE');
 
 			} else {
 
-				if (file_exists($tmpfname)) {
+				if (MCWPFileSystem::getInstance()->exists($tmpfname) === true) {
 
-					$fsize = filesize($tmpfname);
+					$fsize = MCWPFileSystem::getInstance()->size($tmpfname);
 					$result["size"] = $fsize;
 
 					if ($fsize <= $limit) {
-
-						$result['content'] = file_get_contents($tmpfname);
-
+						$result['content'] = MCWPFileSystem::getInstance()->getContents($tmpfname);
 					} else {
-						$handle = fopen($tmpfname, "rb");
-						$result['content'] = fread($handle, $limit);
+						$handle = fopen($tmpfname, "rb"); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
+						$result['content'] = fread($handle, $limit); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread
 						$result['incomplete'] = true;
-						fclose($handle);
+						fclose($handle); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 					}
 
 					$result['tmpfile'] = unlink($tmpfname);
@@ -80,6 +78,7 @@ class BVWatchCallback extends BVCallbackBase {
 		return $result;
 	}
 
+	// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fsockopen, WordPress.WP.AlternativeFunctions.file_system_operations_fwrite, WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 	public function getDomainInfo($params) {
 		$domain = $params["domain"];
 		if (empty($domain)) {
@@ -112,6 +111,21 @@ class BVWatchCallback extends BVCallbackBase {
 
 		return array('domainData' => $response);
 	}
+	// phpcs:enable WordPress.WP.AlternativeFunctions.file_system_operations_fsockopen, WordPress.WP.AlternativeFunctions.file_system_operations_fwrite, WordPress.WP.AlternativeFunctions.file_system_operations_fclose
+
+	public function getOffsetResetInfo($params, $offset, $table, $col_name = "id") {
+		if (!isset($params['enforce_auto_incr_check']) || !($params['enforce_auto_incr_check'] === true)) {
+			return array();
+		}
+		$last_id = $this->db->getLastRowId($col_name, $table);
+		if ($last_id === null) {
+			return array("error" => "UNABLE_TO_FETCH_LAST_ROW_ID");
+		} else if ($last_id < $offset) {
+			return array("last_row_id" => $last_id, "offset_reset_required" => true);
+		} else {
+			return array();
+		} 
+	}
 
 	public function process($request) {
 		$db = $this->db;
@@ -130,18 +144,14 @@ class BVWatchCallback extends BVCallbackBase {
 			if (array_key_exists('lp', $params)) {
 				require_once dirname( __FILE__ ) . '/../../protect/lp.php';
 				$lp_params = $params['lp'];
-				if (!isset($lp_params['bv_check_table']) || $db->isTablePresent($db->getBVTable(MCProtectLP_V581::TABLE_NAME))) {
+				if (!isset($lp_params['bv_check_table']) || $db->isTablePresent($db->getBVTable(MCProtectLP_V593::TABLE_NAME))) {
 					$limit = intval($lp_params['limit']);
 					$filter = $lp_params['filter'];
 					$offset = isset($lp_params['offset']) ? intval($lp_params['offset']) : 0;
-					$table = $db->getBVTable(MCProtectLP_V581::TABLE_NAME);
-					$auto_increment = $db->getAutoIncrement($table);
-
-
-					if ($auto_increment && ($auto_increment < $offset) && $lp_params['enforce_auto_incr_check']) {
-						$resp["lplogs"] = array("auto_increment" => $auto_increment, "offset_reset_required" => true);
-					} else {
-						$db->deleteBVTableContent(MCProtectLP_V581::TABLE_NAME, $lp_params['rmfilter']);
+					$table = $db->getBVTable(MCProtectLP_V593::TABLE_NAME);
+					$resp["lplogs"] = $this->getOffsetResetInfo($lp_params, $offset, $table);
+					if (empty($resp["lplogs"])) {
+						$db->deleteBVTableContent(MCProtectLP_V593::TABLE_NAME, $lp_params['rmfilter']);
 						$resp["lplogs"] = $this->getData($table, $limit, $filter);
 					}
 				} else {
@@ -157,20 +167,16 @@ class BVWatchCallback extends BVCallbackBase {
 			if (array_key_exists('fw', $params)) {
 				require_once dirname( __FILE__ ) . '/../../protect/fw.php';
 				$fw_params = $params['fw'];
-				if (!isset($fw_params['bv_check_table']) || $db->isTablePresent($db->getBVTable(MCProtectFW_V581::TABLE_NAME))) {
+				if (!isset($fw_params['bv_check_table']) || $db->isTablePresent($db->getBVTable(MCProtectFW_V593::TABLE_NAME))) {
 					$limit = intval($fw_params['limit']);
 					$filter = $fw_params['filter'];
 					$offset = isset($fw_params['offset']) ? intval($fw_params['offset']) : 0;
-					$table = $db->getBVTable(MCProtectFW_V581::TABLE_NAME);
-					$auto_increment = $db->getAutoIncrement($table);
-
-					if ($auto_increment && ($auto_increment < $offset) && $fw_params['enforce_auto_incr_check']) {
-						$resp["fwlogs"] = array("auto_increment" => $auto_increment, "offset_reset_required" => true);
-					} else {
-						$db->deleteBVTableContent(MCProtectFW_V581::TABLE_NAME, $fw_params['rmfilter']);
+					$table = $db->getBVTable(MCProtectFW_V593::TABLE_NAME);
+					$resp["fwlogs"] = $this->getOffsetResetInfo($fw_params, $offset, $table);
+					if (empty($resp["fwlogs"])){
+						$db->deleteBVTableContent(MCProtectFW_V593::TABLE_NAME, $fw_params['rmfilter']);
 						$resp["fwlogs"] = $this->getData($table, $limit, $filter);
 					}
-
 				} else {
 					$resp["fwlogs"] = array("status" => "TABLE_NOT_PRESENT");
 				}
@@ -185,11 +191,8 @@ class BVWatchCallback extends BVCallbackBase {
 						$filter = $params['filter'];
 						$offset = isset($params['offset']) ? intval($params['offset']) : 0;
 						$table = $db->getBVTable(BVWPDynSync::$dynsync_table);
-						$auto_increment = $db->getAutoIncrement($table);
-
-						if ($auto_increment && ($auto_increment < $offset) && $params['enforce_auto_incr_check']) {
-							$resp = array("auto_increment" => $auto_increment, "offset_reset_required" => true);
-						} else {
+						$offset_reset_info = $this->getOffsetResetInfo($params, $offset, $table);
+						if (empty($offset_reset_info)) {
 							$this->deleteBvDynamicEvents($params['rmfilter']);
 							$data = $this->getData($table, $limit, $filter);
 
@@ -197,6 +200,13 @@ class BVWatchCallback extends BVCallbackBase {
 							$resp['events'] = $data['rows'];
 							$resp['timestamp'] = time();
 							$resp["status"] = true;
+						} else {
+							if (array_key_exists("error", $offset_reset_info)) {
+								$resp["error"] = $offset_reset_info["error"];
+							} else {
+								$resp["offset_reset_required"] = $offset_reset_info["offset_reset_required"];
+								$resp["last_row_id"] = $offset_reset_info["last_row_id"];
+							}
 						}
 					}
 				}
@@ -210,11 +220,8 @@ class BVWatchCallback extends BVCallbackBase {
 					$limit = intval($actlog_params['limit']);
 					$filter = $actlog_params['filter'];
 					$offset = isset($actlog_params['offset']) ? intval($actlog_params['offset']) : 0;
-					$auto_increment = $db->getAutoIncrement($table);
-
-					if ($auto_increment && ($auto_increment < $offset) && $actlog_params['enforce_auto_incr_check']) {
-						$resp["actlogs"] = array("auto_increment" => $auto_increment, "offset_reset_required" => true);
-					} else {
+					$resp["actlogs"] = $this->getOffsetResetInfo($actlog_params, $offset, $table);
+					if (empty($resp["actlogs"])) {
 						$db->deleteBVTableContent(BVWPActLog::$actlog_table, $actlog_params['rmfilter']);
 						$resp["actlogs"] = $this->getData($table, $limit, $filter);
 					}
@@ -231,11 +238,8 @@ class BVWatchCallback extends BVCallbackBase {
 					$limit = intval($airlift_stats_params['limit']);
 					$filter = $airlift_stats_params['filter'];
 					$offset = isset($airlift_stats_params['offset']) ? intval($airlift_stats_params['offset']) : 0;
-					$auto_increment = $db->getAutoIncrement($table);
-
-					if ($auto_increment && ($auto_increment < $offset) && $airlift_stats_params['enforce_auto_incr_check']) {
-						$resp["airlift_stats"] = array("auto_increment" => $auto_increment, "offset_reset_required" => true);
-					} else {
+					$resp["airlift_stats"] = $this->getOffsetResetInfo($airlift_stats_params, $offset, $table);
+					if (empty($resp["airlift_stats"])) {
 						$db->deleteBVTableContent($airlift_stats_table, $airlift_stats_params['rmfilter']);
 						$resp["airlift_stats"] = $this->getData($table, $limit, $filter);
 					}
@@ -252,11 +256,8 @@ class BVWatchCallback extends BVCallbackBase {
 					$limit = intval($php_error_monit_params['limit']);
 					$filter = $php_error_monit_params['filter'];
 					$offset = isset($php_error_monit_params['offset']) ? intval($php_error_monit_params['offset']) : 0;
-					$auto_increment = $db->getAutoIncrement($table);
-
-					if ($auto_increment && ($auto_increment < $offset) && $php_error_monit_params['enforce_auto_incr_check']) {
-						$resp["php_error_monitoring"] = array("auto_increment" => $auto_increment, "offset_reset_required" => true);
-					} else {
+					$resp["php_error_monitoring"] = $this->getOffsetResetInfo($php_error_monit_params, $offset, $table);
+					if (empty($resp["php_error_monitoring"])) {
 						$db->deleteBVTableContent(MCWPPHPErrorMonitoring::ERROR_TABLE, $php_error_monit_params['rmfilter']);
 						$resp["php_error_monitoring"] = $this->getData($table, $limit, $filter);
 					}

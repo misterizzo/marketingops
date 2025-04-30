@@ -1,5 +1,12 @@
 <?php
-
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fread
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fwrite
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fsockopen
+// We use php method like fread, fwrite to read only a portion of a file, we don't have a direct method for partial reads since WP_Filesystem doesn't support a direct equivalent to fread, fwrite.
+// The entire file deals with custom stream handling
+// We need direct socket/file operations for this functionality
+// WordPress filesystem alternatives wouldn't work for this use case
+// It's better to disable these specific rules at file level than adding individual ignore comments
 if (!defined('ABSPATH')) exit;
 if (!class_exists('BVRespStream')) :
 
@@ -77,9 +84,11 @@ class BVRespStream extends BVStream {
 	}
 
 	public function writeChunk($chunk) {
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- chunk should not be escaped
 		echo $this->bvboundry . "ckckckckck" . $chunk . $this->bvboundry . "ckckckckck";
 	}
 	public function endStream() {
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $this->bvboundry . "rerererere";
 
 		return array();
@@ -169,7 +178,7 @@ class BVHttpStream extends BVStream {
 			"Content-Disposition" => "form-data; name=bvinfile; filename=data",
 			"Content-Type" => "application/octet-stream"
 		);
-		$rnd = rand(100000, 999999);
+		$rnd = rand(100000, 999999); // phpcs:ignore WordPress.WP.AlternativeFunctions.rand_rand
 		$this->boundary = "----".$rnd;
 		$prologue = "--".$this->boundary."\r\n";
 		foreach($mph as $key=>$val) {
@@ -244,4 +253,5 @@ class BVHttpStream extends BVStream {
 		return $response;
 	}
 }
+// phpcs:enable
 endif;

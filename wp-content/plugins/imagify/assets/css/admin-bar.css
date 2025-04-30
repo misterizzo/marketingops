@@ -20,14 +20,14 @@
 }
 #wp-admin-bar-imagify-profile [class^="imagify-bar-"] {
 	position: relative;
-	height: 1.5em;
+	height: 8px;
 	width: 100%;
 	background: #60758D;
 	color: #FFF;
 	font-size: 10px;
 }
 #wp-admin-bar-imagify-profile .imagify-progress {
-	height: 1.5em;
+	height: 8px;
 	font-size: 1em;
 }
 .imagify-progress {
@@ -164,12 +164,12 @@
 #wp-admin-bar-imagify-profile .imagify-upsell-admin-bar {
 	position:relative ;
 	background: #c51161;
-	margin: 10px  -13px -10px -13px;
-	padding: 20px;
+	margin: 10px  -15px -13px -15px;
+	padding: 16px;
 }
 
 #wp-admin-bar-imagify-profile .imagify-upsell-admin-bar p {
-	color: #fff;
+	color: #ebebeb;
 }
 
 #wp-admin-bar-imagify-profile a.imagify-upsell-admin-bar-button {

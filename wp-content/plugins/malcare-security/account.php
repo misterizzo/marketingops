@@ -43,7 +43,7 @@ if (!class_exists('MCAccount')) :
 			$str = "";
 			$size = strlen($chars);
 			for( $i = 0; $i < $length; $i++ ) {
-				$str .= $chars[rand(0, $size - 1)];
+				$str .= $chars[rand(0, $size - 1)]; // phpcs:ignore WordPress.WP.AlternativeFunctions.rand_rand
 			}
 			return $str;
 		}

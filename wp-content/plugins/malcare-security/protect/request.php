@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('ABSPATH') && !defined('MCDATAPATH')) exit;
 
-if (!class_exists('MCProtectRequest_V581')) :
-class MCProtectRequest_V581 {
+if (!class_exists('MCProtectRequest_V593')) :
+class MCProtectRequest_V593 {
 	public $ip;
 	public $host = '';
 	public $uri;
@@ -18,8 +19,8 @@ class MCProtectRequest_V581 {
 	public $raw_body = '';
 	public $files;
 	public $respcode;
-	public $status = MCProtectRequest_V581::STATUS_ALLOWED;
-	public $category = MCProtectRequest_V581::CATEGORY_NORMAL;
+	public $status = MCProtectRequest_V593::STATUS_ALLOWED;
+	public $category = MCProtectRequest_V593::CATEGORY_NORMAL;
 
 	public $wp_user;
 
@@ -45,12 +46,12 @@ class MCProtectRequest_V581 {
 	const CATEGORY_GLOBAL_BOT_BLOCKED = 90;
 
 	public function __construct($ip_header, $config) {
-		$this->ip = MCProtectUtils_V581::getIP($ip_header);
+		$this->ip = MCProtectUtils_V593::getIP($ip_header);
 		$this->timestamp = time();
-		$this->get_params = $_GET;
+		$this->get_params = $_GET; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$this->cookies = $_COOKIE;
-		$this->post_params = $_POST;
-		$this->files = $_FILES;
+		$this->post_params = $_POST; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$this->files = $_FILES; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 		if (array_key_exists('cangetrawbody', $config) && is_bool($config['cangetrawbody'])) {
 			$this->can_get_raw_body = $config['cangetrawbody'];
@@ -68,8 +69,8 @@ class MCProtectRequest_V581 {
 			$this->max_json_decode_depth = $config['maxjsondecodedepth'];
 		}
 
-		if (!empty($_FILES)) {
-			foreach ($_FILES as $input => $file) {
+		if (!empty($_FILES)) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			foreach ($_FILES as $input => $file) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 				$this->file_names[$input] = $file['name'];
 			}
 		}
@@ -83,28 +84,33 @@ class MCProtectRequest_V581 {
 					$this->headers[$header] = $value;
 				}
 			}
-			if (array_key_exists('CONTENT_TYPE', $_SERVER)) {
-				$this->headers['Content-Type'] = $_SERVER['CONTENT_TYPE'];
+			$content_type = MCHelper::getRawParam('SERVER', 'CONTENT_TYPE');
+			if (isset($content_type)) {
+				$this->headers['Content-Type'] = $content_type;
 			}
-			if (array_key_exists('CONTENT_LENGTH', $_SERVER)) {
-				$this->headers['Content-Length'] = $_SERVER['CONTENT_LENGTH'];
+			$content_length = MCHelper::getRawParam('SERVER', 'CONTENT_LENGTH');
+			if (isset($content_length)) {
+				$this->headers['Content-Length'] = $content_length;
 			}
-			if (array_key_exists('REFERER', $_SERVER)) {
-				$this->headers['Referer'] = $_SERVER['REFERER'];
+			$referer = MCHelper::getRawParam('SERVER', 'REFERER');
+			if (isset($referer)) {
+				$this->headers['Referer'] = $referer;
 			}
-			if (array_key_exists('HTTP_USER_AGENT', $_SERVER)) {
-				$this->headers['User-Agent'] = $_SERVER['HTTP_USER_AGENT'];
+			$http_user_agent = MCHelper::getRawParam('SERVER', 'HTTP_USER_AGENT');
+			if (isset($http_user_agent)) {
+				$this->headers['User-Agent'] = $http_user_agent;
 			}
 
 			if (array_key_exists('Host', $this->headers)) {
 				$this->host = $this->headers['Host'];
 			} elseif (array_key_exists('SERVER_NAME', $_SERVER)) {
-				$this->host = $_SERVER['SERVER_NAME'];
+				$this->host = MCHelper::getRawParam('SERVER', 'SERVER_NAME');
 			}
 
-			$this->method = array_key_exists('REQUEST_METHOD', $_SERVER)
-				? $_SERVER['REQUEST_METHOD'] : 'GET';
-			$this->uri = array_key_exists('REQUEST_URI', $_SERVER) ? $_SERVER['REQUEST_URI'] : '';
+			$request_method = MCHelper::getRawParam('SERVER', 'REQUEST_METHOD');
+			$this->method = isset($request_method) ? $request_method : 'GET';
+			$request_uri = MCHelper::getRawParam('SERVER', 'REQUEST_URI');
+			$this->uri = isset($request_uri) ? $request_uri : '';
 			$_uri = parse_url($this->uri);
 			$this->path = (is_array($_uri) && array_key_exists('path', $_uri)) ? $_uri['path']  : $this->uri;
 		}
@@ -118,7 +124,7 @@ class MCProtectRequest_V581 {
 
 		if ($this->can_decode_json) {
 			if ($this->getContentType() === "application/json" && !empty($this->raw_body)) {
-				$_json_params = MCProtectUtils_V581::safeDecodeJSON($this->raw_body,
+				$_json_params = MCProtectUtils_V593::safeDecodeJSON($this->raw_body,
 						true, $this->max_json_decode_depth);
 				if (isset($_json_params)) {
 					$this->json_params['JSON'] = $_json_params;
@@ -129,15 +135,15 @@ class MCProtectRequest_V581 {
 
 	public static function blacklistedCategories() {
 		return array(
-			MCProtectRequest_V581::CATEGORY_BOT_BLOCKED,
-			MCProtectRequest_V581::CATEGORY_COUNTRY_BLOCKED,
-			MCProtectRequest_V581::CATEGORY_USER_BLACKLISTED,
-			MCProtectRequest_V581::CATEGORY_GLOBAL_BOT_BLOCKED
+			MCProtectRequest_V593::CATEGORY_BOT_BLOCKED,
+			MCProtectRequest_V593::CATEGORY_COUNTRY_BLOCKED,
+			MCProtectRequest_V593::CATEGORY_USER_BLACKLISTED,
+			MCProtectRequest_V593::CATEGORY_GLOBAL_BOT_BLOCKED
 		);
 	}
 
 	public static function whitelistedCategories() {
-		return array(MCProtectRequest_V581::CATEGORY_WHITELISTED);
+		return array(MCProtectRequest_V593::CATEGORY_WHITELISTED);
 	}
 
 	public function setRespCode($code) {
@@ -272,17 +278,15 @@ class MCProtectRequest_V581 {
 
 	public function getRequestID() {
 		if (!defined("BV_REQUEST_ID")) {
-			define("BV_REQUEST_ID", uniqid(mt_rand()));
+			define("BV_REQUEST_ID", uniqid(mt_rand())); // phpcs:ignore WordPress.WP.AlternativeFunctions.rand_mt_rand
 		}
 
 		return BV_REQUEST_ID;
 	}
 
 	public function getServerValue($key) {
-		if (isset($_SERVER) && array_key_exists($key, $_SERVER)) {
-			return $_SERVER[$key];
-		}
-		return false;
+		$val = MCHelper::getRawParam('SERVER', $key);
+		return isset($val) ? $val : false;
 	}
 
 	public function getHeadersV2() {

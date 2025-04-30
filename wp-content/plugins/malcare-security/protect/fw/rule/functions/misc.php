@@ -1,8 +1,9 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped
 if (!defined('ABSPATH') && !defined('MCDATAPATH')) exit;
 
-if (!trait_exists('MCProtectFWRuleMiscFunc_V581')) :
-trait MCProtectFWRuleMiscFunc_V581 {
+if (!trait_exists('MCProtectFWRuleMiscFunc_V593')) :
+trait MCProtectFWRuleMiscFunc_V593 {
 	private function _rf_isTrue() {
 		$args = $this->processRuleFunctionParams(
 			'isTrue',
@@ -55,7 +56,7 @@ trait MCProtectFWRuleMiscFunc_V581 {
 		$name = $args[0];
 
 		if (!array_key_exists($name, $this->variables)) {
-			throw new MCProtectRuleError_V581(
+			throw new MCProtectRuleError_V593(
 				$this->addExState("UndefinedVariableError: " . $name . " is not defined.")
 			);
 		}
@@ -116,7 +117,7 @@ trait MCProtectFWRuleMiscFunc_V581 {
 		}
 		$resp = MCHelper::safePregMatch((string) $pattern, (string) $subject);
 		if ($resp === false) {
-			throw new MCProtectRuleError_V581(
+			throw new MCProtectRuleError_V593(
 				$this->addExState('BVHelper::safePregMatch' . serialize($subject))
 			);
 		} elseif ($resp > 0) {
@@ -157,7 +158,7 @@ trait MCProtectFWRuleMiscFunc_V581 {
 		}
 		$count = preg_match_all((string) $pattern, (string) $subject, $matches);
 		if ($count === false) {
-			throw new MCProtectRuleError_V581(
+			throw new MCProtectRuleError_V593(
 				$this->addExState("preg_match_all: " . serialize($subject))
 			);
 		}
@@ -183,7 +184,7 @@ trait MCProtectFWRuleMiscFunc_V581 {
 		}
 		$count = preg_match_all((string) $pattern, (string) $subject, $matches);
 		if ($count === false) {
-			throw new MCProtectRuleError_V581(
+			throw new MCProtectRuleError_V593(
 				$this->addExState("preg_match_all: " . serialize($subject))
 			);
 		}
@@ -378,6 +379,7 @@ trait MCProtectFWRuleMiscFunc_V581 {
 			func_get_args()
 		);
 
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace -- Needed for stack trace functionality
 		return debug_backtrace();
 	}
 

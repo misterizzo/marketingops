@@ -51,34 +51,21 @@ if (!class_exists('BVCallbackRequest')) :
 			return array_key_exists('apicall', $this->params);
 		}
 
-		public function curlRequest($url, $body) {
-			$ch = curl_init($url);
-			curl_setopt($ch, CURLOPT_POST, 1);
-			curl_setopt($ch, CURLOPT_TIMEOUT, 15);
-			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($body));
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			return curl_exec($ch);
-		}
-
-		public function fileGetContentRequest($url, $body) {
-			$options = array(
-				'http' => array(
-					'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-					'method'  => 'POST',
-					'content' => http_build_query($body)
-				)
-			);
-
-			$context  = stream_context_create($options);
-			return file_get_contents($url, false, $context);
-		}
-
 		public function http_request($url, $body) {
-			if (in_array('curl', get_loaded_extensions())) {
-				return $this->curlRequest($url, $body);
-			} else {
-				return $this->fileGetContentRequest($url, $body);
-			} 
+			$body = http_build_query($body);
+			$response = wp_remote_post($url, array(
+				'body' => $body,
+				'timeout' => 15,
+				'headers' => array(
+					'Content-Type' => 'application/x-www-form-urlencoded',
+				),
+			));
+
+			if (is_wp_error($response)) {
+				return false;
+			}
+
+			return wp_remote_retrieve_body($response);
 		}
 
 		public function get_params_via_api($params_key, $apiurl) {
@@ -186,6 +173,7 @@ if (!class_exists('BVCallbackRequest')) :
 
 					if (array_key_exists('memset', $in_params)) {
 						$val = intval($in_params['memset']);
+						// phpcs:ignore Squiz.PHP.DiscouragedFunctions.Discouraged -- Required for memory limit adjustment
 						@ini_set('memory_limit', $val.'M');
 					}
 
@@ -252,7 +240,9 @@ if (!class_exists('BVCallbackRequest')) :
 				$this->error["message"] = "PUBLIC_KEY_NOT_FOUND";
 				return false;
 			}
-			$public_key_str = file_get_contents($key_file);
+
+			$public_key_str = MCWPFileSystem::getInstance()->getContents($key_file);
+
 			$public_key = openssl_pkey_get_public($public_key_str);
 			if (!$public_key) {
 				$this->error["message"] = "UNABLE_TO_LOAD_PUBLIC_KEY";

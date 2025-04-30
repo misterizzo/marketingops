@@ -34,11 +34,13 @@ class MCWPLoginWhitelabel {
 
 		$logo_style = 'background-image: none, url("' . esc_attr($this->logo) . '") !important;';
 
+		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '<style type="text/css">
 			.login h1 a {
 			' . $logo_style . '
 			}
 		</style>';
+		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	function custom_login_message($message) {

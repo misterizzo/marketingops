@@ -107,17 +107,11 @@ class AdminBar implements SubscriberInterface {
 			return;
 		}
 
-		if (
-			$this->user->is_free()
-			&&
-			$this->user->get_percent_unconsumed_quota() > 20
-		) {
-			$wp_admin_bar->add_menu( [
-				'parent' => 'imagify',
-				'id'     => 'imagify-upgrade-plan',
-				'title'  => '<button data-nonce="' . wp_create_nonce( 'imagify_get_pricing_' . get_current_user_id() ) . '" data-target="#imagify-pricing-modal" type="button" class="imagify-get-pricing-modal imagify-modal-trigger imagify-admin-bar-upgrade-plan">' . __( 'Upgrade Plan', 'imagify' ) . '</button>',
-			] );
-		}
+		$wp_admin_bar->add_menu( array(
+			'parent' => 'imagify',
+			'id'     => 'imagify-upgrade-plan',
+			'title'  => '<div id="wp-admin-bar-imagify-pricing-content" class="hide-if-no-js"></div>',
+		) );
 
 		$wp_admin_bar->add_menu( array(
 			'parent' => 'imagify',
@@ -145,22 +139,22 @@ class AdminBar implements SubscriberInterface {
 		$upgrade_link     = '';
 
 		if ( $this->user->is_free() ) {
-			$text         = esc_html__( 'Upgrade your plan now for more!', 'rocket' ) . '<br>' .
-			esc_html__( 'From $5.99/month only, keep going with image optimization!', 'rocket' );
-			$button_text  = esc_html__( 'Upgrade My Plan', 'rocket' );
+			$text         = esc_html__( 'Upgrade your plan now for more!', 'imagify' ) . '<br>' .
+			esc_html__( 'From $5.99/month only, keep going with image optimization!', 'imagify' );
+			$button_text  = esc_html__( 'Upgrade My Plan', 'imagify' );
 			$upgrade_link = IMAGIFY_APP_DOMAIN . '/subscription/?utm_source=plugin&utm_medium=notification';
 		} elseif ( $this->user->is_growth() ) {
-			$text = esc_html__( 'Switch to Infinite plan for unlimited optimization:', 'rocket' ) . '<br>';
+			$text = esc_html__( 'Switch to Infinite plan for unlimited optimization:', 'imagify' ) . '<br>';
 
 			if ( $this->user->is_monthly ) {
-				$text         .= esc_html__( 'For $9.99/month, optimize as many images as you like!', 'rocket' );
+				$text         .= esc_html__( 'For $11.99/month, optimize as many images as you like!', 'imagify' );
 				$upgrade_link = IMAGIFY_APP_DOMAIN . '/subscription/plan_switch/?label=infinite&payment_plan=1&utm_source=plugin&utm_medium=notification ';
 			} else {
-				$text         .= esc_html__( 'For $99.9/year, optimize as many images as you like!', 'rocket' );
+				$text         .= esc_html__( 'For $9.99/month, optimize as many images as you like!', 'imagify' );
 				$upgrade_link = IMAGIFY_APP_DOMAIN . '/subscription/plan_switch/?label=infinite&payment_plan=2&utm_source=plugin&utm_medium=notification ';
 			}
 
-			$button_text = esc_html__( 'Switch To Infinite Plan', 'rocket' );
+			$button_text = esc_html__( 'Switch To Infinite Plan', 'imagify' );
 		}
 
 		$data = [
@@ -169,14 +163,19 @@ class AdminBar implements SubscriberInterface {
 			'plan_label'       => $this->user->plan_label,
 			'plan_with_quota'  => $this->user->is_free() || $this->user->is_growth(),
 			'unconsumed_quota' => $unconsumed_quota,
-			'user_quota'       => $this->user->quota,
+			'user_quota'       => $this->user->get_quota(),
 			'next_update'      => $this->user->next_date_update,
 			'text'             => $text,
 			'button_text'      => $button_text,
 			'upgrade_link'     => $upgrade_link,
 		];
 
-		$template = $views->get_template( 'admin/admin-bar-status', $data );
+		$template = [
+			'admin_bar_status'  => $views->get_template( 'admin/admin-bar-status', $data ),
+			'admin_bar_pricing' => $views->get_template( 'admin/admin-bar-pricing', [
+				'upgrade_pricing'  => $this->user->is_free() && ( $this->user->get_percent_unconsumed_quota() > 20 ),
+			] ),
+		];
 
 		wp_send_json_success( $template );
 	}

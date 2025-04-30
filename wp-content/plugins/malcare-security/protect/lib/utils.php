@@ -1,17 +1,16 @@
 <?php
 if (!defined('ABSPATH') && !defined('MCDATAPATH')) exit;
 
-if (!class_exists('MCProtectUtils_V581')) :
-class MCProtectUtils_V581 {
+if (!class_exists('MCProtectUtils_V593')) :
+class MCProtectUtils_V593 {
 	public static function getIP($ip_header) {
 		$ip = null;
-
 		if (is_array($ip_header)) {
 			if ((array_key_exists('hdr', $ip_header) && is_string($ip_header['hdr'])) &&
 					(array_key_exists('pos', $ip_header) && is_int($ip_header['pos']))) {
 
 				if (array_key_exists($ip_header['hdr'], $_SERVER) && is_string($_SERVER[$ip_header['hdr']])) {
-					$_ips = preg_split("/(,| |\t)/", $_SERVER[$ip_header['hdr']]);
+					$_ips = preg_split("/(,| |\t)/", MCHelper::getRawParam('SERVER', $ip_header['hdr']));
 
 					if (array_key_exists($ip_header['pos'], $_ips)) {
 						$ip = $_ips[$ip_header['pos']];
@@ -19,7 +18,7 @@ class MCProtectUtils_V581 {
 				}
 			}
 		} elseif (array_key_exists('REMOTE_ADDR', $_SERVER)) {
-			$ip = $_SERVER['REMOTE_ADDR'];
+			$ip = MCHelper::getRawParam('SERVER', 'REMOTE_ADDR');
 		}
 
 		if (is_string($ip)) {
@@ -121,18 +120,8 @@ class MCProtectUtils_V581 {
 	}
 
 	public static function rrmdir($dir) {
-		if (is_dir($dir)) {
-			$objects = scandir($dir);
-			foreach ($objects as $object) {
-				if ($object != "." && $object != "..") {
-					if (is_dir($dir . "/" . $object) && !is_link($dir . "/" . $object)) {
-						MCProtectUtils_V581::rrmdir($dir . "/" . $object);
-					} else {
-						unlink($dir . "/" . $object);
-					}
-				}
-			}
-			rmdir($dir);
+		if (MCWPFileSystem::getInstance()->isDir($dir) === true) {
+			MCWPFileSystem::getInstance()->rmdir($dir, true);
 		}
 	}
 
@@ -141,7 +130,7 @@ class MCProtectUtils_V581 {
 
 		if (is_array($val)) {
 			foreach ($val as $e) {
-				$length += MCProtectUtils_V581::getLength($e);
+				$length += MCProtectUtils_V593::getLength($e);
 			}
 
 			return $length;
@@ -154,7 +143,7 @@ class MCProtectUtils_V581 {
 		$result = array();
 
 		if (file_exists($fname)) {
-			$content = file_get_contents($fname);
+			$content = file_get_contents($fname); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 			if (($content !== false) && is_string($content)) {
 				$result = json_decode($content, true);
 
@@ -168,10 +157,12 @@ class MCProtectUtils_V581 {
 	}
 
 	public static function fileRemovePattern($fname, $pattern, $regex_pattern = false) {
-		if (!file_exists($fname)) return;
+		if (MCWPFileSystem::getInstance()->exists($fname) === false) {
+			return;
+		}
 
-		$content = file_get_contents($fname);
-		if ($content) {
+		$content = MCWPFileSystem::getInstance()->getContents($fname);
+		if ($content !== false) {
 			if ($regex_pattern) {
 				$modified_content = preg_replace($pattern, "", $content);
 			} else {
@@ -179,7 +170,8 @@ class MCProtectUtils_V581 {
 			}
 
 			if ($content !== $modified_content) {
-				file_put_contents($fname, $modified_content);
+				MCWPFileSystem::getInstance()->putContents($fname, $modified_content,
+						MCWPFileSystem::getInstance()->getchmodOctal($fname));
 			}
 		}
 	}

@@ -11,7 +11,7 @@ if (!class_exists('MCInfo')) :
 		public $ip_header_option = 'mcipheader';
 		public $brand_option = 'bv_whitelabel_infos';
 		public $wp_lp_whitelabel_option = 'mcLpWhitelabelConf';
-		public $version = '5.81';
+		public $version = '5.93';
 		public $webpage = 'https://www.malcare.com';
 		public $appurl = 'https://app.malcare.com';
 		public $slug = 'malcare-security/malcare.php';
@@ -65,7 +65,7 @@ if (!class_exists('MCInfo')) :
 			$encoded_url = base64_encode($bvsiteinfo->siteurl());
 			$secret = MCRecover::defaultSecret($this->settings);
 
-			return base64_encode("v1:".$secret.":".$encoded_url);
+			return base64_encode("v2:".$secret.":".$encoded_url.":".$this->plugname);
 		}
 
 		public function getDefaultSecret() {
@@ -87,27 +87,13 @@ if (!class_exists('MCInfo')) :
 
 		public static function getRequestID() {
 			if (!defined("BV_REQUEST_ID")) {
-				define("BV_REQUEST_ID", uniqid(mt_rand()));
+				define("BV_REQUEST_ID", uniqid(mt_rand())); // phpcs:ignore WordPress.WP.AlternativeFunctions.rand_mt_rand
 			}
 			return BV_REQUEST_ID;
 		}
 
-		public function canSetCWBranding() {
-			if (MCWPSiteInfo::isCWServer()) {
-
-				$bot_protect_accounts = MCAccount::accountsByType($this->settings, 'botprotect');
-				if (sizeof($bot_protect_accounts) >= 1)
-					return true;
-
-				$bot_protect_accounts = MCAccount::accountsByPattern($this->settings, 'email', '/@cw_user\.com$/');
-				if (sizeof($bot_protect_accounts) >= 1)
-					return true;
-			}
-
-			return false;
-		}
-
 		public function canWhiteLabel($slug = NULL) {
+			// phpcs:disable WordPress.Security.NonceVerification.Recommended
 			if (array_key_exists("bv_override_global_whitelabel", $_REQUEST)) {
 				return false;
 			}
@@ -115,6 +101,7 @@ if (!class_exists('MCInfo')) :
 				$_REQUEST["bv_override_plugin_whitelabel"] === $slug) {
 				return false;
 			}
+			// phpcs:enable WordPress.Security.NonceVerification.Recommended
 			return true;
 		}
 
@@ -160,11 +147,6 @@ if (!class_exists('MCInfo')) :
 			if (is_array($brand) && array_key_exists('menuname', $brand)) {
 				return $brand['menuname'];
 			}
-		  $bvinfo = new MCInfo($this->settings);
-if ($bvinfo->canSetCWBranding()) {
-				return "Cloudways";
-			}
-
 			return $this->brandname;
 		}
 

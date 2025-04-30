@@ -5,8 +5,10 @@ Plugin URI: https://www.malcare.com
 Description: MalCare WordPress Security Plugin - Malware Scanner, Cleaner, Security Firewall
 Author: MalCare Security
 Author URI: https://www.malcare.com
-Version: 5.81
+Version: 5.93
 Network: True
+License: GPLv2 or later
+License URI: [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
  */
 
 /*  Copyright 2017  MalCare  (email : support@malcare.com )
@@ -38,6 +40,7 @@ require_once dirname( __FILE__ ) . '/wp_actions.php';
 require_once dirname( __FILE__ ) . '/info.php';
 require_once dirname( __FILE__ ) . '/account.php';
 require_once dirname( __FILE__ ) . '/helper.php';
+require_once dirname( __FILE__ ) . '/wp_file_system.php';
 require_once dirname( __FILE__ ) . '/wp_2fa/wp_2fa.php';
 
 require_once dirname( __FILE__ ) . '/wp_login_whitelabel.php';
@@ -93,8 +96,8 @@ if (is_admin()) {
 	##ALADMINMENU##
 }
 
-if ((array_key_exists('bvreqmerge', $_POST)) || (array_key_exists('bvreqmerge', $_GET))) {
-	$_REQUEST = array_merge($_GET, $_POST);
+if ((array_key_exists('bvreqmerge', $_POST)) || (array_key_exists('bvreqmerge', $_GET))) { // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended
+	$_REQUEST = array_merge($_GET, $_POST); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended
 }
 
 #Service active check
@@ -113,80 +116,42 @@ if ($bvinfo->hasValidDBVersion()) {
 		$actlog->init();
 	}
 
-	if ($bvinfo->isServiceActive('maintenance_mode')) {
-		require_once dirname( __FILE__ ). '/maintenance/wp_maintenance.php';
-		$bvconfig = $bvinfo->config;
-		$maintenance = new BVWPMaintenance($bvconfig['maintenance_mode']);
-		$maintenance->init();
-	}
-
+	##MAINTENANCEMODULE##
 }
 
-if ((array_key_exists('bvplugname', $_REQUEST)) && ($_REQUEST['bvplugname'] == "malcare")) {
+if (MCHelper::getRawParam('REQUEST', 'bvplugname') == "malcare") {
 	require_once dirname( __FILE__ ) . '/callback/base.php';
 	require_once dirname( __FILE__ ) . '/callback/response.php';
 	require_once dirname( __FILE__ ) . '/callback/request.php';
 	require_once dirname( __FILE__ ) . '/recover.php';
 
-	$pubkey = MCAccount::sanitizeKey($_REQUEST['pubkey']);
+	$pubkey = MCHelper::getRawParam('REQUEST', 'pubkey');
+	$pubkey = isset($pubkey) ? MCAccount::sanitizeKey($pubkey) : '';
+	$rcvracc = MCHelper::getRawParam('REQUEST', 'rcvracc');
 
-	if (array_key_exists('rcvracc', $_REQUEST)) {
+	if (isset($rcvracc)) {
 		$account = MCRecover::find($bvsettings, $pubkey);
 	} else {
 		$account = MCAccount::find($bvsettings, $pubkey);
 	}
 
-	$request = new BVCallbackRequest($account, $_REQUEST, $bvsettings);
+	$request = new BVCallbackRequest($account, $_REQUEST, $bvsettings); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	$response = new BVCallbackResponse($request->bvb64cksize);
 
 	if ($request->authenticate() === 1) {
-		if (array_key_exists('bv_ignr_frm_cptch', $_REQUEST)) {
-			#handling of Contact Forms 7
-			add_filter('wpcf7_skip_spam_check', '__return_true', PHP_INT_MAX, 2);
+		$bv_frm_tstng = MCHelper::getRawParam('REQUEST', 'bv_frm_tstng');
+		if (isset($bv_frm_tstng)) {
+			require_once dirname(__FILE__) . '/form_testing/form_testing.php';
+			$form_testing = new BVFormTesting($_REQUEST); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$form_testing->init();
 
-			#handling of Formidable plugin
-			add_filter('frm_is_field_hidden', '__return_true', PHP_INT_MAX, 3);
-
-			#handling of WP Forms plugin
-			add_filter('wpforms_process_bypass_captcha', '__return_true', PHP_INT_MAX, 3);
-
-			#handling of Forminator plugin
-			if (defined('WP_PLUGIN_DIR')) {
-				$abstractFrontActionFilePath = WP_PLUGIN_DIR . '/forminator/library/abstracts/abstract-class-front-action.php';
-				$frontActionFilePath = WP_PLUGIN_DIR . '/forminator/library/modules/custom-forms/front/front-action.php';
-
-				if (file_exists($abstractFrontActionFilePath) && file_exists($frontActionFilePath)) {
-					require_once $abstractFrontActionFilePath;
-					require_once $frontActionFilePath;
-					if (class_exists('Forminator_CForm_Front_Action')) {
-						Forminator_CForm_Front_Action::$hidden_fields[] = "bv-stripe-";
-					}
-				}
-			}
-
-			#handling of CleanTalk Antispam plugin
-			add_action('init', function() {
-				global $apbct;
-				if (isset($apbct) && is_object($apbct)) {
-					$apbct->settings['forms__contact_forms_test'] = 0;
-				}
-			});
-
-			#handling of Akismet plugin
-			add_filter('akismet_get_api_key', function($api_key) { return null; }, PHP_INT_MAX);
-
-			#handling of Formidable Antispam
-			add_filter('frm_validate_entry', function($errors, $values, $args) {
-				unset($errors['spam']);
-				return $errors;
-			}, PHP_INT_MAX, 3);
 		} else {
 			define('MCBASEPATH', plugin_dir_path(__FILE__));
 
 
 			require_once dirname( __FILE__ ) . '/callback/handler.php';
 
-			$params = $request->processParams($_REQUEST);
+			$params = $request->processParams($_REQUEST); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ($params === false) {
 				$response->terminate($request->corruptedParamsResp());
 			}
@@ -209,14 +174,14 @@ if ((array_key_exists('bvplugname', $_REQUEST)) && ($_REQUEST['bvplugname'] == "
 		if ($bvinfo->isProtectModuleEnabled()) {
 			require_once dirname( __FILE__ ) . '/protect/protect.php';
 			//For backward compatibility.
-			MCProtect_V581::$settings = new MCWPSettings();
-			MCProtect_V581::$db = new MCWPDb();
-			MCProtect_V581::$info = new MCInfo(MCProtect_V581::$settings);
+			MCProtect_V593::$settings = new MCWPSettings();
+			MCProtect_V593::$db = new MCWPDb();
+			MCProtect_V593::$info = new MCInfo(MCProtect_V593::$settings);
 
-			add_action('mc_clear_pt_config', array('MCProtect_V581', 'uninstall'));
+			add_action('mc_clear_pt_config', array('MCProtect_V593', 'uninstall'));
 
 			if ($bvinfo->isActivePlugin()) {
-				MCProtect_V581::init(MCProtect_V581::MODE_WP);
+				MCProtect_V593::init(MCProtect_V593::MODE_WP);
 			}
 		}
 

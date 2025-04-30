@@ -7,7 +7,7 @@ namespace Composer\Autoload;
 use Composer\AutoloadWPMediaImagifyWordPressPlugin\ClassLoader as ClassLoaderWPMediaImagifyWordPressPlugin;
 
 
-class ComposerStaticInit4fff6e59f3e5ad878e4b5bf99ef89f0a
+class ComposerStaticInit91650977b1d625b62f414430e2316982
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -135,9 +135,9 @@ class ComposerStaticInit4fff6e59f3e5ad878e4b5bf99ef89f0a
     public static function getInitializer(ClassLoaderWPMediaImagifyWordPressPlugin $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit4fff6e59f3e5ad878e4b5bf99ef89f0a::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit4fff6e59f3e5ad878e4b5bf99ef89f0a::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit4fff6e59f3e5ad878e4b5bf99ef89f0a::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit91650977b1d625b62f414430e2316982::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit91650977b1d625b62f414430e2316982::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit91650977b1d625b62f414430e2316982::$classMap;
 
         }, null, ClassLoaderWPMediaImagifyWordPressPlugin::class);
     }
