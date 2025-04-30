@@ -356,7 +356,12 @@ class HubWooConnectionMananager {
 						'headers' => $headers,
 					)
 				);
-				$message       = esc_html__( 'Creating ' . $object_type . ' Groups', 'makewebbetter-hubspot-for-woocommerce' );
+				
+				/* translators: %s is the object type */
+				$message = esc_html__( 'Creating %s Groups', 'makewebbetter-hubspot-for-woocommerce' );
+				$message = sprintf( $message, $object_type );
+
+
 				if ( is_wp_error( $response ) ) {
 					$status_code = $response->get_error_code();
 					$res_message = $response->get_error_message();
@@ -482,7 +487,11 @@ class HubWooConnectionMananager {
 					'headers' => $headers,
 				)
 			);
-			$message      = esc_html__( 'Creating ' . $object_type . ' Batch Properties', 'makewebbetter-hubspot-for-woocommerce' );
+
+			/* translators: %s is the object type */
+			$message = esc_html__( 'Creating %s Batch Properties', 'makewebbetter-hubspot-for-woocommerce' );
+			$message = sprintf( $message, $object_type );
+
 			if ( is_wp_error( $response ) ) {
 				$status_code = $response->get_error_code();
 				$res_message = $response->get_error_message();
@@ -1255,7 +1264,9 @@ class HubWooConnectionMananager {
 			)
 		);
 
-		$message = esc_html__( 'Fetching all ' . $object_type . ' Properties', 'makewebbetter-hubspot-for-woocommerce' );
+		/* translators: %s is the object type */
+		$message = esc_html__( 'Fetching all %s Properties', 'makewebbetter-hubspot-for-woocommerce' );
+		$message = sprintf( $message, $object_type );
 
 		$this->create_log( $message, $url, $response, 'properties' );
 
@@ -1373,7 +1384,11 @@ class HubWooConnectionMananager {
 			'response' => $res_message,
 			'body' => $res_body,
 		);
-		$message = esc_html__( 'Fetching ' . $object_type . ' object', 'makewebbetter-hubspot-for-woocommerce' );
+
+		/* translators: %s is the object type */
+		$message = esc_html__( 'Fetching %s object', 'makewebbetter-hubspot-for-woocommerce' );
+		$message = sprintf( $message, $object_type );
+
 		$this->create_log( $message, $url, $parsed_response, $object_type );
 
 		return $parsed_response;
@@ -1402,7 +1417,10 @@ class HubWooConnectionMananager {
 					'headers' => $headers,
 				)
 			);
-			$message  = esc_html__( 'Creating single ' . $object_type . ' data', 'makewebbetter-hubspot-for-woocommerce' );
+
+			/* translators: %s is the object type */
+			$message = esc_html__( 'Creating single %s data', 'makewebbetter-hubspot-for-woocommerce' );
+			$message = sprintf( $message, $object_type );
 
 			if ( is_wp_error( $response ) ) {
 				$status_code = $response->get_error_code();
@@ -1449,7 +1467,10 @@ class HubWooConnectionMananager {
 					'headers' => $headers,
 				)
 			);
-			$message  = esc_html__( 'Updated single ' . $object_type . ' data', 'makewebbetter-hubspot-for-woocommerce' );
+
+			/* translators: %s is the object type */
+			$message = esc_html__( 'Updated single %s data', 'makewebbetter-hubspot-for-woocommerce' );
+			$message = sprintf( $message, $object_type );
 
 			if ( is_wp_error( $response ) ) {
 				$status_code = $response->get_error_code();
@@ -1493,7 +1514,10 @@ class HubWooConnectionMananager {
 					'headers' => $headers,
 				)
 			);
-			$message  = esc_html__( 'Search single ' . $object_type . ' data', 'makewebbetter-hubspot-for-woocommerce' );
+			
+			/* translators: %s is the object type */
+			$message = esc_html__( 'Search single %s data', 'makewebbetter-hubspot-for-woocommerce' );
+			$message = sprintf( $message, $object_type );
 
 			if ( is_wp_error( $response ) ) {
 				$status_code = $response->get_error_code();
@@ -1550,7 +1574,11 @@ class HubWooConnectionMananager {
 				'response' => $res_message,
 				'body' => $res_body,
 			);
-			$message = esc_html__( 'Fetching Batch ' . $object_type, 'makewebbetter-hubspot-for-woocommerce' );
+
+			/* translators: %s is the object type */
+			$message = esc_html__( 'Fetching Batch %s', 'makewebbetter-hubspot-for-woocommerce' );
+			$message = sprintf( $message, $object_type );
+
 			$this->create_log( $message, $url, $parsed_response, $object_type );
 
 			return $parsed_response;
@@ -1580,7 +1608,10 @@ class HubWooConnectionMananager {
 					'headers' => $headers,
 				)
 			);
-			$message  = esc_html__( 'Creating bulk ' . $object_type . ' data', 'makewebbetter-hubspot-for-woocommerce' );
+			
+			/* translators: %s is the object type */
+			$message = esc_html__( 'Creating bulk %s data', 'makewebbetter-hubspot-for-woocommerce' );
+			$message = sprintf( $message, $object_type );
 
 			if ( is_wp_error( $response ) ) {
 				$status_code = $response->get_error_code();
@@ -1626,7 +1657,10 @@ class HubWooConnectionMananager {
 					'headers' => $headers,
 				)
 			);
-			$message  = esc_html__( 'Updated bulk ' . $object_type . ' data', 'makewebbetter-hubspot-for-woocommerce' );
+
+			/* translators: %s is the object type */
+			$message = esc_html__( 'Updated bulk %s data', 'makewebbetter-hubspot-for-woocommerce' );
+			$message = sprintf( $message, $object_type );
 
 			if ( is_wp_error( $response ) ) {
 				$status_code = $response->get_error_code();
@@ -1681,7 +1715,11 @@ class HubWooConnectionMananager {
 					'headers' => $headers,
 				)
 			);
-			$message  = esc_html__( 'Associate ' . $from_object . ' to ' . $to_object, 'makewebbetter-hubspot-for-woocommerce' );
+			
+			/* translators: %1$s is the object being associated, %2$s is the target object*/
+			$message = esc_html__( 'Associate %1$s to %2$s', 'makewebbetter-hubspot-for-woocommerce' );
+			$message = sprintf( $message, $from_object, $to_object );
+
 
 			if ( is_wp_error( $response ) ) {
 				$status_code = $response->get_error_code();
@@ -1727,7 +1765,11 @@ class HubWooConnectionMananager {
 					'headers' => $headers,
 				)
 			);
-			$message  = esc_html__( 'Delete association ' . $from_object . ' to ' . $to_object, 'makewebbetter-hubspot-for-woocommerce' );
+
+			/* translators: %1$s is the source object , %2$s is the target object */
+			$message = esc_html__( 'Delete association %1$s to %2$s', 'makewebbetter-hubspot-for-woocommerce' );
+			$message = sprintf( $message, $from_object, $to_object );
+
 
 			if ( is_wp_error( $response ) ) {
 				$status_code = $response->get_error_code();
@@ -1773,7 +1815,11 @@ class HubWooConnectionMananager {
 				'headers' => $headers,
 			)
 		);
-		$message  = esc_html__( 'Associate batch ' . $from_object . ' to ' . $to_object, 'makewebbetter-hubspot-for-woocommerce' );
+		
+		/* translators: %1$s is the source object, %2$s is the target object*/
+		$message = esc_html__( 'Associate batch %1$s to %2$s', 'makewebbetter-hubspot-for-woocommerce' );
+		$message = sprintf( $message, $from_object, $to_object );
+
 
 		if ( is_wp_error( $response ) ) {
 			$status_code = $response->get_error_code();
@@ -1818,7 +1864,11 @@ class HubWooConnectionMananager {
 				'headers' => $headers,
 			)
 		);
-		$message  = esc_html__( 'Delete batch association ' . $from_object . ' to ' . $to_object, 'makewebbetter-hubspot-for-woocommerce' );
+
+		/* translators: %1$s is the source object, %2$s is the target object*/
+		$message = esc_html__( 'Delete batch association %1$s to %2$s', 'makewebbetter-hubspot-for-woocommerce' );
+		$message = sprintf( $message, $from_object, $to_object );
+
 
 		if ( is_wp_error( $response ) ) {
 			$status_code = $response->get_error_code();

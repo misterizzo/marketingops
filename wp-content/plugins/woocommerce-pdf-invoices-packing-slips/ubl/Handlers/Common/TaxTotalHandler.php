@@ -3,6 +3,7 @@
 namespace WPO\IPS\UBL\Handlers\Common;
 
 use WPO\IPS\UBL\Handlers\UblHandler;
+use WPO\IPS\UBL\Settings\TaxesSettings;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -11,7 +12,64 @@ if ( ! defined( 'ABSPATH' ) ) {
 class TaxTotalHandler extends UblHandler {
 
 	public function handle( $data, $options = array() ) {
-		$formatted_tax_array = array_map( function( $item ) {
+		$taxReasons   = TaxesSettings::get_available_reasons();
+		$orderTaxData = $this->document->order_tax_data;
+		
+		// Fallback if no tax data is available
+		if ( empty( $orderTaxData ) ) {
+			$orderTaxData = array(
+				0 => array(
+					'total_ex'  => $this->document->order->get_total(),
+					'total_tax' => 0,
+					'items'     => array(),
+					'name'      => '',
+				),
+			);
+		}
+		
+		$formatted_tax_array = array_map( function( $item ) use ( $taxReasons ) {
+			$itemTaxPercentage = ! empty( $item['percentage'] )              ? $item['percentage']              : 0;
+			$itemTaxCategory   = ! empty( $item['category'] )                ? $item['category']                : wpo_ips_ubl_get_tax_data_from_fallback( 'category', null, $this->document->order );
+			$itemTaxReasonKey  = ! empty( $item['reason'] )                  ? $item['reason']                  : wpo_ips_ubl_get_tax_data_from_fallback( 'reason', null, $this->document->order );
+			$itemTaxReason     = ! empty( $taxReasons[ $itemTaxReasonKey ] ) ? $taxReasons[ $itemTaxReasonKey ] : $itemTaxReasonKey;
+			$itemTaxScheme     = ! empty( $item['scheme'] )                  ? $item['scheme']                  : wpo_ips_ubl_get_tax_data_from_fallback( 'scheme', null, $this->document->order );
+			
+			$taxCategory = array(
+				array(
+					'name'  => 'cbc:ID',
+					'value' => strtoupper( $itemTaxCategory ),
+				),
+				array(
+					'name'  => 'cbc:Name',
+					'value' => $item['name'],
+				),
+				array(
+					'name'  => 'cbc:Percent',
+					'value' => round( $itemTaxPercentage, 1 ),
+				),
+			);
+			
+			if ( 'none' !== $itemTaxReasonKey ) {
+				$taxCategory[] = array(
+					'name'  => 'cbc:TaxExemptionReasonCode',
+					'value' => $itemTaxReasonKey,
+				);
+				$taxCategory[] = array(
+					'name'  => 'cbc:TaxExemptionReason',
+					'value' => $itemTaxReason,
+				);
+			}
+			
+			$taxCategory[] = array(
+				'name'  => 'cac:TaxScheme',
+				'value' => array(
+					array(
+						'name'  => 'cbc:ID',
+						'value' => strtoupper( $itemTaxScheme ),
+					),
+				),
+			);
+
 			return array(
 				'name'  => 'cac:TaxSubtotal',
 				'value' => array(
@@ -31,33 +89,11 @@ class TaxTotalHandler extends UblHandler {
 					),
 					array(
 						'name'  => 'cac:TaxCategory',
-						'value' => array(
-							array(
-								'name'  => 'cbc:ID',
-								'value' => strtoupper( $item['category'] ),
-							),
-							array(
-								'name'  => 'cbc:Name',
-								'value' => $item['name'],
-							),
-							array(
-								'name'  => 'cbc:Percent',
-								'value' => round( $item['percentage'], 1 ),
-							),
-							array(
-								'name'  => 'cac:TaxScheme',
-								'value' => array(
-									array(
-										'name'  => 'cbc:ID',
-										'value' => strtoupper( $item['scheme'] ),
-									),
-								),
-							),
-						),
+						'value' => $taxCategory,
 					),
 				),
 			);
-		}, $this->document->order_tax_data );
+		}, apply_filters( 'wpo_wc_ubl_orderTaxData', $orderTaxData, $data, $options, $this ) );
 
 		$array = array(
 			'name'  => 'cac:TaxTotal',

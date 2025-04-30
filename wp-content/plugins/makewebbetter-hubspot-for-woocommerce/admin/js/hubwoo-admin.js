@@ -1767,7 +1767,7 @@
 						const deal_property = await jQuery.ajax({ type : 'POST', url  : ajaxUrl, data : { action : 'hubwoo_deals_create_property', hubwooSecurity, }, dataType : 'json', });
 						
 					allCreatedProperties = allCreatedProperties.map((prop) => { return prop.replace(/["']/g, "").trim()})
-					await saveUpdates( { 'hubwoo-groups-created': allCreatedGroups, 'hubwoo-properties-created': allCreatedProperties, 'hubwoo_fields_setup_completed': 1, 'hubwoo_pro_setup_completed': 1, 'hubwoo_plugin_version': '1.5.8' } );
+					await saveUpdates( { 'hubwoo-groups-created': allCreatedGroups, 'hubwoo-properties-created': allCreatedProperties, 'hubwoo_fields_setup_completed': 1, 'hubwoo_pro_setup_completed': 1, 'hubwoo_plugin_version': '1.6.1' } );
 					await runEcommSetup();
 					updateProgressBar( 100 );
 					transferScreen( 'move-to-list' );

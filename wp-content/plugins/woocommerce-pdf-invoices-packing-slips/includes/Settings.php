@@ -62,9 +62,6 @@ class Settings {
 		// settings capabilities
 		add_filter( 'option_page_capability_wpo_wcpdf_general_settings', array( $this, 'user_settings_capability' ) );
 
-		// admin notice for auto_increment_increment
-		// add_action( 'admin_notices', array( $this, 'check_auto_increment_increment') );
-
 		// AJAX set number store
 		add_action( 'wp_ajax_wpo_wcpdf_set_next_number', array( $this, 'set_number_store' ) );
 
@@ -77,7 +74,7 @@ class Settings {
 		add_action( "update_option_wpo_wcpdf_settings_debug", array( $this, 'debug_settings_updated' ), 10, 3 );
 		add_action( 'init', array( $this, 'maybe_delete_flush_rewrite_rules_transient' ) );
 		// migrate old template paths to template IDs before loading settings page
-		add_action( 'wpo_wcpdf_settings_output_general', array( $this, 'maybe_migrate_template_paths' ), 9, 1 );
+		add_action( 'wpo_wcpdf_settings_output_general', array( $this, 'maybe_migrate_template_paths' ), 9, 2 );
 
 		// AJAX preview
 		add_action( 'wp_ajax_wpo_wcpdf_preview', array( $this, 'ajax_preview' ) );
@@ -86,6 +83,9 @@ class Settings {
 
 		// schedule yearly reset numbers
 		add_action( 'wpo_wcpdf_schedule_yearly_reset_numbers', array( $this, 'yearly_reset_numbers' ) );
+
+		// Apply settings sections.
+		add_action( 'wpo_wcpdf_init_documents', array( $this, 'update_documents_settings_sections' ), 999 );
 	}
 
 	public function menu() {
@@ -106,7 +106,7 @@ class Settings {
 	 */
 	public function add_settings_link( $links ) {
 		$action_links = array(
-			'settings' => '<a href="admin.php?page=wpo_wcpdf_options_page">'. esc_html__( 'Settings', 'woocommerce' ) . '</a>',
+			'settings' => '<a href="admin.php?page=wpo_wcpdf_options_page">'. esc_html__( 'Settings', 'woocommerce-pdf-invoices-packing-slips' ) . '</a>',
 		);
 
 		return array_merge( $action_links, $links );
@@ -129,21 +129,30 @@ class Settings {
 	}
 
 	/**
-	 * Get a valid user role settings capability.
-	 * @return string
+	 * Returns the first capability from a filterable list that the current user has access to.
+	 * Falls back to the default capability if none match.
+	 *
+	 * @return string The matched or default user capability.
 	 */
 	public function user_settings_capability() {
-		$user_capability       = 'manage_woocommerce';
-		$capabilities_to_check = apply_filters( 'wpo_wcpdf_settings_user_role_capabilities', array( $user_capability ) );
-
-		foreach ( $capabilities_to_check as $capability ) {
-			if ( current_user_can( $capability ) ) {
-				$user_capability = $capability;
-				break;
+		$manage_woocommerce = 'manage_woocommerce';
+		
+		// Get the default capability
+		$default_capability = apply_filters( 'wpo_wcpdf_settings_default_user_capability', $manage_woocommerce );
+		$default_capability = ( empty( $default_capability ) || ! is_string( $default_capability ) ) ? $manage_woocommerce : $default_capability;
+		
+		// Get the list of capabilities
+		$capabilities = (array) apply_filters( 'wpo_wcpdf_settings_user_role_capabilities', array( $default_capability ) );
+		
+		// Loop through the list
+		foreach ( $capabilities as $capability ) {
+			if ( is_string( $capability ) && current_user_can( $capability ) ) {
+				return $capability;
 			}
 		}
-
-		return $user_capability;
+		
+		// Fallback
+		return ! empty( $default_capability ) ? $default_capability : $manage_woocommerce;
 	}
 
 	/**
@@ -153,17 +162,6 @@ class Settings {
 	public function user_can_manage_settings() {
 		return current_user_can( $this->user_settings_capability() );
 	}
-
-	function check_auto_increment_increment() {
-		global $wpdb;
-		$row = $wpdb->get_row( "SHOW VARIABLES LIKE 'auto_increment_increment'" );
-		if ( ! empty( $row ) && ! empty( $row->Value ) && $row->Value != 1 ) {
-			/* translators: database row value */
-			$error = wp_kses_post( sprintf( __( "<strong>Warning!</strong> Your database has an AUTO_INCREMENT step size of %d, your invoice numbers may not be sequential. Enable the 'Calculate document numbers (slow)' setting in the Advanced tab to use an alternate method." , 'woocommerce-pdf-invoices-packing-slips' ), intval( $row->Value ) ) );
-			printf( '<div class="error"><p>%s</p></div>', $error );
-		}
-	}
-
 
 	public function settings_page() {
 		// feedback on settings save
@@ -179,14 +177,12 @@ class Settings {
 				'preview_states' => 3,
 			),
 		) );
-		
-		if ( wcpdf_is_ubl_available() ) {
-			$settings_tabs['ubl'] = array(
-				'title'          => __( 'UBL', 'woocommerce-pdf-invoices-packing-slips' ),
-				'preview_states' => 1,
-				'beta'           => true,
-			);
-		}
+
+		$settings_tabs['ubl'] = array(
+			'title'          => __( 'Taxes', 'woocommerce-pdf-invoices-packing-slips' ),
+			'preview_states' => 1,
+			//'beta'           => true,
+		);
 
 		// add status and upgrade tabs last in row
 		$settings_tabs['debug'] = array(
@@ -199,12 +195,11 @@ class Settings {
 			'preview_states' => 1,
 		);
 
-		$settings_tabs  = $this->maybe_disable_preview_on_settings_tabs( $settings_tabs ); // disable preview on debug setting
-		$default_tab    = apply_filters( 'wpo_wcpdf_settings_tabs_default', ! empty( $settings_tabs['general'] ) ? 'general' : key( $settings_tabs ) );
-		$active_tab     = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : $default_tab;
-		$active_section = isset( $_GET[ 'section' ] ) ? sanitize_text_field( $_GET[ 'section' ] ) : '';
+		$settings_tabs = $this->maybe_disable_preview_on_settings_tabs( $settings_tabs ); // disable preview on debug setting
+		$default_tab   = apply_filters( 'wpo_wcpdf_settings_tabs_default', ! empty( $settings_tabs['general'] ) ? 'general' : key( $settings_tabs ) );
+		$nonce         = wp_create_nonce( 'wp_wcpdf_settings_page_nonce' );
 
-		include( WPO_WCPDF()->plugin_path() . '/views/settings-page.php' );
+		include WPO_WCPDF()->plugin_path() . '/views/settings-page.php';
 	}
 
 	public function maybe_disable_preview_on_settings_tabs( $settings_tabs ) {
@@ -233,14 +228,14 @@ class Settings {
 
 			// get document type
 			if ( ! empty( $_POST['document_type'] ) ) {
-				$document_type = sanitize_text_field( $_POST['document_type'] );
+				$document_type = sanitize_text_field( wp_unslash( $_POST['document_type'] ) );
 			} else {
 				$document_type = 'invoice';
 			}
 
 			// get order ID
 			if ( ! empty( $_POST['order_id'] ) ) {
-				$order_id = sanitize_text_field( $_POST['order_id'] );
+				$order_id = sanitize_text_field( wp_unslash( $_POST['order_id'] ) );
 
 				if ( $document_type == 'credit-note' ) {
 					// get last refund ID of the order if available
@@ -277,7 +272,7 @@ class Settings {
 				// process settings data
 				if ( ! empty( $_POST['data'] ) ) {
 					// parse form data
-					parse_str( $_POST['data'], $form_data );
+					parse_str( $_POST['data'], $form_data ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 					$form_data = stripslashes_deep( $form_data );
 
 					foreach ( $form_data as $option_key => $form_settings ) {
@@ -312,18 +307,30 @@ class Settings {
 						$document->set_number( $number_store->get_next() );
 					}
 
-					// apply document number formatting
-					if ( $document_number = $document->get_number( $document->get_type() ) ) {
+					// Update document date.
+					$document->initiate_date();
+
+					// Update document number.
+					$document_number = $document->get_document_number();
+
+					if ( ! empty( $document_number ) ) {
+						$document->set_number( $document_number );
+					}
+
+					$document_number = $document->get_number( $document->get_type() );
+
+					// Apply document number formatting.
+					if ( $document_number ) {
 						if ( ! empty( $document->settings['number_format'] ) ) {
 							foreach ( $document->settings['number_format'] as $key => $value ) {
-								$document_number->$key = $document->settings['number_format'][$key];
+								$document_number->$key = $document->settings['number_format'][ $key ];
 							}
 						}
 						$document_number->apply_formatting( $document, $order );
 					}
 
 					// preview
-					$output_format = ( ! empty( $_REQUEST['output_format'] ) && $_REQUEST['output_format'] != 'pdf' && in_array( $_REQUEST['output_format'], $document->output_formats ) ) ? esc_attr( $_REQUEST['output_format'] ) : 'pdf';
+					$output_format = ( ! empty( $_REQUEST['output_format'] ) && $_REQUEST['output_format'] != 'pdf' && in_array( $_REQUEST['output_format'], $document->output_formats ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['output_format'] ) ) : 'pdf';
 					switch ( $output_format ) {
 						default:
 						case 'pdf':
@@ -380,8 +387,8 @@ class Settings {
 			}
 
 			if ( ! empty( $_POST['search'] ) && ! empty( $_POST['document_type'] ) ) {
-				$search        = sanitize_text_field( $_POST['search'] );
-				$document_type = sanitize_text_field( $_POST['document_type'] );
+				$search        = sanitize_text_field( wp_unslash( $_POST['search'] ) );
+				$document_type = sanitize_text_field( wp_unslash( $_POST['document_type'] ) );
 				$results       = array();
 
 				// we have an order ID
@@ -479,7 +486,8 @@ class Settings {
 					$settings_field['id'],
 					$settings_field['title'],
 					$callback,
-					$page
+					$page,
+					$settings_field['args'] ?? array()
 				);
 			} else {
 				add_settings_field(
@@ -492,32 +500,37 @@ class Settings {
 				);
 				// register option separately for singular options
 				if ( is_string( $settings_field['callback'] ) && $settings_field['callback'] == 'singular_text_element') {
-					register_setting( $option_group, $settings_field['args']['option_name'], array( $this->callbacks, 'validate' ) );
+					register_setting( $option_group, $settings_field['args']['option_name'], array( $this->callbacks, 'validate' ) ); // phpcs:ignore PluginCheck.CodeAnalysis.SettingSanitization.register_settingDynamic
 				}
 			}
 		}
 		// $page, $option_group & $option_name are all the same...
-		register_setting( $option_group, $option_name, array( $this->callbacks, 'validate' ) );
+		register_setting( $option_group, $option_name, array( $this->callbacks, 'validate' ) ); // phpcs:ignore PluginCheck.CodeAnalysis.SettingSanitization.register_settingDynamic
 		add_filter( 'option_page_capability_'.$page, array( $this, 'user_settings_capability' ) );
 
 	}
 
-	public function get_common_document_settings() {
-		$common_settings = array(
-			'paper_size'         => isset( $this->general_settings['paper_size'] ) ? $this->general_settings['paper_size'] : '',
-			'font_subsetting'    => isset( $this->general_settings['font_subsetting'] ) || ( defined("DOMPDF_ENABLE_FONTSUBSETTING") && DOMPDF_ENABLE_FONTSUBSETTING === true ) ? true : false,
-			'header_logo'        => isset( $this->general_settings['header_logo'] ) ? $this->general_settings['header_logo'] : '',
-			'header_logo_height' => isset( $this->general_settings['header_logo_height'] ) ? $this->general_settings['header_logo_height'] : '',
-			'vat_number'         => isset( $this->general_settings['vat_number'] ) ? $this->general_settings['vat_number'] : '',
-			'coc_number'         => isset( $this->general_settings['coc_number'] ) ? $this->general_settings['coc_number'] : '',
-			'shop_name'          => isset( $this->general_settings['shop_name'] ) ? $this->general_settings['shop_name'] : '',
-			'shop_address'       => isset( $this->general_settings['shop_address'] ) ? $this->general_settings['shop_address'] : '',
-			'footer'             => isset( $this->general_settings['footer'] ) ? $this->general_settings['footer'] : '',
-			'extra_1'            => isset( $this->general_settings['extra_1'] ) ? $this->general_settings['extra_1'] : '',
-			'extra_2'            => isset( $this->general_settings['extra_2'] ) ? $this->general_settings['extra_2'] : '',
-			'extra_3'            => isset( $this->general_settings['extra_3'] ) ? $this->general_settings['extra_3'] : '',
+	/**
+	 * Get document general settings.
+	 *
+	 * @return array
+	 */
+	public function get_common_document_settings(): array {
+		return array(
+			'paper_size'         => $this->general_settings['paper_size'] ?? '',
+			'font_subsetting'    => isset( $this->general_settings['font_subsetting'] ) || ( defined( "DOMPDF_ENABLE_FONTSUBSETTING" ) && DOMPDF_ENABLE_FONTSUBSETTING === true ),
+			'header_logo'        => $this->general_settings['header_logo'] ?? '',
+			'header_logo_height' => $this->general_settings['header_logo_height'] ?? '',
+			'vat_number'         => $this->general_settings['vat_number'] ?? '',
+			'coc_number'         => $this->general_settings['coc_number'] ?? '',
+			'shop_name'          => $this->general_settings['shop_name'] ?? '',
+			'shop_phone_number'  => $this->general_settings['shop_phone_number'] ?? '',
+			'shop_address'       => $this->general_settings['shop_address'] ?? '',
+			'footer'             => $this->general_settings['footer'] ?? '',
+			'extra_1'            => $this->general_settings['extra_1'] ?? '',
+			'extra_2'            => $this->general_settings['extra_2'] ?? '',
+			'extra_3'            => $this->general_settings['extra_3'] ?? '',
 		);
-		return $common_settings;
 	}
 
 	public function get_document_settings( $document_type, $output_format = 'pdf' ) {
@@ -529,15 +542,15 @@ class Settings {
 		}
 	}
 
-	public function get_output_format( $document = null ) {
+	public function get_output_format( $document = null, $request = null ) {
 		$output_format = 'pdf'; // default
 
-		if ( isset( $this->debug_settings['html_output'] ) || ( isset( $_REQUEST['output'] ) && 'html' === $_REQUEST['output'] ) ) {
+		if ( isset( $this->debug_settings['html_output'] ) || ( isset( $request['output'] ) && 'html' === $request['output'] ) ) {
 			$output_format = 'html';
-		} elseif ( isset( $_REQUEST['output'] ) && ! empty( $_REQUEST['output'] ) && ! empty( $document ) && in_array( $_REQUEST['output'], $document->output_formats ) ) {
-			$document_settings = $this->get_document_settings( $document->get_type(), esc_attr( $_REQUEST['output'] ) );
+		} elseif ( isset( $request['output'] ) && ! empty( $request['output'] ) && ! empty( $document ) && in_array( $request['output'], $document->output_formats ) ) {
+			$document_settings = $this->get_document_settings( $document->get_type(), esc_attr( $request['output'] ) );
 			if ( isset( $document_settings['enabled'] ) ) {
-				$output_format = esc_attr( $_REQUEST['output'] );
+				$output_format = esc_attr( $request['output'] );
 			}
 		}
 
@@ -652,7 +665,7 @@ class Settings {
 			$outdated = false;
 			// cache could be outdated, so we check whether the folders exist
 			foreach ( $template_list as $path => $template_id ) {
-				if ( @is_dir( $path ) ) {
+				if ( WPO_WCPDF()->file_system->is_dir( $path ) ) {
 					$checked_list[$path] = $template_id; // folder exists
 					continue;
 				}
@@ -664,7 +677,7 @@ class Settings {
 					// try wp-content
 					$relative_path = substr( $path, strrpos( $path, $wp_content_folder ) + strlen( $wp_content_folder ) );
 					$new_path = WP_CONTENT_DIR . $relative_path;
-					if ( @is_dir( $new_path ) ) {
+					if ( WPO_WCPDF()->file_system->is_dir( $new_path ) ) {
 						$checked_list[$new_path] = $template_id;
 					}
 				}
@@ -712,15 +725,24 @@ class Settings {
 	}
 
 	public function get_relative_template_path( $absolute_path ) {
+		if ( empty( $absolute_path ) ) {
+			return '';
+		}
+
 		if ( defined( 'WP_CONTENT_DIR' ) && ! empty( WP_CONTENT_DIR ) && false !== strpos( WP_CONTENT_DIR, ABSPATH ) ) {
 			$base_path = wp_normalize_path( ABSPATH );
 		} else {
 			$base_path = wp_normalize_path( WP_CONTENT_DIR );
 		}
+
 		return str_replace( $base_path, '', wp_normalize_path( $absolute_path ) );
 	}
 
-	public function maybe_migrate_template_paths( $settings_section = null ) {
+	public function maybe_migrate_template_paths( $settings_section = null, $nonce = null ) {
+		if ( ! wp_verify_nonce( $nonce, 'wp_wcpdf_settings_page_nonce' ) ) {
+			return;
+		}
+
 		// bail if no template is selected yet (fresh install)
 		if ( empty( $this->general_settings['template_path'] ) ) {
 			return;
@@ -760,7 +782,10 @@ class Settings {
 	}
 
 	public function set_number_store() {
-		check_ajax_referer( "wpo_wcpdf_next_{$_POST['store']}", 'security' );
+		$store = ! empty( $_POST['store'] ) ? sanitize_text_field( wp_unslash( $_POST['store'] ) ) : '';
+
+		check_ajax_referer( "wpo_wcpdf_next_{$store}", 'security' );
+
 		// check permissions
 		if ( ! $this->user_can_manage_settings() ) {
 			die();
@@ -769,9 +794,9 @@ class Settings {
 		$number = ! empty( $_POST['number'] ) ? (int) $_POST['number'] : 0;
 		if ( $number > 0 ) {
 			$number_store_method = $this->get_sequential_number_store_method();
-			$number_store = new SequentialNumberStore( $_POST['store'], $number_store_method );
+			$number_store = new SequentialNumberStore( $store, $number_store_method );
 			$number_store->set_next( $number );
-			echo wp_kses_post( "next number ({$_POST['store']}) set to {$number}" );
+			echo wp_kses_post( "next number ({$store}) set to {$number}" );
 		}
 		die();
 	}
@@ -781,7 +806,10 @@ class Settings {
 		$method = isset( $this->debug_settings['calculate_document_numbers'] ) ? 'calculate' : 'auto_increment';
 
 		// safety first - always use calculate when auto_increment_increment is not 1
-		$row = $wpdb->get_row("SHOW VARIABLES LIKE 'auto_increment_increment'");
+		$row = $wpdb->get_row( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.DirectQuery
+			"SHOW VARIABLES LIKE 'auto_increment_increment'"
+		);
+
 		if ( ! empty( $row ) && ! empty( $row->Value ) && $row->Value != 1 ) {
 			$method = 'calculate';
 		}
@@ -795,17 +823,18 @@ class Settings {
 		}
 
 		// checks AS functions existence
-		if ( ! function_exists( 'as_schedule_single_action' ) || ! function_exists( 'as_get_scheduled_actions' ) ) {
+		if ( ! function_exists( '\\as_schedule_single_action' ) || ! function_exists( '\\as_get_scheduled_actions' ) ) {
+			wcpdf_log_error( 'Action Scheduler functions not available. Cannot schedule yearly document number reset.', 'critical' );
 			return;
 		}
 
 		$next_year = strval( intval( current_time( 'Y' ) ) + 1 );
 		$datetime  = new \WC_DateTime( "{$next_year}-01-01 00:00:01", new \DateTimeZone( wc_timezone_string() ) );
-		$lock      = new Semaphore( 'schedule_yearly_reset_numbers' );
+		$semaphore = new Semaphore( 'schedule_yearly_reset_numbers' );
 		$hook      = 'wpo_wcpdf_schedule_yearly_reset_numbers';
 
 		// checks if there are pending actions
-		$scheduled_actions = count( as_get_scheduled_actions( array(
+		$scheduled_actions = count( \as_get_scheduled_actions( array(
 			'hook'   => $hook,
 			'status' => \ActionScheduler_Store::STATUS_PENDING,
 		) ) );
@@ -813,12 +842,12 @@ class Settings {
 		// if no concurrent actions sets the action
 		if ( $scheduled_actions < 1 ) {
 
-			if ( $lock->lock() ) {
+			if ( $semaphore->lock() ) {
 
-				$lock->log( 'Lock acquired for yearly reset numbers schedule.', 'info' );
+				$semaphore->log( 'Lock acquired for yearly reset numbers schedule.', 'info' );
 
 				try {
-					$action_id = as_schedule_single_action( $datetime->getTimestamp(), $hook );
+					$action_id = \as_schedule_single_action( $datetime->getTimestamp(), $hook );
 					if ( ! empty( $action_id ) ) {
 						wcpdf_log_error(
 							"Yearly document numbers reset scheduled with the action id: {$action_id}",
@@ -831,17 +860,17 @@ class Settings {
 						);
 					}
 				} catch ( \Exception $e ) {
-					$lock->log( $e, 'critical' );
+					$semaphore->log( $e, 'critical' );
 				} catch ( \Error $e ) {
-					$lock->log( $e, 'critical' );
+					$semaphore->log( $e, 'critical' );
 				}
 
-				if ( $lock->release() ) {
-					$lock->log( 'Lock released for yearly reset numbers schedule.', 'info' );
+				if ( $semaphore->release() ) {
+					$semaphore->log( 'Lock released for yearly reset numbers schedule.', 'info' );
 				}
 
 			} else {
-				$lock->log( 'Couldn\'t get the lock for yearly reset numbers schedule.', 'critical' );
+				$semaphore->log( 'Couldn\'t get the lock for yearly reset numbers schedule.', 'critical' );
 			}
 
 		} else {
@@ -850,8 +879,10 @@ class Settings {
 				'error'
 			);
 
-			if ( function_exists( 'as_unschedule_all_actions' ) ) {
-				as_unschedule_all_actions( $hook );
+			if ( function_exists( '\\as_unschedule_all_actions' ) ) {
+				\as_unschedule_all_actions( $hook );
+			} else {
+				wcpdf_log_error( 'Action Scheduler functions not available. Cannot unschedule yearly document number reset.', 'critical' );
 			}
 
 			// reschedule
@@ -860,11 +891,11 @@ class Settings {
 	}
 
 	public function yearly_reset_numbers() {
-		$lock = new Semaphore( 'yearly_reset_numbers' );
+		$semaphore = new Semaphore( 'yearly_reset_numbers' );
 
-		if ( $lock->lock() ) {
+		if ( $semaphore->lock() ) {
 
-			$lock->log( 'Lock acquired for yearly reset numbers.', 'info' );
+			$semaphore->log( 'Lock acquired for yearly reset numbers.', 'info' );
 
 			try {
 				// reset numbers
@@ -893,17 +924,17 @@ class Settings {
 					}
 				}
 			} catch ( \Exception $e ) {
-				$lock->log( $e, 'critical' );
+				$semaphore->log( $e, 'critical' );
 			} catch ( \Error $e ) {
-				$lock->log( $e, 'critical' );
+				$semaphore->log( $e, 'critical' );
 			}
 
-			if ( $lock->release() ) {
-				$lock->log( 'Lock release for yearly reset numbers.', 'info' );
+			if ( $semaphore->release() ) {
+				$semaphore->log( 'Lock release for yearly reset numbers.', 'info' );
 			}
 
 		} else {
-			$lock->log( 'Couldn\'t get the lock for yearly reset numbers.', 'critical' );
+			$semaphore->log( 'Couldn\'t get the lock for yearly reset numbers.', 'critical' );
 		}
 
 		// reschedule the action for the next year
@@ -921,16 +952,26 @@ class Settings {
 		}
 
 		// unschedule existing actions
-		if ( ! $schedule && function_exists( 'as_unschedule_all_actions' ) ) {
-			as_unschedule_all_actions( 'wpo_wcpdf_schedule_yearly_reset_numbers' );
+		if ( ! $schedule ) {
+			if ( function_exists( '\\as_unschedule_all_actions' ) ) {
+				\as_unschedule_all_actions( 'wpo_wcpdf_schedule_yearly_reset_numbers' );
+			} else {
+				wcpdf_log_error( 'Action Scheduler functions not available. Cannot unschedule yearly document number reset.', 'critical' );
+			}
 		}
 
 		return $schedule;
 	}
 
 	public function yearly_reset_action_is_scheduled() {
-		$is_scheduled      = false;
-		$scheduled_actions = as_get_scheduled_actions( array(
+		$is_scheduled = false;
+		
+		if ( ! function_exists( '\\as_get_scheduled_actions' ) ) {
+			wcpdf_log_error( 'Action Scheduler function not available. Cannot check if the yearly numbering reset is scheduled.', 'critical' );
+			return $is_scheduled;
+		}
+		
+		$scheduled_actions = \as_get_scheduled_actions( array(
 			'hook'   => 'wpo_wcpdf_schedule_yearly_reset_numbers',
 			'status' => \ActionScheduler_Store::STATUS_PENDING,
 		) );
@@ -954,14 +995,17 @@ class Settings {
 
 	public function get_media_upload_setting_html() {
 		check_ajax_referer( 'wpo_wcpdf_get_media_upload_setting_html', 'security' );
+
+		$request = stripslashes_deep( $_POST );
+
 		// check permissions
 		if ( ! $this->user_can_manage_settings() ) {
 			wp_send_json_error();
 		}
 
 		// get previous (default) args and preset current
-		$args = $_POST['args'];
-		$args['current'] = absint( $_POST['attachment_id'] );
+		$args            = isset( $request['args'] ) ? $request['args'] : array();
+		$args['current'] = isset( $request['attachment_id'] ) ? absint( $request['attachment_id'] ) : 0;
 
 		if ( isset( $args['translatable'] ) ) {
 			$args['translatable'] = wc_string_to_bool( $args['translatable'] );
@@ -1006,6 +1050,227 @@ class Settings {
 		$new_settings = array_merge( array_slice( $settings, 0, $pos, true ), $insert_settings, array_slice( $settings, $pos, NULL, true ) );
 
 		return $new_settings;
+	}
+
+	/**
+	 * Applies categories to document settings.
+	 *
+	 * @return void
+	 */
+	public function update_documents_settings_sections(): void {
+		$documents = WPO_WCPDF()->documents->get_documents( 'all' );
+
+		foreach ( $documents as $document ) {
+			foreach ( $document->output_formats as $output_format ) {
+				add_filter( "wpo_wcpdf_settings_fields_documents_{$document->get_type()}_{$output_format}", array( $this, 'apply_settings_categories' ), 999 );
+			}
+		}
+	}
+
+	/**
+	 * Apply settings categories to the settings fields.
+	 *
+	 * @param array  $settings_fields
+	 *
+	 * @return array
+	 */
+	public function apply_settings_categories( array $settings_fields ): array {
+		$current_filter = explode( '_', current_filter() );
+		$output_format  = end( $current_filter );
+		$document_type  = prev( $current_filter );
+		$document       = wcpdf_get_document( $document_type, null );
+
+		if ( ! $document ) {
+			return $settings_fields;
+		}
+
+		$settings_categories = is_callable( array( $document, 'get_settings_categories' ) ) ? $document->get_settings_categories( $output_format ) : array();
+
+		// Return if no category found!
+		if ( empty( $settings_categories ) ) {
+			return $settings_fields;
+		}
+
+		// Remove all sections first.
+		foreach ( $settings_fields as $key => $field ) {
+			if ( 'section' === $field['type'] ) {
+				unset( $settings_fields[ $key ] );
+			}
+		}
+
+		$modified_settings_fields = array();
+		$settings_lookup          = array();
+		$processed_keys           = array();
+
+		// Create a lookup array for settings fields by id.
+		// This allows for quick access to settings fields by their id, reducing the time complexity
+		// of finding a settings field from O(n*m) to O(n+m), where n is the number of category members
+		// and m is the number of settings fields.
+		foreach ( $settings_fields as $key => $settings_field ) {
+			$settings_lookup[ $settings_field['id'] ] = $key;
+		}
+
+		// Update settings fields.
+		foreach ( $settings_categories as $category_name => $category_details ) {
+			// Add section for each category.
+			$modified_settings_fields[] = $this->create_section( $category_name, $category_details['title'] );
+
+			// Add settings fields based on the order in the members array.
+			foreach ( $category_details['members'] as $member ) {
+				if ( isset( $settings_lookup[ $member ] ) ) {
+					$key = $settings_lookup[ $member ];
+
+					// Skip if the key has already been processed.
+					if ( in_array( $key, $processed_keys, true ) ) {
+						continue;
+					}
+
+					$settings_field             = $settings_fields[ $key ];
+					$settings_field['section']  = $category_name;
+					$modified_settings_fields[] = $settings_field;
+					$processed_keys[]           = $key;
+				}
+			}
+		}
+
+		// Check for any unprocessed settings fields.
+		$unprocessed_settings_fields = array_diff_key( $settings_fields, array_flip( $processed_keys ) );
+
+		// Create an "Additional settings" section for uncategorized settings fields.
+		if ( ! empty( $unprocessed_settings_fields ) ) {
+			$category_name = 'additional';
+
+			$modified_settings_fields[] = $this->create_section(
+				$category_name,
+				__( 'Additional settings', 'woocommerce-pdf-invoices-packing-slips' )
+			);
+
+			// Add rest of settings to the $modified_settings_fields array under "More" category
+			foreach ( $unprocessed_settings_fields as $settings_field ) {
+				$settings_field['section']  = $category_name;
+				$modified_settings_fields[] = $settings_field;
+			}
+		}
+
+		return $modified_settings_fields;
+	}
+
+	/**
+	 * Creates a section array for settings fields.
+	 *
+	 * @param string $category_name The ID of the category.
+	 * @param string $category_title The title of the section.
+	 *
+	 * @return array The section configuration array.
+	 */
+	private function create_section( string $category_name, string $category_title ): array {
+		return array(
+			'type'     => 'section',
+			'id'       => $category_name,
+			'title'    => $category_title,
+			'callback' => 'section',
+			'args'     => array(
+				'before_section' => '<div class="settings_category" id="' . esc_attr( $category_name ) . '">',
+				'after_section'  => '</div>',
+			),
+		);
+	}
+
+	/**
+	 * Helper method to add a single setting field to a category.
+	 *
+	 * @param array    $settings_categories Array of existing settings categories, with category names as keys.
+	 * @param string   $new_setting_id      The new setting ID to add to the specified category.
+	 * @param string   $category_name       Name of the category to which the settings will be added.
+	 * @param int|null $position            Optional. The position at which to insert the new settings (starts from 1). Defaults to appending at the end.
+	 *
+	 * @return array
+	 */
+	public function add_single_setting_field_to_category( array $settings_categories, string $new_setting_id, string $category_name, ?int $position = null ): array {
+		return $this->add_setting_field_to_category( $settings_categories, array( $new_setting_id ), $category_name, $position );
+	}
+
+	/**
+	 * Helper method to add multiple setting fields to a category.
+	 *
+	 * @param array    $settings_categories Array of existing settings categories, with category names as keys.
+	 * @param array    $new_setting_ids     Array of new setting IDs to add to the specified category.
+	 * @param string   $category_name       Name of the category to which the settings will be added.
+	 * @param int|null $position            Optional. The position at which to insert the new settings (starts from 1). Defaults to appending at the end.
+	 *
+	 * @return array
+	 */
+	public function add_multiple_setting_fields_to_category( array $settings_categories, array $new_setting_ids, string $category_name, ?int $position = null ): array {
+		return $this->add_setting_field_to_category( $settings_categories, $new_setting_ids, $category_name, $position );
+	}
+
+	/**
+	 * Internal method to handle adding setting fields to a category.
+	 *
+	 * @param array    $settings_categories Array of existing settings categories, with category names as keys.
+	 * @param array    $new_setting_ids     Array of new setting IDs to add to the specified category.
+	 * @param string   $category_name       Name of the category to which the settings will be added.
+	 * @param int|null $position            Optional. The position at which to insert the new settings (1-based index). Defaults to appending at the end.
+	 *
+	 * @return array
+	 */
+	private function add_setting_field_to_category( array $settings_categories, array $new_setting_ids, string $category_name, ?int $position = null ): array {
+		if ( ! isset( $settings_categories[ $category_name ] ) ) {
+			return $settings_categories;
+		}
+
+		$members = &$settings_categories[ $category_name ]['members'];
+
+		if ( is_null( $position ) || 0 === $position ) {
+			$members = array_merge( $members, $new_setting_ids );
+		} else {
+			array_splice( $members, $position - 1, 0, $new_setting_ids );
+		}
+
+		return $settings_categories;
+	}
+
+	/**
+	 * Get the position of a specific setting in the settings array.
+	 *
+	 * @param array  $settings_categories Array of settings categories where the setting name is searched.
+	 * @param string $category            Name of the category to search in.
+	 * @param string $setting_name        Name of the setting to find in the settings array.
+	 *
+	 * @return int Position of the setting (1-based index) if found; otherwise, returns 0.
+	 */
+	public function get_setting_position( array $settings_categories, string $category, string $setting_name ): int {
+		if ( empty( $settings_categories[ $category ]['members'] ) ) {
+			return 0;
+		}
+
+		$key = array_search( $setting_name, $settings_categories[ $category ]['members'], true );
+
+		return $key !== false ? absint( $key ) + 1: 0;
+	}
+
+	/**
+	 * Helper method to add a setting category.
+	 *
+	 * @param array  $settings_categories
+	 * @param string $category_name
+	 * @param string $title
+	 * @param array  $members
+	 *
+	 * @return array
+	 */
+	public function add_settings_category( array $settings_categories, string $category_name, string $title, array $members ): array {
+		// Do not override if the category already exist.
+		if ( isset( $settings_categories[ $category_name ] ) ) {
+			return $settings_categories;
+		}
+
+		$settings_categories[ $category_name ] = array(
+			'title'   => $title,
+			'members' => $members,
+		);
+
+		return $settings_categories;
 	}
 
 }

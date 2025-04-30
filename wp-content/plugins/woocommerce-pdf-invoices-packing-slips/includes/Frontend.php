@@ -19,7 +19,7 @@ class Frontend {
 	}
 
 	public function __construct()	{
-		add_filter( 'woocommerce_my_account_my_orders_actions', array( $this, 'my_account_pdf_link' ), 999, 2 ); // needs to be triggered later because of Jetpack query string: https://github.com/Automattic/jetpack/blob/1a062c5388083c7f15b9a3e82e61fde838e83047/projects/plugins/jetpack/modules/woocommerce-analytics/classes/class-jetpack-woocommerce-analytics-my-account.php#L235
+		add_filter( 'woocommerce_my_account_my_orders_actions', array( $this, 'my_account_invoice_pdf_link' ), 999, 2 ); // needs to be triggered later because of Jetpack query string: https://github.com/Automattic/jetpack/blob/1a062c5388083c7f15b9a3e82e61fde838e83047/projects/plugins/jetpack/modules/woocommerce-analytics/classes/class-jetpack-woocommerce-analytics-my-account.php#L235
 		add_filter( 'woocommerce_api_order_response', array( $this, 'woocommerce_api_invoice_number' ), 10, 2 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'open_my_account_pdf_link_on_new_tab' ), 999 );
 		add_shortcode( 'wcpdf_download_invoice', array( $this, 'generate_document_shortcode' ) );
@@ -28,17 +28,22 @@ class Frontend {
 	}
 
 	/**
-	 * Display download link on My Account page
+	 * Display Invoice download link on My Account page
+	 * 
+	 * @param array $actions
+	 * @param \WC_Abstract_Order $order
+	 * @return array
 	 */
-	public function my_account_pdf_link( $actions, $order ) {
+	public function my_account_invoice_pdf_link( array $actions, \WC_Abstract_Order $order ): array {
 		$this->disable_storing_document_settings();
 
-		$invoice = wcpdf_get_invoice( $order );
+		$invoice         = wcpdf_get_invoice( $order );
+		$invoice_allowed = false;
+		
 		if ( $invoice && $invoice->is_enabled() ) {
-			$pdf_url = WPO_WCPDF()->endpoint->get_document_link( $order, 'invoice', array( 'my-account' => 'true' ) );
-
 			// check my account button settings
 			$button_setting = $invoice->get_setting( 'my_account_buttons', 'available' );
+			
 			switch ( $button_setting ) {
 				case 'available':
 					$invoice_allowed = $invoice->exists();
@@ -46,23 +51,22 @@ class Frontend {
 				case 'always':
 					$invoice_allowed = true;
 					break;
-				case 'never':
-					$invoice_allowed = false;
-					break;
 				case 'custom':
-					$allowed_statuses = $button_setting = $invoice->get_setting( 'my_account_restrict', array() );
-					if ( !empty( $allowed_statuses ) && in_array( $order->get_status(), array_keys( $allowed_statuses ) ) ) {
-						$invoice_allowed = true;
-					} else {
-						$invoice_allowed = false;
+					$allowed_statuses = $invoice->get_setting( 'my_account_restrict', array() );
+					
+					if ( ! empty( $allowed_statuses ) && in_array( $order->get_status(), array_keys( $allowed_statuses ), true ) ) {
+						$invoice_allowed = true;						
 					}
+					break;
+				case 'never':
+				default:
 					break;
 			}
 
 			// Check if invoice has been created already or if status allows download (filter your own array of allowed statuses)
 			if ( $invoice_allowed || in_array( $order->get_status(), apply_filters( 'wpo_wcpdf_myaccount_allowed_order_statuses', array() ) ) ) {
 				$actions['invoice'] = array(
-					'url'  => esc_url( $pdf_url ),
+					'url'  => WPO_WCPDF()->endpoint->get_document_link( $order, 'invoice', array( 'my-account' => 'true' ) ),
 					'name' => apply_filters( 'wpo_wcpdf_myaccount_button_text', $invoice->get_title(), $invoice )
 				);
 			}
@@ -78,11 +82,13 @@ class Frontend {
 		if ( function_exists( 'is_account_page' ) && is_account_page() ) {
 			if ( $general_settings = get_option( 'wpo_wcpdf_settings_general' ) ) {
 				if ( isset( $general_settings['download_display'] ) && $general_settings['download_display'] == 'display' ) {
-					$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+					$suffix    = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+					$file_path = WPO_WCPDF()->plugin_path() . '/assets/js/my-account-link' . $suffix . '.js';
 
-					if ( function_exists( 'file_get_contents' ) && $script = file_get_contents( WPO_WCPDF()->plugin_path() . '/assets/js/my-account-link'.$suffix.'.js' ) ) {
-
-						if ( WPO_WCPDF()->endpoint->pretty_links_enabled() ) {
+					if ( WPO_WCPDF()->file_system->exists( $file_path ) ) {
+						$script = WPO_WCPDF()->file_system->get_contents( $file_path );
+						
+						if ( $script && WPO_WCPDF()->endpoint->pretty_links_enabled() ) {
 							$script = str_replace( 'generate_wpo_wcpdf', WPO_WCPDF()->endpoint->get_identifier(), $script );
 						}
 

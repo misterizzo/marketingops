@@ -21,7 +21,7 @@ class Install {
 	public function __construct() {
 		// run lifecycle methods
 		if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
-			add_action( 'wp_loaded', array( $this, 'do_install' ) );
+			add_action( 'admin_init', array( $this, 'do_install' ) );
 		}
 	}
 
@@ -82,7 +82,7 @@ class Install {
 	 */
 	protected function install() {
 		// only install when php version or higher
-		if ( version_compare( PHP_VERSION, '7.2', '<' ) ) {
+		if ( ! WPO_WCPDF()->is_dependency_version_supported( 'php' ) ) {
 			return;
 		}
 
@@ -96,7 +96,7 @@ class Install {
 		$tmp_base = WPO_WCPDF()->main->get_tmp_base();
 
 		// check if tmp folder exists => if not, initialize
-		if ( ! @is_dir( $tmp_base ) || ! wp_is_writable( $tmp_base ) ) {
+		if ( ! WPO_WCPDF()->file_system->is_dir( $tmp_base ) || ! WPO_WCPDF()->file_system->is_writable( $tmp_base ) ) {
 			WPO_WCPDF()->main->init_tmp();
 		}
 
@@ -211,29 +211,32 @@ class Install {
 	 * @param string $installed_version the currently installed ('old') version
 	 */
 	protected function upgrade( $installed_version ) {
-		// only upgrade when php version or higher
-		if ( version_compare( PHP_VERSION, '7.2', '<' ) ) {
+		// Only upgrade when php version or higher
+		if ( ! WPO_WCPDF()->is_dependency_version_supported( 'php' ) ) {
 			return;
 		}
 
-		// sync fonts on every upgrade!
+		// Sync fonts on every upgrade!
 		$tmp_base = WPO_WCPDF()->main->get_tmp_base();
 
-		// get fonts folder path
+		// Get fonts folder path
 		$font_path = WPO_WCPDF()->main->get_tmp_path( 'fonts' );
 
-		// check if tmp folder exists => if not, initialize
-		if ( ! @is_dir( $tmp_base ) || ! wp_is_writable( $tmp_base ) || ! @is_dir( $font_path ) || ! wp_is_writable( $font_path ) ) {
+		// Check if tmp folder exists => if not, initialize
+		if (
+			! WPO_WCPDF()->file_system->is_dir( $tmp_base ) ||
+			! WPO_WCPDF()->file_system->is_writable( $tmp_base ) ||
+			! WPO_WCPDF()->file_system->is_dir( $font_path ) ||
+			! WPO_WCPDF()->file_system->is_writable( $font_path )
+		) {
 			WPO_WCPDF()->main->init_tmp();
-		} else {
-			// don't try merging fonts with local when updating pre 2.0
-			$pre_2 = ( $installed_version == 'versionless' || version_compare( $installed_version, '2.0-dev', '<' ) );
-			$merge_with_local = !$pre_2;
-			WPO_WCPDF()->main->copy_fonts( $font_path, $merge_with_local );
 		}
 
-		// to ensure fonts will be copied to the upload directory
+		// To ensure fonts will be copied to the upload directory
 		delete_transient( 'wpo_wcpdf_subfolder_fonts_has_files' );
+
+		// Maybe reinstall fonts
+		WPO_WCPDF()->main->maybe_reinstall_fonts();
 
 		// 1.5.28 update: copy next invoice number to separate setting
 		if ( $installed_version == 'versionless' || version_compare( $installed_version, '1.5.28', '<' ) ) {
@@ -381,8 +384,8 @@ class Install {
 
 		// 2.11.2: remove the obsolete .dist font cache file and mustRead.html from local fonts folder
 		if ( version_compare( $installed_version, '2.11.2', '<' ) ) {
-			@unlink( trailingslashit( $font_path ) . 'dompdf_font_family_cache.dist.php' );
-			@unlink( trailingslashit( $font_path ) . 'mustRead.html' );
+			wp_delete_file( trailingslashit( $font_path ) . 'dompdf_font_family_cache.dist.php' );
+			wp_delete_file( trailingslashit( $font_path ) . 'mustRead.html' );
 		}
 
 		// 2.12.2-dev-1: change 'date' database table default value to '1000-01-01 00:00:00'
@@ -390,25 +393,40 @@ class Install {
 			global $wpdb;
 			$documents = WPO_WCPDF()->documents->get_documents( 'all' );
 			foreach ( $documents as $document ) {
-				$store_name = "{$document->slug}_number";
-				$method     = WPO_WCPDF()->settings->get_sequential_number_store_method();
-				$table_name = apply_filters( "wpo_wcpdf_number_store_table_name", "{$wpdb->prefix}wcpdf_{$store_name}", $store_name, $method );
-				if ( $wpdb->get_var( "SHOW TABLES LIKE '{$table_name}'" ) != $table_name ) {
+				$store_name        = "{$document->slug}_number";
+				$method            = WPO_WCPDF()->settings->get_sequential_number_store_method();
+				$table_name        = apply_filters( 'wpo_wcpdf_number_store_table_name', wpo_wcpdf_sanitize_identifier( "{$wpdb->prefix}wcpdf_{$store_name}" ), $store_name, $method );
+				$table_name_exists = $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.DirectQuery
+					$wpdb->prepare( "SHOW TABLES LIKE %s", $table_name )
+				) === $table_name;
+
+				if ( ! $table_name_exists ) {
 					continue;
 				}
+
 				if ( is_callable( array( $document, 'get_sequential_number_store' ) ) ) {
 					$number_store = $document->get_sequential_number_store();
+
 					if ( ! empty( $number_store ) ) {
 						$column_name = 'date';
-						$query       = $wpdb->query( "ALTER TABLE {$number_store->table_name} ALTER {$column_name} SET DEFAULT '1000-01-01 00:00:00'" );
-						if ( $query ) {
+						$table_name  = $number_store->table_name;
+
+						$query = wpo_wcpdf_prepare_identifier_query(
+							"ALTER TABLE %i ALTER %i SET DEFAULT %s",
+							array( $table_name, $column_name ),
+							array( '1000-01-01 00:00:00' )
+						);
+
+						$query_result = $wpdb->query( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+
+						if ( $query_result ) {
 							wcpdf_log_error(
-								"Default value changed for 'date' column to '1000-01-01 00:00:00' on database table: {$number_store->table_name}",
+								"Default value changed for '{$column_name}' column to '1000-01-01 00:00:00' on database table: {$table_name}",
 								'info'
 							);
 						} else {
 							wcpdf_log_error(
-								"An error occurred! The default value for 'date' column couldn't be changed to '1000-01-01 00:00:00' on database table: {$number_store->table_name}",
+								"An error occurred! The default value for '{$column_name}' column couldn't be changed to '1000-01-01 00:00:00' on database table: {$table_name}",
 								'critical'
 							);
 						}
@@ -532,6 +550,52 @@ class Install {
 			}
 		}
 
+		// 3.9.5-beta-4: migrate UBL tax schemes/categories
+		if ( version_compare( $installed_version, '3.9.5-beta-4', '<' ) ) {
+			$ubl_tax_settings = get_option( 'wpo_wcpdf_settings_ubl_taxes', array() );
+
+			if ( ! empty( $ubl_tax_settings ) ) {
+				array_walk_recursive( $ubl_tax_settings, function ( &$value, $key ) {
+					if ( in_array( $key, array( 'scheme', 'category' ) ) && ! empty( $value ) ) {
+						$value = strtoupper( $value );
+					}
+				} );
+
+				update_option( 'wpo_wcpdf_settings_ubl_taxes', $ubl_tax_settings );
+			}
+		}
+
+		// 4.0.0-beta-3: Remove translatability from VAT and COC fields
+		if ( version_compare( $installed_version, '4.0.0-beta-3', '<' ) ) {
+			$general_settings = get_option( 'wpo_wcpdf_settings_general', array() );
+
+			if ( isset( $general_settings['vat_number']['default'] ) ) {
+				$general_settings['vat_number'] = $general_settings['vat_number']['default'];
+			}
+
+			if ( isset( $general_settings['coc_number']['default'] ) ) {
+				$general_settings['coc_number'] = $general_settings['coc_number']['default'];
+			}
+
+			update_option( 'wpo_wcpdf_settings_general', $general_settings );
+		}
+
+		// 4.2.0-beta.3: migrate 'guest' access type to 'full'
+		if ( version_compare( $installed_version, '4.2.0-beta.3', '<' ) ) {
+			$debug_settings = get_option( 'wpo_wcpdf_settings_debug', array() );
+
+			if ( ! empty( $debug_settings['document_link_access_type'] ) && 'guest' === $debug_settings['document_link_access_type'] ) {
+				$debug_settings['document_link_access_type'] = 'full';
+				update_option( 'wpo_wcpdf_settings_debug', $debug_settings );
+			}
+		}
+
+		// 4.3.0-rc.2: reload attachment translations
+		if ( version_compare( $installed_version, '4.3.0-rc.2', '<' ) ) {
+			$debug_settings = get_option( 'wpo_wcpdf_settings_debug', array() );
+			$debug_settings['reload_attachment_translations'] = '1';
+			update_option( 'wpo_wcpdf_settings_debug', $debug_settings );
+		}
 	}
 
 	/**
@@ -541,23 +605,32 @@ class Install {
 	 * @param string $installed_version the currently installed ('old') version (actually higher since this is a downgrade)
 	 */
 	protected function downgrade( $installed_version ) {
-		// make sure fonts match with version: copy from plugin folder
+		// Make sure fonts match with version: copy from plugin folder
 		$tmp_base = WPO_WCPDF()->main->get_tmp_base();
 
-		// make sure we have the fonts directory
+		// Make sure we have the fonts directory
 		$font_path = WPO_WCPDF()->main->get_tmp_path( 'fonts' );
 
-		// don't continue if we don't have an upload dir
-		if ($tmp_base === false) {
-			return false;
+		// Don't continue if we don't have an upload dir
+		if ( false === $tmp_base ) {
+			return $tmp_base;
 		}
 
-		// check if tmp folder exists => if not, initialize
-		if ( ! @is_dir( $tmp_base ) || ! wp_is_writable( $tmp_base ) || ! @is_dir( $font_path ) || ! wp_is_writable( $font_path ) ) {
+		// Check if tmp folder exists => if not, initialize
+		if (
+			! WPO_WCPDF()->file_system->is_dir( $tmp_base ) ||
+			! WPO_WCPDF()->file_system->is_writable( $tmp_base ) ||
+			! WPO_WCPDF()->file_system->is_dir( $font_path ) ||
+			! WPO_WCPDF()->file_system->is_writable( $font_path )
+		) {
 			WPO_WCPDF()->main->init_tmp();
-		} else {
-			WPO_WCPDF()->main->copy_fonts( $font_path );
 		}
+
+		// To ensure fonts will be copied to the upload directory
+		delete_transient( 'wpo_wcpdf_subfolder_fonts_has_files' );
+
+		// Maybe reinstall fonts
+		WPO_WCPDF()->main->maybe_reinstall_fonts();
 	}
 
 }

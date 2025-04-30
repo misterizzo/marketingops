@@ -137,7 +137,7 @@ class Hubwoo_Admin {
 					'hubwooMailFailure'     => esc_html__( 'Mail not sent', 'makewebbetter-hubspot-for-woocommerce' ),
 					'hubwooMailSuccess'     => esc_html__( 'Mail Sent Successfully. We will get back to you soon.', 'makewebbetter-hubspot-for-woocommerce' ),
 					'hubwooAccountSwitch'   => esc_html__( 'Want to continue to switch to new HubSpot account? This cannot be reverted and will require running the whole setup again.', 'makewebbetter-hubspot-for-woocommerce' ),
-					'hubwooRollback'        => esc_html__( 'Doing rollback will require running the whole setup again. Continue?' ),
+					'hubwooRollback'        => esc_html__( 'Doing rollback will require running the whole setup again. Continue?', 'makewebbetter-hubspot-for-woocommerce' ),
 					'hubwooOverviewTab'     => admin_url() . 'admin.php?page=hubwoo&hubwoo_tab=hubwoo-overview',
 					'hubwooNoListsSelected' => esc_html__( 'Please select a list to proceed', 'makewebbetter-hubspot-for-woocommerce' ),
 					'hubwooOcsSuccess'      => esc_html__( 'Congratulations !! Your data has been synced successfully.', 'makewebbetter-hubspot-for-woocommerce' ),
@@ -714,7 +714,7 @@ class Hubwoo_Admin {
 						<strong><?php echo esc_html__( "We noticed you're using WooCommerce HPOS. To ensure compatibility with the HubSpot WooCommerce plugin, please install the HPOS Addon.", 'makewebbetter-hubspot-for-woocommerce' ); ?></strong>
 					</p>
 					<div class="hubwoo-wrapper-notice">
-						<a target="_blank" href="https://makewebbetter.com/product/hubspot-woocommerce-hpos-compatibility/?utm_source=MWB-HubspotFree-backend&utm_medium=MWB-backend&utm_campaign=backend" class="hubwoo-btn--notific"><?php esc_html_e( 'Install Now', 'makewebbetter-hubspot-for-woocommerce' ); ?></a>
+						<a target="_blank" href="https://makewebbetter.com/product/hubspot-woocommerce-hpos-compatibility/?utm_source=MWB-HubspotFree-backend&utm_medium=MWB-backend&utm_campaign=backend" class="hubwoo-btn--notific"><?php esc_html_e( 'Buy Now', 'makewebbetter-hubspot-for-woocommerce' ); ?></a>
 						<a class="hubwoo-close-size hubwoo-hide-hpos-notice fa fa-times"></a>
 					</div>
 				</div>
@@ -2603,21 +2603,51 @@ class Hubwoo_Admin {
 	 *
 	 * @return void
 	 */
+
 	public function hubwoo_get_plugin_log() {
 
-		if ( isset( $_GET['action'] ) && 'download-log' == $_GET['action'] ) {
+		if ( isset( $_GET['action'] ) && 'download-log' === $_GET['action'] ) {
 			$filename = WC_LOG_DIR . 'hubspot-for-woocommerce-logs.log';
-			if ( is_readable( $filename ) && file_exists( $filename ) ) {
-				header( 'Content-type: text/plain' );
-				header( 'Content-Disposition: attachment; filename="' . basename( $filename ) . '"' );
-				readfile( $filename );
-				exit();
+	
+			global $wp_filesystem;
+			if ( ! function_exists( 'WP_Filesystem' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/file.php';
 			}
-		} elseif ( isset( $_GET['action'] ) && 'dismiss-hubwoo-notice' == $_GET['action'] ) {
+			WP_Filesystem();
+	
+			if ( $wp_filesystem->exists( $filename ) ) {
+
+				$file_contents = $wp_filesystem->get_contents( $filename );
+	
+				if ( $file_contents === false ) {
+					wp_die( esc_html__( 'Log file could not be read.', 'makewebbetter-hubspot-for-woocommerce' ) );
+				}
+				
+				if ( ob_get_length() ) {
+					ob_end_clean();
+				}
+	
+				header( 'Content-Type: text/plain' );
+				header( 'Content-Disposition: attachment; filename="' . basename( $filename ) . '"' );
+				header( 'Content-Length: ' . strlen( $file_contents ) ); // Ensure correct file size
+				header( 'Cache-Control: no-cache, no-store, must-revalidate' );
+				header( 'Pragma: no-cache' );
+				header( 'Expires: 0' );
+	
+				echo esc_html( $file_contents );
+				flush(); 
+				exit();
+			} else {
+				wp_die( esc_html__( 'Log file not found or inaccessible.', 'makewebbetter-hubspot-for-woocommerce' ) );
+			}
+		} elseif ( isset( $_GET['action'] ) && 'dismiss-hubwoo-notice' === $_GET['action'] ) {
 			update_option( 'hubwoo-cron-notice-dismiss', 'yes' );
 			wp_safe_redirect( admin_url( 'admin.php' ) . '?page=hubwoo' );
+			exit();
 		}
 	}
+	
+	
 
 	/**
 	 * Re-sync Orders as deals.

@@ -187,7 +187,7 @@ function wcpdf_get_ubl_maker() {
  */
 function wcpdf_is_ubl_available(): bool {
 	// Check `sabre/xml` library here: https://packagist.org/packages/sabre/xml
-	return apply_filters( 'wpo_wcpdf_ubl_available', version_compare( PHP_VERSION, '7.4', '>=' ) );
+	return apply_filters( 'wpo_wcpdf_ubl_available', WPO_WCPDF()->is_dependency_version_supported( 'php' ) );
 }
 
 /**
@@ -201,30 +201,36 @@ function wcpdf_pdf_maker_is_default() {
 	return $default_pdf_maker == apply_filters( 'wpo_wcpdf_pdf_maker', $default_pdf_maker );
 }
 
-function wcpdf_pdf_headers( $filename, $mode = 'inline', $pdf = null ) {
-	switch ( $mode ) {
-		case 'download':
-			header( 'Content-Description: File Transfer' );
-			header( 'Content-Type: application/pdf' );
-			header( 'Content-Disposition: attachment; filename="' . $filename . '"' );
-			header( 'Content-Transfer-Encoding: binary' );
-			header( 'Connection: Keep-Alive' );
-			header( 'Expires: 0' );
-			header( 'Cache-Control: must-revalidate, post-check=0, pre-check=0' );
-			header( 'Pragma: public' );
-			break;
-		case 'inline':
-		default:
-			header( 'Content-type: application/pdf' );
-			header( 'Content-Disposition: inline; filename="' . $filename . '"' );
-			break;
-	}
+/**
+ * Send PDF headers for inline viewing or file download.
+ *
+ * @param string      $filename PDF file name
+ * @param string      $mode     Delivery mode ('inline' or 'download')
+ * @param string|null $pdf      PDF string
+ */
+function wcpdf_pdf_headers( string $filename, string $mode = 'inline', ?string $pdf = null ) {
+	// Decide whether to display inline or prompt a download
+	$disposition  = ( $mode === 'download' ) ? 'attachment' : 'inline';
+	$content_type = ( $mode === 'download' ) ? 'application/octet-stream' : 'application/pdf';
+
+	// PDF-specific headers
+	header( "Content-Type: $content_type" );
+	header( "Content-Disposition: $disposition; filename=\"" . rawurlencode( $filename ) . "\"" );
+	header( 'Content-Transfer-Encoding: binary' );
+	header( 'Accept-Ranges: bytes' );
+
+	// Cache control headers
+	header( 'Cache-Control: public, must-revalidate, max-age=0' );
+	header( 'Pragma: public' );
+	header( 'Expires: 0' );
+
+	// Allows other developers or code to hook in
 	do_action( 'wpo_wcpdf_headers', $filename, $mode, $pdf );
 }
 
 function wcpdf_ubl_headers( $filename, $size ) {
 	$charset = apply_filters( 'wcpdf_ubl_headers_charset', 'UTF-8' );
-	
+
 	header( 'Content-Description: File Transfer' );
 	header( 'Content-Type: text/xml; charset=' . $charset );
 	header( 'Content-Disposition: attachment; filename=' . $filename );
@@ -234,7 +240,7 @@ function wcpdf_ubl_headers( $filename, $size ) {
 	header( 'Cache-Control: must-revalidate, post-check=0, pre-check=0' );
 	header( 'Pragma: public' );
 	header( 'Content-Length: ' . $size );
-	
+
 	do_action( 'wpo_after_ubl_headers', $filename, $size );
 }
 
@@ -244,9 +250,9 @@ function wcpdf_ubl_headers( $filename, $size ) {
  * @param  object $document
  * @param  string $output_format
  * @param  string $error_handling
- * @return string
+ * @return string|false
  */
-function wcpdf_get_document_file( object $document, string $output_format = 'pdf', $error_handling = 'exception' ): string {
+function wcpdf_get_document_file( object $document, string $output_format = 'pdf', string $error_handling = 'exception' ) {
 	$default_output_format = 'pdf';
 
 	if ( ! $document ) {
@@ -263,14 +269,19 @@ function wcpdf_get_document_file( object $document, string $output_format = 'pdf
 		return wcpdf_error_handling( $error_message, $error_handling, true, 'critical' );
 	}
 
+	if ( is_callable( array( $document, 'is_enabled' ) ) && ! $document->is_enabled( $output_format ) ) {
+		$error_message = "The {$output_format} output format is not enabled for this document: {$document->get_title()}.";
+		return wcpdf_error_handling( $error_message, $error_handling, true, 'critical' );
+	}
+
 	$tmp_path = WPO_WCPDF()->main->get_tmp_path( 'attachments' );
 
-	if ( ! @is_dir( $tmp_path ) || ! wp_is_writable( $tmp_path ) ) {
+	if ( ! WPO_WCPDF()->file_system->is_dir( $tmp_path ) || ! WPO_WCPDF()->file_system->is_writable( $tmp_path ) ) {
 		$error_message = "Couldn't get the attachments temporary folder path: {$tmp_path}.";
 		return wcpdf_error_handling( $error_message, $error_handling, true, 'critical' );
 	}
 
-	$function = "get_document_{$output_format}_attachment";
+	$function = "get_document_{$output_format}_attachment"; // 'get_document_pdf_attachment' or 'get_document_ubl_attachment'
 
 	if ( ! is_callable( array( WPO_WCPDF()->main, $function ) ) ) {
 		$error_message = "The {$function} method is not callable on WPO_WCPDF()->main.";
@@ -325,85 +336,105 @@ function wcpdf_deprecated_function( $function, $version, $replacement = null ) {
 		do_action( 'deprecated_function_run', $function, $replacement, $version );
 		$log_string  = "The {$function} function is deprecated since version {$version}.";
 		$log_string .= $replacement ? " Replace with {$replacement}." : '';
-		error_log( $log_string );
 		wcpdf_log_error( $log_string, 'warning' );
 	} else {
-		_deprecated_function( $function, $version, $replacement );
+		_deprecated_function( esc_html( $function ), esc_html( $version ), esc_html( $replacement ) );
 	}
 }
 
 /**
- * Logger function to capture errors thrown by this plugin, uses the WC Logger when possible (WC3.0+)
+ * Logs errors thrown by this plugin. 
+ * Uses the WooCommerce logger when available (WC 3.0+), otherwise falls back to PHP error_log().
+ *
+ * @param string           $message Error message to log.
+ * @param string           $level   Log level: debug, info, notice, warning, error, critical, alert, emergency.
+ * @param \Throwable|null  $e       (Optional) Exception or error object.
+ * @return void
  */
-function wcpdf_log_error( $message, $level = 'error', $e = null ) {
-	if ( function_exists( 'wc_get_logger' ) ) {
-		$logger  = wc_get_logger();
-		$context = array( 'source' => 'wpo-wcpdf' );
-
-		if ( is_callable( array( $e, 'getFile' ) ) && is_callable( array( $e, 'getLine' ) ) ) {
+function wcpdf_log_error( string $message, string $level = 'error', ?\Throwable $e = null ): void {
+	/**
+	 * Appends exception details to the message if available.
+	 *
+	 * @param string          $message
+	 * @param \Throwable|null $e
+	 * @return string
+	 */
+	$format_message = static function ( string $message, ?\Throwable $e ): string {
+		if ( $e instanceof \Throwable ) {
 			$message = sprintf( '%s (%s:%d)', $message, $e->getFile(), $e->getLine() );
+			
+			if ( apply_filters( 'wcpdf_log_stacktrace', false ) && is_callable( array( $e, 'getTraceAsString' ) ) ) {
+				$message .= "\n" . $e->getTraceAsString();
+			}
 		}
-
-		if ( apply_filters( 'wcpdf_log_stacktrace', false ) && is_callable( array( $e, 'getTraceAsString' ) ) ) {
-			$message .= "\n" . $e->getTraceAsString();
-		}
-		// The `log` method accepts any valid level as its first argument.
-		// debug     - 'Detailed debug information'
-		// info      - 'Interesting events'
-		// notice    - 'Normal but significant events'
-		// warning   - 'Exceptional occurrences that are not errors'
-		// error     - 'Runtime errors that do not require immediate'
-		// critical  - 'Critical conditions'
-		// alert     - 'Action must be taken immediately'
-		// emergency - 'System is unusable'.
-		$logger->log( $level, $message, $context );
-	} else {
-		error_log( "WCPDF error ({$level}): {$message}" );
+		return $message;
+	};
+	
+	$message = $format_message( $message, $e );
+	
+	if ( ! function_exists( 'wc_get_logger' ) ) {
+		error_log( '[WPO_WCPDF] ' . $message );
+		return;
 	}
+	
+	$logger  = wc_get_logger();
+	$context = array( 'source' => 'wpo-wcpdf' );
+	
+	$logger->log( $level, $message, $context );
 }
 
-function wcpdf_output_error( $message, $level = 'error', $e = null ) {
+/**
+ * Outputs an error message in the frontend.
+ *
+ * @param string          $message Error message to display.
+ * @param string          $level   Log level (unused here, but kept for consistency).
+ * @param \Throwable|null $e       (Optional) Exception or error object.
+ * @return void
+ */
+function wcpdf_output_error( string $message, string $level = 'error', ?\Throwable $e = null ): void {
 	if ( ! current_user_can( 'edit_shop_orders' ) ) {
 		esc_html_e( 'Error creating PDF, please contact the site owner.', 'woocommerce-pdf-invoices-packing-slips' );
 		return;
 	}
-	?>
-	<div style="border: 2px solid red; padding: 5px;">
-		<h3><?php echo wp_kses_post( $message ); ?></h3>
-		<?php if ( is_callable( array( $e, 'getFile' ) ) && is_callable( array( $e, 'getLine' ) ) ): ?>
-		<pre><?php echo esc_html( $e->getFile() ); ?> (<?php echo esc_html( $e->getLine() ); ?>)</pre>
-		<?php endif ?>
-		<?php if ( is_callable( array( $e, 'getTraceAsString' ) ) ) : ?>
-		<pre><?php echo esc_html( $e->getTraceAsString() ); ?></pre>
-		<?php endif ?>
-	</div>
-	<?php
+	
+	echo '<div style="border: 2px solid red; padding: 5px;">';
+	echo '<h3>' . wp_kses_post( $message ) . '</h3>';
+	
+	if ( $e instanceof \Throwable ) {
+		echo '<pre>' . esc_html( $e->getFile() ) . ' (' . esc_html( (string) $e->getLine() ) . ')</pre>';
+		echo '<pre>' . esc_html( $e->getTraceAsString() ) . '</pre>';
+	}
+		
+	echo '</div>';
 }
 
 /**
- * Error handling function
+ * Handles errors by either throwing an exception or outputting the error, optionally logging it first.
  *
- * @param string $message
- * @param string $handling_type
- * @param bool   $log_error
- * @param string $log_level
- * @return mixed
- * @throws Exception
+ * @param string $message        The error message.
+ * @param string $handling_type  How to handle the error: 'exception' (default) or 'output'.
+ * @param bool   $log_error      Whether to log the error via wcpdf_log_error().
+ * @param string $log_level      Log level to use when logging the error.
+ * @return bool Always returns false when not throwing.
+ * @throws \Exception When handling_type is 'exception'.
  */
-function wcpdf_error_handling( string $message, string $handling_type = 'exception', bool $log_error = true, string $log_level = 'error' ) {
+function wcpdf_error_handling( string $message, string $handling_type = 'exception', bool $log_error = true, string $log_level = 'error' ): bool {
 	if ( $log_error ) {
 		wcpdf_log_error( $message, $log_level );
 	}
 
 	switch ( $handling_type ) {
 		case 'exception':
-			throw new \Exception( $message );
-			break;
+			throw new \Exception( esc_html( $message ) );
 		case 'output':
 			wcpdf_output_error( $message, $log_level );
 			break;
+		default:
+			// Unexpected handling type
+			wcpdf_log_error( sprintf( 'Unknown error handling type: %s', $handling_type ), 'warning' );
+			break;
 	}
-
+	
 	return false;
 }
 
@@ -677,7 +708,7 @@ function wcpdf_safe_redirect_or_die( $url = '', $message = '' ) {
 		wp_safe_redirect( $url );
 		exit;
 	} else {
-		wp_die( $message );
+		wp_die( esc_html( $message ) );
 	}
 }
 
@@ -789,10 +820,12 @@ function wpo_wcpdf_get_image_mime_type( string $src ): string {
 
 	// Fetch the actual image data if MIME type is still unknown (remote files)
 	if ( empty( $mime_type ) && filter_var( $src, FILTER_VALIDATE_URL ) ) {
-		$image_data = @file_get_contents( $src );
+		$response = wp_remote_get( $src );
 
-		if ( $image_data ) {
-			if ( function_exists( 'finfo_open' ) ) {
+		if ( ! is_wp_error( $response ) && 200 === wp_remote_retrieve_response_code( $response ) ) {
+			$image_data = wp_remote_retrieve_body( $response );
+
+			if ( $image_data && function_exists( 'finfo_open' ) ) {
 				$finfo = finfo_open( FILEINFO_MIME_TYPE );
 
 				if ( $finfo ) {
@@ -842,19 +875,20 @@ function wpo_wcpdf_get_image_mime_type( string $src ): string {
 }
 
 /**
- * Base64 encode file from URL or local path
+ * Base64 encode file from local path
  *
- * @param string $src
+ * @param string $local_path
  *
  * @return string|bool
  */
-function wpo_wcpdf_base64_encode_file( string $src ) {
-	if ( empty( $src ) ) {
+function wpo_wcpdf_base64_encode_file( string $local_path ) {
+	if ( empty( $local_path ) ) {
 		return false;
 	}
 
-	$file_data = @file_get_contents( $src );
-	return base64_encode( $file_data ) ?? false;
+	$file_data = WPO_WCPDF()->file_system->get_contents( $local_path );
+
+	return $file_data ? base64_encode( $file_data ) : false;
 }
 
 /**
@@ -870,7 +904,7 @@ function wpo_wcpdf_is_file_readable( string $path ): bool {
 
 	// Check if the path is a URL
 	if ( filter_var( $path, FILTER_VALIDATE_URL ) ) {
-		$parsed_url = parse_url( $path );
+		$parsed_url = wp_parse_url( $path );
 		$args	    = array();
 
 		// Check if the URL is localhost
@@ -898,17 +932,16 @@ function wpo_wcpdf_is_file_readable( string $path ): bool {
 
 	// Local path file check
 	} else {
-		if ( @is_readable( $path ) ) {
+		if ( WPO_WCPDF()->file_system->is_readable( $path ) ) {
 			return true;
 		} else {
-			// Fallback to fopen if first check fails
-			$handle = @fopen( $path, 'r' );
+			// Fallback to checking file readability by attempting to open it
+			$file_contents = WPO_WCPDF()->file_system->get_contents( $path );
 
-			if ( $handle ) {
-				fclose( $handle );
+			if ( $file_contents ) {
 				return true;
 			} else {
-				wcpdf_log_error( 'Failed to open local file with both methods: ' . $path, 'critical' );
+				wcpdf_log_error( 'Failed to open local file: ' . $path, 'critical' );
 				return false;
 			}
 		}
@@ -982,10 +1015,467 @@ function wpo_wcpdf_get_simple_template_default_table_headers( $document ): array
 		'quantity' => __( 'Quantity', 'woocommerce-pdf-invoices-packing-slips' ),
 		'price'    => __( 'Price', 'woocommerce-pdf-invoices-packing-slips' ),
 	);
-	
+
 	if ( 'packing-slip' === $document->get_type() ) {
 		unset( $headers['price'] );
 	}
-	
+
 	return apply_filters( 'wpo_wcpdf_simple_template_default_table_headers', $headers, $document );
 }
+
+/**
+ * Get the WP_Filesystem instance
+ *
+ * @return WP_Filesystem|false
+ * @throws RuntimeException
+ */
+function wpo_wcpdf_get_wp_filesystem() {
+	wcpdf_deprecated_function( 'wpo_wcpdf_get_wp_filesystem', '4.2.0', '\WPO\IPS\Compatibility\FileSystem::instance()->wp_filesystem' );
+
+	if ( class_exists( '\\WPO\\IPS\\Compatibility\\FileSystem' ) ) {
+		$filesystem = \WPO\IPS\Compatibility\FileSystem::instance();
+		$filesystem->initialize_wp_filesystem();
+		return $filesystem->wp_filesystem ?? false;
+	}
+
+	return false;
+}
+
+/**
+ * Escapes a URL, filesystem path, or base64 string for safe output in HTML.
+ *
+ * @param string $url_path_or_base64
+ * @return string
+ */
+function wpo_wcpdf_escape_url_path_or_base64( string $url_path_or_base64 ): string {
+	// Check if it's a URL
+	if ( 0 === strpos( $url_path_or_base64, 'http' ) ) {
+		return esc_url( $url_path_or_base64 );
+	}
+
+	// Check if it's a base64 string
+	if ( preg_match( '/^data:[a-zA-Z0-9\/\-\.\+]+;base64,/', $url_path_or_base64 ) ) {
+		return esc_attr( $url_path_or_base64 );
+	}
+
+	// Otherwise, assume it's a filesystem path
+	return esc_attr( wp_normalize_path( $url_path_or_base64 ) );
+}
+
+/**
+ * Dynamic string translation
+ *
+ * @param string $string
+ * @param string $textdomain
+ * @return string
+ */
+function wpo_wcpdf_dynamic_translate( string $string, string $textdomain ): string {
+	static $cache       = array();
+	static $logged      = array();
+
+	$cache_key          = md5( $textdomain . '::' . $string );
+	$log_enabled        = ! empty( WPO_WCPDF()->settings->debug_settings['log_missing_translations'] );
+	$multilingual_class = '\WPO\WC\PDF_Invoices_Pro\Multilingual_Full';
+	$translation        = $string;
+
+	// Return early if empty string
+	if ( '' === $string ) {
+		if ( $log_enabled && ! isset( $logged[ $cache_key ] ) ) {
+			wcpdf_log_error( "Skipping translation for empty string in textdomain: {$textdomain}", 'warning' );
+			$logged[ $cache_key ] = true;
+		}
+		return $string;
+	}
+
+	// Check cache
+	if ( isset( $cache[ $cache_key ] ) ) {
+		return $cache[ $cache_key ];
+	}
+
+	// Attempt to get a translation from multilingual class
+	if ( class_exists( $multilingual_class ) && method_exists( $multilingual_class, 'maybe_get_string_translation' ) ) {
+		$translation = $multilingual_class::maybe_get_string_translation( $string, $textdomain );
+	}
+
+	// If not translated yet, try native translate() first, then custom filters
+	if ( $translation === $string && function_exists( 'translate' ) ) {
+		$translation = translate( $string, $textdomain );
+	}
+
+	// If still not translated, try custom filters
+	if ( $translation === $string ) {
+		$translation = wpo_wcpdf_gettext( $string, $textdomain );
+	}
+
+	// Log a warning if no translation is found and debug logging is enabled
+	if ( $translation === $string && $log_enabled && ! isset( $logged[ $cache_key ] ) ) {
+		wcpdf_log_error( "Missing translation for: {$string} in textdomain: {$textdomain}", 'warning' );
+		$logged[ $cache_key ] = true;
+	}
+
+	// Store in cache and return
+	$cache[ $cache_key ] = $translation;
+	return $cache[ $cache_key ];
+}
+
+/**
+ * Get text translation
+ *
+ * @param string $string
+ * @param string $textdomain
+ * @return string
+ */
+function wpo_wcpdf_gettext( string $string, string $textdomain ): string {
+	$filtered = apply_filters( 'wpo_wcpdf_gettext', $string, $textdomain );
+
+	if ( ! empty( $filtered ) && $filtered !== $string ) {
+		$translation = $filtered;
+	} else {
+		// standard WP gettext filters
+		$translation = apply_filters( 'gettext', $string, $string, $textdomain );
+		$translation = apply_filters( "gettext_{$textdomain}", $translation, $string, $textdomain );
+	}
+
+	return $translation;
+}
+
+/**
+ * Check if the order is VAT exempt.
+ *
+ * @param \WC_Abstract_Order $order
+ * @return bool
+ */
+function wpo_wcpdf_order_is_vat_exempt( \WC_Abstract_Order $order ): bool {
+	if ( 'shop_order_refund' === $order->get_type() ) {
+		$order = wc_get_order( $order->get_parent_id() );
+
+		if ( ! $order ) {
+			return false;
+		}
+	}
+
+	// Check if order is VAT exempt based on order meta
+	$vat_exempt_meta_key = apply_filters( 'wpo_wcpdf_order_vat_exempt_meta_key', 'is_vat_exempt', $order );
+	$is_vat_exempt       = apply_filters(  'woocommerce_order_is_vat_exempt', 'yes' === $order->get_meta( $vat_exempt_meta_key ), $order );
+
+	// Fallback to customer VAT exemption if order is not exempt
+	if ( ! $is_vat_exempt && apply_filters( 'wpo_wcpdf_order_vat_exempt_fallback_to_customer', true, $order ) ) {
+		$customer_id = $order->get_customer_id();
+
+		if ( $customer_id ) {
+			$customer      = new \WC_Customer( $customer_id );
+			$is_vat_exempt = $customer->is_vat_exempt();
+		}
+	}
+
+	// Check VAT exemption for EU orders based on VAT number and tax details
+	if ( ! $is_vat_exempt && apply_filters( 'wpo_wcpdf_order_vat_exempt_fallback_to_customer_vat_number', true, $order ) ) {
+		$is_eu_order = in_array(
+			$order->get_billing_country(),
+			WC()->countries->get_european_union_countries( 'eu_vat' ),
+			true
+		);
+
+		if ( $is_eu_order && $order->get_total() > 0 && $order->get_total_tax() == 0 ) {
+			$vat_number    = wpo_wcpdf_get_order_customer_vat_number( $order );
+			$is_vat_exempt = ! empty( $vat_number );
+		}
+	}
+
+	return apply_filters( 'wpo_wcpdf_is_vat_exempt_order', $is_vat_exempt, $order );
+}
+
+/**
+ * Retrieve the customer VAT number from order meta.
+ *
+ * @param \WC_Abstract_Order $order
+ * @return string|null
+ */
+function wpo_wcpdf_get_order_customer_vat_number( \WC_Abstract_Order $order ): ?string {
+	$vat_meta_keys = apply_filters( 'wpo_wcpdf_order_customer_vat_number_meta_keys', array(
+		'_vat_number',            // WooCommerce EU VAT Number
+		'_billing_vat_number',    // WooCommerce EU VAT Number 2.3.21+
+		'VAT Number',             // WooCommerce EU VAT Compliance
+		'_eu_vat_evidence',       // Aelia EU VAT Assistant
+		'_billing_eu_vat_number', // EU VAT Number for WooCommerce (WP Whale/former Algoritmika)
+		'yweu_billing_vat',       // YITH WooCommerce EU VAT
+		'billing_vat',            // German Market
+		'_billing_vat_id',        // Germanized Pro
+		'_shipping_vat_id',       // Germanized Pro (alternative)
+		'_billing_dic',           // EU/UK VAT Manager for WooCommerce
+	), $order );
+
+	$vat_number = null;
+
+	foreach ( $vat_meta_keys as $meta_key ) {
+		$meta_value = $order->get_meta( $meta_key );
+
+		// Handle multidimensional VAT data (e.g., Aelia EU VAT Assistant)
+		if ( '_eu_vat_evidence' === $meta_key && is_array( $meta_value ) ) {
+			$meta_value = $meta_value['exemption']['vat_number'] ?? '';
+		}
+
+		if ( $meta_value ) {
+			$vat_number = $meta_value;
+			break;
+		}
+	}
+
+	return apply_filters( 'wpo_wcpdf_order_customer_vat_number', $vat_number, $order, $meta_key ?? null );
+}
+
+/**
+ * Prepare an identifier query for use with $wpdb->prepare().
+ *
+ * @param string $query
+ * @param array  $identifiers Identifiers for %i placeholders.
+ * @param array  $values      Regular values for %s, %d, etc.
+ * @return string|void
+ */
+function wpo_wcpdf_prepare_identifier_query( string $query, array $identifiers = array(), array $values = array() ) {
+	global $wpdb;
+
+	$has_identifier_escape = version_compare( get_bloginfo( 'version' ), '6.2', '>=' );
+
+	if ( $has_identifier_escape ) {
+		// Combine both arrays in the order the placeholders appear
+		$all_placeholders = array();
+		$identifier_index = 0;
+		$value_index      = 0;
+		$split            = preg_split( '/(%[a-zA-Z])/', $query, -1, PREG_SPLIT_DELIM_CAPTURE );
+
+		foreach ( $split as $part ) {
+			if ( '%i' === $part ) {
+				$all_placeholders[] = $identifiers[ $identifier_index++ ] ?? null;
+			} elseif ( preg_match( '/^%[sdfb]/', $part ) ) {
+				$all_placeholders[] = $values[ $value_index++ ] ?? null;
+			}
+		}
+
+		$total_placeholders = substr_count( $query, '%i' ) + (int) preg_match_all( '/%[sdfb]/', $query, $matches );
+		if ( count( $all_placeholders ) !== $total_placeholders ) {
+			wcpdf_log_error(
+				sprintf(
+					"The number of passed identifiers/values (%d) does not match the number of placeholders (%d).\nQuery: %s\nIdentifiers: %s\nValues: %s",
+					count( $all_placeholders ),
+					$total_placeholders,
+					$query,
+					wp_json_encode( $identifiers ),
+					wp_json_encode( $values )
+				),
+				'critical'
+			);
+			return;
+		}
+
+		return $wpdb->prepare( $query, ...$all_placeholders ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	}
+
+	// Fallback for < 6.2: replace %i manually
+	foreach ( $identifiers as &$id ) {
+		$id = '`' . wpo_wcpdf_sanitize_identifier( $id ) . '`';
+	}
+
+	// Replace %i manually, leave others for prepare()
+	$segments = explode( '%i', $query );
+	$query    = array_shift( $segments );
+
+	foreach ( $segments as $index => $segment ) {
+		$query .= $identifiers[ $index ] . $segment;
+	}
+
+	return $wpdb->prepare( $query, ...$values ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+}
+
+/**
+ * Sanitize a database identifier (e.g., table or column name).
+ *
+ * @param string $identifier The identifier to sanitize.
+ * @return string The sanitized identifier.
+ */
+function wpo_wcpdf_sanitize_identifier( string $identifier ): string {
+	$pattern = apply_filters( 'wpo_wcpdf_prepare_identifier_regex', '/[^a-zA-Z0-9_\-]/' );
+	return preg_replace( $pattern, '', $identifier );
+}
+
+/**
+ * Get the latest stable and prerelease versions from GitHub.
+ *
+ * @param string $owner
+ * @param string $repo
+ * @param int    $cache_duration
+ * @return array {
+ *     @type array $stable   Latest stable release.
+ *     @type array $unstable Latest valid pre-release.
+ * }
+ */
+function wpo_wcpdf_get_latest_releases_from_github( string $owner = 'wpovernight', string $repo = 'woocommerce-pdf-invoices-packing-slips', int $cache_duration = 1800 ): array {
+	$option_key   = 'wpo_latest_releases_' . md5( $owner . '/' . $repo );
+	$empty_result = array( 'stable' => array(), 'unstable' => array() );
+	$cached       = get_option( $option_key );
+
+	if ( $cached && isset( $cached['timestamp'], $cached['data'] ) ) {
+		if ( ( time() - $cached['timestamp'] ) < $cache_duration ) {
+			return $cached['data'];
+		}
+	}
+
+	$url     = "https://api.github.com/repos/{$owner}/{$repo}/releases";
+	$options = array(
+		'http' => array(
+			'header' => "User-Agent: " . get_bloginfo( 'name' ) . " (" . home_url() . ")\r\n"
+		)
+	);
+	$context  = stream_context_create( $options );
+	$response = file_get_contents( $url, false, $context );
+
+	if ( ! $response ) {
+		return $empty_result;
+	}
+
+	$releases = json_decode( $response, true );
+
+	if ( ! is_array( $releases ) ) {
+		return $empty_result;
+	}
+
+	$stable   = array();
+	$unstable = array();
+
+	foreach ( $releases as $release ) {
+		$tag  = $release['tag_name'];
+		$name = ltrim( $release['name'], 'v' );
+
+		if ( preg_match( '/-pr\d+/i', $tag ) ) {
+			continue;
+		}
+
+		$release_data = apply_filters( 'wpo_wcpdf_github_release_data', array(
+			'name'     => $name,
+			'tag'      => $tag,
+			'url'      => $release['html_url'],
+			'zipball'  => $release['zipball_url'],
+			'download' => "https://github.com/{$owner}/{$repo}/releases/download/{$tag}/{$repo}.{$name}.zip"
+		), $release, $owner, $repo );
+
+		if ( ! $release['prerelease'] && empty( $stable ) ) {
+			$stable = $release_data;
+
+			// Once we find the first stable, we stop.
+			break;
+		}
+
+		if ( $release['prerelease'] && empty( $unstable ) ) {
+			$unstable = $release_data;
+		}
+	}
+
+	$data = array(
+		'stable'   => $stable,
+		'unstable' => $unstable,
+	);
+
+	// Check if a new prerelease is available
+	$last_seen_option_key = 'wpo_last_seen_prerelease_' . md5( $owner . '/' . $repo );
+	$last_seen_tag        = get_option( $last_seen_option_key );
+
+	if ( ! empty( $unstable['tag'] ) && $unstable['tag'] !== $last_seen_tag ) {
+		update_option( $last_seen_option_key, $unstable['tag'], false );
+
+		/**
+		 * Fires when a new GitHub prerelease becomes available.
+		 *
+		 * @param array  $unstable The new prerelease data.
+		 * @param string $owner    GitHub repo owner.
+		 * @param string $repo     GitHub repo name.
+		 */
+		do_action( 'wpo_wcpdf_new_github_prerelease_available', $unstable, $owner, $repo );
+	}
+
+	update_option( $option_key, array(
+		'timestamp' => time(),
+		'data'      => $data,
+	), false );
+
+	return $data;
+}
+
+/**
+ * Get the latest plugin version from the WordPress.org API.
+ *
+ * @param string $plugin_slug
+ * @return string|false
+ */
+function wpo_wcpdf_get_latest_plugin_version( string $plugin_slug ) {
+	// Ensure plugin update info is loaded
+	if ( ! function_exists( 'get_site_transient' ) ) {
+		require_once ABSPATH . 'wp-includes/option.php';
+	}
+
+	$update_plugins = get_site_transient( 'update_plugins' );
+
+	if ( isset( $update_plugins->response[ $plugin_slug ] ) ) {
+		return $update_plugins->response[ $plugin_slug ]->new_version;
+	}
+
+	// No update available or plugin not found
+	return false;
+}
+
+/**
+ * Write UBL file
+ * 
+ * @param \WPO\IPS\Documents\OrderDocument $document
+ * @param bool $attachment
+ * @param bool $contents_only
+ * 
+ * @return string|false
+ */
+function wpo_ips_write_ubl_file( \WPO\IPS\Documents\OrderDocument $document, bool $attachment = false, bool $contents_only = false ) {
+	$ubl_maker = wcpdf_get_ubl_maker();
+
+	if ( ! $ubl_maker ) {
+		return wcpdf_error_handling( 'UBL Maker not available. Cannot write UBL file.' );
+	}
+
+	if ( $attachment ) {
+		$tmp_path = WPO_WCPDF()->main->get_tmp_path( 'attachments' );
+		
+		if ( ! $tmp_path ) {
+			return wcpdf_error_handling( 'Temporary path not available. Cannot write UBL file.' );
+		}
+		
+		$ubl_maker->set_file_path( $tmp_path );
+	}
+
+	$ubl_document = new \WPO\IPS\UBL\Documents\UblDocument();
+	$ubl_document->set_order_document( $document );
+
+	$builder  = new \WPO\IPS\UBL\Builders\SabreBuilder();
+	$contents = apply_filters( 'wpo_ips_ubl_contents',
+		$builder->build( $ubl_document ),
+		$ubl_document,
+		$document
+	);
+	
+	if ( empty( $contents ) ) {
+		return wcpdf_error_handling( 'Failed to build UBL contents.' );
+	}
+
+	if ( $contents_only ) {
+		return $contents;
+	}
+
+	$filename = apply_filters( 'wpo_ips_ubl_filename',
+		$document->get_filename(
+			'download',
+			array( 'output' => 'ubl' )
+		),
+		$document
+	);
+
+	$full_filename = $ubl_maker->write( $filename, $contents );
+
+	return $full_filename;
+}
+

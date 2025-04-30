@@ -76,7 +76,7 @@ $portal_id = get_option( 'hubwoo_pro_hubspot_id', '' );
 				</div>
 				<div class="hubwoo-db__counter-column">
 					<p class="hubwoo-db__counter-title"><?php esc_html_e( 'PRODUCTS SYNCED', 'makewebbetter-hubspot-for-woocommerce' ); ?></p>
-					<h6 class="hubwoo-db__counter-number"><a target="_blank" href=" <?php echo esc_url( 'https://app.hubspot.com/settings/' . $portal_id . '/sales/products' ); ?> "><?php echo esc_textarea( $display_data['product'], 'makewebbetter-hubspot-for-woocommerce' ); ?></a></h6>
+					<h6 class="hubwoo-db__counter-number"><a target="_blank" href=" <?php echo esc_url( 'https://app.hubspot.com/contacts/' . $portal_id . '/objects/0-7/views/all/list' ); ?> "><?php echo esc_textarea( $display_data['product'], 'makewebbetter-hubspot-for-woocommerce' ); ?></a></h6>
 					<span class="hubwoo-db__counter-desc"><?php echo esc_textarea( $display_data['products_left'], 'makewebbetter-hubspot-for-woocommerce' ); ?></span>
 				</div>
 			</div>

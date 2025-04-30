@@ -309,6 +309,8 @@ class HubwooObjectProperties {
 					),
 				);
 
+				$filtergps = apply_filters( 'hubwoo_deal_search_filter', $filtergps, $order_id );
+
 				$response = HubWooConnectionMananager::get_instance()->search_object_record( 'deals', $filtergps );
 
 				if ( 200 == $response['status_code'] ) {
@@ -377,6 +379,10 @@ class HubwooObjectProperties {
 			$response          = array( 'status_code' => 206 );
 			$no_products_found = false;
 
+			if ( 'yes' == $order->get_meta('hubwoo_order_line_item_created', 'no' ) ) {
+				return $response;
+			}
+
 			if ( is_array( $order_items ) && count( $order_items ) ) {
 
 				foreach ( $order_items as $item_key => $single_item ) :
@@ -398,7 +404,7 @@ class HubwooObjectProperties {
 
 					$line_item_hs_id = wc_get_order_item_meta( $item_key, 'hubwoo_ecomm_line_item_id', true );
 
-					if ( ! empty( $line_item_hs_id ) || 'yes' == $order->get_meta('hubwoo_order_line_item_created', 'no') ) {
+					if ( ! empty( $line_item_hs_id ) ) {
 						continue;
 					}
 

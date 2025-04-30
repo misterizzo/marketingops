@@ -28,7 +28,7 @@ class SettingsUbl {
 		];
 
 		add_action( 'admin_init', array( $this, 'init_tax_settings' ) );
-		add_action( 'wpo_wcpdf_settings_output_ubl', array( $this, 'output' ), 10, 1 );
+		add_action( 'wpo_wcpdf_settings_output_ubl', array( $this, 'output' ), 10, 2 );
 
 		add_action( 'woocommerce_order_after_calculate_totals', array( $this, 'save_taxes_on_order_totals' ), 10, 2 );
 		add_action( 'woocommerce_checkout_order_processed', array( $this, 'save_taxes_on_checkout' ), 10, 3 );
@@ -37,7 +37,11 @@ class SettingsUbl {
 		add_action( 'admin_notices', array( $this, 'vat_coc_required_for_ubl_invoice') );
 	}
 
-	public function output( $active_section ) {
+	public function output( $active_section, $nonce ) {
+		if ( ! wp_verify_nonce( $nonce, 'wp_wcpdf_settings_page_nonce' ) ) {
+			return;
+		}
+		
 		$active_section = ! empty( $active_section ) ? $active_section : 'taxes';
 		?>
 		<div class="wcpdf_ubl_settings_sections">
@@ -46,12 +50,12 @@ class SettingsUbl {
 				<?php
 					foreach ( $this->sections as $section => $title ) {
 						$active = ( $section == $active_section ) ? 'nav-tab-active' : '';
-						printf( '<a href="%1$s" class="nav-tab nav-tab-%2$s %3$s">%4$s</a>', esc_url( add_query_arg( 'section', $section ) ), esc_attr( $section ), $active, esc_html( $title ) );
+						printf( '<a href="%1$s" class="nav-tab nav-tab-%2$s %3$s">%4$s</a>', esc_url( add_query_arg( 'section', $section ) ), esc_attr( $section ), esc_attr( $active ), esc_html( $title ) );
 					}
 				?>
 			</h2>
 			<?php else : ?>
-			<h3><?php echo $this->sections[ $active_section ]; ?></h3>
+			<h3><?php echo esc_html( $this->sections[ $active_section ] ); ?></h3>
 			<?php endif; ?>
 		</div>
 		<?php
@@ -59,6 +63,8 @@ class SettingsUbl {
 		switch ( $active_section ) {
 			default:
 			case 'taxes':
+				echo '<p>' . esc_html__( 'To ensure compliance with e-invoicing requirements, please complete the Taxes Classification. This information is essential for accurately generating legally compliant invoices.', 'woocommerce-pdf-invoices-packing-slips' ) . '</p>';
+				echo '<p><strong>' . esc_html__( 'Note', 'woocommerce-pdf-invoices-packing-slips' ) . ':</strong> ' . esc_html__( 'Each rate line allows you to configure the tax scheme, category, and reason. If these values are set to "Default," they will automatically inherit the settings selected in the "Tax class default" dropdowns at the bottom of the table.', 'woocommerce-pdf-invoices-packing-slips' ) . '</p>';
 				$setting = new UblTaxSettings();
 				$setting->output();
 				break;
@@ -85,7 +91,7 @@ class SettingsUbl {
 		// it seems $and taxes is mostly false, meaning taxes are calculated separately,
 		// but we still update just in case anything changed
 		if ( ! empty( $order ) ) {
-			$this->save_order_taxes( $order );
+			wpo_ips_ubl_save_order_taxes( $order );
 		}
 	}
 
@@ -95,51 +101,7 @@ class SettingsUbl {
 		}
 
 		if ( $order ) {
-			$this->save_order_taxes( $order );
-		}
-	}
-
-	public function save_order_taxes( $order ) {
-		foreach ( $order->get_taxes() as $item_id => $tax_item ) {
-			if ( is_a( $tax_item, '\WC_Order_Item_Tax' ) && is_callable( array( $tax_item, 'get_rate_id' ) ) ) {
-				// get tax rate id from item
-				$tax_rate_id = $tax_item->get_rate_id();
-
-				// read tax rate data from db
-				if ( class_exists( '\WC_TAX' ) && is_callable( array( '\WC_TAX', '_get_tax_rate' ) ) ) {
-					$tax_rate = \WC_Tax::_get_tax_rate( $tax_rate_id, OBJECT );
-					if ( ! empty( $tax_rate ) && is_numeric( $tax_rate->tax_rate ) ) {
-						// store percentage in tax item meta
-						wc_update_order_item_meta( $item_id, '_wcpdf_rate_percentage', $tax_rate->tax_rate );
-
-						$ubl_tax_settings = get_option( 'wpo_wcpdf_settings_ubl_taxes' );
-
-						$category       = isset( $ubl_tax_settings['rate'][$tax_rate->tax_rate_id]['category'] ) ? $ubl_tax_settings['rate'][$tax_rate->tax_rate_id]['category'] : '';
-						$scheme         = isset( $ubl_tax_settings['rate'][$tax_rate->tax_rate_id]['scheme'] ) ? $ubl_tax_settings['rate'][$tax_rate->tax_rate_id]['scheme'] : '';
-						$tax_rate_class = $tax_rate->tax_rate_class;
-
-						if ( empty( $tax_rate_class ) ) {
-							$tax_rate_class = 'standard';
-						}
-
-						if ( empty( $category ) ) {
-							$category = isset( $ubl_tax_settings['class'][$tax_rate_class]['category'] ) ? $ubl_tax_settings['class'][$tax_rate_class]['category'] : '';
-						}
-
-						if ( empty( $scheme ) ) {
-							$scheme = isset( $ubl_tax_settings['class'][$tax_rate_class]['scheme'] ) ? $ubl_tax_settings['class'][$tax_rate_class]['scheme'] : '';
-						}
-
-						if ( ! empty( $category ) ) {
-							wc_update_order_item_meta( $item_id, '_wcpdf_ubl_tax_category', $category );
-						}
-
-						if ( ! empty( $scheme ) ) {
-							wc_update_order_item_meta( $item_id, '_wcpdf_ubl_tax_scheme', $scheme );
-						}
-					}
-				}
-			}
+			wpo_ips_ubl_save_order_taxes( $order );
 		}
 	}
 
@@ -154,7 +116,7 @@ class SettingsUbl {
 				'<a href="' . esc_url( admin_url( 'admin.php?page=wpo_wcpdf_options_page&tab=ubl' ) ) . '">' . __( 'UBL settings', 'woocommerce-pdf-invoices-packing-slips' ) . '</a>'
 			);
 
-			echo '<div class="notice notice-warning"><p>' . $message . '</p></div>';
+			echo '<div class="notice notice-warning"><p>' . wp_kses_post( $message ) . '</p></div>';
 		}
 	}
 

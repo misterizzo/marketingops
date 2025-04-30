@@ -34,7 +34,22 @@ if ( ! class_exists( 'Hubwoo_Activator' ) ) {
 
 			update_option( 'hubwoo_plugin_activated_time', time() );
 
-			fopen( WC_LOG_DIR . 'hubspot-for-woocommerce-logs.log', 'a' );
+			if ( ! function_exists( 'WP_Filesystem' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/file.php';
+			}
+			
+			global $wp_filesystem;
+			
+			if ( ! is_object( $wp_filesystem ) ) {
+				WP_Filesystem();
+			}
+			
+			$log_file = WC_LOG_DIR . 'hubspot-for-woocommerce-logs.log';
+			
+			if ( ! $wp_filesystem->exists( $log_file ) ) {
+				$wp_filesystem->put_contents( $log_file, '', FS_CHMOD_FILE );
+			}
+			
 
 			if ( ! as_next_scheduled_action( 'hubwoo_cron_schedule' ) ) {
 

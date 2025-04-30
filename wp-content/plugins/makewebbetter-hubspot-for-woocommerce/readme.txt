@@ -3,11 +3,11 @@ Contributors: MakeWebBetter
 Donate link: https://makewebbetter.com/
 Tags: abandoned cart, email marketing, marketing automation, woocommerce, hubspot
 Requires at least: 4.4.0
-Tested up to: 6.6.2
+Tested up to: 6.7.2
 WC requires at least: 3.5.0
-WC tested up to: 9.3.3
+WC tested up to: 9.6.1
 Requires PHP: 5.1
-Stable tag: 1.5.8
+Stable tag: 1.6.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
  
@@ -141,6 +141,12 @@ Please visit the MakeWebBetter [knowledge base](https://support.makewebbetter.co
 If you have the free HubSpot plan, you can sync Product Name, Product Image, Product Price, Product Description. And if you use a Marketing professional or enterprise plan, you can sync all the data included in the free plan along with the Product SKU and Product Image URL.
 
 == Changelog ==
+= 1.6.1 - Released on 13 Feb 2025 =
+* Fix   - HPOS add-on listing
+= 1.6.0 - Released on 30 Jan 2025 =
+* Fix   - Minor Fixes.
+= 1.5.9 - Released on 03 December 2024 =
+* Fix   - Added search filter.
 = 1.5.8 - Released on 24 October 2024 =
 * Fix   - Fixed Abandoned Cart bugs.
 = 1.5.7 - Released on 30 August 2024 =
@@ -229,5 +235,5 @@ If you have the free HubSpot plan, you can sync Product Name, Product Image, Pro
  
 == Upgrade Notice ==
  
-= 1.5.8 - Released on 24 October 2024 =
-* Fix   - Minor Fixes.
+= 1.6.1 - Released on 13 Feb 2025 =
+* Fix   - HPOS add-on listing

@@ -349,7 +349,7 @@ class HubwooEcommPropertyCallbacks {
 
 			if ( ! in_array( $deal_stage, self::hubwoo_ecomm_won_stages() ) ) {
 
-				$order_date = get_post_time( 'U', true, $this->_object_id ) + ( get_option( 'hubwoo_ecomm_closedate_days', 1 ) * 24 * 60 * 60 );
+				$order_date = get_post_time( 'U', true, $this->_object_id ) + ( get_option( 'hubwoo_ecomm_closedate_days', 5 ) * 24 * 60 * 60 );
 			}
 
 			if ( ! empty( $order ) && ! is_wp_error( $order ) ) {

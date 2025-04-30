@@ -71,7 +71,7 @@ if ( ! class_exists( 'Hubwoo' ) ) {
 				$this->version = HUBWOO_VERSION;
 			} else {
 
-				$this->version = '1.5.8';
+				$this->version = '1.6.1';
 			}
 
 			$this->plugin_name = 'makewebbetter-hubspot-for-woocommerce';
@@ -199,10 +199,6 @@ if ( ! class_exists( 'Hubwoo' ) ) {
 			 */
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-hubwooecommpropertycallbacks.php';
 
-			/**
-			 * The class responsible for defining functions for CSV generations of the respective hubspot objects.
-			 */
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-hubwoo-csv-handler.php';
 		}
 
 		/**
@@ -555,7 +551,7 @@ if ( ! class_exists( 'Hubwoo' ) ) {
 
 			if ( self::is_setup_completed() ) {
 
-				return get_option( 'hubwoo_pro_version', '1.5.8' );
+				return get_option( 'hubwoo_pro_version', '1.6.1' );
 			} else {
 
 				return HUBWOO_VERSION;
@@ -1758,7 +1754,7 @@ if ( ! class_exists( 'Hubwoo' ) ) {
 
 			switch ( $query_action ) {
 				case 'total_products_to_sync':
-					return $wpdb->get_results( "SELECT COUNT(ID) FROM {$wpdb->posts} WHERE post_type IN ( 'product', 'product_variation' ) AND ID NOT IN (SELECT post_parent FROM {$wpdb->posts} WHERE post_type IN ( 'product', 'product_variation' ) ) AND post_status  IN ( 'publish', 'draft' )" );
+					return $wpdb->get_results( "SELECT COUNT(ID) FROM {$wpdb->posts} WHERE post_type IN ( 'product', 'product_variation' ) AND ID NOT IN (SELECT post_parent FROM {$wpdb->posts} WHERE post_type IN ( 'product', 'product_variation' ) ) AND post_status  IN ( 'publish' )" );
 				case 'total_synced_products':
 					return $wpdb->get_results( "SELECT COUNT(post_id) FROM {$wpdb->postmeta} WHERE meta_key LIKE 'hubwoo_ecomm_pro_id'" );
 				case 'total_synced_deals':
@@ -2186,7 +2182,7 @@ if ( ! class_exists( 'Hubwoo' ) ) {
 			$request  = array(
 				'post_type'           => array( 'product', 'product_variation' ),
 				'posts_per_page'      => $post_per_page,
-				'post_status'         => array( 'publish', 'draft' ),
+				'post_status'         => array( 'publish' ),
 				'orderby'             => 'date',
 				'order'               => 'desc',
 				'fields'              => 'ids',

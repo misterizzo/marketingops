@@ -78,7 +78,7 @@ class SettingsCallbacks {
 
 		// print store empty input if true
 		if( $store_unchecked ) {
-			printf( '<input type="hidden" name="%s[wpo_wcpdf_setting_store_empty][]" value="%s"/>', $option_name, esc_attr( $id ) );
+			printf( '<input type="hidden" name="%s[wpo_wcpdf_setting_store_empty][]" value="%s"/>', esc_attr( $option_name ), esc_attr( $id ) );
 		}
 
 		// output description.
@@ -108,7 +108,7 @@ class SettingsCallbacks {
 		}
 
 		$size = ! empty( $size ) ? sprintf( 'size="%s"', esc_attr( $size ) ) : '';
-		printf( '<input type="%1$s" id="%2$s" name="%3$s" value="%4$s" %5$s placeholder="%6$s" %7$s/>', esc_attr( $type ), esc_attr( $id ), esc_attr( $setting_name ), esc_attr( $current ), $size, esc_attr( $placeholder ), ! empty( $disabled ) ? 'disabled="disabled"' : '' );
+		printf( '<input type="%1$s" id="%2$s" name="%3$s" value="%4$s" %5$s placeholder="%6$s" %7$s/>', esc_attr( $type ), esc_attr( $id ), esc_attr( $setting_name ), esc_attr( $current ), esc_attr( $size ), esc_attr( $placeholder ), ! empty( $disabled ) ? 'disabled="disabled"' : '' );
 
 		// output description.
 		if ( ! empty( $description ) ) {
@@ -137,7 +137,36 @@ class SettingsCallbacks {
 		}
 
 		$size = ! empty( $size ) ? sprintf( 'size="%s"', esc_attr( $size ) ) : '';
-		printf( '<input type="%1$s" id="%2$s" name="%3$s" value="%4$s" %5$s placeholder="%6$s" %7$s/>', esc_attr( $type ), esc_attr( $id ), esc_attr( $setting_name ), sanitize_url( $current ), $size, esc_attr( $placeholder ), ! empty( $disabled ) ? 'disabled="disabled"' : '' );
+		printf( '<input type="%1$s" id="%2$s" name="%3$s" value="%4$s" %5$s placeholder="%6$s" %7$s/>', esc_attr( $type ), esc_attr( $id ), esc_attr( $setting_name ), esc_attr( $current ), esc_attr( $size ), esc_attr( $placeholder ), ! empty( $disabled ) ? 'disabled="disabled"' : '' );
+
+		// output description.
+		if ( ! empty( $description ) ) {
+			printf( '<p class="description">%s</p>', wp_kses_post( $description ) );
+		}
+	}
+
+	/**
+	 * Email input callback.
+	 *
+	 * args:
+	 *   option_name - name of the main option
+	 *   id          - key of the setting
+	 *   size        - size of the text input (em)
+	 *   default     - default setting (optional)
+	 *   description - description (optional)
+	 *   type        - type (optional)
+	 *
+	 * @return void.
+	 */
+	public function email_input( $args ) {
+		extract( $this->normalize_settings_args( $args ) );
+
+		if ( empty( $type ) ) {
+			$type = 'email';
+		}
+
+		$size = ! empty( $size ) ? sprintf( 'size="%s"', esc_attr( $size ) ) : '';
+		printf( '<input type="%1$s" id="%2$s" name="%3$s" value="%4$s" %5$s placeholder="%6$s" %7$s/>', esc_attr( $type ), esc_attr( $id ), esc_attr( $setting_name ), esc_attr( sanitize_email( $current ) ), esc_attr( $size ), esc_attr( $placeholder ), ! empty( $disabled ) ? 'disabled="disabled"' : '' );
 
 		// output description.
 		if ( ! empty( $description ) ) {
@@ -169,10 +198,10 @@ class SettingsCallbacks {
 
 		// get text input for insertion in wrapper
 		$input_args = array(
-			'id'			=> $args['text_input_id'],
-			'default'		=> isset( $args['text_input_default'] ) ? (string) $args['text_input_default'] : NULL,
-			'size'			=> isset( $args['text_input_size'] ) ? $args['text_input_size'] : NULL,
-		)  + $args;
+			'id'      => $args['text_input_id'],
+			'default' => isset( $args['text_input_default'] ) ? (string) $args['text_input_default'] : null,
+			'size'    => isset( $args['text_input_size'] ) ? $args['text_input_size'] : null,
+		) + $args;
 		unset( $input_args['current'] );
 		unset( $input_args['setting_name'] );
 
@@ -180,11 +209,25 @@ class SettingsCallbacks {
 		$this->text_input( $input_args );
 		$text_input = ob_get_clean();
 
-		if (! empty( $text_input_wrap ) ) {
-			printf( "{$checkbox} {$text_input_wrap}", $text_input);
-		} else {
-			echo "{$checkbox} {$text_input}";
+		$allowed_html = array(
+			'input' => array(
+				'type'        => true,
+				'name'        => true,
+				'id'          => true,
+				'value'       => true,
+				'class'       => true,
+				'placeholder' => true,
+				'disabled'    => true,
+				'checked'     => true,
+				'size'        => true,
+			),
+		);
+
+		if ( ! empty( $text_input_wrap ) ) {
+			$text_input = sprintf( $text_input_wrap, $text_input );
 		}
+
+		echo wp_kses( "{$checkbox} {$text_input}", $allowed_html );
 
 		// output description.
 		if ( ! empty( $description ) ) {
@@ -263,7 +306,7 @@ class SettingsCallbacks {
 			$title = ! empty( $title ) ? esc_attr( $title ) : '';
 			$class = 'wc-enhanced-select wpo-wcpdf-enhanced-select';
 			$css = 'width:400px';
-			printf( '<select id="%1$s" name="%2$s" data-placeholder="%3$s" title="%4$s" class="%5$s" style="%6$s" %7$s>', esc_attr( $id ), esc_attr( $setting_name ), esc_attr( $placeholder ), esc_attr( $title ), esc_attr( $class ), esc_attr( $css ), esc_attr( $multiple ) );
+			printf( '<select id="%1$s" name="%2$s" data-placeholder="%3$s" title="%4$s" class="%5$s" style="%6$s" %7$s %8$s>', esc_attr( $id ), esc_attr( $setting_name ), esc_attr( $placeholder ), esc_attr( $title ), esc_attr( $class ), esc_attr( $css ), esc_attr( $multiple ), ! empty( $disabled ) ? 'disabled="disabled"' : '' );
 		} else {
 			printf( '<select id="%1$s" name="%2$s">', esc_attr( $id ), esc_attr( $setting_name ) );
 		}
@@ -296,7 +339,7 @@ class SettingsCallbacks {
 			jQuery(document).ready(function($) {
 				function check_<?php echo esc_attr( $id ); ?>_custom() {
 					var custom = $('#<?php echo esc_attr( $id ); ?>').val();
-					if (custom == '<?php echo $custom_option; ?>') {
+					if ( custom == '<?php echo esc_attr( $custom_option ); ?>' ) {
 						$( '.<?php echo esc_attr( $id ); ?>_custom').show();
 					} else {
 						$( '.<?php echo esc_attr( $id ); ?>_custom').hide();
@@ -378,7 +421,7 @@ class SettingsCallbacks {
 
 			// field description.
 			if ( ! empty( $field_description ) ) {
-				echo '<td>' . wc_help_tip( $field_description, true ) . '</td>';
+				echo '<td>' . wp_kses_post( wc_help_tip( $field_description, true ) ) . '</td>';
 			} else {
 				echo '<td></td>';
 			}
@@ -465,7 +508,7 @@ class SettingsCallbacks {
 				printf(
 					'<div class="attachment-resolution"><p class="description">%s: %sdpi</p></div>',
 					esc_html__( 'Image resolution', 'woocommerce-pdf-invoices-packing-slips' ),
-					$attachment_resolution
+					esc_html( $attachment_resolution )
 				);
 
 				// warn the user if the image is unnecessarily large
@@ -480,7 +523,7 @@ class SettingsCallbacks {
 			printf('<span class="button wpo_remove_image_button" data-input_id="%1$s">%2$s</span> ', esc_attr( $id ), esc_attr( $remove_button_text ) );
 		}
 
-		printf( '<input id="%1$s" name="%2$s" type="hidden" value="%3$s" data-settings_callback_args="%4$s" data-ajax_nonce="%5$s" class="media-upload-id"/>', esc_attr( $id ), esc_attr( $setting_name ), esc_attr( $current ), esc_attr( json_encode( $args ) ), wp_create_nonce( "wpo_wcpdf_get_media_upload_setting_html" ) );
+		printf( '<input id="%1$s" name="%2$s" type="hidden" value="%3$s" data-settings_callback_args="%4$s" data-ajax_nonce="%5$s" class="media-upload-id"/>', esc_attr( $id ), esc_attr( $setting_name ), esc_attr( $current ), esc_attr( wp_json_encode( $args ) ), esc_attr( wp_create_nonce( 'wpo_wcpdf_get_media_upload_setting_html' ) ) );
 
 		printf( '<span class="button wpo_upload_image_button %4$s" data-uploader_title="%1$s" data-uploader_button_text="%2$s" data-remove_button_text="%3$s" data-input_id="%4$s">%2$s</span>', esc_attr( $uploader_title ), esc_attr( $uploader_button_text ), esc_attr( $remove_button_text ), esc_attr( $id ) );
 

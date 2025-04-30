@@ -138,6 +138,11 @@ class BulkDocument {
 		$this->wrapper_document = wcpdf_get_document( $this->get_type(), null );
 		$html = $this->wrapper_document->wrap_html_content( $this->merge_documents( $html_content ) );
 
+		// clean up special characters
+		if ( apply_filters( 'wpo_wcpdf_convert_encoding', function_exists( 'htmlspecialchars_decode' ) ) ) {
+			$html = htmlspecialchars_decode( wcpdf_convert_encoding( $html ), ENT_QUOTES );
+		}
+
 		do_action( 'wpo_wcpdf_after_html', $this->get_type(), $this );
 
 		// remove temporary filters
@@ -157,12 +162,12 @@ class BulkDocument {
 	public function output_pdf( $output_mode = 'download' ) {
 		$pdf = $this->get_pdf();
 		wcpdf_pdf_headers( $this->get_filename(), $output_mode, $pdf );
-		echo $pdf;
+		echo $pdf; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		die();
 	}
 
 	public function output_html() {
-		echo $this->get_html();
+		echo $this->get_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		die();
 	}
 

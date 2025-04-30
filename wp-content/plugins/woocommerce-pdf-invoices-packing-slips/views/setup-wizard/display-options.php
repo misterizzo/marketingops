@@ -36,6 +36,7 @@
 			<td>
 				<input type="hidden" name="wcpdf_settings[wpo_wcpdf_documents_settings_invoice][display_email]" value="">
 				<input id="display-email" type="checkbox" <?php echo ! empty( $current_settings['display_email'] ) ? 'checked' : ''; ?> name="wcpdf_settings[wpo_wcpdf_documents_settings_invoice][display_email]" value="1">
+				<label for="display-email" class="slider"></label>
 			</td>
 		</tr>
 		<tr>
@@ -45,6 +46,7 @@
 			<td>
 				<input type="hidden" name="wcpdf_settings[wpo_wcpdf_documents_settings_invoice][display_phone]" value="">
 				<input id="display-phone" type="checkbox" <?php echo ! empty( $current_settings['display_phone'] ) ? 'checked' : ''; ?> name="wcpdf_settings[wpo_wcpdf_documents_settings_invoice][display_phone]" value="1">
+				<label for="display-phone" class="slider"></label>
 			</td>
 		</tr>
 		<tr>
@@ -56,9 +58,9 @@
 				<select id="display-date" name="wcpdf_settings[wpo_wcpdf_documents_settings_invoice][display_date]">
 					<?php
 						$options = array(
-							''             => __( 'No' , 'woocommerce-pdf-invoices-packing-slips' ),
-							'invoice_date' => __( 'Invoice Date' , 'woocommerce-pdf-invoices-packing-slips' ),
-							'order_date'   => __( 'Order Date' , 'woocommerce-pdf-invoices-packing-slips' ),
+							''              => __( 'No', 'woocommerce-pdf-invoices-packing-slips' ),
+							'document_date' => __( 'Invoice Date', 'woocommerce-pdf-invoices-packing-slips' ),
+							'order_date'    => __( 'Order Date', 'woocommerce-pdf-invoices-packing-slips' ),
 						);
 						foreach ( $options as $slug => $name ) {
 							$selected = ( ! empty( $current_settings['display_date'] ) && $current_settings['display_date'] == $slug ) ? 'selected' : '';

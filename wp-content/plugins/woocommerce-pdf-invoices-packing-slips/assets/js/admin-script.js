@@ -49,10 +49,21 @@ jQuery( function( $ ) {
 	$( "[name='wpo_wcpdf_documents_settings_invoice[display_number]']" ).on( 'change', function( event ) {
 		if ( $( this ).val() == 'order_number' ) {
 			$( this ).closest( 'td' ).find( '.description' ).slideDown();
-			$( this ).closest( 'tr' ).next( 'tr' ).hide();
+			$( this ).closest( 'tr' ).nextAll( 'tr' ).has( 'input#next_invoice_number' ).first().hide();
 		} else {
 			$( this ).closest( 'td' ).find( '.description' ).hide();
-			$( this ).closest( 'tr' ).next( 'tr' ).show();
+			$( this ).closest( 'tr' ).nextAll( 'tr' ).has( 'input#next_invoice_number' ).first().show();
+		}
+	} ).trigger( 'change' );
+
+	// disable encrypted pdf option for non UBL 2.1 formats
+	$( "[name='wpo_wcpdf_documents_settings_invoice_ubl[ubl_format]']" ).on( 'change', function( event ) {
+		let $encryptedPdfCheckbox = $( this ).closest( 'form' ).find( "[name='wpo_wcpdf_documents_settings_invoice_ubl[include_encrypted_pdf]']" );
+
+		if ( $( this ).val() !== 'ubl_2_1' ) {
+			$encryptedPdfCheckbox.prop( 'checked', false ).prop( 'disabled', true );
+		} else {
+			$encryptedPdfCheckbox.prop( 'disabled', false );
 		}
 	} ).trigger( 'change' );
 
@@ -373,7 +384,14 @@ jQuery( function( $ ) {
 	} );
 
 	// Trigger the Preview
-	function triggerPreview( timeoutDuration ) {
+	function triggerPreview( timeoutDuration = 0 ) {
+		$previewStates = $( '#wpo-wcpdf-preview-wrapper' ).data( 'preview-states' );
+		
+		// Check if preview is disabled and return
+		if ( 'undefined' === $previewStates || 1 === $previewStates ) {
+			return;
+		}
+		
 		timeoutDuration = typeof timeoutDuration == 'number' ? timeoutDuration : 0;
 
 		loadPreviewData();
@@ -430,6 +448,7 @@ jQuery( function( $ ) {
 
 	// Load the Preview with AJAX
 	function ajaxLoadPreview() {
+		console.log( 'Loading preview...' );
 		let worker   = wpo_wcpdf_admin.pdfjs_worker;
 		let canvasId = 'preview-canvas';
 		let data     = {
@@ -595,5 +614,31 @@ jQuery( function( $ ) {
 	}
 
 	//----------> /Preview <----------//
+
+	function settingsAccordion() {
+		// Default to expanded for '#general', collapsed for others.
+		$( '.settings_category' ).not( '#general' ).find( '.form-table' ).hide();
+		$( '#general > h2' ).addClass( 'active' );
+
+		// Retrieve the state from localStorage
+		$( '.settings_category h2' ).each( function( index ) {
+			const state = localStorage.getItem( 'wcpdf_accordion_state_' + index );
+			if ( 'true' === state ) {
+				$( this ).addClass( 'active' ).next( '.form-table' ).show();
+			}
+		} );
+
+		$('.settings_category h2' ).on( 'click', function() {
+			const index = $( '.settings_category h2' ).index( this );
+
+			$( this ).toggleClass( 'active' ).next( '.form-table' ).slideToggle( 'fast', function() {
+				// Save the state in localStorage
+				const isVisible = $( this ).is( ':visible' );
+				localStorage.setItem( 'wcpdf_accordion_state_' + index, isVisible );
+			} );
+		} );
+	}
+
+	settingsAccordion();
 
 } );

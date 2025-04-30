@@ -43,7 +43,7 @@ $log_enable = Hubwoo::is_log_enable();
 					<th>
 					<?php
 					echo esc_html( Hubwoo::get_current_crm_name() );
-					esc_html_e( ' Object', 'integration-with-quickbooks' );
+					esc_html_e( ' Object', 'makewebbetter-hubspot-for-woocommerce' );
 					?>
 					</th>
 					<th><?php esc_html_e( 'Time', 'makewebbetter-hubspot-for-woocommerce' ); ?></th>

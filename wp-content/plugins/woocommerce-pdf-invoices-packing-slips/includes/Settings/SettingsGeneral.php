@@ -22,11 +22,15 @@ class SettingsGeneral {
 
 	public function __construct()	{
 		add_action( 'admin_init', array( $this, 'init_settings' ) );
-		add_action( 'wpo_wcpdf_settings_output_general', array( $this, 'output' ), 10, 1 );
+		add_action( 'wpo_wcpdf_settings_output_general', array( $this, 'output' ), 10, 2 );
 		add_action( 'wpo_wcpdf_before_settings', array( $this, 'attachment_settings_hint' ), 10, 2 );
 	}
 
-	public function output( $section ) {
+	public function output( $section, $nonce ) {
+		if ( ! wp_verify_nonce( $nonce, 'wp_wcpdf_settings_page_nonce' ) ) {
+			return;
+		}
+		
 		settings_fields( $this->option_name );
 		do_settings_sections( $this->option_name );
 
@@ -180,8 +184,7 @@ class SettingsGeneral {
 				'args'     => array(
 					'option_name'  => $option_name,
 					'id'           => 'vat_number',
-					'translatable' => true,
-					'description'  => __( 'Required for UBL output format.<br>You can display this number on the invoice from the document settings.', 'woocommerce-pdf-invoices-packing-slips' ) . ' ' . $requires_pro        ,
+					'description'  => __( 'Required for UBL output format.<br>You can display this number on the invoice from the document settings.', 'woocommerce-pdf-invoices-packing-slips' ) . ' ' . $requires_pro,
 				)
 			),
 			array(
@@ -193,8 +196,20 @@ class SettingsGeneral {
 				'args'     => array(
 					'option_name'  => $option_name,
 					'id'           => 'coc_number',
+					'description'  => __( 'Required for UBL output format.<br>You can display this number on the invoice from the document settings.', 'woocommerce-pdf-invoices-packing-slips' ) . ' ' . $requires_pro,
+				)
+			),
+			array(
+				'type'     => 'setting',
+				'id'       => 'shop_phone_number',
+				'title'    => __( 'Shop Phone Number', 'woocommerce-pdf-invoices-packing-slips' ),
+				'callback' => 'text_input',
+				'section'  => 'general_settings',
+				'args'     => array(
+					'option_name'  => $option_name,
+					'id'           => 'shop_phone_number',
 					'translatable' => true,
-					'description'  => __( 'Required for UBL output format.<br>You can display this number on the invoice from the document settings.', 'woocommerce-pdf-invoices-packing-slips' ) . ' ' . $requires_pro        ,
+					'description'  => __( 'Mandatory for certain UBL formats.', 'woocommerce-pdf-invoices-packing-slips' ),
 				)
 			),
 			array(
@@ -290,7 +305,7 @@ class SettingsGeneral {
 		// save or check option to hide attachments settings hint
 		if ( isset( $_REQUEST['wpo_wcpdf_hide_attachments_hint'] ) && isset( $_REQUEST['_wpnonce'] ) ) {
 			// validate nonce
-			if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'hide_attachments_hint_nonce' ) ) {
+			if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'hide_attachments_hint_nonce' ) ) {
 				wcpdf_log_error( 'You do not have sufficient permissions to perform this action: wpo_wcpdf_hide_attachments_hint' );
 				$hide_hint = false;
 			} else {
@@ -320,18 +335,28 @@ class SettingsGeneral {
 		$template_list = array();
 		foreach ( $installed_templates as $path => $template_id ) {
 			$template_name = basename( $template_id );
-			$group = dirname( $template_id );
+			$group         = dirname( $template_id );
+
+			// check if this is an extension template
+			if ( false !== strpos( $group, 'extension::' ) ) {
+				$extension = explode( '::', $group );
+				$group     = 'extension';
+			}
+
 			switch ( $group ) {
 				case 'default':
 				case 'premium_plugin':
 					// no suffix
+					break;
+				case 'extension':
+					$template_name = sprintf( '%s (%s) [%s]', $template_name, __( 'Extension', 'woocommerce-pdf-invoices-packing-slips' ), $extension[1] );
 					break;
 				case 'theme':
 				default:
 					$template_name = sprintf( '%s (%s)', $template_name, __( 'Custom', 'woocommerce-pdf-invoices-packing-slips' ) );
 					break;
 			}
-			$template_list[$template_id] = $template_name;
+			$template_list[ $template_id ] = $template_name;
 		}
 		return $template_list;
 	}
@@ -354,7 +379,7 @@ class SettingsGeneral {
 
 		$template_paths = apply_filters( 'wpo_wcpdf_template_paths', $template_paths );
 
-		if ( defined( 'WP_CONTENT_DIR' ) && ! empty( WP_CONTENT_DIR ) && false !== strpos( WP_CONTENT_DIR, ABSPATH ) ) {
+		if ( defined( 'WP_CONTENT_DIR' ) && ! empty( WP_CONTENT_DIR ) && ! empty( ABSPATH ) && false !== strpos( WP_CONTENT_DIR, ABSPATH ) ) {
 			$forwardslash_basepath = str_replace( '\\', '/', ABSPATH );
 		} else {
 			$forwardslash_basepath = str_replace( '\\', '/', WP_CONTENT_DIR );
@@ -368,18 +393,19 @@ class SettingsGeneral {
 					continue;
 				}
 				// we're stripping abspath to make the plugin settings more portable
-				$forwardslash_dir = str_replace( '\\', '/', $dir );
-				$installed_templates[ str_replace( $forwardslash_basepath, '', $forwardslash_dir ) ] = basename( $dir );
+				$forwardslash_dir                      = str_replace( '\\', '/', $dir );
+				$relative_path                         = ! empty( $forwardslash_dir ) ? str_replace( $forwardslash_basepath, '', $forwardslash_dir ) : '';
+				$installed_templates[ $relative_path ] = basename( $dir );
 			}
 		}
 
 		// remove parent doubles
 		$installed_templates = array_unique( $installed_templates );
 
-		if ( empty( $installed_templates ) ) {
+		if ( empty( $installed_templates ) && ! empty( $template_paths['default'] ) ) {
 			// fallback to Simple template for servers with glob() disabled
 			$simple_template_path = str_replace( ABSPATH, '', $template_paths['default'] . 'Simple' );
-			$installed_templates[$simple_template_path] = 'Simple';
+			$installed_templates[ $simple_template_path ] = 'Simple';
 		}
 
 		return apply_filters( 'wpo_wcpdf_templates', $installed_templates );

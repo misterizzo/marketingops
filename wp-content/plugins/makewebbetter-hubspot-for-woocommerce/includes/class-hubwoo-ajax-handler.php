@@ -847,7 +847,8 @@ if ( ! class_exists( 'HubWooAjaxHandler' ) ) {
 			// check the nonce sercurity.
 			check_ajax_referer( 'hubwoo_security', 'hubwooSecurity' );
 
-			if ( isset( $_POST['updates'] ) && ! empty( $_POST['action'] ) ) {
+			if ( isset( $_POST['updates'] ) && ! empty( $_POST['action'] ) && current_user_can('manage_options') ) {
+				
 				$updates = map_deep( wp_unslash( $_POST['updates'] ), 'sanitize_text_field' );
 
 				if ( isset( $_POST['type'] ) ) {

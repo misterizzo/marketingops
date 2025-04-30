@@ -1,6 +1,10 @@
  *** MWB HubSpot for WooCommerce Changelog ***
 
+2025-02-12 - version 1.6.1
+* Fix   - Minor Fixes.
 
+2024-12-03 - version 1.5.9
+* Fix   - Added search filter.
 
 2024-10-24 - version 1.5.8
 * Fix   - Fixed Abandoned Cart bugs.

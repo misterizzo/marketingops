@@ -16,7 +16,7 @@ class UBLMaker {
 
 	public function write( $filename, $contents ) {
 		$full_file_name = $this->get_file_path() . $filename;
-		$status         = file_put_contents( $full_file_name, $contents );
+		$status         = WPO_WCPDF()->file_system->put_contents( $full_file_name, $contents, FS_CHMOD_FILE );
 
 		if ( false === $status ) {
 			throw new FileWriteException( 'Error writing UBL file' );
