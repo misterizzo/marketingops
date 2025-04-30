@@ -31,6 +31,13 @@ class WC_Settings_Shipping extends WC_Settings_Page {
 	}
 
 	/**
+	 * Setting page icon.
+	 *
+	 * @var string
+	 */
+	public $icon = 'shipping';
+
+	/**
 	 * Add this page to settings.
 	 *
 	 * @param array $pages Current pages.
@@ -86,18 +93,6 @@ class WC_Settings_Shipping extends WC_Settings_Page {
 	 */
 	protected function get_shipping_methods() {
 		return WC()->shipping()->get_shipping_methods();
-	}
-
-	/**
-	 * Get settings for the default section.
-	 *
-	 * The original implementation of 'get_settings' was returning the settings for the "Options" section
-	 * when the supplied value for $current_section was ''.
-	 *
-	 * @return array
-	 */
-	protected function get_settings_for_default_section() {
-		return $this->get_settings_for_options_section();
 	}
 
 	/**

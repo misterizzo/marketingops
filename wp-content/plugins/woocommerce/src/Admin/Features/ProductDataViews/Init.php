@@ -28,7 +28,7 @@ class Init {
 				add_filter(
 					'admin_body_class',
 					static function ( $classes ) {
-						return "$classes is-fullscreen-mode";
+						return "$classes";
 					}
 				);
 			}
@@ -38,7 +38,7 @@ class Init {
 	/**
 	 * Returns true if we are on a JS powered admin page.
 	 */
-	private static function is_product_data_view_page() {
+	public static function is_product_data_view_page() {
 		// phpcs:disable WordPress.Security.NonceVerification
 		return isset( $_GET['page'] ) && 'woocommerce-products-dashboard' === $_GET['page'];
 		// phpcs:enable WordPress.Security.NonceVerification
@@ -109,9 +109,9 @@ class Init {
 		}
 		$ptype_obj = get_post_type_object( 'product' );
 		add_submenu_page(
-			'woocommerce',
+			'edit.php?post_type=product',
 			$ptype_obj->labels->name,
-			esc_html__( 'All Products', 'woocommerce' ),
+			esc_html__( 'All Products ( new )', 'woocommerce' ),
 			'manage_woocommerce',
 			'woocommerce-products-dashboard',
 			array( $this, 'woocommerce_products_dashboard' ),

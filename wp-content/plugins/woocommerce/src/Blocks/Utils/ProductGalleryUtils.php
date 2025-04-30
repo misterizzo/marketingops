@@ -55,7 +55,7 @@ class ProductGalleryUtils {
 					$product_image_html_processor = new \WP_HTML_Tag_Processor( $product_image_html );
 					$product_image_html_processor->next_tag( 'img' );
 					$product_image_html_processor->set_attribute(
-						'data-wc-context',
+						'data-wp-context',
 						wp_json_encode(
 							array(
 								'imageId' => $product_gallery_image_id,
@@ -63,6 +63,10 @@ class ProductGalleryUtils {
 							JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP
 						)
 					);
+
+					if ( wp_is_mobile() ) {
+						$product_image_html_processor->set_attribute( 'loading', 'eager' );
+					}
 
 					$product_gallery_images[] = $product_image_html_processor->get_updated_html();
 				}

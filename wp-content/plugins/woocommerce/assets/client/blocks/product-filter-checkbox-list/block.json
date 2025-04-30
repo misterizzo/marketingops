@@ -11,12 +11,14 @@
 	"textdomain": "woocommerce",
 	"apiVersion": 3,
 	"ancestor": [
-		"woocommerce/product-filter-attribute"
+		"woocommerce/product-filter-attribute",
+		"woocommerce/product-filter-status"
 	],
 	"supports": {
 		"color": {
 			"enableContrastChecker": false
-		}
+		},
+		"interactivity": true
 	},
 	"usesContext": [
 		"filterData"
