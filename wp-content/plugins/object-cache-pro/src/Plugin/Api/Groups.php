@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -18,30 +18,17 @@ namespace RedisCachePro\Plugin\Api;
 
 use WP_Error;
 use WP_REST_Server;
-use WP_REST_Controller;
 
-use RedisCachePro\Plugin;
 use RedisCachePro\ObjectCaches\ObjectCacheInterface;
 
-class Groups extends WP_REST_Controller
+class Groups extends Controller
 {
     /**
      * The resource name of this controller's route.
      *
      * @var string
      */
-    protected $resource_name;
-
-    /**
-     * Create a new instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->namespace = 'objectcache/v1';
-        $this->resource_name = 'groups';
-    }
+    protected $resource_name = 'groups';
 
     /**
      * Register all REST API routes.
@@ -54,42 +41,16 @@ class Groups extends WP_REST_Controller
             [
                 'methods' => WP_REST_Server::READABLE,
                 'callback' => [$this, 'get_items'],
-                'permission_callback' => [$this, 'item_permissions_check'],
+                'permission_callback' => [$this, 'get_items_permissions_check'],
             ],
             [
                 'methods' => WP_REST_Server::DELETABLE,
                 'callback' => [$this, 'delete_item'],
-                'permission_callback' => [$this, 'item_permissions_check'],
+                'permission_callback' => [$this, 'delete_item_permissions_check'],
                 'args' => $this->get_endpoint_args_for_item_schema(WP_REST_Server::DELETABLE),
             ],
             'schema' => [$this, 'get_public_item_schema'],
         ]);
-    }
-
-    /**
-     * The permission callback for the endpoint.
-     *
-     * @param  \WP_REST_Request  $request
-     * @return true|\WP_Error
-     */
-    public function item_permissions_check($request)
-    {
-        /**
-         * Filter the capability required to access REST API endpoints.
-         *
-         * @param  string  $capability  The drop-in metadata.
-         */
-        $capability = (string) apply_filters('objectcache_rest_capability', Plugin::Capability);
-
-        if (current_user_can($capability)) {
-            return true;
-        }
-
-        return new WP_Error(
-            'rest_forbidden',
-            'Sorry, you are not allowed to do that.',
-            ['status' => rest_authorization_required_code()]
-        );
     }
 
     /**
@@ -136,11 +97,12 @@ class Groups extends WP_REST_Controller
 
         foreach ($connection->listKeys($pattern) as $keys) {
             foreach ($keys as $key) {
-                $groups[$this->parseGroup($key)][] = $key;
+                $id = $this->parseGroup($key);
+                $groups[$id] = ($groups[$id] ?? 0) + 1;
             }
         }
 
-        $groups = $this->prepareGroupsForResponse(array_map('count', $groups));
+        $groups = $this->prepareGroupsForResponse($groups);
 
         /** @var \WP_REST_Response $response */
         $response = rest_ensure_response($groups);

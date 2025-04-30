@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -58,9 +58,9 @@ class PhpRedis extends Client
 
     public const ATOMIC = 0;
 
-    public const PIPELINE = 1;
+    public const MULTI = 1;
 
-    public const MULTI = 2;
+    public const PIPELINE = 2;
 
     public const COMPRESSION_NONE = 0;
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -16,12 +16,15 @@ declare(strict_types=1);
 
 namespace RedisCachePro\Connections;
 
+use Throwable;
 use Relay\Sentinel;
 
 use RedisCachePro\Clients\RelaySentinel;
 use RedisCachePro\Connectors\RelayConnector;
 use RedisCachePro\Configuration\Configuration;
 use RedisCachePro\Exceptions\ConnectionException;
+
+use function RedisCachePro\log;
 
 class RelaySentinelsConnection extends RelayReplicatedConnection implements ConnectionInterface
 {
@@ -39,9 +42,9 @@ class RelaySentinelsConnection extends RelayReplicatedConnection implements Conn
      *
      * If the state is `null` no connection has been established.
      * If the state is `false` the connection failed or a timeout occurred.
-     * If the state is a `RedisSentinel` object it's the current Sentinel node.
+     * If the state is a `RelaySentinel` object it's the current Sentinel node.
      *
-     * @var array<mixed>
+     * @var array<string, \RedisCachePro\Clients\RelaySentinel|null|false>
      */
     protected $sentinels;
 
@@ -58,7 +61,21 @@ class RelaySentinelsConnection extends RelayReplicatedConnection implements Conn
             $this->sentinels[$sentinel] = null;
         }
 
+        if (RelayConnector::supports('get-meta')) {
+            $this->supportsGetWithMeta = true;
+        }
+
         $this->connectToSentinels();
+    }
+
+    /**
+     * Returns the current Sentinel connection.
+     *
+     * @return \RedisCachePro\Clients\RelaySentinel|false|null
+     */
+    public function sentinel()
+    {
+        return $this->sentinels[$this->sentinel];
     }
 
     /**
@@ -104,9 +121,15 @@ class RelaySentinelsConnection extends RelayReplicatedConnection implements Conn
      */
     protected function discoverPrimary()
     {
-        $primary = $this->sentinel()->getMasterAddrByName($this->config->service);
+        if (! $sentinel = $this->sentinel()) {
+            throw new ConnectionException(sprintf(
+                'Unable to discover sentinel primary for `%s` (%s)',
+                $this->sentinel,
+                gettype($this->sentinel)
+            ));
+        }
 
-        if (! $primary) {
+        if (! $primary = $sentinel->getMasterAddrByName($this->config->service)) {
             throw new ConnectionException("Failed to retrieve sentinel primary of `{$this->sentinel}`");
         }
 
@@ -134,11 +157,19 @@ class RelaySentinelsConnection extends RelayReplicatedConnection implements Conn
      */
     protected function discoverReplicas()
     {
-        $replicas = $this->sentinel()->slaves($this->config->service);
+        if (! $sentinel = $this->sentinel()) {
+            throw new ConnectionException(sprintf(
+                'Unable to discover sentinel replicas for `%s` (%s)',
+                $this->sentinel,
+                gettype($this->sentinel)
+            ));
+        }
 
-        if (! $replicas) {
+        if (! $replicas = $sentinel->slaves($this->config->service)) {
             throw new ConnectionException("Failed to discover Sentinel replicas of `{$this->sentinel}`");
         }
+
+        $this->replicas = [];
 
         foreach ($replicas as $replica) {
             if (($replica['role-reported'] ?? '') !== 'slave') {
@@ -149,17 +180,11 @@ class RelaySentinelsConnection extends RelayReplicatedConnection implements Conn
             $config->setHost($replica['ip']);
             $config->setPort($replica['port']);
 
-            $this->replicas[$replica['name']] = RelayConnector::connectToInstance($config);
+            try {
+                $this->replicas[$replica['name']] = RelayConnector::connectToInstance($config);
+            } catch (Throwable $error) {
+                log('warning', $error->getMessage());
+            }
         }
-    }
-
-    /**
-     * Returns the current Sentinel connection.
-     *
-     * @return \RedisCachePro\Clients\RelaySentinel
-     */
-    public function sentinel()
-    {
-        return $this->sentinels[$this->sentinel];
     }
 }

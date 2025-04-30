@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -40,6 +40,11 @@ trait Meta
         add_filter("network_admin_plugin_action_links_{$this->basename}", [$this, 'actionLinks']);
 
         add_filter('manage_sites_action_links', [$this, 'siteActionLinks'], 10, 2);
+
+        // allow plugin information to be viewed in version controlled environments
+        if ($this->isPluginInformationRequest()) {
+            add_filter('file_mod_allowed', '__return_true');
+        }
     }
 
     /**
@@ -175,5 +180,29 @@ trait Meta
         }
 
         return $result;
+    }
+
+    /**
+     * Determines whether the request is for this plugin's information.
+     *
+     * @return bool
+     */
+    public function isPluginInformationRequest()
+    {
+        global $pagenow;
+
+        if ($pagenow !== 'plugin-install.php') {
+            return false;
+        }
+
+        if (($_GET['tab'] ?? '') !== 'plugin-information') {
+            return false;
+        }
+
+        if (($_GET['plugin'] ?? '') !== $this->slug()) {
+            return false;
+        }
+
+        return true;
     }
 }

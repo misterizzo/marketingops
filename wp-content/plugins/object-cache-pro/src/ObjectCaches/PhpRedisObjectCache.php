@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -211,6 +211,8 @@ class PhpRedisObjectCache extends ObjectCache implements MeasuredObjectCacheInte
     /**
      * Decrements numeric cache item's value.
      *
+     * To preserve the key's expiry Redis 6.0 and PhpRedis 5.3 or newer is required.
+     *
      * @param  int|string  $key
      * @param  int  $offset
      * @param  string  $group
@@ -245,7 +247,11 @@ class PhpRedisObjectCache extends ObjectCache implements MeasuredObjectCacheInte
             }
 
             $value = $this->decrement($value, $offset);
-            $result = $this->connection->set($id, $value);
+            $result = $this->connection->set($id, $value, ['KEEPTTL']);
+
+            if ($result === false && $this->connection->lastErrorWasSyntaxError()) {
+                $result = $this->connection->set($id, $value);
+            }
 
             $this->metrics->write($group);
 
@@ -431,6 +437,10 @@ class PhpRedisObjectCache extends ObjectCache implements MeasuredObjectCacheInte
      */
     public function flush_group(string $group): bool
     {
+        if ($this->config->group_flush === Configuration::GROUP_FLUSH_FULL) {
+            return $this->flush();
+        }
+
         unset($this->cache[$group]);
         unset($this->prefetch[$group]);
 
@@ -462,6 +472,9 @@ class PhpRedisObjectCache extends ObjectCache implements MeasuredObjectCacheInte
 
     /**
      * Retrieves the cache contents from the cache by key and group.
+     *
+     * Using `$found` to disambiguate a return value of `false`
+     * requires PhpRedis 6.2.0 or Relay v0.10.1 or newer.
      *
      * @param  int|string  $key
      * @param  string  $group
@@ -505,10 +518,19 @@ class PhpRedisObjectCache extends ObjectCache implements MeasuredObjectCacheInte
         }
 
         $found = false;
+        $length = -1;
 
         try {
             if ($this->isAllOptionsId($id)) {
                 $data = $this->getAllOptions($id);
+            } elseif ($this->connection->supportsGetWithMeta) {
+                $data = false;
+                $result = $this->connection->getWithMeta($id);
+
+                if (is_array($result)) {
+                    $data = $result[0];
+                    $length = $result[1]['length'];
+                }
             } else {
                 $data = $this->connection->get($id);
             }
@@ -520,7 +542,7 @@ class PhpRedisObjectCache extends ObjectCache implements MeasuredObjectCacheInte
 
         $this->metrics->read($group);
 
-        if ($data === false) {
+        if ($data === false && $length < 0) {
             $this->metrics->misses += 1;
             $this->metrics->storeMisses += 1;
 
@@ -672,6 +694,8 @@ class PhpRedisObjectCache extends ObjectCache implements MeasuredObjectCacheInte
     /**
      * Increment numeric cache item's value.
      *
+     * To preserve the key's expiry Redis 6.0 and PhpRedis 5.3 or newer is required.
+     *
      * @param  int|string  $key
      * @param  int  $offset
      * @param  string  $group
@@ -706,7 +730,11 @@ class PhpRedisObjectCache extends ObjectCache implements MeasuredObjectCacheInte
             }
 
             $value = $this->increment($value, $offset);
-            $result = $this->connection->set($id, $value);
+            $result = $this->connection->set($id, $value, ['KEEPTTL']);
+
+            if ($result === false && $this->connection->lastErrorWasSyntaxError()) {
+                $result = $this->connection->set($id, $value);
+            }
 
             $this->metrics->write($group);
 
@@ -901,7 +929,7 @@ class PhpRedisObjectCache extends ObjectCache implements MeasuredObjectCacheInte
         }
 
         if ($expire) {
-            return $this->connection->setex($id, $expire, $data);
+            return $this->connection->set($id, $data, ['EX' => $expire]);
         }
 
         if ($option) {
@@ -949,7 +977,7 @@ class PhpRedisObjectCache extends ObjectCache implements MeasuredObjectCacheInte
             }
 
             if ($expire) {
-                $pipe->setex($id, $expire, $value);
+                $pipe->set($id, $value, ['EX' => $expire]);
                 continue;
             }
 
@@ -996,7 +1024,7 @@ class PhpRedisObjectCache extends ObjectCache implements MeasuredObjectCacheInte
     }
 
     /**
-     * Deletes keys matching given patterns atomically.
+     * Deletes keys matching given patterns.
      *
      * @internal
      * @param  string|string[]  $patterns

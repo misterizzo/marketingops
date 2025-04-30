@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -77,11 +77,11 @@ trait PhpRedisTransactions
                 return $pipe->exec();
             }, 'exec');
         } catch (Throwable $th) {
+            throw $th;
+        } finally {
             if ($this->client->getMode() !== self::ATOMIC) {
                 $this->client->discard();
             }
-
-            throw $th;
         }
     }
 }

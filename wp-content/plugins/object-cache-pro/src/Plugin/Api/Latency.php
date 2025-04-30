@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -20,31 +20,18 @@ use Throwable;
 
 use WP_Error;
 use WP_REST_Server;
-use WP_REST_Controller;
 
-use RedisCachePro\Plugin;
 use RedisCachePro\Configuration\Configuration;
 use RedisCachePro\ObjectCaches\ObjectCacheInterface;
 
-class Latency extends WP_REST_Controller
+class Latency extends Controller
 {
     /**
      * The resource name of this controller's route.
      *
      * @var string
      */
-    protected $resource_name;
-
-    /**
-     * Create a new instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->namespace = 'objectcache/v1';
-        $this->resource_name = 'latency';
-    }
+    protected $resource_name = 'latency';
 
     /**
      * Register all REST API routes.
@@ -61,32 +48,6 @@ class Latency extends WP_REST_Controller
             ],
             'schema' => [$this, 'get_public_item_schema'],
         ]);
-    }
-
-    /**
-     * The permission callback for the endpoint.
-     *
-     * @param  \WP_REST_Request  $request
-     * @return true|\WP_Error
-     */
-    public function get_items_permissions_check($request)
-    {
-        /**
-         * Filter the capability required to access REST API endpoints.
-         *
-         * @param  string  $capability  The drop-in metadata.
-         */
-        $capability = (string) apply_filters('objectcache_rest_capability', Plugin::Capability);
-
-        if (current_user_can($capability)) {
-            return true;
-        }
-
-        return new WP_Error(
-            'rest_forbidden',
-            'Sorry, you are not allowed to do that.',
-            ['status' => rest_authorization_required_code()]
-        );
     }
 
     /**

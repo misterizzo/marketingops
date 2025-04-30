@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -521,10 +521,11 @@ class Commands extends WP_CLI_Command
         $database = $config->database ?? 0;
         $username = $config->username;
         $password = $config->password;
+        $scheme = $config->scheme ?? 'tcp';
 
         $info = (object) [
             'server' => null,
-            'scheme' => strtoupper($config->scheme),
+            'scheme' => strtoupper($scheme),
             'auth' => 'no password',
         ];
 
@@ -534,12 +535,13 @@ class Commands extends WP_CLI_Command
         if (is_array($config->cluster)) {
             $command .= ' -c';
 
-            $primary = parse_url(reset($config->cluster));
+            $primary = parse_url(reset($config->cluster)); // @phpstan-ignore-line
             $host = $primary['host']; // @phpstan-ignore-line
             $port = $primary['port']; // @phpstan-ignore-line
 
-            if (strtolower($primary['scheme']) === 'tls') { // @phpstan-ignore-line
-                $command .= ' --tls';
+            if (! empty($primary['scheme'])) {
+                $scheme = $primary['scheme'];
+                $info->scheme = strtoupper($scheme);
             }
         }
 
@@ -553,13 +555,16 @@ class Commands extends WP_CLI_Command
 
         $arguments[] = $host;
 
-        if ($config->scheme === 'unix') {
+        if ($scheme === 'unix') {
             $command .= ' -s %s';
             $info->server = "%y{$host}%n";
         } else {
             $command .= ' -h %s -p %s';
             $arguments[] = $port;
             $info->server = "%y{$host}%n:%y{$port}%n";
+            if ($scheme === 'tls') {
+                $command .= ' --tls';
+            }
         }
 
         if ($password) {
@@ -572,10 +577,6 @@ class Commands extends WP_CLI_Command
             $command .= ' --user %s';
             $arguments[] = $username;
             $info->auth = "as %y{$username}%n";
-        }
-
-        if ($config->scheme === 'tls') {
-            $command .= ' --tls';
         }
 
         // The `--no-auth-warning` option was added in Redis 4.0

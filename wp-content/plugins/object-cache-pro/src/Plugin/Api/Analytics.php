@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -18,9 +18,6 @@ namespace RedisCachePro\Plugin\Api;
 
 use WP_Error;
 use WP_REST_Server;
-use WP_REST_Controller;
-
-use RedisCachePro\Plugin;
 
 use RedisCachePro\ObjectCaches\ObjectCacheInterface;
 use RedisCachePro\ObjectCaches\MeasuredObjectCacheInterface;
@@ -29,14 +26,14 @@ use RedisCachePro\Metrics\RedisMetrics;
 use RedisCachePro\Metrics\RelayMetrics;
 use RedisCachePro\Metrics\WordPressMetrics;
 
-class Analytics extends WP_REST_Controller
+class Analytics extends Controller
 {
     /**
      * The resource name of this controller's route.
      *
      * @var string
      */
-    protected $resource_name;
+    protected $resource_name = 'analytics';
 
     /**
      * The default interval, in seconds.
@@ -58,17 +55,6 @@ class Analytics extends WP_REST_Controller
         60 => 30,
         300 => 24,
     ];
-
-    /**
-     * Create a new instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->namespace = 'objectcache/v1';
-        $this->resource_name = 'analytics';
-    }
 
     /**
      * Returns the default interval, in seconds.
@@ -119,32 +105,6 @@ class Analytics extends WP_REST_Controller
             ],
             'schema' => [$this, 'get_public_item_schema'],
         ]);
-    }
-
-    /**
-     * The permission callback for the endpoint.
-     *
-     * @param  \WP_REST_Request  $request
-     * @return true|\WP_Error
-     */
-    public function get_items_permissions_check($request)
-    {
-        /**
-         * Filter the capability required to access REST API endpoints.
-         *
-         * @param  string  $capability  The capability name.
-         */
-        $capability = (string) apply_filters('objectcache_rest_capability', Plugin::Capability);
-
-        if (current_user_can($capability)) {
-            return true;
-        }
-
-        return new WP_Error(
-            'rest_forbidden',
-            'Sorry, you are not allowed to do that.',
-            ['status' => rest_authorization_required_code()]
-        );
     }
 
     /**
@@ -252,23 +212,21 @@ class Analytics extends WP_REST_Controller
      */
     public function prepare_item_for_response($item, $request) // @phpstan-ignore-line
     {
-        $fields = $this->get_fields_for_response($request);
-
-        if (rest_is_field_included('count', $fields)) {
+        if ($this->fieldIsIncluded('count', $request)) {
             $item['count'] = count($item['measurements'] ?? []);
         }
 
         $rfc3339 = 'Y-m-d\TH:i:s';
 
-        if (rest_is_field_included('date', $fields)) {
+        if ($this->fieldIsIncluded('date', $request)) {
             $item['date'] = get_date_from_gmt("@{$item['timestamp']}", $rfc3339);
         }
 
-        if (rest_is_field_included('date_gmt', $fields)) {
+        if ($this->fieldIsIncluded('date_gmt', $request)) {
             $item['date_gmt'] = date($rfc3339, $item['timestamp']);
         }
 
-        if (rest_is_field_included('date_display', $fields)) {
+        if ($this->fieldIsIncluded('date_display', $request)) {
             $item['date_display'] = [
                 'date' => wp_date('D jS', $item['timestamp']),
                 'time' => sprintf(
@@ -283,20 +241,19 @@ class Analytics extends WP_REST_Controller
         $hasMeasurements = ! empty($item['measurements']);
 
         foreach ($this->get_metrics() as $id => $metric) {
-            foreach ($metric['computations'] as $computation) {
-                $name = $metric['group'] === 'wp'
-                    ? $id
-                    : str_replace($metric['group'], '', $id);
-
-                if (rest_is_field_included("{$id}.{$computation}", $fields)) {
-                    $item[$id][$computation] = $hasMeasurements
-                        ? $item['measurements']->{$computation}("{$metric['group']}->{$name}")
-                        : null;
+            if ($this->fieldIsIncluded($id, $request)) {
+                foreach ($metric['computations'] as $computation) {
+                    if ($hasMeasurements) {
+                        $name = $metric['group'] === 'wp' ? $id : str_replace($metric['group'], '', $id);
+                        $item[$id][$computation] = $item['measurements']->{$computation}("{$metric['group']}->{$name}");
+                    } else {
+                        $item[$id][$computation] = null;
+                    }
                 }
             }
         }
 
-        if (rest_is_field_included('measurements', $fields)) {
+        if ($this->fieldIsIncluded('measurements', $request)) {
             $item['measurements'] = array_map(static function ($measurement) {
                 return $measurement->toArray();
             }, $item['measurements'] ? $item['measurements']->all() : []);
@@ -306,6 +263,31 @@ class Analytics extends WP_REST_Controller
         $item = $this->filter_response_by_context($item, $request['context']);
 
         return $item;
+    }
+
+    /**
+     * Determine whether the provided field should
+     * be included in the response body.
+     *
+     * @param  string  $field
+     * @param  \WP_REST_Request  $request
+     * @return bool
+     */
+    protected function fieldIsIncluded($field, $request)
+    {
+        static $fields = null;
+
+        if ($fields === null) {
+            $fields = $this->get_fields_for_response($request);
+        }
+
+        static $cache = [];
+
+        if (! isset($cache[$field])) {
+            $cache[$field] = rest_is_field_included($field, $fields);
+        }
+
+        return $cache[$field];
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -15,6 +15,8 @@
 declare(strict_types=1);
 
 namespace RedisCachePro\Support;
+
+// phpcs:disable PSR1.Classes.ClassDeclaration.MultipleClasses
 
 class PluginApiResponse
 {
@@ -173,3 +175,5 @@ class ObjectCacheMetricsGroup
     /** @var float */
     public $wait = 0.0;
 }
+
+// phpcs:enable PSR1.Classes.ClassDeclaration.MultipleClasses

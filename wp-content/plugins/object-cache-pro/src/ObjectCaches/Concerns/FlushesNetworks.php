@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -48,6 +48,10 @@ trait FlushesNetworks
     {
         if (is_null($siteId)) {
             $siteId = $this->blogId;
+        }
+
+        if (is_null($siteId)) {
+            return false;
         }
 
         if (is_null($network_flush)) {

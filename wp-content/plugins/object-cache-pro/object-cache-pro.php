@@ -3,7 +3,7 @@
  * Plugin Name: Object Cache Pro
  * Plugin URI: https://objectcache.pro
  * Description: A business class Redis object cache backend for WordPress.
- * Version: 1.21.1
+ * Version: 1.23.1
  * Author: Rhubarb Group
  * Author URI: https://rhubarb.group
  * License: Proprietary
@@ -25,13 +25,13 @@ if (version_compare(PHP_VERSION, '7.2', '<')) {
  * Avoid loading plugin more than once.
  */
 if (defined('RedisCachePro\Version')) {
-    return error_log('objectcache.notice: Object Cache Pro is being loaded more than once');
+    return error_log('objectcache.warning: Object Cache Pro is being loaded more than once');
 }
 
 /**
  * The plugin version number.
  */
-define('RedisCachePro\Version', '1.21.1');
+define('RedisCachePro\Version', '1.23.1');
 
 /**
  * The absolute path to the plugin file.
@@ -52,10 +52,6 @@ add_action('plugins_loaded', function () {
     }
 
     $GLOBALS['ObjectCachePro'] = \RedisCachePro\Plugin::boot();
-
-    // `$GLOBALS['RedisCachePro']` is deprecated since version 1.14.0!
-    // Use `$GLOBALS['ObjectCachePro']` instead.
-    $GLOBALS['RedisCachePro'] = $GLOBALS['ObjectCachePro'];
 
     if (defined('WP_CLI') && WP_CLI) {
         WP_CLI::get_root_command()->remove_subcommand('redis');

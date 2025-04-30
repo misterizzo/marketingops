@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -91,6 +91,8 @@ class RelayConnector implements ConnectorInterface
                     && \defined('\Relay\Relay::BACKOFF_ALGORITHM_DECORRELATED_JITTER');
             case 'tls':
                 return true;
+            case 'get-meta':
+                return method_exists(RelayClient::class, 'getWithMeta');
             case 'allow-patterns':
                 return \defined('\Relay\Relay::OPT_ALLOW_PATTERNS');
         }

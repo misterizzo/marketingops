@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -22,11 +22,11 @@ use InvalidArgumentException;
 
 use RedisCachePro\Configuration\Configuration;
 
+use OpenTelemetry\API\Globals;
 use OpenTelemetry\API\Trace\SpanKind;
 use OpenTelemetry\API\Trace\NoopTracer;
 use OpenTelemetry\API\Trace\TracerInterface;
 use OpenTelemetry\API\Trace\TracerProviderInterface;
-use OpenTelemetry\API\Common\Instrumentation\Globals;
 
 abstract class Client implements ClientInterface
 {
@@ -111,24 +111,28 @@ abstract class Client implements ClientInterface
             return $callback;
         }
 
-        if (
-            ! \class_exists(TracerProviderInterface::class) ||
-            ! \class_exists(NoopTracer::class) ||
-            ! \class_exists(Globals::class)
-        ) {
-            return $context;
-        }
+        if ($callback === Configuration::TRACER_OPENTELEMETRY) {
+            if (
+                ! \interface_exists(TracerProviderInterface::class) ||
+                ! \class_exists(NoopTracer::class) ||
+                ! \class_exists(Globals::class)
+            ) {
+                error_log('objectcache.error: Unable to autoload `open-telemetry/api` components');
 
-        if (! $context && $callback === Configuration::TRACER_OPENTELEMETRY) {
-            $context = Globals::tracerProvider();
-        }
+                return $context;
+            }
 
-        if ($context instanceof TracerProviderInterface) {
-            $context = $this->createOpenTelemetryTracer($context);
-        }
+            if (! $context) {
+                $context = Globals::tracerProvider();
+            }
 
-        if ($context instanceof NoopTracer) {
-            return;
+            if ($context instanceof TracerProviderInterface) {
+                $context = $this->createOpenTelemetryTracer($context);
+            }
+
+            if ($context instanceof NoopTracer) {
+                return;
+            }
         }
 
         return $context;

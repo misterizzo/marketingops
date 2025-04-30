@@ -1,4 +1,22 @@
 <?php
+/**
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
+ *
+ * The Object Cache Pro Software and its related materials are property and confidential
+ * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
+ * of the Object Cache Pro Software and its related materials, in whole or in part,
+ * is strictly forbidden unless prior permission is obtained from Rhubarb Tech Inc.
+ *
+ * In addition, any reproduction, use, distribution, or exploitation of the Object Cache Pro
+ * Software and its related materials, in whole or in part, is subject to the End-User License
+ * Agreement accessible in the included `LICENSE` file, or at: https://objectcache.pro/eula
+ */
+
+declare(strict_types=1);
+
+namespace RedisCachePro;
+
+use RedisCachePro\Configuration\Configuration;
 
 defined('ABSPATH') || exit;
 
@@ -17,8 +35,8 @@ spl_autoload_register(function ($fqcn) {
     $error = json_last_error();
 
     if ($error !== JSON_ERROR_NONE || ! is_array($config)) {
-        error_log(sprintf(
-            'objectcache.warning: Unable to decode `OBJECTCACHE_CONFIG` environment variable (%s)',
+        log('warning', sprintf(
+            'Unable to decode `OBJECTCACHE_CONFIG` environment variable (%s)',
             json_last_error_msg()
         ));
 
@@ -59,3 +77,25 @@ spl_autoload_register(function ($fqcn) {
 
     define('WP_REDIS_CONFIG', $config);
 })(getenv('OBJECTCACHE_CONFIG'));
+
+if (! function_exists(__NAMESPACE__ . '\log')) :
+    /**
+     * Log a message to `error_log()` and try to respect the configured log levels.
+     *
+     * @param  string  $level
+     * @param  string  $message
+     * @return void
+     */
+    function log($level, $message)
+    {
+        $config = Configuration::safelyFrom(
+            defined('WP_REDIS_CONFIG') ? WP_REDIS_CONFIG : []
+        );
+
+        if ($config->log_levels && ! \in_array($level, $config->log_levels)) {
+            return;
+        }
+
+        \error_log("objectcache.{$level}: {$message}");
+    }
+endif;

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace RedisCachePro\Connections;
 
+use Throwable;
 use RedisSentinel;
 
 use RedisCachePro\Clients\PhpRedisSentinel;
@@ -23,6 +24,8 @@ use RedisCachePro\Clients\PhpRedisSentinel;
 use RedisCachePro\Configuration\Configuration;
 use RedisCachePro\Connectors\PhpRedisConnector;
 use RedisCachePro\Exceptions\ConnectionException;
+
+use function RedisCachePro\log;
 
 class PhpRedisSentinelsConnection extends PhpRedisReplicatedConnection implements ConnectionInterface
 {
@@ -40,9 +43,9 @@ class PhpRedisSentinelsConnection extends PhpRedisReplicatedConnection implement
      *
      * If the state is `null` no connection has been established.
      * If the state is `false` the connection failed or a timeout occurred.
-     * If the state is a `RedisSentinel` object it's the current Sentinel node.
+     * If the state is a `PhpRedisSentinel` object it's the current Sentinel node.
      *
-     * @var array<mixed>
+     * @var array<string, \RedisCachePro\Clients\PhpRedisSentinel|null|false>
      */
     protected $sentinels;
 
@@ -59,7 +62,21 @@ class PhpRedisSentinelsConnection extends PhpRedisReplicatedConnection implement
             $this->sentinels[$sentinel] = null;
         }
 
+        if (PhpRedisConnector::supports('get-meta')) {
+            $this->supportsGetWithMeta = true;
+        }
+
         $this->connectToSentinels();
+    }
+
+    /**
+     * Returns the current Sentinel connection.
+     *
+     * @return \RedisCachePro\Clients\PhpRedisSentinel|false|null
+     */
+    public function sentinel()
+    {
+        return $this->sentinels[$this->sentinel];
     }
 
     /**
@@ -113,9 +130,15 @@ class PhpRedisSentinelsConnection extends PhpRedisReplicatedConnection implement
      */
     protected function discoverPrimary()
     {
-        $primary = $this->sentinel()->getMasterAddrByName($this->config->service);
+        if (! $sentinel = $this->sentinel()) {
+            throw new ConnectionException(sprintf(
+                'Unable to discover sentinel primary for `%s` (%s)',
+                $this->sentinel,
+                gettype($this->sentinel)
+            ));
+        }
 
-        if (! $primary) {
+        if (! $primary = $sentinel->getMasterAddrByName($this->config->service)) {
             throw new ConnectionException("Failed to retrieve sentinel primary of `{$this->sentinel}`");
         }
 
@@ -142,11 +165,19 @@ class PhpRedisSentinelsConnection extends PhpRedisReplicatedConnection implement
      */
     protected function discoverReplicas()
     {
-        $replicas = $this->sentinel()->slaves($this->config->service);
+        if (! $sentinel = $this->sentinel()) {
+            throw new ConnectionException(sprintf(
+                'Unable to discover sentinel replicas for `%s` (%s)',
+                $this->sentinel,
+                gettype($this->sentinel)
+            ));
+        }
 
-        if (! $replicas) {
+        if (! $replicas = $sentinel->slaves($this->config->service)) {
             throw new ConnectionException("Failed to discover Sentinel replicas of `{$this->sentinel}`");
         }
+
+        $this->replicas = [];
 
         foreach ($replicas as $replica) {
             if (($replica['role-reported'] ?? '') !== 'slave') {
@@ -157,17 +188,11 @@ class PhpRedisSentinelsConnection extends PhpRedisReplicatedConnection implement
             $config->setHost($replica['ip']);
             $config->setPort($replica['port']);
 
-            $this->replicas[$replica['name']] = PhpRedisConnector::connectToInstance($config);
+            try {
+                $this->replicas[$replica['name']] = PhpRedisConnector::connectToInstance($config);
+            } catch (Throwable $error) {
+                log('warning', $error->getMessage());
+            }
         }
-    }
-
-    /**
-     * Returns the current Sentinel connection.
-     *
-     * @return \RedisCachePro\Clients\PhpRedisSentinel
-     */
-    public function sentinel()
-    {
-        return $this->sentinels[$this->sentinel];
     }
 }

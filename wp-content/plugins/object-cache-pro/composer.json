@@ -6,7 +6,7 @@
     "license": "proprietary",
     "require": {
         "php": "^7.2 || ^8.0",
-        "ext-redis": ">=3.1.1",
+        "ext-redis": ">=4.0.0",
         "composer/installers": "~1.0 || ~2.0"
     },
     "require-dev": {
@@ -33,7 +33,11 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
-        }
+        },
+        "exclude-from-classmap": [
+            "tests/PHPStan/",
+            "tests/bootstrap.php"
+        ]
     },
     "suggest": {
         "ext-redis": "Required to use PhpRedis as the object cache backend.",
@@ -58,8 +62,8 @@
         "coverage:http": "phpunit --testsuite Feature --coverage-clover=coverage.xml",
         "style": "php-cs-fixer fix --verbose --dry-run --diff",
         "style:fix": "php-cs-fixer fix --verbose",
-        "lint": "phpcs --no-cache --ignore=vendor --extensions=php --standard=PSR12 .",
-        "compat": "phpcs --no-cache -p --standard=PHPCompatibility --ignore=vendor,tests .",
+        "lint": "phpcs --no-cache -p -s --standard=phpcs.lint.xml --ignore=vendor .",
+        "compat": "phpcs --no-cache -p -s --standard=phpcs.compat.xml --ignore=vendor,tests .",
         "phpstan": "phpstan analyze"
     }
 }

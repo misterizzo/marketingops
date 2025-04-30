@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace RedisCachePro\Connections;
 
 use RedisCachePro\Clients\RelayCluster;
+use RedisCachePro\Connectors\RelayConnector;
 use RedisCachePro\Configuration\Configuration;
 
 /**
@@ -51,6 +52,10 @@ class RelayClusterConnection extends RelayConnection
         $this->setBackoff();
         $this->setSerializer();
         $this->setCompression();
+
+        if (RelayConnector::supports('get-meta')) {
+            $this->supportsGetWithMeta = true;
+        }
     }
 
     /**

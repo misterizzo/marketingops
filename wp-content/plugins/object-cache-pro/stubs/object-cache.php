@@ -3,7 +3,7 @@
  * Plugin Name: Object Cache Pro (Drop-in)
  * Plugin URI: https://objectcache.pro
  * Description: A business class Redis object cache backend for WordPress.
- * Version: 1.21.1
+ * Version: 1.23.1
  * Author: Rhubarb Group
  * Author URI: https://rhubarb.group
  * License: Proprietary

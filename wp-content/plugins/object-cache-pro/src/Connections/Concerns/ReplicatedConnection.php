@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -82,9 +82,9 @@ trait ReplicatedConnection
      */
     public function multi(?int $type = null)
     {
-        return $type === $this->client::PIPELINE
-            ? Transaction::multi($this->primary)
-            : Transaction::pipeline($this->primary);
+        return $type === $this->client()::PIPELINE // @phpstan-ignore-line
+            ? Transaction::pipeline($this->primary)
+            : Transaction::multi($this->primary);
     }
 
     /**

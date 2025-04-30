@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -18,6 +18,8 @@ namespace RedisCachePro\ObjectCaches\Concerns;
 
 use Throwable;
 use __PHP_Incomplete_Class;
+
+use function RedisCachePro\log;
 
 /**
  * When the `prefetch` configuration option is enabled, all persistent keys are stored in
@@ -110,13 +112,12 @@ trait PrefetchesKeys
         $this->deleteFromMemory($key, $group);
         $this->metrics->prefetches--;
 
-        if ($this->config->debug) {
-            \error_log(
-                "objectcache.warning: The cache key `{$key}` is incompatible with prefetching" .
-                " and the group `{$group}` should be added to the list of non-prefetchable groups." .
-                ' For more information see: https://objectcache.pro/docs/configuration-options/#non-prefetchable-groups'
-            );
-        }
+        log(
+            'notice',
+            "The cache key `{$key}` is incompatible with prefetching" .
+            " and the group `{$group}` should be added to the list of non-prefetchable groups." .
+            ' For more information see: https://objectcache.pro/docs/configuration-options/#non-prefetchable-groups'
+        );
     }
 
     /**

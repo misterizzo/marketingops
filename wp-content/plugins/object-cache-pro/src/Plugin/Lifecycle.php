@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -96,7 +96,7 @@ trait Lifecycle
     public function resetCache()
     {
         try {
-            $this->logFlush(null, 2);
+            $this->logFlush(null, null, 2);
 
             return $this->config->connector::connect($this->config)->flushdb();
         } catch (Exception $exception) {
@@ -156,7 +156,7 @@ trait Lifecycle
             }
 
             if ($flush['type'] === 'flush') {
-                $this->logFlush($flush['backtrace']);
+                $this->logFlush($flush['reason'] ?? null, $flush['backtrace']);
             }
 
             if ($flush['type'] === 'group-flush') {
@@ -168,11 +168,12 @@ trait Lifecycle
     /**
      * Log cache flush.
      *
+     * @param  ?string  $reason
      * @param  ?array<int, array<string, mixed>>  $backtrace
      * @param  int  $skip_frames
      * @return void
      */
-    public function logFlush($backtrace = null, int $skip_frames = 1)
+    public function logFlush($reason = null, $backtrace = null, int $skip_frames = 1)
     {
         /** @var string $traceSummary */
         $traceSummary = $backtrace
@@ -197,6 +198,7 @@ trait Lifecycle
                 'site' => $backtrace ? get_current_blog_id() : null,
                 'cron' => wp_doing_cron(),
                 'cli' => defined('WP_CLI') && WP_CLI,
+                'reason' => $reason,
                 'trace' => $traceSummary,
             ]);
 

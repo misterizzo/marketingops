@@ -2,6 +2,80 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.23.1 - 2025-03-17
+### Changed
+- Support disambiguating `false` return values using `$found` (PhpRedis 6.2; Relay 0.10.1)
+- Show integrity flush reason in flush log widget
+- Use unified base REST controller class
+- Support calling `FLUSHDB` without `ASYNC` on Relay connections
+
+### Fixed
+- Fixed undefined array key access
+- Fixed Dragonfly issues with lua scripts
+- Fixed strict types error when using `ZRANGE`
+
+## v1.23.0 - 2025-03-13
+### Added
+- Added server type to diagnostics
+- Added health checks for `KEEPTTL` requirements (Redis 6.0; PhpRedis 5.3)
+
+### Changed
+- Bump required PhpRedis version to 4.0.0
+- Promote `noeviction` health check status to critical
+- Exclude WooCommerce's `wc_cache_*` group from prefetching
+- Retry loading cache metadata with backoff
+- Reduced blocking time when pruning analytics measurements
+- Switch away from deprecated Redis commands
+- Support discarding pipelines and transactions
+- Reduced memory footprint of `Connection::command()`
+
+### Fixed
+- Prevent integrity flush when metadata can't be loaded
+- Preserve key TTL when (de|in)crementing numeric key
+- Fixed resetting log levels when `debug` mode is disabled
+- Prevent rare warnings in `connectToSentinels()`
+- Avoid undefined key notices in `RedisMetrics`
+- Avoid calling invalid calls to `flushBlog()`
+
+## v1.22.0 - 2025-01-23
+### Added
+- Added `full` option for `group_flush` configuration option
+
+### Changed
+- Switch `group_flush` default value to `scan`
+- Swap all `error_log()` call for internal `log()` helper
+- Log all messages when `debug` mode is enabled
+- Improve performance of analytics API requests
+
+### Fixed
+- Fixed rare `TypeError` in `Diagnostics::redisVersion()`
+- Fixed scheme detection for `wp redis cli` command
+- Fixed inverted multi/pipeline modes
+- Fixed OpenTelemetry tracer integration
+- Avoid cloning connection when computing metrics
+
+### Removed
+- Removed deprecated `$RedisCachePro` global
+
+## v1.21.3 - 2024-10-29
+### Changed
+- Allow more cache key separators in Relay prefix health check
+
+### Fixed
+- Fixed changelog not being accessible when `DISALLOW_FILE_MODS` is set
+- Avoid rare notice when using Query Monitor
+- Removed debug call
+
+## v1.21.2 - 2024-07-18
+### Added
+- Support setting `strict` mode using `OBJECTCACHE_STRICT` environment variable
+
+### Changed
+- Don't enable `strict` mode when a `prefix` is set
+
+### Fixed
+- Fixed connection error when no Sentinel replicas are available
+
 ## v1.21.1 - 2024-05-21
 ### Fixed
 - Fixed rare type mismatch when running admin lifecycle

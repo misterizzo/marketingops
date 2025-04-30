@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -27,6 +27,8 @@ use RedisCachePro\Metrics\WordPressMetrics;
 use RedisCachePro\Clients\PhpRedis;
 use RedisCachePro\Connections\RelayConnection;
 use RedisCachePro\Configuration\Configuration;
+
+use function RedisCachePro\log;
 
 trait TakesMeasurements
 {
@@ -151,18 +153,41 @@ trait TakesMeasurements
      */
     public function pruneMeasurements()
     {
+        $id = $this->id('measurements', 'analytics');
         $retention = $this->config->analytics->retention;
+        $remaining = 0;
 
         try {
-            $this->connection->zRemRangeByScore(
-                (string) $this->id('measurements', 'analytics'),
-                '-inf',
-                (string) (microtime(true) - $retention)
+            $threshold = $this->connection->zRangeByScore(
+                (string) $id,
+                (string) (microtime(true) - $retention),
+                '+inf',
+                ['limit' => [0, 1]]
             );
 
-            $this->metrics->write('analytics');
+            $this->metrics->write('read');
+
+            if (empty($threshold)) {
+                return;
+            }
+
+            $remaining = $this->connection->zRank((string) $id, $threshold[0]);
+            $this->metrics->write('read');
+
+            if (! $remaining) {
+                return;
+            }
         } catch (Throwable $exception) {
             $this->error($exception);
+        }
+
+        while ($remaining > 0) {
+            $chunk = min($remaining, 500);
+
+            $this->connection->zRemRangeByRank((string) $id, 0, $chunk - 1);
+            $this->metrics->write('write');
+
+            $remaining -= $chunk;
         }
     }
 
@@ -178,7 +203,7 @@ trait TakesMeasurements
             $this->config->compression === Configuration::COMPRESSION_ZSTD &&
             version_compare((string) phpversion('redis'), '5.3.5', '<')
         ) {
-            error_log('objectcache.notice: Unable to restore analytics when using Zstandard compression, please update to PhpRedis 5.3.5 or newer');
+            log('warning', 'Unable to restore analytics when using Zstandard compression, please update to PhpRedis 5.3.5 or newer');
 
             return false;
         }
@@ -192,7 +217,7 @@ trait TakesMeasurements
 
             return $dump;
         } catch (Throwable $exception) {
-            error_log("objectcache.notice: Failed to dump analytics ({$exception})");
+            log('warning', "Failed to dump analytics ({$exception})");
         }
 
         return false;
@@ -213,7 +238,7 @@ trait TakesMeasurements
 
             return $result;
         } catch (Throwable $exception) {
-            error_log("objectcache.notice: Failed to restore analytics ({$exception})");
+            log('warning', "Failed to restore analytics ({$exception})");
         }
     }
 

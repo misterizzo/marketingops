@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -34,24 +34,26 @@ use RedisCachePro\Connectors\ConnectorInterface;
 use RedisCachePro\ObjectCaches\PhpRedisObjectCache;
 use RedisCachePro\ObjectCaches\ObjectCacheInterface;
 
+use function RedisCachePro\log;
+
 /**
  * @property-read ?string $token
  * @property-read class-string<\RedisCachePro\Connectors\ConnectorInterface> $connector
  * @property-read class-string<\RedisCachePro\ObjectCaches\ObjectCacheInterface> $cache
  * @property-read string|callable|null $tracer
  * @property-read \RedisCachePro\Loggers\LoggerInterface $logger
- * @property-read ?array $log_levels
+ * @property-read ?array<string> $log_levels
  * @property-read string $scheme
  * @property-read string $host
  * @property-read int $port
  * @property-read int $database
  * @property-read ?string $username
  * @property-read ?string $password
- * @property-read string|array|null $cluster
+ * @property-read string|array<string>|null $cluster
  * @property-read string $cluster_failover
- * @property-read array $servers
+ * @property-read array<string> $servers
  * @property-read string $replication_strategy
- * @property-read array $sentinels
+ * @property-read array<string> $sentinels
  * @property-read ?string $service
  * @property-read ?string $prefix
  * @property-read int $maxttl
@@ -69,10 +71,10 @@ use RedisCachePro\ObjectCaches\ObjectCacheInterface;
  * @property-read bool $split_alloptions
  * @property-read string $serializer
  * @property-read string $compression
- * @property-read array $global_groups
- * @property-read array $non_persistent_groups
- * @property-read array $non_prefetchable_groups
- * @property-read array $tls_options
+ * @property-read array<string> $global_groups
+ * @property-read array<string> $non_persistent_groups
+ * @property-read array<string> $non_prefetchable_groups
+ * @property-read array<mixed> $tls_options
  * @property-read \RedisCachePro\Support\AnalyticsConfiguration $analytics
  * @property-read \RedisCachePro\Support\RelayConfiguration $relay
  * @property-read bool $updates
@@ -171,6 +173,14 @@ final class Configuration
      * @var string
      */
     const GROUP_FLUSH_INCREMENTAL = 'incremental';
+
+    /**
+     * Flush groups/patterns atomically using a full cache flush
+     * Useful for massive datasets and debugging.
+     *
+     * @var string
+     */
+    const GROUP_FLUSH_FULL = 'full';
 
     /**
      * The smart backoff algorithm uses decorrelated jitter with `retry_interval`
@@ -391,7 +401,7 @@ final class Configuration
      *
      * @var string
      */
-    protected $group_flush = self::GROUP_FLUSH_KEYS;
+    protected $group_flush = self::GROUP_FLUSH_SCAN;
 
     /**
      * The cache flushing strategy in multisite network environments.
@@ -641,10 +651,13 @@ final class Configuration
     protected static function fromArray(array $array): self
     {
         $config = new static;
-        $client = $config->determineClient($array['client'] ?? null);
 
-        // call `setClient()` first
+        // determine and set the client first, it's used by other options
+        $client = $config->determineClient($array['client'] ?? null);
         $array = ['client' => $client] + $array;
+
+        // determine strict mode dynamically
+        $array['strict'] = $config->determineStrictMode($array);
 
         foreach ($array as $name => $value) {
             $method = \str_replace('_', ' ', \strtolower($name));
@@ -1462,6 +1475,10 @@ final class Configuration
         }
 
         $this->debug = (bool) $debug;
+
+        if ($this->debug) {
+            $this->log_levels = null;
+        }
     }
 
     /**
@@ -1764,6 +1781,37 @@ final class Configuration
     }
 
     /**
+     * Determine whether strict mode should be enabled.
+     *
+     * @param  array<string, mixed>  $config
+     * @return bool
+     */
+    public function determineStrictMode($config)
+    {
+        $override = \getenv('OBJECTCACHE_STRICT');
+
+        if (is_string($override) && strlen($override)) {
+            if (\in_array($override, self::Truthy, true)) {
+                return true;
+            }
+
+            if (\in_array($override, self::Falsy, true)) {
+                return false;
+            }
+        }
+
+        if (isset($config['strict'])) {
+            return $config['strict'];
+        }
+
+        if (! empty($config['prefix'])) {
+            return false;
+        }
+
+        return $this->strict;
+    }
+
+    /**
      * Set whether strict mode is enabled.
      *
      * @param  bool  $strict
@@ -1877,7 +1925,7 @@ final class Configuration
                 \preg_replace('/(?<!^)[A-Z]/', '_$0', \substr($method, 3))
             );
 
-            \error_log("objectcache.warning: `{$method}` is not a valid config option");
+            log('warning', "`{$method}` is not a valid config option");
 
             return;
         }
@@ -1987,6 +2035,6 @@ final class Configuration
             return [$name, $encodeJson($value)];
         };
 
-        return array_column(array_map($formatter, array_keys($config), $config), 1, 0); // @phpstan-ignore-line
+        return array_column(array_map($formatter, array_keys($config), $config), 1, 0);
     }
 }

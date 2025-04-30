@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -18,7 +18,10 @@ namespace RedisCachePro\ObjectCaches\Concerns;
 
 use Throwable;
 
-use RedisCachePro\Exceptions\ObjectCacheException;
+use RedisCachePro\Exceptions\MetadataException;
+use RedisCachePro\Connectors\Concerns\HandlesBackoff;
+
+use function RedisCachePro\log;
 
 /**
  * Keeps track of object cache metadata, such as the used configuration.
@@ -28,6 +31,8 @@ use RedisCachePro\Exceptions\ObjectCacheException;
  */
 trait KeepsMetadata
 {
+    use HandlesBackoff;
+
     /**
      * The stored object cache metadata.
      *
@@ -45,30 +50,32 @@ trait KeepsMetadata
         try {
             $this->loadMetadata();
             $this->throwIfRiskyConfigurationChanged();
-        } catch (Throwable $exception) {
+        } catch (MetadataException $exception) {
             $this->integrityProtectionFlush($exception->getMessage());
+        } catch (Throwable $exception) {
+            throw $exception;
         }
 
         $this->maybeUpdateMetadata();
     }
 
     /**
-     * Retrieves the stored metadata from the cache.
+     * Loads the metadata from the cache.
      *
      * @return void
      */
     private function loadMetadata()
     {
-        $json = $this->withoutMutations([$this, 'getMetadata']);
+        $json = $this->retrieveMetadataWithRetries();
 
         if (! is_string($json)) {
-            throw new ObjectCacheException('Cache metadata not found');
+            throw new MetadataException('Cache metadata not found');
         }
 
         $metadata = json_decode($json, true);
 
         if (! is_array($metadata)) {
-            throw new ObjectCacheException(sprintf(
+            throw new MetadataException(sprintf(
                 'Unable to decode cache metadata (%s)',
                 (json_last_error() !== JSON_ERROR_NONE)
                     ? json_last_error_msg()
@@ -77,6 +84,31 @@ trait KeepsMetadata
         }
 
         $this->metadata = $metadata;
+    }
+
+    /**
+     * Returns the stored metadata from the cache.
+     *
+     * @return string
+     */
+    private function retrieveMetadataWithRetries()
+    {
+        $retries = 3;
+        $attempt = $delay = 0;
+
+        while (true) {
+            $delay = self::nextDelay($this->config(), $attempt, $delay);
+
+            try {
+                return $this->withoutMutations([$this, 'getMetadata']);
+            } catch (Throwable $exception) {
+                if (++$attempt >= $retries) {
+                    throw $exception;
+                }
+
+                \usleep($delay * 1000);
+            }
+        }
     }
 
     /**
@@ -137,7 +169,7 @@ trait KeepsMetadata
 
         foreach ($riskyOptions as $option) {
             if (! array_key_exists($option, $storedConfig) || $storedConfig[$option] !== $currentConfig[$option]) {
-                throw new ObjectCacheException("Risky configuration option `{$option}` changed");
+                throw new MetadataException("Risky configuration option `{$option}` changed");
             }
         }
     }
@@ -160,6 +192,7 @@ trait KeepsMetadata
     /**
      * Flushes the object cache for integrity protection, if `strict` mode is enabled.
      *
+     * @param  string  $message
      * @return bool
      */
     private function integrityProtectionFlush(string $message)
@@ -169,15 +202,16 @@ trait KeepsMetadata
         $this->metadata = null;
 
         if (! $this->config->strict) {
-            error_log("objectcache.notice: {$message}, skipping integrity protection flush because `strict` mode is disabled");
+            log('notice', "{$message}, skipping integrity protection flush because `strict` mode is disabled");
 
             return false;
         }
 
-        error_log("objectcache.notice: {$message}, flushing cache for integrity protection...");
+        log('notice', "{$message}, flushing cache for integrity protection...");
 
         $wp_object_cache_flushlog[] = [
             'type' => 'flush',
+            'reason' => $message,
             'backtrace' => \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS, 5),
         ];
 

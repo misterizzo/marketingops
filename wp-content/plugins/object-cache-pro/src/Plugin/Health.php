@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -579,8 +579,8 @@ trait Health
                     'Setting a reasonable MaxTTL (maximum time-to-live) helps to reduce that risk.',
                 ])
             ),
-            'badge' => ['label' => 'Object Cache Pro', 'color' => 'orange'],
-            'status' => 'recommended',
+            'badge' => ['label' => 'Object Cache Pro', 'color' => 'red'],
+            'status' => 'critical',
             'test' => 'objectcache_eviction_policy',
             'actions' => sprintf(
                 '<p><a href="%s" target="_blank">%s</a><p>',
@@ -591,13 +591,14 @@ trait Health
     }
 
     /**
-     * Test whether Redis supports Relay and asynchronous commands.
+     * Test whether Redis supports asynchronous commands, preserving expiry dates and Relay.
      *
      * @param  \RedisCachePro\Diagnostics\Diagnostics  $diagnostics
      * @return array<string, mixed>
      */
     protected function healthTestRedisVersion(Diagnostics $diagnostics)
     {
+        $phpredisVersion = (string) phpversion('redis');
         $redisVersion = (string) $diagnostics->redisVersion()->value;
 
         if ($diagnostics->usingRelayCache() && version_compare($redisVersion, '6.2.7', '<')) {
@@ -607,7 +608,7 @@ trait Health
                     '<p>%s</p>',
                     implode(' ', [
                         "Object Cache Pro is using Relay, but the connected Redis Server ({$redisVersion}) is too old and the object cache may go stale.",
-                        'Upgrade Redis to version 6.2.7 or newer.',
+                        'Upgrade Redis Server to version 6.2.7 or newer.',
                     ])
                 ),
                 'badge' => ['label' => 'Object Cache Pro', 'color' => 'red'],
@@ -624,7 +625,7 @@ trait Health
                     implode(' ', [
                         'Object Cache Pro is configured to use asynchronous commands,',
                         "but the connected Redis Server ({$redisVersion}) is too old and does not support them.",
-                        'Upgrade Redis to version 4.0 or newer, or disable asynchronous flushing.',
+                        'Upgrade Redis Server to version 4.0 or newer, or disable asynchronous flushing.',
                     ])
                 ),
                 'badge' => ['label' => 'Object Cache Pro', 'color' => 'red'],
@@ -636,6 +637,47 @@ trait Health
                     'Learn more.'
                 ),
             ];
+        }
+
+        if (! $diagnostics->usingRelay()) {
+            if (version_compare($redisVersion, '6.0', '<')) {
+                return [
+                    'label' => 'Redis does not support preserving expiry dates',
+                    'description' => sprintf(
+                        '<p>%s</p>',
+                        implode(' ', [
+                            'Object Cache Pro is unable to preserve the expiry of keys when (de|in)crementing their value,',
+                            "because the connected Redis Server ({$redisVersion}) is too old and does not support it.",
+                            'Upgrade Redis Server to version 6.0 or newer.',
+                        ])
+                    ),
+                    'badge' => ['label' => 'Object Cache Pro', 'color' => 'red'],
+                    'status' => 'critical', // 'recommended'
+                    'test' => 'objectcache_redis_version',
+                ];
+            }
+
+            if (version_compare($phpredisVersion, '5.3', '<')) {
+                return [
+                    'label' => 'PhpRedis does not support preserving expiry dates',
+                    'description' => sprintf(
+                        '<p>%s</p>',
+                        implode(' ', [
+                            'Object Cache Pro is unable to preserve the expiry of keys when (de|in)crementing their value,',
+                            "because the installed PhpRedis extension ({$phpredisVersion}) is too old and does not support it.",
+                            'Upgrade PhpRedis to version 6.0 or newer.',
+                        ])
+                    ),
+                    'badge' => ['label' => 'Object Cache Pro', 'color' => 'red'],
+                    'status' => 'critical',
+                    'test' => 'objectcache_redis_version',
+                    'actions' => sprintf(
+                        '<p><a href="%s" target="_blank">%s</a></p>',
+                        'https://objectcache.pro/docs/phpredis',
+                        'Learn more.'
+                    ),
+                ];
+            }
         }
 
         return [
@@ -678,7 +720,7 @@ trait Health
             ];
         }
 
-        if ($config->shared && ! preg_match("/^db{$db}:?$/", $config->prefix ?? '')) {
+        if ($config->shared && ! preg_match("/^db{$db}[:_-]?$/", $config->prefix ?? '')) {
             return $results + [
                 'description' => sprintf(
                     '<p>%s</p>',

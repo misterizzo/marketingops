@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -37,6 +37,13 @@ class PhpRedisConnection extends Connection implements ConnectionInterface
     protected $client;
 
     /**
+     * Whether the client supports the `getWithMeta()` method.
+     *
+     * @var bool
+     */
+    public $supportsGetWithMeta = false;
+
+    /**
      * Create a new PhpRedis instance connection.
      *
      * @param  \RedisCachePro\Clients\PhpRedis  $client
@@ -54,6 +61,10 @@ class PhpRedisConnection extends Connection implements ConnectionInterface
 
         if (PhpRedisConnector::supports('backoff')) {
             $this->setBackoff();
+        }
+
+        if (PhpRedisConnector::supports('get-meta')) {
+            $this->supportsGetWithMeta = true;
         }
     }
 
@@ -245,8 +256,8 @@ class PhpRedisConnection extends Connection implements ConnectionInterface
     public function multi(?int $type = null)
     {
         return $type === $this->client::PIPELINE
-            ? Transaction::multi($this)
-            : Transaction::pipeline($this);
+            ? Transaction::pipeline($this)
+            : Transaction::multi($this);
     }
 
     /**
@@ -370,6 +381,10 @@ class PhpRedisConnection extends Connection implements ConnectionInterface
             ]);
 
             throw ConnectionException::from($exception);
+        } finally {
+            if ($this->client->getMode() !== $this->client::ATOMIC) {
+                $this->client->discard();
+            }
         }
 
         if (! is_array($results)) {
@@ -400,6 +415,31 @@ class PhpRedisConnection extends Connection implements ConnectionInterface
             ]);
         }
 
+        $tx->commands = [];
+
         return $results;
+    }
+
+    /**
+     * Returns the last server error message, if any.
+     *
+     * Bypasses the `command()` method to avoid log spam.
+     *
+     * @return string|null
+     */
+    public function getLastError()
+    {
+        return $this->client->getLastError();
+    }
+
+    /**
+     * Whether the last error was a syntax error.
+     *
+     * @see https://github.com/phpredis/phpredis/pull/2632
+     * @return bool
+     */
+    public function lastErrorWasSyntaxError()
+    {
+        return strpos($this->getLastError() ?? '', 'ERR syntax error') === 0;
     }
 }

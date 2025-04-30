@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -63,6 +63,10 @@ class PhpRedisReplicatedConnection extends PhpRedisConnection implements Connect
 
         if (empty($this->replicas)) {
             $this->discoverReplicas();
+        }
+
+        if (PhpRedisConnector::supports('get-meta')) {
+            $this->supportsGetWithMeta = true;
         }
 
         $this->setPool();
@@ -156,5 +160,17 @@ class PhpRedisReplicatedConnection extends PhpRedisConnection implements Connect
         return $this->withoutTimeout(function () {
             return $this->primary->command('flushdb');
         });
+    }
+
+    /**
+     * Returns the last server error message, if any.
+     *
+     * Bypasses the `command()` method to avoid log spam.
+     *
+     * @return string|null
+     */
+    public function getLastError()
+    {
+        return $this->primary->getLastError();
     }
 }

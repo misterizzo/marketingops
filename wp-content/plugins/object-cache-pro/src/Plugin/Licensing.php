@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -25,6 +25,8 @@ use RedisCachePro\Plugin;
 use RedisCachePro\License;
 use RedisCachePro\Diagnostics\Diagnostics;
 use RedisCachePro\ObjectCaches\ObjectCache;
+
+use function RedisCachePro\log;
 
 /**
  * @mixin \RedisCachePro\Plugin
@@ -439,6 +441,7 @@ trait Licensing
             'host' => $diagnostics['general']['host']->value,
             'environment' => $diagnostics['general']['env']->value,
             'status' => $diagnostics['general']['status']->value,
+            'server' => $diagnostics['general']['engine']->value,
             'plugin' => $diagnostics['versions']['plugin']->value,
             'dropin' => $diagnostics['versions']['dropin']->value,
             'redis' => $diagnostics['versions']['redis']->value,
@@ -449,6 +452,7 @@ trait Licensing
             'serializer' => $diagnostics['config']['serializer']->value ?? null,
             'prefetch' => $diagnostics['config']['prefetch']->value ?? false,
             'alloptions' => $diagnostics['config']['prefetch']->value ?? false,
+            'strict' => $diagnostics['config']['strict']->value ?? false,
         ];
     }
 
@@ -528,8 +532,8 @@ trait Licensing
             }
         }
 
-        error_log(sprintf(
-            'objectcache.warning: Unable to normalize URL (url=%s; scheme=%s; host=%s; server=%s; forwarded=%s)',
+        log('warning', sprintf(
+            'Unable to normalize URL (url=%s; scheme=%s; host=%s; server=%s; forwarded=%s)',
             $url,
             $scheme,
             $httpHost,

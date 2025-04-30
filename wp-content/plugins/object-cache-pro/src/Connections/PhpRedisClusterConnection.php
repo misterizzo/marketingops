@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -18,6 +18,7 @@ namespace RedisCachePro\Connections;
 
 use RedisCachePro\Clients\PhpRedisCluster;
 use RedisCachePro\Configuration\Configuration;
+use RedisCachePro\Connectors\PhpRedisConnector;
 
 /**
  * Distributed systems are hard.
@@ -51,5 +52,9 @@ class PhpRedisClusterConnection extends PhpRedisConnection
         $this->setBackoff();
         $this->setSerializer();
         $this->setCompression();
+
+        if (PhpRedisConnector::supports('get-meta')) {
+            $this->supportsGetWithMeta = true;
+        }
     }
 }

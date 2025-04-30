@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -348,7 +348,7 @@ class Dashboard extends Page
             add_meta_box(
                 sprintf('objectcache_metric_%s', str_replace('-', '_', $id)),
                 $title,
-                function () use ($id, $metric) { // @phpstan-ignore-line
+                function () use ($id, $metric) {
                     require __DIR__ . '/../templates/widgets/metric.phtml';
                 },
                 $this->plugin->screenId(),

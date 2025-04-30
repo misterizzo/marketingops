@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -16,9 +16,7 @@ declare(strict_types=1);
 
 namespace RedisCachePro\Plugin\Api;
 
-use WP_Error;
 use WP_REST_Server;
-use WP_REST_Controller;
 
 use RedisCachePro\Plugin;
 use RedisCachePro\License;
@@ -26,7 +24,7 @@ use RedisCachePro\License;
 use RedisCachePro\Plugin\Options\Sanitizer;
 use RedisCachePro\Plugin\Options\Validator;
 
-class Options extends WP_REST_Controller
+class Options extends Controller
 {
     /**
      * The plugin instance.
@@ -40,7 +38,7 @@ class Options extends WP_REST_Controller
      *
      * @var string
      */
-    protected $resource_name;
+    protected $resource_name = 'options';
 
     /**
      * Create a new instance.
@@ -50,8 +48,7 @@ class Options extends WP_REST_Controller
     public function __construct(Plugin $plugin)
     {
         $this->plugin = $plugin;
-        $this->namespace = 'objectcache/v1';
-        $this->resource_name = 'options';
+        parent::__construct();
     }
 
     /**
@@ -65,43 +62,17 @@ class Options extends WP_REST_Controller
             [
                 'methods' => WP_REST_Server::READABLE,
                 'callback' => [$this, 'get_item'],
-                'permission_callback' => [$this, 'item_permissions_check'],
+                'permission_callback' => [$this, 'get_items_permissions_check'],
                 'args' => $this->get_endpoint_args_for_item_schema(WP_REST_Server::READABLE),
             ],
             [
                 'methods' => WP_REST_Server::EDITABLE,
                 'callback' => [$this, 'update_item'],
-                'permission_callback' => [$this, 'item_permissions_check'],
+                'permission_callback' => [$this, 'update_item_permissions_check'],
                 'args' => $this->get_endpoint_args_for_item_schema(WP_REST_Server::EDITABLE),
             ],
             'schema' => [$this, 'get_public_item_schema'],
         ]);
-    }
-
-    /**
-     * The permission callback for the endpoint.
-     *
-     * @param  \WP_REST_Request  $request
-     * @return true|\WP_Error
-     */
-    public function item_permissions_check($request)
-    {
-        /**
-         * Filter the capability required to access REST API endpoints.
-         *
-         * @param  string  $capability  The capability name.
-         */
-        $capability = (string) apply_filters('objectcache_rest_capability', Plugin::Capability);
-
-        if (current_user_can($capability)) {
-            return true;
-        }
-
-        return new WP_Error(
-            'rest_forbidden',
-            'Sorry, you are not allowed to do that.',
-            ['status' => rest_authorization_required_code()]
-        );
     }
 
     /**

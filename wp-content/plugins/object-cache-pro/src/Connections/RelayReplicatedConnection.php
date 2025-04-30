@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -60,6 +60,10 @@ class RelayReplicatedConnection extends RelayConnection implements ConnectionInt
 
         $this->config = $config;
         $this->log = $this->config->logger;
+
+        if (RelayConnector::supports('get-meta')) {
+            $this->supportsGetWithMeta = true;
+        }
 
         if (empty($this->replicas)) {
             $this->discoverReplicas();

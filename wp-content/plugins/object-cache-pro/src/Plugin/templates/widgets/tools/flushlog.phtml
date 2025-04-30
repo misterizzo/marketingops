@@ -31,6 +31,12 @@ $log = get_site_option('objectcache_flushlog', []);
                             <?php echo get_user_by('id', $flush['user'])->display_name; ?>
                         </li>
                     <?php endif; ?>
+                    <?php if (isset($flush['reason'])) : ?>
+                        <li>
+                            <span class="dashicons dashicons-tag"></span>
+                            <code><?php echo esc_html($flush['reason']); ?></code>
+                        </li>
+                    <?php endif; ?>
                     <li>
                         <span class="dashicons dashicons-clock"></span>
                         <time datetime="<?php echo date('c', $flush['time']); ?>">

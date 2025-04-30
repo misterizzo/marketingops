@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -19,6 +19,8 @@ namespace RedisCachePro\Connections\Concerns;
 use Throwable;
 
 use RedisCachePro\Exceptions\ConnectionException;
+
+use function RedisCachePro\log;
 
 trait SentinelsConnection
 {
@@ -49,19 +51,14 @@ trait SentinelsConnection
      */
     protected function connectToSentinels()
     {
-        if ($this->sentinel) {
-            $this->sentinels[$this->sentinel] = false;
-        }
-
         foreach ($this->sentinels as $url => $state) {
-            unset($this->sentinel, $this->primary, $this->replicas, $this->pool);
-
             if (! is_null($state)) {
                 continue;
             }
 
             try {
                 $this->sentinel = $url;
+                $this->replicas = $this->pool = [];
                 $this->establishConnections($url);
                 $this->setPool();
 
@@ -69,9 +66,7 @@ trait SentinelsConnection
             } catch (Throwable $error) {
                 $this->sentinels[$url] = false;
 
-                if ($this->config->debug) {
-                    error_log("objectcache.notice: {$error->getMessage()}");
-                }
+                log('warning', $error->getMessage());
             }
         }
 
@@ -98,7 +93,7 @@ trait SentinelsConnection
             $isReading = \strpos($parameters[0], 'options:alloptions') === false;
         }
 
-        $node = $isReading
+        $node = $isReading && ! empty($this->pool)
             ? $this->pool[\array_rand($this->pool)]
             : $this->primary;
 
@@ -110,6 +105,7 @@ trait SentinelsConnection
             return $result;
         } catch (Throwable $th) {
             try {
+                $this->sentinels[$this->sentinel] = false;
                 $this->connectToSentinels();
             } catch (ConnectionException $ex) {
                 throw new ConnectionException($ex->getMessage(), $ex->getCode(), $th);

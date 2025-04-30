@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -52,6 +52,10 @@ class RelayConnection extends PhpRedisConnection implements ConnectionInterface
 
         if (RelayConnector::supports('backoff')) {
             $this->setBackoff();
+        }
+
+        if (RelayConnector::supports('get-meta')) {
+            $this->supportsGetWithMeta = true;
         }
 
         $this->setRelayOptions();
@@ -198,11 +202,17 @@ class RelayConnection extends PhpRedisConnection implements ConnectionInterface
      */
     public function flushdb($async = null)
     {
-        $asyncValue = \version_compare((string) \phpversion('relay'), '0.6.9', '<')
-            ? true // Relay < 0.6.9
-            : false; // Relay >= 0.6.9
+        if ($async ?? $this->config->async_flush) {
+            $asyncValue = \version_compare((string) \phpversion('relay'), '0.6.9', '<')
+                ? true // Relay < 0.6.9
+                : false; // Relay >= 0.6.9
 
-        return $this->command('flushdb', [$asyncValue]);
+            return $this->command('flushdb', [$asyncValue]);
+        }
+
+        return $this->withoutTimeout(function () {
+            return $this->command('flushdb');
+        });
     }
 
     /**

@@ -66,7 +66,7 @@ if (! defined('QM_OBJECTCACHE_HEAVY')) {
 
                         <ol>
                             <li>
-                                <?php echo self::output_filename($caller['display'], $caller['calling_file'], $caller['calling_line']); ?>
+                                <?php echo self::output_filename($caller['display'] ?? "{$item['function']}()", $caller['calling_file'], $caller['calling_line']); ?>
                             </li>
                             <div class="qm-toggled">
                                 <?php foreach ($trace as $item) : ?>

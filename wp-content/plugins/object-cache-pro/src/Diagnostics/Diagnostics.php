@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -198,6 +198,7 @@ class Diagnostics implements ArrayAccess
         $this->data[self::GENERAL]['eviction-policy'] = $this->evictionPolicy();
         $this->data[self::GENERAL]['compressions'] = $this->compressions();
         $this->data[self::GENERAL]['basename'] = Diagnostic::name('Basename')->value(Basename);
+        $this->data[self::GENERAL]['engine'] = $this->serverName();
 
         if ($this->client) {
             $this->data[self::GENERAL]['client'] = Diagnostic::name('Client')->value(get_class($this->client));
@@ -870,6 +871,8 @@ class Diagnostics implements ArrayAccess
             return $diagnostic->value($version);
         }
 
+        $version = (string) $version;
+
         if (version_compare($version, '4.0', '<')) {
             return $diagnostic->warning($version)->comment('Outdated');
         }
@@ -879,6 +882,17 @@ class Diagnostics implements ArrayAccess
         }
 
         return $diagnostic->value($version);
+    }
+
+    /**
+     * Returns the server name/type, if a connection is established.
+     *
+     * @return \RedisCachePro\Diagnostics\Diagnostic
+     */
+    public function serverName()
+    {
+        return Diagnostic::name('Server Type')
+            ->value($this->redisInfoKey('server_name'));
     }
 
     /**
@@ -1226,7 +1240,7 @@ class Diagnostics implements ArrayAccess
         }
 
         if (isset($_ENV['PANTHEON_ENVIRONMENT']) || defined('PANTHEON_ENVIRONMENT')) {
-            return 'pantheon';
+            return 'pantheon.' . $_ENV['PANTHEON_ENVIRONMENT'];
         }
 
         if (! empty($_SERVER['CS_AUTH_KEY'])) {

@@ -96,6 +96,7 @@ function wp_cache_init()
             'analytics',
             'objectcache',
             'userlogins',
+            'wc_cache_*',
             defined('WC_SESSION_CACHE_GROUP') ? WC_SESSION_CACHE_GROUP : 'wc_session_id',
         ]);
 
@@ -189,6 +190,8 @@ function wp_cache_close()
 /**
  * Decrements numeric cache item's value.
  *
+ * To preserve the key's expiry Redis 6.0 and PhpRedis 5.3 or newer is required.
+ *
  * @param int|string $key    The cache key to decrement.
  * @param int        $offset Optional. The amount by which to decrement the item's value.
  *                           Default 1.
@@ -238,7 +241,7 @@ function wp_cache_delete_multiple(array $keys, $group = '')
  */
 function wp_cache_flush()
 {
-    global $wp_object_cache, $wp_object_cache_flushlog;
+    global $wp_object_cache, $wp_object_cache_flushlog, $blog_id;
 
     $backtrace = \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS, 5);
 
@@ -259,6 +262,10 @@ function wp_cache_flush()
     }
 
     if ($wp_object_cache->shouldFlushBlog()) {
+        if (defined('WP_CLI') && WP_CLI) {
+            $wp_object_cache->switch_to_blog((int) $blog_id);
+        }
+
         return $wp_object_cache->flushBlog();
     }
 
@@ -334,6 +341,9 @@ function wp_cache_supports_group_flush()
 /**
  * Retrieves the cache contents from the cache by key and group.
  *
+ * Using `$found` to disambiguate a return value of `false` requires
+ * PhpRedis 6.2.0 or Relay v0.10.1 or newer.
+ *
  * @param int|string $key   The key under which the cache contents are stored.
  * @param string     $group Optional. Where the cache contents are grouped. Default empty.
  * @param bool       $force Optional. Whether to force an update of the local cache
@@ -368,6 +378,8 @@ function wp_cache_get_multiple($keys, $group = '', $force = false)
 
 /**
  * Increments numeric cache item's value.
+ *
+ * To preserve the key's expiry Redis 6.0 and PhpRedis 5.3 or newer is required.
  *
  * @param int|string $key    The key for the cache contents that should be incremented.
  * @param int        $offset Optional. The amount by which to increment the item's value.

@@ -1,3 +1,4 @@
+--!df flags=allow-undeclared-keys
 
 if redis.REDIS_VERSION == nil then
     redis.replicate_commands()

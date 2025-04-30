@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -94,17 +94,17 @@ trait QueryMonitor
      * Registers all object cache related Query Monitor HTML outputters.
      *
      * @param  array<string, mixed>  $output
-     * @return array<string, mixed>|void
+     * @return array<string, mixed>
      */
     public function registerQmOutputters(array $output)
     {
         if (! class_exists('QM_Output_Html')) {
-            return;
+            return $output;
         }
 
         // Added in Query Monitor 3.1.0
         if (! method_exists('QM_Output_Html', 'before_non_tabular_output')) { // @phpstan-ignore-line
-            return;
+            return $output;
         }
 
         require_once "{$this->directory}/src/Extensions/QueryMonitor/ObjectCacheHtmlOutput.php";

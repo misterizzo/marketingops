@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -81,15 +81,6 @@ abstract class Connection
         $method = strtolower($name);
         $command = strtoupper($name);
 
-        $context = [
-            'command' => $command,
-            'parameters' => $parameters,
-        ];
-
-        if ($debug) {
-            $context['backtrace'] = \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS);
-        }
-
         try {
             $start = microtime(true);
             $memory = memory_get_usage();
@@ -99,8 +90,11 @@ abstract class Connection
             $memory = (memory_get_usage() - $memory) ?: 1;
             $wait = (microtime(true) - $start) * 1000;
         } catch (Throwable $exception) {
-            $this->log->error("Failed to execute `{$command}` command", $context + [
+            $this->log->error("Failed to execute `{$command}` command", [
+                'command' => $command,
+                'parameters' => $parameters,
                 'exception' => $exception,
+                'backtrace' => \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS),
             ]);
 
             throw ConnectionException::from($exception);
@@ -114,10 +108,13 @@ abstract class Connection
         if ($debug) {
             $ms = \round($wait, 4);
 
-            $this->log->info("Executed `{$command}` command in {$ms}ms", $context + [
+            $this->log->info("Executed `{$command}` command in {$ms}ms", [
+                'command' => $command,
+                'parameters' => $parameters,
                 'time' => $wait,
                 'memory' => $memory,
                 'result' => $result,
+                'backtrace' => \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS),
             ]);
         }
 

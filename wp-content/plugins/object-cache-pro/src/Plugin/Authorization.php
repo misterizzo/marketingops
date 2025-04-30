@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -169,7 +169,8 @@ trait Authorization
             return $groups;
         }, 10, 2);
 
-        add_filter('ure_full_capabilites', function ($caps) { // that typo ¯\_(ツ)_/¯
+        // that typo ¯\_(ツ)_/¯
+        add_filter('ure_full_capabilites', function ($caps) {
             if (! array_key_exists(Plugin::Capability, $caps)) {
                 $caps[Plugin::Capability] = [
                     'inner' => Plugin::Capability,

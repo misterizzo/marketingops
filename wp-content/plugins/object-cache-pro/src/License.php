@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -122,7 +122,7 @@ class License
      *
      * @var \WP_Error|null
      */
-    protected $_error;
+    protected $_error; // phpcs:ignore PSR2.Classes.PropertyDeclaration.Underscore
 
     /**
      * The license token.
@@ -317,7 +317,7 @@ class License
         $license->_error = $error;
         $license->last_check = static::currentTimestamp();
 
-        error_log("objectcache.warning: {$error->get_error_message()}");
+        log('warning', $error->get_error_message());
 
         return $license->save();
     }
@@ -358,7 +358,7 @@ class License
         $this->_error = $error;
         $this->last_check = self::currentTimestamp();
 
-        error_log("objectcache.notice: {$error->get_error_message()}");
+        log('warning', $error->get_error_message());
 
         return $this->save();
     }

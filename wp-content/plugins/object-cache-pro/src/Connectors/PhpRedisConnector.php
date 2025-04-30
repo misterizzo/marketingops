@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -49,10 +49,10 @@ class PhpRedisConnector implements ConnectorInterface
      *
      * @var string
      */
-    const RequiredVersion = '3.1.1';
+    const RequiredVersion = '4.0.0';
 
     /**
-     * Ensure PhpRedis v3.1.1 or newer loaded.
+     * Ensure PhpRedis v4.0.0 or newer loaded.
      *
      * @return void
      */
@@ -93,6 +93,8 @@ class PhpRedisConnector implements ConnectorInterface
                     && \defined('\Redis::BACKOFF_ALGORITHM_DECORRELATED_JITTER');
             case 'tls':
                 return \version_compare((string) \phpversion('redis'), '5.3.2', '>=');
+            case 'get-meta':
+                return method_exists(Redis::class, 'getWithMeta');
         }
 
         return false;

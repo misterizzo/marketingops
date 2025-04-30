@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2019-2024 Rhubarb Tech Inc. All Rights Reserved.
+ * Copyright © 2019-2025 Rhubarb Tech Inc. All Rights Reserved.
  *
  * The Object Cache Pro Software and its related materials are property and confidential
  * information of Rhubarb Tech Inc. Any reproduction, use, distribution, or exploitation
@@ -122,20 +122,22 @@ class RedisMetrics
     public function __construct(ObjectCache $cache)
     {
         $info = $cache->connection()->memoize('info');
-        $total = intval($info['keyspace_hits'] + $info['keyspace_misses']);
 
-        $this->hits = $info['keyspace_hits'];
-        $this->misses = $info['keyspace_misses'];
+        $this->hits = $info['keyspace_hits'] ?? 0;
+        $this->misses = $info['keyspace_misses'] ?? 0;
+
+        $total = intval($this->hits + $this->misses);
         $this->hitRatio = $total > 0 ? round($this->hits / ($total / 100), 2) : 100;
-        $this->opsPerSec = $info['instantaneous_ops_per_sec'];
-        $this->evictedKeys = $info['evicted_keys'];
-        $this->usedMemory = $info['used_memory'];
-        $this->usedMemoryRss = $info['used_memory_rss'];
-        $this->memoryRatio = empty($info['maxmemory']) ? 0 : ($info['used_memory'] / $info['maxmemory']) * 100;
+
+        $this->opsPerSec = $info['instantaneous_ops_per_sec'] ?? 0;
+        $this->evictedKeys = $info['evicted_keys'] ?? 0;
+        $this->usedMemory = $info['used_memory'] ?? 0;
+        $this->usedMemoryRss = $info['used_memory_rss'] ?? 0;
+        $this->memoryRatio = empty($info['maxmemory']) ? 0 : ($this->usedMemory / $info['maxmemory']) * 100;
         $this->memoryFragmentationRatio = $info['mem_fragmentation_ratio'] ?? 0;
-        $this->connectedClients = $info['connected_clients'];
+        $this->connectedClients = $info['connected_clients'] ?? 0;
         $this->trackingClients = $info['tracking_clients'] ?? 0;
-        $this->rejectedConnections = $info['rejected_connections'];
+        $this->rejectedConnections = $info['rejected_connections'] ?? 0;
 
         $dbKey = "db{$cache->config()->database}";
 
