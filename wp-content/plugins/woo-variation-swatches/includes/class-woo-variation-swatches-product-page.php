@@ -378,6 +378,7 @@ if ( ! class_exists( 'Woo_Variation_Swatches_Product_Page' ) ) {
 			$options     = $args[ 'options' ];
 			$product     = $args[ 'product' ];
 			$attribute   = $args[ 'attribute' ];
+			$attribute_name = $data[ 'attribute_name' ];
 			$is_selected = $data[ 'is_selected' ];
 			$option_name = $data[ 'option_name' ];
 			$option_slug = $data[ 'option_slug' ];
@@ -390,6 +391,7 @@ if ( ! class_exists( 'Woo_Variation_Swatches_Product_Page' ) ) {
 			$html_attributes = array(
 				'aria-checked' => ( $is_selected ? 'true' : 'false' ),
 				'tabindex'     => ( wp_is_mobile() ? '2' : '0' ),
+				'data-attribute_name' => $attribute_name,
 			);
 
 			$html_attributes = wp_parse_args( $this->get_item_tooltip_attribute( $data, $attribute_type, $variation_data ), $html_attributes );
@@ -601,9 +603,11 @@ if ( ! class_exists( 'Woo_Variation_Swatches_Product_Page' ) ) {
 				// Global
 				$image = $this->get_image_attribute( $data, $attribute_type, $variation_data );
 
-				$template_format = apply_filters( 'woo_variation_swatches_image_attribute_template', '<img class="variable-item-image" aria-hidden="true" alt="%s" src="%s" width="%d" height="%d" />', $data, $attribute_type, $variation_data );
+				$lazy_attr = ( wp_lazy_loading_enabled( 'img', 'woo_variation_swatches_image_attribute' ) ? ' loading="lazy" decoding="async"' : '' );
 
-				return sprintf( $template_format, esc_attr( $option_name ), esc_url( $image[ 0 ] ), esc_attr( $image[ 1 ] ), esc_attr( $image[ 2 ] ) );
+				$template_format = apply_filters( 'woo_variation_swatches_image_attribute_template', '<img class="variable-item-image" %s aria-hidden="true" alt="%s" src="%s" width="%d" height="%d" />', $data, $attribute_type, $variation_data );
+
+				return sprintf( $template_format, $lazy_attr, esc_attr( $option_name ), esc_url( $image[ 0 ] ), esc_attr( $image[ 1 ] ), esc_attr( $image[ 2 ] ) );
 			}
 		}
 
@@ -659,7 +663,9 @@ if ( ! class_exists( 'Woo_Variation_Swatches_Product_Page' ) ) {
 
 						$variation_image = $this->get_variation_img_src( $image_id, $image_size );
 
-						$image = sprintf( '<img src="%1$s" title="%2$s" alt="%2$s" width="%3$s" height="%4$s" />', esc_url( $variation_image[ 'src' ] ), $label, absint( $variation_image[ 'width' ] ), absint( $variation_image[ 'height' ] ) );
+						$lazy_attr = ( wp_lazy_loading_enabled( 'img', 'woo_variation_swatches_radio_attribute' ) ? ' loading="lazy" decoding="async"' : '' );
+
+						$image = sprintf( '<img src="%1$s" title="%2$s" alt="%2$s" width="%3$s" height="%4$s" %5$s />', esc_url( $variation_image[ 'src' ] ), $label, absint( $variation_image[ 'width' ] ), absint( $variation_image[ 'height' ] ), $lazy_attr );
 						$stock = wp_kses_post( $variation[ 'availability_html' ] );
 						$price = wp_kses_post( $variation[ 'price_html' ] );
 						$label = str_ireplace( array( '%image%', '%variation%', '%price%', '%stock%' ), array(
@@ -671,9 +677,9 @@ if ( ! class_exists( 'Woo_Variation_Swatches_Product_Page' ) ) {
 					}
 				}
 
-				$template_format = apply_filters( 'woo_variation_swatches_radio_attribute_template', '<label class="variable-item-radio-input-wrapper"><input name="%1$s" class="variable-item-radio-input" %2$s type="radio" value="%3$s" data-value="%3$s" /><span class="variable-item-radio-value-wrapper">%4$s</span></label>', $data, $attribute_type, $variation_data );
+				$template_format = apply_filters( 'woo_variation_swatches_radio_attribute_template', '<label class="variable-item-radio-input-wrapper"><input name="%1$s" class="variable-item-radio-input" %2$s type="radio" value="%3$s" data-attribute_name="%5$s" data-value="%3$s" /><span class="variable-item-radio-value-wrapper">%4$s</span></label>', $data, $attribute_type, $variation_data );
 
-				return sprintf( $template_format, $name, checked( $is_selected, true, false ), esc_attr( $slug ), $label );
+				return sprintf( $template_format, $name, checked( $is_selected, true, false ), esc_attr( $slug ), $label, esc_attr($attribute_name) );
 			}
 		}
 

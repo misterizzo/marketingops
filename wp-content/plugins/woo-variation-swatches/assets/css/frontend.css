@@ -2,7 +2,7 @@
  * Variation Swatches for WooCommerce
  *
  * Author: Emran Ahmed ( emran.bd.08@gmail.com )
- * Date: 8/29/2024, 6:38:28 PM
+ * Date: 2/16/2025, 5:38:38 PM
  * Released under the GPLv3 license.
  */
 .woo-variation-swatches.wvs-tooltip {
@@ -788,10 +788,10 @@
   color: var(--wvs-selected-item-text-color, #000000);
 }
 .woo-variation-swatches .variable-items-wrapper .variable-item:not(.radio-variable-item).disabled, .woo-variation-swatches .variable-items-wrapper .variable-item:not(.radio-variable-item).disabled:hover {
-  pointer-events: none;
+  /*pointer-events: none;
   cursor: not-allowed;
+  overflow: hidden;*/
   position: relative;
-  overflow: hidden;
 }
 .woo-variation-swatches .variable-items-wrapper .variable-item:not(.radio-variable-item).disabled img, .woo-variation-swatches .variable-items-wrapper .variable-item:not(.radio-variable-item).disabled span, .woo-variation-swatches .variable-items-wrapper .variable-item:not(.radio-variable-item).disabled .variable-item-contents, .woo-variation-swatches .variable-items-wrapper .variable-item:not(.radio-variable-item).disabled:hover img, .woo-variation-swatches .variable-items-wrapper .variable-item:not(.radio-variable-item).disabled:hover span, .woo-variation-swatches .variable-items-wrapper .variable-item:not(.radio-variable-item).disabled:hover .variable-item-contents {
   opacity: 0.6;

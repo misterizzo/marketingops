@@ -160,7 +160,20 @@ if ( ! class_exists( 'Woo_Variation_Swatches_Term_Meta' ) ) :
 				$image         = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
 
 				if ( is_array( $image ) ) {
-					printf( '<img src="%s" alt="" width="%d" height="%d" class="wvs-preview wvs-image-preview" />', esc_url( $image[0] ), esc_attr( $image[1] ), esc_attr( $image[2] ) );
+
+					$attributes = array(
+						'src'=>$image[0],
+						'alt'=>'',
+						'width'=>$image[1],
+						'height'=>$image[2],
+						'class'=>'wvs-preview wvs-image-preview',
+					);
+
+					if (  wp_lazy_loading_enabled( 'img', 'woo_variation_swatches_admin_image_preview' ) ) {
+						$attributes['loading'] ='lazy';
+					}
+
+					printf( '<img %s  />', wc_implode_html_attributes($attributes) );
 				}
 			}
 		}
@@ -449,6 +462,7 @@ if ( ! class_exists( 'Woo_Variation_Swatches_Term_Meta' ) ) :
 			)*/
 
 			$attributes = array(
+				'inert' => ! empty( $field['dependency'] ),
 				'data-gwp_dependency' => ! empty( $field['dependency'] ) ? wc_esc_json( wp_json_encode( $field['dependency'] ) ) : null,
 			);
 

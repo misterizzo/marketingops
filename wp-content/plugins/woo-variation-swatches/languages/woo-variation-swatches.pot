@@ -1,4 +1,4 @@
-# Copyright (C) 2024 Variation Swatches for WooCommerce
+# Copyright (C) 2025 Variation Swatches for WooCommerce
 # This file is distributed under the same license as the Variation Swatches for WooCommerce package.
 msgid ""
 msgstr ""
@@ -7,7 +7,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language-Team: Emran Ahmed <emran.bd.08@gmail.com>\n"
-"POT-Creation-Date: 2024-08-29 12:38+0000\n"
+"POT-Creation-Date: 2025-02-16 11:38+0000\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -214,7 +214,7 @@ msgstr ""
 msgid "%s left"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-product-page.php:821, ../includes/class-woo-variation-swatches-product-page.php:847
+#: ../includes/class-woo-variation-swatches-product-page.php:827, ../includes/class-woo-variation-swatches-product-page.php:853
 msgid "Choose an option"
 msgstr ""
 
@@ -342,7 +342,7 @@ msgstr ""
 msgid "Special Attributes"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-settings.php:302, ../includes/class-woo-variation-swatches-term-meta.php:182
+#: ../includes/class-woo-variation-swatches-settings.php:302, ../includes/class-woo-variation-swatches-term-meta.php:195
 msgid "Group"
 msgstr ""
 
@@ -730,11 +730,11 @@ msgstr ""
 msgid "Show Attribute taxonomies in large size."
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-term-meta.php:405
+#: ../includes/class-woo-variation-swatches-term-meta.php:418
 msgid "Upload / Add image"
 msgstr ""
 
-#: ../includes/class-woo-variation-swatches-term-meta.php:411
+#: ../includes/class-woo-variation-swatches-term-meta.php:424
 msgid "Remove image"
 msgstr ""
 

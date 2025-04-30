@@ -226,7 +226,7 @@ if ( ! class_exists( 'GetWooPlugins_Admin_Settings', false ) ) :
 
 		public static function dependency_attribute($value) {
 			if ($value && isset( $value['require'] )) {
-				   return sprintf(' data-gwp_dependency="%s"', self::esc_json(wp_json_encode( $value['require'] )));
+				   return sprintf(' inert data-gwp_dependency="%s"', self::esc_json(wp_json_encode( $value['require'] )));
 			}
 			return '';
 		}

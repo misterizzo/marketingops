@@ -12,413 +12,410 @@
 
 (function (window) {
 
-    'use strict'
+	'use strict'
 
-    const Plugin = (($) => {
+	const Plugin = (($) => {
 
-        return class {
+		return class {
 
-            DEFAULTS = {
-                attribute : 'data-gwp_dependency',
-            }
+			DEFAULTS = {
+				attribute: 'data-gwp_dependency',
+			}
 
-            constructor(element, options, name) {
-                this.name     = name
-                this.$element = $(element)
-                this.settings = $.extend(true, {}, this.DEFAULTS, options)
-                this.init();
-                this.action();
-            }
+			constructor (element, options, name) {
+				this.name = name
+				this.$element = $(element)
+				this.settings = $.extend(true, {}, this.DEFAULTS, options)
+				this.init()
+				this.action()
+			}
 
-            init() {
-                this.$element.addClass('has-dependency-data');
+			init () {
+				this.$element.addClass('has-dependency-data')
 
-                let attribute = this.settings.attribute.trim()
+				let attribute = this.settings.attribute.trim()
 
-                let conditionString = this.$element.attr(attribute).replace(/'/g, '"')
+				let conditionString = this.$element.attr(attribute).replace(/'/g, '"')
 
-                this.conditions = JSON.parse(conditionString);
+				this.conditions = JSON.parse(conditionString)
 
-                let success = this.check();
-                this.showHide(success);
-            }
+				let success = this.check()
+				this.showHide(success)
+			}
 
-            showHide(success) {
-                if (success) {
-                    this.$element.removeClass('dependency-show').addClass('dependency-show')
-                    return true;
-                }
-                else {
-                    this.$element.removeClass('dependency-show')
-                    return false;
-                }
-            }
+			showHide (success) {
+				if (success) {
+					this.$element.removeAttr('inert')
 
-            check() {
-                return this.conditions.every((conditionObj) => {
+					this.$element.removeClass('dependency-show').addClass('dependency-show')
+					return true
+				} else {
+					this.$element.attr('inert', '')
+					this.$element.removeClass('dependency-show')
+					return false
+				}
+			}
 
-                    let selectors = Object.keys(conditionObj);
+			check () {
+				return this.conditions.every((conditionObj) => {
 
-                    return selectors.every((selector) => {
+					let selectors = Object.keys(conditionObj)
 
-                        let condition = conditionObj[selector];
+					return selectors.every((selector) => {
 
-                        return this.decision(selector, condition)
-                    })
-                })
-            }
+						let condition = conditionObj[selector]
 
-            action() {
-                this.conditions.forEach((rules) => {
+						return this.decision(selector, condition)
+					})
+				})
+			}
 
-                    for (const [selector, rule] of Object.entries(rules)) {
-                        // @TODO: Some SelectBox like select2 doesn't trigger input event
-                        $(document.body).on('input.dependency change.dependency', selector, (event) => {
-                            let success = this.check();
-                            this.showHide(success);
-                        })
-                    }
-                })
-            }
+			action () {
+				this.conditions.forEach((rules) => {
 
-            getValue(selector) {
+					for (const [selector, rule] of Object.entries(rules)) {
+						// @TODO: Some SelectBox like select2 doesn't trigger input event
+						$(document.body).on('input.dependency change.dependency', selector, (event) => {
+							let success = this.check()
+							this.showHide(success)
+						})
+					}
+				})
+			}
 
-                let values = []
+			getValue (selector) {
 
-                if (selector && $(selector).length > 0) {
+				let values = []
 
-                    let inputType = $(selector).prop('type').toLowerCase()
+				if (selector && $(selector).length > 0) {
 
-                    let currentSelector = selector;
+					let inputType = $(selector).prop('type').toLowerCase()
 
-                    if (['checkbox', 'radio'].includes(inputType)) {
-                        currentSelector = `${selector}:checked`
-                    }
+					let currentSelector = selector
 
-                    if ('select-multiple' === inputType) {
-                        currentSelector = `${selector} option:selected`
-                    }
+					if (['checkbox', 'radio'].includes(inputType)) {
+						currentSelector = `${selector}:checked`
+					}
 
-                    $(currentSelector).each((index, element) => {
-                        let value = $(element).val().trim();
-                        values.push(value)
-                    })
-                }
+					if ('select-multiple' === inputType) {
+						currentSelector = `${selector} option:selected`
+					}
 
-                return values.filter(value => value !== '');
-            }
+					$(currentSelector).each((index, element) => {
+						let value = $(element).val().trim()
+						values.push(value)
+					})
+				}
 
-            decision(selector, condition) {
+				return values.filter(value => value !== '')
+			}
 
-                let type         = condition['type'];
-                let currentValue = this.getValue(selector)
+			decision (selector, condition) {
 
-                let checkValue = (typeof condition['value'] === 'undefined') ? false : condition['value'];
+				let type = condition['type']
+				let currentValue = this.getValue(selector)
+
+				let checkValue = (typeof condition['value'] === 'undefined') ? false : condition['value']
+
+				let minValue = (typeof condition['min'] === 'undefined') ? false : parseInt(condition['min'])
+				let maxValue = (typeof condition['max'] === 'undefined') ? false : parseInt(condition['max'])
+
+				let allowEmpty = (typeof condition['empty'] === 'undefined') ? false : condition['empty']
+				let isEmpty = (!allowEmpty && currentValue.length < 1)
+
+				let likeSelector = (typeof condition['like'] === 'undefined') ? false : condition['like']
+				let likeSelectorValue = this.getValue(likeSelector)
+
+				let regExpPattern = (typeof condition['pattern'] === 'undefined') ? false : condition['pattern']
+				let regExpModifier = (typeof condition['modifier'] === 'undefined') ? 'gi' : condition['modifier']
+				let sign = (typeof condition['sign'] === 'undefined') ? false : condition['sign']
+				let strict = (typeof condition['strict'] === 'undefined') ? false : condition['strict']
+
+				let emptyTypes = ['empty', 'blank']
+				let notEmptyTypes = ['!empty', 'notEmpty', 'not-empty', 'notempty']
+
+				let equalTypes = ['equal', '=', '==', '===']
+				let notEqualTypes = ['!equal', '!=', '!==', '!===', 'notEqual', 'not-equal', 'notequal']
+
+				let regularExpressionTypes = ['regexp', 'exp', 'expression', 'match']
+
+				// if empty return true
+				if (emptyTypes.includes(type)) {
+					return (currentValue.length < 1)
+				}
+
+				// if not empty return true
+				if (notEmptyTypes.includes(type)) {
+					return (currentValue.length > 0)
+				}
+
+				// if equal return true
+				if (equalTypes.includes(type)) {
+
+					if (isEmpty) {
+						return false
+					}
+
+					// Match two selector value/s
+					if (likeSelector) {
+
+						if (strict) {
+							return likeSelectorValue.every((value) => {
+								return currentValue.includes(value)
+							})
+						} else {
+							return likeSelectorValue.some((value) => {
+								return currentValue.includes(value)
+							})
+						}
+					}
+
+					// Match pre-defined value/s
+					if (strict) {
+
+						if (checkValue && Array.isArray(checkValue)) {
+							return checkValue.every((value) => {
+								return currentValue.includes(value)
+							})
+						}
+
+						if (checkValue && !Array.isArray(checkValue)) {
+							return currentValue.includes(checkValue)
+						}
+					} else {
+
+						if (checkValue && Array.isArray(checkValue)) {
+							return checkValue.some((value) => {
+								return currentValue.includes(value)
+							})
+						}
+
+						if (checkValue && !Array.isArray(checkValue)) {
+
+							/*return currentValue.find(value => {
+								return value.toLowerCase() === checkValue.toLowerCase();
+							});*/
+
+							return currentValue.includes(checkValue)
+						}
+					}
+				}
+
+				// if not equal return true
+				if (notEqualTypes.includes(type)) {
+
+					if (isEmpty) {
+						return false
+					}
+
+					// Match two selector value/s
+					if (likeSelector) {
+
+						if (strict) {
+							return likeSelectorValue.every((value) => {
+								return !currentValue.includes(value)
+							})
+						} else {
+							return likeSelectorValue.some((value) => {
+								return !currentValue.includes(value)
+							})
+						}
+					}
+
+					// Match pre-defined value/s
+					if (strict) {
+
+						if (checkValue && Array.isArray(checkValue)) {
+							return checkValue.every((value) => {
+								return !currentValue.includes(value)
+							})
+						}
+
+						if (checkValue && !Array.isArray(checkValue)) {
+							return !currentValue.includes(checkValue)
+						}
+
+					} else {
+
+						if (checkValue && Array.isArray(checkValue)) {
+							return checkValue.some((value) => {
+								return !currentValue.includes(value)
+							})
+						}
+
+						if (checkValue && !Array.isArray(checkValue)) {
+							return !currentValue.includes(checkValue)
+						}
+					}
+				}
+
+				// if regexp match
+				if ((regularExpressionTypes.includes(type)) && regExpPattern) {
+
+					if (isEmpty) {
+						return false
+					}
+
+					let exp = new RegExp(regExpPattern, regExpModifier)
+					return currentValue.every((value) => {
+						return exp.test(value)
+					})
+				}
+
+				// if length
+				if ('length' === type) {
+
+					if (isEmpty) {
+						return false
+					}
+
+					if (checkValue && Array.isArray(checkValue)) {
+						minValue = parseInt(checkValue[0])
+						maxValue = (typeof checkValue[1] === 'undefined') ? false : parseInt(checkValue[1])
+					}
+
+					if (checkValue && !Array.isArray(checkValue)) {
+						minValue = parseInt(checkValue)
+						maxValue = false
+					}
+
+					return currentValue.every((value) => {
+						if (!maxValue) {
+							return value.length >= minValue
+						}
+
+						if (!minValue) {
+							return value.length <= maxValue
+						}
+
+						return value.length >= minValue && value.length <= maxValue
+
+					})
+				}
+
+				// if range
+				if ('range' === type) {
+
+					if (isEmpty) {
+						return false
+					}
+
+					if (checkValue && Array.isArray(checkValue)) {
+						minValue = parseInt(checkValue[0])
+						maxValue = (typeof checkValue[1] === 'undefined') ? false : parseInt(checkValue[1])
+					}
+
+					return currentValue.every((value) => {
+						if (!maxValue) {
+							return parseInt(value) > minValue
+						}
+
+						if (!minValue) {
+							return parseInt(value) < maxValue
+						}
+
+						return parseInt(value) > minValue && parseInt(value) < maxValue
+
+					})
+				}
 
-                let minValue = (typeof condition['min'] === 'undefined') ? false : parseInt(condition['min']);
-                let maxValue = (typeof condition['max'] === 'undefined') ? false : parseInt(condition['max']);
-
-                let allowEmpty = (typeof condition['empty'] === 'undefined') ? false : condition['empty'];
-                let isEmpty    = (!allowEmpty && currentValue.length < 1)
-
-                let likeSelector      = (typeof condition['like'] === 'undefined') ? false : condition['like'];
-                let likeSelectorValue = this.getValue(likeSelector)
-
-                let regExpPattern  = (typeof condition['pattern'] === 'undefined') ? false : condition['pattern'];
-                let regExpModifier = (typeof condition['modifier'] === 'undefined') ? 'gi' : condition['modifier'];
-                let sign           = (typeof condition['sign'] === 'undefined') ? false : condition['sign'];
-                let strict         = (typeof condition['strict'] === 'undefined') ? false : condition['strict'];
-
-                let emptyTypes    = ['empty', 'blank']
-                let notEmptyTypes = ['!empty', 'notEmpty', 'not-empty', 'notempty']
-
-                let equalTypes    = ['equal', '=', '==', '===']
-                let notEqualTypes = ['!equal', '!=', '!==', '!===', 'notEqual', 'not-equal', 'notequal']
-
-                let regularExpressionTypes = ['regexp', 'exp', 'expression', 'match']
-
-                // if empty return true
-                if (emptyTypes.includes(type)) {
-                    return (currentValue.length < 1);
-                }
-
-                // if not empty return true
-                if (notEmptyTypes.includes(type)) {
-                    return (currentValue.length > 0)
-                }
-
-                // if equal return true
-                if (equalTypes.includes(type)) {
-
-                    if (isEmpty) {
-                        return false
-                    }
-
-                    // Match two selector value/s
-                    if (likeSelector) {
-
-                        if (strict) {
-                            return likeSelectorValue.every((value) => {
-                                return currentValue.includes(value)
-                            })
-                        }
-                        else {
-                            return likeSelectorValue.some((value) => {
-                                return currentValue.includes(value)
-                            })
-                        }
-                    }
-
-                    // Match pre-defined value/s
-                    if (strict) {
-
-                        if (checkValue && Array.isArray(checkValue)) {
-                            return checkValue.every((value) => {
-                                return currentValue.includes(value);
-                            })
-                        }
-
-                        if (checkValue && !Array.isArray(checkValue)) {
-                            return currentValue.includes(checkValue);
-                        }
-                    }
-
-                    else {
-
-                        if (checkValue && Array.isArray(checkValue)) {
-                            return checkValue.some((value) => {
-                                return currentValue.includes(value);
-                            })
-                        }
-
-                        if (checkValue && !Array.isArray(checkValue)) {
-
-                            /*return currentValue.find(value => {
-                                return value.toLowerCase() === checkValue.toLowerCase();
-                            });*/
-
-                            return currentValue.includes(checkValue);
-                        }
-                    }
-                }
-
-                // if not equal return true
-                if (notEqualTypes.includes(type)) {
-
-                    if (isEmpty) {
-                        return false
-                    }
-
-                    // Match two selector value/s
-                    if (likeSelector) {
-
-                        if (strict) {
-                            return likeSelectorValue.every((value) => {
-                                return !currentValue.includes(value)
-                            })
-                        }
-                        else {
-                            return likeSelectorValue.some((value) => {
-                                return !currentValue.includes(value)
-                            })
-                        }
-                    }
-
-                    // Match pre-defined value/s
-                    if (strict) {
-
-                        if (checkValue && Array.isArray(checkValue)) {
-                            return checkValue.every((value) => {
-                                return !currentValue.includes(value);
-                            })
-                        }
-
-                        if (checkValue && !Array.isArray(checkValue)) {
-                            return !currentValue.includes(checkValue);
-                        }
-
-                    }
-                    else {
-
-                        if (checkValue && Array.isArray(checkValue)) {
-                            return checkValue.some((value) => {
-                                return !currentValue.includes(value);
-                            })
-                        }
-
-                        if (checkValue && !Array.isArray(checkValue)) {
-                            return !currentValue.includes(checkValue);
-                        }
-                    }
-                }
-
-                // if regexp match
-                if ((regularExpressionTypes.includes(type)) && regExpPattern) {
-
-                    if (isEmpty) {
-                        return false
-                    }
-
-                    let exp = new RegExp(regExpPattern, regExpModifier)
-                    return currentValue.every((value) => {
-                        return exp.test(value)
-                    })
-                }
-
-                // if length
-                if ('length' === type) {
-
-                    if (isEmpty) {
-                        return false
-                    }
-
-                    if (checkValue && Array.isArray(checkValue)) {
-                        minValue = parseInt(checkValue[0]);
-                        maxValue = (typeof checkValue[1] === 'undefined') ? false : parseInt(checkValue[1]);
-                    }
-
-                    if (checkValue && !Array.isArray(checkValue)) {
-                        minValue = parseInt(checkValue);
-                        maxValue = false;
-                    }
-
-                    return currentValue.every((value) => {
-                        if (!maxValue) {
-                            return value.length >= minValue;
-                        }
-
-                        if (!minValue) {
-                            return value.length <= maxValue;
-                        }
-
-                        return value.length >= minValue && value.length <= maxValue;
-
-                    })
-                }
-
-                // if range
-                if ('range' === type) {
-
-                    if (isEmpty) {
-                        return false
-                    }
-
-                    if (checkValue && Array.isArray(checkValue)) {
-                        minValue = parseInt(checkValue[0]);
-                        maxValue = (typeof checkValue[1] === 'undefined') ? false : parseInt(checkValue[1]);
-                    }
-
-                    return currentValue.every((value) => {
-                        if (!maxValue) {
-                            return parseInt(value) > minValue;
-                        }
-
-                        if (!minValue) {
-                            return parseInt(value) < maxValue;
-                        }
-
-                        return parseInt(value) > minValue && parseInt(value) < maxValue;
-
-                    })
-                }
+				// if compare
+				if ('compare' === type && sign && checkValue) {
 
-                // if compare
-                if ('compare' === type && sign && checkValue) {
+					if (isEmpty) {
+						return false
+					}
 
-                    if (isEmpty) {
-                        return false
-                    }
+					checkValue = parseInt(checkValue)
 
-                    checkValue = parseInt(checkValue)
+					switch (sign) {
+						case '<':
+							return currentValue.every((value) => {
+								return parseInt(value) < checkValue
+							})
+							break
 
-                    switch (sign) {
-                        case '<':
-                            return currentValue.every((value) => {
-                                return parseInt(value) < checkValue;
-                            })
-                            break;
+						case '<=':
+							return currentValue.every((value) => {
+								return parseInt(value) <= checkValue
+							})
+							break
 
-                        case '<=':
-                            return currentValue.every((value) => {
-                                return parseInt(value) <= checkValue;
-                            })
-                            break;
+						case '>':
+							return currentValue.every((value) => {
+								return parseInt(value) > checkValue
+							})
+							break
 
-                        case '>':
-                            return currentValue.every((value) => {
-                                return parseInt(value) > checkValue;
-                            })
-                            break;
+						case '>=':
+							return currentValue.every((value) => {
+								return parseInt(value) >= checkValue
+							})
+							break
 
-                        case '>=':
-                            return currentValue.every((value) => {
-                                return parseInt(value) >= checkValue;
-                            })
-                            break;
+						case '=':
+						case '==':
+							return currentValue.every((value) => {
+								return parseInt(value) === checkValue
+							})
+							break
+					}
 
-                        case '=':
-                        case '==':
-                            return currentValue.every((value) => {
-                                return parseInt(value) === checkValue;
-                            })
-                            break;
-                    }
+				}
 
-                }
+				// $( document.body ).triggerHandler( 'depends-on',[selector, condition, this])
 
-                // $( document.body ).triggerHandler( 'depends-on',[selector, condition, this])
+			}
 
-            }
+			destroy () {
+				this.$element.removeData(this.name)
+			}
+		}
 
-            destroy() {
-                this.$element.removeData(this.name)
-            }
-        }
+	})(jQuery)
 
-    })(jQuery)
+	const jQueryPlugin = (($) => {
 
-    const jQueryPlugin = (($) => {
+		return (PluginName, ClassName) => {
 
-        return (PluginName, ClassName) => {
+			$.fn[PluginName] = function (options, ...args) {
+				return this.each((index, element) => {
 
-            $.fn[PluginName] = function (options, ...args) {
-                return this.each((index, element) => {
+					let $element = $(element)
+					let data = $element.data(PluginName)
 
-                    let $element = $(element)
-                    let data     = $element.data(PluginName)
+					if (!data) {
+						data = new ClassName($element, $.extend({}, options), PluginName)
+						$element.data(PluginName, data)
+					}
 
-                    if (!data) {
-                        data = new ClassName($element, $.extend({}, options), PluginName)
-                        $element.data(PluginName, data)
-                    }
+					if (typeof options === 'string') {
 
-                    if (typeof options === 'string') {
+						if (typeof data[options] === 'object') {
+							return data[options]
+						}
 
-                        if (typeof data[options] === 'object') {
-                            return data[options]
-                        }
+						if (typeof data[options] === 'function') {
+							return data[options](...args)
+						}
+					}
 
-                        if (typeof data[options] === 'function') {
-                            return data[options](...args)
-                        }
-                    }
+					return this
+				})
+			}
 
-                    return this
-                })
-            }
+			// Constructor
+			$.fn[PluginName].Constructor = ClassName
 
-            // Constructor
-            $.fn[PluginName].Constructor = ClassName
+			// Short Hand
+			$[PluginName] = (options, ...args) => $({})[PluginName](options, ...args)
 
-            // Short Hand
-            $[PluginName] = (options, ...args) => $({})[PluginName](options, ...args)
+			// No Conflict
+			$.fn[PluginName].noConflict = () => $.fn[PluginName]
+		}
 
-            // No Conflict
-            $.fn[PluginName].noConflict = () => $.fn[PluginName]
-        }
+	})(jQuery)
 
-    })(jQuery)
+	jQueryPlugin('GWPFormFieldDependency', Plugin)
 
-    jQueryPlugin('GWPFormFieldDependency', Plugin)
-
-})(window);
+})(window)

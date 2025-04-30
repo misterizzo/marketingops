@@ -85,13 +85,14 @@ class URE_User_Other_Roles {
         }
         
         wp_enqueue_style('wp-jquery-ui-dialog');
-        wp_enqueue_style('ure-jquery-multiple-select', plugins_url('/css/'. $file_name, URE_PLUGIN_FULL_PATH ), array(), false, 'screen');
+        wp_enqueue_style('ure-jquery-multiple-select', plugins_url('/css/'. $file_name, URE_PLUGIN_FULL_PATH ), array(), URE_VERSION, 'screen');
         
     }
     // end of load_css()                
 
 
     public function load_js($hook_suffix)  {
+        global $wp_version;
         
         if ( !in_array( $hook_suffix, array('user-edit.php', 'user-new.php') ) ) {
             return;
@@ -114,7 +115,7 @@ class URE_User_Other_Roles {
         
         $select_primary_role = apply_filters('ure_users_select_primary_role', true);
         
-        wp_enqueue_script('jquery-ui-dialog', '', array('jquery-ui-core', 'jquery-ui-button', 'jquery'), false, true );
+        wp_enqueue_script('jquery-ui-dialog', '', array('jquery-ui-core', 'jquery-ui-button', 'jquery'), $wp_version, true );
         wp_register_script('ure-jquery-multiple-select', plugins_url('/js/'. $ms_file_name, URE_PLUGIN_FULL_PATH ), array(), URE_VERSION, true );
         wp_enqueue_script('ure-jquery-multiple-select');
         wp_register_script('ure-user-profile-other-roles', plugins_url('/js/user-profile-other-roles.js', URE_PLUGIN_FULL_PATH ), array(), URE_VERSION, true );
@@ -215,12 +216,14 @@ class URE_User_Other_Roles {
         
         $output = '';
         foreach ($user->caps as $cap => $value) {
-            if (!$wp_roles->is_role($cap)) {
-                if ('' != $output) {
-                    $output .= ', ';
-                }
-                $output .= $value ? $cap : sprintf(__('Denied: %s'), $cap);
+            if ( $wp_roles->is_role( $cap ) ) {
+                continue;
             }
+            if ('' !== $output) {
+                $output .= ', ';
+            }
+            // translators: placeholder %s is replaced by denied user capability id string value
+            $output .= $value ? $cap : sprintf(__('Denied: %s', 'user-role-editor'), $cap);
         }
         
         return $output;

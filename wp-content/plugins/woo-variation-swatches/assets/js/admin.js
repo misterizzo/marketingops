@@ -2,7 +2,7 @@
  * Variation Swatches for WooCommerce
  *
  * Author: Emran Ahmed ( emran.bd.08@gmail.com )
- * Date: 8/29/2024, 6:38:28 PM
+ * Date: 2/16/2025, 5:38:38 PM
  * Released under the GPLv3 license.
  */
 /******/ (function() { // webpackBootstrap

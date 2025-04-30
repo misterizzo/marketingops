@@ -1,5 +1,16 @@
 *** Variation Swatches for WooCommerce ***
 
+2025-02-16 - version 2.2.0
+
+* Fixed - Broken Settings html table.
+* Added - Lazy Loading attribute on swatches images.
+
+2024-10-11 - version 2.1.3
+
+* Fixed - JS Setting update warning trigger issue.
+* Added - WP 6.7+ compatibility.
+* Added - WC 9.4+ compatibility.
+
 2024-08-29 - version 2.1.2
 
 * Added - WooCommerce 9.2+ Compatibility.
