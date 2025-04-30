@@ -1,11 +1,11 @@
-=== Elementor Website Builder - More than Just a Page Builder ===
+=== Elementor Website Builder - More Than Just a Page Builder ===
 Contributors: elemntor
 Tags: page builder, editor, landing page, drag-and-drop, elementor,
-Requires at least: 6.3
+Requires at least: 6.5
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 3.25.10
-Beta tag: 3.25.0-beta3
+Stable tag: 3.28.4
+Beta tag: 3.28.0-beta3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -15,11 +15,13 @@ The Elementor Website Builder has it all: drag and drop page builder, pixel perf
 
 https://www.youtube.com/watch?v=le72grP_Q6k
 
-= THE #1 NO CODE DRAG & DROP WORDPRESS WEBSITE BUILDER POWERING OVER 17M WEBSITES WORLDWIDE, NOW WITH AI. =
+= THE #1 NO CODE DRAG & DROP WORDPRESS WEBSITE BUILDER POWERING OVER 18M WEBSITES WORLDWIDE, NOW WITH AI. =
 
 Elementor, the leading WordPress website creation platform, empowers you to build professional, pixel-perfect websites seamlessly.
 
 Unlock all features with [Elementor Pro](https://go.elementor.com/wp-repo-description-tab-elementor-pro-pro-features/).
+
+Need fast and secure cloud hosting for your Elementor site? Try out **[Elementor Hosting](https://elemn.to/repo-hosting)** Powered by Google Cloud & Cloudflare. 4.9/5 TrustPilot score.
 
 ### 🌟 Create Professional Stunning Websites
 
@@ -255,7 +257,7 @@ Join a global community that helps each other achieve their goals.
 
 = Minimum Requirements =
 
-* WordPress 6.3 or greater
+* WordPress 6.5 or greater
 * PHP version 7.4 or greater
 * MySQL version 5.0 or greater
 
@@ -305,11 +307,11 @@ It works with almost all the plugins. If you experience an incompatibility issue
 
 No! Elementor provides you with all the widgets and features that you need to build a professional website without using code.
 
-**Do i need to know how to design?**
+**Do I need to know how to design?**
 
 No, you can choose between professionally designed kits and templates that fit toevery industry and have all you need to create your own professional website.
 
-**Will elementor slow down my website?**
+**Will Elementor slow down my website?**
 
 As Elementor prioritizes speed and performance, you enjoy better and faster performance with each new version of Elementor. When testing the same page layout on older versions you can see a significant performance improvement, from a score of 82 in Google PageSpeed Insight in version 3.1, to a score of 95 i in version 3.5.
 
@@ -347,80 +349,49 @@ You can also add a new language via [translate.wordpress.org](https://go.element
 
 == Changelog ==
 
-= 3.25.10 - 2024-11-24 =
+= 3.28.4 - 2025-04-22 =
 
-* Security Fix: Improved code security enforcement in Typography control
-* Fix: Link URL actions not functioning as expected inside the editor
+* Tweak: Added Site Planner as an option in the onboarding wizard
+* Tweak: Changed the default theme to Hello Biz in the onboarding wizard
+* Tweak: Added inline editing support for controls using multiple repeaters
 
-= 3.25.9 - 2024-11-20 =
+= 3.28.3 - 2025-04-01 =
 
-* Fix: 3D Rotate transform is not functioning as expected when the Optimized Control Loading feature is activated
+* Tweak: Added Isolate object tool to Elementor AI image editing capabilities
+* Fix: Third dropdown in template display conditions not working in Theme Builder ([#30729](https://github.com/elementor/elementor/issues/30729), [#30732](https://github.com/elementor/elementor/issues/30732))
 
-= 3.25.8 - 2024-11-19 =
+= 3.28.2 - 2025-03-30 =
 
-* Security Fix: Improved code security enforcement in Icon widget
+* New: Generate logo with AI
+* Tweak: Adjusted supported attributes and elements in SVG files ([#29340](https://github.com/elementor/elementor/issues/29340), [#30132](https://github.com/elementor/elementor/issues/30132))
+* Fix: "Create a page" button is not working in Elementor Home
+* Fix: Icons in Button widgets are not vertically aligned when changing the text line-height ([#30606](https://github.com/elementor/elementor/issues/30606))
 
-= 3.25.7 - 2024-11-18 =
+= 3.28.1 - 2025-03-23 =
 
-* Security Fix: Improved code security enforcement in Post functionality
+* Fix: Font URL is not updating after domain change when "Load Google Fonts Locally" feature is activated
 
-= 3.25.6 - 2024-11-13 =
+= 3.28.0 - 2025-03-17 =
 
-* Tweak: Updated `eicons` library to v5.32.0
-* Tweak: Adjusted Kit import flow to allow extendability
-* Tweak: Added extendability functionality to the common Advanced Tab controls
-* Fix: PHP error appears when an undefined color or typography value is used in Site Settings
-* Fix: Permanently deleting a global widget causes a fatal error on pages where it is used
-* Fix: Nested Elements are activated even when the Container experiment is inactive
-
-= 3.25.5 - 2024-11-12 =
-
-* Security Fix: Improved code security enforcement in Post functionality
-* Security Fix: Improved code security enforcement in Floating Elements
-* Security Fix: Improved code security enforcement in Import and Export functionality
-
-= 3.25.4 - 2024-11-03 =
-
-* Fix: Console warning errors related to popups ([#29137](https://github.com/elementor/elementor/issues/29137), [#29141](https://github.com/elementor/elementor/issues/29141))
-
-= 3.25.3 - 2024-10-30 =
-
-* Fix: Global Widgets are not displaying correctly in both the editor and frontend ([#29112](https://github.com/elementor/elementor/issues/29112))
-
-= 3.25.2 - 2024-10-29 =
-
-* Fix: Global Widgets are not displaying correctly in the editor ([#29092](https://github.com/elementor/elementor/issues/29092))
-* Fix: Image captions are not displaying for non-logged-in users in Image Carousel widget
-
-= 3.25.1 - 2024-10-28 =
-
-* Fix: Custom template fails to insert into the page and displays a permission error ([#29076](https://github.com/elementor/elementor/issues/29076))
-* Fix: Global Widgets not displaying correctly on the frontend ([#29076](https://github.com/elementor/elementor/issues/29076))
-
-= 3.25.0 - 2024-10-28 =
-
-* New: Introducing Optimized Markup as an Alpha experiment - Reduce DOM size by eliminating unnecessary HTML wrappers in various elements and widgets
-* Tweak: Reduced the use of JavaScript for smooth scrolling by implementing a modern CSS-based solution ([#13773](https://github.com/elementor/elementor/issues/13773))
-* Tweak: Updated smooth scroll behavior to respect the user's reduced motion preference setting
-* Tweak: Removed `elementor-button-wrapper` div from Button widget as part of the Optimized Markup experiment
-* Tweak: Load styles for Floating Elements separately to enhance performance
-* Tweak: Load styles for Link in Bio widgets separately to enhance performance
-* Tweak: Optimized `global.css` to exclude style generation for unused widgets
-* Tweak: Removed the Floating Elements modules from `module.js`
-* Tweak: Added "Edit with Elementor" button to WooCommerce's new product editor
-* Tweak: Merged "Build with AI" feature to version
-* Tweak: Merged "Grid Container" to "Flexbox Container" feature
-* Tweak: Activated "Editor Top Bar" feature for existing sites
-* Tweak: Activated "Optimized Control Loading" for existing sites and promoted the feature to stable
-* Tweak: Activated "Nested Elements" feature for existing sites
-* Tweak: Removed compatibility CSS support for the Twenty Fifteen theme
-* Tweak: Renamed the "Flexbox Container" feature to "Container" feature
-* Fix: Expand Icon in the Accordion widget would not display when nested inside another Accordion widget ([#24086](https://github.com/elementor/elementor/issues/24086))
-* Fix: Swiper incorrectly applied the `inert` attribute to a slide in the Nested Carousel ([#23039](https://github.com/elementor/elementor/issues/23039))
-* Fix: Footer would overlap the Archive Posts, Portfolio, and Gallery widgets in mobile view when using the Archive template
-* Fix: "Edit with Elementor AI" button is visible for unsupported file types
-* Fix: Structure panel indicator color is not visible in dark mode
-* Fix: Indentation issue with empty elements in the Structure panel
-* Fix: "Reference a website" feature in Elementor AI failed to work in Safari 17
+* New: Added a Clear Files & Data button to the WordPress frontend admin bar for quick and easy cache clearing ([#21642](https://github.com/elementor/elementor/issues/21642))
+* Tweak: Added a note clarifying that the Image Resolution control doesn't support dynamic background images ([#21359](https://github.com/elementor/elementor/issues/21359), [#22055](https://github.com/elementor/elementor/issues/22055))
+* Tweak: Added hover state Box Shadow controls to Button widget ([#4859](https://github.com/elementor/elementor/issues/4859), [#30210](https://github.com/elementor/elementor/issues/30210), [#17509](https://github.com/elementor/elementor/issues/17509))
+* Tweak: Renamed "Regenerate CSS & Data" to "Elementor Cache" in Elementor Tools for better clarity
+* Tweak: Hide Landing Page feature when no landing page posts exist on the site
+* Tweak: Promoted Load Google Fonts Locally feature to Stable status and enabled it by default for all websites
+* Tweak: Improved rendering functionality when updating CSS ID control to enhance editing performance in Accordion widget
+* Tweak: Improved rendering functionality when updating CSS ID control to enhance editing performance in Tabs widget
+* Tweak: Removed unused deprecated methods from `elementorCommon.helpers`
+* Tweak: Optimized style loading for the Text Editor widget by applying styles at the control level ensuring Drop Cap styles load only when enabled
+* Tweak: Updated Drop Cap controls to use CSS logical properties in Text Editor widget
+* Tweak: Updated minimum required WordPress version to 6.5
+* Tweak: Removed Modest Branding control from Video widget
+* Tweak: Promoted Optimized Markup feature to Beta status
+* Tweak: Added link color controls in Text Editor widget
+* Tweak: Applied hover color on focus for keyboard users in the Heading widget
+* Fix: Button icon alignment breaks when Inline Font Icons feature is activated ([#16077](https://github.com/elementor/elementor/issues/16077), [#16511](https://github.com/elementor/elementor/issues/16511), [#17692](https://github.com/elementor/elementor/issues/17692), [#17922](https://github.com/elementor/elementor/issues/17922), [#19253](https://github.com/elementor/elementor/issues/19253), [#19370](https://github.com/elementor/elementor/issues/19370), [#21236](https://github.com/elementor/elementor/issues/21236), [#21844](https://github.com/elementor/elementor/issues/21844), [#28080](https://github.com/elementor/elementor/issues/28080))
+* Fix: Editor fails to load in some edge cases when ACF Term fields are used as Dynamic Tags ([#29160](https://github.com/elementor/elementor/issues/29160))
+* Fix: Improved sanitization of titles to ensure consistent handling for Admin users in the Heading widget
+* Fix: Hover link color transition duration is not being applied in Heading widget
 
 [See changelog for all versions.](https://go.elementor.com/full-changelog/)

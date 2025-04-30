@@ -29,7 +29,6 @@ class Admin_Notices extends Module {
 		'role_manager_promote',
 		'experiment_promotion',
 		'site_mailer_promotion',
-		'design_not_appearing',
 		'plugin_image_optimization',
 	];
 
@@ -236,6 +235,7 @@ class Admin_Notices extends Module {
 		$options = [
 			'title' => esc_html__( 'Love using Elementor?', 'elementor' ),
 			'description' => $message,
+			'dismissible' => false,
 			'button' => [
 				'text' => esc_html__( 'Sure! I\'d love to help', 'elementor' ),
 				'url' => $optin_url,
@@ -272,6 +272,7 @@ class Admin_Notices extends Module {
 		$dismiss_url = add_query_arg( [
 			'action' => 'elementor_set_admin_notice_viewed',
 			'notice_id' => esc_attr( $notice_id ),
+			'_wpnonce' => wp_create_nonce( 'elementor_set_admin_notice_viewed' ),
 		], admin_url( 'admin-post.php' ) );
 
 		$options = [
@@ -458,7 +459,7 @@ class Admin_Notices extends Module {
 			return true;
 		}
 
-		return (bool) mt_rand( 0, 1 );
+		return (bool) wp_rand( 0, 1 );
 	}
 
 	private function is_elementor_page(): bool {
@@ -484,48 +485,9 @@ class Admin_Notices extends Module {
 		];
 	}
 
-	private function notice_design_not_appearing() {
-		$installs_history = get_option( 'elementor_install_history', [] );
-		$is_first_install = 1 === count( $installs_history );
-
-		if ( $is_first_install || ! current_user_can( 'update_plugins' ) ) {
-			return false;
-		}
-
-		$notice_id          = 'design_not_appearing';
-		$notice             = User::get_user_notices()[ $notice_id ] ?? [];
-		$notice_version     = $notice['meta']['version'] ?? null;
-		$is_version_changed = $this->get_elementor_version() !== $notice_version;
-
-		if ( $is_version_changed ) {
-			User::set_user_notice( $notice_id, false, [ 'version' => $this->get_elementor_version() ] );
-		}
-
-		if ( ! in_array( $this->current_screen_id, [ 'toplevel_page_elementor', 'edit-elementor_library', 'elementor_page_elementor-system-info', 'dashboard', 'update-core', 'plugins' ], true ) ) {
-			return false;
-		}
-
-		if ( User::is_user_notice_viewed( $notice_id ) ) {
-			return false;
-		}
-
-		$options = [
-			'title' => esc_html__( 'The version was updated successfully!', 'elementor' ),
-			'description' => sprintf(
-				esc_html__( 'Encountering issues after updating the version? Don’t worry - we’ve collected all the fixes for troubleshooting common issues. %1$sFind a solution%2$s', 'elementor' ),
-				'<a href="https://go.elementor.com/wp-dash-changes-do-not-appear-online/" target="_blank">',
-				'</a>'
-			),
-			'id' => $notice_id,
-		];
-
-		$excluded_pages = [];
-		$this->print_admin_notice( $options, $excluded_pages );
-
-		return true;
-	}
-
-	// For testing purposes
+	/**
+	 * For testing purposes
+	 */
 	public function get_elementor_version() {
 		return ELEMENTOR_VERSION;
 	}
@@ -612,10 +574,14 @@ class Admin_Notices extends Module {
 			$notice_classes[] = 'e-notice--' . $options['type'];
 		}
 
+		$wrapper_attributes = [];
+
 		if ( $options['dismissible'] ) {
 			$label = esc_html__( 'Dismiss this notice.', 'elementor' );
 			$notice_classes[] = 'e-notice--dismissible';
 			$dismiss_button = '<i class="e-notice__dismiss" role="button" aria-label="' . $label . '" tabindex="0"></i>';
+
+			$wrapper_attributes['data-nonce'] = wp_create_nonce( 'elementor_set_admin_notice_viewed' );
 		}
 
 		if ( $options['icon'] ) {
@@ -623,9 +589,7 @@ class Admin_Notices extends Module {
 			$icon = '<div class="e-notice__icon-wrapper"><i class="' . esc_attr( $options['icon'] ) . '" aria-hidden="true"></i></div>';
 		}
 
-		$wrapper_attributes = [
-			'class' => $notice_classes,
-		];
+		$wrapper_attributes['class'] = $notice_classes;
 
 		if ( $options['id'] ) {
 			$wrapper_attributes['data-notice_id'] = $options['id'];

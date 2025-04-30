@@ -1,4 +1,4 @@
-/*! elementor-pro - v3.25.0 - 20-11-2024 */
+/*! elementor-pro - v3.28.0 - 16-04-2025 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["loop-filter-editor"],{
 
