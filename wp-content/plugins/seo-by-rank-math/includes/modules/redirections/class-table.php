@@ -43,8 +43,6 @@ class Table extends List_Table {
 	 * Prepares the list of items for displaying.
 	 */
 	public function prepare_items() {
-		global $per_page;
-
 		$per_page = $this->get_items_per_page( 'rank_math_redirections_per_page', 100 );
 
 		$data = DB::get_redirections(
@@ -118,8 +116,8 @@ class Table extends List_Table {
 		/**
 		 * Filters the default column output. Pass non-empty value to enable.
 		 *
-		 * @param mixed $false The column value.
-		 * @param array $item  The current item.
+		 * @param bool   $false The column value.
+		 * @param object $item  The current item.
 		 */
 		$default = apply_filters( "rank_math/redirection/admin_column_{$column_name}", false, $item );
 		if ( ! empty( $default ) ) {
@@ -239,7 +237,7 @@ class Table extends List_Table {
 			'redirections/table_item',
 			[
 				'id'          => $item['id'],
-				'sources'     => unserialize( $item['sources'] ),
+				'sources'     => unserialize( $item['sources'] ), //phpcs:ignore -- This will be fixed after moving the sources to JSON.
 				'url_to'      => $item['url_to'],
 				'header_code' => $item['header_code'],
 				'status'      => $item['status'],
@@ -368,6 +366,7 @@ class Table extends List_Table {
 		 * Filters the row class.
 		 *
 		 * @param string $classes The row class.
+		 * @param object $item    The current item.
 		 */
 		$classes = apply_filters( 'rank_math/redirection/row_classes', $classes, $item );
 

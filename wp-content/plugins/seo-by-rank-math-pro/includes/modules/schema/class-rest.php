@@ -45,13 +45,7 @@ class Rest extends WP_REST_Controller {
 			[
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => [ $this, 'save_template' ],
-				'args'                => [
-					'schema' => [
-						'required'          => true,
-						'description'       => esc_html__( 'Schema to add.', 'rank-math-pro' ),
-						'validate_callback' => [ '\\RankMath\\Rest\\Rest_Helper', 'is_param_empty' ],
-					],
-				],
+				'args'                => $this->get_save_template_args(),
 				'permission_callback' => [ $this, 'get_permissions_check' ],
 			]
 		);
@@ -120,6 +114,28 @@ class Rest extends WP_REST_Controller {
 		return [
 			'id'   => $template_id,
 			'link' => get_edit_post_link( $template_id ),
+		];
+	}
+
+	/**
+	 * Get save template arguments.
+	 *
+	 * @return array
+	 */
+	private function get_save_template_args() {
+		return [
+			'postId' => [
+				'type'              => 'integer',
+				'required'          => false,
+				'description'       => esc_html__( 'Post ID.', 'rank-math-pro' ),
+				'validate_callback' => [ '\\RankMath\\Rest\\Rest_Helper', 'is_param_empty' ],
+			],
+			'schema' => [
+				'type'              => 'object',
+				'required'          => true,
+				'description'       => esc_html__( 'Schema data.', 'rank-math-pro' ),
+				'validate_callback' => [ '\\RankMath\\Rest\\Rest_Helper', 'is_param_empty' ],
+			],
 		];
 	}
 

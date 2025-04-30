@@ -368,6 +368,7 @@ class Redirections {
 		$url = RANK_MATH_PRO_URL . 'includes/modules/redirections/assets/';
 		wp_enqueue_style( 'rank-math-pro-redirections', $url . 'css/redirections.css', [], RANK_MATH_PRO_VERSION );
 		wp_enqueue_script( 'rank-math-pro-redirections', $url . 'js/redirections.js', [ 'lodash' ], RANK_MATH_PRO_VERSION, true );
+		wp_set_script_translations( 'rank-math-pro-redirections', 'rank-math-pro', RANK_MATH_PRO_PATH . 'languages/' );
 	}
 
 	/**

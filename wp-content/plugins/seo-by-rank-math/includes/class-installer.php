@@ -153,7 +153,7 @@ class Installer {
 
 		// Save install date.
 		if ( false === boolval( get_option( 'rank_math_install_date' ) ) ) {
-			update_option( 'rank_math_install_date', current_time( 'timestamp' ) ); // phpcs:ignore
+			update_option( 'rank_math_install_date', Helper::get_current_time() );
 		}
 
 		// Activate Watcher.
@@ -206,7 +206,7 @@ class Installer {
 		if ( in_array( 'redirections', $modules, true ) ) {
 			$table_schema[] = "CREATE TABLE {$wpdb->prefix}rank_math_redirections (
 				id bigint(20) unsigned NOT NULL auto_increment,
-				sources text CHARACTER SET {$wpdb->charset} COLLATE {$wpdb->charset}_bin NOT NULL,
+				sources longtext CHARACTER SET {$wpdb->charset} COLLATE {$wpdb->charset}_bin NOT NULL,
 				url_to text NOT NULL,
 				header_code smallint(4) unsigned NOT NULL,
 				hits bigint(20) unsigned NOT NULL default '0',
@@ -253,7 +253,7 @@ class Installer {
 
 		$table_schema = apply_filters( 'rank_math/admin/create_tables', $table_schema, $modules );
 
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php'; // @phpstan-ignore-line
 		foreach ( $table_schema as $table ) {
 			dbDelta( $table );
 		}
@@ -560,7 +560,6 @@ class Installer {
 
 		$titles['remove_product_cat_snippet_data'] = 'on';
 		$titles['remove_product_tag_snippet_data'] = 'on';
-
 	}
 
 	/**
@@ -699,5 +698,4 @@ class Installer {
 			)
 		);
 	}
-
 }

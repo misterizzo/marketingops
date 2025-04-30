@@ -39,6 +39,8 @@ class Quick_Edit {
 		$this->action( 'save_post', 'save_post' );
 		$this->action( 'load-edit.php', 'maybe_save_bulk_edit', 20 );
 
+		$this->filter( 'rank_math/post/column/seo_details/focus_keyword', 'determine_search_intent' );
+
 		$taxonomies = Helper::get_accessible_taxonomies();
 		unset( $taxonomies['post_format'] );
 		$taxonomies = wp_list_pluck( $taxonomies, 'label', 'name' );
@@ -64,15 +66,15 @@ class Quick_Edit {
 	/**
 	 * Add the hidden fields in the SEO Details column of the terms listing screen.
 	 *
-	 * @param  string $string      Current content.
+	 * @param  string $content     Current content.
 	 * @param  string $column_name Column name.
 	 * @param  int    $term_id     Term ID.
 	 *
 	 * @return string              New content.
 	 */
-	public function tax_seo_column_content( $string, $column_name, $term_id ) {
+	public function tax_seo_column_content( $content, $column_name, $term_id ) {
 		if ( 'rank_math_tax_seo_details' !== $column_name ) {
-			return $string;
+			return $content;
 		}
 
 		ob_start();
@@ -176,7 +178,7 @@ class Quick_Edit {
 		global $pagenow;
 		if ( Admin_Helper::is_post_list() ) {
 			wp_enqueue_script( 'rank-math-pro-post-list', RANK_MATH_PRO_URL . 'assets/admin/js/post-list.js', [], RANK_MATH_PRO_VERSION, true );
-			wp_enqueue_style( 'rank-math-pro-post-list', RANK_MATH_PRO_URL . 'assets/admin/css/post-list.css', [], RANK_MATH_PRO_VERSION );
+			wp_enqueue_style( 'rank-math-pro-post-list', RANK_MATH_PRO_URL . 'assets/admin/css/post-list.css', [ 'rank-math-common' ], RANK_MATH_PRO_VERSION );
 		} elseif ( 'edit-tags.php' === $pagenow ) {
 			wp_enqueue_script( 'rank-math-pro-term-list', RANK_MATH_PRO_URL . 'assets/admin/js/term-list.js', [], RANK_MATH_PRO_VERSION, true );
 			wp_enqueue_style( 'rank-math-pro-term-list', RANK_MATH_PRO_URL . 'assets/admin/css/term-list.css', [], RANK_MATH_PRO_VERSION );
@@ -287,15 +289,15 @@ class Quick_Edit {
 							</label>
 							<?php
 							if ( false === $this->do_filter( 'admin/disable_primary_term', false ) ) :
-								$taxonomy = ProAdminHelper::get_primary_taxonomy();
-								if ( false !== $taxonomy ) :
+								$taxonomy_obj = ProAdminHelper::get_primary_taxonomy();
+								if ( false !== $taxonomy_obj ) :
 									?>
 									<fieldset class="inline-edit-rank-math-primary-term inline-edit-categories">
 										<?php wp_nonce_field( 'rank-math-edit-primary-term', 'rank_math_bulk_edit_primary_term' ); ?>
 										<label class="rank-math-primary-term">
 											<span class="title">
 												<?php // Translators: placeholder is taxonomy name, e.g. "Category". ?>
-												<?php echo esc_html( sprintf( __( 'Primary %s', 'rank-math-pro' ), $taxonomy['singularLabel'] ) ); ?>
+												<?php echo esc_html( sprintf( __( 'Primary %s', 'rank-math-pro' ), $taxonomy_obj['singularLabel'] ) ); ?>
 											</span>
 											<span class="input-text-wrap rank-math-quick-edit-text-wrap">
 											<?php
@@ -306,7 +308,7 @@ class Quick_Edit {
 													'class' => '',
 													'selected' => '0',
 													'orderby' => 'name',
-													'taxonomy' => $taxonomy['name'],
+													'taxonomy' => $taxonomy_obj['name'],
 													'hide_empty' => false,
 													'show_option_all' => false,
 													'show_option_none' => __( '&mdash; Not Selected &mdash;', 'rank-math-pro' ),
@@ -636,5 +638,38 @@ class Quick_Edit {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Add Keyword Intent.
+	 *
+	 * @param  string $keyword Focus Keyword.
+	 *
+	 * @return string
+	 */
+	public function determine_search_intent( $keyword ) {
+		if ( ! Helper::should_determine_search_intent() ) {
+			return $keyword;
+		}
+
+		$keyword_lower  = strtolower( $keyword );
+		$search_intent  = ProAdminHelper::get_search_intent();
+		$keyword_intent = ! empty( $search_intent[ $keyword_lower ] ) ? strtolower( $search_intent[ $keyword_lower ] ) : '';
+		$intent_types   = [
+			'commercial'    => esc_html__( 'Commercial', 'rank-math-pro' ),
+			'informational' => esc_html__( 'Informational', 'rank-math-pro' ),
+			'navigational'  => esc_html__( 'Navigational', 'rank-math-pro' ),
+			'transactional' => esc_html__( 'Transactional', 'rank-math-pro' ),
+		];
+
+		if ( ! isset( $intent_types[ $keyword_intent ] ) ) {
+			return $keyword;
+		}
+
+		return "
+			<span class='rank-math-tooltip'>
+				{$keyword}
+				<span class='intent'>{$intent_types[ $keyword_intent ]}</span>
+			</span>";
 	}
 }

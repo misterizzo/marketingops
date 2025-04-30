@@ -65,7 +65,10 @@ class Parser {
 
 		$json = [];
 		foreach ( $scripts as $script ) {
-			$json[] = json_decode( trim( $script->nodeValue ) ); // phpcs:ignore
+			$data = json_decode( trim( $script->nodeValue ) ); // phpcs:ignore
+			if ( $data ) {
+				$json[] = $data;
+			}
 		}
 
 		return $json;

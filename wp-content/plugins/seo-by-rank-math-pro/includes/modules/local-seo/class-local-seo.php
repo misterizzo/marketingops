@@ -84,6 +84,10 @@ class Local_Seo {
 			return;
 		}
 
+		if ( function_exists( 'register_block_type' ) ) {
+			new Block_Local_Business();
+		}
+
 		$this->post_singular_name = Helper::get_settings( 'titles.locations_post_type_label', 'Location' );
 
 		$this->register_location_post_type();

@@ -87,6 +87,18 @@ class Image_Seo_Pro {
 
 		$this->action( 'rank_math/vars/register_extra_replacements', 'register_replacements' );
 		$this->filter( 'cmb2_field_arguments', 'maybe_exclude_image_vars', 10 );
+
+		$this->action( 'rest_api_init', 'init_rest_api' );
+	}
+
+	/**
+	 * Registers rest routes defined in the Image Seo module.
+	 *
+	 * @return void
+	 */
+	public function init_rest_api() {
+		$rest = new Image_Seo_Pro\Rest();
+		$rest->register_routes();
 	}
 
 	/**
@@ -546,7 +558,7 @@ class Image_Seo_Pro {
 		$field_ids       = wp_list_pluck( $cmb->prop( 'fields' ), 'id' );
 		$fields_position = array_search( 'img_title_format', array_keys( $field_ids ), true ) + 1;
 
-		include_once dirname( __FILE__ ) . '/options.php';
+		include_once __DIR__ . '/options.php';
 	}
 
 	/**
@@ -605,12 +617,12 @@ class Image_Seo_Pro {
 	/**
 	 * Turn first character of every sentence to uppercase.
 	 *
-	 * @param  string $string Original sring.
+	 * @param  string $value Original string value.
 	 *
-	 * @return string         New string.
+	 * @return string New string.
 	 */
-	private function sentence_case( $string ) {
-		$sentences  = preg_split( '/([.?!]+)/', $string, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
+	private function sentence_case( $value ) {
+		$sentences  = preg_split( '/([.?!]+)/', $value, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
 		$new_string = '';
 		foreach ( $sentences as $key => $sentence ) {
 			$new_string .= ( $key & 1 ) === 0 ?
@@ -624,23 +636,23 @@ class Image_Seo_Pro {
 	/**
 	 * Multibyte ucfirst().
 	 *
-	 * @param  string $string String.
+	 * @param  string $value String value.
 	 *
-	 * @return string         New string.
+	 * @return string New string.
 	 */
-	private function mb_ucfirst( $string ) {
-		return mb_strtoupper( mb_substr( $string, 0, 1 ) ) . mb_strtolower( mb_substr( $string, 1 ) );
+	private function mb_ucfirst( $value ) {
+		return mb_strtoupper( mb_substr( $value, 0, 1 ) ) . mb_strtolower( mb_substr( $value, 1 ) );
 	}
 
 	/**
 	 * Change case of string.
 	 *
-	 * @param  string $string String to change.
-	 * @param  string $case   Case type to change to.
+	 * @param  string $value       String to change.
+	 * @param  string $string_case Case type to change to.
 	 *
 	 * @return string         New string.
 	 */
-	private function change_case( $string, $case ) {
+	private function change_case( $value, $string_case ) {
 		$cases_hash = [
 			'titlecase'    => MB_CASE_TITLE,
 			'sentencecase' => MB_CASE_LOWER,
@@ -648,15 +660,15 @@ class Image_Seo_Pro {
 			'uppercase'    => MB_CASE_UPPER,
 		];
 
-		if ( ! isset( $cases_hash[ $case ] ) ) {
-			return $string;
+		if ( ! isset( $cases_hash[ $string_case ] ) ) {
+			return $value;
 		}
 
-		if ( 'sentencecase' === $case ) {
-			return $this->sentence_case( $string );
+		if ( 'sentencecase' === $string_case ) {
+			return $this->sentence_case( $value );
 		}
 
-		return mb_convert_case( $string, $cases_hash[ $case ] );
+		return mb_convert_case( $value, $cases_hash[ $string_case ] );
 	}
 
 	/**

@@ -13,6 +13,8 @@ use RankMath\Helper;
 use RankMathPro\WooCommerce\Migrate_GTIN;
 use RankMath\Traits\Hooker;
 use RankMath\Schema\DB;
+use RankMath\Schema\Product_WooCommerce;
+use RankMath\Schema\Product;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -33,19 +35,93 @@ class WooCommerce {
 	private $varies_by = [];
 
 	/**
+	 * Whether to noindex and remove hidden products from the Sitemap.
+	 *
+	 * @var bool
+	 */
+	private $noindex_hidden_products;
+
+	/**
+	 * Include Products with specific statuses in the Sitemap.
+	 *
+	 * @var array
+	 */
+	private $exclude_stock_status = [];
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct() {
+		$this->filter( 'rank_math/database/tools', 'add_gtin_migration_tool' );
 		if ( is_admin() ) {
-			$this->filter( 'rank_math/database/tools', 'add_gtin_migration_tool' );
 			new Admin();
 			return;
 		}
 
+		$this->noindex_hidden_products = Helper::get_settings( 'general.noindex_hidden_products' );
+		$this->exclude_stock_status    = $this->do_filter( 'woocommerce/stock_status', [] );
+
 		Migrate_GTIN::get();
-		$this->filter( 'rank_math/sitemap/entry', 'remove_hidden_products', 10, 3 );
 		$this->action( 'wp', 'init' );
+		$this->filter( 'rank_math/json_ld', 'add_carousels', 11, 2 );
 		$this->filter( 'rank_math/tools/migrate_gtin_values', 'migrate_gtin_values' );
+
+		if ( ! $this->noindex_hidden_products && empty( $this->exclude_stock_status ) ) {
+			return;
+		}
+
+		$this->filter( 'rank_math/sitemap/post_count/join', 'join_clause', 10, 2 );
+		$this->filter( 'rank_math/sitemap/post_count/where', 'where_clause', 10, 2 );
+		$this->filter( 'rank_math/sitemap/get_posts/join', 'join_clause', 10, 2 );
+		$this->filter( 'rank_math/sitemap/get_posts/where', 'where_clause', 10, 2 );
+	}
+
+	/**
+	 * Get JOIN clause for the sitemap query.
+	 *
+	 * @param string $join     JOIN clause.
+	 * @param string $post_type Post type.
+	 */
+	public function join_clause( $join, $post_type ) {
+		if ( 'product' !== $post_type ) {
+			return $join;
+		}
+
+		global $wpdb;
+
+		return $join . " INNER JOIN {$wpdb->prefix}postmeta ON p.ID = {$wpdb->prefix}postmeta.post_id ";
+	}
+
+	/**
+	 * Get WHERE clause for the sitemap query.
+	 *
+	 * @param string $where    WHERE clause.
+	 * @param string $post_type Post type.
+	 */
+	public function where_clause( $where, $post_type ) {
+		if ( 'product' !== $post_type ) {
+			return $where;
+		}
+
+		global $wpdb;
+
+		if ( $this->exclude_stock_status ) {
+			$where .= " AND {$wpdb->prefix}postmeta.meta_key = '_stock_status'
+					AND {$wpdb->prefix}postmeta.meta_value IN ( '" . implode( "', '", $this->exclude_stock_status ) . "' )";
+		}
+
+		if ( $this->noindex_hidden_products ) {
+			$where .= " AND NOT EXISTS (
+						SELECT 1 FROM {$wpdb->prefix}term_relationships AS tr
+						INNER JOIN {$wpdb->prefix}term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+						INNER JOIN {$wpdb->prefix}terms AS t ON tt.term_id = t.term_id
+						WHERE tr.object_id = p.ID
+						AND tt.taxonomy = 'product_visibility'
+						AND t.slug = 'exclude-from-catalog'
+					)";
+		}
+
+		return $where;
 	}
 
 	/**
@@ -72,24 +148,65 @@ class WooCommerce {
 	}
 
 	/**
-	 * Remove hidden products from the sitemap.
+	 * Add carousels
 	 *
-	 * @param array  $url    Array of URL parts.
-	 * @param string $type   URL type. Can be user, post or term.
-	 * @param object $object Data object for the URL.
+	 * @param array  $data   Array of JSON-LD data.
+	 * @param JsonLD $jsonld JsonLD Instance.
 	 */
-	public function remove_hidden_products( $url, $type, $object ) {
-		if (
-			'post' !== $type ||
-			! isset( $object->post_type ) ||
-			'product' !== $object->post_type ||
-			! Helper::get_settings( 'general.noindex_hidden_products' ) ||
-			'hidden' !== \wc_get_product( $object->ID )->get_catalog_visibility()
-		) {
-			return $url;
+	public function add_carousels( $data, $jsonld ) {
+		if ( ! isset( $data['ProductsPage'] ) ) {
+			return $data;
 		}
 
-		return false;
+		$seller   = Product::get_seller( $jsonld );
+		$items    = [];
+		$position = 0;
+		while ( have_posts() ) {
+			the_post();
+
+			$post_id = get_the_ID();
+			$product = wc_get_product( $post_id );
+
+			if ( empty( $product ) || 'grouped' === $product->get_type() ) {
+				continue;
+			}
+
+			$single = [
+				'@type'    => 'ListItem',
+				'position' => ++$position,
+				'item'     => [
+					'@type' => 'Product',
+					'name'  => $jsonld->get_product_title( $product ),
+					'url'   => $jsonld->get_post_url( $post_id ),
+				],
+			];
+
+			$images = Product_WooCommerce::get()->get_images( $product );
+			if ( $images ) {
+				$single['item']['image'] = $images;
+			}
+
+			$offers = Product_WooCommerce::get()->get_offers( $product, $seller );
+			if ( $offers ) {
+				$single['item']['offers'] = $offers;
+			}
+
+			$items[] = $single;
+		}
+
+		wp_reset_postdata();
+
+		if ( ! empty( $items ) ) {
+			unset( $data['ProductsPage'] );
+
+			$data['ProductsCarousel'] = [
+				'@context'        => 'https://schema.org/',
+				'@type'           => 'ItemList',
+				'itemListElement' => $items,
+			];
+		}
+
+		return $data;
 	}
 
 	/**
@@ -100,7 +217,7 @@ class WooCommerce {
 	 * @return array Modified robots.
 	 */
 	public function robots( $robots ) {
-		if ( ! Helper::get_settings( 'general.noindex_hidden_products' ) ) {
+		if ( ! $this->noindex_hidden_products ) {
 			return $robots;
 		}
 
@@ -206,11 +323,13 @@ class WooCommerce {
 	public function add_gtin_meta() {
 		global $product;
 		$gtin_code = $this->get_gtin_value( $product );
-		if ( ! $gtin_code ) {
+		if ( ! $gtin_code && ! $this->variations_have_gtin( $product ) ) {
 			return;
 		}
 
-		echo '<span class="rank-math-gtin-wrapper">';
+		$hidden = ! $gtin_code ? 'hidden' : '';
+
+		echo '<span class="rank-math-gtin-wrapper" ' . esc_attr( $hidden ) . '>';
 		echo esc_html( $this->get_formatted_value( $gtin_code ) );
 		echo '</span>';
 	}
@@ -243,22 +362,35 @@ class WooCommerce {
 		if ( ! $product->is_type( 'variable' ) ) {
 			return;
 		}
+		$label = $this->get_gtin_label();
 		?>
 		<script>
-			const $form = jQuery( '.variations_form' );
-			const wrapper = jQuery( '.rank-math-gtin-wrapper' );
-			const gtin_code = wrapper.text();
-			if ( $form.length ) {
-				$form.on( 'found_variation', function( event, variation ) {
-					if ( variation.rank_math_gtin ) {
-						wrapper.text( variation.rank_math_gtin );
-					}
-				} );
+			( function () {
+				const $form = jQuery( '.variations_form' );
+				const wrapper = jQuery( '.rank-math-gtin-wrapper' );
+				const gtin_code = wrapper.text();
 
-				$form.on( 'reset_data', function() {
-					wrapper.text( gtin_code );
-				} );
-			}
+				function toggleAttributes( variation ) {
+					variation.rank_math_gtin ? wrapper.removeAttr( 'hidden' ) :
+						wrapper.attr( 'hidden', 'hidden' )
+				}
+				if ( $form.length ) {
+					$form.on( 'found_variation', function( event, variation ) {
+						toggleAttributes( variation )
+						if ( variation.rank_math_gtin ) {
+							wrapper.text( variation.rank_math_gtin );
+						}
+					} );
+
+					$form.on( 'reset_data', function() {
+						wrapper.text( gtin_code );
+
+						if ( '<?php echo esc_attr( $label ); ?>' === gtin_code ) {
+							toggleAttributes( { } )
+						}
+					} );
+				}
+			} )();
 		</script>
 		<?php
 	}
@@ -278,7 +410,7 @@ class WooCommerce {
 
 		$schemas = array_filter(
 			DB::get_schemas( $product_id ),
-			function( $schema ) {
+			function ( $schema ) {
 				return $schema['@type'] === 'WooCommerceProduct';
 			}
 		);
@@ -546,9 +678,45 @@ class WooCommerce {
 	 * @return string Formatted GTIN value with label.
 	 */
 	private function get_formatted_value( $gtin ) {
+		return esc_html( $this->get_gtin_label() . $gtin );
+	}
+
+	/**
+	 * Checks if any of the variations have a gtin value.
+	 *
+	 * @param Object $product The WC Product object.
+	 *
+	 * @return bool
+	 */
+	private function variations_have_gtin( $product ) {
+		if ( ! $product->has_child() ) {
+			return false;
+		}
+
+		$args = [
+			'parent'     => $product->get_id(),
+			'type'       => 'variation',
+			'visibility' => 'visible',
+		];
+
+		$has_gtin = array_filter(
+			wc_get_products( $args ),
+			function ( \WC_Product_Variation $variation ) {
+				return ! empty( self::get_gtin_value( $variation ) );
+			}
+		);
+
+		return ! empty( $has_gtin );
+	}
+
+	/**
+	 * Get GTIN label.
+	 *
+	 * @return string The GTIN label.
+	 */
+	private function get_gtin_label() {
 		$label = Helper::get_settings( 'general.gtin_label' );
 		$label = $label ? $label . ' ' : '';
-
-		return esc_html( $this->do_filter( 'woocommerce/gtin_label', $label ) . $gtin );
+		return $this->do_filter( 'woocommerce/gtin_label', $label );
 	}
 }

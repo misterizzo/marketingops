@@ -16,6 +16,8 @@ namespace RankMath\Frontend;
 use RankMath\Helper;
 use RankMath\Traits\Hooker;
 use RankMath\Helpers\Security;
+use WP_Error;
+use WP_Term;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -446,6 +448,10 @@ class Breadcrumbs {
 		global $author;
 
 		$userdata = get_userdata( $author );
+		if ( ! $userdata || ! is_object( $userdata ) || ! isset( $userdata->ID ) ) {
+			return;
+		}
+
 		$this->add_crumb( sprintf( $this->strings['archive_format'], $this->get_breadcrumb_title( 'user', $userdata->ID, $userdata->display_name ) ) );
 	}
 
@@ -509,7 +515,7 @@ class Breadcrumbs {
 	/**
 	 * Get the primary term.
 	 *
-	 * @param array $terms Terms attached to the current post.
+	 * @param WP_Term[]|false|WP_Error $terms Terms attached to the current post.
 	 */
 	private function maybe_add_primary_term( $terms ) {
 		// Early Bail!
@@ -630,12 +636,12 @@ class Breadcrumbs {
 	/**
 	 * Get the breadcrumb title.
 	 *
-	 * @param  string $object_type Object type.
-	 * @param  int    $object_id   Object ID to get the title for.
-	 * @param  string $default     Default value to use for title.
+	 * @param  string $object_type   Object type.
+	 * @param  int    $object_id     Object ID to get the title for.
+	 * @param  string $default_value Default value to use for title.
 	 * @return string
 	 */
-	private function get_breadcrumb_title( $object_type, $object_id, $default ) {
+	private function get_breadcrumb_title( $object_type, $object_id, $default_value ) {
 		$title = '';
 		if ( 'post' === $object_type ) {
 			$title = Helper::get_post_meta( 'breadcrumb_title', $object_id );
@@ -645,6 +651,6 @@ class Breadcrumbs {
 			$title = Helper::get_user_meta( 'breadcrumb_title', $object_id );
 		}
 
-		return $title ? $title : $default;
+		return $title ? $title : $default_value;
 	}
 }

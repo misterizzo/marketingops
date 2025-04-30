@@ -100,7 +100,7 @@ class Content_AI_Page {
 				// Translators: placeholder is the new label.
 				'menu_title' => sprintf( esc_html__( 'Content AI %s', 'rank-math' ), $new_label ),
 				'capability' => 'rank_math_content_ai',
-				'render'     => dirname( __FILE__ ) . '/views/main.php',
+				'render'     => __DIR__ . '/views/main.php',
 				'classes'    => [ 'rank-math-page' ],
 				'assets'     => [
 					'styles'  => [
@@ -119,7 +119,6 @@ class Content_AI_Page {
 						'wp-blocks'            => '',
 						'wp-element'           => '',
 						'wp-editor'            => '',
-						'rank-math-block-faq'  => rank_math()->plugin_url() . 'assets/admin/js/blocks.js',
 						'rank-math-analyzer'   => rank_math()->plugin_url() . 'assets/admin/js/analyzer.js',
 						'rank-math-content-ai' => rank_math()->plugin_url() . 'includes/modules/content-ai/assets/js/content-ai.js',
 					],

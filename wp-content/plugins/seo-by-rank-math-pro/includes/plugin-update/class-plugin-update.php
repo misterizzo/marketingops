@@ -150,7 +150,7 @@ class Plugin_Update {
 			return;
 		}
 		?>
-			<div class="notice notice-success rank-math-notice">
+			<div class="notice notice-success rank-math-notice rank-math-admin-license-notice">
 				<p>
 					<?php
 					esc_html_e( 'Rank Math PRO is installed but it is not connected to your account, so you are missing out on important SEO features.', 'rank-math-pro' );

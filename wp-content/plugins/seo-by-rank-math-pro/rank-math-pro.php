@@ -9,7 +9,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Rank Math SEO PRO
- * Version:           3.0.75
+ * Version:           3.0.86
  * Plugin URI:        https://rankmath.com/wordpress/plugin/seo-suite/
  * Description:       Super-charge your website’s SEO with the Rank Math PRO options like Site Analytics, SEO Performance, Custom Schema Templates, News/Video Sitemaps, etc.
  * Author:            Rank Math SEO
@@ -36,14 +36,14 @@ final class RankMathPro {
 	 *
 	 * @var string
 	 */
-	public $version = '3.0.75';
+	public $version = '3.0.86';
 
 	/**
 	 * Minimum version of Rank Math SEO.
 	 *
 	 * @var string
 	 */
-	public $rank_math_min_version = '1.0.232';
+	public $rank_math_min_version = '1.0.243';
 
 	/**
 	 * Holds various class instances
@@ -100,7 +100,7 @@ final class RankMathPro {
 		$this->includes();
 		new \RankMathPro\Installer();
 
-		add_action( 'plugins_loaded', [ $this, 'localization_setup' ] );
+		add_action( 'after_setup_theme', [ $this, 'localization_setup' ], 1 );
 		add_action( 'rank_math/loaded', [ $this, 'setup' ] );
 		add_filter( 'rank_math/license/activate_url', [ $this, 'add_query_arg' ] );
 	}
@@ -266,7 +266,7 @@ final class RankMathPro {
 		}
 
 		add_action( 'rest_api_init', [ $this, 'init_rest_api' ] );
-		add_action( 'plugins_loaded', [ $this, 'init' ], 11 );
+		add_action( 'after_setup_theme', [ $this, 'init' ], 11 );
 		new \RankMathPro\Common();
 		new \RankMathPro\Register_Vars();
 	}
@@ -337,6 +337,7 @@ final class RankMathPro {
 			new \RankMathPro\Content_AI();
 		}
 
+		new \RankMathPro\Status\System_Status();
 		new \RankMathPro\Plugin_Update\Plugin_Update();
 		new \RankMathPro\Thumbnail_Overlays();
 	}

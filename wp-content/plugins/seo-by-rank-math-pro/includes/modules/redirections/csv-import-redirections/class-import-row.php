@@ -147,8 +147,7 @@ class Import_Row {
 	 * @return mixed
 	 */
 	public function import_redirection( $data = [] ) {
-
-		$exist = DB::get_redirection( $data );
+		$exist = $this->get_redirection( $data );
 
 		/**
 		 * Filter to modify the redirection data before updating a redirection.
@@ -162,6 +161,23 @@ class Import_Row {
 		}
 
 		return $this->create_redirection();
+	}
+
+	/**
+	 * Get a redirection. First, look up by ID, then by other fields.
+	 *
+	 * @param array $data Redirection data.
+	 * @return mixed
+	 */
+	public function get_redirection( $data = [] ) {
+		if ( isset( $data['id'] ) ) {
+			$redirection = DB::get_redirection_by_id( $data['id'] );
+			if ( $redirection ) {
+				return $redirection;
+			}
+		}
+
+		return DB::get_redirection( $data );
 	}
 
 	/**

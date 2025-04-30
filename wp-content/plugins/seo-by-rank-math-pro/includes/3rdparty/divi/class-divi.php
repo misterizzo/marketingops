@@ -230,6 +230,7 @@ class Divi {
 				'wp-hooks',
 				'wp-i18n',
 				'wp-plugins',
+				'wp-api-fetch',
 			],
 			RANK_MATH_PRO_VERSION,
 			true

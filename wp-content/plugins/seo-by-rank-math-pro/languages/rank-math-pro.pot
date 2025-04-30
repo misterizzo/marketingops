@@ -1,4 +1,4 @@
-# Copyright (C) 2024 rank-math-pro
+# Copyright (C) 2025 rank-math-pro
 # This file is distributed under the same license as the rank-math-pro package.
 msgid ""
 msgstr ""
@@ -8,7 +8,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language-Team: Rank Math\n"
 "Last-Translator: Rank Math\n"
-"POT-Creation-Date: 2024-11-13 04:10+0000\n"
+"POT-Creation-Date: 2025-04-23 08:21+0000\n"
 "Project-Id-Version: undefined\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
@@ -72,6 +72,30 @@ msgid "Persistent random word chosen from a list"
 msgstr ""
 
 msgid "Non-persistent random word chosen from a list. A new random word will be chosen on each page load."
+msgstr ""
+
+msgid "Please select a file to import."
+msgstr ""
+
+msgid "Something went wrong! Please try again later."
+msgstr ""
+
+msgid "API Key."
+msgstr ""
+
+msgid "Username."
+msgstr ""
+
+msgid "Plan."
+msgstr ""
+
+msgid "Keywords."
+msgstr ""
+
+msgid "Settings."
+msgstr ""
+
+msgid "The keyword used to determine the intent."
 msgstr ""
 
 msgid "Off"
@@ -551,12 +575,6 @@ msgstr ""
 msgid "Micronesia, Federated States of"
 msgstr ""
 
-msgid "Moldova, Republic of"
-msgstr ""
-
-msgid "Northern Mariana Islands"
-msgstr ""
-
 msgid "Monaco"
 msgstr ""
 
@@ -609,6 +627,9 @@ msgid "Niue"
 msgstr ""
 
 msgid "Norfolk Island"
+msgstr ""
+
+msgid "Northern Mariana Islands"
 msgstr ""
 
 msgid "Norway"
@@ -698,7 +719,10 @@ msgstr ""
 msgid "Senegal"
 msgstr ""
 
-msgid "Serbia and Montenegro"
+msgid "Serbia"
+msgstr ""
+
+msgid "Montenegro"
 msgstr ""
 
 msgid "Seychelles"
@@ -881,9 +905,6 @@ msgstr ""
 msgid "Czechia"
 msgstr ""
 
-msgid "Côte d'Ivoire"
-msgstr ""
-
 msgid "Falkland Islands (Islas Malvinas)"
 msgstr ""
 
@@ -920,9 +941,6 @@ msgstr ""
 msgid "Moldova"
 msgstr ""
 
-msgid "Montenegro"
-msgstr ""
-
 msgid "Myanmar (Burma)"
 msgstr ""
 
@@ -936,9 +954,6 @@ msgid "Russia"
 msgstr ""
 
 msgid "Réunion"
-msgstr ""
-
-msgid "Serbia"
 msgstr ""
 
 msgid "Sint Maarten"
@@ -1001,7 +1016,20 @@ msgstr ""
 msgid "Unknown Region"
 msgstr ""
 
+msgid "Could not generate. Please try again later."
+msgstr ""
+
 msgid "Special Sitemaps:"
+msgstr ""
+
+msgid "Enable Search Intent"
+msgstr ""
+
+#. translators: placeholder is a link to "Read more".
+msgid "Determine the Keyword's Search Intent for Writing Tailored Content. %s"
+msgstr ""
+
+msgid "Read more"
 msgstr ""
 
 #. translators: 1 The number of posts edited. 2 The post type name.
@@ -1021,6 +1049,15 @@ msgstr ""
 
 #. translators: 1 The number of posts edited. 2 The post type name.
 msgid "Custom Canonical URL removed from %1$d %2$s."
+msgstr ""
+
+#. translators: placeholder is the number of Keyword intent.
+msgid "Search Intent updated for %d Focus Keyword."
+msgid_plural "Search Intent updated for %d Focus Keywords."
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Focus keywords are not added for the selected posts. Please add the Focus keywords and try again."
 msgstr ""
 
 msgid "Affiliate Link Prefix"
@@ -1172,6 +1209,18 @@ msgid "Primary %s"
 msgstr ""
 
 msgid "&mdash; Not Selected &mdash;"
+msgstr ""
+
+msgid "Commercial"
+msgstr ""
+
+msgid "Informational"
+msgstr ""
+
+msgid "Navigational"
+msgstr ""
+
+msgid "Transactional"
 msgstr ""
 
 msgid "Upload"
@@ -1439,12 +1488,6 @@ msgstr ""
 msgid "Sorry, you are not allowed to export the content of this site."
 msgstr ""
 
-msgid "Please select a file to import."
-msgstr ""
-
-msgid "Sorry, you are not allowed to import contents to this site."
-msgstr ""
-
 msgid "CSV could not be imported:"
 msgstr ""
 
@@ -1461,12 +1504,6 @@ msgid "Terms"
 msgstr ""
 
 msgid "Users"
-msgstr ""
-
-msgid "Import could not be canceled: invalid nonce. Please try again."
-msgstr ""
-
-msgid "Import could not be canceled: you are not allowed to import content to this site."
 msgstr ""
 
 msgid "Import could not be canceled."
@@ -1782,13 +1819,46 @@ msgstr ""
 msgid "Rank Math [SEO Report] - %s"
 msgstr ""
 
-msgid "Sorry, no keyword found."
+msgid "Keyword to search."
 msgstr ""
 
-msgid "Sorry, no record id found."
+msgid "Query to search."
 msgstr ""
 
-msgid "Sorry, no post id found."
+msgid "The %s parameter must not be empty."
+msgstr ""
+
+msgid "Keyword to add."
+msgstr ""
+
+msgid "Data to add."
+msgstr ""
+
+msgid "The %s parameter must be numeric."
+msgstr ""
+
+msgid "The %s parameter must be array."
+msgstr ""
+
+msgid "The %s parameter must be valid post type."
+msgstr ""
+
+msgid "The %s parameter must be boolean."
+msgstr ""
+
+msgid "Record id."
+msgstr ""
+
+msgid "The %s parameter must be integer."
+msgstr ""
+
+msgid "Post id."
+msgstr ""
+
+msgid "Force update pagespeed."
+msgstr ""
+
+msgid "Is admin bar."
 msgstr ""
 
 msgid "Mark Unsolved."
@@ -1811,6 +1881,20 @@ msgstr ""
 
 #. translators: placeholder is the username or email.
 msgid "Avatar of %s"
+msgstr ""
+
+#. translators: Bold text
+msgid "%s Unable to install the Imagify plugin. Please try again later."
+msgstr ""
+
+msgid "Installation Failed:"
+msgstr ""
+
+#. translators: Bold text
+msgid "Imagify has been successfully activated! %s."
+msgstr ""
+
+msgid "Configure settings now"
 msgstr ""
 
 msgid "Add missing image caption"
@@ -1904,6 +1988,19 @@ msgid "Title"
 msgstr ""
 
 msgid "Caption"
+msgstr ""
+
+#. translators: Description and link texts
+msgid "%1$s Install Imagify to automatically optimize all your images to improve site performance and enhance your SEO visibility. %2$s or %3$s"
+msgstr ""
+
+msgid "Optimize Images:"
+msgstr ""
+
+msgid "Install Now"
+msgstr ""
+
+msgid "Learn More."
 msgstr ""
 
 msgid "Local Sitemap"
@@ -2267,7 +2364,10 @@ msgstr ""
 msgid "Schema Templates"
 msgstr ""
 
-msgid "Schema to add."
+msgid "Post ID."
+msgstr ""
+
+msgid "Schema data."
 msgstr ""
 
 msgid "Sorry, you are not allowed to save template."
@@ -2333,9 +2433,6 @@ msgstr ""
 msgid "Conversion started. A success message will be shown here once the process completes. You can close this page."
 msgstr ""
 
-msgid "Print"
-msgstr ""
-
 msgid "Free version"
 msgstr ""
 
@@ -2353,6 +2450,13 @@ msgid "Hide Sitemap"
 msgstr ""
 
 msgid "Hide the sitemap from normal visitors?"
+msgstr ""
+
+msgid "YouTube API Key"
+msgstr ""
+
+#. translators: %s is a link to the Rank Math article to get the YouTube API key.
+msgid "Enter your %s to fetch video details automatically. Leave blank to use the default public API, which may have limitations and lower reliability."
 msgstr ""
 
 msgid "Custom Fields"
@@ -2973,6 +3077,12 @@ msgstr ""
 msgid "Sorry, you are not allowed to import redirections on this site."
 msgstr ""
 
+msgid "Import could not be canceled: invalid nonce. Please try again."
+msgstr ""
+
+msgid "Import could not be canceled: you are not allowed to import content to this site."
+msgstr ""
+
 msgid "Created"
 msgstr ""
 
@@ -3176,24 +3286,6 @@ msgstr ""
 
 #. translators: Placeholder is the image title.
 msgid "Video Thumbnail: %s"
-msgstr ""
-
-msgid "Competitor Analysis"
-msgstr ""
-
-msgid "Enter a site URL to see how it ranks for the same SEO criteria as your site."
-msgstr ""
-
-msgid "Start Audit"
-msgstr ""
-
-msgid "Complete"
-msgstr ""
-
-msgid "Note:"
-msgstr ""
-
-msgid "The total test count is different for the competitor as we don't have access to their database."
 msgstr ""
 
 msgid "SEO Report of Your Website"

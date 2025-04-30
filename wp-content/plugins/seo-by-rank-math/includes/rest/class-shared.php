@@ -12,13 +12,15 @@
 
 namespace RankMath\Rest;
 
-use RankMath\Helpers\Str;
 use RankMath\Helper;
+use RankMath\Helpers\Str;
+use RankMath\Helpers\Url;
 use RankMath\Redirections\Metabox;
 use RankMath\Rest\Rest_Helper;
 use RankMath\Rest\Sanitize;
 use RankMath\Traits\Meta;
 use RankMath\Schema\DB;
+use WP_Error;
 use WP_REST_Controller;
 use WP_REST_Request;
 use WP_REST_Server;
@@ -50,6 +52,7 @@ class Shared extends WP_REST_Controller {
 			[
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => [ $this, 'update_redirection' ],
+				'args'                => $this->get_update_redirection_args(),
 				'permission_callback' => [ '\\RankMath\\Rest\\Rest_Helper', 'get_redirection_permissions_check' ],
 			]
 		);
@@ -72,7 +75,7 @@ class Shared extends WP_REST_Controller {
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => [ $this, 'update_schemas' ],
 				'args'                => $this->get_update_schemas_args(),
-				'permission_callback' => [ '\\RankMath\\Rest\\Rest_Helper', 'get_object_permissions_check' ],
+				'permission_callback' => [ '\\RankMath\\Rest\\Rest_Helper', 'get_schema_permissions_check' ],
 			]
 		);
 	}
@@ -155,19 +158,7 @@ class Shared extends WP_REST_Controller {
 		foreach ( $meta as $meta_key => $meta_value ) {
 			// Delete schema by meta id.
 			if ( Str::starts_with( 'rank_math_delete_', $meta_key ) ) {
-				// First, delete the "shortcut" to the new schema.
-				$schema = \get_metadata_by_mid( $object_type, absint( \str_replace( 'rank_math_delete_schema-', '', $meta_key ) ) );
-				if ( ! empty( $schema->meta_value ) ) {
-					// Maybe unserialize the schema.
-					$schema = \maybe_unserialize( $schema->meta_value );
-					if ( ! empty( $schema['metadata']['shortcode'] ) ) {
-						\delete_metadata( $object_type, $object_id, 'rank_math_shortcode_schema_' . $schema['metadata']['shortcode'] );
-					}
-				}
-
-				// Now delete the schema.
-				\delete_metadata_by_mid( $object_type, absint( \str_replace( 'rank_math_delete_schema-', '', $meta_key ) ) );
-				update_metadata( $object_type, $object_id, 'rank_math_rich_snippet', 'off' );
+				$this->maybe_delete_schema( $object_type, $object_id, $meta_key );
 				continue;
 			}
 
@@ -186,68 +177,6 @@ class Shared extends WP_REST_Controller {
 	}
 
 	/**
-	 * Get update metadata endpoint arguments.
-	 *
-	 * @return array
-	 */
-	private function get_update_metadata_args() {
-		return [
-			'objectType' => [
-				'type'              => 'string',
-				'required'          => true,
-				'description'       => esc_html__( 'Object Type i.e. post, term, user', 'rank-math' ),
-				'validate_callback' => [ '\\RankMath\\Rest\\Rest_Helper', 'is_param_empty' ],
-			],
-			'objectID'   => [
-				'type'              => 'integer',
-				'required'          => true,
-				'description'       => esc_html__( 'Object unique id', 'rank-math' ),
-				'validate_callback' => function( $param ) {
-					if ( empty( $param ) && 0 !== $param ) {
-						return new WP_Error(
-							'param_value_empty',
-							esc_html__( 'Sorry, field is empty which is not allowed.', 'rank-math' )
-						);
-					}
-
-					return true;
-				},
-			],
-			'meta'       => [
-				'required'          => true,
-				'description'       => esc_html__( 'Meta to add or update data.', 'rank-math' ),
-				'validate_callback' => [ '\\RankMath\\Rest\\Rest_Helper', 'is_param_empty' ],
-			],
-		];
-	}
-
-	private function update_site_editor_homepage( $meta ) {
-		$meta_keys = [
-			'homepage_title'                => 'rank_math_title',
-			'homepage_description'          => 'rank_math_description',
-			'homepage_facebook_title'       => 'rank_math_facebook_title',
-			'homepage_facebook_description' => 'rank_math_facebook_description',
-			'homepage_facebook_image'       => 'rank_math_facebook_image',
-			'homepage_facebook_image_id'    => 'rank_math_facebook_image_id',
-			'homepage_robots'               => 'rank_math_robots',
-			'homepage_advanced_robots'      => 'rank_math_advanced_robots',
-			'breadcrumbs_home_label'        => 'rank_math_breadcrumb_title',
-		];
-
-		$settings = rank_math()->settings->all_raw();
-		foreach ( $meta_keys as $key => $meta_key ) {
-			if ( empty( $meta[ $meta_key ] ) ) {
-				continue;
-			}
-			$prefix = $key === 'breadcrumbs_home_label' ? 'general' : 'titles';
-
-			$settings[ $prefix ][ $key ] = $meta[ $meta_key ];
-		}
-
-		Helper::update_all_settings( $settings['general'], $settings['titles'], null );
-	}
-
-	/**
 	 * Update metadata.
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
@@ -261,7 +190,9 @@ class Shared extends WP_REST_Controller {
 		$new_ids     = [];
 
 		do_action( 'rank_math/pre_update_schema', $object_id, $object_type );
+		$sanitizer = Sanitize::get();
 		foreach ( $schemas as $meta_id => $schema ) {
+			$schema   = $sanitizer->sanitize( 'rank_math_schema', $schema );
 			$schema   = $this->sanitize_schema_type( $schema );
 			$type     = is_array( $schema['@type'] ) ? $schema['@type'][0] : $schema['@type'];
 			$meta_key = 'rank_math_schema_' . $type;
@@ -294,6 +225,142 @@ class Shared extends WP_REST_Controller {
 		do_action( 'rank_math/schema/update', $object_id, $schemas, $object_type );
 
 		return $new_ids;
+	}
+
+	/**
+	 * Allow only rank math meta keys
+	 *
+	 * @param bool   $is_protected Whether the key is considered protected.
+	 * @param string $meta_key     Meta key.
+	 *
+	 * @return bool
+	 */
+	public function only_this_plugin( $is_protected, $meta_key ) {
+		return Str::starts_with( 'rank_math_', $meta_key );
+	}
+
+	/**
+	 * Get update redirection endpoint arguments.
+	 *
+	 * @return array
+	 */
+	private function get_update_redirection_args() {
+		return [
+			'objectID'        => [
+				'type'              => 'integer',
+				'required'          => true,
+				'description'       => esc_html__( 'Object unique id', 'rank-math' ),
+				'validate_callback' => [ '\\RankMath\\Rest\\Rest_Helper', 'is_param_empty' ],
+			],
+			'objectType'      => [
+				'type'              => 'string',
+				'default'           => 'post',
+				'required'          => true,
+				'description'       => esc_html__( 'Object Type i.e. post, term, user', 'rank-math' ),
+				'sanitize_callback' => 'rest_sanitize_request_arg',
+				'validate_callback' => [ '\\RankMath\\Rest\\Rest_Helper', 'is_valid_string' ],
+			],
+			'hasRedirect'     => [
+				'type'        => 'boolean',
+				'required'    => true,
+				'description' => esc_html__( 'Whether the object has a redirect or not', 'rank-math' ),
+			],
+			'redirectionID'   => [
+				'type'        => 'string',
+				'required'    => false,
+				'description' => esc_html__( 'Redirection ID', 'rank-math' ),
+			],
+			'redirectionUrl'  => [
+				'type'              => 'string',
+				'required'          => false,
+				'description'       => esc_html__( 'Redirection URL', 'rank-math' ),
+				'sanitize_callback' => 'rest_sanitize_request_arg',
+				'validate_callback' => function ( $param, $request ) {
+					$redirection_type = $request->get_param( 'redirectionType' );
+					if ( in_array( $param, [ '301', '302', '307' ], true ) ) {
+						return Url::is_url( $param );
+					}
+
+					return true;
+				},
+			],
+			'redirectionType' => [
+				'type'              => 'string',
+				'default'           => '301',
+				'required'          => true,
+				'description'       => esc_html__( 'Redirection Type', 'rank-math' ),
+				'enum'              => [ '301', '302', '307', '410', '451' ],
+				'sanitize_callback' => 'rest_sanitize_request_arg',
+				'validate_callback' => [ '\\RankMath\\Rest\\Rest_Helper', 'is_valid_string' ],
+			],
+		];
+	}
+
+	/**
+	 * Get update metadata endpoint arguments.
+	 *
+	 * @return array
+	 */
+	private function get_update_metadata_args() {
+		return [
+			'objectType' => [
+				'type'              => 'string',
+				'required'          => true,
+				'description'       => esc_html__( 'Object Type i.e. post, term, user', 'rank-math' ),
+				'validate_callback' => [ '\\RankMath\\Rest\\Rest_Helper', 'is_param_empty' ],
+			],
+			'objectID'   => [
+				'type'              => 'integer',
+				'required'          => true,
+				'description'       => esc_html__( 'Object unique id', 'rank-math' ),
+				'validate_callback' => function ( $param ) {
+					if ( empty( $param ) && 0 !== $param ) {
+						return new WP_Error(
+							'param_value_empty',
+							esc_html__( 'Sorry, field is empty which is not allowed.', 'rank-math' )
+						);
+					}
+
+					return true;
+				},
+			],
+			'meta'       => [
+				'required'          => true,
+				'description'       => esc_html__( 'Meta to add or update data.', 'rank-math' ),
+				'validate_callback' => [ '\\RankMath\\Rest\\Rest_Helper', 'is_param_empty' ],
+			],
+		];
+	}
+
+	/**
+	 * Update site editor homepage metadata.
+	 *
+	 * @param array $meta Metadata to update.
+	 */
+	private function update_site_editor_homepage( $meta ) {
+		$meta_keys = [
+			'homepage_title'                => 'rank_math_title',
+			'homepage_description'          => 'rank_math_description',
+			'homepage_facebook_title'       => 'rank_math_facebook_title',
+			'homepage_facebook_description' => 'rank_math_facebook_description',
+			'homepage_facebook_image'       => 'rank_math_facebook_image',
+			'homepage_facebook_image_id'    => 'rank_math_facebook_image_id',
+			'homepage_robots'               => 'rank_math_robots',
+			'homepage_advanced_robots'      => 'rank_math_advanced_robots',
+			'breadcrumbs_home_label'        => 'rank_math_breadcrumb_title',
+		];
+
+		$settings = rank_math()->settings->all_raw();
+		foreach ( $meta_keys as $key => $meta_key ) {
+			if ( empty( $meta[ $meta_key ] ) ) {
+				continue;
+			}
+			$prefix = $key === 'breadcrumbs_home_label' ? 'general' : 'titles';
+
+			$settings[ $prefix ][ $key ] = $meta[ $meta_key ];
+		}
+
+		Helper::update_all_settings( $settings['general'], $settings['titles'], null );
 	}
 
 	/**
@@ -349,14 +416,39 @@ class Shared extends WP_REST_Controller {
 	}
 
 	/**
-	 * Allow only rank math meta keys
+	 * Maybe delete schema.
 	 *
-	 * @param bool   $protected Whether the key is considered protected.
-	 * @param string $meta_key  Meta key.
+	 * This function checks if a schema should be deleted based on the provided object type, object ID, and meta key.
 	 *
-	 * @return bool
+	 * @param string $object_type The type of the object (e.g., post, term, user).
+	 * @param int    $object_id   The ID of the object.
+	 * @param string $meta_key    The meta key associated with the schema.
 	 */
-	public function only_this_plugin( $protected, $meta_key ) {
-		return Str::starts_with( 'rank_math_', $meta_key );
+	private function maybe_delete_schema( $object_type, $object_id, $meta_key ) {
+		// Early bail if user doesn't have the capability to edit the schema data.
+		if ( ! Helper::has_cap( 'onpage_snippet' ) ) {
+			return;
+		}
+
+		$meta_id = absint( \str_replace( 'rank_math_delete_schema-', '', $meta_key ) );
+		$schemas = DB::get_schemas( $object_id, "{$object_type}meta" );
+		// Early bail if meta_id doesn't match with the schema data of the current post.
+		if ( empty( $schemas ) || ! in_array( "schema-{$meta_id}", array_keys( $schemas ), true ) ) {
+			return;
+		}
+
+		// First, delete the "shortcut" to the new schema.
+		$schema = \get_metadata_by_mid( $object_type, $meta_id );
+		if ( ! empty( $schema->meta_value ) ) {
+			// Maybe unserialize the schema.
+			$schema = \maybe_unserialize( $schema->meta_value );
+			if ( ! empty( $schema['metadata']['shortcode'] ) ) {
+				\delete_metadata( $object_type, $object_id, 'rank_math_shortcode_schema_' . $schema['metadata']['shortcode'] );
+			}
+		}
+
+		// Now delete the schema.
+		\delete_metadata_by_mid( $object_type, $meta_id );
+		update_metadata( $object_type, $object_id, 'rank_math_rich_snippet', 'off' );
 	}
 }

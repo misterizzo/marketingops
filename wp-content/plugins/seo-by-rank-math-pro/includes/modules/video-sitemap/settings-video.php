@@ -39,6 +39,23 @@ $cmb->add_field(
 
 $cmb->add_field(
 	[
+		'id'      => 'youtube_api_key',
+		'type'    => 'text',
+		'name'    => esc_html__( 'YouTube API Key', 'rank-math-pro' ),
+		'desc'    => wp_kses_post(
+			sprintf(
+				/* translators: %s is a link to the Rank Math article to get the YouTube API key. */
+				__( 'Enter your %s to fetch video details automatically. Leave blank to use the default public API, which may have limitations and lower reliability.', 'rank-math-pro' ),
+				'<a href="https://rankmath.com/kb/how-to-get-youtube-api-key/" target="_blank">YouTube API key</a>'
+			)
+		),
+		'classes' => 'rank-math-advanced-option cmb2-top-border',
+		'default' => '',
+	]
+);
+
+$cmb->add_field(
+	[
 		'id'      => 'video_sitemap_custom_fields',
 		'type'    => 'textarea_small',
 		'name'    => esc_html__( 'Custom Fields', 'rank-math-pro' ),

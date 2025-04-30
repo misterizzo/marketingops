@@ -37,6 +37,7 @@ class Updates {
 		'3.0.32' => 'updates/update-3.0.32.php',
 		'3.0.60' => 'updates/update-3.0.60.php',
 		'3.0.72' => 'updates/update-3.0.72.php',
+		'3.0.81' => 'updates/update-3.0.81.php',
 	];
 
 	/**

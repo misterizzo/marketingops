@@ -17,7 +17,6 @@ use RankMath\Helpers\DB as DB_Helper;
 use RankMath\Traits\Hooker;
 use RankMath\Analytics\Stats;
 
-
 // Analytics.
 use RankMathPro\Google\Adsense;
 use RankMath\Google\Permissions;
@@ -63,6 +62,7 @@ class Analytics {
 		$this->filter( 'rank_math/metabox/post/values', 'add_metadata', 10, 2 );
 		$this->filter( 'rank_math/analytics/date_exists_tables', 'date_exists_tables', 10 );
 		$this->filter( 'rank_math/analytics/rows', 'add_analytics_rows', 10, 3 );
+		$this->filter( 'rank_math/analytics/adsense', 'adsense_options', 10, 3 );
 
 		if ( Helper::has_cap( 'analytics' ) ) {
 			$this->action( 'rank_math/admin_bar/items', 'admin_bar_items', 11 );
@@ -82,6 +82,65 @@ class Analytics {
 		new Ajax();
 		new Email_Reports();
 		new Url_Inspection();
+	}
+
+	/**
+	 * Add AdSense markup
+	 *
+	 * @param string $html      HTML markup.
+	 * @param array  $analytics Analytics data.
+	 * @param array  $all_services All services data.
+	 */
+	public function adsense_options( $html, $analytics, $all_services ) {
+		$is_adsense_connected = ! empty( $analytics['adsense_id'] );
+
+		$adsense_classes = Helper::classnames(
+			'rank-math-box no-padding rank-math-accordion rank-math-connect-adsense',
+			[
+				'connected'    => $is_adsense_connected,
+				'disconnected' => ! $is_adsense_connected,
+				'disabled'     => ! Permissions::has_adsense(),
+			]
+		);
+		$adsense_status_classes = Helper::classnames(
+			'rank-math-connection-status',
+			[
+				'rank-math-connection-status-success' => Permissions::has_adsense() && $is_adsense_connected,
+				'rank-math-connection-status-error' => Permissions::has_adsense() && ! $is_adsense_connected,
+			]
+		);
+		$adsense_status = $is_adsense_connected ? 'Connected' : 'Not Connected';
+		ob_start();
+		?>
+		<div class="<?php echo esc_attr( $adsense_classes ); ?>" tabindex="0">
+			<header>
+				<h3><span class="rank-math-connection-status-wrap"><span class="<?php echo esc_attr( $adsense_status_classes ); ?>" title="<?php echo esc_attr( $adsense_status ); ?>"></span></span><?php esc_html_e( 'AdSense', 'rank-math' ); ?></h3>
+			</header>
+			<div class="rank-math-accordion-content">
+		
+				<?php
+				if ( ! Permissions::has_adsense() ) {
+					Permissions::print_warning();
+				} ?>
+		
+				<div class="cmb-row cmb-type-select">
+					<div class="cmb-row-col">
+						<label for="site-adsense-account"><?php esc_html_e( 'Account', 'rank-math' ); ?></label>
+						<select class="cmb2_select site-adsense-account notrack" name="site-adsense-account" id="site-adsense-account" data-selected="<?php echo esc_attr( $analytics['adsense_id'] ); ?>" disabled="disabled">
+							<option value=""><?php esc_html_e( 'Select Account', 'rank-math' ); ?></option>
+							<?php
+							if ( $is_adsense_connected ) :
+								$adsense = $all_services['adsenseAccounts'][ $analytics['adsense_id'] ];
+								?>
+							<option value="<?php echo $analytics['adsense_id']; ?>"><?php echo $adsense['name']; ?></option>
+							<?php endif; ?>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<?php
+		return ob_get_clean();
 	}
 
 	/**
@@ -129,6 +188,7 @@ class Analytics {
 		$uri = untrailingslashit( plugin_dir_url( __FILE__ ) );
 		wp_enqueue_style( 'rank-math-analytics-pro-stats', $uri . '/assets/css/admin-bar.css', [ 'rank-math-analytics-stats' ], rank_math_pro()->version );
 		wp_enqueue_script( 'rank-math-analytics-pro-stats', $uri . '/assets/js/admin-bar.js', [ 'rank-math-analytics-stats' ], rank_math_pro()->version, true );
+		wp_set_script_translations( 'rank-math-analytics-pro-stats', 'rank-math-pro', RANK_MATH_PRO_PATH . 'languages/' );
 
 		Helper::add_json( 'dateFormat', get_option( 'date_format' ) );
 	}
@@ -259,6 +319,7 @@ class Analytics {
 			rank_math_pro()->version,
 			true
 		);
+		wp_set_script_translations( 'rank-math-pro-analytics', 'rank-math-pro', RANK_MATH_PRO_PATH . 'languages/' );
 	}
 
 	/**

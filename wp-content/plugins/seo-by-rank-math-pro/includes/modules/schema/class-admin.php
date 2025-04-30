@@ -186,6 +186,8 @@ class Admin {
 			true
 		);
 
+		wp_set_script_translations( 'rank-math-pro-schema-filters', 'rank-math-pro', RANK_MATH_PRO_PATH . 'languages/' );
+
 		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : false;
 		if ( $screen instanceof WP_Screen && 'rank_math_schema' === $screen->post_type ) {
 			Helper::add_json( 'isTemplateScreen', true );
@@ -207,10 +209,13 @@ class Admin {
 				true
 			);
 
+			wp_set_script_translations( 'rank-math-schema-pro', 'rank-math-pro', RANK_MATH_PRO_PATH . 'languages/' );
+
 			return;
 		}
 
 		wp_enqueue_script( 'rank-math-schema-pro', RANK_MATH_PRO_URL . 'includes/modules/schema/assets/js/schema.js', [ 'rank-math-schema' ], rank_math_pro()->version, true );
+		wp_set_script_translations( 'rank-math-schema-pro', 'rank-math-pro', RANK_MATH_PRO_PATH . 'languages/' );
 	}
 
 	/**

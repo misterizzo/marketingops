@@ -27,7 +27,8 @@ defined( 'ABSPATH' ) || exit;
  */
 class Posts {
 
-	use Hooker, Cache;
+	use Hooker;
+	use Cache;
 
 	/**
 	 * Main instance
@@ -152,7 +153,7 @@ class Posts {
 			if ( 'DESC' === $order ) {
 				uasort(
 					$data['rankingKeywords'],
-					function( $a, $b ) use ( $orderby ) {
+					function ( $a, $b ) use ( $orderby ) {
 						return strtolower( $a[ $orderby ] ) < strtolower( $b[ $orderby ] );
 					}
 				);
@@ -161,7 +162,7 @@ class Posts {
 			if ( 'ASC' === $order ) {
 				uasort(
 					$data['rankingKeywords'],
-					function( $a, $b ) use ( $orderby ) {
+					function ( $a, $b ) use ( $orderby ) {
 						return strtolower( $a[ $orderby ] ) > strtolower( $b[ $orderby ] );
 					}
 				);
@@ -188,7 +189,7 @@ class Posts {
 		if ( 'DESC' === $arr_order ) {
 			uasort(
 				$arr,
-				function( $a, $b ) use ( $arr_orderby ) {
+				function ( $a, $b ) use ( $arr_orderby ) {
 					return $a[ $arr_orderby ]['total'] < $b[ $arr_orderby ]['total'];
 				}
 			);
@@ -197,7 +198,7 @@ class Posts {
 		if ( 'ASC' === $arr_order ) {
 			uasort(
 				$arr,
-				function( $a, $b ) use ( $arr_orderby ) {
+				function ( $a, $b ) use ( $arr_orderby ) {
 					return $a[ $arr_orderby ]['total'] > $b[ $arr_orderby ]['total'];
 				}
 			);
@@ -218,6 +219,7 @@ class Posts {
 		$objects   = Stats::get()->get_objects_by_score( $request );
 		$objects   = Links::get_links_by_objects( $objects );
 		$pages     = isset( $objects['rows'] ) ? \array_keys( $objects['rows'] ) : [];
+		$pages     = array_map( 'esc_sql', $pages );
 		$pageviews = Pageviews::get_pageviews( [ 'pages' => $pages ] );
 		$pageviews = Stats::get()->set_page_as_key( $pageviews['rows'] );
 		$console   = Stats::get()->get_analytics_data(
@@ -286,7 +288,7 @@ class Posts {
 		if ( 'DESC' === $arr_order ) {
 			uasort(
 				$arr,
-				function( $a, $b ) use ( $arr_orderby ) {
+				function ( $a, $b ) use ( $arr_orderby ) {
 
 					if ( false === array_key_exists( $arr_orderby, $a ) ) {
 						$a[ $arr_orderby ] = [ 'total' => '0' ];
@@ -303,7 +305,7 @@ class Posts {
 		if ( 'ASC' === $arr_order ) {
 			uasort(
 				$arr,
-				function( $a, $b ) use ( $arr_orderby ) {
+				function ( $a, $b ) use ( $arr_orderby ) {
 
 					if ( false === array_key_exists( $arr_orderby, $a ) ) {
 						$a[ $arr_orderby ] = [ 'total' => '0' ];
@@ -339,7 +341,7 @@ class Posts {
 		);
 		$history   = Keywords::get()->get_graph_data_for_keywords( \array_keys( $data ), $sub_query );
 
-		$post['rankingKeywords'] = Stats::get()->set_query_position( $data, $history ); // phpcs:ignore
+		$post['rankingKeywords'] = Stats::get()->set_query_position( $data, $history );
 
 		return $post;
 	}
@@ -369,7 +371,7 @@ class Posts {
 	 * @return integer
 	 */
 	public function get_position_for_badges( $column, $page ) {
-		$start = date( 'Y-m-d H:i:s', strtotime( '-30 days ', Stats::get()->end ) );
+		$start = gmdate( 'Y-m-d H:i:s', strtotime( '-30 days ', Stats::get()->end ) );
 		if ( 'traffic' === $column ) {
 			$rows = DB::traffic()
 				->select( 'page' )
@@ -421,15 +423,16 @@ class Posts {
 		$sql_daterange = Stats::get()->get_sql_date_intervals( $intervals );
 
 		// Step2. Get analytics data summary for each splitted date intervals.
-		$query   = $wpdb->prepare(
-			"SELECT DATE_FORMAT( created, '%%Y-%%m-%%d') as date, SUM( clicks ) as clicks, SUM(impressions) as impressions, ROUND( AVG(ctr), 2 ) as ctr, {$sql_daterange}
-			FROM {$wpdb->prefix}rank_math_analytics_gsc
-			WHERE created BETWEEN %s AND %s AND page LIKE '%{$page}'
-			GROUP BY range_group",
-			Stats::get()->start_date,
-			Stats::get()->end_date
+		$metrics = $wpdb->get_results( // phpcs:disable -- $sql_daterange, $page are escaped.
+			$wpdb->prepare(
+				"SELECT DATE_FORMAT( created, '%%Y-%%m-%%d') as date, SUM( clicks ) as clicks, SUM(impressions) as impressions, ROUND( AVG(ctr), 2 ) as ctr, {$sql_daterange}
+				FROM {$wpdb->prefix}rank_math_analytics_gsc
+				WHERE created BETWEEN %s AND %s AND page LIKE '%{$page}'
+				GROUP BY range_group",
+				Stats::get()->start_date,
+				Stats::get()->end_date
+			)
 		);
-		$metrics = $wpdb->get_results( $query );
 
 		// Step3. Get position data summary for each splitted date intervals.
 		$query     = $wpdb->prepare(
@@ -456,7 +459,6 @@ class Posts {
 			Stats::get()->end_date
 		);
 		$keywords = $wpdb->get_results( $query );
-		// phpcs:enable
 
 		// Step5. Filter graph data.
 		$metrics   = Stats::get()->filter_graph_rows( $metrics );

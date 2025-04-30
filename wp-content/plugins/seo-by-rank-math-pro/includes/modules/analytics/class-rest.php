@@ -48,6 +48,7 @@ class Rest extends WP_REST_Controller {
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => [ Keywords::get(), 'get_keyword_pages' ],
 				'permission_callback' => [ $this, 'has_permission' ],
+				'args'                => $this->get_keyword_pages_args(),
 			]
 		);
 
@@ -78,6 +79,7 @@ class Rest extends WP_REST_Controller {
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => [ $this, 'get_tracked_keywords_rows' ],
 				'permission_callback' => [ $this, 'has_permission' ],
+				'args'                => $this->get_tracked_keywords_rows_args(),
 			]
 		);
 
@@ -108,6 +110,7 @@ class Rest extends WP_REST_Controller {
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => [ $this, 'add_track_keyword' ],
 				'permission_callback' => [ $this, 'has_permission' ],
+				'args'                => $this->get_add_track_keyword_args(),
 			]
 		);
 
@@ -118,6 +121,7 @@ class Rest extends WP_REST_Controller {
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => [ $this, 'auto_add_focus_keywords' ],
 				'permission_callback' => [ $this, 'has_permission' ],
+				'args'                => $this->get_auto_add_focus_keywords_args(),
 			]
 		);
 
@@ -128,8 +132,10 @@ class Rest extends WP_REST_Controller {
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => [ $this, 'remove_track_keyword' ],
 				'permission_callback' => [ $this, 'has_permission' ],
+				'args'                => $this->get_collection_params(),
 			]
 		);
+
 		register_rest_route(
 			$this->namespace,
 			'/deleteTrackedKeywords',
@@ -147,6 +153,7 @@ class Rest extends WP_REST_Controller {
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => [ $this, 'get_pagespeed' ],
 				'permission_callback' => [ $this, 'has_permission' ],
+				'args'                => $this->get_pagespeed_args(),
 			]
 		);
 
@@ -172,22 +179,11 @@ class Rest extends WP_REST_Controller {
 	}
 
 	/**
-	 * Determines if the current user can manage analytics.
-	 *
-	 * @return true
-	 */
-	public function has_permission() {
-		return current_user_can( 'rank_math_analytics' );
-	}
-
-	/**
 	 * Get top 5 winning and losing posts rows.
-	 *
-	 * @param WP_REST_Request $request Full details about the request.
 	 *
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
-	public function get_posts_overview( WP_REST_Request $request ) {
+	public function get_posts_overview() {
 		return rest_ensure_response(
 			[
 				'winningPosts' => Posts::get()->get_winning_posts(),
@@ -199,11 +195,9 @@ class Rest extends WP_REST_Controller {
 	/**
 	 * Get tracked keywords rows.
 	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 *
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
-	public function get_tracked_keywords( WP_REST_Request $request ) {
+	public function get_tracked_keywords() {
 		return rest_ensure_response(
 			[ 'rows' => Keywords::get()->get_tracked_keywords() ]
 		);
@@ -223,11 +217,9 @@ class Rest extends WP_REST_Controller {
 	/**
 	 * Get tracked keywords summary.
 	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 *
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
-	public function get_tracked_keyword_summary( WP_REST_Request $request ) {
+	public function get_tracked_keyword_summary() {
 		\RankMathPro\Admin\Api::get()->get_settings();
 
 		return rest_ensure_response( Keywords::get()->get_tracked_keywords_summary() );
@@ -236,11 +228,9 @@ class Rest extends WP_REST_Controller {
 	/**
 	 * Get top 5 winning and losing tracked keywords overview.
 	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 *
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
-	public function get_tracked_keywords_overview( WP_REST_Request $request ) {
+	public function get_tracked_keywords_overview() {
 		return rest_ensure_response(
 			[
 				'winningKeywords' => Keywords::get()->get_tracked_winning_keywords(),
@@ -305,20 +295,11 @@ class Rest extends WP_REST_Controller {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function add_track_keyword( WP_REST_Request $request ) {
-		$keywords = $request->get_param( 'keyword' );
-		$keywords = mb_strtolower( filter_var( $keywords, FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_NO_ENCODE_QUOTES ) );
-		if ( empty( $keywords ) ) {
-			return new WP_Error(
-				'param_value_empty',
-				esc_html__( 'Sorry, no keyword found.', 'rank-math-pro' )
-			);
-		}
-
-		$keywords = html_entity_decode( $keywords );
+		$keyword = $request->get_param( 'keyword' );
 
 		// Check remain keywords count can be added.
 		$total_keywords = Keywords::get()->get_tracked_keywords_count();
-		$new_keywords   = Keywords::get()->extract_addable_track_keyword( $keywords );
+		$new_keywords   = Keywords::get()->extract_addable_track_keyword( $keyword );
 		$keywords_count = count( $new_keywords );
 		if ( $keywords_count <= 0 ) {
 			return false;
@@ -357,12 +338,6 @@ class Rest extends WP_REST_Controller {
 	 */
 	public function remove_track_keyword( WP_REST_Request $request ) {
 		$keyword = $request->get_param( 'keyword' );
-		if ( empty( $keyword ) ) {
-			return new WP_Error(
-				'param_value_empty',
-				esc_html__( 'Sorry, no keyword found.', 'rank-math-pro' )
-			);
-		}
 
 		// Remove keyword.
 		Keywords::get()->remove_track_keyword( $keyword );
@@ -429,21 +404,8 @@ class Rest extends WP_REST_Controller {
 	 * @return array|bool Pagespeed info on success, false on failure.
 	 */
 	public function get_pagespeed( WP_REST_Request $request ) {
-		$id = $request->get_param( 'id' );
-		if ( empty( $id ) ) {
-			return new WP_Error(
-				'param_value_empty',
-				esc_html__( 'Sorry, no record id found.', 'rank-math-pro' )
-			);
-		}
-
+		$id      = $request->get_param( 'id' );
 		$post_id = $request->get_param( 'objectID' );
-		if ( empty( $id ) ) {
-			return new WP_Error(
-				'param_value_empty',
-				esc_html__( 'Sorry, no post id found.', 'rank-math-pro' )
-			);
-		}
 
 		if ( Helper::is_localhost() ) {
 			return [
@@ -466,10 +428,7 @@ class Rest extends WP_REST_Controller {
 		$is_admin_bar = \boolval( $request->get_param( 'isAdminBar' ) );
 		if ( $force || ( ! $is_admin_bar && $this->should_update_pagespeed( $id ) ) ) {
 			// Page Score.
-			$analyzer = new SEO_Analyzer();
-			$analyzer->set_url();
-
-			$score  = $analyzer->get_page_score( $url );
+			$score  = $this->get_page_score( $url );
 			$update = [];
 			if ( $score > 0 ) {
 				$update['page_score'] = $score;
@@ -497,6 +456,44 @@ class Rest extends WP_REST_Controller {
 		}
 
 		return empty( $update ) ? false : $update;
+	}
+
+	/**
+	 * Get page score
+	 *
+	 * @param string $url URL to check.
+	 * @return int
+	 */
+	private function get_page_score( $url ) {
+		$analyzer = new SEO_Analyzer();
+		$analyzer->set_url();
+
+		$analyzer->results         = [];
+		$analyzer->analyse_url     = $url;
+		$analyzer->analyse_subpage = true;
+		if ( ! $analyzer->run_api_tests() ) {
+			return 0;
+		}
+
+		$analyzer->build_results();
+		if ( empty( $analyzer->results ) ) {
+			return 0;
+		}
+
+		$score = 0;
+		foreach ( $analyzer->results as $id => $result ) {
+			if (
+				$result->is_hidden() ||
+				'ok' !== $result->get_status() ||
+				false === $analyzer->can_count_result( $result )
+			) {
+				continue;
+			}
+
+			$score = $score + $result->get_score();
+		}
+
+		return $score;
 	}
 
 	/**
@@ -531,5 +528,314 @@ class Rest extends WP_REST_Controller {
 				'status'   => Url_Inspection::get_status_stats(),
 			]
 		);
+	}
+
+	/**
+	 * Get tracked keywords collection params.
+	 *
+	 * @return array
+	 */
+	public function get_tracked_keywords_rows_args() {
+		$query_params                       = parent::get_collection_params();
+		$query_params['orderby']['default'] = 'default';
+		$query_params['orderby']['enum'][]  = 'default';
+		$query_params['orderby']['enum'][]  = 'keyword';
+
+		$query_params['search'] = [
+			'description'       => esc_html__( 'Keyword to search.', 'rank-math-pro' ),
+			'type'              => 'string',
+			'default'           => '',
+			'sanitize_callback' => function ( $keyword ) {
+				$keyword = mb_strtolower( filter_var( $keyword, FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_NO_ENCODE_QUOTES ) );
+				$keyword = html_entity_decode( $keyword );
+				return $keyword;
+			},
+			'validate_callback' => 'rest_validate_request_arg',
+		];
+
+		return $query_params;
+	}
+
+	/**
+	 * Get keyword pages collection params.
+	 *
+	 * @return array
+	 */
+	public function get_keyword_pages_args() {
+		$query_params = parent::get_collection_params();
+
+		$query_params['query'] = [
+			'description'       => esc_html__( 'Query to search.', 'rank-math-pro' ),
+			'type'              => 'string',
+			'default'           => '',
+			'sanitize_callback' => 'rest_sanitize_request_arg',
+			'validate_callback' => function ( $param, $request, $key ) {
+				if ( empty( $param ) ) {
+					return new WP_Error(
+						'rest_invalid_param',
+						sprintf( esc_html__( 'The %s parameter must not be empty.', 'rank-math-pro' ), $key ),
+						[ 'status' => 400 ]
+					);
+				}
+
+				return rest_validate_request_arg( $param, $request, $key );
+			},
+		];
+
+		return $query_params;
+	}
+
+	/**
+	 * Get add track keyword collection params.
+	 *
+	 * @return array
+	 */
+	public function get_add_track_keyword_args() {
+		$query_params = parent::get_collection_params();
+
+		$query_params['keyword'] = [
+			'description'       => esc_html__( 'Keyword to add.', 'rank-math-pro' ),
+			'type'              => 'string',
+			'default'           => '',
+			'sanitize_callback' => 'rest_sanitize_request_arg',
+			'validate_callback' => function ( $param, $request, $key ) {
+				if ( empty( $param ) ) {
+					return new WP_Error(
+						'param_value_empty',
+						sprintf( esc_html__( 'The %s parameter must not be empty.', 'rank-math-pro' ), $key ),
+						[ 'status' => 400 ]
+					);
+				}
+
+				return rest_validate_request_arg( $param, $request, $key );
+			},
+		];
+
+		return $query_params;
+	}
+
+	/**
+	 * Get auto add focus keywords collection params.
+	 *
+	 * @return array
+	 */
+	public function get_auto_add_focus_keywords_args() {
+		$query_params = parent::get_collection_params();
+
+		$query_params['data'] = [
+			'description'       => esc_html__( 'Data to add.', 'rank-math-pro' ),
+			'type'              => 'object',
+			'default'           => '',
+			'sanitize_callback' => function ( $param ) {
+				$param = filter_var_array(
+					$param,
+					[
+						'enable_auto_import' => [
+							'filter' => FILTER_VALIDATE_INT,
+						],
+						'post_types'         => [
+							'filter' => FILTER_SANITIZE_STRING,
+							'flags'  => FILTER_REQUIRE_ARRAY,
+						],
+						'secondary_keyword'  => [
+							'filter' => FILTER_VALIDATE_BOOLEAN,
+						],
+					]
+				);
+
+				if ( ! empty( $param['post_types'] ) ) {
+					$param['post_types'] = array_map( 'sanitize_text_field', $param['post_types'] );
+				}
+
+				return $param;
+			},
+			'validate_callback' => function ( $param, $request, $key ) {
+				if ( empty( $param ) ) {
+					return new WP_Error(
+						'param_value_empty',
+						sprintf( esc_html__( 'The %s parameter must not be empty.', 'rank-math-pro' ), $key ),
+						[ 'status' => 400 ]
+					);
+				}
+
+				if ( ! empty( $param['enable_auto_import'] ) && ! is_numeric( $param['enable_auto_import'] ) ) {
+					return new WP_Error(
+						'param_value_invalid',
+						sprintf( esc_html__( 'The %s parameter must be numeric.', 'rank-math-pro' ), 'enable_auto_import' ),
+						[ 'status' => 400 ]
+					);
+				}
+
+				if ( ! empty( $param['post_types'] ) ) {
+					if ( ! is_array( $param['post_types'] ) ) {
+						return new WP_Error(
+							'param_value_invalid',
+							sprintf( esc_html__( 'The %s parameter must be array.', 'rank-math-pro' ), 'post_types' ),
+							[ 'status' => 400 ]
+						);
+					}
+
+					if ( ! preg_match( '/^[a-zA-Z0-9-_]+$/', implode( '', $param['post_types'] ) ) ) {
+						return new WP_Error(
+							'param_value_invalid',
+							sprintf( esc_html__( 'The %s parameter must be valid post type.', 'rank-math-pro' ), 'post_types' ),
+							[ 'status' => 400 ]
+						);
+					}
+				}
+
+				if ( ! empty( $param['secondary_keyword'] ) && ! is_bool( $param['secondary_keyword'] ) ) {
+					return new WP_Error(
+						'param_value_invalid',
+						sprintf( esc_html__( 'The %s parameter must be boolean.', 'rank-math-pro' ), 'secondary_keyword' ),
+						[ 'status' => 400 ]
+					);
+				}
+
+				return rest_validate_request_arg( $param, $request, $key );
+			},
+		];
+
+		return $query_params;
+	}
+
+	/**
+	 * Get pagespeed collection params.
+	 *
+	 * @return array
+	 */
+	public function get_pagespeed_args() {
+		$query_params = parent::get_collection_params();
+
+		$query_params['id'] = [
+			'description'       => esc_html__( 'Record id.', 'rank-math-pro' ),
+			'type'              => 'integer',
+			'default'           => 0,
+			'sanitize_callback' => 'rest_sanitize_request_arg',
+			'validate_callback' => function ( $param, $request, $key ) {
+				if ( empty( $param ) ) {
+					return new WP_Error(
+						'param_value_empty',
+						sprintf( esc_html__( 'The %s parameter must not be empty.', 'rank-math-pro' ), $key ),
+						[ 'status' => 400 ]
+					);
+				}
+
+				if ( ! is_numeric( $param ) ) {
+					return new WP_Error(
+						'param_value_invalid',
+						sprintf( esc_html__( 'The %s parameter must be integer.', 'rank-math-pro' ), $key ),
+						[ 'status' => 400 ]
+					);
+				}
+
+				return rest_validate_request_arg( $param, $request, $key );
+			},
+		];
+
+		$query_params['objectID'] = [
+			'description'       => esc_html__( 'Post id.', 'rank-math-pro' ),
+			'type'              => 'integer',
+			'default'           => 0,
+			'sanitize_callback' => 'rest_sanitize_request_arg',
+			'validate_callback' => function ( $param, $request, $key ) {
+				if ( empty( $param ) ) {
+					return new WP_Error(
+						'param_value_empty',
+						sprintf( esc_html__( 'The %s parameter must not be empty.', 'rank-math-pro' ), $key ),
+						[ 'status' => 400 ]
+					);
+				}
+
+				return rest_validate_request_arg( $param, $request, $key );
+			},
+		];
+
+		$query_params['force'] = [
+			'description'       => esc_html__( 'Force update pagespeed.', 'rank-math-pro' ),
+			'type'              => 'boolean',
+			'default'           => false,
+			'sanitize_callback' => 'rest_sanitize_request_arg',
+			'validate_callback' => function ( $param, $request, $key ) {
+				if ( ! is_bool( $param ) ) {
+					return new WP_Error(
+						'param_value_invalid',
+						sprintf( esc_html__( 'The %s parameter must be boolean.', 'rank-math-pro' ), $key ),
+						[ 'status' => 400 ]
+					);
+				}
+
+				return rest_validate_request_arg( $param, $request, $key );
+			},
+		];
+
+		$query_params['isAdminBar'] = [
+			'description'       => esc_html__( 'Is admin bar.', 'rank-math-pro' ),
+			'type'              => 'boolean',
+			'default'           => false,
+			'sanitize_callback' => 'rest_sanitize_request_arg',
+			'validate_callback' => function ( $param, $request, $key ) {
+				if ( ! is_bool( $param ) ) {
+					return new WP_Error(
+						'param_value_invalid',
+						sprintf( esc_html__( 'The %s parameter must be boolean.', 'rank-math-pro' ), $key ),
+						[ 'status' => 400 ]
+					);
+				}
+
+				return rest_validate_request_arg( $param, $request, $key );
+			},
+		];
+
+		return $query_params;
+	}
+
+	/**
+	 * Retrieves the query params for the posts collection.
+	 *
+	 * @return array Collection parameters.
+	 */
+	public function get_collection_params() {
+		$query_params = parent::get_collection_params();
+
+		$query_params['order'] = [
+			'description'       => esc_html__( 'Order sort attribute ascending or descending.', 'rank-math' ),
+			'type'              => 'string',
+			'default'           => 'desc',
+			'enum'              => [ 'asc', 'desc', 'ASC', 'DESC' ],
+			'sanitize_callback' => 'rest_sanitize_request_arg',
+			'validate_callback' => 'rest_validate_request_arg',
+		];
+
+		$query_params['orderby'] = [
+			'description'       => esc_html__( 'Sort collection by post attribute.', 'rank-math' ),
+			'type'              => 'string',
+			'default'           => 'date',
+			'enum'              => [
+				'author',
+				'date',
+				'id',
+				'include',
+				'modified',
+				'parent',
+				'relevance',
+				'slug',
+				'include_slugs',
+				'title',
+			],
+			'sanitize_callback' => 'rest_sanitize_request_arg',
+			'validate_callback' => 'rest_validate_request_arg',
+		];
+
+		return $query_params;
+	}
+
+	/**
+	 * Determines if the current user can manage analytics.
+	 *
+	 * @return true
+	 */
+	public function has_permission() {
+		return current_user_can( 'rank_math_analytics' );
 	}
 }

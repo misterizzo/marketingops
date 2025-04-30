@@ -11,7 +11,6 @@
 namespace RankMathPro\Admin;
 
 use RankMathPro\Updates;
-use RankMathPro\Status\System_Status;
 use RankMath\Helper;
 use RankMath\Helpers\Param;
 use RankMath\Traits\Hooker;
@@ -44,9 +43,9 @@ class Admin {
 		$this->filter( 'rank_math/settings/sitemap', 'special_seprator' );
 		$this->action( 'admin_enqueue_scripts', 'enqueue' );
 		$this->filter( 'wp_helpers_notifications_render', 'prevent_pro_notice', 10, 3 );
+		$this->action( 'rank_math/admin/settings/others', 'add_search_intent_setting' );
 
 		new Updates();
-		new System_Status();
 	}
 
 	/**
@@ -94,6 +93,28 @@ class Admin {
 	}
 
 	/**
+	 * Add new settings.
+	 *
+	 * @param object $cmb CMB2 instance.
+	 */
+	public function add_search_intent_setting( $cmb ) {
+		$field_ids      = wp_list_pluck( $cmb->prop( 'fields' ), 'id' );
+		$field_position = array_search( 'rss_after_content', array_keys( $field_ids ), true ) + 1;
+
+		$cmb->add_field(
+			[
+				'id'      => 'determine_search_intent',
+				'type'    => 'toggle',
+				'name'    => esc_html__( 'Enable Search Intent', 'rank-math-pro' ),
+				// Translators: placeholder is a link to "Read more".
+				'desc'    => sprintf( esc_html__( 'Determine the Keyword\'s Search Intent for Writing Tailored Content. %s', 'rank-math-pro' ), '<a href="https://rankmath.com/kb/search-intent-analysis/?utm_source=Plugin&utm_medium=Others%20Tab%20KB%20Link&utm_campaign=WP" target="_blank">' . esc_html__( 'Read more', 'rank-math-pro' ) . '</a>' ),
+				'default' => 'on',
+			],
+			++$field_position
+		);
+	}
+
+	/**
 	 * Load setup wizard.
 	 */
 	private function load_setup_wizard() {
@@ -120,7 +141,7 @@ class Admin {
 			rank_math_pro()->version
 		);
 
-		wp_enqueue_script( 'rank-math-pro-general-options', RANK_MATH_PRO_URL . 'assets/admin/js/general-options.js', [ 'wp-hooks' ], rank_math_pro()->version );
+		wp_enqueue_script( 'rank-math-pro-general-options', RANK_MATH_PRO_URL . 'assets/admin/js/general-options.js', [ 'wp-hooks' , 'lodash', 'jquery', 'wp-i18n', 'wp-api-fetch' ], rank_math_pro()->version );
 
 		Helper::add_json( 'isAdsenseConnected', Adsense::is_adsense_connected() );
 	}

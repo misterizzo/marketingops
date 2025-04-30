@@ -523,8 +523,7 @@ class Parser {
 		if ( empty( $id ) ) {
 			return false;
 		}
-
-		$pattern = '/https:\/\/www\.(?:youtu\.?be(?:(-nocookie)?\.com\/embed)?)\/' . current( $id ) . '/';
+		$pattern = '/https:\/\/(?:(www\.)?youtu\.?be(?:(-nocookie)?\.com)?(\/)?(embed|watch\?v=)?)(\/)?' .current( $id ) . '/';
 		return 1 === preg_match( $pattern, $content );
 	}
 }

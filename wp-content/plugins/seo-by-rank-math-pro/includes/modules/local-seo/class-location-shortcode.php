@@ -86,18 +86,6 @@ class Location_Shortcode {
 		$this->add_shortcode( 'rank_math_local', 'local_shortcode' );
 		$this->action( 'wp_enqueue_scripts', 'enqueue' );
 		$this->action( 'wp_enqueue_scripts', 'enqueue' );
-
-		if ( ! function_exists( 'register_block_type' ) ) {
-			return;
-		}
-
-		register_block_type(
-			'rank-math/local-business',
-			[
-				'render_callback' => [ $this, 'local_shortcode' ],
-				'attributes'      => $this->get_attributes(),
-			]
-		);
 	}
 
 	/**
@@ -378,7 +366,7 @@ class Location_Shortcode {
 			return;
 		}
 
-		return '<div class="rank-math-business-image"><img src="' . esc_url( $schema['image']['url'] ) . '" /><div>';
+		return '<div class="rank-math-business-image"><img src="' . esc_url( $schema['image']['url'] ) . '" /></div>';
 	}
 
 	/**

@@ -23,13 +23,14 @@ defined( 'ABSPATH' ) || exit;
  */
 class Local_Seo {
 
-	use Ajax, Hooker;
+	use Ajax;
+	use Hooker;
 
 	/**
 	 * The Constructor.
 	 */
 	public function __construct() {
-		$this->action( 'after_setup_theme', 'location_sitemap' );
+		$this->action( 'after_setup_theme', 'location_sitemap', 11 );
 		$this->filter( 'rank_math/settings/title', 'add_settings' );
 		$this->filter( 'rank_math/json_ld', 'organization_or_person', 9, 2 );
 	}
@@ -55,7 +56,7 @@ class Local_Seo {
 	 * @return array
 	 */
 	public function add_settings( $tabs ) {
-		$tabs['local']['file'] = dirname( __FILE__ ) . '/views/titles-options.php';
+		$tabs['local']['file'] = __DIR__ . '/views/titles-options.php';
 
 		return $tabs;
 	}

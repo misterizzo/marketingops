@@ -50,6 +50,8 @@ class Schema {
 		$this->action( 'enqueue_block_editor_assets', 'editor_assets', 9 );
 		$this->filter( 'rank_math/schema/block/howto-block', 'add_graph', 11, 2 );
 		$this->filter( 'rank_math/schema/block/howto/content', 'block_content', 11, 3 );
+		$this->filter( 'register_block_type_args', 'add_id_to_schema_block', 10, 2 );
+		$this->filter( 'register_block_type_args', 'extend_howto_block', 10, 2 );
 	}
 
 	/**
@@ -103,6 +105,63 @@ class Schema {
 		$this->add_materials( $data['howto'], $attrs );
 
 		return $data;
+	}
+
+	/**
+	 * Add id attribute in Schema Block.
+	 *
+	 * @param array  $args       Array of arguments for registering a block type.
+	 * @param string $block_type Block type name including namespace.
+	 */
+	public function add_id_to_schema_block( $args, $block_type ) {
+		if ( $block_type !== 'rank-math/rich-snippet' ) {
+			return $args;
+		}
+
+		$args['attributes']['id'] = [
+			'type'    => 'string',
+			'default' => '',
+		];
+
+		return $args;
+	}
+
+	/**
+	 * Extend HowTo Block.
+	 *
+	 * @param array  $args       Array of arguments for registering a block type.
+	 * @param string $block_type Block type name including namespace.
+	 */
+	public function extend_howto_block( $args, $block_type ) {
+		if ( $block_type !== 'rank-math/howto-block' ) {
+			return $args;
+		}
+
+		$attributes = [
+			'estimatedCost'         => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'estimatedCostCurrency' => [
+				'type'    => 'string',
+				'default' => 'USD',
+			],
+			'supply'                => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'tools'                 => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'material'              => [
+				'type'    => 'string',
+				'default' => '',
+			],
+		];
+
+		$args['attributes'] = array_merge( $args['attributes'], $attributes );
+		return $args;
 	}
 
 	/**

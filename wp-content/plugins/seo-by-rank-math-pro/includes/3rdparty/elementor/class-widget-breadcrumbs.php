@@ -16,7 +16,7 @@ use RankMath\Helper;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -146,7 +146,9 @@ class Widget_Breadcrumbs extends Widget_Base {
 			[
 				'name'     => 'typography',
 				'selector' => '{{WRAPPER}}',
-				'scheme'   => Typography::TYPOGRAPHY_2,
+				'global'   => [
+					'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
+				],
 			]
 		);
 

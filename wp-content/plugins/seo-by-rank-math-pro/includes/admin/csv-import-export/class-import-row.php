@@ -447,6 +447,7 @@ class Import_Row {
 	 * @return void
 	 */
 	public function import_schema_data( $value ) {
+		$value = preg_replace('/u([\da-fA-F]{4})/', '\\u$1', $value);
 		$value = json_decode( $value, true );
 		if ( ! $value ) {
 			return;

@@ -39,11 +39,9 @@ class Rest_Helper {
 	/**
 	 * Checks whether a given request has permission to update redirection.
 	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 *
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
-	public static function get_redirection_permissions_check( $request ) {
+	public static function get_redirection_permissions_check() {
 		if ( ! Helper::is_module_active( 'redirections' ) || ! Helper::has_cap( 'redirections' ) ) {
 			return new WP_Error(
 				'rest_cannot_edit',
@@ -53,6 +51,25 @@ class Rest_Helper {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Checks whether a given request has permission to update schema.
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 *
+	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
+	 */
+	public static function get_schema_permissions_check( $request ) {
+		if ( ! Helper::is_module_active( 'rich-snippet' ) || ! Helper::has_cap( 'onpage_snippet' ) ) {
+			return new WP_Error(
+				'rest_cannot_edit',
+				__( 'Sorry, you are not allowed to create/update schema.', 'rank-math' ),
+				[ 'status' => rest_authorization_required_code() ]
+			);
+		}
+
+		return self::get_object_permissions_check( $request );
 	}
 
 	/**
@@ -240,5 +257,40 @@ class Rest_Helper {
 	public static function can_manage_settings( $request ) {
 		$type = $request->get_param( 'type' );
 		return $type === 'roleCapabilities' ? current_user_can( 'rank_math_role_manager' ) : current_user_can( "rank_math_$type" );
+	}
+
+	/**
+	 * Param emptiness validate callback.
+	 *
+	 * @param mixed $param Param to validate.
+	 *
+	 * @return boolean
+	 */
+	public static function is_valid_string( $param ) {
+		if ( empty( $param ) ) {
+			return new WP_Error(
+				'param_value_empty',
+				esc_html__( 'Sorry, field is empty which is not allowed.', 'rank-math' )
+			);
+		}
+
+		return self::is_alphanumerical( $param );
+	}
+
+	/**
+	 * Check the alphanumerical string.
+	 *
+	 * @param mixed $param Param to validate.
+	 *
+	 * @return boolean
+	 */
+	public static function is_alphanumerical( $param ) {
+		if ( ! preg_match( '/^[a-zA-Z0-9]+$/', $param ) ) {
+			return new WP_Error(
+				'param_value_empty',
+				esc_html__( 'Sorry, the field contains invalid characters.', 'rank-math' )
+			);
+		}
+		return true;
 	}
 }

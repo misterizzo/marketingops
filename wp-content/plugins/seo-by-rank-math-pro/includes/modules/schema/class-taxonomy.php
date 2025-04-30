@@ -95,6 +95,8 @@ class Taxonomy extends Admin {
 		);
 
 		wp_enqueue_script( 'rank-math-schema-pro', RANK_MATH_PRO_URL . 'includes/modules/schema/assets/js/schema.js', [ 'rank-math-editor' ], rank_math_pro()->version, true );
+		wp_set_script_translations( 'rank-math-pro-schema-filters', 'rank-math-pro', RANK_MATH_PRO_PATH . 'languages/' );
+		wp_set_script_translations( 'rank-math-schema-pro', 'rank-math-pro', RANK_MATH_PRO_PATH . 'languages/' );
 	}
 
 	/**

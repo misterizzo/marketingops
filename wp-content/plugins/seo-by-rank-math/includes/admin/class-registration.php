@@ -47,12 +47,6 @@ class Registration {
 	 * @var string
 	 */
 	protected $step_slug = '';
-	/**
-	 * The text string array.
-	 *
-	 * @var array
-	 */
-	protected $strings = null;
 
 	/**
 	 * Is registration invalid.
@@ -65,12 +59,6 @@ class Registration {
 	 * The Constructor.
 	 */
 	public function __construct() {
-		// Strings passed in from the config file.
-		$this->strings = [
-			'title'               => esc_html__( 'Rank Math Product Registration', 'rank-math' ),
-			'return-to-dashboard' => esc_html__( 'Return to dashboard', 'rank-math' ),
-		];
-
 		$this->step      = 'register';
 		$this->step_slug = 'register';
 		$this->invalid   = Helper::is_invalid_registration();
@@ -84,6 +72,18 @@ class Registration {
 		}
 
 		$this->action( 'admin_init', 'handle_registration' );
+		$this->filter( 'allowed_redirect_hosts', 'allowed_redirect_hosts' );
+	}
+
+	/**
+	 * Add allowed redirect hosts.
+	 *
+	 * @param  array $hosts Allowed hosts.
+	 * @return array
+	 */
+	public function allowed_redirect_hosts( $hosts ) {
+		$hosts[] = 'rankmath.com';
+		return $hosts;
 	}
 
 	/**
@@ -142,8 +142,8 @@ class Registration {
 				]
 			);
 
-			if ( 1 == Param::get( 'analytics' ) ) {
-				wp_redirect( Authentication::get_auth_url() );
+			if ( 1 === absint( Param::get( 'analytics' ) ) ) {
+				wp_redirect( Authentication::get_auth_url() ); //phpcs:ignore -- This is used to redirect to the external url.
 				exit;
 			}
 
@@ -170,7 +170,7 @@ class Registration {
 			return false;
 		}
 
-		$params = json_decode( base64_decode( $params ), true );
+		$params = json_decode( base64_decode( $params ), true ); // phpcs:ignore -- Verified as safe usage.
 		if (
 			! is_array( $params ) ||
 			! isset( $params['username'] ) ||
@@ -354,14 +354,13 @@ class Registration {
 	 * @param array $values Array of values for the step to process.
 	 */
 	private function redirect_to_connect( $values ) {
-
 		if ( ! isset( $values['rank_math_activate'] ) ) {
 			Admin_Helper::deregister_user();
 			return;
 		}
 
 		$url = Admin_Helper::get_activate_url( Helper::get_admin_url( 'registration' ) );
-		wp_redirect( $url );
+		wp_safe_redirect( $url );
 		die();
 	}
 

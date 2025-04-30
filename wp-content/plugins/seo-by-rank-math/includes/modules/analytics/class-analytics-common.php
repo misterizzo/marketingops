@@ -47,7 +47,7 @@ class Analytics_Common {
 
 		new GTag();
 		new Analytics_Stats();
-		$this->action( 'plugins_loaded', 'maybe_init_email_reports', 15 );
+		$this->action( 'init', 'maybe_init_email_reports' );
 		$this->action( 'init', 'maybe_enable_email_reports', 20 );
 		$this->action( 'cmb2_save_options-page_fields_rank-math-options-general_options', 'maybe_update_report_schedule', 20, 3 );
 
@@ -227,7 +227,7 @@ class Analytics_Common {
 			return;
 		}
 
-		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'enable_email_reports' ) ) {
+		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( $_GET['_wpnonce'] ), 'enable_email_reports' ) ) {
 			return;
 		}
 
@@ -274,13 +274,11 @@ class Analytics_Common {
 	/**
 	 * Replace link inside notice dynamically to avoid issues with the nonce.
 	 *
-	 * @param string $output  Notice output.
-	 * @param string $message Notice message.
-	 * @param array  $options Notice options.
+	 * @param string $output Notice output.
 	 *
 	 * @return string
 	 */
-	public function replace_notice_link( $output, $message, $options ) {
+	public function replace_notice_link( $output ) {
 		$url    = wp_nonce_url( Helper::get_admin_url( 'options-general&enable_email_reports=1#setting-panel-analytics' ), 'enable_email_reports' );
 		$output = str_replace( '###ENABLE_EMAIL_REPORTS###', $url, $output );
 		return $output;
@@ -316,13 +314,13 @@ class Analytics_Common {
 			],
 			'total-keywords'    => [
 				'label' => __( 'Total Keywords', 'rank-math' ),
-				'desc'  => __( 'Total number of keywords your site ranking below 100 position.', 'rank-math' ),
+				'desc'  => __( 'Total number of keywords your site ranks for within top 100 positions.', 'rank-math' ),
 				'value' => true,
 				'data'  => $data->keywords,
 			],
 			'average-position'  => [
 				'label'  => __( 'Average Position', 'rank-math' ),
-				'desc'   => __( 'Average position of all the ranking keywords below 100 position.', 'rank-math' ),
+				'desc'   => __( 'Average position of all the keywords ranking within top 100 positions.', 'rank-math' ),
 				'value'  => true,
 				'revert' => true,
 				'data'   => $data->position,
