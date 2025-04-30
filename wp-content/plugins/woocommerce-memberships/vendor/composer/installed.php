@@ -1,0 +1,41 @@
+<?php return array(
+    'root' => array(
+        'name' => 'skyverge/woocommerce-memberships',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => 'e2e92b87fe1fc755eb996ef9af01304644e71a6a',
+        'type' => 'wordpress-plugin',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => false,
+    ),
+    'versions' => array(
+        'skyverge/wc-plugin-framework' => array(
+            'pretty_version' => '5.12.1',
+            'version' => '5.12.1.0',
+            'reference' => 'c78046e2a97463afbc64a2b847dedfdc87bf38d7',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../skyverge/wc-plugin-framework',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'skyverge/woocommerce-memberships' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'e2e92b87fe1fc755eb996ef9af01304644e71a6a',
+            'type' => 'wordpress-plugin',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'woocommerce/action-scheduler' => array(
+            'pretty_version' => '2.2.5',
+            'version' => '2.2.5.0',
+            'reference' => 'fd7c6b76a7af27d6403ffe39b0963dbd8ce50488',
+            'type' => 'wordpress-plugin',
+            'install_path' => __DIR__ . '/../woocommerce/action-scheduler',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+    ),
+);

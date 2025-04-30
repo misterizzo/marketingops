@@ -1,91 +1,96 @@
-# Copyright (C) 2024 SkyVerge
+# Copyright (C) 2025 SkyVerge
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce Memberships 1.26.9\n"
+"Project-Id-Version: WooCommerce Memberships 1.26.11\n"
 "Report-Msgid-Bugs-To: https://woocommerce.com/my-account/marketplace-ticket-form/\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-10-07T11:27:52+00:00\n"
+"POT-Creation-Date: 2025-02-28T12:17:48+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: woocommerce-memberships\n"
 
 #. Plugin Name of the plugin
-#: class-wc-memberships.php:767
+#: woocommerce-memberships.php
+#: class-wc-memberships.php:768
 msgid "WooCommerce Memberships"
 msgstr ""
 
 #. Plugin URI of the plugin
+#: woocommerce-memberships.php
 msgid "https://www.woocommerce.com/products/woocommerce-memberships/"
 msgstr ""
 
 #. Description of the plugin
+#: woocommerce-memberships.php
 msgid "Sell memberships that provide access to restricted content, products, discounts, and more!"
 msgstr ""
 
 #. Author of the plugin
+#: woocommerce-memberships.php
 msgid "SkyVerge"
 msgstr ""
 
 #. Author URI of the plugin
+#: woocommerce-memberships.php
 msgid "https://www.woocommerce.com/"
 msgstr ""
 
-#: class-wc-memberships.php:814
+#: class-wc-memberships.php:815
 msgid "You've created your first membership plan!"
 msgstr ""
 
-#: class-wc-memberships.php:824
+#: class-wc-memberships.php:825
 msgid "You've created your first user membership!"
 msgstr ""
 
 #. translators: Placeholders: %1$s - opening <strong> HTML tag, %2$s - closing </strong> HTML tag
-#: class-wc-memberships.php:850
+#: class-wc-memberships.php:851
 msgid "%1$sHeads up!%2$s We've merged the Directory Shortcode add-on into Memberships, so you no longer need this add-on to display a Member Directory. This add-on has been deactivated and can be safely removed from your plugin list."
 msgstr ""
 
 #. translators: Placeholders: %1$s - opening <strong> HTML tag, %2$s - closing </strong> HTML tag
-#: class-wc-memberships.php:857
+#: class-wc-memberships.php:858
 msgid "%1$sHeads up!%2$s We've merged the Adjust Excerpt Length add-on into Memberships, so you no longer need this add-on to adjust the restricted content excerpt. This add-on has been deactivated and can be safely removed from your plugin list."
 msgstr ""
 
 #. translators: Placeholders: %1$s - opening <strong> HTML tag, %2$s - closing </strong> HTML tag
-#: class-wc-memberships.php:864
+#: class-wc-memberships.php:865
 msgid "%1$sHeads up!%2$s We've merged the Role Handler add-on into Memberships, so you no longer need this add-on to set default member roles. This add-on has been deactivated and can be safely removed from your plugin list."
 msgstr ""
 
 #. translators: Placeholders: %1$s - opening <strong> HTML tag, %2$s - closing </strong> HTML tag
-#: class-wc-memberships.php:871
+#: class-wc-memberships.php:872
 msgid "%1$sHeads up!%2$s We've merged the Sensei Member Area add-on into Memberships, so you no longer need this add-on to add the \"Courses & Lessons\" section to your plan member areas. This add-on has been deactivated and can be safely removed from your plugin list."
 msgstr ""
 
 #. translators: Placeholders: %1$s - "WooCommerce Memberships" plugin name in <strong> HTML tags, %2$s - opening <a> HTML tag, %3$s - closing </a> HTML tag
-#: class-wc-memberships.php:892
+#: class-wc-memberships.php:893
 msgid "%1$s: The Member Directory block and shortcode are enabled and ready to use. You can add the shortcode or the block to a post or a page to display members of your published plans. Make sure you have %2$sread the documentation%3$s about this feature."
 msgstr ""
 
-#: class-wc-memberships.php:921
+#: class-wc-memberships.php:922
 msgid "%1$sHeads up!%2$s We introduced a bug in version 1.16.0 of Memberships that caused issues with scheduled actions. We're so sorry for this issue! The bug should be resolved in the current version, but %3$splease contact our support team immediately%4$s if you notice any further issues."
 msgstr ""
 
-#: class-wc-memberships.php:1147
-#: class-wc-memberships.php:1225
+#: class-wc-memberships.php:1148
+#: class-wc-memberships.php:1226
 msgid "User Memberships"
 msgstr ""
 
-#: class-wc-memberships.php:1198
+#: class-wc-memberships.php:1199
 msgid "Removed User Membership for \"%s\"."
 msgstr ""
 
-#: class-wc-memberships.php:1201
+#: class-wc-memberships.php:1202
 msgid "User Membership for \"%s\" has been retained."
 msgstr ""
 
-#: class-wc-memberships.php:1261
+#: class-wc-memberships.php:1262
 #: src/admin/class-wc-memberships-admin-users.php:142
 #: src/admin/class-wc-memberships-admin.php:1279
 #: src/admin/class-wc-memberships-settings.php:44
@@ -96,7 +101,7 @@ msgstr ""
 msgid "Memberships"
 msgstr ""
 
-#: class-wc-memberships.php:1285
+#: class-wc-memberships.php:1286
 #: src/admin/class-wc-memberships-admin-user-memberships.php:120
 #: src/admin/class-wc-memberships-import-export-handler.php:495
 #: src/admin/meta-boxes/views/class-wc-memberships-meta-box-view-content-restriction-rule.php:180
@@ -111,19 +116,19 @@ msgstr ""
 msgid "Plan"
 msgstr ""
 
-#: class-wc-memberships.php:1289
+#: class-wc-memberships.php:1290
 msgid "Start Date (UTC)"
 msgstr ""
 
-#: class-wc-memberships.php:1296
+#: class-wc-memberships.php:1297
 msgid "End Date (UTC)"
 msgstr ""
 
-#: class-wc-memberships.php:1303
+#: class-wc-memberships.php:1304
 msgid "Related Order"
 msgstr ""
 
-#: class-wc-memberships.php:1310
+#: class-wc-memberships.php:1311
 msgid "Related Product"
 msgstr ""
 
@@ -3511,62 +3516,62 @@ msgid "An error occurred while starting the import process. %s"
 msgstr ""
 
 #. translators: Placeholder: %s - merge tag
-#: src/class-wc-memberships-emails.php:361
-#: src/emails/class-wc-memberships-user-membership-activated-email.php:123
-#: src/emails/class-wc-memberships-user-membership-ended-email.php:128
-#: src/emails/class-wc-memberships-user-membership-ending-soon-email.php:150
-#: src/emails/class-wc-memberships-user-membership-note-email.php:120
-#: src/emails/class-wc-memberships-user-membership-renewal-reminder-email.php:159
+#: src/class-wc-memberships-emails.php:384
+#: src/Emails/class-wc-memberships-user-membership-activated-email.php:123
+#: src/Emails/class-wc-memberships-user-membership-ended-email.php:128
+#: src/Emails/class-wc-memberships-user-membership-ending-soon-email.php:150
+#: src/Emails/class-wc-memberships-user-membership-note-email.php:121
+#: src/Emails/class-wc-memberships-user-membership-renewal-reminder-email.php:159
 msgid "%s inserts your site name."
 msgstr ""
 
 #. translators: Placeholder: %s - merge tag
-#: src/class-wc-memberships-emails.php:364
+#: src/class-wc-memberships-emails.php:387
 msgid "%s inserts the member display name."
 msgstr ""
 
 #. translators: Placeholder: %s - merge tag
-#: src/class-wc-memberships-emails.php:367
+#: src/class-wc-memberships-emails.php:390
 msgid "%s inserts the member first name."
 msgstr ""
 
 #. translators: Placeholder: %s - merge tag
-#: src/class-wc-memberships-emails.php:370
+#: src/class-wc-memberships-emails.php:393
 msgid "%s inserts the member last name."
 msgstr ""
 
 #. translators: Placeholder: %s - merge tag
-#: src/class-wc-memberships-emails.php:373
+#: src/class-wc-memberships-emails.php:396
 msgid "%s inserts the member full name (or display name, if full name is not set)."
 msgstr ""
 
 #. translators: Placeholder: %s - merge tag
-#: src/class-wc-memberships-emails.php:376
-#: src/emails/class-wc-memberships-user-membership-activated-email.php:131
-#: src/emails/class-wc-memberships-user-membership-ended-email.php:136
-#: src/emails/class-wc-memberships-user-membership-ending-soon-email.php:158
-#: src/emails/class-wc-memberships-user-membership-note-email.php:128
-#: src/emails/class-wc-memberships-user-membership-renewal-reminder-email.php:167
+#: src/class-wc-memberships-emails.php:399
+#: src/Emails/class-wc-memberships-user-membership-activated-email.php:131
+#: src/Emails/class-wc-memberships-user-membership-ended-email.php:136
+#: src/Emails/class-wc-memberships-user-membership-ending-soon-email.php:158
+#: src/Emails/class-wc-memberships-user-membership-note-email.php:129
+#: src/Emails/class-wc-memberships-user-membership-renewal-reminder-email.php:167
 msgid "%s inserts the membership plan name."
 msgstr ""
 
 #. translators: Placeholder: %s - merge tag
-#: src/class-wc-memberships-emails.php:379
+#: src/class-wc-memberships-emails.php:402
 msgid "%s inserts the expiration date of the membership."
 msgstr ""
 
 #. translators: Placeholder: %s - merge tag
-#: src/class-wc-memberships-emails.php:382
+#: src/class-wc-memberships-emails.php:405
 msgid "%s inserts the time difference between now and the date when the membership expires or has expired (e.g. \"2 days\", or \"1 week\", etc.)."
 msgstr ""
 
 #. translators: Placeholder: %s - merge tag
-#: src/class-wc-memberships-emails.php:385
+#: src/class-wc-memberships-emails.php:408
 msgid "%s inserts a plain URL to the members area to view the membership."
 msgstr ""
 
 #. translators: Placeholder: %s - merge tag
-#: src/class-wc-memberships-emails.php:388
+#: src/class-wc-memberships-emails.php:411
 msgid "%s inserts a plain membership renewal URL."
 msgstr ""
 
@@ -3582,12 +3587,12 @@ msgid "Unlimited"
 msgstr ""
 
 #. translators: Placeholders: %1$s - product name, %2$s - order number.
-#: src/class-wc-memberships-membership-plan.php:2027
+#: src/class-wc-memberships-membership-plan.php:2053
 msgid "Membership access granted from purchasing %1$s (Order %2$s)"
 msgstr ""
 
 #. translators: Placeholders: %1$s - product name, %2$s - order number.
-#: src/class-wc-memberships-membership-plan.php:2040
+#: src/class-wc-memberships-membership-plan.php:2066
 msgid "Membership access renewed from purchasing %1$s (Order %2$s)"
 msgstr ""
 
@@ -4307,28 +4312,28 @@ msgid "Profile field definition ID invalid or not found while updating."
 msgstr ""
 
 #. translators: Placeholders: %1$s - Opening <a> HTML tag, %2$s - Closing </a> HTML tag
-#: src/emails/abstract-wc-memberships-user-membership-email.php:65
+#: src/Emails/abstract-wc-memberships-user-membership-email.php:65
 msgid "You can edit the content of this email for %1$seach one of your plans%2$s individually."
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-activated-email.php:48
+#: src/Emails/class-wc-memberships-user-membership-activated-email.php:48
 msgid "Delayed membership activated"
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-activated-email.php:49
+#: src/Emails/class-wc-memberships-user-membership-activated-email.php:49
 msgid "Delayed membership activated emails are sent to members when a delayed membership is activated."
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-activated-email.php:50
+#: src/Emails/class-wc-memberships-user-membership-activated-email.php:50
 msgid "Your {site_title} membership is now active!"
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-activated-email.php:51
+#: src/Emails/class-wc-memberships-user-membership-activated-email.php:51
 msgid "You can now access {membership_plan}"
 msgstr ""
 
 #. translators: Placeholders: the text within curly braces consists of email merge tags that shouldn't be changed in translation
-#: src/emails/class-wc-memberships-user-membership-activated-email.php:154
+#: src/Emails/class-wc-memberships-user-membership-activated-email.php:154
 msgid ""
 "\n"
 "\t\t\t<p>Hey {member_name},</p>\n"
@@ -4338,24 +4343,24 @@ msgid ""
 "\t\t"
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-ended-email.php:48
+#: src/Emails/class-wc-memberships-user-membership-ended-email.php:48
 msgid "Membership ended"
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-ended-email.php:49
+#: src/Emails/class-wc-memberships-user-membership-ended-email.php:49
 msgid "Membership ended emails are sent to plan members in the moment their membership expires."
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-ended-email.php:50
+#: src/Emails/class-wc-memberships-user-membership-ended-email.php:50
 msgid "Your {site_title} membership has expired"
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-ended-email.php:51
+#: src/Emails/class-wc-memberships-user-membership-ended-email.php:51
 msgid "Renew your {membership_plan}"
 msgstr ""
 
 #. translators: Placeholders: the text within curly braces consists of email merge tags that shouldn't be changed in translation
-#: src/emails/class-wc-memberships-user-membership-ended-email.php:159
+#: src/Emails/class-wc-memberships-user-membership-ended-email.php:159
 msgid ""
 "\n"
 "\t\t\t<p>Hey {member_name},</p>\n"
@@ -4366,41 +4371,41 @@ msgid ""
 "\t\t"
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-ending-soon-email.php:52
+#: src/Emails/class-wc-memberships-user-membership-ending-soon-email.php:52
 msgid "Membership ending soon"
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-ending-soon-email.php:53
+#: src/Emails/class-wc-memberships-user-membership-ending-soon-email.php:53
 msgid "Membership ending soon emails are sent to plan members when their membership is about to expire."
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-ending-soon-email.php:54
+#: src/Emails/class-wc-memberships-user-membership-ending-soon-email.php:54
 msgid "Your {site_title} membership ends soon!"
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-ending-soon-email.php:55
+#: src/Emails/class-wc-memberships-user-membership-ending-soon-email.php:55
 msgid "An update about your {membership_plan}"
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-ending-soon-email.php:61
+#: src/Emails/class-wc-memberships-user-membership-ending-soon-email.php:61
 msgid "You are about to update the schedule to send emails when a membership is about to expire."
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-ending-soon-email.php:129
+#: src/Emails/class-wc-memberships-user-membership-ending-soon-email.php:129
 msgid "Send Email Days Before"
 msgstr ""
 
 #. translators: Days before a membership expires
-#: src/emails/class-wc-memberships-user-membership-ending-soon-email.php:133
+#: src/Emails/class-wc-memberships-user-membership-ending-soon-email.php:133
 msgid "day(s) before"
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-ending-soon-email.php:134
+#: src/Emails/class-wc-memberships-user-membership-ending-soon-email.php:134
 msgid "Number of days before the membership expires the email will be sent. Note: this shouldn't exceed the length of the Membership plan itself."
 msgstr ""
 
 #. translators: Placeholders: the text within curly braces consists of email merge tags that shouldn't be changed in translation
-#: src/emails/class-wc-memberships-user-membership-ending-soon-email.php:181
+#: src/Emails/class-wc-memberships-user-membership-ending-soon-email.php:181
 msgid ""
 "\n"
 "\t\t\t<p>Hey {member_name},</p>\n"
@@ -4411,58 +4416,62 @@ msgid ""
 "\t\t"
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-note-email.php:52
+#: src/Emails/class-wc-memberships-user-membership-note-email.php:53
 msgid "Membership note"
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-note-email.php:53
+#: src/Emails/class-wc-memberships-user-membership-note-email.php:54
 msgid "Membership note emails are sent when you add a membership note and notify member."
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-note-email.php:54
+#: src/Emails/class-wc-memberships-user-membership-note-email.php:55
 msgid "Note added to your {site_title} membership"
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-note-email.php:55
+#: src/Emails/class-wc-memberships-user-membership-note-email.php:56
 msgid "A note has been added about your membership"
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-renewal-reminder-email.php:53
+#: src/Emails/class-wc-memberships-user-membership-note-email.php:161
+msgid "Membership status changed from pending to active."
+msgstr ""
+
+#: src/Emails/class-wc-memberships-user-membership-renewal-reminder-email.php:53
 msgid "Membership renewal reminder"
 msgstr ""
 
 #. translators: Placeholders: %1$s - <strong> tag, %2$s - </strong> tag
-#: src/emails/class-wc-memberships-user-membership-renewal-reminder-email.php:55
+#: src/Emails/class-wc-memberships-user-membership-renewal-reminder-email.php:55
 msgid "Membership renewal reminder emails are sent to former plan members inviting them to renew their membership. %1$sRenewal reminders are not sent for non-renewable memberships, such as registration-based or admin-assign only memberships%2$s."
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-renewal-reminder-email.php:56
+#: src/Emails/class-wc-memberships-user-membership-renewal-reminder-email.php:56
 msgid "Renew your {site_title} membership!"
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-renewal-reminder-email.php:57
+#: src/Emails/class-wc-memberships-user-membership-renewal-reminder-email.php:57
 msgid "You can renew your {membership_plan}"
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-renewal-reminder-email.php:63
+#: src/Emails/class-wc-memberships-user-membership-renewal-reminder-email.php:63
 msgid "You are about to update the schedule to send emails after a membership is expired to remind users they can renew."
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-renewal-reminder-email.php:138
+#: src/Emails/class-wc-memberships-user-membership-renewal-reminder-email.php:138
 msgid "Send Email Days After"
 msgstr ""
 
 #. translators: Days after a membership has expired
-#: src/emails/class-wc-memberships-user-membership-renewal-reminder-email.php:142
+#: src/Emails/class-wc-memberships-user-membership-renewal-reminder-email.php:142
 msgid "day(s) after"
 msgstr ""
 
-#: src/emails/class-wc-memberships-user-membership-renewal-reminder-email.php:143
+#: src/Emails/class-wc-memberships-user-membership-renewal-reminder-email.php:143
 msgid "Number of days after the membership has expired the email will be sent to users who haven't renewed their membership yet."
 msgstr ""
 
 #. translators: Placeholders: the text within curly braces consists of email merge tags that shouldn't be changed in translation
-#: src/emails/class-wc-memberships-user-membership-renewal-reminder-email.php:190
+#: src/Emails/class-wc-memberships-user-membership-renewal-reminder-email.php:190
 msgid ""
 "\n"
 "\t\t\t<p>Hey {member_name},</p>\n"
@@ -5047,11 +5056,11 @@ msgid "Membership reactivated because subscription was readded."
 msgstr ""
 
 #. translators: Placeholders: %1$s - The Subscription's id, %2$s - The Subscription's holder full name
-#: src/integrations/subscriptions/class-wc-memberships-integration-subscriptions.php:873
+#: src/integrations/subscriptions/class-wc-memberships-integration-subscriptions.php:872
 msgid "Subscription #%1$s - %2$s"
 msgstr ""
 
-#: src/integrations/subscriptions/class-wc-memberships-integration-subscriptions.php:1122
+#: src/integrations/subscriptions/class-wc-memberships-integration-subscriptions.php:1121
 msgid "Related Subscription"
 msgstr ""
 

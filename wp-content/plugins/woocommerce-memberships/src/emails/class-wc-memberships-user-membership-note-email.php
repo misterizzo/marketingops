@@ -17,7 +17,7 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2024, SkyVerge, Inc. (info@skyverge.com)
+ * @copyright Copyright (c) 2014-2025, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -33,10 +33,11 @@ defined( 'ABSPATH' ) or exit;
  * @since 1.0.0
  */
 class WC_Memberships_User_Membership_Note_Email extends \WC_Memberships_User_Membership_Email {
+	use \SkyVerge\WooCommerce\Memberships\Emails\Traits\HasEmailPreviewValuesTrait;
 
 
-	/** @private object Membership note */
-	private $membership_note;
+	/** @private string Membership note */
+	private string $membership_note = '';
 
 
 	/**
@@ -154,5 +155,9 @@ class WC_Memberships_User_Membership_Note_Email extends \WC_Memberships_User_Mem
 		];
 	}
 
-
+	/** @inheritDoc */
+	public function setPreviewValues() : void
+	{
+		$this->membership_note = __('Membership status changed from pending to active.', 'woocommerce-memberships');
+	}
 }

@@ -17,7 +17,7 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2024, SkyVerge, Inc. (info@skyverge.com)
+ * @copyright Copyright (c) 2014-2025, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -771,7 +771,6 @@ class WC_Memberships_Integration_Subscriptions {
 					array(
 						'key'   => '_subscription_id',
 						'value' => $subscription_id,
-						'type' => 'numeric',
 					),
 				),
 			) );
