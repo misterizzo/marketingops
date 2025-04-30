@@ -2,19 +2,19 @@
 Contributors: tagconcierge
 Tags: google tag manager, GA4, WooCommerce, Facebook Pixel, Consent Mode
 Requires at least: 5.1.0
-Tested up to: 6.7.1
+Tested up to: 6.7.2
 Requires PHP: 7.0
-Stable tag: 1.12.2
+Stable tag: 1.12.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Complete GTM plugin for WooCommerce (consent Mode v2 and server-side GTM). Ready for GA4 and FB Pixel. Product feed for Google Merchant Center.
+Complete GTM plugin for WooCommerce (Consent Mode v2 and Server-Side). Ready for GA4 and FB Pixel. Product feed for Google Merchant Center.
 
 == Description ==
 
 Tracking eCommerce events via Google Tag Manager and DataLayer makes adding new growth channels a straighforward task. Regardless of a number of connected platforms the data quality and events coverage stays the same.
 
-https://youtu.be/rxY13l4N4JI
+https://youtu.be/tTluZ8l94VA
 
 This plugin, once activated, starts pushing standard GA4 eCommerce events into GTM DataLayer. Once the data is there you can leverage Google Tag Manager containers to connect virtually any analytics o marketing platform, even if you're still undecided on your choice.
 
@@ -23,7 +23,7 @@ To speed up the process, our plugin offers pre-packaged integrations for GA4 and
 
 Check [live demo here](https://demo2-woocommerce.tagconcierge.com/) (perform typical shop activities - add to cart, purchase - to see how events are triggered). This demo showcase all PRO plugin features - FREE version is limited to 2 events listed below.
 
-More information and documentation can be found [here](https://docs.tagconcierge.com/).
+More information and documentation can be found [here](https://docs.tagpilot.io/).
 
 ## Example scenarios
 
@@ -162,6 +162,32 @@ Yes! Just use the appropriate preset available in the settings screen of the plu
 
 
 == Changelog ==
+
+= 1.12.8 =
+
+* fix PHP notice
+
+= 1.12.7 =
+
+* optimizes purchase event statistics loading
+
+= 1.12.6 =
+
+* removes tax and shipping from event value
+* tested against the latest versions of WordPress and WooCommerce
+
+= 1.12.5 =
+
+* default to 1 when quantity is not found
+* tested against the latest versions of WooCommerce
+
+= 1.12.4 =
+
+* prevent errors when WooCommerce is not active
+
+= 1.12.3 =
+
+* improved order monitor statistics
 
 = 1.12.2 =
 
