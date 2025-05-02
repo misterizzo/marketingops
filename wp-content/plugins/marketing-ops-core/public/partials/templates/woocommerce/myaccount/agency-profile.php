@@ -31,11 +31,7 @@ $agency_id        = ( ! empty( $agency_id->posts[0] ) ) ? $agency_id->posts[0] :
 
 // If the linked agency is not available, show the registration page.
 if ( false === $agency_id || false === $is_agency_member ) {
-	$agency_subscription_page = get_page_by_path( 'subscribe/agency' );
-
-	echo $agency_subscription_page->post_content;
-
-	// echo do_shortcode( '[elementor-template id="231177"]' );
+	echo do_shortcode( '[elementor-template id="231177"]' );
 } else {
 	$agency_post_status = get_post_status( $agency_id );
 	$agency_title       = get_the_title( $agency_id );
