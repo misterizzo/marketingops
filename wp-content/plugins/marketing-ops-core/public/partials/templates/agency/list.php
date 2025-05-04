@@ -141,7 +141,7 @@ $agency_services          = get_terms( // Get the agency services.
 						}
 
 						// Print the agency list item.
-						echo mops_agency_list_item( $agency_id['post_id'] );
+						echo mops_agency_list_item( $agency_id['post_id'], 'paid' );
 					}
 
 					// Print the signup box.

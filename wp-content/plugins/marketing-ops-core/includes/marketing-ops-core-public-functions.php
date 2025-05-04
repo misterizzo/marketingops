@@ -9799,7 +9799,7 @@ if ( ! function_exists( 'mops_agency_list_item' ) ) {
 	 *
 	 * @since 1.0.0
 	 */
-	function mops_agency_list_item( $agency_id = 0 ) {
+	function mops_agency_list_item( $agency_id = 0, $subscription_type = 'free' ) {
 		// Get the agency html.
 		ob_start();
 
@@ -9824,7 +9824,10 @@ if ( ! function_exists( 'mops_agency_list_item' ) ) {
 			<li>
 				<a href="<?php echo esc_url( get_permalink( $agency_id ) ); ?>" class="learnmorebtnagency">
 					<div class="inneragencylistbox">
-						<h4><?php esc_html_e( 'PARTNER', 'marketingops' ); ?></h4>
+						<!-- partner tag shows up only for the paid agency memberships -->
+						<?php if ( 'paid' === $subscription_type ) { ?>
+							<h4><?php esc_html_e( 'PARTNER', 'marketingops' ); ?></h4>
+						<?php } ?>
 						<img src="<?php echo esc_url( $agency_featured_image ); ?>" alt="img" />
 						<h3><?php echo wp_kses_post( $agency_title ); ?></h3>
 						<?php if ( ! empty( $agency_services ) && is_array( $agency_services ) ) { ?>
