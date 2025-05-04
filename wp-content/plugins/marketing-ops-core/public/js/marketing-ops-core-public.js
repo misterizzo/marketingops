@@ -5476,14 +5476,21 @@ jQuery( document ).ready( function( $ ) {
 		} );
 	}
 
-	var current_agency_subscription = '';
-
 	// Agency signup email confirmation.
+	var current_agency_subscription = '';
 	if ( $( '.agency-signup-email-confirmation' ).length ) {
 		$( document ).on( 'click', '.agency-signup-email-confirmation a', function( evt ) {
 			evt.preventDefault();
 			$( '.mainpricebox' ).addClass( 'active' );
 			current_agency_subscription = $( this ).parents( '.agency-signup-email-confirmation' ).data( 'agency-subscription' );
+
+			if ( 'paid' === current_agency_subscription ) {
+				// Hide the agency name field. This is only required for the free subscription.
+				$( 'input[name="agency-name"]' ).hide();
+			} else if ( 'free' === current_agency_subscription ) {
+				// Show up the agency name field.
+				$( 'input[name="agency-name"]' ).show();
+			}
 		} );
 	}
 
