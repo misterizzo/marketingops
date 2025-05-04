@@ -17,13 +17,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
-global $post, $current_user;
+global $post, $current_user, $wpdb;
+
+// Fetch the agencies.
+$paid_agency_members_query = new WP_Query(
+	array(
+		'post_type'      => 'wc_user_membership',
+		'post_parent'    => 237665,
+		'post_status'    => 'wcm-active',
+		'posts_per_page' => 9,
+	)
+);
+$paid_agency_members       = ( ! empty( $paid_agency_members_query->posts ) && is_array( $paid_agency_members_query->posts ) ) ? $paid_agency_members_query->posts : array();
+$free_agency_members_query = new WP_Query(
+	array(
+		'post_type'      => 'wc_user_membership',
+		'post_parent'    => 232396,
+		'post_status'    => 'wcm-active',
+		'posts_per_page' => 9,
+	)
+);
+$free_agency_members       = ( ! empty( $free_agency_members_query->posts ) && is_array( $free_agency_members_query->posts ) ) ? $free_agency_members_query->posts : array();
+$agency_members            = array_merge( $paid_agency_members, $free_agency_members );
 
 // Fetch the agencies.
 $is_agency_member         = mops_is_user_agency_partner( $current_user->ID );
 $is_administrator         = ( ! empty( $current_user->roles ) && in_array( 'administrator', $current_user->roles, true ) ) ? true : false;
-$agency_query             = new WP_Query( moc_posts_query_args( 'agency', 1, -1 ) );
-$agency_ids               = ( ! empty( $agency_query->posts ) && is_array( $agency_query->posts ) ) ? $agency_query->posts : array();
 $page_excerpt             = get_post_field( 'post_excerpt', $post->ID );
 $agency_types             = get_terms( // Get the agency types.
 	array(
@@ -62,7 +81,7 @@ $agency_services          = get_terms( // Get the agency services.
 		<?php } ?>
 
 		<!-- if the agencies are available, filter them -->
-		<?php if ( ! empty( $agency_ids ) && is_array( $agency_ids ) ) { ?>
+		<?php if ( ! empty( $agency_members ) && is_array( $agency_members ) ) { ?>
 			<div id="container" class="agency-containe agency-directory-filters" style="">
 				<!-- agency types -->
 				<?php if ( ! empty( $agency_types ) && is_array( $agency_types ) ) { ?>
@@ -106,14 +125,40 @@ $agency_services          = get_terms( // Get the agency services.
 			</div>
 		<?php } ?>
 
-		<!-- agency listing -->
-		<?php if ( ! empty( $agency_ids ) && is_array( $agency_ids ) ) { ?>
+		<!-- agencies listing -->
+		<?php if ( ! empty( $agency_members ) && is_array( $agency_members ) ) { ?>
 			<div class="agency-mainlistboxs">
 				<ul class="innermainlistboxs">
 					<?php
-					// Loop through the agencies.
-					foreach ( $agency_ids as $agency_id ) {
-						echo mops_agency_list_item( $agency_id, $is_agency_member, $is_administrator );
+					// Loop through the paid agencies members.
+					foreach ( $paid_agency_members as $agency_member ) {
+						// Get the agency ID.
+						$agency_id = $wpdb->get_row( "SELECT `post_id` FROM `{$wpdb->postmeta}` WHERE `meta_key` = 'agency_owner' AND `meta_value` = '{$agency_member->post_author}'", ARRAY_A );
+
+						// Skip, if the agency ID is not found.
+						if ( empty( $agency_id['post_id'] ) ) {
+							continue;
+						}
+
+						// Print the agency list item.
+						echo mops_agency_list_item( $agency_id['post_id'] );
+					}
+
+					// Print the signup box.
+					echo mops_agency_list_item();
+
+					// Loop through the free agencies members.
+					foreach ( $free_agency_members as $agency_member ) {
+						// Get the agency ID.
+						$agency_id = $wpdb->get_row( "SELECT `post_id` FROM `{$wpdb->postmeta}` WHERE `meta_key` = 'agency_owner' AND `meta_value` = '{$agency_member->post_author}'", ARRAY_A );
+
+						// Skip, if the agency ID is not found.
+						if ( empty( $agency_id['post_id'] ) ) {
+							continue;
+						}
+
+						// Print the agency list item.
+						echo mops_agency_list_item( $agency_id['post_id'] );
 					}
 					?>
 				</ul>
