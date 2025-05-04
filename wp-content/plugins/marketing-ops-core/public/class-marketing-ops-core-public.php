@@ -1403,6 +1403,13 @@ class Marketing_Ops_Core_Public {
 		// Include the notification html.
 		require_once MOC_PLUGIN_PATH . 'public/partials/templates/notifications/notification.php';
 
+		// Include the agency signup modal on the customer dashboard.
+		if ( is_account_page() ) {
+			if ( is_wc_endpoint_url( 'agency-profile' ) ) {
+				require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-agency-signup.php';
+			}
+		}
+
 		if ( is_user_logged_in() ) {
 			require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-be-a-guest-on-ops-cast-template.php';
 			require_once MOC_PLUGIN_PATH . 'public/partials/templates/popups/popup-add-custom-certificate-template.php';
@@ -6770,5 +6777,28 @@ class Marketing_Ops_Core_Public {
 		$posted_array = filter_input_array( INPUT_POST );
 		debug( $posted_array );
 		die;
+	}
+
+	/**
+	 * Logout callback.
+	 *
+	 * @param int $user_id User ID.
+	 *
+	 * @return void
+	 *
+	 * @since 1.0.0
+	 */
+	public function mops_wp_logout_callback( $user_id ) {
+		$redirectto = ( ! empty( $_COOKIE['redirectto'] ) ) ? $_COOKIE['redirectto'] : '';
+
+		// Check if the redirectto is a valid URL.
+		if ( ! empty( $redirectto ) && false !== filter_var( $redirectto, FILTER_VALIDATE_URL ) ) {
+			// Clear the cookie.
+			setcookie( 'redirectto', '', time() - 3600, '/' );
+
+			// Do the redirect.
+			wp_safe_redirect( $redirectto, 301 );
+			exit;
+		}
 	}
 }

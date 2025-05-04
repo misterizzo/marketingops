@@ -5497,9 +5497,22 @@ jQuery( document ).ready( function( $ ) {
 			if ( 'free' === current_agency_subscription ) {
 				// If the customer wants to go with same email.
 				if ( 'yes' === use_same_email ) {
-					window.location.href = window.location.origin + window.location.pathname + '?agency_signup=free&email=same';
-				} else if ( 'no' === use_same_email ) { // If the customer wants to go with a different email.
+					var agency_name = $( 'input[name="agency-name"]' ).val();
 
+					if ( 1 !== is_valid_string( agency_name ) ) {
+						moc_show_toast( 'bg-danger', 'fa-skull-crossbones', toast_error_heading, 'Agency name is required.' );
+					} else {
+						window.location.href = window.location.origin + window.location.pathname + '?agency_signup=' + current_agency_subscription + '&logout=no&same_email=yes&agency_name=' + agency_name;
+					}
+				} else if ( 'no' === use_same_email ) { // If the customer wants to go with a different email.
+					window.location.href = window.location.origin + window.location.pathname + '?agency_signup=' + current_agency_subscription + '&logout=yes&same_email=no';
+				}
+			} else if ( 'paid' === current_agency_subscription ) { // If it is the paid subscription.
+				// If the customer wants to go with same email.
+				if ( 'yes' === use_same_email ) {
+					window.location.href = window.location.origin + '/checkout/?add-to-cart=233628';
+				} else if ( 'no' === use_same_email ) { // If the customer wants to go with a different email.
+					window.location.href = window.location.origin + window.location.pathname + '?agency_signup=' + current_agency_subscription + '&logout=yes&same_email=no';
 				}
 			}
 		} );

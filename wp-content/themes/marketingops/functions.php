@@ -476,18 +476,6 @@ function member_search( $atts ) {
 	return $out2;
 }
 
-
-
-add_action( 'wp_logout', 'auto_redirect_after_logout' );
-/**
- * Redirect to homepage on clicking logout.
- */
-function auto_redirect_after_logout() {
-	wp_safe_redirect( home_url() );
-	exit;
-}
-
-
 add_action( 'admin_menu', 'admin_menu_jobs', 12 );
 /**
  * Quick filter menu item in job listing.

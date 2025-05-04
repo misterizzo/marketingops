@@ -11,6 +11,56 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 global $current_user, $wpdb;
 
+// Check if there are agency signups required from the signup modal.
+$agency_signup = filter_input( INPUT_GET, 'agency_signup', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+
+if ( ! is_null( $agency_signup ) ) {
+	$logout     = filter_input( INPUT_GET, 'logout', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+	$same_email = filter_input( INPUT_GET, 'same_email', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+
+	// If the user wishes to continue with the same email.
+	if ( ! is_null( $same_email ) && 'yes' === $same_email ) {
+		$agency_name = filter_input( INPUT_GET, 'agency_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+
+		// Create the agency post and redirect the user to the agency profile setup page.
+		wp_insert_post(
+			array(
+				'post_title'   => $agency_name,
+				'post_type'    => 'agency',
+				'post_status'  => 'publish',
+				'post_author'  => $current_user->ID,
+				'meta_input'   => array(
+					'agency_owner'      => $current_user->ID,
+					'agency_user_email' => $current_user->data->user_email,
+				),
+			)
+		);
+
+		// Redirect the user to the agency profile setup page.
+		wp_safe_redirect( wc_get_endpoint_url( 'agency-profile' ) );
+		exit;
+	} else {
+		// If the agency signup is paid, or free.
+		if ( 'paid' === $agency_signup ) {
+			$redirectto = home_url( '/sign-up/?plan=237665&type=agency' );
+		} elseif ( 'free' === $agency_signup ) {
+			$redirectto = home_url( '/sign-up/?plan=232396&type=agency' );
+		}
+
+		// Set the cookie so the redirection can be done propoerly.
+		setcookie( 'redirectto', $redirectto, time() + 86400, '/' );
+
+		/**
+		 * Logout the user if the logout is set to yes.
+		 * This is to ensure that the user is logged out and redirected to the signup page.
+		 */
+		if ( ! is_null( $logout ) && 'yes' === $logout ) {
+			wp_logout();
+			wp_die();
+		}
+	}
+}
+
 $is_agency_member = mops_is_user_agency_partner( $current_user->ID );
 $agency_id        = new WP_Query(
 	array(
