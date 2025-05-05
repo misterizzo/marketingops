@@ -9799,7 +9799,7 @@ if ( ! function_exists( 'mops_agency_list_item' ) ) {
 	 *
 	 * @since 1.0.0
 	 */
-	function mops_agency_list_item( $agency_id = 0, $agency_member, $subscription_type = 'free' ) {
+	function mops_agency_list_item( $agency_id = 0, $agency_member = array(), $subscription_type = 'free' ) {
 		// Get the agency html.
 		ob_start();
 
