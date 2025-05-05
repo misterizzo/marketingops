@@ -25,7 +25,7 @@ $paid_agency_members_query = new WP_Query(
 		'post_type'      => 'wc_user_membership',
 		'post_parent'    => 237665,
 		'post_status'    => 'wcm-active',
-		'posts_per_page' => 9,
+		'posts_per_page' => -1,
 	)
 );
 $paid_agency_members       = ( ! empty( $paid_agency_members_query->posts ) && is_array( $paid_agency_members_query->posts ) ) ? $paid_agency_members_query->posts : array();
@@ -34,17 +34,13 @@ $free_agency_members_query = new WP_Query(
 		'post_type'      => 'wc_user_membership',
 		'post_parent'    => 232396,
 		'post_status'    => 'wcm-active',
-		'posts_per_page' => 9,
+		'posts_per_page' => -1,
 	)
 );
 $free_agency_members       = ( ! empty( $free_agency_members_query->posts ) && is_array( $free_agency_members_query->posts ) ) ? $free_agency_members_query->posts : array();
 $agency_members            = array_merge( $paid_agency_members, $free_agency_members );
-
-// Fetch the agencies.
-$is_agency_member         = mops_is_user_agency_partner( $current_user->ID );
-$is_administrator         = ( ! empty( $current_user->roles ) && in_array( 'administrator', $current_user->roles, true ) ) ? true : false;
-$page_excerpt             = get_post_field( 'post_excerpt', $post->ID );
-$agency_types             = get_terms( // Get the agency types.
+$page_excerpt              = get_post_field( 'post_excerpt', $post->ID );
+$agency_types              = get_terms( // Get the agency types.
 	array(
 		'taxonomy'   => 'agency_type',
 		'hide_empty' => false,
@@ -68,6 +64,10 @@ $agency_services          = get_terms( // Get the agency services.
 		'hide_empty' => false,
 	)
 );
+
+if ( '119.252.197.174' === $_SERVER['SERVER_ADDR'] ) {
+	debug( $paid_agency_members_query );
+}
 ?>
 <section class="agenctdirectoryblock">
 	<div class="leftbgbar"><img src="/wp-content/themes/marketingops/images/agencypages/blurcircle1.png" alt="img" /></div>
