@@ -65,9 +65,7 @@ $agency_services          = get_terms( // Get the agency services.
 	)
 );
 
-var_dump( $_SERVER['SERVER_ADDR'] );
-
-if ( '119.252.197.174' === $_SERVER['SERVER_ADDR'] ) {
+if ( '119.252.197.174' === $_SERVER['REMOTE_ADDR'] ) {
 	debug( $paid_agency_members_query );
 }
 ?>
