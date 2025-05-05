@@ -64,10 +64,6 @@ $agency_services          = get_terms( // Get the agency services.
 		'hide_empty' => false,
 	)
 );
-
-if ( '119.252.197.174' === $_SERVER['REMOTE_ADDR'] ) {
-	debug( $paid_agency_members_query );
-}
 ?>
 <section class="agenctdirectoryblock">
 	<div class="leftbgbar"><img src="/wp-content/themes/marketingops/images/agencypages/blurcircle1.png" alt="img" /></div>
@@ -141,7 +137,7 @@ if ( '119.252.197.174' === $_SERVER['REMOTE_ADDR'] ) {
 						}
 
 						// Print the agency list item.
-						echo mops_agency_list_item( $agency_id['post_id'], 'paid' );
+						echo mops_agency_list_item( $agency_id['post_id'], $agency_member, 'paid' );
 					}
 
 					// Print the signup box.
@@ -158,7 +154,7 @@ if ( '119.252.197.174' === $_SERVER['REMOTE_ADDR'] ) {
 						}
 
 						// Print the agency list item.
-						echo mops_agency_list_item( $agency_id['post_id'] );
+						echo mops_agency_list_item( $agency_id['post_id'], $agency_member );
 					}
 					?>
 				</ul>

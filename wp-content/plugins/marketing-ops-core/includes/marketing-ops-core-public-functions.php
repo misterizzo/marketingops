@@ -9799,14 +9799,14 @@ if ( ! function_exists( 'mops_agency_list_item' ) ) {
 	 *
 	 * @since 1.0.0
 	 */
-	function mops_agency_list_item( $agency_id = 0, $subscription_type = 'free' ) {
+	function mops_agency_list_item( $agency_id = 0, $agency_member, $subscription_type = 'free' ) {
 		// Get the agency html.
 		ob_start();
 
 		// If the agency ID is not available.
 		if ( 0 === $agency_id ) {
 			?>
-			<li>
+			<li class="agency-list-item" data-membership-id="<?php echo esc_attr( $agency_member->ID ); ?>" data-agencyowner-id="<?php echo esc_attr( $agency_member->post_author ); ?>" data-membership-creation-date="<?php echo esc_attr( $agency_member->post_date ); ?>">
 				<!-- show the overlay if the current user is not agency member -->
 				<div class="overlayonhover" style="visibility: visible;opacity: 1;">
 					<h2><?php esc_html_e( 'Apply for an agency profile at no charge.', 'marketingops' ); ?></h2>
