@@ -1,4 +1,11 @@
 <?php
+/**
+ * Settings class file.
+ *
+ * @since 1.0
+ *
+ * @package LearnDash\Achievements
+ */
 
 namespace LearnDash\Achievements;
 
@@ -46,6 +53,7 @@ class Settings {
 	public static function get_default_value() {
 		return array(
 			'popup_time'       => 0,
+			'position'         => 'top_right',
 			'background_color' => '#ffffff',
 			'text_color'       => '#333333',
 			'rtl'              => 0,
@@ -87,7 +95,7 @@ class Settings {
 		// Load our admin JS.
 		wp_enqueue_script(
 			'learndash-achievements-admin-script',
-			LEARNDASH_ACHIEVEMENTS_PLUGIN_URL . 'assets/js/admin-script.js',
+			LEARNDASH_ACHIEVEMENTS_PLUGIN_URL . 'dist/js/admin/scripts' . learndash_min_asset() . '.js',
 			array(
 				'jquery',
 				'wp-color-picker',
@@ -98,7 +106,7 @@ class Settings {
 
 		wp_localize_script(
 			'learndash-achievements-admin-script',
-			'LD_Achievements_String',
+			'LD_Achievements_Admin_Data',
 			array(
 				'nonce'               => wp_create_nonce( 'ld_achievements_nonce' ),
 				'select_lesson'       => __( '-- Select Lesson --', 'learndash-achievements' ),
@@ -115,7 +123,13 @@ class Settings {
 		);
 
 		// Load our style.
-		wp_enqueue_style( 'learndash-achievements-admin-style', LEARNDASH_ACHIEVEMENTS_PLUGIN_URL . 'assets/css/admin-style.css', array(), LEARNDASH_ACHIEVEMENTS_VERSION, 'screen' );
+		wp_enqueue_style(
+			'learndash-achievements-admin-style',
+			LEARNDASH_ACHIEVEMENTS_PLUGIN_URL . 'dist/css/admin/styles' . learndash_min_asset() . '.css',
+			[],
+			LEARNDASH_ACHIEVEMENTS_VERSION,
+			'screen'
+		);
 	}
 
 	/**

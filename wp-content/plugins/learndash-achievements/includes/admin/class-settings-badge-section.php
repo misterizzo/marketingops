@@ -1,10 +1,28 @@
 <?php
+/**
+ * Badge settings section class file.
+ *
+ * @since 1.1.1
+ *
+ * @package LearnDash\Achievements
+ */
 
 namespace LearnDash\Achievements\Settings\Section;
 
 use LearnDash_Settings_Section;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( class_exists( 'LearnDash_Settings_Section' ) ) :
+	/**
+	 * Badge settings section class.
+	 *
+	 * @since 1.1.1
+	 *
+	 * @package LearnDash\Achievements
+	 */
 	class Badge extends LearnDash_Settings_Section {
 		/**
 		 * Constructor

@@ -1,0 +1,49 @@
+= [2.0.3] =
+
+* Tweak - Add support for LearnDash modern course page.
+
+= [2.0.2] =
+
+* Fix - Resolved issue where an order paid for with achievements points was recorded as an unknown gateway.
+
+= [2.0.1] =
+
+* Feature - Add support for LearnDash Registration "Modern" variation.
+* Tweak - Added filter: `learndash_registration_variation`.
+
+= [2.0.0] =
+
+* Feature - Added "User has logged in for X consecutive days" trigger.
+* Feature - Added "User has completed X courses/groups" trigger.
+* Feature - Added "User has earned X badges or points" trigger.
+* Feature - Added achievements data in WordPress Personal Data Export and Erasure.
+* Feature - Added points to "My Achievements" shortcode and block output.
+* Feature - Positionable pop up notice when completing a trigger.
+* Fix - Resolved 'Quiz score above %' trigger not scoring correctly.
+* Fix - Fixed unnecessary achievements tab always appear on courses list page.
+* Tweak - Added functions: `learndash_achievements_extra_autoloading`, `learndash_achievements_extra_includes`.
+* Tweak - Added actions: `learndash_achievements_after_create_achievement`, `learndash_achievements_after_delete_achievements`, `learndash_achievements_before_delete_achievements`, `learndash_achievements_uninstall`.
+* Tweak - Added filters: `learndash_achievements_trigger_action_is_valid`, `learndash_achievements_trigger_classes`.
+* Tweak - Updated filters: `learndash_achievements_languages_directory`.
+
+= [1.2.1] =
+
+* Fix - Blocks not displaying correctly in editor.
+* Fix - Allow course purchase with achievement points.
+* Fix - Remove placeholder text on course settings page.
+* Fix - PHP errors when submitting a quiz.
+
+= [1.2.0] =
+
+* Fix - Added badge descriptions to leaderboard.
+* Fix - Re-enable points system on leaderboard.
+* Fix - Earned points not calculating correctly.
+
+= [1.1.1] =
+
+* Feature - Added trigger for awarding achievement if quiz score set above percentage.
+* Feature - Restrict achievements to a LearnDash group.
+* Fix - Added group leaders can now see achievements of their students.
+* Fix - Added users can now use achievement points to purchase a course.
+* Fix - Achievement image is now optional.
+* Fix - Achievement badge icons can be set to a larger size.

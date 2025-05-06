@@ -1,12 +1,25 @@
 <?php
+/**
+ * Student achievements settings page class file.
+ *
+ * @since 1.1.0
+ *
+ * @package LearnDash\Achievements
+ */
 
 namespace LearnDash\Achievements\Settings;
 
 use LearnDash\Achievements\Settings\Table\Students_Achievements_Table;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( class_exists( 'LearnDash_Settings_Page' ) ) :
 	/**
-	 * Create an admin page for group leader can see their students achievements
+	 * Create an admin page for group leader can see their students achievements.
+	 *
+	 * @since 1.1.0
 	 */
 	class Students_Achievements extends \LearnDash_Settings_Page {
 		/**

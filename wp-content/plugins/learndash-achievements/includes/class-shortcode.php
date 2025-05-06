@@ -1,28 +1,42 @@
 <?php
+/**
+ * Shortcode class file.
+ *
+ * @since 1.0
+ *
+ * @package LearnDash\Achievements
+ */
 
 namespace LearnDash\Achievements;
 
 use LearnDash\Achievements\Database;
+use LearnDash\Achievements\Utilities\Assets;
+use LearnDash\Core\Utilities\Cast;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
- * Shortcode class
+ * Shortcode class.
+ *
+ * @since 1.0
  */
 class Shortcode {
-
 	/**
 	 * Initial
 	 */
 	public static function init() {
 		// Hooks.
-		add_action( 'init', array( __CLASS__, 'register_shortcodes' ) );
+		add_action( 'init', [ __CLASS__, 'register_shortcodes' ] );
 	}
 
 	/**
 	 * Register the shortcodes.
 	 */
 	public static function register_shortcodes() {
-		add_shortcode( 'ld_achievements_leaderboard', array( __CLASS__, 'ld_achievements_leaderboard_shortcode' ) );
-		add_shortcode( 'ld_my_achievements', array( __CLASS__, 'ld_my_achievements_shortcode' ) );
+		add_shortcode( 'ld_achievements_leaderboard', [ __CLASS__, 'ld_achievements_leaderboard_shortcode' ] );
+		add_shortcode( 'ld_my_achievements', [ __CLASS__, 'ld_my_achievements_shortcode' ] );
 		// add_shortcode( 'ld_achievements', array( __CLASS__, 'ld_achievements_shortcode' ) );
 	}
 
@@ -31,18 +45,27 @@ class Shortcode {
 	 *
 	 * @param array  $atts Shortcode attributes.
 	 * @param string $content The content.
+	 * @param string $shortcode_slug The shortcode slug. Default 'ld_achievements_leaderboard'.
 	 *
 	 * @return false|string
 	 * @deprecated
 	 */
-	public static function ld_achievements_leaderboard_shortcode( $atts, $content ) {
-		$atts = shortcode_atts(
-			array(
-				'number' => 10,
-			),
-			$atts,
-			'ld_achievements_leaderboard'
-		);
+	public static function ld_achievements_leaderboard_shortcode( $atts = [], $content = '', $shortcode_slug = 'ld_achievements_leaderboard' ) {
+		$defaults = [
+			'number'      => 10,
+			'show_points' => false,
+		];
+		$atts     = shortcode_atts( $defaults, $atts );
+
+		/**
+		 * Filters shortcode attributes.
+		 *
+		 * @since 1.2
+		 *
+		 * @param array  $atts           An array of shortcode attributes.
+		 * @param string $shortcode_slug The current shortcode slug.
+		 */
+		$atts = apply_filters( 'ld_achievements_leaderboard_shortcode_atts', $atts, $shortcode_slug );
 
 		// Get leaders in points.
 		$leaders = wp_cache_get( 'leaderboard_v2_' . $atts['number'], 'learndash_achievements' );
@@ -53,8 +76,13 @@ class Shortcode {
 			$table_name = Database::$table_name;
 
 			$sql     = $wpdb->prepare(
-				"SELECT COUNT(user_id) as total, user_id, GROUP_CONCAT(post_id SEPARATOR ',') as post_ids FROM {$table_name}
-GROUP BY user_id ORDER BY COUNT(user_id) DESC LIMIT %d",
+				"SELECT COUNT(user_id) as total, user_id, GROUP_CONCAT(post_id SEPARATOR ',') as post_ids, SUM(points) as total_points
+				FROM %i
+				WHERE `post_id` IN (SELECT ID FROM {$wpdb->prefix}posts WHERE `post_status` = 'publish' AND `post_type` = 'ld-achievement')
+				GROUP BY user_id
+				ORDER BY total_points DESC
+				LIMIT %d",
+				$table_name,
 				absint( $atts['number'] )
 			);
 			$leaders = $wpdb->get_results( $sql, ARRAY_A );
@@ -65,7 +93,8 @@ GROUP BY user_id ORDER BY COUNT(user_id) DESC LIMIT %d",
 				$post_ids = array_unique( $post_ids );
 				$post_ids = array_filter( $post_ids );
 				foreach ( $post_ids as $post_id ) {
-					$row['images'][] = get_post_meta( $post_id, 'image', true );
+					$row['images'][] = Assets::achievement_icon_url( $post_id );
+					$row['post'][]   = get_post( $post_id );
 				}
 			}
 
@@ -81,17 +110,43 @@ GROUP BY user_id ORDER BY COUNT(user_id) DESC LIMIT %d",
 	/**
 	 * Output for the shortcode [ld_my_achievements]
 	 *
-	 * @param array  $atts attributes.
+	 * @param array  $atts    Attributes.
 	 * @param string $content Content.
+	 *
+	 * @phpstan-param array{
+	 *     'user_id'         ?: int,
+	 *     'show_title'      ?: bool,
+	 *     'show_points'     ?: bool,
+	 *     'points_position' ?: string,
+	 *     'points_label'    ?: string
+	 * } $atts
 	 *
 	 * @return false|string
 	 */
 	public static function ld_my_achievements_shortcode( $atts, $content ) {
+		// Treat string "false" as actual false for show_title and show_points parameters.
+
+		$bool_atts = [
+			'show_title',
+			'show_points',
+		];
+
+		foreach ( $bool_atts as $key ) {
+			if ( ! isset( $atts[ $key ] ) ) {
+				continue;
+			}
+
+			$atts[ $key ] = filter_var( $atts[ $key ], FILTER_VALIDATE_BOOLEAN );
+		}
+
 		$atts = shortcode_atts(
-			array(
-				'user_id'    => get_current_user_id(),
-				'show_title' => false,
-			),
+			[
+				'user_id'         => get_current_user_id(),
+				'show_title'      => false,
+				'show_points'     => false,
+				'points_position' => 'after',
+				'points_label'    => __( 'Points', 'learndash-achievements' ),
+			],
 			$atts,
 			'ld_my_achievements'
 		);
@@ -131,11 +186,11 @@ GROUP BY user_id ORDER BY COUNT(user_id) DESC LIMIT %d",
 		global $wpdb, $post;
 
 		$atts = shortcode_atts(
-			array(
+			[
 				'post_id' => 0,
 				'user_id' => 0,
 				'show'    => '',
-			),
+			],
 			$atts,
 			'ld_achievements'
 		);

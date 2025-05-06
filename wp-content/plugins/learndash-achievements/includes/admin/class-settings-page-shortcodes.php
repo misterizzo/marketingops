@@ -1,13 +1,25 @@
 <?php
+/**
+ * Shortcodes settings page class file.
+ *
+ * @since 1.0
+ *
+ * @package LearnDash\Achievements
+ */
 
 namespace LearnDash\Achievements\Settings;
 
 use LearnDash_Settings_Page;
 
-if ( class_exists( 'LearnDash_Settings_Page' ) ) :
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
+if ( class_exists( 'LearnDash_Settings_Page' ) ) :
 	/**
 	 * Class to create the settings page.
+	 *
+	 * @since 1.0
 	 */
 	class Shortcodes extends LearnDash_Settings_Page {
 

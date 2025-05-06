@@ -3,9 +3,14 @@
  * Handles all server side logic for the ld-achievements-leaderboard Gutenberg Block. This block is functionally the same
  * as the ld_achievements_leaderboard shortcode used within LearnDash.
  *
- * @package LearnDash
- * @since 2.5.9
+ * @since 1.0
+ *
+ * @package LearnDash\Achievements
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! class_exists( 'LearnDash_Gutenberg_Block' ) ) {
 	return;
@@ -13,7 +18,9 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block' ) ) {
 
 if ( ! class_exists( 'LearnDash_Gutenberg_Block_Achievements_Leaderboard' ) ) {
 	/**
-	 * Class for handling LearnDash Achievements Leaderboard Block
+	 * Class for handling LearnDash Achievements Leaderboard Block.
+	 *
+	 * @since 1.0
 	 */
 	class LearnDash_Gutenberg_Block_Achievements_Leaderboard extends LearnDash_Gutenberg_Block {
 
@@ -26,6 +33,9 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block_Achievements_Leaderboard' ) ) {
 			$this->block_attributes = array(
 				'number'       => array(
 					'type' => 'integer',
+				),
+				'show_points'  => array(
+					'type' => 'boolean',
 				),
 				'preview_show' => array(
 					'type' => 'boolean',
@@ -45,21 +55,27 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block_Achievements_Leaderboard' ) ) {
 		 *
 		 * @since 2.5.9
 		 *
-		 * @param array $attributes Shortcode attrbutes.
-		 * @return none The output is echoed.
+		 * @param mixed    $block_attributes The block attributes.
+		 * @param string   $block_content    The block content.
+		 * @param WP_Block $block            The block object.
+		 *
+		 * @return string  The rendered block
 		 */
-		public function render_block( $block_attributes = array(), $block_content = '', WP_block $block = null ) {
+		public function render_block( $block_attributes = array(), $block_content = '', WP_Block $block = null ) {
 
 			if ( is_user_logged_in() ) {
 
-				$block_attributes           = apply_filters( 'learndash_block_markers_shortcode_atts', $block_attributes, $this->shortcode_slug, $this->block_slug, '' );
+				$block_attributes = apply_filters( 'learndash_block_markers_shortcode_atts', $block_attributes, $this->shortcode_slug, $this->block_slug, '' );
+
 				$shortcode_params_str = $this->prepare_course_list_atts_to_param( $block_attributes );
 				$shortcode_params_str = '[' . $this->shortcode_slug . ' ' . $shortcode_params_str . ']';
 				$shortcode_out        = do_shortcode( $shortcode_params_str );
 
-				// This is mainly to protect against emty returns with the Gutenberg ServerSideRender function.
+				// This is mainly to protect against empty returns with the Gutenberg ServerSideRender function.
 				return $this->render_block_wrap( $shortcode_out );
 			}
+
+			return '';
 		}
 
 		/**
@@ -70,7 +86,7 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block_Achievements_Leaderboard' ) ) {
 		 * @param array  $attributes The array of attributes parse from the block content.
 		 * @param string $shortcode_slug This will match the related LD shortcode ld_profile, ld_achievements_leaderboard, etc.
 		 * @param string $block_slug This is the block token being processed. Normally same as the shortcode but underscore replaced with dash.
-		 * @param string $content This is the orignal full content being parsed.
+		 * @param string $content This is the original full content being parsed.
 		 *
 		 * @return array $attributes.
 		 */

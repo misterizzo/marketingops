@@ -1,21 +1,63 @@
 <?php
+/**
+ * Achievement class file.
+ *
+ * @since 1.0
+ *
+ * @package LearnDash\Achievements
+ */
 
 namespace LearnDash\Achievements;
 
 use LearnDash\Achievements\Database;
 use LearnDash\Achievements\Settings;
+use LearnDash\Achievements\Utilities\Assets;
+use LearnDash\Core\Utilities\Cast;
+use WP_Post;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
- * Achievement class
+ * Achievement class.
+ *
+ * @since 1.0
  */
 class Achievement {
-
+	/**
+	 * Settings.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var array<string, mixed>
+	 */
 	public static $settings;
 
+	/**
+	 * Temp data.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var array<string, mixed>
+	 */
 	public static $temp_data;
 
+	/**
+	 * Init the class.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
 	public static function init() {
-		self::$settings = get_option( 'learndash_achievements_settings_popup', Settings::get_default_value() );
+		/**
+		 * Achievements popup settings.
+		 *
+		 * @var array<string, mixed>
+		 */
+		$popup_settings = get_option( 'learndash_achievements_settings_popup', Settings::get_default_value() );
+		self::$settings = $popup_settings;
 
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'load_scripts' ) );
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'load_scripts' ) );
@@ -39,6 +81,89 @@ class Achievement {
 			)
 		);
 		add_action( 'delete_post', array( __CLASS__, 'clear_badge_when_achievement_deleted' ), 10, 2 );
+	}
+
+	/**
+	 * Gets user achievements by user ID.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param int $user_id User ID.
+	 *
+	 * @return array<mixed>
+	 */
+	public static function get_by_user_id( int $user_id ): array {
+		return Database::get_user_achievements( $user_id );
+	}
+
+	/**
+	 * Get user raw achievements by user ID.
+	 *
+	 * Raw achievements are achievements that are not filtered by any kind of filters.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param int                  $user_id User ID.
+	 * @param array<string, mixed> $args    Query arguments.
+	 *
+	 * @return array<object{
+	 *  id: int,
+	 *  user_id: int,
+	 *  post_id: int,
+	 *  trigger: string,
+	 *  points: int,
+	 *  created_at: string
+	 * }>
+	 */
+	public static function get_raw_by_user_id( int $user_id, array $args ): array {
+		$args = wp_parse_args(
+			$args,
+			[
+				'limit' => 100,
+				'page'  => 1,
+			]
+		);
+
+		$offset = ( $args['page'] - 1 ) * $args['limit'];
+
+		return Database::get_raw_user_achievements(
+			$user_id,
+			[
+				'limit'  => $args['limit'],
+				'offset' => $offset,
+			]
+		);
+	}
+
+	/**
+	 * Delete achievements from database.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param array<int> $ids Achievement IDs or objects.
+	 *
+	 * @return void
+	 */
+	public static function delete( array $ids ): void {
+		/**
+		 * Action filter hook before deleting achievements.
+		 *
+		 * @since 2.0.0
+		 *
+		 * @param array<int> $ids Achievement IDs.
+		 */
+		do_action( 'learndash_achievements_before_delete_achievements', $ids );
+
+		Database::delete_badges( $ids );
+
+		/**
+		 * Action filter hook after deleting achievements.
+		 *
+		 * @since 2.0.0
+		 *
+		 * @param array<int> $ids Achievement IDs.
+		 */
+		do_action( 'learndash_achievements_after_delete_achievements', $ids );
 	}
 
 	/**
@@ -110,14 +235,14 @@ class Achievement {
 
 		wp_enqueue_style(
 			'ld-achievements-style',
-			LEARNDASH_ACHIEVEMENTS_PLUGIN_URL . 'assets/css/style.css',
+			LEARNDASH_ACHIEVEMENTS_PLUGIN_URL . 'dist/css/styles' . learndash_min_asset() . '.css',
 			array(),
 			LEARNDASH_ACHIEVEMENTS_VERSION,
 			'screen'
 		);
 		wp_enqueue_script(
 			'ld-achievements-script',
-			LEARNDASH_ACHIEVEMENTS_PLUGIN_URL . 'assets/js/script.js',
+			LEARNDASH_ACHIEVEMENTS_PLUGIN_URL . 'dist/js/scripts' . learndash_min_asset() . '.js',
 			array( 'jquery' ),
 			LEARNDASH_ACHIEVEMENTS_VERSION,
 			true
@@ -146,6 +271,13 @@ class Achievement {
 		);
 	}
 
+	/**
+	 * Outputs custom CSS.
+	 *
+	 * @since 1.0
+	 *
+	 * @return void
+	 */
 	public static function custom_css() { ?>
 
 		<style type="text/css" media="screen">
@@ -153,12 +285,12 @@ class Achievement {
 			<?php
 			if ( ! empty( self::$settings['background_color'] ) ) :
 				?>
-				 background-color: <?php echo esc_attr( self::$settings['background_color'] ); ?>;
-				border-bottom: 1px solid<?php echo esc_attr( self::$settings['background_color'] ); ?>;
+				background-color: <?php echo esc_attr( Cast::to_string( self::$settings['background_color'] ) ); ?>;
+				border-bottom: 1px solid<?php echo esc_attr( Cast::to_string( self::$settings['background_color'] ) ); ?>;
 			<?php endif; ?> <?php
 			if ( ! empty( self::$settings['text_color'] ) ) :
 				?>
-				 color: <?php echo esc_attr( self::$settings['text_color'] ); ?>;
+				 color: <?php echo esc_attr( Cast::to_string( self::$settings['text_color'] ) ); ?>;
 			<?php endif; ?>
 			}
 		</style>
@@ -166,6 +298,22 @@ class Achievement {
 		<?php
 	}
 
+	/**
+	 * Creates a new achievement.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param string    $trigger         The trigger key.
+	 * @param int       $user_id         The user ID.
+	 * @param int|false $trigger_post_id The trigger post ID.
+	 * @param ?int      $group_id        The group ID.
+	 * @param ?int      $course_id       The course ID.
+	 * @param ?int      $lesson_id       The lesson ID.
+	 * @param ?int      $topic_id        The topic ID.
+	 * @param ?int      $quiz_id         The quiz ID.
+	 *
+	 * @return void
+	 */
 	public static function create_new(
 			$trigger,
 			$user_id,
@@ -181,6 +329,42 @@ class Achievement {
 		$notifications = array();
 
 		foreach ( $templates as $template ) {
+			/**
+			 * Filters to check whether current trigger action is valid or not.
+			 *
+			 * @since 2.0.0
+			 *
+			 * @param bool      $is_valid        Whether current trigger action is valid or not. Default true.
+			 * @param string    $trigger         The trigger.
+			 * @param int       $user_id         The user ID.
+			 * @param int|false $trigger_post_id The trigger post ID.
+			 * @param ?int      $group_id        The group ID.
+			 * @param ?int      $course_id       The course ID.
+			 * @param ?int      $lesson_id       The lesson ID.
+			 * @param ?int      $topic_id        The topic ID.
+			 * @param ?int      $quiz_id         The quiz ID.
+			 * @param WP_Post   $template        The achievement trigger template post object.
+			 *
+			 * @return bool Whether current trigger action is valid or not.
+			 */
+			$is_valid = apply_filters(
+				'learndash_achievements_trigger_action_is_valid',
+				true,
+				$trigger,
+				$user_id,
+				$trigger_post_id,
+				$group_id,
+				$course_id,
+				$lesson_id,
+				$topic_id,
+				$quiz_id,
+				$template
+			);
+
+			if ( ! $is_valid ) {
+				continue;
+			}
+
 			do_action(
 				'ld_' . $trigger . '_achievement',
 				$trigger,
@@ -194,21 +378,6 @@ class Achievement {
 			);
 			// Check trigger post ID.
 			$temp_trigger_post_id = get_post_meta( $template->ID, 'trigger_post_id', true );
-			error_log(
-				implode(
-					'|',
-					array(
-						'trigger: ' . $trigger,
-						'user id:' . $user_id,
-						'trigger post:' . $trigger_post_id,
-						'group_id:' . $group_id,
-						'course_id:' . $course_id,
-						'lesson_id:' . $lesson_id,
-						'topic_id:' . $topic_id,
-						'quiz id:' . $quiz_id,
-					)
-				)
-			);
 			// For backward compatibility for addon < v1.1
 			// LD < v2.5 doesn't support nested courses.
 			if ( ! empty( $temp_trigger_post_id ) ) {
@@ -244,13 +413,17 @@ class Achievement {
 			}
 
 			if ( 'quiz_score_above' === $trigger ) {
-				$percent = get_post_meta( $template->ID, 'percentage', true );
+				$percent = Cast::to_string(
+					get_post_meta( $template->ID, 'percentage', true )
+				);
 				$percent = floatval( $percent );
 
 				if ( ! is_array( self::$temp_data ) || ! isset( self::$temp_data['percentage'] ) ) {
 					continue;
 				}
-				$passed_percentage = floatval( self::$temp_data['percentage'] );
+				$passed_percentage = floatval(
+					Cast::to_string( self::$temp_data['percentage'] )
+				);
 				if ( $passed_percentage < $percent ) {
 					// do nothing.
 					continue;
@@ -288,6 +461,34 @@ class Achievement {
 				$quiz_id
 			);
 
+			/**
+			 * Fires after an achievement is created and recorded.
+			 *
+			 * @since 2.0.0
+			 *
+			 * @param string    $trigger         The trigger key.
+			 * @param int       $user_id         The user ID.
+			 * @param int|false $trigger_post_id The trigger post ID.
+			 * @param ?int      $group_id        The group ID.
+			 * @param ?int      $course_id       The course ID.
+			 * @param ?int      $lesson_id       The lesson ID.
+			 * @param ?int      $topic_id        The topic ID.
+			 * @param ?int      $quiz_id         The quiz ID.
+			 * @param WP_Post   $template        The achievement trigger template post object.
+			 */
+			do_action(
+				'learndash_achievements_after_create_achievement',
+				$trigger,
+				$user_id,
+				$trigger_post_id,
+				$group_id,
+				$course_id,
+				$lesson_id,
+				$topic_id,
+				$quiz_id,
+				$template
+			);
+
 			$shortcode_params = array(
 				'post_id' => $template->ID,
 				'user_id' => $user_id,
@@ -305,7 +506,7 @@ class Achievement {
 				array(
 					'title'   => do_shortcode( $title ),
 					'message' => do_shortcode( $message ),
-					'image'   => get_post_meta( $template->ID, 'image', true ),
+					'image'   => Assets::achievement_icon_url( $template->ID ),
 				),
 				$trigger,
 				$user_id,
@@ -410,16 +611,23 @@ class Achievement {
 		return $templates;
 	}
 
+	/**
+	 * Gets icon URLs.
+	 *
+	 * @since 1.0
+	 *
+	 * @return array<string>
+	 */
 	public static function get_icons() {
 		$icons = wp_cache_get( 'achievement_icons', 'learndash_achievements' );
 
 		if ( $icons === false ) {
-			$icons = glob( LEARNDASH_ACHIEVEMENTS_PLUGIN_PATH . 'assets/img/icons/*.png' );
+			$icons = glob( LEARNDASH_ACHIEVEMENTS_PLUGIN_PATH . 'dist/img/icons/*.png' );
 
-			$icons_url = array();
+			$icons_url = [];
 			foreach ( $icons as $icon ) {
 				$icon_url    = preg_replace(
-					'/(.*)\/(assets\/.*\.png)/i',
+					'/(.*)\/(dist\/.*\.png)/i',
 					LEARNDASH_ACHIEVEMENTS_PLUGIN_URL . '${2}',
 					$icon
 				);
@@ -427,25 +635,31 @@ class Achievement {
 			}
 
 			wp_cache_set( 'achievement_icons', $icons_url, 'learndash_achievements' );
+		} else {
+			$icons_url = $icons;
 		}
 
 		return apply_filters( 'learndash_achievements_icons', $icons_url );
 	}
 
+	/**
+	 * Registers triggers.
+	 *
+	 * @since 1.0
+	 *
+	 * @return array<string, array<string, string>>
+	 */
 	public static function get_triggers() {
-		$triggers = array(
-			// 'Custom' => array(
-			// 'manual' => __( 'Manually awarded' ),
-			// ),
-				'WordPress' => array(
-					'register'     => __( 'User registration', 'learndash-achievements' ),
-					'log_in'       => __( 'User logs in', 'learndash-achievements' ),
-					'add_post'     => __( 'User adds a post', 'learndash-achievements' ),
-					'add_comment'  => __( 'User adds a comment', 'learndash-achievements' ),
-					'visit_post'   => __( 'User visits a post', 'learndash-achievements' ),
-					'post_visited' => __( 'User\'s post gets visited', 'learndash-achievements' ),
-				),
-			'LearnDash'     => array(
+		$triggers = [
+			'WordPress' => [
+				'register'     => __( 'User registration', 'learndash-achievements' ),
+				'log_in'       => __( 'User logs in', 'learndash-achievements' ),
+				'add_post'     => __( 'User adds a post', 'learndash-achievements' ),
+				'add_comment'  => __( 'User adds a comment', 'learndash-achievements' ),
+				'visit_post'   => __( 'User visits a post', 'learndash-achievements' ),
+				'post_visited' => __( 'User\'s post gets visited', 'learndash-achievements' ),
+			],
+			'LearnDash' => [
 				'enroll_group'        => __( 'User enrolls into a group', 'learndash-achievements' ),
 				'enroll_course'       => __( 'User enrolls into a course', 'learndash-achievements' ),
 				'complete_course'     => __( 'User completes a course', 'learndash-achievements' ),
@@ -457,13 +671,19 @@ class Achievement {
 				'quiz_score_above'    => __( 'Quiz score above %', 'learndash-achievements' ),
 				'upload_assignment'   => __( 'User uploads assignment', 'learndash-achievements' ),
 				'assignment_approved' => __( 'User\'s assignment is approved', 'learndash-achievements' ),
-				'essay_graded'        => __(
-					'User\'s essay question has been graded',
-					'learndash-achievements'
-				),
-			),
-		);
+				'essay_graded'        => __( 'User\'s essay question has been graded', 'learndash-achievements' ),
+			],
+		];
 
+		/**
+		 * Filters the list of available triggers.
+		 *
+		 * @since 1.0
+		 *
+		 * @param array<string, array<string, string>> $triggers List of triggers.
+		 *
+		 * @return array<string, array<string, string>>
+		 */
 		return apply_filters( 'learndash_achievements_triggers', $triggers );
 	}
 

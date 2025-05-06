@@ -1,9 +1,22 @@
 <?php
+/**
+ * Widget class file.
+ *
+ * @since 1.0
+ *
+ * @package LearnDash\Achievements
+ */
 
 namespace LearnDash\Achievements;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
- * Widget class
+ * Widget class.
+ *
+ * @since 1.0
  */
 class Widget {
 

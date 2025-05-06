@@ -1,13 +1,26 @@
 <?php
+/**
+ * Popup settings section class file.
+ *
+ * @since 1.0
+ *
+ * @package LearnDash\Achievements
+ */
 
 namespace LearnDash\Achievements\Settings\Section;
 
 use LearnDash\Achievements\Settings;
 use LearnDash_Settings_Section;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( class_exists( 'LearnDash_Settings_Section' ) ) :
 	/**
-	 * Register the Popup section
+	 * Register the Popup section.
+	 *
+	 * @since 1.0
 	 */
 	class Popup extends LearnDash_Settings_Section {
 
@@ -39,7 +52,7 @@ if ( class_exists( 'LearnDash_Settings_Section' ) ) :
 			parent::load_settings_values();
 
 			$_init = false;
-			if ( false === $this->setting_option_values ) {
+			if ( empty( $this->setting_option_values ) ) {
 				$_init                       = true;
 				$this->setting_option_values = array();
 			}
@@ -65,6 +78,23 @@ if ( class_exists( 'LearnDash_Settings_Section' ) ) :
 						'min' => 0,
 					),
 				),
+
+				'position' => [
+					'name'      => 'position',
+					'type'      => 'select',
+					'label'     => __( 'Position', 'learndash-achievements' ),
+					'help_text' => __( 'Select where the popup displays in the browser window.', 'learndash-achievements' ),
+					'value'     => $this->setting_option_values['position'],
+					'options'   => [
+						'top_left'      => __( 'Top Left', 'learndash-achievements' ),
+						'top_center'    => __( 'Top Center', 'learndash-achievements' ),
+						'top_right'     => __( 'Top Right', 'learndash-achievements' ),
+						'center'        => __( 'Center', 'learndash-achievements' ),
+						'bottom_left'   => __( 'Bottom Left', 'learndash-achievements' ),
+						'bottom_center' => __( 'Bottom Center', 'learndash-achievements' ),
+						'bottom_right'  => __( 'Bottom Right', 'learndash-achievements' ),
+					],
+				],
 
 				'background_color' => array(
 					'name'      => 'background_color',

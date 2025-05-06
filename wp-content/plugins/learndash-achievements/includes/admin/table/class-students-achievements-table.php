@@ -1,4 +1,11 @@
 <?php
+/**
+ * Table class file for displaying students achievements.
+ *
+ * @since 1.1.0
+ *
+ * @package LearnDash\Achievements
+ */
 
 namespace LearnDash\Achievements\Settings\Table;
 
@@ -6,8 +13,14 @@ use LearnDash\Achievements\Database;
 use LearnDash\Achievements\Settings;
 use LearnDash\Achievements\Template\General_Template;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
- * Display the students achievements
+ * Students achievements table class.
+ *
+ * @since 1.1.0
  */
 class Students_Achievements_Table extends \WP_List_Table {
 	/**

@@ -1,12 +1,28 @@
 <?php
+/**
+ * Trigger class file.
+ *
+ * @since 1.0
+ *
+ * @package LearnDash\Achievements
+ */
 
 namespace LearnDash\Achievements;
 
 use LearnDash\Achievements\Achievement;
 use LearnDash\Achievements\Database;
+use LearnDash\Core\Utilities\Cast;
+use WP_Post;
+use WP_User;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
- * Trigger class
+ * Trigger class.
+ *
+ * @since 1.0
  */
 class Trigger {
 
@@ -75,8 +91,8 @@ class Trigger {
 	/**
 	 * Give achievements when user logs in
 	 *
-	 * @param string $user_login Username.
-	 * @param object $user       WP_User object.
+	 * @param string  $user_login Username.
+	 * @param WP_User $user       WP_User object.
 	 */
 	public static function user_login( $user_login, $user ) {
 		Achievement::create_new( 'log_in', $user->ID );
@@ -146,7 +162,7 @@ class Trigger {
 
 			$post = get_post();
 
-			Achievement::create_new( 'post_visited', $post->post_author, $post->ID );
+			Achievement::create_new( 'post_visited', (int) $post->post_author, (int) $post->ID );
 		}
 	}
 
@@ -219,14 +235,20 @@ class Trigger {
 	}
 
 	/**
-	 * Give achievement when user completes a quiz
+	 * Triggers achievement when user completes a quiz.
+	 *
+	 * @since 1.0.1
 	 *
 	 * @param array  $data Data of the quiz taken.
 	 * @param object $user Current user WP object who take the quiz.
+	 *
+	 * @return void
 	 */
 	public static function user_complete_quiz( $data, $user ) {
-		$quiz = is_object( $data['quiz'] ) ? $data['quiz']->ID : $data['quiz'];
-		Achievement::create_new( 'complete_quiz', $user->ID, $quiz, $group_id = null, $course_id = $data['course']->ID, $lesson_id = null, $topic_id = null, $quiz );
+		$quiz      = is_object( $data['quiz'] ) ? $data['quiz']->ID : Cast::to_int( $data['quiz'] );
+		$course_id = is_object( $data['course'] ) ? $data['course']->ID : Cast::to_int( $data['course'] );
+
+		Achievement::create_new( 'complete_quiz', $user->ID, $quiz, $group_id = null, $course_id, $lesson_id = null, $topic_id = null, $quiz );
 	}
 
 	/**
@@ -253,13 +275,34 @@ class Trigger {
 	}
 
 	/**
-	 * @param $data
-	 * @param $user
+	 * Triggers achievement when user scores above a certain score percentage in a quiz.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param array{quiz: WP_Post|int, course: WP_Post|int, lesson: WP_Post|int, topic: WP_Post|int} $data Quiz data.
+	 * @param WP_User                                                                                $user User data.
+	 *
+	 * @return void
 	 */
 	public static function quiz_score_above( $data, $user ) {
+		// Store the data in a static variable to use it in the Achievement method.
 		Achievement::$temp_data = $data;
-		$quiz                   = is_object( $data['quiz'] ) ? $data['quiz']->ID : $data['quiz'];
-		Achievement::create_new( 'quiz_score_above', $user->ID, $quiz, $group_id = null, $course_id = $data['course']->ID, $lesson_id = null, $topic_id = null, $quiz );
+
+		$quiz_id   = $data['quiz'] instanceof WP_Post ? $data['quiz']->ID : Cast::to_int( $data['quiz'] );
+		$course_id = $data['course'] instanceof WP_Post ? $data['course']->ID : Cast::to_int( $data['course'] );
+		$lesson_id = $data['lesson'] instanceof WP_Post ? $data['lesson']->ID : Cast::to_int( $data['lesson'] );
+		$topic_id  = $data['topic'] instanceof WP_Post ? $data['topic']->ID : Cast::to_int( $data['topic'] );
+
+		Achievement::create_new(
+			'quiz_score_above',
+			$user->ID,
+			$quiz_id,
+			$group_id = null,
+			$course_id,
+			$lesson_id,
+			$topic_id,
+			$quiz_id
+		);
 	}
 
 	/**
@@ -276,10 +319,13 @@ class Trigger {
 				}
 			}
 		}
-		$quiz = is_object( $data['quiz'] ) ? $data['quiz']->ID : $data['quiz'];
-		// If user passes the quiz
+
+		$quiz_id   = $data['quiz'] instanceof WP_Post ? $data['quiz']->ID : Cast::to_int( $data['quiz'] );
+		$course_id = $data['course'] instanceof WP_Post ? $data['course']->ID : Cast::to_int( $data['course'] );
+
+		// If user fails the quiz.
 		if ( $data['pass'] == 0 ) {
-			Achievement::create_new( 'fail_quiz', $user->ID, $quiz, $group_id = null, $course_id = $data['course']->ID, $lesson_id = null, $topic_id = null, $quiz );
+			Achievement::create_new( 'fail_quiz', $user->ID, $quiz_id, $group_id = null, $course_id, $lesson_id = null, $topic_id = null, $quiz_id );
 		}
 	}
 
@@ -294,12 +340,18 @@ class Trigger {
 	}
 
 	/**
-	 * Give achievement when admin approves an assignment
+	 * Triggers achievement when admin approves an assignment.
+	 *
+	 * @since 1.0
 	 *
 	 * @param int $assignment_id ID of assignment post object.
+	 *
+	 * @return void
 	 */
 	public static function user_assignment_approved( $assignment_id ) {
-		$user_id = get_post_meta( $assignment_id, 'user_id', true );
+		$user_id = Cast::to_int(
+			get_post_meta( $assignment_id, 'user_id', true )
+		);
 
 		Achievement::create_new( 'assignment_approved', $user_id );
 	}

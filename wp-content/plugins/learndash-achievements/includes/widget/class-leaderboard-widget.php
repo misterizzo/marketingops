@@ -1,16 +1,34 @@
 <?php
+/**
+ * Leaderboard widget class file.
+ *
+ * @since 1.0
+ *
+ * @package LearnDash\Achievements
+ */
 
 namespace LearnDash\Achievements\Widget;
 
 use LearnDash\Achievements\Database;
 use WP_Widget;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
- * Leaderboard widget class
+ * Leaderboard widget class.
+ *
+ * @since 1.0
+ *
+ * @template T of array<string, mixed>
+ * @extends WP_Widget<T>
  */
 class Leaderboard extends WP_Widget {
 	/**
 	 * Leaderboard constructor.
+	 *
+	 * @since 1.0
 	 */
 	public function __construct() {
 		$widget_ops = array(

@@ -1,12 +1,28 @@
 <?php
+/**
+ * Meta box class file.
+ *
+ * @since 1.0
+ *
+ * @package LearnDash\Achievements
+ */
 
 namespace LearnDash\Achievements;
 
 use LearnDash\Achievements\Achievement;
+use LearnDash\Achievements\Utilities\Assets;
 use WP_Error;
+use WP_Post;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 
 /**
- * Meta_Box class
+ * Meta_Box class.
+ *
+ * @since 1.0
  */
 class Meta_Box {
 
@@ -74,7 +90,7 @@ class Meta_Box {
 						$return[ $t->ID ] = $t->post_title;
 					}
 				} elseif ( $parent_type == 'lesson' && is_numeric( $course_id ) ) {
-					$children = learndash_course_get_steps_by_type( $course_id, 'sfwd-topic' );
+					$children = learndash_course_get_steps_by_type( (int) $course_id, 'sfwd-topic' );
 
 					foreach ( $children as $child_id ) {
 						$post                = get_post( $child_id );
@@ -89,7 +105,7 @@ class Meta_Box {
 						$return[ $q->ID ] = $q->post_title;
 					}
 				} elseif ( $parent_type == 'topic' && is_numeric( $course_id ) ) {
-					$children = learndash_course_get_steps_by_type( $course_id, 'sfwd-quiz' );
+					$children = learndash_course_get_steps_by_type( (int) $course_id, 'sfwd-quiz' );
 
 					foreach ( $children as $child_id ) {
 						$post                = get_post( $child_id );
@@ -98,7 +114,7 @@ class Meta_Box {
 				}
 			} else {
 
-				$children = learndash_course_get_children_of_step( $course_id, $parent_id, $step_type );
+				$children = learndash_course_get_children_of_step( (int) $course_id, (int) $parent_id, $step_type );
 
 				foreach ( $children as $child_id ) {
 					$post                = get_post( $child_id );
@@ -112,6 +128,17 @@ class Meta_Box {
 		wp_die();
 	}
 
+	/**
+	 * Saves achievements trigger template meta box data.
+	 *
+	 * @since 1.0
+	 *
+	 * @param int     $post_id Post ID.
+	 * @param WP_Post $post    Post object.
+	 * @param bool    $update  Whether this is an existing post being updated.
+	 *
+	 * @return void
+	 */
 	public static function save_data( $post_id, $post, $update ) {
 		if ( 'ld-achievement' != $post->post_type ) {
 			return;
@@ -140,13 +167,23 @@ class Meta_Box {
 		$data['achievement_message'] = wp_kses_post( $_POST['achievement_message'] );
 		$data['trigger']             = sanitize_text_field( $_POST['trigger'] );
 
-		$data['group_id']   = sanitize_text_field( $_POST['group_id'] );
-		$data['course_id']  = sanitize_text_field( $_POST['course_id'] );
-		$data['lesson_id']  = sanitize_text_field( $_POST['lesson_id'] );
-		$data['topic_id']   = sanitize_text_field( $_POST['topic_id'] );
-		$data['quiz_id']    = sanitize_text_field( $_POST['quiz_id'] );
-		$data['percentage'] = sanitize_text_field( $_POST['percentage'] );
-		$data['user_group'] = sanitize_text_field( $_POST['user_group'] );
+		$data['group_id']      = isset( $_POST['group_id'] ) ? sanitize_text_field( wp_unslash( $_POST['group_id'] ) ) : null;
+		$data['course_id']     = isset( $_POST['course_id'] ) ? sanitize_text_field( wp_unslash( $_POST['course_id'] ) ) : null;
+		$data['lesson_id']     = isset( $_POST['lesson_id'] ) ? sanitize_text_field( wp_unslash( $_POST['lesson_id'] ) ) : null;
+		$data['topic_id']      = isset( $_POST['topic_id'] ) ? sanitize_text_field( wp_unslash( $_POST['topic_id'] ) ) : null;
+		$data['quiz_id']       = isset( $_POST['quiz_id'] ) ? sanitize_text_field( wp_unslash( $_POST['quiz_id'] ) ) : null;
+		$data['percentage']    = isset( $_POST['percentage'] ) ? sanitize_text_field( wp_unslash( $_POST['percentage'] ) ) : null;
+		$data['user_group']    = isset( $_POST['user_group'] ) ? sanitize_text_field( wp_unslash( $_POST['user_group'] ) ) : null;
+		$data['days']          = isset( $_POST['days'] ) ? sanitize_text_field( wp_unslash( $_POST['days'] ) ) : null;
+		$data['courses_count'] = isset( $_POST['courses_count'] ) ? sanitize_text_field( wp_unslash( $_POST['courses_count'] ) ) : null;
+		$data['groups_count']  = isset( $_POST['groups_count'] ) ? sanitize_text_field( wp_unslash( $_POST['groups_count'] ) ) : null;
+
+		$data['trigger_badges_count'] = isset( $_POST['trigger_badges_count'] )
+			? sanitize_text_field( wp_unslash( $_POST['trigger_badges_count'] ) )
+			: null;
+		$data['trigger_points_count'] = isset( $_POST['trigger_points_count'] )
+			? sanitize_text_field( wp_unslash( $_POST['trigger_points_count'] ) )
+			: null;
 
 		if ( in_array( $data['trigger'], array( 'enroll_course', 'complete_course', 'course_expires' ) ) ) {
 			$data['group_id']  = '';
@@ -213,7 +250,7 @@ class Meta_Box {
 
 			// Update the post, which calls save_post again.
 			$post->post_status = 'draft';
-			wp_update_post( $post );
+			wp_update_post( $post ); // @phpstan-ignore-line -- WP_Post is a valid parameter and accepted.
 
 			// Re-hook this function.
 			add_action( 'save_post', array( __CLASS__, 'save_data' ) );
@@ -260,9 +297,19 @@ class Meta_Box {
 		echo '</div>';
 	}
 
+	/**
+	 * Outputs image meta box.
+	 *
+	 * @since 1.0
+	 *
+	 * @return void
+	 */
 	public static function image_meta_box() {
 		$icons    = Achievement::get_icons();
-		$selected = get_post_meta( get_the_ID(), 'image', true );
+		$post_id  = get_the_ID();
+		$selected = $post_id !== false
+			? Assets::achievement_icon_url( $post_id )
+			: '';
 
 		?>
 
@@ -460,7 +507,7 @@ class Meta_Box {
 	/**
 	 * Get metabox settings
 	 *
-	 * @return array Metabos settings
+	 * @return array Metabox settings
 	 */
 	public static function get_settings() {
 		$groups       = get_posts( 'post_type=groups&posts_per_page=-1&orderby=title&order=ASC' );
@@ -572,6 +619,57 @@ class Meta_Box {
 				'hide'      => 1,
 				'parent'    => array( 'quiz_score_above' ),
 			),
+			'days'  => [
+				'type'      => 'number',
+				'title'     => __( 'Days', 'learndash-achievements' ),
+				'help_text' => __( 'Set to 0 for daily login without a limit.', 'learndash-achievements' ),
+				'hide'      => 1,
+				'parent'    => [ 'consecutive_login' ],
+			],
+			'courses_count' => [
+				'type'      => 'number',
+				'title'     => sprintf(
+					// Translators: Placeholder %s is replaced with the custom label for courses.
+					__( '%s Count', 'learndash-achievements' ),
+					learndash_get_custom_label( 'courses' )
+				),
+				'help_text' => sprintf(
+					// Translators: Placeholder %s is replaced with the custom label for courses.
+					__( 'Number of %s required. Leave empty to disable this counting towards the achievement.', 'learndash-achievements' ),
+					learndash_get_custom_label_lower( 'courses' )
+				),
+				'hide'      => 1,
+				'parent'    => [ 'complete_courses_groups_count' ],
+			],
+			'groups_count'  => [
+				'type'      => 'number',
+				'title'     => sprintf(
+					// Translators: Placeholder %s is replaced with the custom label for groups.
+					__( '%s Count', 'learndash-achievements' ),
+					learndash_get_custom_label( 'groups' )
+				),
+				'help_text' => sprintf(
+					// Translators: Placeholder %s is replaced with the custom label for groups.
+					__( 'Number of %s required. Leave empty to disable this counting towards the achievement.', 'learndash-achievements' ),
+					learndash_get_custom_label_lower( 'groups' )
+				),
+				'hide'      => 1,
+				'parent'    => [ 'complete_courses_groups_count' ],
+			],
+			'trigger_badges_count' => [
+				'type'      => 'number',
+				'title'     => __( 'Badges Count', 'learndash-achievements' ),
+				'help_text' => __( 'Number of badges required to trigger the achievement. Leave empty to disable this counting towards the achievement.', 'learndash-achievements' ),
+				'hide'      => 1,
+				'parent'    => [ 'earn_badges_points_count' ],
+			],
+			'trigger_points_count' => [
+				'type'      => 'number',
+				'title'     => __( 'Points Count', 'learndash-achievements' ),
+				'help_text' => __( 'Number of points required to trigger the achievement. Leave empty to disable counting towards the achievement.', 'learndash-achievements' ),
+				'hide'      => 1,
+				'parent'    => [ 'earn_badges_points_count' ],
+			],
 			'user_group'  => array(
 				'type'            => 'dropdown',
 				'title'           => __( 'User\'s group', 'learndash-achievements' ),

@@ -1,12 +1,25 @@
 <?php
+/**
+ * Submit settings section class file.
+ *
+ * @since 1.0
+ *
+ * @package LearnDash\Achievements
+ */
 
 namespace LearnDash\Achievements\Settings\Section;
 
 use LearnDash_Settings_Section;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( class_exists( 'LearnDash_Settings_Section' ) ) :
 	/**
 	 * Register the submit section.
+	 *
+	 * @since 1.0
 	 */
 	class Submit extends LearnDash_Settings_Section {
 		/**

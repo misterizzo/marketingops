@@ -1,11 +1,28 @@
 <?php
+/**
+ * General settings section class file.
+ *
+ * @since 1.1.0
+ *
+ * @package LearnDash\Achievements
+ */
 
 namespace LearnDash\Achievements;
 
 use LearnDash\Achievements\Settings\Section\Popup;
 
-if ( class_exists( 'LearnDash_Settings_Section' ) ) :
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
+if ( class_exists( 'LearnDash_Settings_Section' ) ) :
+	/**
+	 * General settings section class.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @package LearnDash\Achievements
+	 */
 	class General extends \LearnDash_Settings_Section {
 		public function __construct() {
 			$this->settings_page_id = 'ld-achievements-settings';
@@ -24,7 +41,7 @@ if ( class_exists( 'LearnDash_Settings_Section' ) ) :
 		function load_settings_values() {
 			parent::load_settings_values();
 
-			if ( $this->setting_option_values === false ) {
+			if ( empty( $this->setting_option_values ) ) {
 				$this->setting_option_values = array();
 			}
 
@@ -42,8 +59,10 @@ if ( class_exists( 'LearnDash_Settings_Section' ) ) :
 					'name'      => 'redeem_course_by_point',
 					'type'      => 'checkbox-switch',
 					'label'     => __( 'Allow redeeming courses by points', 'learndash-achievements' ),
-					'help_text' => __( 'Enable this to allow the users to redeem the courses by achievements points.',
-					                   'learndash-achievements' ),
+					'help_text' => __(
+						'Enable this to allow the users to redeem the courses by achievements points.',
+						'learndash-achievements'
+					),
 					'value'     => isset( $this->setting_option_values['redeem_course_by_point'] ) ? $this->setting_option_values['redeem_course_by_point'] : 0,
 					'options'   => array(
 						'0' => __( 'Disable', 'learndash-achievements' ),
@@ -52,9 +71,11 @@ if ( class_exists( 'LearnDash_Settings_Section' ) ) :
 				),
 			);
 
-			$this->setting_option_fields = apply_filters( 'learndash_achievements_settings_fields',
-			                                              $this->setting_option_fields,
-			                                              $this->settings_section_key );
+			$this->setting_option_fields = apply_filters(
+				'learndash_achievements_settings_fields',
+				$this->setting_option_fields,
+				$this->settings_section_key
+			);
 
 			parent::load_settings_fields();
 		}
@@ -64,6 +85,7 @@ if ( class_exists( 'LearnDash_Settings_Section' ) ) :
 		'learndash_settings_sections_init',
 		function() {
 			General::add_section_instance();
-		},9
+		},
+		9
 	);
 endif;

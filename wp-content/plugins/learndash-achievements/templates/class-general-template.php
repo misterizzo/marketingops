@@ -1,11 +1,24 @@
 <?php
+/**
+ * General_Template class file.
+ *
+ * @since 1.1.0
+ *
+ * @package LearnDash\Achievements
+ */
 
 namespace LearnDash\Achievements\Template;
 
+use LearnDash\Achievements\Utilities\Assets;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
- * Class General_Template
+ * General_Template class.
  *
- * @package LearnDash\Achievements\Template
+ * @since 1.1.0
  */
 class General_Template {
 	/**
@@ -20,13 +33,13 @@ class General_Template {
 			<?php foreach ( $achievements as $achievement ) : ?>
 				<?php
 				$post    = get_post( $achievement->post_id );
-				$image   = get_post_meta( $achievement->post_id, 'image', true );
+				$image   = Assets::achievement_icon_url( $achievement->post_id );
 				$title   = $post->post_title;
 				$content = $post->post_content;
 				?>
 				<span class="ld-achievement-image ld-achievement-tooltip">
 					<?php if ( $with_tooltip ) : ?>
-						<span class="ld-achievement-tooltiptext"><?php echo esc_html( $title ); ?></span>
+						<span class="ld-achievement-tooltip-text"><?php echo esc_html( $title ); ?></span>
 					<?php endif; ?>
 					<img src="<?php echo esc_attr( $image ); ?>" title="<?php echo esc_attr( $title ); ?>" alt="<?php echo esc_attr( $content ); ?>">
 				</span>
@@ -70,14 +83,14 @@ class General_Template {
 							<td>
 								<?php foreach ( $leader['post_ids'] as $post_id ) : ?>
 									<?php
-									$image   = get_post_meta( $post_id, 'image', true );
+									$image   = Assets::achievement_icon_url( $post_id );
 									$post    = get_post( $post_id );
 									$title   = $post->post_title;
 									$content = $post->post_content;
 									?>
 									<span class="ld-achievement-tooltip">
 									<?php if ( $with_tooltip ) : ?>
-										<span class="ld-achievement-tooltiptext"><?php echo esc_html( $title ); ?></span>
+										<span class="ld-achievement-tooltip-text"><?php echo esc_html( $title ); ?></span>
 									<?php endif; ?>
 									<img width="40" src="<?php echo esc_url_raw( $image ); ?>" alt="<?php esc_attr( $content ); ?>"/>
 								</span>
@@ -105,7 +118,7 @@ class General_Template {
 			<?php foreach ( $achievements as $achievement ) : ?>
 				<?php
 				$post  = get_post( $achievement->post_id );
-				$image = get_post_meta( $achievement->post_id, 'image', true );
+				$image = Assets::achievement_icon_url( $achievement->post_id );
 				if ( ! is_object( $post ) ) {
 					continue;
 				}
@@ -116,7 +129,7 @@ class General_Template {
 				<div class="inner-item">
 					<span class="ld-achievement-tooltip">
 						<img src="<?php echo esc_attr( $image ); ?>"/>
-						<span class="ld-achievement-tooltiptext"><?php echo esc_html( $message ); ?></span>
+						<span class="ld-achievement-tooltip-text"><?php echo esc_html( $message ); ?></span>
 					</span>
 					<div class="actions">
 						<span>

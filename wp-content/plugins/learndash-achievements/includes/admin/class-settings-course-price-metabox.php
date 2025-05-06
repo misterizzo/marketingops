@@ -1,8 +1,20 @@
 <?php
+/**
+ * Class to create the metabox.
+ *
+ * @package LearnDash/Achievements
+ */
 
 namespace LearnDash\Achievements;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ( class_exists( 'LearnDash_Settings_Metabox' ) ) && ( ! class_exists( 'LearnDash_Settings_Metabox_Course_Access_Settings' ) ) ) {
+	/**
+	 * Start Course_Price class
+	 */
 	class Course_Price extends \LearnDash_Settings_Metabox {
 		/**
 		 * Public constructor for class
@@ -17,8 +29,7 @@ if ( ( class_exists( 'LearnDash_Settings_Metabox' ) ) && ( ! class_exists( 'Lear
 			$this->settings_metabox_key = 'learndash-course-achievements-settings';
 
 			// Section label/header.
-			$this->settings_section_label       = esc_html__( 'Achievements Settings', 'learndash' );
-			$this->settings_section_description = esc_html__( 'Placeholder' );
+			$this->settings_section_label = esc_html__( 'Achievements Settings', 'learndash-achievements' );
 
 			$this->settings_fields_map = array(
 				'achievements_buy_course'              => 'achievements_buy_course',
@@ -65,7 +76,7 @@ if ( ( class_exists( 'LearnDash_Settings_Metabox' ) ) && ( ! class_exists( 'Lear
 						esc_html_x(
 							'Allow to use achievements points to purchase this %1$s.',
 							'placeholders: course',
-							'learndash'
+							'learndash-achievements'
 						),
 						learndash_get_custom_label_lower( 'course' )
 					),

@@ -1,11 +1,25 @@
 <?php
+/**
+ * Post type class file.
+ *
+ * @since 1.0
+ *
+ * @package LearnDash\Achievements
+ */
 
 namespace LearnDash\Achievements;
 
 use LearnDash\Achievements\Achievement;
+use LearnDash\Achievements\Utilities\Assets;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
- * Post_Type class
+ * Post type class.
+ *
+ * @since 1.0
  */
 class Post_Type {
 
@@ -130,8 +144,14 @@ class Post_Type {
 	}
 
 	/**
-	 * @param $column_name
-	 * @param $post_id
+	 * Outputs custom achievement post type columns.
+	 *
+	 * @since 1.0
+	 *
+	 * @param string $column_name Column name.
+	 * @param int    $post_id     Current post ID.
+	 *
+	 * @return void
 	 */
 	public function posts_custom_column( $column_name, $post_id ) {
 		switch ( $column_name ) {
@@ -157,7 +177,9 @@ class Post_Type {
 				break;
 
 			case 'image':
-				printf( '<img class="listing-image" src="%s">', get_post_meta( $post_id, 'image', true ) );
+				$icon_url = Assets::achievement_icon_url( $post_id );
+
+				printf( '<img class="listing-image" src="%s">', esc_url( $icon_url ) );
 				break;
 		}
 	}

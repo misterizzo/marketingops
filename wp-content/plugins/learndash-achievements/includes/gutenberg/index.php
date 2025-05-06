@@ -1,10 +1,22 @@
 <?php
+/**
+ * Gutenberg class file.
+ *
+ * @since 1.0
+ *
+ * @package LearnDash\Achievements
+ */
+
 namespace LearnDash\Achievements;
 
-defined( 'ABSPATH' ) || exit();
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
- * Gutenberg class
+ * Gutenberg class.
+ *
+ * @since 1.0
  */
 class Gutenberg {
 

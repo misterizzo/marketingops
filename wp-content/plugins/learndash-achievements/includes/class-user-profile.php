@@ -1,24 +1,34 @@
 <?php
+/**
+ * User profile class file.
+ *
+ * @since 1.1.0
+ *
+ * @package LearnDash\Achievements
+ */
 
 namespace LearnDash\Achievements;
 
 use LearnDash\Achievements\Template\General_Template;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * This class handling the output in user profile page.
- * Class User_Profile
  *
- * @package LearnDash\Achievements
+ * @since 1.1.0
  */
 class User_Profile {
 	/**
 	 * User_Profile constructor.
 	 */
 	public function __construct() {
-		add_action( 'edit_user_profile', array( $this, 'add_badges_list' ) );
-		add_action( 'show_user_profile', array( $this, 'add_badges_list' ) );
-		add_action( 'edit_user_profile_update', array( $this, 'save_extra_points' ) );
-		add_action( 'personal_options_update', array( $this, 'save_extra_points' ) );
+		add_action( 'edit_user_profile', [ $this, 'add_badges_list' ] );
+		add_action( 'show_user_profile', [ $this, 'add_badges_list' ] );
+		add_action( 'edit_user_profile_update', [ $this, 'save_extra_points' ] );
+		add_action( 'personal_options_update', [ $this, 'save_extra_points' ] );
 	}
 
 	/**
@@ -61,14 +71,21 @@ class User_Profile {
 			<h3><?php esc_attr_e( 'Achievements', 'learndash-achievements' ); ?></h3>
 				<?php General_Template::render_badges_table( $achievements ); ?>
 			<?php endif ?>
-			<h3><?php _e( 'Users\' points.' ); ?></h3>
+			<h3 id="learndash-achievement-points">
+				<?php esc_html_e( "User's achievement points.", 'learndash-achievements' ); ?>
+			</h3>
 			<p>
-				<strong><?php _e( 'Earned Points', 'learndash-achievements' ); ?></strong>:
+				<strong>
+					<?php esc_html_e( 'Earned Points', 'learndash-achievements' ); ?>
+				</strong>:
+
 				<?php echo Database::get_user_points( $user->ID ); ?>
 			</p>
 			<p>
 				<label for="learndash-achievements-extra-points">
-					<strong><?php _e( 'Extra points', 'learndash-achievements' ); ?></strong>
+					<strong>
+						<?php esc_html_e( 'Extra points', 'learndash-achievements' ); ?>
+					</strong>
 				</label>
 				<input id="learndash-achievements-extra-points" name="learndash_achievements_extra_points" type="text" value="<?php echo $extra_points; ?>">
 			</p>
