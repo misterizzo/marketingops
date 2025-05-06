@@ -1,4 +1,14 @@
 <?php
+/**
+ * Legacy LD course info bar widget.
+ *
+ * @since 1.0
+ *
+ * @package LearnDash\Elementor
+ */
+
+use LearnDash\Elementor\Widgets;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -26,9 +36,9 @@ class LearnDash_Elementor_Widget_Course_Infobar extends LearnDash_Elementor_Widg
 	 * @param array|null $args Optional. Widget default arguments. Default is null.
 	 */
 	public function __construct( $data = array(), $args = null ) {
-		$this->widget_slug  = 'ld-course-infobar';
+		$this->widget_slug = 'ld-course-infobar';
 
-		$template_type   = learndash_elementor_get_template_type();
+		$template_type = learndash_elementor_get_template_type();
 		if ( learndash_get_post_type_slug( 'course' ) === $template_type ) {
 			$this->widget_title = sprintf(
 				// translators: placeholder: Course.
@@ -55,7 +65,7 @@ class LearnDash_Elementor_Widget_Course_Infobar extends LearnDash_Elementor_Widg
 			);
 		}
 
-		$this->widget_icon = 'eicon-form-vertical';
+		$this->widget_icon      = 'eicon-form-vertical';
 		$this->shortcode_slug   = 'ld_course_infobar';
 		$this->shortcode_params = array(
 			'course_id'         => 'course_id',
@@ -72,7 +82,7 @@ class LearnDash_Elementor_Widget_Course_Infobar extends LearnDash_Elementor_Widg
 	}
 
 	/** Documented in Elementor /includes/base/controls-stack.php */
-	protected function _register_controls() {
+	protected function register_controls() {
 		$template_type   = learndash_elementor_get_template_type();
 		$preview_step_id = $this->learndash_get_preview_post_id( $template_type );
 
@@ -318,7 +328,7 @@ class LearnDash_Elementor_Widget_Course_Infobar extends LearnDash_Elementor_Widg
 				array(
 					'name'     => 'control_infobar_not_enrolled_current_status_text',
 					'label'    => __( 'Text', 'learndash-elementor' ),
-					'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+					'scheme'   => Widgets::$typography_scheme_key,
 					'selector' => '{{WRAPPER}} .learndash-wrapper .ld-course-status.ld-course-status-not-enrolled .ld-course-status-segment.ld-course-status-seg-status .ld-course-status-label',
 					'exclude'  => array( 'line_height' ),
 				)
@@ -349,7 +359,7 @@ class LearnDash_Elementor_Widget_Course_Infobar extends LearnDash_Elementor_Widg
 				\Elementor\Group_Control_Typography::get_type(),
 				array(
 					'name'     => 'control_infobar_not_enrolled_current_status_bubble_text',
-					'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+					'scheme'   => Widgets::$typography_scheme_key,
 					'selector' => '{{WRAPPER}} .learndash-wrapper .ld-course-status.ld-course-status-not-enrolled .ld-course-status-segment.ld-course-status-seg-status .ld-course-status-content .ld-status.ld-status-waiting',
 					'exclude'  => array( 'line_height' ),
 				)
@@ -402,7 +412,7 @@ class LearnDash_Elementor_Widget_Course_Infobar extends LearnDash_Elementor_Widg
 				\Elementor\Group_Control_Typography::get_type(),
 				array(
 					'name'     => 'control_infobar_not_enrolled_price_text',
-					'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+					'scheme'   => Widgets::$typography_scheme_key,
 					'selector' => '{{WRAPPER}} .learndash-wrapper .ld-course-status.ld-course-status-not-enrolled .ld-course-status-segment.ld-course-status-seg-price .ld-course-status-label',
 					'exclude'  => array( 'line_height' ),
 				)
@@ -433,7 +443,7 @@ class LearnDash_Elementor_Widget_Course_Infobar extends LearnDash_Elementor_Widg
 				\Elementor\Group_Control_Typography::get_type(),
 				array(
 					'name'     => 'control_infobar_not_enrolled_price_status_text',
-					'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+					'scheme'   => Widgets::$typography_scheme_key,
 					'selector' => '{{WRAPPER}} .learndash-wrapper .ld-course-status.ld-course-status-not-enrolled .ld-course-status-segment.ld-course-status-seg-price .ld-course-status-price',
 					'exclude'  => array( 'line_height' ),
 				)
@@ -474,7 +484,7 @@ class LearnDash_Elementor_Widget_Course_Infobar extends LearnDash_Elementor_Widg
 				\Elementor\Group_Control_Typography::get_type(),
 				array(
 					'name'     => 'control_infobar_not_enrolled_get_started_header_text',
-					'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+					'scheme'   => Widgets::$typography_scheme_key,
 					'selector' => '{{WRAPPER}} .learndash-wrapper .ld-course-status.ld-course-status-not-enrolled .ld-course-status-segment.ld-course-status-seg-action .ld-course-status-label',
 					'exclude'  => array( 'line_height' ),
 				)
@@ -506,8 +516,8 @@ class LearnDash_Elementor_Widget_Course_Infobar extends LearnDash_Elementor_Widg
 				array(
 					'name'     => 'control_infobar_not_enrolled_get_started_status_button_text',
 					'label'    => __( 'Text', 'learndash-elementor' ),
-					'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
-					//'selector' => '{{WRAPPER}} .learndash-wrapper .ld-course-status.ld-course-status-not-enrolled .ld-course-status-segment.ld-course-status-seg-action .ld-course-status-action',
+					'scheme'   => Widgets::$typography_scheme_key,
+					// 'selector' => '{{WRAPPER}} .learndash-wrapper .ld-course-status.ld-course-status-not-enrolled .ld-course-status-segment.ld-course-status-seg-action .ld-course-status-action',
 					'selector' => '{{WRAPPER}} .learndash-wrapper .ld-course-status.ld-course-status-not-enrolled .ld-course-status-segment.ld-course-status-seg-action .ld-course-status-action .learndash_join_button input.btn-join, .learndash-wrapper .ld-course-status.ld-course-status-not-enrolled .ld-course-status-segment.ld-course-status-seg-action .ld-course-status-action a.ld-button, .learndash-wrapper .ld-course-status.ld-course-status-not-enrolled .ld-course-status-segment.ld-course-status-seg-action .ld-course-status-action input#btn-join',
 					'exclude'  => array( 'line_height' ),
 				)
@@ -618,7 +628,7 @@ class LearnDash_Elementor_Widget_Course_Infobar extends LearnDash_Elementor_Widg
 				\Elementor\Group_Control_Typography::get_type(),
 				array(
 					'name'     => 'control_infobar_enrolled_progress_percent_complete_text',
-					'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+					'scheme'   => Widgets::$typography_scheme_key,
 					'selector' => '{{WRAPPER}} .learndash-wrapper .ld-progress .ld-progress-heading .ld-progress-stats .ld-progress-percentage',
 					'exclude'  => array( 'line_height' ),
 				)
@@ -649,7 +659,7 @@ class LearnDash_Elementor_Widget_Course_Infobar extends LearnDash_Elementor_Widg
 				\Elementor\Group_Control_Typography::get_type(),
 				array(
 					'name'     => 'control_infobar_enrolled_progress_steps_complete_text',
-					'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+					'scheme'   => Widgets::$typography_scheme_key,
 					'selector' => '{{WRAPPER}} .learndash-wrapper .ld-progress .ld-progress-heading .ld-progress-stats .ld-progress-steps',
 					'exclude'  => array( 'line_height' ),
 				)
@@ -682,7 +692,7 @@ class LearnDash_Elementor_Widget_Course_Infobar extends LearnDash_Elementor_Widg
 				\Elementor\Group_Control_Typography::get_type(),
 				array(
 					'name'     => 'infobar_status_step_step_breadcrumbs_text_color',
-					'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+					'scheme'   => Widgets::$typography_scheme_key,
 					'selector' => '{{WRAPPER}} .learndash-wrapper .ld-breadcrumbs .ld-breadcrumbs-segments',
 					'exclude'  => array( 'line_height' ),
 				)
@@ -739,7 +749,7 @@ class LearnDash_Elementor_Widget_Course_Infobar extends LearnDash_Elementor_Widg
 				\Elementor\Group_Control_Typography::get_type(),
 				array(
 					'name'     => 'control_infobar_status_step_status_bubble_text',
-					'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+					'scheme'   => Widgets::$typography_scheme_key,
 					'selector' => '{{WRAPPER}} .learndash-wrapper .ld-breadcrumbs .ld-status',
 					'exclude'  => array( 'line_height' ),
 				)
@@ -798,7 +808,7 @@ class LearnDash_Elementor_Widget_Course_Infobar extends LearnDash_Elementor_Widg
 					\Elementor\Group_Control_Typography::get_type(),
 					array(
 						'name'     => 'control_infobar_lesson_progress_header_text',
-						'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+						'scheme'   => Widgets::$typography_scheme_key,
 						'selector' => '{{WRAPPER}} .learndash-wrapper .ld-topic-status .ld-progress .ld-progress-heading .ld-progress-label',
 						'exclude'  => array( 'line_height' ),
 					)
@@ -829,7 +839,7 @@ class LearnDash_Elementor_Widget_Course_Infobar extends LearnDash_Elementor_Widg
 					\Elementor\Group_Control_Typography::get_type(),
 					array(
 						'name'     => 'infobar_lesson_progress_percent_header_text',
-						'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+						'scheme'   => Widgets::$typography_scheme_key,
 						'selector' => '{{WRAPPER}} .learndash-wrapper .ld-topic-status .ld-progress .ld-progress-heading .ld-progress-stats .ld-progress-percentage',
 						'exclude'  => array( 'line_height' ),
 					)
@@ -980,7 +990,6 @@ class LearnDash_Elementor_Widget_Course_Infobar extends LearnDash_Elementor_Widg
 				global $post;
 				$post = get_post( $shortcode_pairs['step_id'] );
 			}
-
 		} else {
 			unset( $shortcode_pairs['preview_course_id'] );
 			unset( $shortcode_pairs['preview_step_id'] );
@@ -1055,7 +1064,7 @@ class LearnDash_Elementor_Widget_Course_Infobar extends LearnDash_Elementor_Widg
 					}
 				}
 
-				$infobar_html = learndash_get_template_part(
+				$infobar_html = learndash_elementor_get_template_part(
 					'modules/infobar.php',
 					array(
 						'context'       => $context,

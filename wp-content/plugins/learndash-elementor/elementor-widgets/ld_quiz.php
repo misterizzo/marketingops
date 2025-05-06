@@ -1,4 +1,14 @@
 <?php
+/**
+ * Legacy LD quiz widget.
+ *
+ * @since 1.0
+ *
+ * @package LearnDash\Elementor
+ */
+
+use LearnDash\Elementor\Widgets;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -37,7 +47,7 @@ class LearnDash_Elementor_Widget_Quiz extends LearnDash_Elementor_Widget_Base {
 		$this->shortcode_slug   = 'ld_quiz';
 		$this->shortcode_params = array(
 			'quiz_id'           => 'quiz_id',
-			//'course_id'         => 'course_id',
+			// 'course_id'         => 'course_id',
 			'preview_quiz_id'   => 'preview_quiz_id',
 			'preview_course_id' => 'preview_course_id',
 		);
@@ -46,7 +56,7 @@ class LearnDash_Elementor_Widget_Quiz extends LearnDash_Elementor_Widget_Base {
 	}
 
 	/** Documented in Elementor /includes/base/controls-stack.php */
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$preview_quiz_id = 0;
 		if ( get_post_type() === learndash_get_post_type_slug( 'quiz' ) ) {
@@ -60,7 +70,7 @@ class LearnDash_Elementor_Widget_Quiz extends LearnDash_Elementor_Widget_Base {
 		if ( ! empty( $quiz_courses ) ) {
 			$preview_course_id = array_keys( $quiz_courses )[0];
 		}
-/*
+		/*
 		$this->start_controls_section(
 			'settings',
 			array(
@@ -101,7 +111,7 @@ class LearnDash_Elementor_Widget_Quiz extends LearnDash_Elementor_Widget_Base {
 		);
 
 		$this->end_controls_section();
-*/
+		*/
 		$this->start_controls_section(
 			'preview',
 			array(
@@ -147,7 +157,7 @@ class LearnDash_Elementor_Widget_Quiz extends LearnDash_Elementor_Widget_Base {
 			\Elementor\Group_Control_Typography::get_type(),
 			array(
 				'name'     => 'control_quiz_start_button_text',
-				'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+				'scheme'   => Widgets::$typography_scheme_key,
 				'selector' => '{{WRAPPER}} .learndash-wrapper input.wpProQuiz_button[name="startQuiz"]',
 				'exclude'  => array( 'line_height' ),
 			)
@@ -166,7 +176,7 @@ class LearnDash_Elementor_Widget_Quiz extends LearnDash_Elementor_Widget_Base {
 		);
 
 		$this->add_control(
-			'control_quiz_start_button_backgroundcolor',
+			'control_quiz_start_button_background_color',
 			array(
 				'label'     => __( 'Background Color', 'learndash-elementor' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
@@ -197,7 +207,7 @@ class LearnDash_Elementor_Widget_Quiz extends LearnDash_Elementor_Widget_Base {
 			$shortcode_pairs[ $key_in ] = '';
 			if ( isset( $settings[ $key_ex ] ) ) {
 				switch ( $key_ex ) {
-					//case 'course_id':
+					// case 'course_id':
 					case 'preview_course_id':
 					case 'quiz_id':
 					case 'preview_quiz_id':
@@ -236,10 +246,10 @@ class LearnDash_Elementor_Widget_Quiz extends LearnDash_Elementor_Widget_Base {
 				}
 			}
 
-			//if ( ( empty( $shortcode_pairs['course_id'] ) ) && ( ! empty( $shortcode_pairs['preview_course_id'] ) ) ) {
-			//	$shortcode_pairs['course_id'] = absint( $shortcode_pairs['preview_course_id'] );
-			//	unset( $shortcode_pairs['preview_course_id'] );
-			//}
+			// if ( ( empty( $shortcode_pairs['course_id'] ) ) && ( ! empty( $shortcode_pairs['preview_course_id'] ) ) ) {
+			// $shortcode_pairs['course_id'] = absint( $shortcode_pairs['preview_course_id'] );
+			// unset( $shortcode_pairs['preview_course_id'] );
+			// }
 
 			$quiz_content = '<div class="wpProQuiz_content"><div class="wpProQuiz_text"><div><input class="wpProQuiz_button" type="button" value="Start Quiz" name="startQuiz"></div></div></div>';
 			if ( ! empty( $quiz_content ) ) {
@@ -290,7 +300,7 @@ class LearnDash_Elementor_Widget_Quiz extends LearnDash_Elementor_Widget_Base {
 				$quiz_settings = learndash_get_setting( $atts['quiz_id'] );
 				$meta          = \SFWD_CPT_Instance::$instances['sfwd-quiz']->get_settings_values( 'sfwd-quiz' );
 
-				$show_content   = ! ( ! empty( $lesson_progression_enabled ) && ! is_quiz_accessable( $user_id, $quiz_post, false, $atts['course_id'] ) );
+				$show_content   = ! ( ! empty( $lesson_progression_enabled ) && ! learndash_is_quiz_accessable( $user_id, $quiz_post, false, $atts['course_id'] ) );
 				$attempts_count = 0;
 				$repeats        = ( isset( $quiz_settings['repeats'] ) ) ? trim( $quiz_settings['repeats'] ) : '';
 				if ( '' === $repeats ) {
@@ -314,15 +324,15 @@ class LearnDash_Elementor_Widget_Quiz extends LearnDash_Elementor_Widget_Base {
 				if ( '' !== $repeats ) {
 
 					if ( $user_id ) {
-						$usermeta = get_user_meta( $user_id, '_sfwd-quizzes', true );
-						$usermeta = maybe_unserialize( $usermeta );
+						$user_meta = get_user_meta( $user_id, '_sfwd-quizzes', true );
+						$user_meta = maybe_unserialize( $user_meta );
 
-						if ( ! is_array( $usermeta ) ) {
-							$usermeta = array();
+						if ( ! is_array( $user_meta ) ) {
+							$user_meta = array();
 						}
 
-						if ( ! empty( $usermeta ) ) {
-							foreach ( $usermeta as $k => $v ) {
+						if ( ! empty( $user_meta ) ) {
+							foreach ( $user_meta as $k => $v ) {
 								if ( ( intval( $v['quiz'] ) === $atts['quiz_id'] ) ) {
 									if ( ! empty( $atts['course_id'] ) ) {
 										if ( ( isset( $v['course'] ) ) && ( ! empty( $v['course'] ) ) && ( absint( $v['course'] ) === absint( $atts['course_id'] ) ) ) {
@@ -360,20 +370,19 @@ class LearnDash_Elementor_Widget_Quiz extends LearnDash_Elementor_Widget_Base {
 				 * @since 3.1.0
 				 *
 				 * @param boolean $attempts_left  Whether any quiz attempts left for a user or not.
-				 * @param int     $attempts_count Number of Quiz attemplts already taken.
+				 * @param int     $attempts_count Number of Quiz attempts already taken.
 				 * @param int     $user_id        ID of User taking Quiz.
 				 * @param int     $quiz_id        ID of Quiz being taken.
 				 */
 				$attempts_left = apply_filters( 'learndash_quiz_attempts', $attempts_left, absint( $attempts_count ), absint( $user_id ), absint( $quiz_post->ID ) );
 				$attempts_left = absint( $attempts_left );
 
-				if ( ! empty( $lesson_progression_enabled ) && ! is_quiz_accessable( $user_id, $quiz_post, false, $atts['course_id'] ) ) {
+				if ( ! empty( $lesson_progression_enabled ) && ! learndash_is_quiz_accessable( $user_id, $quiz_post, false, $atts['course_id'] ) ) {
 					add_filter( 'comments_array', 'learndash_remove_comments', 1, 2 );
 				}
 
-				if ( ! empty( $lesson_progression_enabled ) ) :
-
-					$last_incomplete_step = is_quiz_accessable( null, $quiz_post, true, $atts['course_id'] );
+				if ( ! empty( $lesson_progression_enabled ) ) {
+					$last_incomplete_step = learndash_is_quiz_accessable( null, $quiz_post, true, $atts['course_id'] );
 					if ( learndash_is_sample( $quiz_post ) ) {
 						$last_incomplete_step = null;
 					}
@@ -382,7 +391,7 @@ class LearnDash_Elementor_Widget_Quiz extends LearnDash_Elementor_Widget_Base {
 						/** This filter is documented in themes/ld30/templates/quiz.php */
 						do_action( 'learndash-quiz-progression-before', $quiz_post->ID, $atts['course_id'], $user_id );
 
-						$progression_message = learndash_get_template_part(
+						$progression_message = learndash_elementor_get_template_part(
 							'modules/messages/lesson-progression.php',
 							array(
 								'previous_item' => $last_incomplete_step,
@@ -394,14 +403,20 @@ class LearnDash_Elementor_Widget_Quiz extends LearnDash_Elementor_Widget_Base {
 						);
 
 						if ( ! empty( $progression_message ) ) {
-							echo '<div class="' . esc_attr( learndash_get_wrapper_class( $shortcode_pairs['step_id'] ) ) . '">' . $progression_message . '</div>';
+							echo '<div class="' . esc_attr( learndash_get_wrapper_class( $shortcode_pairs['quiz_id'] ) ) . '">' . $progression_message . '</div>';
 						}
 
 						/** This filter is documented in themes/ld30/templates/quiz.php */
-						do_action( 'learndash-quiz-progression-after', $quiz_post->ID, $course_id, $user_id );
+						do_action( 'learndash-quiz-progression-after', $quiz_post->ID, $shortcode_pairs['course_id'], $user_id );
 						return;
 					}
-				endif;
+				} else {
+					$learndash_content = learndash_elementor_user_step_access_state( 'learndash_content', $user_id, $shortcode_pairs['quiz_id'], $shortcode_pairs['course_id'] );
+					if ( ! empty( $learndash_content ) ) {
+						echo $learndash_content;
+						return;
+					}
+				}
 
 				if ( $attempts_left ) {
 
@@ -468,7 +483,7 @@ class LearnDash_Elementor_Widget_Quiz extends LearnDash_Elementor_Widget_Base {
 
 					echo '<div class="' . esc_attr( learndash_get_wrapper_class( $shortcode_pairs['quiz_id'] ) ) . '">';
 
-					learndash_get_template_part(
+					learndash_elementor_get_template_part(
 						'modules/alert.php',
 						array(
 							'type'    => 'warning',

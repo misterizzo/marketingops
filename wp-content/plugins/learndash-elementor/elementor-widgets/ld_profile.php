@@ -1,4 +1,14 @@
 <?php
+/**
+ * Legacy LD profile widget.
+ *
+ * @since 1.0
+ *
+ * @package LearnDash\Elementor
+ */
+
+use LearnDash\Elementor\Widgets;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -47,7 +57,7 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 	}
 
 	/** Documented in Elementor /includes/base/controls-stack.php */
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'section_profile',
@@ -59,12 +69,12 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 		$this->add_control(
 			'per_page',
 			array(
-				'label'       => sprintf(
+				'label' => sprintf(
 					// translators: placeholder: Courses.
 					esc_html_x( '%s per page', 'placeholder: Courses', 'learndash-elementor' ),
 					\LearnDash_Custom_Label::get_label( 'courses' )
 				),
-				'type'        => \Elementor\Controls_Manager::NUMBER,
+				'type'  => \Elementor\Controls_Manager::NUMBER,
 			)
 		);
 
@@ -120,7 +130,7 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 		$this->add_control(
 			'course_points_user',
 			array(
-				// translators: placeholder: Cours.
+				// translators: placeholder: Course.
 				'label'   => sprintf( esc_html_x( 'Show Earned %s Points', 'placeholder: Course', 'learndash-elementor' ), \LearnDash_Custom_Label::get_label( 'course' ) ),
 				'type'    => \Elementor\Controls_Manager::SWITCHER,
 				'default' => 'yes',
@@ -149,7 +159,7 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 		$this->add_control(
 			'expand_all',
 			array(
-				// translators: placeholder: Cours.
+				// translators: placeholder: Course.
 				'label'   => sprintf( esc_html_x( 'Expand All %s Sections', 'placeholder: Course', 'learndash-elementor' ), \LearnDash_Custom_Label::get_label( 'course' ) ),
 				'type'    => \Elementor\Controls_Manager::SWITCHER,
 				'default' => 'yes',
@@ -224,7 +234,7 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 			array(
 				'name'     => 'control_profile_header_summary_header_text',
 				'label'    => __( 'Header Typography', 'learndash-elementor' ),
-				'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+				'scheme'   => Widgets::$typography_scheme_key,
 				'selector' => '{{WRAPPER}} .learndash-wrapper #ld-profile .ld-profile-summary .ld-profile-stats .ld-profile-stat > strong',
 				'exclude'  => array( 'line_height' ),
 			)
@@ -247,7 +257,7 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 			array(
 				'name'     => 'control_profile_header_summary_label_text',
 				'label'    => __( 'Label Typography', 'learndash-elementor' ),
-				'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+				'scheme'   => Widgets::$typography_scheme_key,
 				'selector' => '{{WRAPPER}} .learndash-wrapper #ld-profile .ld-profile-summary .ld-profile-stats .ld-profile-stat span',
 				'exclude'  => array( 'line_height' ),
 			)
@@ -283,7 +293,7 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 			array(
 				'name'     => 'control_profile_header_yourcourses_text',
 				'label'    => __( 'Label Typography', 'learndash-elementor' ),
-				'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+				'scheme'   => Widgets::$typography_scheme_key,
 				'selector' => '{{WRAPPER}} .learndash-wrapper #ld-profile .ld-section-heading h3',
 				'exclude'  => array( 'line_height' ),
 			)
@@ -336,7 +346,6 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 
 		$this->end_controls_section();
 
-
 		$this->start_controls_section(
 			'section_profile_row_item',
 			array(
@@ -357,7 +366,6 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 			)
 		);
 
-
 		$this->add_control(
 			'header_section_profile_row_item_title',
 			array(
@@ -372,7 +380,7 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 			array(
 				'name'     => 'control_profile_row_item_title_text',
 				'label'    => __( 'Title Text', 'learndash-elementor' ),
-				'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+				'scheme'   => Widgets::$typography_scheme_key,
 				'selector' => '{{WRAPPER}} .learndash-wrapper #ld-profile .ld-course-title',
 				'exclude'  => array( 'line_height' ),
 			)
@@ -466,7 +474,7 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 			array(
 				'name'     => 'control_profile_row_item_course_progress_text',
 				'label'    => __( 'Title Text', 'learndash-elementor' ),
-				'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+				'scheme'   => Widgets::$typography_scheme_key,
 				'selector' => '{{WRAPPER}} .learndash-wrapper #ld-profile .ld-progress .ld-progress-heading .ld-progress-label',
 				'exclude'  => array( 'line_height' ),
 			)
@@ -502,7 +510,7 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 			array(
 				'name'     => 'control_profile_row_item_course_progress_percent_text',
 				'label'    => __( 'Title Text', 'learndash-elementor' ),
-				'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+				'scheme'   => Widgets::$typography_scheme_key,
 				'selector' => '{{WRAPPER}} .learndash-wrapper #ld-profile .ld-progress .ld-progress-heading .ld-progress-percentage',
 				'exclude'  => array( 'line_height' ),
 			)
@@ -538,7 +546,7 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 			array(
 				'name'     => 'control_profile_row_item_course_progress_steps_text',
 				'label'    => __( 'Title Text', 'learndash-elementor' ),
-				'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+				'scheme'   => Widgets::$typography_scheme_key,
 				'selector' => '{{WRAPPER}} .learndash-wrapper #ld-profile .ld-progress .ld-progress-heading .ld-progress-steps',
 				'exclude'  => array( 'line_height' ),
 			)
@@ -555,7 +563,6 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 				),
 			)
 		);
-
 
 		$this->add_control(
 			'header_section_profile_row_item_course_progress_bar',
@@ -579,7 +586,7 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 		);
 
 		$this->add_control(
-			'control_profile_row_item_course_progress_bar_color_backgrouns',
+			'control_profile_row_item_course_progress_bar_color_background',
 			array(
 				'label'     => __( 'Progress Bar Background', 'learndash-elementor' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
@@ -604,7 +611,6 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 			)
 		);
 
-
 		$this->add_control(
 			'header_section_profile_row_item_progress_quiz_header',
 			array(
@@ -619,7 +625,7 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 			array(
 				'name'     => 'control_profile_row_item_progress_quiz_header_text',
 				'label'    => __( 'Text', 'learndash-elementor' ),
-				'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+				'scheme'   => Widgets::$typography_scheme_key,
 				'selector' => '{{WRAPPER}} .learndash-wrapper #ld-profile .ld-table-list.ld-quiz-list .ld-table-list-header',
 				'exclude'  => array( 'line_height' ),
 			)
@@ -649,7 +655,6 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 			)
 		);
 
-
 		$this->add_control(
 			'header_section_profile_row_item_progress_quiz_row',
 			array(
@@ -664,7 +669,7 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 			array(
 				'name'     => 'control_profile_row_item_progress_quiz_row_text',
 				'label'    => __( 'Text', 'learndash-elementor' ),
-				'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+				'scheme'   => Widgets::$typography_scheme_key,
 				'selector' => '{{WRAPPER}} .learndash-wrapper #ld-profile .ld-table-list.ld-quiz-list .ld-table-list-item',
 				'exclude'  => array( 'line_height' ),
 			)
@@ -696,9 +701,7 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 			)
 		);
 
-
 		$this->end_controls_section();
-
 
 		$this->start_controls_section(
 			'section_profile_row_item_progress_assignments',
@@ -722,7 +725,7 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 			array(
 				'name'     => 'control_profile_row_item_progress_assignments_header_text',
 				'label'    => __( 'Text', 'learndash-elementor' ),
-				'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+				'scheme'   => Widgets::$typography_scheme_key,
 				'selector' => '{{WRAPPER}} .learndash-wrapper #ld-profile .ld-assignment-list .ld-table-list-header',
 				'exclude'  => array( 'line_height' ),
 			)
@@ -752,7 +755,6 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 			)
 		);
 
-
 		$this->add_control(
 			'header_section_profile_row_item_progress_assignments_row',
 			array(
@@ -767,7 +769,7 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 			array(
 				'name'     => 'control_profile_row_item_progress_assignments_row_text',
 				'label'    => __( 'Text', 'learndash-elementor' ),
-				'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+				'scheme'   => Widgets::$typography_scheme_key,
 				'selector' => '{{WRAPPER}} .learndash-wrapper #ld-profile .ld-assignment-list .ld-table-list-item',
 				'exclude'  => array( 'line_height' ),
 			)
@@ -814,7 +816,7 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 			array(
 				'name'     => 'control_profile_row_item_progress_assignments_row_comments_text',
 				'label'    => __( 'Text', 'learndash-elementor' ),
-				'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+				'scheme'   => Widgets::$typography_scheme_key,
 				'selector' => '{{WRAPPER}} .learndash-wrapper #ld-profile .ld-assignment-list .ld-table-list-item .ld-status-column .ld-status',
 				'exclude'  => array( 'line_height' ),
 			)
@@ -843,9 +845,6 @@ class LearnDash_Elementor_Widget_Profile extends LearnDash_Elementor_Widget_Base
 				),
 			)
 		);
-
-
-
 
 		$this->end_controls_section();
 	}

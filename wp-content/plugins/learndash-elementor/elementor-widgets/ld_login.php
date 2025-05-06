@@ -1,4 +1,14 @@
 <?php
+/**
+ * Legacy LD course login widget.
+ *
+ * @since 1.0
+ *
+ * @package LearnDash\Elementor
+ */
+
+use LearnDash\Elementor\Widgets;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -50,7 +60,7 @@ class LearnDash_Elementor_Widget_Login extends LearnDash_Elementor_Widget_Base {
 	}
 
 	/** Documented in Elementor /includes/base/controls-stack.php */
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'preview_section',
@@ -168,9 +178,9 @@ class LearnDash_Elementor_Widget_Login extends LearnDash_Elementor_Widget_Base {
 				'type'        => \Elementor\Controls_Manager::SELECT,
 				'label_block' => true,
 				'options'     => array(
-					'left'  => __( 'Left - To left of label', 'learndash-elementor' ),
-					''      => __( 'Right - To right of label', 'learndash-elementor' ),
-					'none'  => __( 'None - No icon', 'learndash-elementor' ),
+					'left' => __( 'Left - To left of label', 'learndash-elementor' ),
+					''     => __( 'Right - To right of label', 'learndash-elementor' ),
+					'none' => __( 'None - No icon', 'learndash-elementor' ),
 				),
 			)
 		);
@@ -206,7 +216,7 @@ class LearnDash_Elementor_Widget_Login extends LearnDash_Elementor_Widget_Base {
 			\Elementor\Group_Control_Typography::get_type(),
 			array(
 				'name'     => 'control_login_text',
-				'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+				'scheme'   => Widgets::$typography_scheme_key,
 				'selector' => '{{WRAPPER}} .learndash-wrapper .ld-login.ld-button',
 				'exclude'  => array( 'line_height' ),
 			)
@@ -250,7 +260,7 @@ class LearnDash_Elementor_Widget_Login extends LearnDash_Elementor_Widget_Base {
 			\Elementor\Group_Control_Typography::get_type(),
 			array(
 				'name'     => 'control_logout_text',
-				'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+				'scheme'   => Widgets::$typography_scheme_key,
 				'selector' => '{{WRAPPER}} .learndash-wrapper .ld-logout.ld-button',
 				'exclude'  => array( 'line_height' ),
 			)

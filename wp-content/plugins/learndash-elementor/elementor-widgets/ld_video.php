@@ -28,7 +28,7 @@ class LearnDash_Elementor_Widget_Video extends LearnDash_Elementor_Widget_Base {
 	public function __construct( $data = array(), $args = null ) {
 		$this->widget_slug  = 'ld-video';
 		$this->widget_title = esc_html__( 'Video Progress', 'learndash-elementor' );
-		$this->widget_icon = 'fas fa-file-video';
+		$this->widget_icon  = 'fas fa-file-video';
 
 		$this->shortcode_slug   = 'ld_video';
 		$this->shortcode_params = array();
@@ -47,7 +47,7 @@ class LearnDash_Elementor_Widget_Video extends LearnDash_Elementor_Widget_Base {
 	protected function render() {
 
 		$shortcode_params_str = '[' . $this->shortcode_slug . ']';
-		$shortcode_content = do_shortcode( $shortcode_params_str );
+		$shortcode_content    = do_shortcode( $shortcode_params_str );
 		echo $shortcode_content;
 	}
 }

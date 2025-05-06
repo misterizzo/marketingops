@@ -1,4 +1,14 @@
 <?php
+/**
+ * Legacy LD course content widget.
+ *
+ * @since 1.0
+ *
+ * @package LearnDash\Elementor
+ */
+
+use LearnDash\Elementor\Widgets;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -64,7 +74,7 @@ class LearnDash_Elementor_Widget_Course_Content extends LearnDash_Elementor_Widg
 	}
 
 	/** Documented in Elementor /includes/base/controls-stack.php */
-	protected function _register_controls() {
+	protected function register_controls() {
 		$template_type   = learndash_elementor_get_template_type();
 		$preview_step_id = $this->learndash_get_preview_post_id( $template_type );
 
@@ -173,7 +183,7 @@ class LearnDash_Elementor_Widget_Course_Content extends LearnDash_Elementor_Widg
 				\Elementor\Group_Control_Typography::get_type(),
 				array(
 					'name'     => 'control_course_content_header_text',
-					'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+					'scheme'   => Widgets::$typography_scheme_key,
 					'selector' => '{{WRAPPER}} .learndash-wrapper .ld-section-heading h2',
 					'exclude'  => array( 'line_height' ),
 				)
@@ -183,7 +193,7 @@ class LearnDash_Elementor_Widget_Course_Content extends LearnDash_Elementor_Widg
 				\Elementor\Group_Control_Typography::get_type(),
 				array(
 					'name'     => 'control_course_content_header_text',
-					'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+					'scheme'   => Widgets::$typography_scheme_key,
 					'selector' => '{{WRAPPER}} .learndash-wrapper .ld-lesson-topic-list .ld-table-list .ld-table-list-header .ld-table-list-title',
 					'exclude'  => array( 'line_height' ),
 				)
@@ -193,7 +203,7 @@ class LearnDash_Elementor_Widget_Course_Content extends LearnDash_Elementor_Widg
 				\Elementor\Group_Control_Typography::get_type(),
 				array(
 					'name'     => 'control_course_content_header_text',
-					'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+					'scheme'   => Widgets::$typography_scheme_key,
 					'selector' => '{{WRAPPER}} .learndash-wrapper .ld-table-list .ld-table-list-header .ld-table-list-title',
 					'exclude'  => array( 'line_height' ),
 				)
@@ -279,7 +289,7 @@ class LearnDash_Elementor_Widget_Course_Content extends LearnDash_Elementor_Widg
 				\Elementor\Group_Control_Typography::get_type(),
 				array(
 					'name'     => 'control_course_content_row_item_title_text',
-					'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+					'scheme'   => Widgets::$typography_scheme_key,
 					'selector' => '{{WRAPPER}} .learndash-wrapper .ld-item-list .ld-item-list-item .ld-item-title',
 					'exclude'  => array( 'line_height' ),
 				)
@@ -289,7 +299,7 @@ class LearnDash_Elementor_Widget_Course_Content extends LearnDash_Elementor_Widg
 				\Elementor\Group_Control_Typography::get_type(),
 				array(
 					'name'     => 'control_course_content_row_item_title_text',
-					'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+					'scheme'   => Widgets::$typography_scheme_key,
 					'selector' => '{{WRAPPER}} .learndash-wrapper .ld-topic-list.ld-table-list .ld-table-list-items',
 					'exclude'  => array( 'line_height' ),
 				)
@@ -299,7 +309,7 @@ class LearnDash_Elementor_Widget_Course_Content extends LearnDash_Elementor_Widg
 				\Elementor\Group_Control_Typography::get_type(),
 				array(
 					'name'     => 'control_course_content_row_item_title_text',
-					'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+					'scheme'   => Widgets::$typography_scheme_key,
 					'selector' => '{{WRAPPER}} .learndash-wrapper .ld-topic-list.ld-table-list .ld-table-list-items',
 					'exclude'  => array( 'line_height' ),
 				)
@@ -381,7 +391,7 @@ class LearnDash_Elementor_Widget_Course_Content extends LearnDash_Elementor_Widg
 				\Elementor\Group_Control_Typography::get_type(),
 				array(
 					'name'     => 'control_course_content_row_item_lesson_progress_text',
-					'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+					'scheme'   => Widgets::$typography_scheme_key,
 					'selector' => '{{WRAPPER}} .learndash-wrapper .ld-lesson-list .ld-item-list-items .ld-item-list-item .ld-table-list-header',
 					'exclude'  => array( 'line_height' ),
 				)
@@ -440,7 +450,7 @@ class LearnDash_Elementor_Widget_Course_Content extends LearnDash_Elementor_Widg
 				\Elementor\Group_Control_Typography::get_type(),
 				array(
 					'name'     => 'control_course_content_footer_links_text',
-					'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+					'scheme'   => Widgets::$typography_scheme_key,
 					'selector' => '{{WRAPPER}} .learndash-wrapper .ld-content-actions a.ld-primary-color',
 					'exclude'  => array( 'line_height' ),
 				)
@@ -470,7 +480,7 @@ class LearnDash_Elementor_Widget_Course_Content extends LearnDash_Elementor_Widg
 				\Elementor\Group_Control_Typography::get_type(),
 				array(
 					'name'     => 'control_course_content_footer_navigation_text',
-					'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+					'scheme'   => Widgets::$typography_scheme_key,
 					'selector' => '{{WRAPPER}} .learndash-wrapper .ld-content-action a.ld-button',
 					'exclude'  => array( 'line_height' ),
 				)
@@ -512,7 +522,7 @@ class LearnDash_Elementor_Widget_Course_Content extends LearnDash_Elementor_Widg
 				\Elementor\Group_Control_Typography::get_type(),
 				array(
 					'name'     => 'control_course_content_footer_mark_complete_text',
-					'scheme'   => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_2,
+					'scheme'   => Widgets::$typography_scheme_key,
 					'selector' => '{{WRAPPER}} .learndash-wrapper .ld-content-action input.learndash_mark_complete_button',
 					'exclude'  => array( 'line_height' ),
 				)

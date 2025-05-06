@@ -46,7 +46,7 @@ if ( ( class_exists( 'LearnDash_Elementor_Document_Base' ) ) && ( ! class_exists
 		}
 
 		/** Documented in core/base/document.php */
-		protected function _register_controls() {
+		protected function register_controls() {
 			$this->start_controls_section(
 				'sfwd_courses_settings',
 				array(
@@ -77,7 +77,7 @@ if ( ( class_exists( 'LearnDash_Elementor_Document_Base' ) ) && ( ! class_exists
 			$this->end_controls_section();
 
 			// Make sure to include the rest of the controls.
-			parent::_register_controls();
+			parent::register_controls();
 		}
 
 		/** Documented in core/base/document.php */
@@ -128,7 +128,7 @@ if ( ( class_exists( 'LearnDash_Elementor_Document_Base' ) ) && ( ! class_exists
 							'learndash_course_prerequisites_message',
 							array(
 								'current_post'           => $post,
-								// We need to support the 'prerequisite_post' element since modifued templates may suse it.
+								// We need to support the 'prerequisite_post' element since modified templates may suse it.
 								'prerequisite_post'      => get_post( $c_id ),
 								'prerequisite_posts_all' => $course_pre,
 								'content_type'           => $content_type,
@@ -170,7 +170,7 @@ if ( ( class_exists( 'LearnDash_Elementor_Document_Base' ) ) && ( ! class_exists
 					$step_material_select = apply_filters( 'learndash_elementor_use_content_tabs', $step_material_select, get_the_ID(), get_post_type( get_the_ID() ), $this );
 
 					if ( 'tabs' === $step_material_select ) {
-						$ld_content = learndash_get_template_part(
+						$ld_content = learndash_elementor_get_template_part(
 							'modules/tabs.php',
 							array(
 								'course_id' => $course_id,
@@ -229,12 +229,12 @@ if ( ( class_exists( 'LearnDash_Elementor_Document_Base' ) ) && ( ! class_exists
 							SFWD_LMS::get_template(
 								'learndash_course_prerequisites_message',
 								array(
-									'current_post'           => $post,
-									// We need to support the 'prerequisite_post' element since modifued templates may suse it.
-									'prerequisite_post'      => get_post( $c_id ),
+									'current_post'      => $post,
+									// We need to support the 'prerequisite_post' element since modified templates may suse it.
+									'prerequisite_post' => get_post( $c_id ),
 									'prerequisite_posts_all' => $course_pre,
-									'content_type'           => $content_type,
-									'course_settings'        => $course_settings,
+									'content_type'      => $content_type,
+									'course_settings'   => $course_settings,
 								),
 								true
 							);
@@ -272,7 +272,7 @@ if ( ( class_exists( 'LearnDash_Elementor_Document_Base' ) ) && ( ! class_exists
 						$step_material_select = apply_filters( 'learndash_elementor_use_content_tabs', $step_material_select, $course_id, get_post_type( $course_id ), $this );
 
 						if ( 'tabs' === $step_material_select ) {
-							$ld_content = learndash_get_template_part(
+							$ld_content = learndash_elementor_get_template_part(
 								'modules/tabs.php',
 								array(
 									'course_id' => $course_id,

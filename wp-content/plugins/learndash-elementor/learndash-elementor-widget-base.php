@@ -11,16 +11,16 @@ use ElementorPro\Core\Utils;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
+	 exit; // Exit if accessed directly.
 }
 
 if ( ( class_exists( 'Elementor\Widget_Base' ) ) && ( ! class_exists( 'LearnDash_Elementor_Widget_Base' ) ) ) {
-	/**
-	 * LearnDash Elementor Widget Base
-	 *
-	 * @since 1.0.0
-	 * @package LearnDash
-	 */
+	 /**
+	  * LearnDash Elementor Widget Base
+	  *
+	  * @since 1.0.0
+	  * @package LearnDash
+	  */
 	class LearnDash_Elementor_Widget_Base extends Elementor\Widget_Base {
 
 		/**
@@ -103,7 +103,7 @@ if ( ( class_exists( 'Elementor\Widget_Base' ) ) && ( ! class_exists( 'LearnDash
 		 * This is used by widgets having a preview section.
 		 *
 		 * @since 1.0.0
-		 * @param string $post_type Post Type Slug to retreive.
+		 * @param string $post_type Post Type Slug to retrieve.
 		 * @return integer $post_id Post ID.
 		 */
 		public function learndash_get_preview_post_id( $post_type = '' ) {
@@ -140,7 +140,7 @@ if ( ( class_exists( 'Elementor\Widget_Base' ) ) && ( ! class_exists( 'LearnDash
 		/**
 		 * Get the color scheme from the LD30 template logic.
 		 *
-		 * @param string $color_key Key for color to retreive. default 'primary'.
+		 * @param string $color_key Key for color to retrieve. default 'primary'.
 		 * @return string color hex code.
 		 */
 		protected function learndash_get_template_color( $color_key = 'primary' ) {

@@ -59,7 +59,7 @@ class LearnDash_Elementor_Widget_Course_List extends LearnDash_Elementor_Widget_
 	}
 
 	/** Documented in Elementor /includes/base/controls-stack.php */
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'ld_course_list_settings',
 			array(
@@ -199,9 +199,9 @@ class LearnDash_Elementor_Widget_Course_List extends LearnDash_Elementor_Widget_
 			$this->add_control(
 				'col',
 				array(
-					'label'       => esc_html__( 'Columns', 'learndash-elementor' ),
-					'type'        => \Elementor\Controls_Manager::NUMBER,
-					'default'     => 3,
+					'label'   => esc_html__( 'Columns', 'learndash-elementor' ),
+					'type'    => \Elementor\Controls_Manager::NUMBER,
+					'default' => 3,
 				)
 			);
 

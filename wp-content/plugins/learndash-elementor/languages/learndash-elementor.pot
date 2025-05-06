@@ -1,44 +1,52 @@
-# Copyright (C) 2021 LearnDash
+# Copyright (C) 2025 LearnDash
 # This file is distributed under the same license as the LearnDash LMS - Elementor plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: LearnDash LMS - Elementor 1.0.3\n"
+"Project-Id-Version: LearnDash LMS - Elementor 1.0.10\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/learndash-elementor\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-01-06T15:58:52+00:00\n"
+"POT-Creation-Date: 2025-05-05T14:34:14+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.4.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: learndash-elementor\n"
 
 #. Plugin Name of the plugin
+#: learndash-elementor.php
+#: src/App/Admin/Translation.php:51
 msgid "LearnDash LMS - Elementor"
 msgstr ""
 
 #. Plugin URI of the plugin
 #. Author URI of the plugin
-msgid "https://support.learndash.com"
+#: learndash-elementor.php
+msgid "http://www.learndash.com"
 msgstr ""
 
 #. Description of the plugin
-msgid "LearnDash LMS add-on to add Elementor widgets and templates."
+#: learndash-elementor.php
+msgid "LearnDash LMS official add-on to integrate LearnDash LMS with Elementor widgets and templates."
 msgstr ""
 
 #. Author of the plugin
+#: learndash-elementor.php
+#: src/App/Elements.php:29
 msgid "LearnDash"
 msgstr ""
 
 #. translators: placeholder: Course.
 #: elementor-documents/course-single.php:43
+#: src/App/Documents/Course_Single.php:50
 msgctxt "placeholder: Course"
 msgid "Single %s"
 msgstr ""
 
 #. translators: placeholder: Course.
 #: elementor-documents/course-single.php:55
+#: src/App/Documents/Course_Single.php:76
 msgctxt "placeholder: Course"
 msgid "%s Settings"
 msgstr ""
@@ -47,6 +55,10 @@ msgstr ""
 #: elementor-documents/lesson-single.php:65
 #: elementor-documents/quiz-single.php:66
 #: elementor-documents/topic-single.php:65
+#: src/App/Documents/Course_Single.php:86
+#: src/App/Documents/Lesson_Single.php:86
+#: src/App/Documents/Quiz_Single.php:86
+#: src/App/Documents/Topic_Single.php:86
 msgid "Materials Display"
 msgstr ""
 
@@ -54,6 +66,10 @@ msgstr ""
 #: elementor-documents/lesson-single.php:67
 #: elementor-documents/quiz-single.php:68
 #: elementor-documents/topic-single.php:67
+#: src/App/Documents/Course_Single.php:88
+#: src/App/Documents/Lesson_Single.php:88
+#: src/App/Documents/Quiz_Single.php:88
+#: src/App/Documents/Topic_Single.php:88
 msgid "How to handle the Materials content display."
 msgstr ""
 
@@ -61,6 +77,10 @@ msgstr ""
 #: elementor-documents/lesson-single.php:70
 #: elementor-documents/quiz-single.php:71
 #: elementor-documents/topic-single.php:70
+#: src/App/Documents/Course_Single.php:91
+#: src/App/Documents/Lesson_Single.php:91
+#: src/App/Documents/Quiz_Single.php:91
+#: src/App/Documents/Topic_Single.php:91
 msgid "Tabs"
 msgstr ""
 
@@ -68,6 +88,10 @@ msgstr ""
 #: elementor-documents/lesson-single.php:71
 #: elementor-documents/quiz-single.php:72
 #: elementor-documents/topic-single.php:71
+#: src/App/Documents/Course_Single.php:92
+#: src/App/Documents/Lesson_Single.php:92
+#: src/App/Documents/Quiz_Single.php:92
+#: src/App/Documents/Topic_Single.php:92
 msgid "Append to bottom"
 msgstr ""
 
@@ -75,534 +99,776 @@ msgstr ""
 #: elementor-documents/lesson-single.php:72
 #: elementor-documents/quiz-single.php:73
 #: elementor-documents/topic-single.php:72
+#: src/App/Documents/Course_Single.php:93
+#: src/App/Documents/Lesson_Single.php:93
+#: src/App/Documents/Quiz_Single.php:93
+#: src/App/Documents/Topic_Single.php:93
 msgid "Not displayed"
 msgstr ""
 
 #. translators: placeholder: Lesson.
 #: elementor-documents/lesson-single.php:43
+#: src/App/Documents/Lesson_Single.php:50
 msgctxt "placeholder: Lesson"
 msgid "Single %s"
 msgstr ""
 
 #. translators: placeholder: Lesson.
 #: elementor-documents/lesson-single.php:55
+#: src/App/Documents/Lesson_Single.php:76
 msgctxt "placeholder: Lesson"
 msgid "%s Settings"
 msgstr ""
 
 #. translators: placeholder: Quiz.
 #: elementor-documents/quiz-single.php:44
+#: src/App/Documents/Quiz_Single.php:50
 msgctxt "placeholder: Quiz"
 msgid "Single %s"
 msgstr ""
 
 #. translators: placeholder: Quiz.
 #: elementor-documents/quiz-single.php:56
+#: src/App/Documents/Quiz_Single.php:76
 msgctxt "placeholder: Quiz"
 msgid "%s Settings"
 msgstr ""
 
 #. translators: placeholder: Topic.
 #: elementor-documents/topic-single.php:43
+#: src/App/Documents/Topic_Single.php:50
 msgctxt "placeholder: Topic"
 msgid "Single %s"
 msgstr ""
 
 #. translators: placeholder: Topic.
 #: elementor-documents/topic-single.php:55
+#: src/App/Documents/Topic_Single.php:76
 msgctxt "placeholder: Topic"
 msgid "%s Settings"
 msgstr ""
 
 #. translators: placeholder: Course.
-#: elementor-widgets/ld_course_certificate.php:32
+#: elementor-widgets/ld_course_certificate.php:42
+#: src/App/Widgets/Course_Certificate.php:36
 msgctxt "placeholder: Course"
 msgid "%s Certificate"
 msgstr ""
 
-#: elementor-widgets/ld_course_certificate.php:63
+#: elementor-widgets/ld_course_certificate.php:73
 #: elementor-widgets/ld_course_list.php:66
 #: elementor-widgets/ld_course_progress.php:53
 #: elementor-widgets/ld_lesson_list.php:65
 #: elementor-widgets/ld_payment_buttons.php:51
 #: elementor-widgets/ld_quiz_list.php:68
 #: elementor-widgets/ld_topic_list.php:66
+#: src/App/Settings/Section.php:30
+#: src/App/Widgets/Course_Certificate.php:67
+#: src/App/Widgets/Course_List.php:71
+#: src/App/Widgets/Course_Progress.php:56
+#: src/App/Widgets/Lesson_List.php:70
+#: src/App/Widgets/Payment_Buttons.php:54
+#: src/App/Widgets/Quiz_List.php:73
+#: src/App/Widgets/Topic_List.php:71
 msgid "Settings"
 msgstr ""
 
-#: elementor-widgets/ld_course_certificate.php:71
+#: elementor-widgets/ld_course_certificate.php:81
+#: src/App/Widgets/Course_Certificate.php:75
 msgid "Button Label"
 msgstr ""
 
-#: elementor-widgets/ld_course_certificate.php:73
-#: elementor-widgets/ld_course_certificate.php:74
-#: elementor-widgets/ld_course_certificate.php:344
+#: elementor-widgets/ld_course_certificate.php:83
+#: elementor-widgets/ld_course_certificate.php:84
+#: elementor-widgets/ld_course_certificate.php:354
+#: src/App/Frontend.php:196
+#: src/App/Widgets/Course_Certificate.php:77
+#: src/App/Widgets/Course_Certificate.php:78
+#: src/App/Widgets/Course_Certificate.php:347
 msgid "Download Certificate"
 msgstr ""
 
-#: elementor-widgets/ld_course_certificate.php:82
+#: elementor-widgets/ld_course_certificate.php:92
+#: src/App/Widgets/Course_Certificate.php:86
 msgid "Message"
 msgstr ""
 
-#: elementor-widgets/ld_course_certificate.php:84
-#: elementor-widgets/ld_course_certificate.php:85
-#: elementor-widgets/ld_course_certificate.php:347
+#: elementor-widgets/ld_course_certificate.php:94
+#: elementor-widgets/ld_course_certificate.php:95
+#: elementor-widgets/ld_course_certificate.php:357
+#: src/App/Frontend.php:192
+#: src/App/Widgets/Course_Certificate.php:88
+#: src/App/Widgets/Course_Certificate.php:89
+#: src/App/Widgets/Course_Certificate.php:350
 msgid "You've earned a certificate!"
 msgstr ""
 
-#: elementor-widgets/ld_course_certificate.php:93
+#: elementor-widgets/ld_course_certificate.php:103
+#: src/App/Widgets/Course_Certificate.php:97
 msgid "Preview"
 msgstr ""
 
 #. translators: placeholder: Course.
-#: elementor-widgets/ld_course_certificate.php:102
-#: elementor-widgets/ld_course_content.php:85
-#: elementor-widgets/ld_course_infobar.php:93
+#: elementor-widgets/ld_course_certificate.php:112
+#: elementor-widgets/ld_course_content.php:95
+#: elementor-widgets/ld_course_infobar.php:103
 #: elementor-widgets/ld_course_progress.php:62
 #: elementor-widgets/ld_lesson_list.php:74
 #: elementor-widgets/ld_quiz_list.php:77
 #: elementor-widgets/ld_topic_list.php:75
+#: src/App/Widgets/Course_Certificate.php:106
+#: src/App/Widgets/Course_Content.php:91
+#: src/App/Widgets/Course_Infobar.php:99
+#: src/App/Widgets/Course_Progress.php:65
+#: src/App/Widgets/Lesson_List.php:79
+#: src/App/Widgets/Quiz_List.php:82
+#: src/App/Widgets/Topic_List.php:80
 msgctxt "placeholder: Course"
 msgid "%s"
 msgstr ""
 
-#: elementor-widgets/ld_course_certificate.php:121
-#: elementor-widgets/ld_course_infobar.php:186
+#: elementor-widgets/ld_course_certificate.php:131
+#: elementor-widgets/ld_course_infobar.php:196
+#: src/App/Widgets/Course_Certificate.php:125
+#: src/App/Widgets/Course_Infobar.php:192
 msgid "User"
 msgstr ""
 
-#: elementor-widgets/ld_course_certificate.php:140
+#: elementor-widgets/ld_course_certificate.php:150
+#: src/App/Widgets/Course_Certificate.php:144
 msgid "Background & Border"
 msgstr ""
 
-#: elementor-widgets/ld_course_certificate.php:148
-#: elementor-widgets/ld_course_certificate.php:266
-#: elementor-widgets/ld_course_certificate.php:300
-#: elementor-widgets/ld_course_content.php:221
-#: elementor-widgets/ld_course_content.php:325
-#: elementor-widgets/ld_course_content.php:406
-#: elementor-widgets/ld_course_content.php:493
-#: elementor-widgets/ld_course_content.php:535
-#: elementor-widgets/ld_course_infobar.php:245
-#: elementor-widgets/ld_course_infobar.php:288
-#: elementor-widgets/ld_course_infobar.php:373
-#: elementor-widgets/ld_course_infobar.php:533
-#: elementor-widgets/ld_course_infobar.php:578
-#: elementor-widgets/ld_course_infobar.php:718
-#: elementor-widgets/ld_course_infobar.php:765
-#: elementor-widgets/ld_course_infobar.php:875
+#: elementor-widgets/ld_course_certificate.php:158
+#: elementor-widgets/ld_course_certificate.php:276
+#: elementor-widgets/ld_course_certificate.php:310
+#: elementor-widgets/ld_course_content.php:231
+#: elementor-widgets/ld_course_content.php:335
+#: elementor-widgets/ld_course_content.php:416
+#: elementor-widgets/ld_course_content.php:503
+#: elementor-widgets/ld_course_content.php:545
+#: elementor-widgets/ld_course_infobar.php:255
+#: elementor-widgets/ld_course_infobar.php:298
+#: elementor-widgets/ld_course_infobar.php:383
+#: elementor-widgets/ld_course_infobar.php:543
+#: elementor-widgets/ld_course_infobar.php:588
+#: elementor-widgets/ld_course_infobar.php:728
+#: elementor-widgets/ld_course_infobar.php:775
+#: elementor-widgets/ld_course_infobar.php:885
 #: elementor-widgets/ld_course_list.php:389
 #: elementor-widgets/ld_lesson_list.php:357
-#: elementor-widgets/ld_login.php:230
-#: elementor-widgets/ld_login.php:274
-#: elementor-widgets/ld_profile.php:175
-#: elementor-widgets/ld_profile.php:351
-#: elementor-widgets/ld_profile.php:442
-#: elementor-widgets/ld_profile.php:643
-#: elementor-widgets/ld_profile.php:690
-#: elementor-widgets/ld_profile.php:746
-#: elementor-widgets/ld_profile.php:794
-#: elementor-widgets/ld_profile.php:838
-#: elementor-widgets/ld_quiz.php:171
+#: elementor-widgets/ld_login.php:240
+#: elementor-widgets/ld_login.php:284
+#: elementor-widgets/ld_profile.php:185
+#: elementor-widgets/ld_profile.php:360
+#: elementor-widgets/ld_profile.php:450
+#: elementor-widgets/ld_profile.php:649
+#: elementor-widgets/ld_profile.php:695
+#: elementor-widgets/ld_profile.php:749
+#: elementor-widgets/ld_profile.php:796
+#: elementor-widgets/ld_profile.php:840
+#: elementor-widgets/ld_quiz.php:181
 #: elementor-widgets/ld_quiz_list.php:404
 #: elementor-widgets/ld_topic_list.php:379
+#: src/App/Widgets/Course_Certificate.php:152
+#: src/App/Widgets/Course_Certificate.php:270
+#: src/App/Widgets/Course_Certificate.php:304
+#: src/App/Widgets/Course_Content.php:227
+#: src/App/Widgets/Course_Content.php:331
+#: src/App/Widgets/Course_Content.php:412
+#: src/App/Widgets/Course_Content.php:499
+#: src/App/Widgets/Course_Content.php:541
+#: src/App/Widgets/Course_Infobar.php:251
+#: src/App/Widgets/Course_Infobar.php:294
+#: src/App/Widgets/Course_Infobar.php:379
+#: src/App/Widgets/Course_Infobar.php:539
+#: src/App/Widgets/Course_Infobar.php:584
+#: src/App/Widgets/Course_Infobar.php:724
+#: src/App/Widgets/Course_Infobar.php:771
+#: src/App/Widgets/Course_Infobar.php:881
+#: src/App/Widgets/Course_List.php:394
+#: src/App/Widgets/Lesson_List.php:362
+#: src/App/Widgets/Login.php:235
+#: src/App/Widgets/Login.php:279
+#: src/App/Widgets/Profile.php:180
+#: src/App/Widgets/Profile.php:355
+#: src/App/Widgets/Profile.php:445
+#: src/App/Widgets/Profile.php:644
+#: src/App/Widgets/Profile.php:690
+#: src/App/Widgets/Profile.php:744
+#: src/App/Widgets/Profile.php:791
+#: src/App/Widgets/Profile.php:835
+#: src/App/Widgets/Quiz.php:178
+#: src/App/Widgets/Quiz_List.php:409
+#: src/App/Widgets/Topic_List.php:384
 msgid "Background Color"
 msgstr ""
 
-#: elementor-widgets/ld_course_certificate.php:160
+#: elementor-widgets/ld_course_certificate.php:170
+#: src/App/Widgets/Course_Certificate.php:164
 msgid "Border Color"
 msgstr ""
 
-#: elementor-widgets/ld_course_certificate.php:172
+#: elementor-widgets/ld_course_certificate.php:182
+#: src/App/Widgets/Course_Certificate.php:176
 msgid "Border Width"
 msgstr ""
 
-#: elementor-widgets/ld_course_certificate.php:192
+#: elementor-widgets/ld_course_certificate.php:202
+#: src/App/Widgets/Course_Certificate.php:196
 msgid "Border Radius"
 msgstr ""
 
-#: elementor-widgets/ld_course_certificate.php:214
+#: elementor-widgets/ld_course_certificate.php:224
+#: src/App/Widgets/Course_Certificate.php:218
 msgid "Title"
 msgstr ""
 
-#: elementor-widgets/ld_course_certificate.php:222
-#: elementor-widgets/ld_course_certificate.php:254
-#: elementor-widgets/ld_course_certificate.php:288
-#: elementor-widgets/ld_course_content.php:206
-#: elementor-widgets/ld_course_content.php:393
-#: elementor-widgets/ld_course_content.php:451
-#: elementor-widgets/ld_course_content.php:481
-#: elementor-widgets/ld_course_content.php:523
-#: elementor-widgets/ld_course_infobar.php:330
-#: elementor-widgets/ld_course_infobar.php:361
-#: elementor-widgets/ld_course_infobar.php:414
-#: elementor-widgets/ld_course_infobar.php:445
-#: elementor-widgets/ld_course_infobar.php:486
-#: elementor-widgets/ld_course_infobar.php:519
-#: elementor-widgets/ld_course_infobar.php:566
-#: elementor-widgets/ld_course_infobar.php:630
-#: elementor-widgets/ld_course_infobar.php:661
-#: elementor-widgets/ld_course_infobar.php:751
-#: elementor-widgets/ld_course_infobar.php:810
-#: elementor-widgets/ld_course_infobar.php:841
-#: elementor-widgets/ld_course_infobar.php:862
-#: elementor-widgets/ld_login.php:218
-#: elementor-widgets/ld_login.php:262
-#: elementor-widgets/ld_profile.php:631
-#: elementor-widgets/ld_profile.php:676
-#: elementor-widgets/ld_profile.php:734
-#: elementor-widgets/ld_profile.php:779
-#: elementor-widgets/ld_profile.php:826
-#: elementor-widgets/ld_quiz.php:159
+#: elementor-widgets/ld_course_certificate.php:232
+#: elementor-widgets/ld_course_certificate.php:264
+#: elementor-widgets/ld_course_certificate.php:298
+#: elementor-widgets/ld_course_content.php:216
+#: elementor-widgets/ld_course_content.php:403
+#: elementor-widgets/ld_course_content.php:461
+#: elementor-widgets/ld_course_content.php:491
+#: elementor-widgets/ld_course_content.php:533
+#: elementor-widgets/ld_course_infobar.php:340
+#: elementor-widgets/ld_course_infobar.php:371
+#: elementor-widgets/ld_course_infobar.php:424
+#: elementor-widgets/ld_course_infobar.php:455
+#: elementor-widgets/ld_course_infobar.php:496
+#: elementor-widgets/ld_course_infobar.php:529
+#: elementor-widgets/ld_course_infobar.php:576
+#: elementor-widgets/ld_course_infobar.php:640
+#: elementor-widgets/ld_course_infobar.php:671
+#: elementor-widgets/ld_course_infobar.php:761
+#: elementor-widgets/ld_course_infobar.php:820
+#: elementor-widgets/ld_course_infobar.php:851
+#: elementor-widgets/ld_course_infobar.php:872
+#: elementor-widgets/ld_login.php:228
+#: elementor-widgets/ld_login.php:272
+#: elementor-widgets/ld_profile.php:637
+#: elementor-widgets/ld_profile.php:681
+#: elementor-widgets/ld_profile.php:737
+#: elementor-widgets/ld_profile.php:781
+#: elementor-widgets/ld_profile.php:828
+#: elementor-widgets/ld_quiz.php:169
+#: src/App/Widgets/Course_Certificate.php:226
+#: src/App/Widgets/Course_Certificate.php:258
+#: src/App/Widgets/Course_Certificate.php:292
+#: src/App/Widgets/Course_Content.php:212
+#: src/App/Widgets/Course_Content.php:399
+#: src/App/Widgets/Course_Content.php:457
+#: src/App/Widgets/Course_Content.php:487
+#: src/App/Widgets/Course_Content.php:529
+#: src/App/Widgets/Course_Infobar.php:336
+#: src/App/Widgets/Course_Infobar.php:367
+#: src/App/Widgets/Course_Infobar.php:420
+#: src/App/Widgets/Course_Infobar.php:451
+#: src/App/Widgets/Course_Infobar.php:492
+#: src/App/Widgets/Course_Infobar.php:525
+#: src/App/Widgets/Course_Infobar.php:572
+#: src/App/Widgets/Course_Infobar.php:636
+#: src/App/Widgets/Course_Infobar.php:667
+#: src/App/Widgets/Course_Infobar.php:757
+#: src/App/Widgets/Course_Infobar.php:816
+#: src/App/Widgets/Course_Infobar.php:847
+#: src/App/Widgets/Course_Infobar.php:868
+#: src/App/Widgets/Login.php:223
+#: src/App/Widgets/Login.php:267
+#: src/App/Widgets/Profile.php:632
+#: src/App/Widgets/Profile.php:676
+#: src/App/Widgets/Profile.php:732
+#: src/App/Widgets/Profile.php:776
+#: src/App/Widgets/Profile.php:823
+#: src/App/Widgets/Quiz.php:166
 msgid "Color"
 msgstr ""
 
-#: elementor-widgets/ld_course_certificate.php:246
+#: elementor-widgets/ld_course_certificate.php:256
+#: src/App/Widgets/Course_Certificate.php:250
 msgid "Icon"
 msgstr ""
 
-#: elementor-widgets/ld_course_certificate.php:280
+#: elementor-widgets/ld_course_certificate.php:290
+#: src/App/Widgets/Course_Certificate.php:284
 msgid "Download Button"
 msgstr ""
 
 #. translators: placeholder: Course.
-#: elementor-widgets/ld_course_content.php:35
+#: elementor-widgets/ld_course_content.php:45
+#: src/App/Widgets/Course_Content.php:41
 msgctxt "placeholder: Course"
 msgid "%s Content"
 msgstr ""
 
 #. translators: placeholder: Lesson.
-#: elementor-widgets/ld_course_content.php:41
+#: elementor-widgets/ld_course_content.php:51
+#: src/App/Widgets/Course_Content.php:47
 msgctxt "placeholder: Lesson"
 msgid "%s Content"
 msgstr ""
 
 #. translators: placeholder: Topic.
-#: elementor-widgets/ld_course_content.php:47
+#: elementor-widgets/ld_course_content.php:57
+#: src/App/Widgets/Course_Content.php:53
 msgctxt "placeholder: Topic"
 msgid "%s Content"
 msgstr ""
 
-#: elementor-widgets/ld_course_content.php:74
-#: elementor-widgets/ld_quiz.php:108
+#: elementor-widgets/ld_course_content.php:84
+#: elementor-widgets/ld_quiz.php:118
+#: src/App/Widgets/Course_Content.php:80
+#: src/App/Widgets/Quiz.php:115
 msgid "Preview Setting"
 msgstr ""
 
 #. translators: placeholder: Lesson.
-#: elementor-widgets/ld_course_content.php:106
-#: elementor-widgets/ld_course_infobar.php:146
+#: elementor-widgets/ld_course_content.php:116
+#: elementor-widgets/ld_course_infobar.php:156
 #: elementor-widgets/ld_quiz_list.php:98
 #: elementor-widgets/ld_topic_list.php:96
+#: src/App/Widgets/Course_Content.php:112
+#: src/App/Widgets/Course_Infobar.php:152
+#: src/App/Widgets/Quiz_List.php:103
+#: src/App/Widgets/Topic_List.php:101
 msgctxt "placeholder: Lesson"
 msgid "%s"
 msgstr ""
 
 #. translators: placeholder: Topic.
-#: elementor-widgets/ld_course_content.php:127
-#: elementor-widgets/ld_course_infobar.php:167
+#: elementor-widgets/ld_course_content.php:137
+#: elementor-widgets/ld_course_infobar.php:177
 #: elementor-widgets/ld_quiz_list.php:119
+#: src/App/Widgets/Course_Content.php:133
+#: src/App/Widgets/Course_Infobar.php:173
+#: src/App/Widgets/Quiz_List.php:124
 msgctxt "placeholder: Topic"
 msgid "%s"
 msgstr ""
 
-#: elementor-widgets/ld_course_content.php:147
+#: elementor-widgets/ld_course_content.php:157
 #: elementor-widgets/ld_course_progress.php:79
+#: src/App/Widgets/Course_Content.php:153
+#: src/App/Widgets/Course_Progress.php:82
 msgid "User ID"
 msgstr ""
 
-#: elementor-widgets/ld_course_content.php:166
-#: elementor-widgets/ld_profile.php:167
+#: elementor-widgets/ld_course_content.php:176
+#: elementor-widgets/ld_profile.php:177
+#: src/App/Widgets/Course_Content.php:172
+#: src/App/Widgets/Profile.php:172
 msgid "Header"
 msgstr ""
 
-#: elementor-widgets/ld_course_content.php:236
-#: elementor-widgets/ld_course_content.php:348
-#: elementor-widgets/ld_profile.php:316
-#: elementor-widgets/ld_profile.php:405
+#: elementor-widgets/ld_course_content.php:246
+#: elementor-widgets/ld_course_content.php:358
+#: elementor-widgets/ld_profile.php:326
+#: elementor-widgets/ld_profile.php:413
+#: src/App/Widgets/Course_Content.php:242
+#: src/App/Widgets/Course_Content.php:354
+#: src/App/Widgets/Profile.php:321
+#: src/App/Widgets/Profile.php:408
 msgid "Expand Color"
 msgstr ""
 
-#: elementor-widgets/ld_course_content.php:248
-#: elementor-widgets/ld_course_content.php:362
-#: elementor-widgets/ld_profile.php:328
-#: elementor-widgets/ld_profile.php:419
+#: elementor-widgets/ld_course_content.php:258
+#: elementor-widgets/ld_course_content.php:372
+#: elementor-widgets/ld_profile.php:338
+#: elementor-widgets/ld_profile.php:427
+#: src/App/Widgets/Course_Content.php:254
+#: src/App/Widgets/Course_Content.php:368
+#: src/App/Widgets/Profile.php:333
+#: src/App/Widgets/Profile.php:422
 msgid "Expand Background Color"
 msgstr ""
 
-#: elementor-widgets/ld_course_content.php:263
+#: elementor-widgets/ld_course_content.php:273
 #: elementor-widgets/ld_course_list.php:369
 #: elementor-widgets/ld_lesson_list.php:337
-#: elementor-widgets/ld_profile.php:343
+#: elementor-widgets/ld_profile.php:352
 #: elementor-widgets/ld_quiz_list.php:384
 #: elementor-widgets/ld_topic_list.php:359
+#: src/App/Widgets/Course_Content.php:269
+#: src/App/Widgets/Course_List.php:374
+#: src/App/Widgets/Lesson_List.php:342
+#: src/App/Widgets/Profile.php:347
+#: src/App/Widgets/Quiz_List.php:389
+#: src/App/Widgets/Topic_List.php:364
 msgid "Row Item"
 msgstr ""
 
-#: elementor-widgets/ld_course_content.php:271
-#: elementor-widgets/ld_profile.php:364
+#: elementor-widgets/ld_course_content.php:281
+#: elementor-widgets/ld_profile.php:372
+#: src/App/Widgets/Course_Content.php:277
+#: src/App/Widgets/Profile.php:367
 msgid "TITLE"
 msgstr ""
 
-#: elementor-widgets/ld_course_content.php:312
+#: elementor-widgets/ld_course_content.php:322
 #: elementor-widgets/ld_course_list.php:377
 #: elementor-widgets/ld_lesson_list.php:345
-#: elementor-widgets/ld_profile.php:384
-#: elementor-widgets/ld_profile.php:478
+#: elementor-widgets/ld_profile.php:392
+#: elementor-widgets/ld_profile.php:486
 #: elementor-widgets/ld_quiz_list.php:392
 #: elementor-widgets/ld_topic_list.php:367
+#: src/App/Widgets/Course_Content.php:318
+#: src/App/Widgets/Course_List.php:382
+#: src/App/Widgets/Lesson_List.php:350
+#: src/App/Widgets/Profile.php:387
+#: src/App/Widgets/Profile.php:481
+#: src/App/Widgets/Quiz_List.php:397
+#: src/App/Widgets/Topic_List.php:372
 msgid "Title Color"
 msgstr ""
 
-#: elementor-widgets/ld_course_content.php:339
-#: elementor-widgets/ld_profile.php:396
+#: elementor-widgets/ld_course_content.php:349
+#: elementor-widgets/ld_profile.php:404
+#: src/App/Widgets/Course_Content.php:345
+#: src/App/Widgets/Profile.php:399
 msgid "EXPAND"
 msgstr ""
 
-#: elementor-widgets/ld_course_content.php:374
-#: elementor-widgets/ld_course_infobar.php:791
+#: elementor-widgets/ld_course_content.php:384
+#: elementor-widgets/ld_course_infobar.php:801
+#: src/App/Widgets/Course_Content.php:380
+#: src/App/Widgets/Course_Infobar.php:797
 msgid "LESSON PROGRESS HEADER"
 msgstr ""
 
-#: elementor-widgets/ld_course_content.php:425
+#: elementor-widgets/ld_course_content.php:435
+#: src/App/Widgets/Course_Content.php:431
 msgid "Footer"
 msgstr ""
 
-#: elementor-widgets/ld_course_content.php:433
+#: elementor-widgets/ld_course_content.php:443
+#: src/App/Widgets/Course_Content.php:439
 msgid "LINKS (Back to...)"
 msgstr ""
 
-#: elementor-widgets/ld_course_content.php:463
+#: elementor-widgets/ld_course_content.php:473
+#: src/App/Widgets/Course_Content.php:469
 msgid "NAVIGATION"
 msgstr ""
 
-#: elementor-widgets/ld_course_content.php:505
+#: elementor-widgets/ld_course_content.php:515
+#: src/App/Widgets/Course_Content.php:511
 msgid "MARK COMPLETE"
 msgstr ""
 
 #. translators: placeholder: Course.
-#: elementor-widgets/ld_course_infobar.php:35
+#: elementor-widgets/ld_course_infobar.php:45
+#: src/App/Widgets/Course_Infobar.php:41
 msgctxt "placeholder: Course"
 msgid "%s Infobar"
 msgstr ""
 
 #. translators: placeholder: Lesson.
-#: elementor-widgets/ld_course_infobar.php:41
+#: elementor-widgets/ld_course_infobar.php:51
+#: src/App/Widgets/Course_Infobar.php:47
 msgctxt "placeholder: Lesson"
 msgid "%s Infobar"
 msgstr ""
 
 #. translators: placeholder: Topic.
-#: elementor-widgets/ld_course_infobar.php:47
+#: elementor-widgets/ld_course_infobar.php:57
+#: src/App/Widgets/Course_Infobar.php:53
 msgctxt "placeholder: Topic"
 msgid "%s Infobar"
 msgstr ""
 
 #. translators: placeholder: Quiz.
-#: elementor-widgets/ld_course_infobar.php:53
+#: elementor-widgets/ld_course_infobar.php:63
+#: src/App/Widgets/Course_Infobar.php:59
 msgctxt "placeholder: Quiz"
 msgid "%s Infobar"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:82
-#: elementor-widgets/ld_login.php:58
+#: elementor-widgets/ld_course_infobar.php:92
+#: elementor-widgets/ld_login.php:68
+#: src/App/Widgets/Course_Infobar.php:88
+#: src/App/Widgets/Login.php:63
 msgid "Preview Settings"
 msgstr ""
 
 #. translators: placeholder: Course.
-#: elementor-widgets/ld_course_infobar.php:114
+#: elementor-widgets/ld_course_infobar.php:124
+#: src/App/Widgets/Course_Infobar.php:120
 msgctxt "placeholder: Course"
 msgid "%s Status"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:120
+#: elementor-widgets/ld_course_infobar.php:130
 #: elementor-widgets/ld_course_list.php:163
+#: src/App/Widgets/Course_Infobar.php:126
+#: src/App/Widgets/Course_List.php:168
 msgid "Not Started"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:121
+#: elementor-widgets/ld_course_infobar.php:131
 #: elementor-widgets/ld_course_list.php:164
+#: src/App/Widgets/Course_Infobar.php:127
+#: src/App/Widgets/Course_List.php:169
 msgid "In Progress"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:122
+#: elementor-widgets/ld_course_infobar.php:132
 #: elementor-widgets/ld_course_list.php:165
+#: src/App/Widgets/Course_Infobar.php:128
+#: src/App/Widgets/Course_List.php:170
 msgid "Completed"
 msgstr ""
 
 #. translators: placeholder: Course.
-#: elementor-widgets/ld_course_infobar.php:132
+#: elementor-widgets/ld_course_infobar.php:142
+#: src/App/Widgets/Course_Infobar.php:138
 msgctxt "placeholder: Course"
 msgid "Has %s Access"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:206
+#: elementor-widgets/ld_course_infobar.php:216
+#: src/App/Widgets/Course_Infobar.php:212
 msgid "Backgrounds"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:214
+#: elementor-widgets/ld_course_infobar.php:224
+#: src/App/Widgets/Course_Infobar.php:220
 msgid "NOT ENROLLED"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:257
+#: elementor-widgets/ld_course_infobar.php:267
+#: src/App/Widgets/Course_Infobar.php:263
 msgid "ENROLLED"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:302
+#: elementor-widgets/ld_course_infobar.php:312
+#: src/App/Widgets/Course_Infobar.php:308
 msgid "Not Enrolled - Current Status Section"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:310
-#: elementor-widgets/ld_course_infobar.php:395
-#: elementor-widgets/ld_course_infobar.php:467
+#: elementor-widgets/ld_course_infobar.php:320
+#: elementor-widgets/ld_course_infobar.php:405
+#: elementor-widgets/ld_course_infobar.php:477
+#: src/App/Widgets/Course_Infobar.php:316
+#: src/App/Widgets/Course_Infobar.php:401
+#: src/App/Widgets/Course_Infobar.php:473
 msgid "HEADER LABEL"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:320
-#: elementor-widgets/ld_course_infobar.php:508
-#: elementor-widgets/ld_profile.php:621
-#: elementor-widgets/ld_profile.php:666
-#: elementor-widgets/ld_profile.php:724
-#: elementor-widgets/ld_profile.php:769
-#: elementor-widgets/ld_profile.php:816
+#: elementor-widgets/ld_course_infobar.php:330
+#: elementor-widgets/ld_course_infobar.php:518
+#: elementor-widgets/ld_profile.php:627
+#: elementor-widgets/ld_profile.php:671
+#: elementor-widgets/ld_profile.php:727
+#: elementor-widgets/ld_profile.php:771
+#: elementor-widgets/ld_profile.php:818
+#: src/App/Widgets/Course_Infobar.php:326
+#: src/App/Widgets/Course_Infobar.php:514
+#: src/App/Widgets/Profile.php:622
+#: src/App/Widgets/Profile.php:666
+#: src/App/Widgets/Profile.php:722
+#: src/App/Widgets/Profile.php:766
+#: src/App/Widgets/Profile.php:813
 msgid "Text"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:342
-#: elementor-widgets/ld_course_infobar.php:426
+#: elementor-widgets/ld_course_infobar.php:352
+#: elementor-widgets/ld_course_infobar.php:436
+#: src/App/Widgets/Course_Infobar.php:348
+#: src/App/Widgets/Course_Infobar.php:432
 msgid "STATUS LABEL"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:387
+#: elementor-widgets/ld_course_infobar.php:397
+#: src/App/Widgets/Course_Infobar.php:393
 msgid "Not Enrolled - Price Section"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:459
+#: elementor-widgets/ld_course_infobar.php:469
+#: src/App/Widgets/Course_Infobar.php:465
 msgid "Not Enrolled - Get Started Section"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:498
+#: elementor-widgets/ld_course_infobar.php:508
+#: src/App/Widgets/Course_Infobar.php:504
 msgid "STATUS BUTTON"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:549
+#: elementor-widgets/ld_course_infobar.php:559
+#: src/App/Widgets/Course_Infobar.php:555
 msgid "Enrolled - Progress"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:557
-#: elementor-widgets/ld_course_infobar.php:853
+#: elementor-widgets/ld_course_infobar.php:567
+#: elementor-widgets/ld_course_infobar.php:863
+#: src/App/Widgets/Course_Infobar.php:563
+#: src/App/Widgets/Course_Infobar.php:859
 msgid "PROGRESS INDICATOR"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:590
-#: elementor-widgets/ld_course_infobar.php:887
+#: elementor-widgets/ld_course_infobar.php:600
+#: elementor-widgets/ld_course_infobar.php:897
+#: src/App/Widgets/Course_Infobar.php:596
+#: src/App/Widgets/Course_Infobar.php:893
 msgid "Height"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:611
+#: elementor-widgets/ld_course_infobar.php:621
+#: src/App/Widgets/Course_Infobar.php:617
 msgid "PERCENT COMPLETE"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:642
+#: elementor-widgets/ld_course_infobar.php:652
+#: src/App/Widgets/Course_Infobar.php:648
 msgid "STEPS COMPLETE TEXT"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:676
+#: elementor-widgets/ld_course_infobar.php:686
+#: src/App/Widgets/Course_Infobar.php:682
 msgid "Breadcrumbs"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:694
+#: elementor-widgets/ld_course_infobar.php:704
+#: src/App/Widgets/Course_Infobar.php:700
 msgid "Text Color"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:706
+#: elementor-widgets/ld_course_infobar.php:716
+#: src/App/Widgets/Course_Infobar.php:712
 msgid "Arrow Color"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:733
+#: elementor-widgets/ld_course_infobar.php:743
+#: src/App/Widgets/Course_Infobar.php:739
 msgid "Status"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:783
+#: elementor-widgets/ld_course_infobar.php:793
+#: src/App/Widgets/Course_Infobar.php:789
 msgid "Lesson Progress"
 msgstr ""
 
-#: elementor-widgets/ld_course_infobar.php:822
+#: elementor-widgets/ld_course_infobar.php:832
+#: src/App/Widgets/Course_Infobar.php:828
 msgid "LESSON PROGRESS PERCENT HEADER"
 msgstr ""
 
 #. translators: placeholder: Course.
 #: elementor-widgets/ld_course_list.php:32
+#: src/App/Widgets/Course_List.php:37
 msgctxt "placeholder: Course"
 msgid "%s List"
 msgstr ""
 
 #: elementor-widgets/ld_course_list.php:73
 #: elementor-widgets/ld_lesson_list.php:93
-#: elementor-widgets/ld_profile.php:74
+#: elementor-widgets/ld_profile.php:84
 #: elementor-widgets/ld_quiz_list.php:138
 #: elementor-widgets/ld_topic_list.php:115
+#: src/App/Widgets/Course_List.php:78
+#: src/App/Widgets/Lesson_List.php:98
+#: src/App/Widgets/Profile.php:79
+#: src/App/Widgets/Quiz_List.php:143
+#: src/App/Widgets/Topic_List.php:120
 msgid "Order by"
 msgstr ""
 
 #: elementor-widgets/ld_course_list.php:77
 #: elementor-widgets/ld_lesson_list.php:97
-#: elementor-widgets/ld_profile.php:78
+#: elementor-widgets/ld_profile.php:88
 #: elementor-widgets/ld_quiz_list.php:142
 #: elementor-widgets/ld_topic_list.php:119
+#: src/App/Widgets/Course_List.php:82
+#: src/App/Widgets/Lesson_List.php:102
+#: src/App/Widgets/Profile.php:83
+#: src/App/Widgets/Quiz_List.php:147
+#: src/App/Widgets/Topic_List.php:124
 msgid "ID - Order by post id. (default)"
 msgstr ""
 
 #: elementor-widgets/ld_course_list.php:78
 #: elementor-widgets/ld_lesson_list.php:98
-#: elementor-widgets/ld_profile.php:79
+#: elementor-widgets/ld_profile.php:89
 #: elementor-widgets/ld_quiz_list.php:143
 #: elementor-widgets/ld_topic_list.php:120
+#: src/App/Widgets/Course_List.php:83
+#: src/App/Widgets/Lesson_List.php:103
+#: src/App/Widgets/Profile.php:84
+#: src/App/Widgets/Quiz_List.php:148
+#: src/App/Widgets/Topic_List.php:125
 msgid "Title - Order by post title"
 msgstr ""
 
 #: elementor-widgets/ld_course_list.php:79
 #: elementor-widgets/ld_lesson_list.php:99
-#: elementor-widgets/ld_profile.php:80
+#: elementor-widgets/ld_profile.php:90
 #: elementor-widgets/ld_quiz_list.php:144
 #: elementor-widgets/ld_topic_list.php:121
+#: src/App/Widgets/Course_List.php:84
+#: src/App/Widgets/Lesson_List.php:104
+#: src/App/Widgets/Profile.php:85
+#: src/App/Widgets/Quiz_List.php:149
+#: src/App/Widgets/Topic_List.php:126
 msgid "Date - Order by post date"
 msgstr ""
 
 #: elementor-widgets/ld_course_list.php:80
 #: elementor-widgets/ld_lesson_list.php:100
-#: elementor-widgets/ld_profile.php:81
+#: elementor-widgets/ld_profile.php:91
 #: elementor-widgets/ld_quiz_list.php:145
 #: elementor-widgets/ld_topic_list.php:122
+#: src/App/Widgets/Course_List.php:85
+#: src/App/Widgets/Lesson_List.php:105
+#: src/App/Widgets/Profile.php:86
+#: src/App/Widgets/Quiz_List.php:150
+#: src/App/Widgets/Topic_List.php:127
 msgid "Menu - Order by Page Order Value"
 msgstr ""
 
 #: elementor-widgets/ld_course_list.php:89
 #: elementor-widgets/ld_lesson_list.php:109
-#: elementor-widgets/ld_profile.php:90
+#: elementor-widgets/ld_profile.php:100
 #: elementor-widgets/ld_quiz_list.php:154
 #: elementor-widgets/ld_topic_list.php:131
+#: src/App/Widgets/Course_List.php:94
+#: src/App/Widgets/Lesson_List.php:114
+#: src/App/Widgets/Profile.php:95
+#: src/App/Widgets/Quiz_List.php:159
+#: src/App/Widgets/Topic_List.php:136
 msgid "Order"
 msgstr ""
 
 #: elementor-widgets/ld_course_list.php:93
 #: elementor-widgets/ld_lesson_list.php:113
-#: elementor-widgets/ld_profile.php:94
+#: elementor-widgets/ld_profile.php:104
 #: elementor-widgets/ld_quiz_list.php:158
 #: elementor-widgets/ld_topic_list.php:135
+#: src/App/Widgets/Course_List.php:98
+#: src/App/Widgets/Lesson_List.php:118
+#: src/App/Widgets/Profile.php:99
+#: src/App/Widgets/Quiz_List.php:163
+#: src/App/Widgets/Topic_List.php:140
 msgid "DESC - highest to lowest values (default)"
 msgstr ""
 
 #: elementor-widgets/ld_course_list.php:94
 #: elementor-widgets/ld_lesson_list.php:114
-#: elementor-widgets/ld_profile.php:95
+#: elementor-widgets/ld_profile.php:105
 #: elementor-widgets/ld_quiz_list.php:159
 #: elementor-widgets/ld_topic_list.php:136
+#: src/App/Widgets/Course_List.php:99
+#: src/App/Widgets/Lesson_List.php:119
+#: src/App/Widgets/Profile.php:100
+#: src/App/Widgets/Quiz_List.php:164
+#: src/App/Widgets/Topic_List.php:141
 msgid "ASC - lowest to highest values"
 msgstr ""
 
 #. translators: placeholder: Courses.
 #: elementor-widgets/ld_course_list.php:105
-#: elementor-widgets/ld_profile.php:64
+#: elementor-widgets/ld_profile.php:74
+#: src/App/Widgets/Course_List.php:110
+#: src/App/Widgets/Profile.php:69
 msgctxt "placeholder: Courses"
 msgid "%s per page"
 msgstr ""
@@ -612,36 +878,45 @@ msgstr ""
 #: elementor-widgets/ld_lesson_list.php:131
 #: elementor-widgets/ld_quiz_list.php:176
 #: elementor-widgets/ld_topic_list.php:153
+#: src/App/Widgets/Course_List.php:116
+#: src/App/Widgets/Lesson_List.php:136
+#: src/App/Widgets/Quiz_List.php:181
+#: src/App/Widgets/Topic_List.php:158
 msgctxt "placeholder: default per page"
 msgid "Leave empty for default (%d) or 0 to show all items."
 msgstr ""
 
 #. translators: placeholder: Courses.
 #: elementor-widgets/ld_course_list.php:122
+#: src/App/Widgets/Course_List.php:127
 msgctxt "placeholder: Courses"
 msgid "My %s"
 msgstr ""
 
 #. translators: placeholder: Courses.
 #: elementor-widgets/ld_course_list.php:130
+#: src/App/Widgets/Course_List.php:135
 msgctxt "placeholder: Courses"
 msgid "Show All %s (default)"
 msgstr ""
 
 #. translators: placeholder: Courses.
 #: elementor-widgets/ld_course_list.php:135
+#: src/App/Widgets/Course_List.php:140
 msgctxt "placeholder: Courses"
 msgid "Show Enrolled %s only"
 msgstr ""
 
 #. translators: placeholder: Courses.
 #: elementor-widgets/ld_course_list.php:140
+#: src/App/Widgets/Course_List.php:145
 msgctxt "placeholder: Courses"
 msgid "Show not-Enrolled %s only"
 msgstr ""
 
 #. translators: placeholder: Course.
 #: elementor-widgets/ld_course_list.php:153
+#: src/App/Widgets/Course_List.php:158
 msgctxt "placeholder: Course"
 msgid "Enrolled %s Status"
 msgstr ""
@@ -650,6 +925,10 @@ msgstr ""
 #: elementor-widgets/ld_lesson_list.php:143
 #: elementor-widgets/ld_quiz_list.php:188
 #: elementor-widgets/ld_topic_list.php:165
+#: src/App/Widgets/Course_List.php:182
+#: src/App/Widgets/Lesson_List.php:148
+#: src/App/Widgets/Quiz_List.php:193
+#: src/App/Widgets/Topic_List.php:170
 msgid "Grid Settings"
 msgstr ""
 
@@ -657,10 +936,15 @@ msgstr ""
 #: elementor-widgets/ld_lesson_list.php:150
 #: elementor-widgets/ld_quiz_list.php:195
 #: elementor-widgets/ld_topic_list.php:172
+#: src/App/Widgets/Course_List.php:189
+#: src/App/Widgets/Lesson_List.php:155
+#: src/App/Widgets/Quiz_List.php:200
+#: src/App/Widgets/Topic_List.php:177
 msgid "Show Grid"
 msgstr ""
 
 #: elementor-widgets/ld_course_list.php:193
+#: src/App/Widgets/Course_List.php:198
 msgid "Show Progress Bar"
 msgstr ""
 
@@ -668,41 +952,51 @@ msgstr ""
 #: elementor-widgets/ld_lesson_list.php:170
 #: elementor-widgets/ld_quiz_list.php:213
 #: elementor-widgets/ld_topic_list.php:192
+#: src/App/Widgets/Course_List.php:207
+#: src/App/Widgets/Lesson_List.php:175
+#: src/App/Widgets/Quiz_List.php:218
+#: src/App/Widgets/Topic_List.php:197
 msgid "Columns"
 msgstr ""
 
 #. translators: placeholder: Course.
 #: elementor-widgets/ld_course_list.php:218
+#: src/App/Widgets/Course_List.php:223
 msgctxt "placeholder: Course"
 msgid "%s Taxonomies"
 msgstr ""
 
 #. translators: placeholder: Course.
 #: elementor-widgets/ld_course_list.php:230
+#: src/App/Widgets/Course_List.php:235
 msgctxt "placeholder: Course"
 msgid "Show %s Category Selector"
 msgstr ""
 
 #. translators: placeholder: Course.
 #: elementor-widgets/ld_course_list.php:243
+#: src/App/Widgets/Course_List.php:248
 msgctxt "placeholder: Course"
 msgid "%s Category"
 msgstr ""
 
 #. translators: placeholder: Courses.
 #: elementor-widgets/ld_course_list.php:249
+#: src/App/Widgets/Course_List.php:254
 msgctxt "placeholder: Courses"
 msgid "shows %s with mentioned LearnDash category."
 msgstr ""
 
 #. translators: placeholder: Course.
 #: elementor-widgets/ld_course_list.php:271
+#: src/App/Widgets/Course_List.php:276
 msgctxt "placeholder: Course"
 msgid "%s Tag"
 msgstr ""
 
 #. translators: placeholder: Courses.
 #: elementor-widgets/ld_course_list.php:277
+#: src/App/Widgets/Course_List.php:282
 msgctxt "placeholder: Courses"
 msgid "shows %s with mentioned LearnDash tag."
 msgstr ""
@@ -711,12 +1005,19 @@ msgstr ""
 #: elementor-widgets/ld_lesson_list.php:268
 #: elementor-widgets/ld_quiz_list.php:313
 #: elementor-widgets/ld_topic_list.php:290
+#: src/App/Widgets/Course_List.php:305
+#: src/App/Widgets/Lesson_List.php:273
+#: src/App/Widgets/Quiz_List.php:318
+#: src/App/Widgets/Topic_List.php:295
 msgid "WordPress Taxonomies"
 msgstr ""
 
 #: elementor-widgets/ld_course_list.php:308
 #: elementor-widgets/ld_lesson_list.php:276
 #: elementor-widgets/ld_topic_list.php:298
+#: src/App/Widgets/Course_List.php:313
+#: src/App/Widgets/Lesson_List.php:281
+#: src/App/Widgets/Topic_List.php:303
 msgid "Show WordPress Category Selector"
 msgstr ""
 
@@ -724,11 +1025,16 @@ msgstr ""
 #: elementor-widgets/ld_lesson_list.php:285
 #: elementor-widgets/ld_quiz_list.php:332
 #: elementor-widgets/ld_topic_list.php:307
+#: src/App/Widgets/Course_List.php:322
+#: src/App/Widgets/Lesson_List.php:290
+#: src/App/Widgets/Quiz_List.php:337
+#: src/App/Widgets/Topic_List.php:312
 msgid "Category"
 msgstr ""
 
 #. translators: placeholder: Courses.
 #: elementor-widgets/ld_course_list.php:320
+#: src/App/Widgets/Course_List.php:325
 msgctxt "placeholder: Courses"
 msgid "shows %s with mentioned WordPress category."
 msgstr ""
@@ -737,17 +1043,23 @@ msgstr ""
 #: elementor-widgets/ld_lesson_list.php:309
 #: elementor-widgets/ld_quiz_list.php:356
 #: elementor-widgets/ld_topic_list.php:331
+#: src/App/Widgets/Course_List.php:346
+#: src/App/Widgets/Lesson_List.php:314
+#: src/App/Widgets/Quiz_List.php:361
+#: src/App/Widgets/Topic_List.php:336
 msgid "Tag"
 msgstr ""
 
 #. translators: placeholder: Courses.
 #: elementor-widgets/ld_course_list.php:344
+#: src/App/Widgets/Course_List.php:349
 msgctxt "placeholder: Courses"
 msgid "shows %s with mentioned WordPress tag."
 msgstr ""
 
 #. translators: placeholder: Course.
 #: elementor-widgets/ld_course_progress.php:33
+#: src/App/Widgets/Course_Progress.php:36
 msgctxt "placeholder: Course"
 msgid "%s Progress"
 msgstr ""
@@ -755,509 +1067,671 @@ msgstr ""
 #. translators: placeholder: Course, Course.
 #: elementor-widgets/ld_course_progress.php:69
 #: elementor-widgets/ld_payment_buttons.php:67
+#: src/App/Widgets/Course_Progress.php:72
+#: src/App/Widgets/Payment_Buttons.php:70
 msgctxt "placeholders: Course, Course"
 msgid "Enter single %1$s ID. Leave blank if used within a %2$s."
 msgstr ""
 
 #: elementor-widgets/ld_course_progress.php:82
+#: src/App/Widgets/Course_Progress.php:85
 msgid "Enter specific User ID. Leave blank for current User."
 msgstr ""
 
 #. translators: placeholder: Lesson.
 #: elementor-widgets/ld_lesson_list.php:32
+#: src/App/Widgets/Lesson_List.php:37
 msgctxt "placeholder: Lesson"
 msgid "%s List"
 msgstr ""
 
 #. translators: placeholder: Lessons.
 #: elementor-widgets/ld_lesson_list.php:125
+#: src/App/Widgets/Lesson_List.php:130
 msgctxt "placeholder: Lessons"
 msgid "%s per page"
 msgstr ""
 
 #. translators: placeholder: Lesson.
 #: elementor-widgets/ld_lesson_list.php:186
+#: src/App/Widgets/Lesson_List.php:191
 msgctxt "placeholder: Lesson"
 msgid "%s Taxonomies"
 msgstr ""
 
 #. translators: placeholder: Lesson.
 #: elementor-widgets/ld_lesson_list.php:198
+#: src/App/Widgets/Lesson_List.php:203
 msgctxt "placeholder: Lesson"
 msgid "Show %s Category Selector"
 msgstr ""
 
 #. translators: placeholder: Lesson.
 #: elementor-widgets/ld_lesson_list.php:211
+#: src/App/Widgets/Lesson_List.php:216
 msgctxt "placeholder: Lesson"
 msgid "%s Category"
 msgstr ""
 
 #. translators: placeholder: Lessons.
 #: elementor-widgets/ld_lesson_list.php:217
+#: src/App/Widgets/Lesson_List.php:222
 msgctxt "placeholder: Lessons"
 msgid "shows %s with mentioned LearnDash category."
 msgstr ""
 
 #. translators: placeholder: Lesson.
 #: elementor-widgets/ld_lesson_list.php:239
+#: src/App/Widgets/Lesson_List.php:244
 msgctxt "placeholder: Lesson"
 msgid "%s Tag"
 msgstr ""
 
 #. translators: placeholder: Lessons.
 #: elementor-widgets/ld_lesson_list.php:245
+#: src/App/Widgets/Lesson_List.php:250
 msgctxt "placeholder: Lessons"
 msgid "shows %s with mentioned LearnDash tag."
 msgstr ""
 
 #. translators: placeholder: Lessons.
 #: elementor-widgets/ld_lesson_list.php:288
+#: src/App/Widgets/Lesson_List.php:293
 msgctxt "placeholder: Lessons"
 msgid "shows %s with mentioned WordPress category."
 msgstr ""
 
 #. translators: placeholder: Lessons.
 #: elementor-widgets/ld_lesson_list.php:312
+#: src/App/Widgets/Lesson_List.php:317
 msgctxt "placeholder: Lessons"
 msgid "shows %s with mentioned WordPress tag."
 msgstr ""
 
-#: elementor-widgets/ld_login.php:30
+#: elementor-widgets/ld_login.php:40
+#: src/App/Widgets/Login.php:35
 msgid "LearnDash Login"
 msgstr ""
 
-#: elementor-widgets/ld_login.php:65
+#: elementor-widgets/ld_login.php:75
+#: src/App/Widgets/Login.php:70
 msgid "Preview Login/Logout Status"
 msgstr ""
 
-#: elementor-widgets/ld_login.php:69
-#: elementor-widgets/ld_login.php:102
-#: elementor-widgets/ld_login.php:200
-#: elementor-widgets/ld_login.php:313
+#: elementor-widgets/ld_login.php:79
+#: elementor-widgets/ld_login.php:112
+#: elementor-widgets/ld_login.php:210
+#: elementor-widgets/ld_login.php:323
+#: src/App/Widgets/Login.php:74
+#: src/App/Widgets/Login.php:107
+#: src/App/Widgets/Login.php:205
+#: src/App/Widgets/Login.php:318
 msgid "Login"
 msgstr ""
 
-#: elementor-widgets/ld_login.php:70
-#: elementor-widgets/ld_login.php:160
-#: elementor-widgets/ld_login.php:244
-#: elementor-widgets/ld_login.php:316
+#: elementor-widgets/ld_login.php:80
+#: elementor-widgets/ld_login.php:170
+#: elementor-widgets/ld_login.php:254
+#: elementor-widgets/ld_login.php:326
+#: src/App/Widgets/Login.php:75
+#: src/App/Widgets/Login.php:165
+#: src/App/Widgets/Login.php:249
+#: src/App/Widgets/Login.php:321
 msgid "Logout"
 msgstr ""
 
-#: elementor-widgets/ld_login.php:81
+#: elementor-widgets/ld_login.php:91
+#: src/App/Widgets/Login.php:86
 msgid "Login Settings"
 msgstr ""
 
-#: elementor-widgets/ld_login.php:88
+#: elementor-widgets/ld_login.php:98
+#: src/App/Widgets/Login.php:93
 msgid "Login URL"
 msgstr ""
 
-#: elementor-widgets/ld_login.php:91
+#: elementor-widgets/ld_login.php:101
+#: src/App/Widgets/Login.php:96
 msgid "Override default login URL"
 msgstr ""
 
-#: elementor-widgets/ld_login.php:98
+#: elementor-widgets/ld_login.php:108
+#: src/App/Widgets/Login.php:103
 msgid "Login Label"
 msgstr ""
 
-#: elementor-widgets/ld_login.php:101
+#: elementor-widgets/ld_login.php:111
+#: src/App/Widgets/Login.php:106
 msgid "Override default label \"Login\""
 msgstr ""
 
-#: elementor-widgets/ld_login.php:109
+#: elementor-widgets/ld_login.php:119
+#: src/App/Widgets/Login.php:114
 msgid "Login Icon Placement"
 msgstr ""
 
-#: elementor-widgets/ld_login.php:113
-#: elementor-widgets/ld_login.php:171
+#: elementor-widgets/ld_login.php:123
+#: elementor-widgets/ld_login.php:181
+#: src/App/Widgets/Login.php:118
+#: src/App/Widgets/Login.php:176
 msgid "Left - To left of label"
 msgstr ""
 
-#: elementor-widgets/ld_login.php:114
-#: elementor-widgets/ld_login.php:172
+#: elementor-widgets/ld_login.php:124
+#: elementor-widgets/ld_login.php:182
+#: src/App/Widgets/Login.php:119
+#: src/App/Widgets/Login.php:177
 msgid "Right - To right of label"
-msgstr ""
-
-#: elementor-widgets/ld_login.php:115
-#: elementor-widgets/ld_login.php:173
-msgid "None - No icon"
-msgstr ""
-
-#: elementor-widgets/ld_login.php:123
-msgid "Login Displayed as"
 msgstr ""
 
 #: elementor-widgets/ld_login.php:125
 #: elementor-widgets/ld_login.php:183
+#: src/App/Widgets/Login.php:120
+#: src/App/Widgets/Login.php:178
+msgid "None - No icon"
+msgstr ""
+
+#: elementor-widgets/ld_login.php:133
+#: src/App/Widgets/Login.php:128
+msgid "Login Displayed as"
+msgstr ""
+
+#: elementor-widgets/ld_login.php:135
+#: elementor-widgets/ld_login.php:193
+#: src/App/Widgets/Login.php:130
+#: src/App/Widgets/Login.php:188
 msgid "Display as Button or link"
 msgstr ""
 
-#: elementor-widgets/ld_login.php:128
-#: elementor-widgets/ld_login.php:186
+#: elementor-widgets/ld_login.php:138
+#: elementor-widgets/ld_login.php:196
+#: src/App/Widgets/Login.php:133
+#: src/App/Widgets/Login.php:191
 msgid "Button"
 msgstr ""
 
-#: elementor-widgets/ld_login.php:129
-#: elementor-widgets/ld_login.php:187
+#: elementor-widgets/ld_login.php:139
+#: elementor-widgets/ld_login.php:197
+#: src/App/Widgets/Login.php:134
+#: src/App/Widgets/Login.php:192
 msgid "Link"
 msgstr ""
 
-#: elementor-widgets/ld_login.php:139
+#: elementor-widgets/ld_login.php:149
+#: src/App/Widgets/Login.php:144
 msgid "Logout Settings"
 msgstr ""
 
-#: elementor-widgets/ld_login.php:146
+#: elementor-widgets/ld_login.php:156
+#: src/App/Widgets/Login.php:151
 msgid "Logout URL"
 msgstr ""
 
-#: elementor-widgets/ld_login.php:149
+#: elementor-widgets/ld_login.php:159
+#: src/App/Widgets/Login.php:154
 msgid "Override default logout URL"
 msgstr ""
 
-#: elementor-widgets/ld_login.php:156
+#: elementor-widgets/ld_login.php:166
+#: src/App/Widgets/Login.php:161
 msgid "Logout Label"
 msgstr ""
 
-#: elementor-widgets/ld_login.php:159
+#: elementor-widgets/ld_login.php:169
+#: src/App/Widgets/Login.php:164
 msgid "Override default label \"Logout\""
 msgstr ""
 
-#: elementor-widgets/ld_login.php:167
+#: elementor-widgets/ld_login.php:177
+#: src/App/Widgets/Login.php:172
 msgid "Logout Icon Placement"
 msgstr ""
 
-#: elementor-widgets/ld_login.php:181
+#: elementor-widgets/ld_login.php:191
+#: src/App/Widgets/Login.php:186
 msgid "Logout Displayed as"
 msgstr ""
 
 #. translators: placeholder: Course.
 #: elementor-widgets/ld_payment_buttons.php:32
+#: src/App/Widgets/Payment_Buttons.php:35
 msgctxt "placeholder: Course"
 msgid "%s Payment Buttons"
 msgstr ""
 
 #. translators: placeholder: Course.
 #: elementor-widgets/ld_payment_buttons.php:60
+#: src/App/Widgets/Payment_Buttons.php:63
 msgctxt "placeholder: Course"
 msgid "%s ID"
 msgstr ""
 
-#: elementor-widgets/ld_profile.php:30
+#: elementor-widgets/ld_profile.php:40
+#: src/App/Widgets/Profile.php:35
 msgid "Profile"
 msgstr ""
 
-#: elementor-widgets/ld_profile.php:55
+#: elementor-widgets/ld_profile.php:65
+#: src/App/Widgets/Profile.php:60
 msgid "Profile Settings"
 msgstr ""
 
-#: elementor-widgets/ld_profile.php:104
+#: elementor-widgets/ld_profile.php:114
+#: src/App/Widgets/Profile.php:109
 msgid "Show Search"
 msgstr ""
 
-#: elementor-widgets/ld_profile.php:106
+#: elementor-widgets/ld_profile.php:116
+#: src/App/Widgets/Profile.php:111
 msgid "LD30 template only"
 msgstr ""
 
-#: elementor-widgets/ld_profile.php:114
+#: elementor-widgets/ld_profile.php:124
+#: src/App/Widgets/Profile.php:119
 msgid "Show Profile Header"
 msgstr ""
 
-#. translators: placeholder: Cours.
-#: elementor-widgets/ld_profile.php:124
+#. translators: placeholder: Course.
+#: elementor-widgets/ld_profile.php:134
+#: src/App/Widgets/Profile.php:129
 msgctxt "placeholder: Course"
 msgid "Show Earned %s Points"
 msgstr ""
 
-#: elementor-widgets/ld_profile.php:133
+#: elementor-widgets/ld_profile.php:143
+#: src/App/Widgets/Profile.php:138
 msgid "Show Profile Link"
 msgstr ""
 
 #. translators: placeholder: Quiz.
-#: elementor-widgets/ld_profile.php:143
+#: elementor-widgets/ld_profile.php:153
+#: src/App/Widgets/Profile.php:148
 msgctxt "placeholder: Quiz"
 msgid "Show User %s Attempts"
 msgstr ""
 
-#. translators: placeholder: Cours.
-#: elementor-widgets/ld_profile.php:153
+#. translators: placeholder: Course.
+#: elementor-widgets/ld_profile.php:163
+#: src/App/Widgets/Profile.php:158
 msgctxt "placeholder: Course"
 msgid "Expand All %s Sections"
 msgstr ""
 
-#: elementor-widgets/ld_profile.php:187
+#: elementor-widgets/ld_profile.php:197
+#: src/App/Widgets/Profile.php:192
 msgid "AVATAR"
 msgstr ""
 
-#: elementor-widgets/ld_profile.php:196
+#: elementor-widgets/ld_profile.php:206
+#: src/App/Widgets/Profile.php:201
 msgid "Avatar Size"
 msgstr ""
 
-#: elementor-widgets/ld_profile.php:216
+#: elementor-widgets/ld_profile.php:226
+#: src/App/Widgets/Profile.php:221
 msgid "SUMMARY"
 msgstr ""
 
-#: elementor-widgets/ld_profile.php:226
+#: elementor-widgets/ld_profile.php:236
+#: src/App/Widgets/Profile.php:231
 msgid "Header Typography"
 msgstr ""
 
-#: elementor-widgets/ld_profile.php:236
+#: elementor-widgets/ld_profile.php:246
+#: src/App/Widgets/Profile.php:241
 msgid "Header Color"
-msgstr ""
-
-#: elementor-widgets/ld_profile.php:249
-#: elementor-widgets/ld_profile.php:285
-msgid "Label Typography"
 msgstr ""
 
 #: elementor-widgets/ld_profile.php:259
 #: elementor-widgets/ld_profile.php:295
+#: src/App/Widgets/Profile.php:254
+#: src/App/Widgets/Profile.php:290
+msgid "Label Typography"
+msgstr ""
+
+#: elementor-widgets/ld_profile.php:269
+#: elementor-widgets/ld_profile.php:305
+#: src/App/Widgets/Profile.php:264
+#: src/App/Widgets/Profile.php:300
 msgid "Label Color"
 msgstr ""
 
 #. translators: placeholder: Courses.
-#: elementor-widgets/ld_profile.php:273
+#: elementor-widgets/ld_profile.php:283
+#: src/App/Widgets/Profile.php:278
 msgctxt "placeholder: Courses"
 msgid "YOUR %s"
 msgstr ""
 
-#: elementor-widgets/ld_profile.php:307
+#: elementor-widgets/ld_profile.php:317
+#: src/App/Widgets/Profile.php:312
 msgid "EXPAND ALL"
 msgstr ""
 
-#: elementor-widgets/ld_profile.php:374
-#: elementor-widgets/ld_profile.php:468
-#: elementor-widgets/ld_profile.php:504
-#: elementor-widgets/ld_profile.php:540
+#: elementor-widgets/ld_profile.php:382
+#: elementor-widgets/ld_profile.php:476
+#: elementor-widgets/ld_profile.php:512
+#: elementor-widgets/ld_profile.php:548
+#: src/App/Widgets/Profile.php:377
+#: src/App/Widgets/Profile.php:471
+#: src/App/Widgets/Profile.php:507
+#: src/App/Widgets/Profile.php:543
 msgid "Title Text"
 msgstr ""
 
-#: elementor-widgets/ld_profile.php:434
+#: elementor-widgets/ld_profile.php:442
+#: src/App/Widgets/Profile.php:437
 msgid "Row Item Details"
 msgstr ""
 
 #. translators: placeholder: Courses.
-#: elementor-widgets/ld_profile.php:456
+#: elementor-widgets/ld_profile.php:464
+#: src/App/Widgets/Profile.php:459
 msgctxt "placeholder: Courses"
 msgid "%s PROGRESS LABEL"
 msgstr ""
 
 #. translators: placeholder: Courses.
-#: elementor-widgets/ld_profile.php:492
+#: elementor-widgets/ld_profile.php:500
+#: src/App/Widgets/Profile.php:495
 msgctxt "placeholder: Courses"
 msgid "%s PROGRESS PERCENT LABEL"
 msgstr ""
 
-#: elementor-widgets/ld_profile.php:514
-#: elementor-widgets/ld_profile.php:550
+#: elementor-widgets/ld_profile.php:522
+#: elementor-widgets/ld_profile.php:558
+#: src/App/Widgets/Profile.php:517
+#: src/App/Widgets/Profile.php:553
 msgid "Percent Color"
 msgstr ""
 
 #. translators: placeholder: Courses.
-#: elementor-widgets/ld_profile.php:528
+#: elementor-widgets/ld_profile.php:536
+#: src/App/Widgets/Profile.php:531
 msgctxt "placeholder: Courses"
 msgid "%s PROGRESS STEPS LABEL"
 msgstr ""
 
-#: elementor-widgets/ld_profile.php:563
+#: elementor-widgets/ld_profile.php:570
+#: src/App/Widgets/Profile.php:565
 msgid "PROGRESS BAR"
 msgstr ""
 
-#: elementor-widgets/ld_profile.php:572
+#: elementor-widgets/ld_profile.php:579
+#: src/App/Widgets/Profile.php:574
 msgid "Progress Bar Color"
 msgstr ""
 
-#: elementor-widgets/ld_profile.php:584
+#: elementor-widgets/ld_profile.php:591
+#: src/App/Widgets/Profile.php:586
 msgid "Progress Bar Background"
 msgstr ""
 
 #. translators: placeholder: Quizzes.
-#: elementor-widgets/ld_profile.php:600
+#: elementor-widgets/ld_profile.php:607
+#: src/App/Widgets/Profile.php:602
 msgctxt "placeholder: Quizzes"
 msgid "Row Item %s"
 msgstr ""
 
-#: elementor-widgets/ld_profile.php:611
-#: elementor-widgets/ld_profile.php:714
+#: elementor-widgets/ld_profile.php:617
+#: elementor-widgets/ld_profile.php:717
+#: src/App/Widgets/Profile.php:612
+#: src/App/Widgets/Profile.php:712
 msgid "HEADER"
 msgstr ""
 
-#: elementor-widgets/ld_profile.php:656
-#: elementor-widgets/ld_profile.php:759
+#: elementor-widgets/ld_profile.php:661
+#: elementor-widgets/ld_profile.php:761
+#: src/App/Widgets/Profile.php:656
+#: src/App/Widgets/Profile.php:756
 msgid "ROW ITEM"
 msgstr ""
 
-#: elementor-widgets/ld_profile.php:706
+#: elementor-widgets/ld_profile.php:709
+#: src/App/Widgets/Profile.php:704
 msgid "Row Item Assignments"
 msgstr ""
 
-#: elementor-widgets/ld_profile.php:806
+#: elementor-widgets/ld_profile.php:808
+#: src/App/Widgets/Profile.php:803
 msgid "STATUS"
 msgstr ""
 
 #. translators: placeholder: Quiz.
-#: elementor-widgets/ld_quiz.php:32
+#: elementor-widgets/ld_quiz.php:42
+#: src/App/Widgets/Quiz.php:39
 msgctxt "placeholder: Quiz"
 msgid "%s Content"
 msgstr ""
 
 #. translators: placeholder: Quiz.
-#: elementor-widgets/ld_quiz.php:117
+#: elementor-widgets/ld_quiz.php:127
+#: src/App/Widgets/Quiz.php:124
 msgctxt "placeholder: Quiz"
 msgid "%s"
 msgstr ""
 
-#: elementor-widgets/ld_quiz.php:141
+#: elementor-widgets/ld_quiz.php:151
+#: src/App/Widgets/Quiz.php:148
 msgid "Start"
 msgstr ""
 
 #. translators: placeholder: Topic.
 #: elementor-widgets/ld_quiz_list.php:32
 #: elementor-widgets/ld_topic_list.php:32
+#: src/App/Widgets/Quiz_List.php:37
+#: src/App/Widgets/Topic_List.php:37
 msgctxt "placeholder: Topic"
 msgid "%s List"
 msgstr ""
 
 #. translators: placeholder: Quizzes.
 #: elementor-widgets/ld_quiz_list.php:170
+#: src/App/Widgets/Quiz_List.php:175
 msgctxt "placeholder: Quizzes"
 msgid "%s per page"
 msgstr ""
 
 #. translators: placeholder: Quiz.
 #: elementor-widgets/ld_quiz_list.php:229
+#: src/App/Widgets/Quiz_List.php:234
 msgctxt "placeholder: Quiz"
 msgid "%s Taxonomies"
 msgstr ""
 
 #. translators: placeholder: Quiz.
 #: elementor-widgets/ld_quiz_list.php:256
+#: src/App/Widgets/Quiz_List.php:261
 msgctxt "placeholder: Quiz"
 msgid "%s Category"
 msgstr ""
 
 #. translators: placeholder: Quizzes.
 #: elementor-widgets/ld_quiz_list.php:262
+#: src/App/Widgets/Quiz_List.php:267
 msgctxt "placeholder: Quizzes"
 msgid "shows %s with mentioned LearnDash category."
 msgstr ""
 
 #. translators: placeholder: Quiz.
 #: elementor-widgets/ld_quiz_list.php:284
+#: src/App/Widgets/Quiz_List.php:289
 msgctxt "placeholder: Quiz"
 msgid "%s Tag"
 msgstr ""
 
 #. translators: placeholder: Quizzes.
 #: elementor-widgets/ld_quiz_list.php:290
+#: src/App/Widgets/Quiz_List.php:295
 msgctxt "placeholder: Quizzes"
 msgid "shows %s with mentioned LearnDash tag."
 msgstr ""
 
 #. translators: placeholder: Quizzes.
 #: elementor-widgets/ld_quiz_list.php:335
+#: src/App/Widgets/Quiz_List.php:340
 msgctxt "placeholder: Quizzes"
 msgid "shows %s with mentioned WordPress category."
 msgstr ""
 
 #. translators: placeholder: Quizzes.
 #: elementor-widgets/ld_quiz_list.php:359
+#: src/App/Widgets/Quiz_List.php:364
 msgctxt "placeholder: Quizzes"
 msgid "shows %s with mentioned WordPress tag."
 msgstr ""
 
 #. translators: placeholder: Topics.
 #: elementor-widgets/ld_topic_list.php:147
+#: src/App/Widgets/Topic_List.php:152
 msgctxt "placeholder: Topics"
 msgid "%s per page"
 msgstr ""
 
 #. translators: placeholder: Topic.
 #: elementor-widgets/ld_topic_list.php:208
+#: src/App/Widgets/Topic_List.php:213
 msgctxt "placeholder: Topic"
 msgid "%s Taxonomies"
 msgstr ""
 
 #. translators: placeholder: Topic.
 #: elementor-widgets/ld_topic_list.php:220
+#: src/App/Widgets/Topic_List.php:225
 msgctxt "placeholder: Topic"
 msgid "Show %s Category Selector"
 msgstr ""
 
 #. translators: placeholder: Topic.
 #: elementor-widgets/ld_topic_list.php:233
+#: src/App/Widgets/Topic_List.php:238
 msgctxt "placeholder: Topic"
 msgid "%s Category"
 msgstr ""
 
 #. translators: placeholder: Topics.
 #: elementor-widgets/ld_topic_list.php:239
+#: src/App/Widgets/Topic_List.php:244
 msgctxt "placeholder: Topics"
 msgid "shows %s with mentioned LearnDash category."
 msgstr ""
 
 #. translators: placeholder: Topic.
 #: elementor-widgets/ld_topic_list.php:261
+#: src/App/Widgets/Topic_List.php:266
 msgctxt "placeholder: Topic"
 msgid "%s Tag"
 msgstr ""
 
 #. translators: placeholder: Topics.
 #: elementor-widgets/ld_topic_list.php:267
+#: src/App/Widgets/Topic_List.php:272
 msgctxt "placeholder: Topics"
 msgid "shows %s with mentioned LearnDash tag."
 msgstr ""
 
 #. translators: placeholder: Topics.
 #: elementor-widgets/ld_topic_list.php:310
+#: src/App/Widgets/Topic_List.php:315
 msgctxt "placeholder: Topics"
 msgid "shows %s with mentioned WordPress category."
 msgstr ""
 
 #. translators: placeholder: Topics.
 #: elementor-widgets/ld_topic_list.php:334
+#: src/App/Widgets/Topic_List.php:339
 msgctxt "placeholder: Topics"
 msgid "shows %s with mentioned WordPress tag."
 msgstr ""
 
 #: elementor-widgets/ld_video.php:30
+#: src/App/Widgets/Video.php:33
 msgid "Video Progress"
 msgstr ""
 
 #. translators: placeholder: Course.
-#: includes/class-ld-dependency-check.php:172
-msgctxt "placeholder: Minimum plugin version"
-msgid " v%s or higher"
-msgstr ""
-
-#. translators: placeholder: Course.
 #: learndash-elementor-document-base.php:69
+#: src/App/Documents/Base.php:85
 msgctxt "placeholder: Course"
 msgid "LearnDash %s Elements"
 msgstr ""
 
 #. translators: placeholder: Lesson.
 #: learndash-elementor-document-base.php:75
+#: src/App/Documents/Base.php:91
 msgctxt "placeholder: Lesson"
 msgid "LearnDash %s Elements"
 msgstr ""
 
 #. translators: placeholder: Topic.
 #: learndash-elementor-document-base.php:81
+#: src/App/Documents/Base.php:97
 msgctxt "placeholder: Topic"
 msgid "LearnDash %s Elements"
 msgstr ""
 
 #. translators: placeholder: Quiz.
 #: learndash-elementor-document-base.php:87
+#: src/App/Documents/Base.php:103
 msgctxt "placeholder: Quiz"
 msgid "LearnDash %s Elements"
 msgstr ""
 
-#: learndash-elementor.php:104
+#: learndash-elementor.php:53
+msgid "LearnDash LMS - Elementor add-on requires the following plugin(s) be active:"
+msgstr ""
+
+#. translators: placeholder: Course.
+#: src/App/Documents/Course_Single.php:59
+#: src/App/Documents/Quiz_Single.php:59
+msgctxt "placeholder: Courses"
+msgid "Single %s"
+msgstr ""
+
+#. translators: placeholder: Lessons.
+#: src/App/Documents/Lesson_Single.php:59
+msgctxt "placeholder: Lessons"
+msgid "Single %s"
+msgstr ""
+
+#. translators: placeholder: Course.
+#: src/App/Documents/Topic_Single.php:59
+msgctxt "placeholder: Topics "
+msgid "Single %s"
+msgstr ""
+
+#: src/App/Settings/Page.php:27
+msgid "LearnDash Elementor Settings"
+msgstr ""
+
+#: src/App/Settings/Page.php:28
+msgid "Elementor"
+msgstr ""
+
+#: src/App/Settings/Section.php:58
+msgid "Disable Widget Auto Insertion"
+msgstr ""
+
+#: src/App/Settings/Section.php:62
+msgid "By default, we automatically insert the LearnDash infobar, content and navigation widgets into a single course/lesson/topic that has Elementor edit mode enabled (not Elementor Pro global template). Enable this option to prevent that, note that you will need to ensure that you add the appropriate LearnDash widgets into your own page templates."
+msgstr ""
+
+#: src/deprecated/LearnDash_Elementor.php:96
 msgid "LearnDash Elements"
 msgstr ""
 
-#: learndash-elementor.php:332
-msgid "LearnDash LMS Elementor Add-on requires the following plugin(s) be active:"
+#: src/functions/course.php:176
+#: src/functions/course.php:180
+msgid "Expand All"
+msgstr ""
+
+#: src/functions/course.php:177
+msgid "Collapse All"
+msgstr ""
+
+#. translators: placeholders: quiz, attempts count.
+#: src/views/themes/ld30/quiz/index.php:294
+msgctxt "placeholders: quiz, attempts count"
+msgid "You have already taken this %1$s %2$d time(s) and may not take it again."
 msgstr ""

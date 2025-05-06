@@ -43,7 +43,7 @@ class LearnDash_Elementor_Widget_Payment_Buttons extends LearnDash_Elementor_Wid
 	}
 
 	/** Documented in Elementor /includes/base/controls-stack.php */
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'login_section',

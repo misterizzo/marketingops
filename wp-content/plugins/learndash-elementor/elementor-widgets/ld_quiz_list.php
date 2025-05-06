@@ -44,7 +44,7 @@ class LearnDash_Elementor_Widget_Quiz_List extends LearnDash_Elementor_Widget_Ba
 			'orderby'        => 'orderby',
 
 			'course_grid'    => 'course_grid',
-			//'progress_bar'   => 'progress_bar',
+			// 'progress_bar'   => 'progress_bar',
 			'col'            => 'col',
 
 			'ld_quiz_cat_id' => 'quiz_cat',
@@ -61,7 +61,7 @@ class LearnDash_Elementor_Widget_Quiz_List extends LearnDash_Elementor_Widget_Ba
 	}
 
 	/** Documented in Elementor /includes/base/controls-stack.php */
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'ld_quiz_list_settings',
 			array(
@@ -126,7 +126,7 @@ class LearnDash_Elementor_Widget_Quiz_List extends LearnDash_Elementor_Widget_Ba
 				'autocomplete' => array(
 					'object' => ElementorPro\Modules\QueryControl\Module::QUERY_OBJECT_POST,
 					'query'  => array(
-						'post_type' => array( learndash_get_post_type_slug( 'lesson' ) ),
+						'post_type' => array( learndash_get_post_type_slug( 'topic' ) ),
 					),
 				),
 			)
@@ -442,10 +442,10 @@ class LearnDash_Elementor_Widget_Quiz_List extends LearnDash_Elementor_Widget_Ba
 		foreach ( $shortcode_pairs as $key => $val ) {
 			$skip_param = false;
 			switch ( $key ) {
-				case 'quizc_categoryselector':
+				case 'quiz_categoryselector':
 				case 'categoryselector':
 				case 'course_grid':
-				//case 'progress_bar':
+					// case 'progress_bar':
 					if ( 'yes' === $val ) {
 						$val = 'true';
 					} else {

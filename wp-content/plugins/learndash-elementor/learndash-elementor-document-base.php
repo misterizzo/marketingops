@@ -25,9 +25,9 @@ if ( ( class_exists( 'ElementorPro\Modules\ThemeBuilder\Documents\Single' ) ) &&
 		 * @param array $data Data.
 		 */
 		public function __construct( array $data = array() ) {
-			// Hook into the LearnDash template logic and short-circut it if needed.
+			// Hook into the LearnDash template logic and short-circuit it if needed.
 			add_filter( 'learndash_template_preprocess_filter', array( $this, 'learndash_template_preprocess_filter' ), 30, 2 );
-	
+
 			parent::__construct( $data );
 		}
 
@@ -42,10 +42,10 @@ if ( ( class_exists( 'ElementorPro\Modules\ThemeBuilder\Documents\Single' ) ) &&
 			if ( ( function_exists( 'learndash_is_active_theme' ) ) && ( learndash_is_active_theme( 'ld30' ) ) ) {
 				if ( is_singular( self::$post_type_slug ) ) {
 					if ( learndash_get_post_type_slug( 'course' ) === self::$post_type_slug ) {
-						// If 'Course' we stop the normal 'the_content' filtering. 
+						// If 'Course' we stop the normal 'the_content' filtering.
 						$process_template = false;
 					} elseif ( in_array( self::$post_type_slug, learndash_get_post_types( 'course_steps' ), true ) ) {
-						// If a course step, we stop the normal 'the_content' filtering only if not using Focus Mode. 
+						// If a course step, we stop the normal 'the_content' filtering only if not using Focus Mode.
 						if ( 'yes' !== LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Theme_LD30', 'focus_mode_enabled' ) ) {
 							$process_template = false;
 						}
@@ -101,7 +101,7 @@ if ( ( class_exists( 'ElementorPro\Modules\ThemeBuilder\Documents\Single' ) ) &&
 
 			$other_categories = parent::get_editor_panel_categories();
 			if ( isset( $other_categories['learndash-elements'] ) ) {
-				$categories['learndash-elements'] = $other_categories['learndash-elements'];
+				$categories['learndash-elements']           = $other_categories['learndash-elements'];
 				$categories['learndash-elements']['active'] = false;
 				unset( $other_categories['learndash-elements'] );
 			}
