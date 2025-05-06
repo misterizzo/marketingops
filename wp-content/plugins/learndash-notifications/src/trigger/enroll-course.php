@@ -1,14 +1,23 @@
 <?php
+/**
+ * Enroll course trigger.
+ *
+ * @package LearnDash\Notifications
+ */
 
 namespace LearnDash_Notification\Trigger;
 
+use LearnDash\Core\Models\Product;
 use LearnDash_Notification\Notification;
 use LearnDash_Notification\Trigger;
 
+/**
+ * Enroll_Course notification trigger class.
+ *
+ * @since 1.5.0
+ */
 class Enroll_Course extends Trigger {
 	protected $trigger = 'enroll_course';
-
-	protected $models = [];
 
 	/**
 	 * Monitor the course access, depend on the $remove, the access can be enroll or un-roll
@@ -23,18 +32,28 @@ class Enroll_Course extends Trigger {
 	public function monitor_course_access( $user_id, $course_id, $access_list, $remove ): array {
 		$this->models = $this->get_notifications( 'enroll_course' );
 		if ( empty( $this->models ) ) {
-			return array();
+			return [];
 		}
-		// parse the variable to the right type.
+		// Parse the variable to the right type.
 		$user_id   = absint( $user_id );
 		$course_id = absint( $course_id );
 		$remove    = filter_var( $remove, FILTER_VALIDATE_BOOLEAN );
-		$result    = array();
+		$result    = [];
 		$this->log( sprintf( 'Process %d notifications', count( $this->models ) ) );
 		foreach ( $this->models as $model ) {
+			if ( ! $this->is_valid(
+				$model,
+				[
+					'user_id'   => $user_id,
+					'course_id' => $course_id,
+				]
+			) ) {
+				continue;
+			}
+
 			$this->log( sprintf( '- Process notification %s', $model->post->post_title ) );
 			if ( true === $remove ) {
-				//then we will need to delete the mark sent
+				// then we will need to delete the mark sent
 				$model->mark_unsent( $user_id, $this->trigger, $model->post->ID, $course_id );
 				$this->log( sprintf( 'Clear sent status for user #%d in course #%d', $user_id, $course_id ) );
 				$result[ $model->id ] = 'removed';
@@ -52,8 +71,8 @@ class Enroll_Course extends Trigger {
 	 * Send the email to the recipients instantly.
 	 *
 	 * @param Notification $model
-	 * @param int $user_id
-	 * @param int $course_id
+	 * @param int          $user_id
+	 * @param int          $course_id
 	 *
 	 * @return bool
 	 */
@@ -64,16 +83,10 @@ class Enroll_Course extends Trigger {
 			return false;
 		}
 
-		if ( $model->course_id !== 0 && $model->course_id !== $course_id ) {
-			//specific course and this is not the one, return
-			$this->cli_log( 'Not the one, return' );
-
-			return false;
-		}
 		$emails = $model->gather_emails( $user_id, $course_id );
 		$args   = [
 			'user_id'   => $user_id,
-			'course_id' => $course_id
+			'course_id' => $course_id,
 		];
 		if ( absint( $model->delay ) ) {
 			$this->queue_use_db( $emails, $model, $args );
@@ -117,13 +130,40 @@ class Enroll_Course extends Trigger {
 
 	/**
 	 * A base point for monitoring the events
+	 *
 	 * @return void
 	 */
 	function listen() {
+		add_filter( 'learndash_notifications_trigger_valid', [ $this, 'check_for_validity' ], 10, 4 );
+
 		add_action( 'learndash_update_course_access', [ &$this, 'monitor_course_access' ], 10, 4 );
-		add_action( 'leanrdash_notifications_send_delayed_email', [ &$this, 'send_db_delayed_email' ] );
+		add_action( 'leanrdash_notifications_send_delayed_email', [ &$this, 'send_db_delayed_email' ] ); // cSpell:ignore leanrdash -- Typo.
 		add_action( 'ld_added_group_access', [ &$this, 'monitor_auto_enroll_via_group' ], 10, 2 );
 		add_action( 'ld_added_course_group_access', [ $this, 'monitor_enroll_via_course_group' ], 10, 2 );
+	}
+
+	/**
+	 * Filter learndash_notifications_trigger_valid filter hook to check for validity.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @param bool         $valid        True if a trigger is valid|false otherwise.
+	 * @param string       $trigger      Trigger type.
+	 * @param Notification $notification Notification model.
+	 * @param array        $args         Triggering objects arguments.
+	 * @return bool True if a trigger is valid|false otherwise.
+	 */
+	public function check_for_validity( $valid, $trigger, $notification, $args ): bool {
+		if ( $notification->exclude_pre_ordered_course && ! empty( $args['course_id'] ) && ! empty( $args['user_id'] ) ) {
+			$product = Product::find( $args['course_id'] );
+			$user    = get_user_by( 'ID', $args['user_id'] );
+
+			if ( $product && $product->is_pre_ordered( $user ) ) {
+				$valid = false;
+			}
+		}
+
+		return $valid;
 	}
 
 	/**
@@ -137,15 +177,7 @@ class Enroll_Course extends Trigger {
 		$course_id = $args['course_id'];
 
 		if ( ! ld_course_check_user_access( $course_id, $user_id ) ) {
-			//this user not in this course anymore
-			return false;
-		}
-		if ( $model->course_id !== 0 && $model->course_id !== $course_id ) {
-			//specific course and this is not the one, return
-			$this->log( sprintf( "Won't send cause the ID is different from the settings. Expected: %d - Current:%d",
-			                     $model->course_id,
-			                     $course_id ) );
-
+			// This user not in this course anymore.
 			return false;
 		}
 
@@ -154,7 +186,7 @@ class Enroll_Course extends Trigger {
 
 	/**
 	 * @param Notification $model
-	 * @param array $args
+	 * @param array        $args
 	 */
 	protected function after_email_sent( Notification $model, array $args ) {
 		$user_id   = $args['user_id'];

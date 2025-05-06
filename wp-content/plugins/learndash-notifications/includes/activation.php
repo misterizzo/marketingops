@@ -1,4 +1,14 @@
 <?php
+/**
+ * Activation functions.
+ *
+ * @since 1.0.0
+ *
+ * @package LearnDash\Notifications
+ */
+
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
 function learndash_notifications_activate() {
 	if ( ! wp_next_scheduled( 'learndash_notifications_cron' ) ) {

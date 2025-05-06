@@ -1,4 +1,12 @@
 <?php
+/**
+ * LD Notifications Update class.
+ *
+ * @package LearnDash\Notifications
+ *
+ * cspell:ignore shcedule
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
@@ -8,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class LD_Notifications_Update {
 	public function __construct() {
-		add_action( 'init', array( $this, 'update_plugin_cron_shcedule' ) );
+		add_action( 'init', [ $this, 'update_plugin_cron_shcedule' ] );
 	}
 
 	/**
@@ -25,7 +33,7 @@ class LD_Notifications_Update {
 			if ( ! wp_next_scheduled( 'learndash_notifications_cron' ) ) {
 				wp_schedule_event( time(), 'twicedaily', 'learndash_notifications_cron' );
 			}
-			//queue this for kick start the check
+			// queue this for kick start the check
 			if ( ! wp_next_scheduled( 'leanrdash_notifications_send_delayed_email' ) ) {
 				wp_schedule_single_event( time(), 'leanrdash_notifications_send_delayed_email' );
 			}
@@ -36,4 +44,4 @@ class LD_Notifications_Update {
 	}
 }
 
-new LD_Notifications_Update;
+new LD_Notifications_Update();

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Lesson available trigger.
+ *
+ * @package LearnDash\Notifications
+ */
 
 namespace LearnDash_Notification\Trigger;
 
@@ -13,8 +18,6 @@ use LearnDash_Notification\Trigger;
  * do nothing, as both option, the cron for that user surely will start later than existing
  * 3. When a notification get created, make sure all the drip lesson already have a cron monitoring
  * Class Drip_Lesson_Available
- *
- * @package LearnDash_Notification\Trigger
  */
 class Drip_Lesson_Available extends Trigger {
 	/**
@@ -34,13 +37,13 @@ class Drip_Lesson_Available extends Trigger {
 	/**
 	 * Listen for the signal when a new lesson is added or updated, then we going to queue an event for further processing
 	 *
-	 * @param int    $meta_id ID of metadata entry to update.
-	 * @param int    $object_id Post ID.
-	 * @param string $meta_key Metadata key.
+	 * @param int    $meta_id     ID of metadata entry to update.
+	 * @param int    $object_id   Post ID.
+	 * @param string $meta_key    Metadata key.
 	 * @param mixed  $_meta_value Metadata value. This will be a PHP-serialized string representation of the value
-	 *            if the value is an array, an object, or itself a PHP-serialized string.
+	 *                            if the value is an array, an object, or itself a PHP-serialized string.
 	 */
-	public function monitor( $meta_id, $object_id, $meta_key, $_meta_value ) {
+	public function listen_for_lesson_update( $meta_id, $object_id, $meta_key, $_meta_value ) {
 		if ( ! function_exists( 'learndash_get_post_type_slug' ) ) {
 			// this mean the LD core is not on.
 			return;
@@ -59,9 +62,9 @@ class Drip_Lesson_Available extends Trigger {
 			return;
 		}
 
-		$args      = array(
+		$args      = [
 			$object_id,
-		);
+		];
 		$timestamp = $this->get_next_send( $object_id );
 		if ( false === $timestamp ) {
 			// no user enroll to this course, so do nothing.
@@ -79,39 +82,56 @@ class Drip_Lesson_Available extends Trigger {
 	 * Get the nearest time this lesson available for the users
 	 *
 	 * @param int  $lesson_id lesson ID.
-	 * @param bool $get_past If user set the enroll date to the past, then we set this to true.
+	 * @param bool $get_past  If user set the enroll date to the past, then we set this to true.
 	 *
 	 * @return int|bool
 	 */
-	public function get_next_send( int $lesson_id, bool $get_past = false ) {
+	public function get_next_send( int $lesson_id, bool $get_past = false, ?int $user_id = null ) {
 		$course_id = learndash_get_course_id( $lesson_id );
 		$user_ids  = $this->get_users( $course_id );
 
-		if ( empty( $user_ids ) ) {
+		if ( empty( $user_ids ) && ! empty( $user_id ) ) {
 			return false;
 		}
 
-		$timestamps = array();
-		$current    = $this->get_timestamp();
-		// $this->cli_log( 'Now: ' . $this->get_current_time_from( $current ) );
-		foreach ( $user_ids as $user_id ) {
+		$current = $this->get_timestamp();
+
+		if ( ! empty( $user_id ) ) {
+			$user_timestamps = [];
+
 			$timestamp = $this->ld_lesson_access_from( $lesson_id, $user_id, $course_id, true );
-			// this should always in future.
-			if ( $current > $timestamp && false === $get_past ) {
-				// this is already done, moving one.
-				continue;
+
+			$user_timestamps[] = $timestamp;
+
+			$user_timestamps = array_unique( $user_timestamps );
+			$user_timestamps = array_filter( $user_timestamps );
+
+			if ( empty( $user_timestamps ) ) {
+				return false;
 			}
-			// $this->cli_log( "{$user_id} " . $this->get_current_time_from( $timestamp ) );
-			$timestamps[] = $timestamp;
+		} else {
+			$timestamps = [];
+
+			foreach ( $user_ids as $c_user_id ) {
+				$timestamp = $this->ld_lesson_access_from( $lesson_id, $c_user_id, $course_id, true );
+
+				// This should always in future.
+				if ( $current > $timestamp && false === $get_past ) {
+					continue;
+				}
+
+				$timestamps[] = $timestamp;
+			}
+
+			$timestamps = array_unique( $timestamps );
+			$timestamps = array_filter( $timestamps );
+
+			if ( empty( $timestamps ) ) {
+				return false;
+			}
 		}
 
-		$timestamps = array_unique( $timestamps );
-		$timestamps = array_filter( $timestamps );
-		if ( empty( $timestamps ) ) {
-			return false;
-		}
-
-		return min( $timestamps );
+		return ! empty( $user_id ) ? min( $user_timestamps ) : min( $timestamps );
 	}
 
 	/**
@@ -121,86 +141,155 @@ class Drip_Lesson_Available extends Trigger {
 	 *
 	 * @param int $lesson_id The Lesson ID.
 	 */
-	public function maybe_dispatch_emails( int $lesson_id ) {
+	public function maybe_dispatch_emails( $lesson_id ) {
 		$models = $this->get_notifications( $this->trigger );
+
 		if ( empty( $models ) ) {
 			return;
 		}
-		$course_id = learndash_get_course_id( $lesson_id );
-		$user_ids  = $this->get_users( $course_id );
-		$this->log( '====Cron Start====' );
-		foreach ( $user_ids as $user_id ) {
-			$user_id = absint( $user_id );
-			if ( ! $this->should_send( $user_id, $lesson_id, $course_id ) ) {
-				continue;
-			}
-			$timestamp = $this->ld_lesson_access_from( $lesson_id, $user_id, $course_id );
-			// $this->cli_log( get_user_by( 'id', $user_id )->user_login );
-			// $this->cli_log( 'Should access at: ' . $this->get_current_time_from( $timestamp ) );
-			// $this->cli_log( 'Today: ' . $this->get_current_time_from( $this->get_timestamp() ) );
-			$this->log(
-				sprintf(
-					'Expected to send a notification for the lesson %d at %s for the user %d',
-					$lesson_id,
-					$this->get_current_time_from( $timestamp ),
-					$user_id
-				)
-			);
-			// if timestamp is empty, then the user can access.
-			$current = $this->get_timestamp();
-			if ( ! empty( $timestamp ) && $current < $timestamp ) {
-				$this->log( 'Cron was trigger manually, however, the time was not right' );
-				// this is not touch yet.
-				continue;
-			}
-			foreach ( $models as $model ) {
-				if ( $model->is_sent( $user_id, $this->trigger, $model->post->ID, $lesson_id ) ) {
-					continue;
-				}
 
-				if ( 0 !== $model->lesson_id && $model->lesson_id !== $lesson_id ) {
-					continue;
-				}
+		if ( false === $this->is_shared_course() ) {
+			$course_id = learndash_get_course_id( $lesson_id );
+			$this->dispatching_email( (int) $course_id, (int) $lesson_id, $models );
+		} else {
+			$course_ids = $this->get_course_ids_for_shared_coursed( (int) $lesson_id );
 
-				$emails = $model->gather_emails( $user_id, $course_id );
-				$args   = array(
-					'user_id'   => $user_id,
-					'course_id' => $course_id,
-					'lesson_id' => $lesson_id,
-				);
-				if ( absint( $model->delay ) ) {
-					// check if this already queued.
-					$queued = learndash_notifications_get_all_delayed_emails(
-						array_merge( array( 'notification_id' ), $args )
-					);
-					if ( count( $queued ) ) {
-						// this already be queued.
-						return;
-					}
-					$this->queue_use_db( $emails, $model, $args );
-				} else {
-					$this->send( $emails, $model, $args );
-					$model->mark_sent( $user_id, $this->trigger, $model->post->ID, $lesson_id );
-				}
+			foreach ( $course_ids as $course_id ) {
+				$this->dispatching_email( (int) $course_id, (int) $lesson_id, $models );
 			}
 		}
+
 		$timestamp = $this->get_next_send( $lesson_id );
+
 		if ( false !== $timestamp ) {
-			// $this->log( sprintf( 'Next check at: %s - unix timestamp: %s - lesson ID: %d', $this->get_current_time_from( $timestamp ), $timestamp, $lesson_id ) );
-			wp_clear_scheduled_hook( $this->hook_name, array( $lesson_id ) );
-			wp_schedule_single_event( $timestamp, $this->hook_name, array( $lesson_id ) );
+			wp_clear_scheduled_hook( $this->hook_name, [ $lesson_id ] );
+			wp_schedule_single_event( $timestamp, $this->hook_name, [ $lesson_id ] );
 		} else {
-			wp_clear_scheduled_hook( $this->hook_name, array( $lesson_id ) );
+			wp_clear_scheduled_hook( $this->hook_name, [ $lesson_id ] );
 			$this->log( 'All sent' );
 		}
 		$this->log( '====Cron End====' );
 	}
 
 	/**
+	 * Checks and dispatches an email for this lesson.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param int                 $course_id The course ID we are sending for.
+	 * @param int                 $lesson_id The lesson ID we are sending for.
+	 * @param array<Notification> $models    List of Notifications.
+	 *
+	 * @return void
+	 */
+	private function dispatching_email( int $course_id, int $lesson_id, array $models ): void {
+		$user_ids = $this->get_users( $course_id );
+		$this->log( '====Cron Start====' );
+
+		foreach ( $user_ids as $user_id ) {
+			$user_id = absint( $user_id );
+			if ( ! $this->should_send( $user_id, $lesson_id, $course_id ) ) {
+				continue;
+			}
+			$timestamp = $this->ld_lesson_access_from( $lesson_id, $user_id, $course_id );
+			$current   = $this->get_timestamp();
+			if ( ! empty( $timestamp ) && $current < $timestamp ) {
+				$this->log( 'Cron was trigger manually, however, the time was not right' );
+				// this is not touch yet.
+				continue;
+			}
+
+			$args = [
+				'user_id'   => $user_id,
+				'course_id' => $course_id,
+				'lesson_id' => $lesson_id,
+			];
+
+			foreach ( $models as $model ) {
+				if ( ! $this->is_valid( $model, $args ) ) {
+					continue;
+				}
+
+				if ( $model->is_sent( $user_id, $this->trigger, $model->post->ID, $course_id, $lesson_id ) ) {
+					$this->log( sprintf( 'ERR_SENT_%s_%s_%s', $args['user_id'], $args['course_id'], $args['lesson_id'] ) );
+					continue;
+				}
+
+				$this->log(
+					sprintf(
+						'Expected to send a notification "%s" for the lesson %d at %s for the user %d',
+						$model->post->post_title,
+						$lesson_id,
+						$this->get_current_time_from( $timestamp ),
+						$user_id
+					)
+				);
+
+				$emails = $model->gather_emails( $user_id, $course_id );
+
+				if ( absint( $model->delay ) ) {
+					// check if this already queued.
+					$queued = learndash_notifications_get_all_delayed_emails(
+						array_merge( [ 'notification_id' ], $args )
+					);
+
+					if ( count( $queued ) ) {
+						// this already be queued.
+						$this->log( sprintf( 'ERR_QUEUED_%s_%s_%s', $args['user_id'], $args['course_id'], $args['lesson_id'] ) );
+						return;
+					}
+
+					$this->queue_use_db( $emails, $model, $args );
+				} else {
+					$this->send( $emails, $model, $args );
+					$model->mark_sent( $user_id, $this->trigger, $model->post->ID, $course_id, $lesson_id );
+				}
+			}
+		}
+	}
+
+	/**
+	 * Query to the database for retrieving the course_ids if shared course mode enabled.
+	 *
+	 * @since 1.6.4
+	 * @since 1.6.5 Fixed query. LIKE statement was not working.
+	 *
+	 * @param int $lesson_id The lesson ID that is attached to a course.
+	 *
+	 * @return array
+	 */
+	protected function get_course_ids_for_shared_coursed( $lesson_id ) {
+		global $wpdb;
+		$sql = $wpdb->prepare(
+			'SELECT meta_value FROM ' . $wpdb->postmeta . ' WHERE post_id = %d AND meta_key LIKE %s',
+			$lesson_id,
+			$wpdb->esc_like( 'ld_course_' ) . '%'
+		);
+
+		return $wpdb->get_col( $sql );
+	}
+
+	/**
+	 * A shorthand for check if the shared course is enabled.
+	 *
+	 * @return bool
+	 */
+	protected function is_shared_course() {
+		if ( 'yes' === \LearnDash_Settings_Section::get_section_setting(
+			'LearnDash_Settings_Courses_Builder',
+			'shared_steps'
+		) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Determine if this should be send to the user, this mostly for backward compatibility, we should not
 	 * send the email again
 	 *
-	 * @param int $user_id The user ID.
+	 * @param int $user_id   The user ID.
 	 * @param int $lesson_id The lesson ID.
 	 * @param int $course_id The course ID.
 	 */
@@ -236,10 +325,10 @@ class Drip_Lesson_Available extends Trigger {
 	/**
 	 * When an user enroll to a course, and if the course having a drip lesson, then restart the cron
 	 *
-	 * @param int   $user_id The user ID.
-	 * @param int   $course_id The course ID.
+	 * @param int   $user_id     The user ID.
+	 * @param int   $course_id   The course ID.
 	 * @param array $access_list The access list.
-	 * @param bool  $remove Status.
+	 * @param bool  $remove      Status.
 	 */
 	public function maybe_kick_start( $user_id, $course_id, $access_list, $remove ) {
 		if ( $remove ) {
@@ -248,7 +337,7 @@ class Drip_Lesson_Available extends Trigger {
 			return;
 		}
 
-		$lesson_ids = learndash_get_lesson_list( $course_id, array( 'num' => 0 ) );
+		$lesson_ids = $this->get_course_lesson_ids( intval( $course_id ) );
 		foreach ( $lesson_ids as $lesson_id ) {
 			if ( is_object( $lesson_id ) ) {
 				$lesson_id = $lesson_id->ID;
@@ -258,11 +347,11 @@ class Drip_Lesson_Available extends Trigger {
 			}
 			// if the lesson is not able to access now for this user, means this is queued for future.
 			$timestamp = $this->ld_lesson_access_from( $lesson_id, $user_id );
-			if ( absint( $timestamp ) > 0 && ! wp_next_scheduled( $this->hook_name, array( $lesson_id ) ) ) {
+			if ( absint( $timestamp ) > 0 && ! wp_next_scheduled( $this->hook_name, [ $lesson_id ] ) ) {
 				// this is drip and no cron for it, start now.
 				// we don't need to re-queue if something already running, as it should trigger before this.
 				$timestamp = $this->get_next_send( $lesson_id );
-				wp_schedule_single_event( $timestamp, $this->hook_name, array( $lesson_id ) );
+				wp_schedule_single_event( $timestamp, $this->hook_name, [ $lesson_id ] );
 			}
 		}
 	}
@@ -280,7 +369,7 @@ class Drip_Lesson_Available extends Trigger {
 		if ( empty( $user_ids ) ) {
 			return;
 		}
-		$strings = array( sprintf( 'Lesson %d:', $lesson_id ) );
+		$strings = [ sprintf( 'Lesson %d:', $lesson_id ) ];
 		foreach ( $user_ids as $user_id ) {
 			$timestamp = $this->ld_lesson_access_from( $lesson_id, $user_id );
 			if ( $timestamp > $this->get_timestamp() ) {
@@ -300,11 +389,11 @@ class Drip_Lesson_Available extends Trigger {
 	/**
 	 * Clear the single schedule if the course have drip lesson and no one enroll into it
 	 *
-	 * @param int $user_id The user ID.
+	 * @param int $user_id   The user ID.
 	 * @param int $course_id The course ID.
 	 */
 	private function clear_queued_notifications( $user_id, $course_id ) {
-		$lesson_ids = learndash_get_lesson_list( $course_id, array( 'num' => 0 ) );
+		$lesson_ids = $this->get_course_lesson_ids( intval( $course_id ) );
 		$user_ids   = $this->get_users( $course_id );
 		$init_time  = get_option( 'ld_notifications_init' );
 
@@ -324,9 +413,9 @@ class Drip_Lesson_Available extends Trigger {
 					break;
 				}
 			}
-			if ( $remove && wp_next_scheduled( $this->hook_name, array( $lesson_id ) ) ) {
+			if ( $remove && wp_next_scheduled( $this->hook_name, [ $lesson_id ] ) ) {
 				$this->log( sprintf( 'Clear the queue for lesson %d', $lesson_id ) );
-				wp_clear_scheduled_hook( $this->hook_name, array( $lesson_id ) );
+				wp_clear_scheduled_hook( $this->hook_name, [ $lesson_id ] );
 			}
 		}
 	}
@@ -344,7 +433,7 @@ class Drip_Lesson_Available extends Trigger {
 			return $query->get_results();
 		}
 
-		return array();
+		return [];
 	}
 
 	/**
@@ -355,13 +444,13 @@ class Drip_Lesson_Available extends Trigger {
 	 * @return mixed
 	 */
 	public function listen() {
-		add_action( 'updated_postmeta', array( &$this, 'monitor' ), 99, 4 );
-		add_action( 'learndash_update_course_access', array( &$this, 'maybe_kick_start' ), 10, 4 );
-		add_action( 'updated_user_meta', array( $this, 'requeue_cron_when_enroll_date_changed' ), 10, 4 );
-		add_action( $this->hook_name, array( &$this, 'maybe_dispatch_emails' ) );
+		add_action( 'updated_postmeta', [ &$this, 'listen_for_lesson_update' ], 99, 4 );
+		add_action( 'learndash_update_course_access', [ &$this, 'maybe_kick_start' ], 10, 4 );
+		add_action( 'updated_user_meta', [ $this, 'requeue_cron_when_enroll_date_changed' ], 10, 4 );
+		add_action( $this->hook_name, [ &$this, 'maybe_dispatch_emails' ] );
 		// kick start.
-		add_action( 'learndash_notifications_cron', array( $this, 'ensure_cron_queued' ) );
-		add_action( 'leanrdash_notifications_send_delayed_email', array( &$this, 'send_db_delayed_email' ) );
+		add_action( 'learndash_notifications_cron', [ $this, 'ensure_cron_queued' ] );
+		add_action( 'leanrdash_notifications_send_delayed_email', [ &$this, 'send_db_delayed_email' ] );
 		if ( get_option( 'learndash_notifications_drips_check' ) ) {
 			$this->ensure_cron_queued();
 			delete_option( 'learndash_notifications_drips_check' );
@@ -371,9 +460,9 @@ class Drip_Lesson_Available extends Trigger {
 	/**
 	 * We update the cron job time when an enrollment date changed.
 	 *
-	 * @param int    $meta_id ID of updated metadata entry.
-	 * @param int    $object_id ID of the object metadata is for.
-	 * @param string $meta_key Metadata key.
+	 * @param int    $meta_id     ID of updated metadata entry.
+	 * @param int    $object_id   ID of the object metadata is for.
+	 * @param string $meta_key    Metadata key.
 	 * @param mixed  $_meta_value Metadata value. Serialized if non-scalar.
 	 */
 	public function requeue_cron_when_enroll_date_changed( $meta_id, $object_id, $meta_key, $_meta_value ) {
@@ -381,17 +470,18 @@ class Drip_Lesson_Available extends Trigger {
 		if ( preg_match( $pattern, $meta_key, $matches ) ) {
 			$course_id = $matches[1];
 			// get the drip lessons.
-			$lessons = learndash_get_lesson_list( $course_id );
-			if ( count( $lessons ) ) {
-				foreach ( $lessons as $lesson ) {
-					$timestamp = $this->get_next_send( $lesson->ID, true );
+			$lessons = $this->get_course_lesson_ids( intval( $course_id ) );
+			if ( count( $lessons ) && is_array( $lessons ) ) {
+				foreach ( $lessons as $lesson_id ) {
+					$timestamp = $this->get_next_send( $lesson_id, true, $object_id );
+
 					if ( false === $timestamp ) {
 						// no user enroll to this course, so do nothing.
 						continue;
 					}
-					$args = array(
-						$lesson->ID,
-					);
+					$args = [
+						$lesson_id,
+					];
 					if ( wp_next_scheduled( $this->hook_name, $args ) ) {
 						wp_clear_scheduled_hook( $this->hook_name, $args );
 					}
@@ -405,7 +495,7 @@ class Drip_Lesson_Available extends Trigger {
 	 * Determine if we can send delayed email.
 	 *
 	 * @param Notification $model The notification model.
-	 * @param array        $args Misc args.
+	 * @param array        $args  Misc args.
 	 *
 	 * @return bool
 	 */
@@ -416,19 +506,26 @@ class Drip_Lesson_Available extends Trigger {
 
 		if ( ! ld_course_check_user_access( $course_id, $user_id ) ) {
 			// this user not in this course anymore.
-			$this->log( sprintf( 'Won\' send because user not in the course anymore, course id: %d', $course_id ) );
+			$this->log( sprintf( 'Won\'t send because user not in the course anymore, course id: %d', $course_id ) );
 
 			return false;
 		}
 
 		$lesson = get_post( $lesson_id );
 		if ( ! is_object( $lesson ) ) {
-			$this->log( 'Won\' send because lesson doesn\'t exist anymore' );
+			$this->log( 'Won\'t send because lesson doesn\'t exist anymore' );
 
 			return false;
 		}
 
-		if ( 0 !== $model->lesson_id && $model->lesson_id !== $lesson_id ) {
+		if ( ! $this->is_valid(
+			$model,
+			[
+				'user_id'   => $user_id,
+				'course_id' => $course_id,
+				'lesson_id' => $lesson_id,
+			]
+		) ) {
 			// specific course and this is not the one, return.
 			$this->log(
 				sprintf(
@@ -445,7 +542,7 @@ class Drip_Lesson_Available extends Trigger {
 		 * Because, this email can be created by legacy version, and it maybe sent before it reach into this,
 		 * so we have to check
 		 */
-		if ( $model->is_sent( $user_id, $this->trigger, $model->post->ID, $lesson_id ) ) {
+		if ( $model->is_sent( $user_id, $this->trigger, $model->post->ID, $course_id, $lesson_id ) ) {
 			$this->log( 'The email already sent.' );
 
 			return false;
@@ -459,12 +556,14 @@ class Drip_Lesson_Available extends Trigger {
 	 */
 	public function ensure_cron_queued() {
 		$models = $this->get_notifications( $this->trigger );
+
 		if ( empty( $models ) ) {
 			// nothing to do.
 			return;
 		}
 
 		$lesson_ids = $this->get_all_lessons();
+
 		foreach ( $lesson_ids as $lesson_id ) {
 			if ( ! $this->is_dripped_lesson( $lesson_id ) ) {
 				continue;
@@ -473,8 +572,8 @@ class Drip_Lesson_Available extends Trigger {
 			if ( ! $timestamp ) {
 				continue;
 			}
-			if ( ! wp_next_scheduled( $this->hook_name, array( $lesson_id ) ) ) {
-				wp_schedule_single_event( $timestamp, $this->hook_name, array( $lesson_id ) );
+			if ( ! wp_next_scheduled( $this->hook_name, [ $lesson_id ] ) ) {
+				wp_schedule_single_event( $timestamp, $this->hook_name, [ $lesson_id ] );
 			}
 		}
 	}
@@ -483,12 +582,13 @@ class Drip_Lesson_Available extends Trigger {
 	 * Trigger this for flag a notification is sent.
 	 *
 	 * @param Notification $model The Notification model.
-	 * @param array $args Misc Data.
+	 * @param array        $args  Misc Data.
 	 */
 	protected function after_email_sent( Notification $model, array $args ) {
 		$user_id   = $args['user_id'];
+		$course_id = $args['course_id'];
 		$lesson_id = $args['lesson_id'];
-		$model->mark_sent( $user_id, $this->trigger, $model->post->ID, $lesson_id );
+		$model->mark_sent( $user_id, $this->trigger, $model->post->ID, $course_id, $lesson_id );
 	}
 
 	/**
@@ -512,9 +612,9 @@ class Drip_Lesson_Available extends Trigger {
 	/**
 	 * Gets the timestamp of when a user can access the lesson.
 	 *
-	 * @param int      $lesson_id Lesson ID.
-	 * @param int      $user_id User ID.
-	 * @param int|null $course_id Optional. Course ID. Default null.
+	 * @param int      $lesson_id        Lesson ID.
+	 * @param int      $user_id          User ID.
+	 * @param int|null $course_id        Optional. Course ID. Default null.
 	 * @param boolean  $bypass_transient Optional. Whether to bypass transient cache. Default false.
 	 *
 	 * @return int|void The timestamp of when the user can access the lesson.
@@ -539,14 +639,14 @@ class Drip_Lesson_Available extends Trigger {
 
 		$visible_after = learndash_get_setting( $lesson_id, 'visible_after' );
 		if ( $visible_after > 0 ) {
-			// Adjust the Course acces from by the number of days. Use abs() to ensure no negative days.
+			// Adjust the Course access from by the number of days. Use abs() to ensure no negative days.
 			$lesson_access_from = $courses_access_from + abs( $visible_after ) * 24 * 60 * 60;
 			/**
 			 * Filters the timestamp of when lesson will be visible after.
 			 *
 			 * @param int $lesson_access_from The timestamp of when the lesson will be available after a specific date.
-			 * @param int $lesson_id Lesson ID.
-			 * @param int $user_id User ID.
+			 * @param int $lesson_id          Lesson ID.
+			 * @param int $user_id            User ID.
 			 */
 			$lesson_access_from = apply_filters(
 				'ld_lesson_access_from__visible_after',
@@ -560,7 +660,7 @@ class Drip_Lesson_Available extends Trigger {
 			$visible_after_specific_date = learndash_get_setting( $lesson_id, 'visible_after_specific_date' );
 			if ( ! empty( $visible_after_specific_date ) ) {
 				if ( ! is_numeric( $visible_after_specific_date ) ) {
-					// If we a non-numberic value like a date stamp Y-m-d hh:mm:ss we want to convert it to a GMT timestamp
+					// If we a non-numeric value like a date stamp Y-m-d hh:mm:ss we want to convert it to a GMT timestamp
 					$visible_after_specific_date = learndash_get_timestamp_from_date_string(
 						$visible_after_specific_date,
 						true
@@ -581,7 +681,7 @@ class Drip_Lesson_Available extends Trigger {
 		 *
 		 * @param int $timestamp The timestamp of when the lesson can be accessed.
 		 * @param int $lesson_id Lesson ID.
-		 * @param int $user_id User ID.
+		 * @param int $user_id   User ID.
 		 */
 		return apply_filters( 'ld_lesson_access_from', $return, $lesson_id, $user_id );
 	}

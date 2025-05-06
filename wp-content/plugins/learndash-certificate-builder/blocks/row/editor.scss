@@ -1,0 +1,14 @@
+.ld-certificate-builder-row {
+  padding: 10px 0;
+  border: solid 1px black;
+  .block-editor-block-list__layout{
+	display: flex;
+	flex-flow: row;
+	justify-content: start;
+	.wp-block {
+	  width: auto !important;
+	  margin: 0;
+	  display: inline-block;
+	}
+  }
+}

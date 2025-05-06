@@ -5,8 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 add_action( 'admin_init', 'learndash_notifications_tool_empty_db_table' );
 function learndash_notifications_tool_empty_db_table() {
-	if ( 
-		! isset( $_GET['page'] ) || ! isset( $_GET['tool'] ) || ! isset( $_GET['nonce'] ) 
+	if ( ! isset( $_GET['page'] ) || ! isset( $_GET['tool'] ) || ! isset( $_GET['nonce'] )
 		|| $_GET['page'] != 'ld-notifications-status' || $_GET['tool'] != 'empty-table'
 	) {
 		return;
@@ -45,7 +44,7 @@ function learndash_notifications_ajax_fix_recipients() {
 
 	global $wpdb;
 
-	$checked_emails = isset( $_POST['checked_emails'] ) && is_array( $_POST['checked_emails'] ) ? array_walk_recursive( $_POST['checked_emails'], 'sanitize_text_field' ) : array();
+	$checked_emails = isset( $_POST['checked_emails'] ) && is_array( $_POST['checked_emails'] ) ? array_walk_recursive( $_POST['checked_emails'], 'sanitize_text_field' ) : [];
 
 	$step      = intval( $_POST['step'] );
 	$per_batch = 100;
@@ -54,10 +53,10 @@ function learndash_notifications_ajax_fix_recipients() {
 		$total = intval( $_POST['total'] );
 	} else {
 		$total_query = "SELECT COUNT(*) FROM {$wpdb->prefix}ld_notifications_delayed_emails";
-		$total = $wpdb->get_var( $total_query );
+		$total       = $wpdb->get_var( $total_query );
 	}
-	$percentage = number_format( ( ( $offset + $per_batch ) / $total ) * 100, 2 );
-	$percentage = $percentage > 100 ? 100 : $percentage;
+	$percentage = $total > 0 ? number_format( ( ( $offset + $per_batch ) / $total ) * 100, 2 ) : 100;
+	$percentage = $percentage >= 100 ? 100 : $percentage;
 
 	$emails_query = "SELECT * FROM {$wpdb->prefix}ld_notifications_delayed_emails LIMIT {$per_batch} OFFSET {$offset}";
 
@@ -67,10 +66,9 @@ function learndash_notifications_ajax_fix_recipients() {
 		$recipients     = maybe_unserialize( $email->recipient );
 		$shortcode_data = maybe_unserialize( $email->shortcode_data );
 
-		if ( 
-			isset( $shortcode_data['user_id'] ) && $shortcode_data['user_id'] > 0 && 
-			isset( $shortcode_data['notification_id'] ) && $shortcode_data['notification_id'] > 0 && 
-			isset( $shortcode_data['course_id'] ) && $shortcode_data['course_id'] > 0 
+		if ( isset( $shortcode_data['user_id'] ) && $shortcode_data['user_id'] > 0 &&
+			isset( $shortcode_data['notification_id'] ) && $shortcode_data['notification_id'] > 0 &&
+			isset( $shortcode_data['course_id'] ) && $shortcode_data['course_id'] > 0
 		) {
 			$notification     = get_post( $shortcode_data['notification_id'] );
 			$recipients       = learndash_notifications_get_recipients( $shortcode_data['notification_id'] );
@@ -79,39 +77,42 @@ function learndash_notifications_ajax_fix_recipients() {
 			if ( ! empty( $bcc ) ) {
 				$recipient_emails = array_merge( $recipient_emails, $bcc );
 			}
-			$recipient_emails = array_filter( $recipient_emails, function( $value ) {
-				if ( ! empty( $value ) ) {
-					return true;
-				} else {
-					return false;
+			$recipient_emails = array_filter(
+				$recipient_emails,
+				function ( $value ) {
+					if ( ! empty( $value ) ) {
+						return true;
+					} else {
+						return false;
+					}
 				}
-			} );
+			);
 			$recipient_emails = array_unique( $recipient_emails );
 
-			$current_email = array(
+			$current_email = [
 				'recipients'     => $recipient_emails,
 				'shortcode_data' => $shortcode_data,
-			);
+			];
 
 			if ( ! empty( $recipient_emails ) && ! in_array( $current_email, $checked_emails, true ) ) {
 				$wpdb->update(
 					"{$wpdb->prefix}ld_notifications_delayed_emails",
-					array(
-						'recipient' => maybe_serialize( $recipient_emails )
-					),
-					array(
-						'id' => $email->id
-					),
-					array( '%s' ),
-					array( '%d' )
+					[
+						'recipient' => maybe_serialize( $recipient_emails ),
+					],
+					[
+						'id' => $email->id,
+					],
+					[ '%s' ],
+					[ '%d' ]
 				);
 			} else {
 				$wpdb->delete(
 					"{$wpdb->prefix}ld_notifications_delayed_emails",
-					array(
+					[
 						'id' => $email->id,
-					),
-					array( '%d' )
+					],
+					[ '%d' ]
 				);
 			}
 
@@ -120,16 +121,16 @@ function learndash_notifications_ajax_fix_recipients() {
 	}
 
 	if ( ! empty( $emails ) ) {
-		$return = array(
-			'step'              => intval( $step + 1 ),
-			'total'             => intval( $total ),
-			'percentage'        => $percentage,
-			'checked_emails'    => $checked_emails,
-		);
+		$return = [
+			'step'           => intval( $step + 1 ),
+			'total'          => intval( $total ),
+			'percentage'     => $percentage,
+			'checked_emails' => $checked_emails,
+		];
 	} else {
-		$return = array(
-			'step'              => 'complete'
-		);
+		$return = [
+			'step' => 'complete',
+		];
 	}
 
 	echo json_encode( $return );

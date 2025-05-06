@@ -1,0 +1,23 @@
+= [1.1.3.1] =
+
+* Fix - Resolved a fatal error when rendering certificate download URLs.
+
+= [1.1.3] =
+
+* Fix - Resolved an issue where certificate image upload doesn't attach it to the post directly.
+* Fix - Resolved conflict with LearnDash Integrity hotlinking prevention feature that disabled an image from being loaded in a certificate.
+* Tweak - Added support for .PNG background images.
+
+= [1.1.2] =
+
+* Tweak - Added the ability to filter the blocks that can be used within the certificate builder.
+* Tweak - Added filters: `learndash_certificate_builder_allowed_blocks`, `learndash_certificate_builder_block_fallback`.
+
+= [1.1.1] =
+
+* Fix = Resolved missing blocks on widgets block editor page.
+
+= [1.1.0] =
+
+* Fix - Resolved fatal error related to non-prefixed Composer dependencies
+* Tweak - Added actions: `learndash_certificate_builder_uninstall`.

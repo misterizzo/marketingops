@@ -1,4 +1,9 @@
 <?php
+/**
+ * User last login trigger.
+ *
+ * @package LearnDash\Notifications
+ */
 
 namespace LearnDash_Notification\Trigger;
 
@@ -10,8 +15,6 @@ use LearnDash_Notification\Trigger;
  * we schedule a hook to notify them via the queue table.
  *
  * Class User_Login_Track
- *
- * @package LearnDash_Notification\Trigger
  */
 class User_Login_Track extends Trigger {
 	/**
@@ -46,20 +49,27 @@ class User_Login_Track extends Trigger {
 	 * @return array
 	 */
 	public function get_users_and_courses( Notification $model ): array {
-		if ( 0 === $model->course_id ) {
+		if ( is_array( $model->course_id ) && in_array( 'all', $model->course_id ) ) {
 			$course_ids = $this->get_all_course();
 		} else {
-			$course_ids = array( $model->course_id );
+			$course_ids = $model->course_id;
 		}
-		$data = array();
+
+		$data = [];
 		foreach ( $course_ids as $course_id ) {
+			if ( ! is_int( $course_id ) ) {
+				continue;
+			}
+
 			$users = $this->get_users_ids_from_course( $course_id );
+
 			if ( ! count( $users ) ) {
 				continue;
 			}
+
 			foreach ( $users as $user_id ) {
 				if ( ! isset( $data[ $user_id ] ) ) {
-					$data[ $user_id ] = array();
+					$data[ $user_id ] = [];
 				}
 				$data[ $user_id ][] = $course_id;
 			}
@@ -71,7 +81,7 @@ class User_Login_Track extends Trigger {
 	/**
 	 * Return an array of users ids from the course provided.
 	 *
-	 * @param int $course_id Course ID.
+	 * @param array $course_id Course ID.
 	 *
 	 * @return array
 	 */
@@ -79,12 +89,12 @@ class User_Login_Track extends Trigger {
 		$query = learndash_get_users_for_course( $course_id );
 		if ( ! $query instanceof \WP_User_Query ) {
 			// something was wrong.
-			return array();
+			return [];
 		}
 		$users_ids = $query->get_results();
 		foreach ( $users_ids as $key => $user_id ) {
 			if ( learndash_course_completed( $user_id, $course_id )
-				 || ld_course_access_expired( $course_id, $user_id ) ) {
+				|| ld_course_access_expired( $course_id, $user_id ) ) {
 				unset( $users_ids[ $key ] );
 			}
 		}
@@ -177,31 +187,54 @@ class User_Login_Track extends Trigger {
 					// the user and the admins can see all the courses, however the group leader
 					// should only see the course they not participate in.
 					// send email.
-					$emails = array();
+					$emails = [];
 					foreach ( $courses_ids as $course_id ) {
-						$clone = clone $model;
-						unset( $clone->recipients[ array_search( 'group_leader', $clone->recipients, true ) ] );
+						if ( ! $this->is_valid(
+							$model,
+							[
+								'user_id'   => $user_id,
+								'course_id' => $course_id,
+							]
+						) ) {
+							continue;
+						}
+
+						$clone  = clone $model;
+						$gl_key = array_search( 'group_leader', $clone->recipients, true );
+						if ( $gl_key !== false ) {
+							unset( $clone->recipients[ $gl_key ] );
+						}
 						$emails = array_merge( $emails, $clone->gather_emails( $user_id, $course_id ) );
 					}
+
 					$emails = array_unique( $emails );
-					$args   = array(
+					$args   = [
 						'user_id'    => $user_id,
 						'course_ids' => $courses_ids,
-					);
+					];
 					$this->send( $emails, $model, $args );
 
-					$gl_mapping = array();
+					$gl_mapping = [];
 					if ( false !== array_search( 'group_leader', $model->recipients, true ) ) {
 						foreach ( $courses_ids as $course_id ) {
 							$clone                      = clone $model;
 							$clone->addition_recipients = '';
-							unset( $clone->recipients[ array_search( 'user', $clone->recipients, true ) ] );
-							unset( $clone->recipients[ array_search( 'admin', $clone->recipients, true ) ] );
+
+							$user_key = array_search( 'user', $clone->recipients, true );
+							if ( $user_key !== false ) {
+								unset( $clone->recipients[ $user_key ] );
+							}
+
+							$admin_key = array_search( 'admin', $clone->recipients, true );
+							if ( $admin_key !== false ) {
+								unset( $clone->recipients[ $admin_key ] );
+							}
+
 							$emails = $clone->gather_emails( $user_id, $course_id );
 
 							foreach ( $emails as $email ) {
 								if ( ! isset( $gl_mapping[ $email ] ) ) {
-									$gl_mapping[ $email ] = array();
+									$gl_mapping[ $email ] = [];
 								}
 								$gl_mapping[ $email ][] = $course_id;
 								$gl_mapping[ $email ]   = array_unique( $gl_mapping[ $email ] );
@@ -210,11 +243,11 @@ class User_Login_Track extends Trigger {
 					}
 					// now do the sending to group leader.
 					foreach ( $gl_mapping as $email => $course_ids ) {
-						$args = array(
+						$args = [
 							'user_id'    => $user_id,
 							'course_ids' => $course_ids,
-						);
-						$this->send( array( $email ), $model, $args );
+						];
+						$this->send( [ $email ], $model, $args );
 					}
 
 					// $this->cli_log( sprintf( 'User:%d Course: %s', $user_id, implode( ',', $courses_ids ) ) );
@@ -223,7 +256,7 @@ class User_Login_Track extends Trigger {
 						'_ld_notifications_last_login_notified_' . $model->post->ID,
 						$this->get_timestamp()
 					);
-					$affected ++;
+					++$affected;
 				}
 			}
 			// $this->cli_log( '===========' );
@@ -255,8 +288,8 @@ class User_Login_Track extends Trigger {
 	 * @return void
 	 */
 	public function listen() {
-		add_action( 'wp_login', array( $this, 'track_logged_time' ), 10, 2 );
-		add_action( 'learndash_notifications_cron', array( $this, 'maybe_send_reminder' ) );
+		add_action( 'wp_login', [ $this, 'track_logged_time' ], 10, 2 );
+		add_action( 'learndash_notifications_cron', [ $this, 'maybe_send_reminder' ] );
 	}
 
 	/**
@@ -270,5 +303,4 @@ class User_Login_Track extends Trigger {
 	protected function can_send_delayed_email( Notification $model, $args ) {
 		return false;
 	}
-
 }

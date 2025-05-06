@@ -1,4 +1,9 @@
 <?php
+/**
+ * Essay graded trigger.
+ *
+ * @package LearnDash\Notifications
+ */
 
 namespace LearnDash_Notification\Trigger;
 
@@ -6,7 +11,6 @@ use LearnDash_Notification\Notification;
 use LearnDash_Notification\Trigger;
 
 class Essay_Graded extends Trigger {
-
 	protected $trigger = 'essay_graded';
 
 	public function monitor( $quiz_id, $question_id, $updated_scoring, $essay ) {
@@ -23,12 +27,12 @@ class Essay_Graded extends Trigger {
 		$this->log( sprintf( 'Process %d notifications', count( $models ) ) );
 		foreach ( $models as $model ) {
 			$emails = $model->gather_emails( $user_id, $course_id );
-			$args   = array(
+			$args   = [
 				'user_id'     => $user_id,
 				'course_id'   => $course_id,
 				'quiz_id'     => $quiz_id,
-				'question_id' => $question_id
-			);
+				'question_id' => $question_id,
+			];
 			$model->populate_shortcode_data( $args );
 			if ( absint( $model->delay ) ) {
 				$this->queue_use_db( $emails, $model, $args );
@@ -42,6 +46,7 @@ class Essay_Graded extends Trigger {
 
 	/**
 	 * A base point for monitoring the events
+	 *
 	 * @return void
 	 */
 	function listen() {

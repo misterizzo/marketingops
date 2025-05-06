@@ -1,4 +1,9 @@
 <?php
+/**
+ * Essay submitted trigger.
+ *
+ * @package LearnDash\Notifications
+ */
 
 namespace LearnDash_Notification\Trigger;
 
@@ -22,15 +27,14 @@ class Essay_Submitted extends Trigger {
 		$this->log( '==========Job start========' );
 		$this->log( sprintf( 'Process %d notifications', count( $models ) ) );
 		foreach ( $models as $model ) {
-
 			$emails = $model->gather_emails( $user_id, $course_id );
-			$args   = array(
+			$args   = [
 				'user_id'     => $user_id,
 				'course_id'   => $course_id,
 				'lesson_id'   => $lesson_id,
 				'quiz_id'     => $quiz_id,
-				'question_id' => $question_id
-			);
+				'question_id' => $question_id,
+			];
 			if ( absint( $model->delay ) ) {
 				$this->queue_use_db( $emails, $model, $args );
 			} else {
@@ -44,6 +48,7 @@ class Essay_Submitted extends Trigger {
 
 	/**
 	 * A base point for monitoring the events
+	 *
 	 * @return void
 	 */
 	function listen() {

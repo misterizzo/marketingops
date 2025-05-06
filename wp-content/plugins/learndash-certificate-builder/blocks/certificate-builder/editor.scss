@@ -1,0 +1,129 @@
+#certificate-builder-inner-blocks {
+  font-size: 18px;
+  line-height: 1.25;
+
+  h1 {
+	font-size: 3em;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+  }
+
+  h2 {
+	font-size: 2.25em;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+  }
+
+  h3 {
+	font-size: 1.5em;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+  }
+
+  h4 {
+	font-size: 1.25em;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+  }
+
+  h5 {
+	font-size: 1.125em;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+  }
+
+  h6 {
+	font-size: 1em;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+  }
+
+  p {
+	font-size: 1em;
+	margin: 0;
+	padding: 0;
+  }
+
+  .wp-block {
+	width: 100%;
+	max-width: 100%;
+	margin-top: 0;
+  }
+
+  h1.has-background,
+  h2.has-background,
+  h3.has-background,
+  h4.has-background,
+  h5.has-background,
+  h6.has-background {
+	padding: 1.25em 2.375em;
+  }
+
+  p.has-background {
+	padding: 1.25em 2.375em;
+  }
+
+  .wp-block:last-child {
+	margin-bottom: 0;
+  }
+
+  .wp-block-separator {
+	margin: 1em 0 0 0;
+  }
+
+  .wp-block-separator:last-child {
+	margin: 0;
+  }
+
+  .wp-block-column {
+	margin-bottom: 0;
+  }
+
+  .block-library-spacer__resize-container {
+	margin-bottom: 0;
+  }
+
+  h1::before {
+	content: '';
+	margin: 0;
+	background: none;
+	display: none;
+	height: 0;
+	width: 0;
+  }
+}
+
+.is-root-container {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.components-editor-notices__snackbar {
+  .is-tertiary {
+	display: none;
+  }
+}
+
+.edit-post-more-menu {
+  display: none;
+}
+
+/* https://github.com/WordPress/gutenberg/issues/11681 */
+div.editor-template-validation-notice.components-notice.is-warning {
+  display: none;
+}
+
+.wp-block[data-align="left"] > .wp-block-image, .wp-block[data-align="right"] > .wp-block-image {
+  margin-top: 0;
+}
+
+.wp-block[data-align="center"] figure.wp-block-image {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}

@@ -1,4 +1,14 @@
 <?php
+/**
+ * Shortcode functions
+ *
+ * @since 1.0.0
+ *
+ * @package LearnDash\Notifications
+ */
+
+// Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Register shortcode
@@ -12,7 +22,7 @@ add_action( 'init', 'learndash_notifications_register_shortcode', 1 );
 /**
  * ld_notifications shortcode callback
  *
- * @param array $atts Shortcode attributes
+ * @param array  $atts Shortcode attributes
  * @param string $content Shortcode content
  *
  * @return string          Shortcode final result
@@ -26,11 +36,11 @@ function learndash_notifications_shortcode_init( $atts, $content = '' ) {
 
 	$shortcode = 'ld_notifications';
 	$atts      = shortcode_atts(
-		array(
+		[
 			'field'  => '',
 			'show'   => '',
 			'format' => '',
-		),
+		],
 		$atts,
 		$shortcode
 	);
@@ -78,11 +88,15 @@ function learndash_notifications_shortcode_init( $atts, $content = '' ) {
 			case 'title':
 				$result = $group->post_title;
 				break;
+
+			case 'url':
+				$result = get_permalink( $group );
+				break;
 		}
 	} elseif ( $atts['field'] == 'course' ) {
 		if ( isset( $data['course_ids'] ) ) {
 			// this is the cases for x days trigger, only support title and URL.
-			$ret = array();
+			$ret = [];
 			foreach ( $data['course_ids'] as $course_id ) {
 				$course = get_post( $course_id );
 				if ( ! is_object( $course ) ) {
@@ -111,9 +125,9 @@ function learndash_notifications_shortcode_init( $atts, $content = '' ) {
 
 				case 'completed_on':
 					$atts = shortcode_atts(
-						array(
+						[
 							'format' => $format = 'F j, Y, g:i a',
-						),
+						],
 						$atts,
 						$shortcode
 					);
@@ -159,7 +173,7 @@ function learndash_notifications_shortcode_init( $atts, $content = '' ) {
 						break;
 					}
 
-					$scores = array();
+					$scores = [];
 
 					if ( ( ! empty( $quizdata ) ) && ( is_array( $quizdata ) ) ) {
 						foreach ( $quizdata as $data ) {
@@ -186,7 +200,7 @@ function learndash_notifications_shortcode_init( $atts, $content = '' ) {
 
 					if ( $field == 'timespent' ) {
 						// The $result must be integer before passed to
-						// learnash_seconds_to_time()
+						// learndash_seconds_to_time()
 						$result = learndash_seconds_to_time( intval( $result ) );
 					} else {
 						$result = number_format( $result, 2 );
@@ -219,7 +233,7 @@ function learndash_notifications_shortcode_init( $atts, $content = '' ) {
 						break;
 					}
 
-					$scores = array();
+					$scores = [];
 
 					if ( ( ! empty( $quizdata ) ) && ( is_array( $quizdata ) ) ) {
 						foreach ( $quizdata as $data ) {
@@ -246,7 +260,7 @@ function learndash_notifications_shortcode_init( $atts, $content = '' ) {
 
 					if ( $field == 'timespent' ) {
 						// The $result must be integer before passed to
-						// learnash_seconds_to_time()
+						// learndash_seconds_to_time()
 						$result = learndash_seconds_to_time( intval( $result ) );
 					} else {
 						$result = number_format( $result, 2 );
@@ -264,8 +278,8 @@ function learndash_notifications_shortcode_init( $atts, $content = '' ) {
 					break;
 
 				case 'url':
-					$result = learndash_get_step_permalink(
-						$step_id = $data['lesson_id'],
+					$result             = learndash_get_step_permalink(
+						$step_id        = $data['lesson_id'],
 						$step_course_id = $data['course_id']
 					);
 					break;
@@ -296,7 +310,7 @@ function learndash_notifications_shortcode_init( $atts, $content = '' ) {
 
 		$quizinfo = get_user_meta( $data['user_id'], '_sfwd-quizzes', true );
 		if ( ! is_array( $quizinfo ) ) {
-			$quizinfo = array();
+			$quizinfo = [];
 		}
 		foreach ( $quizinfo as $quiz_i ) {
 			if ( $quiz_i['quiz'] == $data['quiz_id'] ) {
@@ -311,9 +325,9 @@ function learndash_notifications_shortcode_init( $atts, $content = '' ) {
 
 			case 'timestamp':
 				$atts = shortcode_atts(
-					array(
+					[
 						'format' => 'Y-m-d H:i:s',
-					),
+					],
 					$atts,
 					$shortcode
 				);
@@ -323,8 +337,10 @@ function learndash_notifications_shortcode_init( $atts, $content = '' ) {
 				 *
 				 * @link https://learndash.atlassian.net/browse/LEARNDASH-4188
 				 */
-				$selected_quizinfo['timestamp'] = learndash_adjust_date_time_display( $selected_quizinfo['time'],
-				                                                                      $atts['format'] );
+				$selected_quizinfo['timestamp'] = learndash_adjust_date_time_display(
+					$selected_quizinfo['time'],
+					$atts['format']
+				);
 				break;
 
 			case 'percentage':
@@ -335,9 +351,13 @@ function learndash_notifications_shortcode_init( $atts, $content = '' ) {
 				break;
 
 			case 'pass':
-				$selected_quizinfo['pass'] = ! empty( $selected_quizinfo['pass'] ) ? __( 'Yes',
-				                                                                         'learndash' ) : __( 'No',
-				                                                                                             'learndash' );
+				$selected_quizinfo['pass'] = ! empty( $selected_quizinfo['pass'] ) ? __(
+					'Yes',
+					'learndash'
+				) : __(
+					'No',
+					'learndash'
+				);
 				break;
 
 			case 'quiz_title':
@@ -374,16 +394,18 @@ function learndash_notifications_shortcode_init( $atts, $content = '' ) {
 				$cats_result = $data['quiz_result']['cats'];
 
 				// Empty data passed because the class requires a parameter
-				$quiz_completed = new WpProQuiz_Controller_QuizCompleted( array() );
-				$method         = new ReflectionMethod( WpProQuiz_Controller_QuizCompleted::class,
-				                                        'setCategoryOverview' );
+				$quiz_completed = new WpProQuiz_Controller_QuizCompleted( [] );
+				$method         = new ReflectionMethod(
+					WpProQuiz_Controller_QuizCompleted::class,
+					'setCategoryOverview'
+				);
 				$method->setAccessible( true );
 				$selected_quizinfo['categories'] = $method->invokeArgs(
 					$quiz_completed,
-					array(
+					[
 						$cats_result,
 						$categories,
-					)
+					]
 				);
 				break;
 		}
@@ -405,10 +427,10 @@ function learndash_notifications_shortcode_init( $atts, $content = '' ) {
 			case 'points_earned':
 				$question_data = get_user_meta( $data['user_id'], '_sfwd-quizzes', true );
 				if ( ! is_array( $question_data ) ) {
-					$question_data = array();
+					$question_data = [];
 				}
 				foreach ( $question_data as $q ) {
-					if ( ! is_null( $q['graded'] ) ) {
+					if ( isset( $q['graded'] ) && is_array( $q['graded'] ) ) {
 						foreach ( $q['graded'] as $question_id => $q_data ) {
 							if ( $question_id == $data['question_id'] ) {
 								$result = $q_data['points_awarded'];
@@ -451,20 +473,5 @@ function learndash_notifications_shortcode_init( $atts, $content = '' ) {
 
 	unset( $ld_notifications_shortcode_data );
 
-	return $result;
+	return apply_filters( 'learndash_notifications_shortcode_output', $result, $atts, $data );
 }
-
-function learndash_notifications_usermeta_shortcode( $user_id, $attr ) {
-	if ( $attr['use'] == 'notifications' ) {
-		global $ld_notifications_shortcode_data;
-		$data = $ld_notifications_shortcode_data;
-
-		$user_id = $data['user_id'];
-
-		unset( $ld_notifications_shortcode_data );
-	}
-
-	return $user_id;
-}
-
-add_filter( 'learndash_usermeta_userid', 'learndash_notifications_usermeta_shortcode_user_id', 10, 2 );

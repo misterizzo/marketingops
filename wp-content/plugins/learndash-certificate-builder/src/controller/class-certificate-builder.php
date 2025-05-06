@@ -9,6 +9,8 @@
 namespace LearnDash_Certificate_Builder\Controller;
 
 use LearnDash_Certificate_Builder\Component\PDF;
+use WP_Block_Editor_Context;
+use WP_Post;
 
 /**
  * Class Certificate_Builder
@@ -325,6 +327,7 @@ class Certificate_Builder {
 					'fonts'    => $this->service->get_fonts(),
 					'font_url' => learndash_certificate_builder_asset_url( '/external/mpdf/mpdf/ttfonts' ),
 					'colors'   => isset( $_wp_theme_features['editor-color-palette'] ) ? $_wp_theme_features['editor-color-palette'] : array( $this->service->get_default_pallete_colors() ),
+					'allowed_blocks' => $this->get_allowed_blocks(),
 				)
 			);
 		}
@@ -345,34 +348,27 @@ class Certificate_Builder {
 	}
 
 	/**
-	 * Whitelist blocks on certificate editor
+	 * Whitelists blocks on certificate editor.
 	 *
-	 * @param array                    $allowed_block_types The blocks that we allow to add inside builder block.
-	 * @param \WP_Block_Editor_Context $context The current post.
+	 * @since 1.0.3
+	 *
+	 * @param string[]                $allowed_block_types The blocks that we allow to add inside builder block.
+	 * @param WP_Block_Editor_Context $context             The current post.
 	 *
 	 * @return string[]
 	 */
 	public function only_allow_this( $allowed_block_types, $context ) {
 		$post = $context->post;
-		if ( $post->post_type === $this->post_type_slug ) {
-			return array(
-				'core/columns',
-				'core/paragraph',
-				'core/heading',
-				'core/spacer',
-				'core/shortcode',
-				'core/image',
-				'core/quote',
-				'core/list',
-				'core/separator',
-				'learndash/ld-courseinfo',
-				'learndash/ld-usermeta',
-				'learndash/ld-groupinfo',
-				'learndash/ld-quizinfo',
-			);
+
+		if (
+			$context->name !== 'core/edit-post'
+			|| ! $post instanceof WP_Post
+			|| $post->post_type !== $this->post_type_slug
+		) {
+			return $allowed_block_types;
 		}
 
-		return $allowed_block_types;
+		return $this->get_allowed_blocks();
 	}
 
 	/**
@@ -452,5 +448,38 @@ class Certificate_Builder {
 		);
 
 		$this->enqueue_blocks();
+	}
+
+	/**
+	 * Returns the blocks that can be used within the Certificate Builder.
+	 *
+	 * @since 1.1.2
+	 *
+	 * @return string[]
+	 */
+	private function get_allowed_blocks(): array {
+		/**
+		 * Filters which Blocks are allowed to be used within the Certificate Builder
+		 *
+		 * @since 1.1.2
+		 *
+		 * @param string[] $allowed_blocks The Blocks that are allowed to be used within the Certificate Builder
+		 * @return string[]
+		 */
+		return apply_filters( 'learndash_certificate_builder_allowed_blocks', array(
+			'core/columns',
+			'core/paragraph',
+			'core/heading',
+			'core/spacer',
+			'core/shortcode',
+			'core/image',
+			'core/quote',
+			'core/list',
+			'core/separator',
+			'learndash/ld-courseinfo',
+			'learndash/ld-usermeta',
+			'learndash/ld-groupinfo',
+			'learndash/ld-quizinfo',
+		) );
 	}
 }

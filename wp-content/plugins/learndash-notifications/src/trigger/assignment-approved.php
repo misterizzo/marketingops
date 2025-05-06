@@ -1,4 +1,9 @@
 <?php
+/**
+ * Assignment approved trigger.
+ *
+ * @package LearnDash\Notifications
+ */
 
 namespace LearnDash_Notification\Trigger;
 
@@ -25,28 +30,26 @@ class Assignment_Approved extends Trigger {
 			$lesson_id = null;
 		}
 		foreach ( $models as $model ) {
-			if ( $model->course_id !== 0 && absint( $course_id ) !== $model->course_id ) {
-				continue;
-			}
-
-			//this is set for lesson id
-			if ( $model->lesson_id !== 0 && $model->lesson_id !== absint( $lesson_id ) ) {
-				continue;
-			}
-
-			if ( $model->topic_id !== 0 && $model->topic_id !== absint( $topic_id ) ) {
-				//specific course and this is not the one, return
+			if ( ! $this->is_valid(
+				$model,
+				[
+					'user_id'   => $user_id,
+					'course_id' => $course_id,
+					'lesson_id' => $lesson_id,
+					'topic_id'  => $topic_id,
+				]
+			) ) {
 				continue;
 			}
 
 			$emails = $model->gather_emails( $user_id, $course_id );
-			$args   = array(
+			$args   = [
 				'user_id'       => $user_id,
 				'course_id'     => $course_id,
 				'topic_id'      => $topic_id,
 				'lesson_id'     => $lesson_id,
-				'assignment_id' => $assignment_id
-			);
+				'assignment_id' => $assignment_id,
+			];
 			if ( absint( $model->delay ) ) {
 				$this->queue_use_db( $emails, $model, $args );
 			} else {
@@ -59,6 +62,7 @@ class Assignment_Approved extends Trigger {
 
 	/**
 	 * A base point for monitoring the events
+	 *
 	 * @return void
 	 */
 	function listen() {
@@ -73,20 +77,20 @@ class Assignment_Approved extends Trigger {
 	 * @return bool
 	 */
 	protected function can_send_delayed_email( Notification $model, $args ) {
-		$lesson_id = $args['lesson_id'];
-		$topic_id  = $args['topic_id'];
+		$user_id   = $args['user_id'] ?? null;
+		$course_id = $args['course_id'] ?? null;
+		$lesson_id = $args['lesson_id'] ?? null;
+		$topic_id  = $args['topic_id'] ?? null;
 
-		//if the object ID changed, then we won't send old queue email
-		if ( $model->lesson_id !== 0 && $lesson_id !== null && $model->lesson_id !== $lesson_id ) {
-			$this->log( sprintf( "Won't send cause the ID is different from the settings. Expected: %d - Current:%d", $model->lesson_id, $lesson_id ) );
-
-			return false;
-		}
-
-		if ( $model->topic_id !== 0 && $topic_id !== null && $model->topic_id !== $topic_id ) {
-			//specific course and this is not the one, return
-			$this->log( sprintf( "Won't send cause the ID is different from the settings. Expected: %d - Current:%d", $model->topic_id, $topic_id ) );
-
+		if ( ! $this->is_valid(
+			$model,
+			[
+				'user_id'   => $user_id,
+				'course_id' => $course_id,
+				'lesson_id' => $lesson_id,
+				'topic_id'  => $topic_id,
+			]
+		) ) {
 			return false;
 		}
 

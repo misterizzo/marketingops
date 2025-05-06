@@ -1,14 +1,14 @@
 === WooCommerce for LearnDash ===
 Author: LearnDash
 Author URI: https://learndash.com
-Plugin URI: https://learndash.com/add-on/woocommerce/ 
+Plugin URI: https://learndash.com/add-on/woocommerce/
 LD Requires at least: 3.0
 Slug: learndash-woocommerce
 Tags: integration, woocommerce,
 Requires at least: 5.0
-Tested up to: 5.9
-Requires PHP: 7.0
-Stable tag: 1.9.4.1
+Tested up to: 6.5
+Requires PHP: 7.4
+Stable tag: 2.0.0.1
 
 Integrate LearnDash LMS with WooCommerce.
 
@@ -18,28 +18,73 @@ Integrate LearnDash LMS with WooCommerce.
 
 WooCommerce is the most popular shopping cart software for WordPress. Most WordPress themes are compatible with WooCommerce. This add-on allows you to sell your LearnDash created courses with the WooCommerce shopping cart.
 
-= Integration Features = 
+= Integration Features =
 
 * Easily map courses to products
 * Associate one, or multiple courses to a single product
 * Automatic course access removal
 * Works with any payment gateway
 * Works with WooCommerce Subscription
+* Control student access to courses and groups based upon order/subscription status
 
-See the [Add-on](https://learndash.com/add-on/woocommerce/) page for more information.
+See the [Add-on](https://www.learndash.com/integrations/woocommerce/) page for more information.
 
 == Installation ==
 
-If the auto-update is not working, verify that you have a valid LearnDash LMS license via LEARNDASH LMS > SETTINGS > LMS LICENSE. 
+If the auto-update is not working, verify that you have a valid LearnDash LMS license via LEARNDASH LMS > SETTINGS > LMS LICENSE.
 
-Alternatively, you always have the option to update manually. Please note, a full backup of your site is always recommended prior to updating. 
+Alternatively, you always have the option to update manually. Please note, a full backup of your site is always recommended prior to updating.
 
 1. Deactivate and delete your current version of the add-on.
-1. Download the latest version of the add-on from our [support site](https://support.learndash.com/article-categories/free/).
+1. Download the latest version of the add-on from our [support site](https://account.learndash.com/plugins/).
 1. Upload the zipped file via PLUGINS > ADD NEW, or to wp-content/plugins.
 1. Activate the add-on plugin via the PLUGINS menu.
 
 == Changelog ==
+
+= 2.0.0.1 =
+
+* Fix - Set 'On hold' subscription status to Grant by default to prevent students from losing access when a subscription renewal processes.
+
+= 2.0.0 =
+
+* Feature - Added support for WooCommerce guest checkout for non-LearnDash products.
+* Feature - Added feature to force customers to log in or create an account during checkout if cart contains product with LearnDash course or group.
+* Feature - Added enrollment status settings to control course enrollment status based on WooCommerce order and subscription status.
+* Feature - Added LearnDash WooCommerce settings menu and pages.
+* Tweak - Updated retroactive access tool to use background processing with action scheduler instead of AJAX batch processing so that it can handle high numbers of orders without users waiting for it to complete.
+* Tweak - Added admin notice if WooCommerce guest checkout is enabled.
+* Tweak - Added actions: `learndash_woocommerce_order_refund_after`, `learndash_woocommerce_uninstall`.
+* Tweak - Added filters: `learndash_woocommerce_order_refund_skip`, `learndash_woocommerce_product_add_to_cart_text`, `learndash_woocommerce_product_add_to_cart_url`, `learndash_woocommerce_registration_required`, `learndash_woocommerce_retroactive_access_tool_per_batch`.
+* Tweak - Added functions: `learndash_woocommerce_extra_autoloading`.
+
+= 1.9.8.1 =
+
+* Fix - Support adding/removing courses/groups to a variable product variation.
+
+= 1.9.8 =
+
+* Fix - Retroactive tool no longer enrolls users into an already expired course.
+
+= 1.9.7 =
+
+* Fix - Compatibility with WooCommerce High Performance Order Storage (HPOS).
+* Fix - Remove password field on guest checkout for non associated course product.
+
+= 1.9.6 =
+
+* Fixed fatal error on checkout with WooCommerce subscriptions plugin
+
+= 1.9.5 =
+
+* Added handle order/subscription item addition and removal
+* Added add support for partial order refund
+* Updated POT file
+* Fixed group field selector returns empty result for shop manager
+* Fixed update select2 version to full version to fix conflict issue
+* Fixed conflict with other plugin because we didn't check if array index exists
+* Fixed remove user login notice and change the logic by always enable registration setting if user cart contains LD course/group
+* Fixed login notice always appear on cartflows checkout
 
 = 1.9.4.1 =
 
@@ -48,11 +93,11 @@ Alternatively, you always have the option to update manually. Please note, a ful
 = 1.9.4 =
 
 * Added course/group access support for restore/delete/trash subscription customer charge updates
-* Added customer charge handler to handle course/group enrollment logic based on customer charge and subscriptio status
+* Added customer charge handler to handle course/group enrollment logic based on customer charge and subscription status
 * Updated re-enroll users to course/group if order is marked as processing (payment received) or completed
 * Updated select2 field styles
 * Updated move scripts and styles to dedicated folder and rename the filename plus add select2 lib files
-* Updated: add scripts registration and deregistration methods and add logic to load scripts conditionally
+* Updated: add scripts registration and de-registration methods and add logic to load scripts conditionally
 * Fixed simultaneous simple and subscription product order doesn't enroll user to simple product course
 * Fixed allowing guest checkout with course products preventing enrollment in associated course
 
@@ -64,24 +109,24 @@ Alternatively, you always have the option to update manually. Please note, a ful
 
 * Fixed Uncaught Error: Call to a member function get_type() on bool
 
-= 1.9.3.1 = 
+= 1.9.3.1 =
 
 * Fixed courses being added to users with the incorrect payment status. Courses are now only added on processing or complete rather than on hold or pending
 
-= 1.9.3 = 
+= 1.9.3 =
 
 * Added new added order item to existing order will trigger course enrollment
 * Fixed retroactive tool and some variables are not compatible with WC 5.6
 * Fixed retroactive tool doesn't honor the expired subscription course removal setting
 * Fixed renewal subscription payment reset access date for expired courses
 
-= 1.9.2 = 
+= 1.9.2 =
 
-* Updated use global variable instead of debug backtrace to enable subscription products filter  
-* Fixed conflict with WooCommerce product bundle extension, better code logic                                                                                      
+* Updated use global variable instead of debug backtrace to enable subscription products filter
+* Fixed conflict with WooCommerce product bundle extension, better code logic
 * Fixed typo in get_type method name
 
-= 1.9.1 = 
+= 1.9.1 =
 
 * Added a setting to skip disabling course access on subscription expiry
 * Added an action hook to remove course access for failed and cancelled subscriptions
@@ -96,9 +141,9 @@ Alternatively, you always have the option to update manually. Please note, a ful
 * Added WC subscription switching feature support
 * Updated allow retroactive tool to process course enrollment directly instead of storing the queue in DB
 * Updated remove old code that process retroactive tool using cron
-* Updated change learndash_woocommerce_silent_course_enrollment_queue option to be non autoload to improve performance
+* Updated change learndash_woocommerce_silent_course_enrollment_queue option to be non auto load to improve performance
 * Updated Use custom label if set
-* Fixed renewal process unenroll and reenroll users to courses
+* Fixed renewal process unenroll and re-enroll users to courses
 * Fixed PHP notice error because of deprecated class property
 * Fixed retroactive tool reset enrollment date to the tool run date
 

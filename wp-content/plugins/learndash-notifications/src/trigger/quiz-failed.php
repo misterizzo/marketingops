@@ -1,4 +1,9 @@
 <?php
+/**
+ * Quiz failed trigger.
+ *
+ * @package LearnDash\Notifications
+ */
 
 namespace LearnDash_Notification\Trigger;
 

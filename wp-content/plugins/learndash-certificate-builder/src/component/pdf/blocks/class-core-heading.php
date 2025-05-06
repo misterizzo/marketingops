@@ -8,7 +8,7 @@
 
 namespace LearnDash_Certificate_Builder\Component\Builder\Pdf\Blocks;
 
-use simplehtmldom\HtmlDocument;
+use LearnDash\Certificate_Builder\simplehtmldom\HtmlDocument;
 
 /**
  * Class Core_Heading

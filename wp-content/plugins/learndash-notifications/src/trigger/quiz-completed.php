@@ -1,4 +1,9 @@
 <?php
+/**
+ * Quiz completed trigger.
+ *
+ * @package LearnDash\Notifications
+ */
 
 namespace LearnDash_Notification\Trigger;
 

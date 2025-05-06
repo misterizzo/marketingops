@@ -1,4 +1,9 @@
 <?php
+/**
+ * Enroll group trigger.
+ *
+ * @package LearnDash\Notifications
+ */
 
 namespace LearnDash_Notification\Trigger;
 
@@ -7,8 +12,6 @@ use LearnDash_Notification\Trigger;
 
 /**
  * Class Enroll_Group
- *
- * @package LearnDash_Notification\Trigger
  */
 class Enroll_Group extends Trigger {
 	/**
@@ -38,16 +41,21 @@ class Enroll_Group extends Trigger {
 				continue;
 			}
 
-			if ( 0 !== $model->group_id && absint( $group_id ) !== $model->group_id ) {
-				// this is not for me.
+			if ( ! $this->is_valid(
+				$model,
+				[
+					'user_id'  => $user_id,
+					'group_id' => $group_id,
+				]
+			) ) {
 				continue;
 			}
 
 			$emails = $model->gather_emails( $user_id, null, $group_id );
-			$args   = array(
+			$args   = [
 				'user_id'  => $user_id,
 				'group_id' => $group_id,
-			);
+			];
 
 			if ( absint( $model->delay ) ) {
 				$this->queue_use_db( $emails, $model, $args );
@@ -85,9 +93,9 @@ class Enroll_Group extends Trigger {
 	 * @return void
 	 */
 	public function listen() {
-		add_action( 'ld_added_group_access', array( &$this, 'monitor' ), 10, 2 );
-		add_action( 'leanrdash_notifications_send_delayed_email', array( &$this, 'send_db_delayed_email' ) );
-		add_action( 'ld_removed_group_access', array( &$this, 'mark_unsent' ), 10, 2 );
+		add_action( 'ld_added_group_access', [ &$this, 'monitor' ], 10, 2 );
+		add_action( 'leanrdash_notifications_send_delayed_email', [ &$this, 'send_db_delayed_email' ] );
+		add_action( 'ld_removed_group_access', [ &$this, 'mark_unsent' ], 10, 2 );
 	}
 
 	/**
@@ -119,10 +127,13 @@ class Enroll_Group extends Trigger {
 			return false;
 		}
 
-		if ( 0 !== $model->group_id && $model->group_id !== $group_id ) {
-			// this can happen via the update page.
-			$this->log( sprintf( "Won't send cause the ID is different from the settings. Expected: %d - Current:%d", $model->group_id, $group_id ) );
-
+		if ( ! $this->is_valid(
+			$model,
+			[
+				'user_id'  => $user_id,
+				'group_id' => $group_id,
+			]
+		) ) {
 			return false;
 		}
 

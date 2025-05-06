@@ -1,141 +1,202 @@
-#, fuzzy
+# Copyright (C) 2024 LearnDash
+# This file is distributed under the same license as the LearnDash LMS - WooCommerce Integration plugin.
 msgid ""
 msgstr ""
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"Project-Id-Version: LearnDash LMS - WooCommerce Integration\n"
-"POT-Creation-Date: 2021-07-08 22:46+0700\n"
-"PO-Revision-Date: 2021-07-08 22:46+0700\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"Project-Id-Version: LearnDash LMS - WooCommerce Integration 2.0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/learndash-woocommerce\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.2\n"
-"X-Poedit-Basepath: ..\n"
-"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
-"X-Poedit-WPHeader: learndash_woocommerce.php\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"POT-Creation-Date: 2024-11-04T19:32:55+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: learndash-woocommerce\n"
+
+#. Plugin Name of the plugin
+#: learndash_woocommerce.php
+msgid "LearnDash LMS - WooCommerce Integration"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: learndash_woocommerce.php
+msgid "https://www.learndash.com/integrations/woocommerce/"
+msgstr ""
+
+#. Description of the plugin
+#: learndash_woocommerce.php
+msgid "LearnDash LMS addon plugin to integrate LearnDash LMS with WooCommerce."
+msgstr ""
+
+#. Author of the plugin
+#: learndash_woocommerce.php
+msgid "LearnDash"
+msgstr ""
+
+#. Author URI of the plugin
+#: learndash_woocommerce.php
+msgid "https://www.learndash.com"
+msgstr ""
 
 #: includes/class-cron.php:29
 msgid "Once per Minute"
 msgstr ""
 
-#: includes/class-tools.php:40
-msgid "Status"
+#: includes/class-learndash-woocommerce.php:156
+msgid "LearnDash LMS - WooCommerce Integration Add-on requires the following plugin(s) to be active:"
 msgstr ""
 
-#: includes/class-tools.php:41
-msgid "Complete"
+#. translators: HTML string, Support doc link.
+#: includes/class-learndash-woocommerce.php:385
+msgctxt "placeholders: HTML string, Support doc link"
+msgid "%1$s When customers checkout with 5 or more associated courses and groups in a single cart, course enrollment process is done in the background and you will need to set up a cron job. To set up a cron job please follow %2$s ."
 msgstr ""
 
-#: includes/class-tools.php:42
-msgid "Please keep this page open until the process is complete."
-msgstr ""
-
-#: includes/class-tools.php:43 includes/class-tools.php:209
-msgid "Check LearnDash course access"
-msgstr ""
-
-#: includes/class-tools.php:208
-msgid "LearnDash retroactive course access"
-msgstr ""
-
-#: includes/class-tools.php:210
-msgid ""
-"Check LearnDash course access of WooCommerce integration. Enroll and "
-"unenroll users according to WooCommerce purchase/subscription data."
-msgstr ""
-
-#: includes/class-translations-ld-woocommerce.php:16
-msgid "LearnDash WooCommerce"
-msgstr ""
-
-#: learndash_woocommerce.php:136
-msgid ""
-"LearnDash LMS - WooCommerce Integration Add-on requires the following "
-"plugin(s) to be active:"
-msgstr ""
-
-#: learndash_woocommerce.php:235 learndash_woocommerce.php:309
-#, php-format
-msgid ""
-"<strong>Important:</strong> When customers checkout with 5 or more "
-"associated courses in a single cart, course enrollment process is done in "
-"the background and you will need to set up a cron job. To set up a cron job "
-"please follow <a href=\"%s\" target=\"_blank\">these steps</a>."
-msgstr ""
-
-#: learndash_woocommerce.php:241 learndash_woocommerce.php:315
-#, php-format
+#. translators: LearnDash Courses.
+#: includes/class-learndash-woocommerce.php:403
+#: includes/class-learndash-woocommerce.php:543
 msgctxt "LearnDash Courses"
 msgid "LearnDash %s"
 msgstr ""
 
-#: learndash_woocommerce.php:244 learndash_woocommerce.php:318
-msgid ""
-"You can select multiple courses to sell together holding the SHIFT key when "
-"clicking."
-msgstr ""
-
-#: learndash_woocommerce.php:251 learndash_woocommerce.php:325
-#, php-format
+#. translators: LearnDash Groups.
+#: includes/class-learndash-woocommerce.php:425
+#: includes/class-learndash-woocommerce.php:562
 msgctxt "LearnDash Groups"
 msgid "LearnDash %s"
 msgstr ""
 
-#: learndash_woocommerce.php:254 learndash_woocommerce.php:328
-msgid ""
-"You can select multiple groups to sell together holding the SHIFT key when "
-"clicking."
+#. translators: HTML string, Support doc link.
+#: includes/class-learndash-woocommerce.php:525
+msgctxt "placeholders: HTML string, Support doc link"
+msgid "%1$s When customers checkout with 5 or more associated courses and groups in a single cart, course enrollment process is done in the background and you will need to set up a cron job. To set up a cron job please follow %2$s."
 msgstr ""
 
-#: learndash_woocommerce.php:691
+#: includes/class-learndash-woocommerce.php:1358
 msgid "WooCommerce subscription settings related to LearnDash."
 msgstr ""
 
-#: learndash_woocommerce.php:695
+#: includes/class-learndash-woocommerce.php:1362
 msgid "Access Removal on Expiration"
 msgstr ""
 
-#: learndash_woocommerce.php:696
+#: includes/class-learndash-woocommerce.php:1363
 msgid "Disable"
 msgstr ""
 
-#: learndash_woocommerce.php:697
-msgid ""
-"Check the box to disable course access removal on subscription expiration. "
-"By default, course access will be revoked when a subscription expires."
+#: includes/class-learndash-woocommerce.php:1364
+msgid "Check the box to disable course access removal on subscription expiration. By default, course access will be revoked when a subscription expires."
 msgstr ""
 
-#: learndash_woocommerce.php:1290
+#: learndash_woocommerce.php:69
+msgid "LearnDash LMS - WooCommerce add-on requires the following plugin(s) be active:"
+msgstr ""
+
+#: src/admin-views/notices/warnings/guest-checkout-enabled.php:24
+#: src/App/Admin/Translation.php:51
+msgid "LearnDash LMS - WooCommerce"
+msgstr ""
+
+#. translators: %1$s: opening "a" tag, %2$s: closing "a" tag, %3$s: Course, %4$s: Group.
+#: src/admin-views/notices/warnings/guest-checkout-enabled.php:30
+msgid "We've noticed that you have WooCommerce %1$sguest checkout%2$s enabled. Please note that purchasing a product with an associated LearnDash %3$s or %4$s still requires an account to ensure successful enrollment."
+msgstr ""
+
+#: src/admin-views/settings/sections/enrollment-status.php:27
+msgid "Order Status"
+msgstr ""
+
+#: src/admin-views/settings/sections/enrollment-status.php:30
+#: src/admin-views/settings/sections/enrollment-status.php:74
+msgid "Access"
+msgstr ""
+
+#: src/admin-views/settings/sections/enrollment-status.php:71
+msgid "Subscription Status"
+msgstr ""
+
+#. Translators: %1$s and %2$s are <strong> tags, %3$s and %4$s are <a> tags.
+#: src/admin-views/settings/sections/enrollment-status.php:114
+msgid "%1$sNote:%2$s These settings apply only to new WooCommerce orders created after saving. If you want these settings to apply to any past orders, you’ll need to run the %3$sretroactive tool%4$s."
+msgstr ""
+
+#: src/App/Admin/Pages/Sections/Settings_Enrollment_Status.php:69
+msgid "Enrollment Status"
+msgstr ""
+
+#: src/App/Admin/Pages/Sections/Settings_Enrollment_Status.php:70
+msgid "Control the LearnDash enrollment status based on WooCommerce order and subscription statuses."
+msgstr ""
+
+#: src/App/Admin/Pages/Sections/Settings_Enrollment_Status.php:255
+msgid "Deny"
+msgstr ""
+
+#: src/App/Admin/Pages/Sections/Settings_Enrollment_Status.php:256
+msgid "Grant"
+msgstr ""
+
+#: src/App/Admin/Pages/Settings.php:29
+msgid "LearnDash LMS - WooCommerce Settings"
+msgstr ""
+
+#: src/App/Admin/Pages/Settings.php:30
+msgid "Settings"
+msgstr ""
+
+#: src/App/Models/Products/Course.php:68
+#: src/deprecated/WC_Product_Course.php:92
 msgid "Add to cart"
 msgstr ""
 
-#: learndash_woocommerce.php:1290
+#: src/App/Models/Products/Course.php:69
+#: src/deprecated/WC_Product_Course.php:93
 msgid "Read More"
 msgstr ""
 
-#. Plugin Name of the plugin/theme
-msgid "LearnDash LMS - WooCommerce Integration"
+#: src/App/Modules/Retroactive_Access_Tool/Handler.php:71
+msgid "Give LearnDash Students Retroactive Access"
 msgstr ""
 
-#. Plugin URI of the plugin/theme
-msgid "http://www.learndash.com/work/woocommerce/"
+#: src/App/Modules/Retroactive_Access_Tool/Handler.php:72
+msgid "Run"
 msgstr ""
 
-#. Description of the plugin/theme
-msgid "LearnDash LMS addon plugin to integrate LearnDash LMS with WooCommerce."
+#. translators: %1$s and %2$s are replaced with the custom labels for courses and groups.
+#: src/App/Modules/Retroactive_Access_Tool/Handler.php:75
+msgid "Grant or deny LearnDash students %1$s and %2$s access, according to WooCommerce order and subscription status."
 msgstr ""
 
-#. Author of the plugin/theme
-msgid "LearnDash"
+#: src/App/Modules/Retroactive_Access_Tool/Handler.php:85
+msgid "The LearnDash retroactive access tool has been initialized and currently is running in the background."
 msgstr ""
 
-#. Author URI of the plugin/theme
-msgid "http://www.learndash.com"
+#: src/App/Modules/Retroactive_Access_Tool/Handler.php:88
+msgid "Another LearnDash retroactive access tool process is already running."
+msgstr ""
+
+#: src/deprecated/Learndash_WooCommerce_Tools.php:74
+msgid "Status"
+msgstr ""
+
+#: src/deprecated/Learndash_WooCommerce_Tools.php:75
+msgid "Complete"
+msgstr ""
+
+#: src/deprecated/Learndash_WooCommerce_Tools.php:76
+msgid "Please keep this page open until the process is complete."
+msgstr ""
+
+#: src/deprecated/Learndash_WooCommerce_Tools.php:77
+#: src/deprecated/Learndash_WooCommerce_Tools.php:287
+msgid "Check LearnDash course access"
+msgstr ""
+
+#: src/deprecated/Learndash_WooCommerce_Tools.php:286
+msgid "LearnDash retroactive course access"
+msgstr ""
+
+#: src/deprecated/Learndash_WooCommerce_Tools.php:288
+msgid "Check LearnDash course access of WooCommerce integration. Enroll and unenroll users according to WooCommerce purchase/subscription data."
 msgstr ""

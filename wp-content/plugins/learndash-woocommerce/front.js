@@ -1,9 +1,9 @@
+jQuery(function ($) {
+	const accountSwitch = $('input#createaccount');
+	if (accountSwitch.length) {
+		accountSwitch.attr('checked', true).parent().hide();
 
-jQuery(function($){
-	var accountSwitch = $('input#createaccount');
-	if(accountSwitch.length){
-		accountSwitch.attr( 'checked', true ).parent().hide();
-		$( '.create-account' ).show();
+		$('.create-account').show();
 		accountSwitch.parent().hide();
 	}
 });

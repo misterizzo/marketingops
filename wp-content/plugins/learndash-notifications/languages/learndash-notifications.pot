@@ -1,792 +1,881 @@
-# Copyright (C) 2021 LearnDash
+# Copyright (C) 2025 LearnDash
 # This file is distributed under the same license as the LearnDash LMS - Notifications plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: LearnDash LMS - Notifications 1.5.3\n"
+"Project-Id-Version: LearnDash LMS - Notifications 1.6.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/learndash-notifications\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-07-16T09:34:10+07:00\n"
+"POT-Creation-Date: 2025-03-10T16:50:11+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.4.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: learndash-notifications\n"
 
 #. Plugin Name of the plugin
+#: learndash-notifications.php
 msgid "LearnDash LMS - Notifications"
 msgstr ""
 
 #. Plugin URI of the plugin
+#: learndash-notifications.php
 msgid "https://www.learndash.com/add-on/learndash-notifications/"
 msgstr ""
 
 #. Description of the plugin
+#: learndash-notifications.php
 msgid "Create and send notification emails to the users."
 msgstr ""
 
 #. Author of the plugin
+#: learndash-notifications.php
 msgid "LearnDash"
 msgstr ""
 
 #. Author URI of the plugin
+#: learndash-notifications.php
 msgid "https://www.learndash.com/"
 msgstr ""
 
-#: includes/admin/class-ld-translations-notifications.php:16
+#: includes/admin/class-ld-translations-notifications.php:26
 msgid "LearnDash Notifications"
 msgstr ""
 
-#: includes/admin/class-logs-page.php:8
-msgid "LearnDash Notifications Logs"
-msgstr ""
-
-#: includes/admin/class-logs-page.php:9
-#: includes/admin/class-settings.php:111
-msgid "Logs"
-msgstr ""
-
-#: includes/admin/class-settings.php:48
-#: includes/admin/class-settings.php:83
-#: includes/admin/class-settings.php:132
-#: includes/post-type.php:13
-#: includes/post-type.php:24
+#: includes/admin/class-settings.php:54
+#: includes/admin/class-settings.php:89
+#: includes/admin/class-settings.php:128
+#: includes/post-type.php:26
+#: includes/post-type.php:37
+#: src/Notifications/Logger.php:24
 msgid "Notifications"
 msgstr ""
 
-#: includes/admin/class-settings.php:73
-#: includes/admin/class-settings.php:122
+#: includes/admin/class-settings.php:79
+#: includes/admin/class-settings.php:118
 msgid "Add New"
 msgstr ""
 
-#: includes/admin/class-settings.php:93
-#: includes/admin/class-status-page.php:14
-#: includes/admin/class-status-page.php:42
-#: templates/admin/status-page.php:2
+#: includes/admin/class-settings.php:99
+#: includes/admin/class-status-page.php:28
+#: includes/admin/class-status-page.php:71
+#: templates/admin/status-page.php:15
 msgid "Status"
 msgstr ""
 
-#: includes/admin/class-settings.php:162
-#: includes/meta-box.php:194
-msgid "-- Select Lesson --"
-msgstr ""
-
-#: includes/admin/class-settings.php:163
-#: includes/meta-box.php:215
-msgid "-- Select Topic --"
+#: includes/admin/class-settings.php:108
+#: src/deprecated/class-logs-page.php:31
+msgid "Logs"
 msgstr ""
 
 #: includes/admin/class-settings.php:164
-#: includes/meta-box.php:228
-msgid "-- Select Quiz --"
+msgctxt "Group label"
+msgid "-- Select %s --"
 msgstr ""
 
 #: includes/admin/class-settings.php:165
-msgid "-- Select Course First --"
+msgctxt "Course label"
+msgid "-- Select %s --"
 msgstr ""
 
 #: includes/admin/class-settings.php:166
-msgid "-- Select Lesson First --"
+msgctxt "Lesson label"
+msgid "-- Select %s --"
 msgstr ""
 
 #: includes/admin/class-settings.php:167
-msgid "-- Select Topic First --"
+msgctxt "Topic label"
+msgid "-- Select %s --"
 msgstr ""
 
 #: includes/admin/class-settings.php:168
-msgid "-- Select Quiz First --"
+msgctxt "Quiz label"
+msgid "-- Select %s --"
 msgstr ""
 
 #: includes/admin/class-settings.php:169
-#: includes/meta-box.php:195
-msgid "Any Lesson"
+msgctxt "Course label"
+msgid "-- Select %s First --"
 msgstr ""
 
 #: includes/admin/class-settings.php:170
-#: includes/meta-box.php:216
-msgid "Any Topic"
+msgctxt "Lesson label"
+msgid "-- Select %s First --"
 msgstr ""
 
 #: includes/admin/class-settings.php:171
-#: includes/meta-box.php:229
-msgid "Any Quiz"
+msgctxt "Topic label"
+msgid "-- Select %s First --"
 msgstr ""
 
-#: includes/admin/class-status-page.php:13
+#: includes/admin/class-settings.php:172
+msgctxt "Quiz label"
+msgid "-- Select %s First --"
+msgstr ""
+
+#: includes/admin/class-settings.php:174
+msgctxt "Course, lesson, or topic label"
+msgid "-- Select %1$s, %2$s, or %3$s First --"
+msgstr ""
+
+#: includes/admin/class-settings.php:179
+msgctxt "Lesson label"
+msgid "Any %s"
+msgstr ""
+
+#: includes/admin/class-settings.php:180
+msgctxt "Topic label"
+msgid "Any %s"
+msgstr ""
+
+#: includes/admin/class-settings.php:181
+msgctxt "Quiz label"
+msgid "Any %s"
+msgstr ""
+
+#: includes/admin/class-status-page.php:27
 msgid "LearnDash Notifications Status"
 msgstr ""
 
-#: includes/admin/class-status-page.php:43
+#: includes/admin/class-status-page.php:72
 msgid "Complete"
 msgstr ""
 
-#: includes/admin/class-status-page.php:44
+#: includes/admin/class-status-page.php:73
 msgid "Please keep this page open until the process is complete."
 msgstr ""
 
-#: includes/admin/class-status-page.php:45
-#: templates/admin/status-page.php:54
-#: templates/admin/status-page.php:60
+#: includes/admin/class-status-page.php:74
+#: templates/admin/status-page.php:69
+#: templates/admin/status-page.php:75
 msgid "Run"
 msgstr ""
 
-#: includes/admin/class-status-page.php:47
+#: includes/admin/class-status-page.php:76
 msgid "Are you sure you want to empty scheduled notifications table? You can NOT undo this process. Please back up your database first!"
 msgstr ""
 
-#: includes/logger.php:5
-msgid "Notification with these data: %s was sent."
+#: includes/ajax.php:170
+msgctxt "Post type label"
+msgid "Any %s"
 msgstr ""
 
 #: includes/logger.php:9
+msgid "Notification with these data: %s was sent."
+msgstr ""
+
+#: includes/logger.php:16
 msgid "Scheduled notification with these data: %s was sent."
 msgstr ""
 
-#: includes/logger.php:13
-msgid "Scheduled notification for the timestamp: %d with these data: %s was stored in database."
+#: includes/logger.php:23
+msgid "Scheduled notification for the timestamp: %1$d with these data: %2$s was stored in database."
 msgstr ""
 
-#: includes/logger.php:17
-msgid "Scheduled notification with these data: %s was updated in database with these new data: %s. %d %s affected."
+#: includes/logger.php:30
+msgid "Scheduled notification with these data: %1$s was updated in database with these new data: %2$s. %3$d %4$s affected."
 msgstr ""
 
-#: includes/logger.php:17
-#: includes/logger.php:21
-#: includes/logger.php:26
+#: includes/logger.php:30
+#: includes/logger.php:39
+#: includes/logger.php:47
 msgid "row was"
 msgid_plural "rows were"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/meta-box.php:6
+#: includes/meta-box.php:17
 msgid "Notification Settings"
 msgstr ""
 
-#: includes/meta-box.php:8
+#: includes/meta-box.php:19
 msgid "Available Shortcodes"
 msgstr ""
 
-#: includes/meta-box.php:50
+#: includes/meta-box.php:90
+#: includes/meta-box.php:487
+msgid "Click for Help!"
+msgstr ""
+
+#: includes/meta-box.php:113
+msgctxt "The sequence of condition."
+msgid "Condition %s"
+msgstr ""
+
+#: includes/meta-box.php:120
+msgid "Condition"
+msgstr ""
+
+#: includes/meta-box.php:121
+msgid "Condition type to check."
+msgstr ""
+
+#: includes/meta-box.php:126
+msgid "-- Select Condition --"
+msgstr ""
+
+#: includes/meta-box.php:152
 msgid "Select an email trigger on the notification settings above to see available shortcodes."
 msgstr ""
 
-#: includes/meta-box.php:57
+#: includes/meta-box.php:159
 msgid "Here are the available shortcodes for the email trigger selected:"
 msgstr ""
 
-#: includes/meta-box.php:73
+#: includes/meta-box.php:175
 msgid "<em>Cumulative</em> is average for all quizzes of the course."
 msgstr ""
 
-#: includes/meta-box.php:75
+#: includes/meta-box.php:177
 msgid "<em>Aggregate</em> is sum for all quizzes of the course."
 msgstr ""
 
-#: includes/meta-box.php:127
+#: includes/meta-box.php:199
 msgid "Email trigger"
 msgstr ""
 
-#: includes/meta-box.php:128
+#: includes/meta-box.php:200
 msgid "When this email will be sent."
 msgstr ""
 
-#: includes/meta-box.php:132
+#: includes/meta-box.php:204
 msgid "-- Select an Email Trigger --"
 msgstr ""
 
-#: includes/meta-box.php:137
-msgid "Group"
+#: includes/meta-box.php:209
+msgid "Exclude Pre-Ordered Course"
 msgstr ""
 
-#: includes/meta-box.php:138
-msgid "Group that the notification is assigned to."
+#: includes/meta-box.php:210
+msgid "Check to exclude pre-ordered course(s) from triggering this notification."
 msgstr ""
 
-#: includes/meta-box.php:143
-msgid "-- Select Group --"
+#: includes/meta-box.php:214
+msgid "Exclude"
 msgstr ""
 
-#: includes/meta-box.php:144
-msgid "Any Group"
+#: includes/meta-box.php:224
+msgid "Conditions"
 msgstr ""
 
-#: includes/meta-box.php:149
-msgid "Course"
+#: includes/meta-box.php:225
+msgid "Conditions to check before notification is being sent."
 msgstr ""
 
-#: includes/meta-box.php:150
-msgid "Course that the notification is assigned to."
-msgstr ""
-
-#: includes/meta-box.php:171
-msgid "-- Select Course --"
-msgstr ""
-
-#: includes/meta-box.php:172
-msgid "Any Course"
-msgstr ""
-
-#: includes/meta-box.php:177
-msgid "Lesson"
-msgstr ""
-
-#: includes/meta-box.php:178
-msgid "Lesson that the notification is assigned to."
-msgstr ""
-
-#: includes/meta-box.php:200
-msgid "Topic"
-msgstr ""
-
-#: includes/meta-box.php:201
-msgid "Topic that the notification is assigned to."
-msgstr ""
-
-#: includes/meta-box.php:221
-msgid "Quiz"
-msgstr ""
-
-#: includes/meta-box.php:222
-msgid "Quiz that the notification is assigned to."
+#: includes/meta-box.php:233
+#: includes/meta-box.php:266
+msgid "After how many days?"
 msgstr ""
 
 #: includes/meta-box.php:234
+#: includes/meta-box.php:257
 #: includes/meta-box.php:267
-msgid "After how many days?"
+msgid "Setting associated with the email trigger setting above."
 msgstr ""
 
 #: includes/meta-box.php:235
 #: includes/meta-box.php:258
 #: includes/meta-box.php:268
-msgid "Setting associated with the email trigger setting above."
-msgstr ""
-
-#: includes/meta-box.php:236
-#: includes/meta-box.php:259
-#: includes/meta-box.php:269
 msgid "day(s)"
 msgstr ""
 
-#: includes/meta-box.php:244
+#: includes/meta-box.php:243
 msgid "One time only"
 msgstr ""
 
-#: includes/meta-box.php:245
+#: includes/meta-box.php:244
 msgid "Check if you want to send this notification only one time."
 msgstr ""
 
-#: includes/meta-box.php:251
-#: templates/admin/status-page.php:9
+#: includes/meta-box.php:250
+#: templates/admin/status-page.php:22
 msgid "Yes"
 msgstr ""
 
-#: includes/meta-box.php:252
+#: includes/meta-box.php:251
 msgid "No"
 msgstr ""
 
-#: includes/meta-box.php:257
+#: includes/meta-box.php:256
 msgid "Before how many days?"
 msgstr ""
 
-#: includes/meta-box.php:277
+#: includes/meta-box.php:276
 msgid "Recipient"
 msgstr ""
 
-#: includes/meta-box.php:278
+#: includes/meta-box.php:277
 msgid "Recipient of this email."
 msgstr ""
 
-#: includes/meta-box.php:285
+#: includes/meta-box.php:284
 msgid "Additional Recipient"
 msgstr ""
 
-#: includes/meta-box.php:286
+#: includes/meta-box.php:285
 msgid "Additional email addresses (separated by comma) that will also get this notification"
 msgstr ""
 
-#: includes/meta-box.php:293
+#: includes/meta-box.php:291
 msgid "Delay"
 msgstr ""
 
-#: includes/meta-box.php:294
+#: includes/meta-box.php:292
 msgid "How long this email is delayed after the trigger occurs (default is 0)."
 msgstr ""
 
-#: includes/meta-box.php:303
+#: includes/meta-box.php:301
 msgid "Delay unit"
 msgstr ""
 
-#: includes/meta-box.php:304
+#: includes/meta-box.php:302
 msgid "How long the notification will be delayed for. Specify minutes, hours or days."
 msgstr ""
 
-#: includes/meta-box.php:310
+#: includes/meta-box.php:308
 msgid "Minutes"
 msgstr ""
 
-#: includes/meta-box.php:311
+#: includes/meta-box.php:309
 msgid "Hours"
 msgstr ""
 
-#: includes/meta-box.php:312
+#: includes/meta-box.php:310
 msgid "Days"
 msgstr ""
 
-#: includes/meta-box.php:398
-msgid "Click for Help!"
-msgstr ""
-
-#: includes/meta-box.php:651
-msgid "Display user's username."
-msgstr ""
-
-#: includes/meta-box.php:652
-msgid "Display user's email."
-msgstr ""
-
-#: includes/meta-box.php:653
-msgid "Display user's display name."
-msgstr ""
-
-#: includes/meta-box.php:654
-msgid "Display user's first name."
-msgstr ""
-
-#: includes/meta-box.php:655
-msgid "Display user's last name."
-msgstr ""
-
-#: includes/meta-box.php:659
-msgid "Display group title."
-msgstr ""
-
-#: includes/meta-box.php:663
-msgid "Display course title."
-msgstr ""
-
-#: includes/meta-box.php:664
-msgid "Display course URL."
+#. translators: Post type label.
+#: includes/meta-box.php:453
+#: includes/post-type.php:310
+msgid "Any %s"
 msgstr ""
 
 #: includes/meta-box.php:668
-msgid "Display time when course is completed. <a href=\"http://php.net/manual/en/function.date.php\" target=\"_blank\">Click here</a> to see format options."
+msgid "Display user's username."
 msgstr ""
 
 #: includes/meta-box.php:669
-msgid "Display average points scored across all quizzes on the course."
+msgid "Display user's email."
 msgstr ""
 
 #: includes/meta-box.php:670
-msgid "Display average points got across all quizzes on the course."
+msgid "Display user's display name."
 msgstr ""
 
 #: includes/meta-box.php:671
-msgid "Display average total points got across all quizzes on the course."
+msgid "Display user's first name."
 msgstr ""
 
 #: includes/meta-box.php:672
-msgid "Display average correct answers percentage across all quizzes on the course."
-msgstr ""
-
-#: includes/meta-box.php:673
-msgid "Display average time spent across all quizzes on the course."
-msgstr ""
-
-#: includes/meta-box.php:674
-msgid "Display average correct answer counted across all quizzes on the course."
-msgstr ""
-
-#: includes/meta-box.php:675
-msgid "Display sum of correct answers percentage across all quizzes on the course."
+msgid "Display user's last name."
 msgstr ""
 
 #: includes/meta-box.php:676
-msgid "Display sum of points scored across all quizzes on the course."
+msgid "Display group title."
 msgstr ""
 
 #: includes/meta-box.php:677
-msgid "Display sum of points got across all quizzes on the course."
+msgid "Display group URL."
 msgstr ""
 
-#: includes/meta-box.php:678
-msgid "Display sum of total points got across all quizzes on the course."
+#: includes/meta-box.php:681
+msgid "Display course title."
 msgstr ""
 
-#: includes/meta-box.php:679
-msgid "Display sum of time spent across all quizzes on the course."
+#: includes/meta-box.php:682
+msgid "Display course URL."
 msgstr ""
 
-#: includes/meta-box.php:680
-msgid "Display sum of correct answer counted across all quizzes on the course."
+#: includes/meta-box.php:686
+msgid "Display time when course is completed. <a href=\"http://php.net/manual/en/function.date.php\" target=\"_blank\">Click here</a> to see format options."
 msgstr ""
 
-#: includes/meta-box.php:684
-msgid "Display lesson title."
+#: includes/meta-box.php:687
+msgid "Display average points scored across all quizzes on the course."
 msgstr ""
 
-#: includes/meta-box.php:685
-msgid "Display lesson URL."
+#: includes/meta-box.php:688
+msgid "Display average points got across all quizzes on the course."
 msgstr ""
 
 #: includes/meta-box.php:689
-msgid "Display topic title."
+msgid "Display average total points got across all quizzes on the course."
 msgstr ""
 
 #: includes/meta-box.php:690
-msgid "Display topic URL."
+msgid "Display average correct answers percentage across all quizzes on the course."
+msgstr ""
+
+#: includes/meta-box.php:691
+msgid "Display average time spent across all quizzes on the course."
+msgstr ""
+
+#: includes/meta-box.php:692
+msgid "Display average correct answer counted across all quizzes on the course."
+msgstr ""
+
+#: includes/meta-box.php:693
+msgid "Display sum of correct answers percentage across all quizzes on the course."
 msgstr ""
 
 #: includes/meta-box.php:694
-msgid "Display quiz URL."
+msgid "Display sum of points scored across all quizzes on the course."
 msgstr ""
 
 #: includes/meta-box.php:695
-msgid "Display time when the quiz is taken. <a href=\"http://php.net/manual/en/function.date.php\" target=\"_blank\">Click here</a> to see format options."
+msgid "Display sum of points got across all quizzes on the course."
 msgstr ""
 
 #: includes/meta-box.php:696
-msgid "Display correct percentage of the quiz."
+msgid "Display sum of total points got across all quizzes on the course."
 msgstr ""
 
 #: includes/meta-box.php:697
-msgid "Display whether the user passes the quiz or not. Display \"Yes\" or \"No\"."
+msgid "Display sum of time spent across all quizzes on the course."
 msgstr ""
 
 #: includes/meta-box.php:698
-msgid "Display quiz title."
+msgid "Display sum of correct answer counted across all quizzes on the course."
 msgstr ""
 
-#: includes/meta-box.php:699
-msgid "Display course title that quiz belongs to."
+#: includes/meta-box.php:702
+msgid "Display lesson title."
 msgstr ""
 
-#: includes/meta-box.php:700
-msgid "Display how long is taken to complete the quiz."
+#: includes/meta-box.php:703
+msgid "Display lesson URL."
 msgstr ""
 
-#: includes/meta-box.php:701
-msgid "Display quiz result based on categories."
+#: includes/meta-box.php:707
+msgid "Display topic title."
 msgstr ""
 
-#: includes/meta-box.php:705
-msgid "Display total points earned."
-msgstr ""
-
-#: includes/meta-box.php:706
-msgid "Display total points possible for the essay."
-msgstr ""
-
-#: includes/meta-box.php:710
-msgid "Display assignment title."
-msgstr ""
-
-#: includes/meta-box.php:711
-msgid "Display assignment file name."
+#: includes/meta-box.php:708
+msgid "Display topic URL."
 msgstr ""
 
 #: includes/meta-box.php:712
-msgid "Display assignment file link."
+msgid "Display quiz URL."
 msgstr ""
 
 #: includes/meta-box.php:713
-msgid "Display lesson title that the assignment belongs to."
+msgid "Display time when the quiz is taken. <a href=\"http://php.net/manual/en/function.date.php\" target=\"_blank\">Click here</a> to see format options."
 msgstr ""
 
 #: includes/meta-box.php:714
+msgid "Display correct percentage of the quiz."
+msgstr ""
+
+#: includes/meta-box.php:715
+msgid "Display whether the user passes the quiz or not. Display \"Yes\" or \"No\"."
+msgstr ""
+
+#: includes/meta-box.php:716
+msgid "Display quiz title."
+msgstr ""
+
+#: includes/meta-box.php:717
+msgid "Display course title that quiz belongs to."
+msgstr ""
+
+#: includes/meta-box.php:718
+msgid "Display how long is taken to complete the quiz."
+msgstr ""
+
+#: includes/meta-box.php:719
+msgid "Display quiz result based on categories."
+msgstr ""
+
+#: includes/meta-box.php:723
+msgid "Display total points earned."
+msgstr ""
+
+#: includes/meta-box.php:724
+msgid "Display total points possible for the essay."
+msgstr ""
+
+#: includes/meta-box.php:728
+msgid "Display assignment title."
+msgstr ""
+
+#: includes/meta-box.php:729
+msgid "Display assignment file name."
+msgstr ""
+
+#: includes/meta-box.php:730
+msgid "Display assignment file link."
+msgstr ""
+
+#: includes/meta-box.php:731
+msgid "Display lesson title that the assignment belongs to."
+msgstr ""
+
+#: includes/meta-box.php:732
 msgid "Display lesson type that the assignment belongs to."
 msgstr ""
 
-#: includes/notification.php:1514
+#: includes/notification.php:1580
 msgid "Assignment"
 msgstr ""
 
-#: includes/notification.php:1517
+#: includes/notification.php:1583
 msgid "Essay"
 msgstr ""
 
-#: includes/notification.php:1530
-msgid "New comment on %s \"%s\""
+#: includes/notification.php:1596
+msgid "New comment on %1$s \"%2$s\""
 msgstr ""
 
 #. translators: 1: comment author, 2: author IP, 3: author domain
-#: includes/notification.php:1532
+#: includes/notification.php:1598
 msgid "Author: %1$s (IP: %2$s, %3$s)"
 msgstr ""
 
-#: includes/notification.php:1533
+#: includes/notification.php:1599
 msgid "Email: %s"
 msgstr ""
 
-#: includes/notification.php:1534
+#: includes/notification.php:1600
 msgid "Comment: %s"
 msgstr ""
 
-#: includes/notification.php:1535
+#: includes/notification.php:1601
 msgid "You can see all comments on this %s here:"
 msgstr ""
 
-#: includes/notification.php:1537
+#: includes/notification.php:1603
 msgid "Permalink: %s"
 msgstr ""
 
 #. translators: 1: title, 2: post title
-#: includes/notification.php:1540
+#: includes/notification.php:1606
 msgid "%1$s Comment: \"%2$s\""
 msgstr ""
 
-#: includes/notification.php:1630
+#: includes/notification.php:1699
 msgid "User enrolls into a group"
 msgstr ""
 
-#: includes/notification.php:1631
+#: includes/notification.php:1700
 msgid "User enrolls into a course"
 msgstr ""
 
-#: includes/notification.php:1632
+#: includes/notification.php:1701
 msgid "User completes a course"
 msgstr ""
 
-#: includes/notification.php:1633
+#: includes/notification.php:1702
 msgid "User completes a lesson"
 msgstr ""
 
-#: includes/notification.php:1634
+#: includes/notification.php:1703
 msgid "A scheduled lesson is available to user"
 msgstr ""
 
-#: includes/notification.php:1635
+#: includes/notification.php:1704
 msgid "User completes a topic"
 msgstr ""
 
-#: includes/notification.php:1636
+#: includes/notification.php:1705
 msgid "User passes a quiz"
 msgstr ""
 
-#: includes/notification.php:1637
+#: includes/notification.php:1706
 msgid "User fails a quiz"
 msgstr ""
 
-#: includes/notification.php:1638
+#: includes/notification.php:1707
 msgid "User submits a quiz"
 msgstr ""
 
-#: includes/notification.php:1639
+#: includes/notification.php:1708
 msgid "User completes a quiz"
 msgstr ""
 
-#: includes/notification.php:1640
+#: includes/notification.php:1709
 msgid "Essay has just been submitted"
 msgstr ""
 
-#: includes/notification.php:1641
+#: includes/notification.php:1710
 msgid "Essay question has been put into graded status"
 msgstr ""
 
-#: includes/notification.php:1642
+#: includes/notification.php:1711
 msgid "An assignment is uploaded"
 msgstr ""
 
-#: includes/notification.php:1643
+#: includes/notification.php:1712
 msgid "An assignment is approved"
 msgstr ""
 
-#: includes/notification.php:1644
+#: includes/notification.php:1713
 msgid "User hasn't logged in for \"X\" days"
 msgstr ""
 
-#: includes/notification.php:1645
+#: includes/notification.php:1714
 msgid "\"X\" days before course expires"
 msgstr ""
 
-#: includes/notification.php:1646
+#: includes/notification.php:1715
 msgid "\"X\" days after course expires"
 msgstr ""
 
-#: includes/notification.php:1654
+#: includes/notification.php:1734
+msgid "User has not completed a quiz."
+msgstr ""
+
+#: includes/notification.php:1741
+msgid "User is enrolled to a group"
+msgstr ""
+
+#: includes/notification.php:1745
+msgid "User is enrolled to a course"
+msgstr ""
+
+#: includes/notification.php:1749
+msgid "User has completed a course"
+msgstr ""
+
+#: includes/notification.php:1753
+msgid "User has completed a lesson"
+msgstr ""
+
+#: includes/notification.php:1761
+msgid "User has completed a topic"
+msgstr ""
+
+#: includes/notification.php:1773
+msgid "User has submitted a quiz"
+msgstr ""
+
+#: includes/notification.php:1777
+msgid "User has completed a quiz"
+msgstr ""
+
+#: includes/notification.php:1781
+msgid "User has uploaded an assignment."
+msgstr ""
+
+#: includes/notification.php:1785
+msgid "User's assignment has been approved."
+msgstr ""
+
+#: includes/notification.php:1831
+msgctxt "Group label"
+msgid "%s that the notification is assigned to."
+msgstr ""
+
+#: includes/notification.php:1843
+msgctxt "Course label"
+msgid "%s that the notification is assigned to."
+msgstr ""
+
+#: includes/notification.php:1872
+msgctxt "Lesson label"
+msgid "%s that the notification is assigned to."
+msgstr ""
+
+#: includes/notification.php:1897
+msgctxt "Topic label"
+msgid "%s that the notification is assigned to."
+msgstr ""
+
+#: includes/notification.php:1943
 msgid "User"
 msgstr ""
 
-#: includes/notification.php:1655
+#: includes/notification.php:1944
 msgid "Group Leader"
 msgstr ""
 
-#: includes/notification.php:1656
+#: includes/notification.php:1945
 msgid "Admin"
 msgstr ""
 
-#: includes/post-type.php:14
+#: includes/post-type.php:27
 msgid "Notification"
 msgstr ""
 
-#: includes/post-type.php:15
+#: includes/post-type.php:28
 msgctxt "learndash-notifications"
 msgid "Add New Notification"
 msgstr ""
 
-#: includes/post-type.php:16
+#: includes/post-type.php:29
 msgid "Add New Notification"
 msgstr ""
 
-#: includes/post-type.php:17
+#: includes/post-type.php:30
 msgid "Edit Notification"
 msgstr ""
 
-#: includes/post-type.php:18
+#: includes/post-type.php:31
 msgid "New Notification"
 msgstr ""
 
-#: includes/post-type.php:19
+#: includes/post-type.php:32
 msgid "View Notification"
 msgstr ""
 
-#: includes/post-type.php:20
+#: includes/post-type.php:33
 msgid "Search Notifications"
 msgstr ""
 
-#: includes/post-type.php:21
+#: includes/post-type.php:34
 msgid "No Notification found"
 msgstr ""
 
-#: includes/post-type.php:22
+#: includes/post-type.php:35
 msgid "No Notification found in Trash"
 msgstr ""
 
-#: includes/post-type.php:23
+#: includes/post-type.php:36
 msgid "Parent Notification:"
 msgstr ""
 
-#: includes/post-type.php:30
+#: includes/post-type.php:43
 msgid "Notifications created for LearnDash."
 msgstr ""
 
-#: includes/post-type.php:100
+#: includes/post-type.php:113
 msgid "Trigger"
 msgstr ""
 
-#: includes/post-type.php:126
-msgid "All Courses"
-msgstr ""
-
 #: includes/post-type.php:145
-msgid "All lessons"
+msgctxt "Courses label"
+msgid "Any %s"
 msgstr ""
 
-#: includes/post-type.php:162
-msgid "All topics"
+#: includes/post-type.php:165
+#: includes/post-type.php:185
+#: includes/post-type.php:205
+msgctxt "Lessons label"
+msgid "Any %s"
 msgstr ""
 
-#: includes/post-type.php:181
-msgid "All quizzes"
-msgstr ""
+#: includes/post-type.php:243
+msgctxt "After mentioning object one by one"
+msgid "%1$s %2$sand %3$d other%4$s"
+msgid_plural "%1$s %2$s and %3$d others%4$s"
+msgstr[0] ""
+msgstr[1] ""
 
-#: includes/post-type.php:238
+#: includes/post-type.php:309
 msgid "Select %s"
 msgstr ""
 
-#: includes/post-type.php:239
-msgid "All %s"
-msgstr ""
-
-#: includes/post-type.php:254
+#: includes/post-type.php:327
 msgid "Select Trigger"
 msgstr ""
 
-#: includes/subscription-manager.php:47
-msgid "Don't want to receive this email anymore? <a href=\"%s\">Click here</a> to manage your notification emails subscription."
+#: includes/subscription-manager.php:60
+msgid "Don't want to receive this email anymore? <a href=\"%s\">Click here</a> to manage your notification email subscriptions."
 msgstr ""
 
-#: includes/subscription-manager.php:93
-#: templates/subscription-page.php:88
+#: includes/subscription-manager.php:109
+#: templates/subscription-page.php:103
 msgid "LearnDash Notifications Subscription"
 msgstr ""
 
-#: includes/tools.php:29
+#: includes/tools.php:28
 msgid "Your ld_notifications_delayed_emails DB table has been successfully emptied."
 msgstr ""
 
-#: learndash-notifications.php:173
+#: learndash-notifications.php:47
+msgid "LearnDash LMS - Notifications add-on requires the following plugin(s) be active:"
+msgstr ""
+
+#: src/deprecated/class-logs-page.php:30
+msgid "LearnDash Notifications Logs"
+msgstr ""
+
+#: src/deprecated/LearnDash_Notifications.php:163
 msgid "LearnDash LMS - Notifications Add-on requires the following plugin(s) to be active:"
 msgstr ""
 
-#: src/trigger/after-course-expire.php:54
+#: src/trigger.php:765
+msgid "Other actions"
+msgstr ""
+
+#: src/trigger/after-course-expire.php:65
 msgid "The course will be expire at %s"
 msgstr ""
 
-#: src/trigger/before-course-expire.php:47
+#: src/trigger/before-course-expire.php:65
 msgid "The course will be expired at %s"
 msgstr ""
 
 #. translators: User ID and the last login timestamp.
-#: src/trigger/user-login-track.php:171
+#: src/trigger/user-login-track.php:181
 msgid "User ID :%1$d - Last login: %2$s"
 msgstr ""
 
-#: templates/admin/logs-page.php:5
+#: templates/admin/logs-page.php:21
 msgid "Clear all logs"
 msgstr ""
 
-#: templates/admin/logs-page.php:24
+#: templates/admin/logs-page.php:41
 msgid "Clear log"
 msgstr ""
 
-#: templates/admin/logs-page.php:31
+#: templates/admin/logs-page.php:48
 msgid "The logs are empty."
 msgstr ""
 
-#: templates/admin/status-page.php:7
+#: templates/admin/status-page.php:20
 msgid "Server Cron Setup"
 msgstr ""
 
-#: templates/admin/status-page.php:9
-#: templates/admin/status-page.php:24
+#: templates/admin/status-page.php:22
+#: templates/admin/status-page.php:37
 msgid "Not yet detected"
 msgstr ""
 
-#: templates/admin/status-page.php:10
+#: templates/admin/status-page.php:23
 msgid ", <a href=\"%s\" target=\"_blank\" rel=\"noreferrer\">click here</a> for cron setup instruction (it may take some times for this value to be updated)"
 msgstr ""
 
-#: templates/admin/status-page.php:14
+#: templates/admin/status-page.php:27
 msgid "Queued Emails in DB"
 msgstr ""
 
-#: templates/admin/status-page.php:22
+#: templates/admin/status-page.php:35
 msgid "Last Run"
 msgstr ""
 
-#: templates/admin/status-page.php:33
+#: templates/admin/status-page.php:46
 msgid "Tools"
 msgstr ""
 
-#: templates/admin/status-page.php:44
+#: templates/admin/status-page.php:57
 msgid "Empty DB Table"
 msgstr ""
 
-#: templates/admin/status-page.php:58
+#: templates/admin/status-page.php:73
 msgid "Fix Scheduled Notification Recipients"
 msgstr ""
 
-#: templates/subscription-page.php:94
+#: templates/subscription-page.php:109
 msgid "Your notification settings has been successfully saved."
 msgstr ""
 
-#: templates/subscription-page.php:99
+#: templates/subscription-page.php:114
 msgid "There is something wrong. Please try again later."
 msgstr ""
 
-#: templates/subscription-page.php:120
+#: templates/subscription-page.php:135
 msgid "Triggers"
 msgstr ""
 
-#: templates/subscription-page.php:123
+#: templates/subscription-page.php:138
 msgid "Enabled"
 msgstr ""
 
-#: templates/subscription-page.php:126
+#: templates/subscription-page.php:141
 msgid "Select All"
 msgstr ""
 
-#: templates/subscription-page.php:142
+#: templates/subscription-page.php:162
 msgid "Save Changes"
 msgstr ""

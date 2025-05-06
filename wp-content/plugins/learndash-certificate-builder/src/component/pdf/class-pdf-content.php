@@ -11,7 +11,7 @@ namespace LearnDash_Certificate_Builder\Component\Pdf;
 use LearnDash_Certificate_Builder\Component\Builder\Pdf\Blocks\Fallback;
 use LearnDash_Certificate_Builder\Component\Pdf\Builder\Html_Builder;
 use LearnDash_Certificate_Builder\Component\Pdf\Builder\Style_Builder;
-use Mpdf\Mpdf;
+use LearnDash\Certificate_Builder\Mpdf\Mpdf;
 
 /**
  * Class Pdf_Content

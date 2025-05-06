@@ -1,4 +1,9 @@
 <?php
+/**
+ * Complete course trigger.
+ *
+ * @package LearnDash\Notifications
+ */
 
 namespace LearnDash_Notification\Trigger;
 
@@ -6,7 +11,6 @@ use LearnDash_Notification\Notification;
 use LearnDash_Notification\Trigger;
 
 class Complete_Course extends Trigger {
-
 	/**
 	 * @var string
 	 */
@@ -16,7 +20,7 @@ class Complete_Course extends Trigger {
 		$course = isset( $args['course'] ) ? $args['course'] : null;
 		$user   = isset( $args['user'] ) ? $args['user'] : null;
 		if ( ! $course instanceof \WP_Post || ! is_object( $user ) ) {
-			//nothing to do here
+			// nothing to do here
 			$this->log( 'Invalid access', $this->trigger );
 
 			return;
@@ -28,10 +32,16 @@ class Complete_Course extends Trigger {
 		$this->log( '==========Job start========' );
 		$this->log( sprintf( 'Process %d notifications', count( $models ) ) );
 		foreach ( $models as $model ) {
-			if ( $model->course_id !== 0 && $model->course_id !== absint( $course->ID ) ) {
-				//this is not for me
+			if ( ! $this->is_valid(
+				$model,
+				[
+					'user_id'   => $user->ID,
+					'course_id' => $course->ID,
+				]
+			) ) {
 				continue;
 			}
+
 			$emails = $model->gather_emails( $user->ID, $course->ID );
 			$args   = [
 				'user_id'   => $user->ID,
@@ -49,6 +59,7 @@ class Complete_Course extends Trigger {
 
 	/**
 	 * A base point for monitoring the events
+	 *
 	 * @return void
 	 */
 	function listen() {
@@ -63,11 +74,16 @@ class Complete_Course extends Trigger {
 	 * @return bool
 	 */
 	protected function can_send_delayed_email( Notification $model, $args ) {
+		$user_id   = $args['user_id'];
 		$course_id = $args['course_id'];
-		if ( $model->course_id !== 0 && $model->course_id !== $course_id ) {
-			//this is not for me
-			$this->log( sprintf( "Won't send cause the ID is different from the settings. Expected: %d - Current:%d", $model->course_id, $course_id ) );
 
+		if ( ! $this->is_valid(
+			$model,
+			[
+				'user_id'   => $user_id,
+				'course_id' => $course_id,
+			]
+		) ) {
 			return false;
 		}
 

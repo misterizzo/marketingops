@@ -9,7 +9,7 @@ namespace LearnDash_Notification;
  *
  * Class Notification
  *
- * @package LearnDash_Notification
+ * @package LearnDash\Notifications
  */
 class Notification {
 	/**
@@ -29,7 +29,7 @@ class Notification {
 	 * The course ID that this should be listen on
 	 * If this is 0, then it means any course will work
 	 *
-	 * @var int
+	 * @var array
 	 */
 	public $course_id;
 
@@ -37,30 +37,37 @@ class Notification {
 	 * The group ID this should be listen on
 	 * If this is 0, then it means any
 	 *
-	 * @var int
+	 * @var array
 	 */
 	public $group_id;
 
 	/**
 	 * The lesson ID that would be listen on, if this is 0 then it means any.
 	 *
-	 * @var int
+	 * @var array
 	 */
 	public $lesson_id;
 
 	/**
 	 * The topic ID that would be listen on, if this is 0 then it means any.
 	 *
-	 * @var int
+	 * @var array
 	 */
 	public $topic_id;
 
 	/**
 	 * The quiz ID that would be listen on, if this is 0 then it means any.
 	 *
-	 * @var int
+	 * @var array
 	 */
 	public $quiz_id;
+
+	/**
+	 * Conditions to check before notifications are sent.
+	 *
+	 * @var array
+	 */
+	public $conditions;
 
 	/**
 	 * This is use for User hasn't logged in for "X" days
@@ -88,7 +95,7 @@ class Notification {
 	 *
 	 * @var array
 	 */
-	public $recipients = array();
+	public $recipients;
 
 	/**
 	 * Addition recipients, separate by commas
@@ -119,6 +126,13 @@ class Notification {
 	public $only_one_time = 1;
 
 	/**
+	 * This is for the enroll_course trigger which if it's enabled, will exclude pre-ordered course.
+	 *
+	 * @var bool
+	 */
+	public $exclude_pre_ordered_course;
+
+	/**
 	 * Contains the Notification post type
 	 *
 	 * @var \WP_Post
@@ -136,42 +150,100 @@ class Notification {
 		}
 		$this->post                = $post;
 		$this->trigger             = get_post_meta( $post->ID, '_ld_notifications_trigger', true );
-		$this->recipients          = get_post_meta( $post->ID, '_ld_notifications_recipient', true );
-		$this->recipients          = apply_filters( 'learndash_notification_recipients', $this->recipients, $post->ID );
+		$this->recipients          = $this->filter_array_prop(
+			apply_filters(
+				'learndash_notification_recipients',
+				get_post_meta( $post->ID, '_ld_notifications_recipient', true ),
+				$post->ID
+			)
+		);
 		$this->addition_recipients = get_post_meta( $post->ID, '_ld_notifications_bcc', true );
 		$this->delay               = absint( get_post_meta( $post->ID, '_ld_notifications_delay', true ) );
 		$this->delay_unit          = get_post_meta( $post->ID, '_ld_notifications_delay_unit', true );
-		if ( ! in_array( $this->delay_unit, array( 'days', 'hours', 'minutes', 'seconds' ), true ) ) {
-			// fallback.
+		if ( ! in_array( $this->delay_unit, [ 'days', 'hours', 'minutes', 'seconds' ], true ) ) {
+			// Fallback.
 			$this->delay_unit = 'days';
 		}
-		$this->course_id            = absint( get_post_meta( $post->ID, '_ld_notifications_course_id', true ) );
-		$this->group_id             = absint( get_post_meta( $post->ID, '_ld_notifications_group_id', true ) );
-		$this->lesson_id            = absint( get_post_meta( $post->ID, '_ld_notifications_lesson_id', true ) );
-		$this->topic_id             = absint( get_post_meta( $post->ID, '_ld_notifications_topic_id', true ) );
-		$this->quiz_id              = absint( get_post_meta( $post->ID, '_ld_notifications_quiz_id', true ) );
-		$this->login_reminder_after = absint(
+		$this->course_id                  = $this->filter_trigger_object_prop( get_post_meta( $post->ID, '_ld_notifications_course_id', true ) );
+		$this->group_id                   = $this->filter_trigger_object_prop( get_post_meta( $post->ID, '_ld_notifications_group_id', true ) );
+		$this->lesson_id                  = $this->filter_trigger_object_prop( get_post_meta( $post->ID, '_ld_notifications_lesson_id', true ) );
+		$this->topic_id                   = $this->filter_trigger_object_prop( get_post_meta( $post->ID, '_ld_notifications_topic_id', true ) );
+		$this->quiz_id                    = $this->filter_trigger_object_prop( get_post_meta( $post->ID, '_ld_notifications_quiz_id', true ) );
+		$conditions                       = get_post_meta( $post->ID, '_ld_notifications_conditions', true );
+		$this->conditions                 = ! is_array( $conditions ) ? [] : $conditions;
+		$this->login_reminder_after       = absint(
 			get_post_meta(
 				$post->ID,
 				'_ld_notifications_not_logged_in_days',
 				true
 			)
 		);
-		$this->before_course_expiry = absint(
+		$this->before_course_expiry       = absint(
 			get_post_meta(
 				$post->ID,
 				'_ld_notifications_course_expires_days',
 				true
 			)
 		);
-		$this->after_course_expiry  = absint(
+		$this->after_course_expiry        = absint(
 			get_post_meta(
 				$post->ID,
 				'_ld_notifications_course_expires_after_days',
 				true
 			)
 		);
-		$this->only_one_time        = absint( get_post_meta( $post->ID, '_ld_notifications_send_only_once', true ) );
+		$this->only_one_time              = absint( get_post_meta( $post->ID, '_ld_notifications_send_only_once', true ) );
+		$this->exclude_pre_ordered_course = absint( get_post_meta( $post->ID, '_ld_notifications_exclude_pre_ordered_course', true ) );
+	}
+
+	/**
+	 * Filter recipients property to always return array.
+	 *
+	 * @since 1.6
+	 *
+	 * @param mixed $value
+	 * @return array
+	 */
+	private function filter_array_prop( $value ): array {
+		if ( ! is_array( $value ) ) {
+			if ( trim( $value ) === '' ) {
+				$value = [];
+			} else {
+				$value = [ $value ];
+			}
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Filter trigger object data such as course_id, lesson_id, etc to always return new array format.
+	 *
+	 * @since 1.6
+	 *
+	 * @param mixed $value
+	 * @return array
+	 */
+	private function filter_trigger_object_prop( $value ): array {
+		if ( ! is_array( $value ) ) {
+			if ( intval( $value ) === 0 ) {
+				$value = [ 'all' ];
+			} elseif ( ! empty( $value ) ) {
+				$value = [ $value ];
+			} else {
+				$value = [];
+			}
+		}
+
+		$value = array_map(
+			function ( $value ) {
+				$value = is_numeric( $value ) ? intval( $value ) : strval( $value );
+				return $value;
+			},
+			$value
+		);
+
+		return $value;
 	}
 
 	/**
@@ -179,7 +251,7 @@ class Notification {
 	 *
 	 * @param array $args Shortcode args.
 	 */
-	public function populate_shortcode_data( array $args = array() ) {
+	public function populate_shortcode_data( array $args = [] ) {
 		global $ld_notifications_shortcode_data;
 		$args['notification_id']         = $this->post->ID;
 		$ld_notifications_shortcode_data = $args;
@@ -233,7 +305,7 @@ class Notification {
 	}
 
 	/**
-	 * Base on the condition of the settings, we mayb get
+	 * Base on the condition of the settings, we maybe get
 	 * 1. The current user's email
 	 * 2. Group owners' emails
 	 * 3. Admin's emails
@@ -263,7 +335,7 @@ class Notification {
 					/**
 					 * In this context, a group leaders should be the leader of this user, if any
 					 */
-					$group_ids = array();
+					$group_ids = [];
 					if ( ! is_null( $group_id ) ) {
 						$group_ids[] = absint( $group_id );
 					}
@@ -282,15 +354,18 @@ class Notification {
 					foreach ( $group_ids as $group_id ) {
 						$users = learndash_get_groups_administrators( $group_id );
 						foreach ( $users as $user ) {
-							$emails[] = $user->user_email;
+							// Make sure the user has group leader or administrator role.
+							if ( in_array( 'group_leader', $user->roles, true ) || in_array( 'administrator', $user->roles, true ) ) {
+								$emails[] = $user->user_email;
+							}
 						}
 					}
 					break;
 				case 'admin':
 					$users = get_users(
-						array(
+						[
 							'role' => 'administrator',
-						)
+						]
 					);
 					foreach ( $users as $user ) {
 						$emails[] = $user->user_email;

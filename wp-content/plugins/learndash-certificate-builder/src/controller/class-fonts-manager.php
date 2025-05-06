@@ -9,10 +9,10 @@
 namespace LearnDash_Certificate_Builder\Controller;
 
 use Certificate_Builder\Traits\IO;
-use Mpdf\Cache;
-use Mpdf\Fonts\FontCache;
-use Mpdf\MpdfException;
-use Mpdf\TTFontFileAnalysis;
+use LearnDash\Certificate_Builder\Mpdf\Cache;
+use LearnDash\Certificate_Builder\Mpdf\Fonts\FontCache;
+use LearnDash\Certificate_Builder\Mpdf\MpdfException;
+use LearnDash\Certificate_Builder\Mpdf\TTFontFileAnalysis;
 
 /**
  * Class Fonts_Manager

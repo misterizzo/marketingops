@@ -11,7 +11,7 @@ namespace LearnDash_Certificate_Builder\Component\Builder\Pdf\Blocks;
 use LearnDash_Certificate_Builder\Component\Pdf\Builder\Html_Builder;
 use LearnDash_Certificate_Builder\Component\Pdf\Builder\Style_Builder;
 use LearnDash_Certificate_Builder\Component\Pdf\Pdf_Content;
-use simplehtmldom\HtmlDocument;
+use LearnDash\Certificate_Builder\simplehtmldom\HtmlDocument;
 
 /**
  * Class Block
@@ -44,7 +44,7 @@ abstract class Block {
 	/**
 	 * The root block
 	 *
-	 * @var array
+	 * @var array{id: string, blockName: string, attrs: array<string, mixed>, innerBlocks: array<string, mixed>[], innerHTML: string, innerContent: mixed[]}
 	 */
 	public $block;
 
@@ -58,10 +58,10 @@ abstract class Block {
 	/**
 	 * Block constructor.
 	 *
-	 * @param array         $block The root block.
-	 * @param Style_Builder $style The style builder class.
-	 * @param Html_Builder  $html The html builder class.
-	 * @param Pdf_Content   $caller The caller class, we use this for accessing to parent data.
+	 * @param array{id: string, blockName: string, attrs: array<string, mixed>, innerBlocks: array<string, mixed>[], innerHTML: string, innerContent: mixed[]} $block  The root block.
+	 * @param Style_Builder                                                                                                                                    $style  The style builder class.
+	 * @param Html_Builder                                                                                                                                     $html   The html builder class.
+	 * @param Pdf_Content                                                                                                                                      $caller The caller class, we use this for accessing to parent data.
 	 */
 	public function __construct( array $block, Style_Builder $style, Html_Builder $html, Pdf_Content $caller ) {
 		$this->block  = $block;

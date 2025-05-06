@@ -1,29 +1,51 @@
-# Copyright (C) 2021 LearnDash
+# Copyright (C) 2024 LearnDash
 # This file is distributed under the same license as the LearnDash LMS - Certificate Builder plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: LearnDash LMS - Certificate Builder 1.0.2\n"
+"Project-Id-Version: LearnDash LMS - Certificate Builder 1.1.3.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/learndash-certificate-builder\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-07-12T17:36:07+07:00\n"
+"POT-Creation-Date: 2024-11-20T15:22:55+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.4.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: learndash-certificate-builder\n"
 
 #. Plugin Name of the plugin
+#: learndash-certificate-builder.php
+#: src/App/Admin/Translation.php:51
 msgid "LearnDash LMS - Certificate Builder"
 msgstr ""
 
+#. Plugin URI of the plugin
+#: learndash-certificate-builder.php
+msgid "https://www.learndash.com/ld-add-ons/learndash-certificate-builder/"
+msgstr ""
+
 #. Description of the plugin
-msgid "LearnDash certificate builder allows you build certificates for your courses using the Gutenberg WordPress block editor"
+#: learndash-certificate-builder.php
+msgid "LearnDash certificate builder allows you build certificates for your courses using the Gutenberg WordPress block editor."
 msgstr ""
 
 #. Author of the plugin
+#: learndash-certificate-builder.php
 msgid "LearnDash"
+msgstr ""
+
+#. Author URI of the plugin
+#: learndash-certificate-builder.php
+msgid "https://www.learndash.com"
+msgstr ""
+
+#: learndash-certificate-builder.php:57
+msgid "LearnDash LMS"
+msgstr ""
+
+#: learndash-certificate-builder.php:66
+msgid "LearnDash LMS - Certificate Builder requires the following plugin(s) to be active:"
 msgstr ""
 
 #. translators: Learndash website.
@@ -83,34 +105,38 @@ msgstr ""
 msgid "A background image is required."
 msgstr ""
 
-#: src/controller/class-certificate-builder.php:107
+#: src/controller/class-certificate-builder.php:109
 msgid "Builder"
 msgstr ""
 
-#: src/controller/class-certificate-builder.php:109
+#: src/controller/class-certificate-builder.php:111
 msgid "Legacy"
 msgstr ""
 
 #. translators: Post type title.
-#: src/controller/class-certificate-builder.php:133
+#: src/controller/class-certificate-builder.php:135
 msgid "Preview &#8220;%s&#8221;"
 msgstr ""
 
-#: src/controller/class-certificate-builder.php:264
+#: src/controller/class-certificate-builder.php:266
 msgid "Certificate Post does not exist."
 msgstr ""
 
-#: src/controller/class-certificate-builder.php:269
+#: src/controller/class-certificate-builder.php:271
 msgid "Awarded Post does not exist."
 msgstr ""
 
-#: src/controller/class-certificate-builder.php:274
+#: src/controller/class-certificate-builder.php:276
 msgid "User does not exist."
 msgstr ""
 
 #: src/controller/class-fonts-manager.php:41
-#: blocks/certificate-builder/edit.js:204
-#: blocks/extend/index.js:223
+#: blocks/certificate-builder/edit.js:212
+#: blocks/extend/index.js:211
+#: build/certificate-builder-extender.js:19
+#: build/certificate-builder.js:19
+#: build/certificate-builder-extender.js:457
+#: build/certificate-builder.js:212
 msgid "Fonts"
 msgstr ""
 
@@ -129,13 +155,17 @@ msgstr ""
 
 #: src/controller/class-fonts-manager.php:231
 #: src/controller/class-fonts-manager.php:266
-#: blocks/extend/index.js:269
+#: blocks/extend/index.js:257
+#: build/certificate-builder-extender.js:19
+#: build/certificate-builder-extender.js:503
 msgid "Bold"
 msgstr ""
 
 #: src/controller/class-fonts-manager.php:239
 #: src/controller/class-fonts-manager.php:267
-#: blocks/extend/index.js:285
+#: blocks/extend/index.js:273
+#: build/certificate-builder-extender.js:19
+#: build/certificate-builder-extender.js:519
 msgid "Italic"
 msgstr ""
 
@@ -156,100 +186,160 @@ msgstr ""
 msgid "Use Certificate Builder"
 msgstr ""
 
-#: blocks/certificate-builder/edit.js:76
+#: blocks/certificate-builder/edit.js:84
+#: build/certificate-builder.js:19
+#: build/certificate-builder.js:84
 msgid "Letter/USLetter (default)"
 msgstr ""
 
-#: blocks/certificate-builder/edit.js:77
+#: blocks/certificate-builder/edit.js:85
+#: build/certificate-builder.js:19
+#: build/certificate-builder.js:85
 msgid "A4"
 msgstr ""
 
-#: blocks/certificate-builder/edit.js:80
+#: blocks/certificate-builder/edit.js:88
+#: build/certificate-builder.js:19
+#: build/certificate-builder.js:88
 msgid "Landscape (default)"
 msgstr ""
 
-#: blocks/certificate-builder/edit.js:81
+#: blocks/certificate-builder/edit.js:89
+#: build/certificate-builder.js:19
+#: build/certificate-builder.js:89
 msgid "Portrait"
 msgstr ""
 
-#: blocks/certificate-builder/edit.js:114
-#: blocks/extend/index.js:159
+#: blocks/certificate-builder/edit.js:122
+#: blocks/extend/index.js:147
+#: build/certificate-builder-extender.js:19
+#: build/certificate-builder.js:19
+#: build/certificate-builder-extender.js:393
+#: build/certificate-builder.js:122
 msgid "Use custom font"
 msgstr ""
 
-#: blocks/certificate-builder/edit.js:144
+#: blocks/certificate-builder/edit.js:152
+#: build/certificate-builder.js:19
+#: build/certificate-builder.js:152
 msgid "Spacing"
 msgstr ""
 
-#: blocks/certificate-builder/edit.js:145
+#: blocks/certificate-builder/edit.js:153
+#: build/certificate-builder.js:19
+#: build/certificate-builder.js:153
 msgid "Container size (%)"
 msgstr ""
 
-#: blocks/certificate-builder/edit.js:155
+#: blocks/certificate-builder/edit.js:163
+#: build/certificate-builder.js:19
+#: build/certificate-builder.js:163
 msgid "Margin bottom (rem)"
 msgstr ""
 
-#: blocks/certificate-builder/edit.js:168
+#: blocks/certificate-builder/edit.js:176
+#: build/certificate-builder.js:19
+#: build/certificate-builder.js:176
 msgid "Options"
 msgstr ""
 
-#: blocks/certificate-builder/edit.js:169
+#: blocks/certificate-builder/edit.js:177
+#: build/certificate-builder.js:19
+#: build/certificate-builder.js:177
 msgid "PDF Page Size"
 msgstr ""
 
-#: blocks/certificate-builder/edit.js:177
+#: blocks/certificate-builder/edit.js:185
+#: build/certificate-builder.js:19
+#: build/certificate-builder.js:185
 msgid "PDF Page Orientation"
 msgstr ""
 
-#: blocks/certificate-builder/edit.js:186
+#: blocks/certificate-builder/edit.js:194
+#: build/certificate-builder.js:19
+#: build/certificate-builder.js:194
 msgid "Fixed Viewport"
 msgstr ""
 
-#: blocks/certificate-builder/edit.js:195
+#: blocks/certificate-builder/edit.js:203
+#: build/certificate-builder.js:19
+#: build/certificate-builder.js:203
 msgid "RTL"
 msgstr ""
 
-#: blocks/certificate-builder/edit.js:207
-#: blocks/extend/index.js:226
+#: blocks/certificate-builder/edit.js:215
+#: blocks/extend/index.js:214
+#: build/certificate-builder-extender.js:19
+#: build/certificate-builder.js:19
+#: build/certificate-builder-extender.js:460
+#: build/certificate-builder.js:215
 msgid "Font family"
 msgstr ""
 
-#: blocks/certificate-builder/edit.js:230
+#: blocks/certificate-builder/edit.js:238
+#: build/certificate-builder.js:19
+#: build/certificate-builder.js:238
 msgid "Certificate Background"
 msgstr ""
 
 #: blocks/certificate-builder/index.js:40
+#: build/certificate-builder.js:19
+#: build/certificate-builder.js:343
 msgid "LearnDash Certificate Builder"
 msgstr ""
 
-#: blocks/extend/index.js:179
+#: blocks/extend/index.js:167
+#: build/certificate-builder-extender.js:19
+#: build/certificate-builder-extender.js:413
 msgid "Font size (px)"
 msgstr ""
 
-#: blocks/extend/index.js:198
+#: blocks/extend/index.js:186
+#: build/certificate-builder-extender.js:19
+#: build/certificate-builder-extender.js:432
 msgid "Text color"
 msgstr ""
 
-#: blocks/extend/index.js:208
+#: blocks/extend/index.js:196
+#: build/certificate-builder-extender.js:19
+#: build/certificate-builder-extender.js:442
 msgid "Background color"
 msgstr ""
 
-#: blocks/extend/index.js:243
+#: blocks/extend/index.js:231
+#: build/certificate-builder-extender.js:19
+#: build/certificate-builder-extender.js:477
 msgid "Left"
 msgstr ""
 
-#: blocks/extend/index.js:251
+#: blocks/extend/index.js:239
+#: build/certificate-builder-extender.js:19
+#: build/certificate-builder-extender.js:485
 msgid "Center"
 msgstr ""
 
-#: blocks/extend/index.js:259
+#: blocks/extend/index.js:247
+#: build/certificate-builder-extender.js:19
+#: build/certificate-builder-extender.js:493
 msgid "Right"
 msgstr ""
 
-#: blocks/extend/index.js:303
+#: blocks/extend/index.js:291
+#: build/certificate-builder-extender.js:19
+#: build/certificate-builder-extender.js:537
 msgid "Uppercase"
 msgstr ""
 
 #: blocks/row/index.js:40
 msgid "LearnDash Certificate Builder Row"
+msgstr ""
+
+#: block.json
+msgctxt "block title"
+msgid "Certificate Builder"
+msgstr ""
+
+#: block.json
+msgctxt "block description"
+msgid "Example block written with ESNext standard and JSX support – build step required."
 msgstr ""

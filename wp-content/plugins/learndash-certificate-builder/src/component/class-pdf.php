@@ -12,10 +12,10 @@ namespace LearnDash_Certificate_Builder\Component;
 use Certificate_Builder\Traits\IO;
 use LearnDash_Certificate_Builder\Component\Pdf\Pdf_Content;
 use LearnDash_Certificate_Builder\Controller\Fonts_Manager;
-use Mpdf\Config\FontVariables;
-use Mpdf\HTMLParserMode;
-use Mpdf\Mpdf;
-use Mpdf\Output\Destination;
+use LearnDash\Certificate_Builder\Mpdf\Config\FontVariables;
+use LearnDash\Certificate_Builder\Mpdf\HTMLParserMode;
+use LearnDash\Certificate_Builder\Mpdf\Mpdf;
+use LearnDash\Certificate_Builder\Mpdf\Output\Destination;
 
 /**
  * Class PDF
@@ -49,7 +49,7 @@ class PDF {
 	/**
 	 * PDF init.
 	 *
-	 * @throws \Mpdf\MpdfException Throw error if Mpdf cant not be init, should never be here.
+	 * @throws \LearnDash\Certificate_Builder\Mpdf\MpdfException Throw error if Mpdf cant not be init, should never be here.
 	 */
 	public function init() {
 		if ( $this->mpdf instanceof Mpdf ) {

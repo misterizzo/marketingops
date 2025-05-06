@@ -1,11 +1,22 @@
 <?php
 /**
+ * User related functions.
+ *
+ * @since 1.0.0
+ *
+ * @package LearnDash\Notifications
+ */
+
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
+/**
  * Delete LearnDash related user data from scheduled cron
- * 
- * @param  int 	$user_id ID of a user
+ *
+ * @param int $user_id ID of a user
  */
 function learndash_notifications_delete_learndash_user_data_cron() {
-	$schedules = get_option( 'learndash_notifications_delete_user_data', array() );
+	$schedules = get_option( 'learndash_notifications_delete_user_data', [] );
 
 	foreach ( $schedules as $user_id => $args ) {
 		delete_user_meta( $user_id, '_ld_notifications_last_login' );
@@ -35,19 +46,19 @@ function learndash_notifications_delete_learndash_user_data_cron() {
 
 /**
  * Schedule cron delete user data in DB
- * 
- * @param  int    $user_id User ID
+ *
+ * @param int $user_id User ID
  */
 function learndash_notifications_schedule_delete_user_data( $user_id ) {
 	$courses = ld_get_mycourses( $user_id );
-	$groups  = learndash_get_groups( $id_only = true, $user_id ) ?: array();
+	$groups  = learndash_get_groups( $id_only = true, $user_id ) ?: [];
 
-	$schedules = get_option( 'learndash_notifications_delete_user_data', array() );
+	$schedules = get_option( 'learndash_notifications_delete_user_data', [] );
 
-	$schedules[ $user_id ] = array(
+	$schedules[ $user_id ] = [
 		'courses' => $courses,
 		'groups'  => $groups,
-	);
+	];
 
 	update_option( 'learndash_notifications_delete_user_data', $schedules );
 }

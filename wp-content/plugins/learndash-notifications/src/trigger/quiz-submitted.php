@@ -1,11 +1,14 @@
 <?php
+/**
+ * Quiz submitted trigger.
+ *
+ * @package LearnDash\Notifications
+ */
 
 namespace LearnDash_Notification\Trigger;
 
 /**
  * Class Quiz_Submitted
- *
- * @package LearnDash_Notification\Trigger
  */
 class Quiz_Submitted extends Quiz_Passed {
 	/**
@@ -19,8 +22,8 @@ class Quiz_Submitted extends Quiz_Passed {
 	 * Listen for events.
 	 */
 	public function listen() {
-		add_action( 'learndash_quiz_submitted', array( &$this, 'monitor' ), 10, 2 );
-		add_action( 'leanrdash_notifications_send_delayed_email', array( &$this, 'send_db_delayed_email' ) );
+		add_action( 'learndash_quiz_submitted', [ &$this, 'monitor' ], 10, 2 );
+		add_action( 'leanrdash_notifications_send_delayed_email', [ &$this, 'send_db_delayed_email' ] );
 	}
 
 	/**
