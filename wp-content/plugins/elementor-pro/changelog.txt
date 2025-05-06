@@ -1,5 +1,10 @@
 # Elementor Pro - by Elementor.com
 
+#### 3.28.4 - 2025-05-05
+
+* Fix: Empty results appeared on the frontend when using the Taxonomy Filter with the 'Avoid Duplicates' option in Loop Grid widget
+* Fix: Errors occur when Debug mode is enabled and the Optimized Markup experiment is active
+
 #### 3.28.3 - 2025-04-16
 * Tweak: Improved sidebar navigation flow on the Elementor Home screen
 
