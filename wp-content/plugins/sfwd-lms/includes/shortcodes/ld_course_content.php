@@ -10,6 +10,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use LearnDash\Core\Utilities\Cast;
+
 /**
  * Builds the `[course_content]` shortcode output.
  *
@@ -119,10 +121,27 @@ function learndash_course_content_shortcode( $atts = array(), $content = '', $sh
 	$atts['paged']     = absint( $atts['paged'] );
 	$atts['wrapper']   = (bool) $atts['wrapper'];
 
+	// Protect post data. User ID is already protected as it is overridden above.
+	if (
+		! learndash_shortcode_can_current_user_access_post(
+			Cast::to_int( $atts['course_id'] )
+		)
+		|| ! learndash_shortcode_can_current_user_access_post(
+			Cast::to_int( $atts['post_id'] )
+		)
+		|| ! learndash_shortcode_can_current_user_access_post(
+			Cast::to_int(
+				$atts['group_id']
+			)
+		)
+	) {
+		return '';
+	}
+
 	if ( '' !== $atts['num'] ) {
 		$atts['num'] = absint( $atts['num'] );
 	}
-	
+
 	if ( ! empty( $atts['group_id'] ) ) {
 		$shown_content_key = $atts['group_id'] . '_' . $atts['user_id'];
 	} elseif ( ! empty( $atts['course_id'] ) ) {
@@ -272,7 +291,7 @@ function learndash_course_content_shortcode( $atts = array(), $content = '', $sh
 			}
 		}
 
-		if ( learndash_lesson_hasassignments( $post_post ) && ! empty( $atts['user_id'] ) ) {
+		if ( learndash_lesson_hasassignments( $post_post ) && ! empty( $atts['user_id'] ) ) { // cspell:disable-line.
 			$bypass_course_limits_admin_users = learndash_can_user_bypass( $atts['user_id'], 'learndash_lesson_assignment' );
 			$course_children_steps_completed  = learndash_user_is_course_children_progress_complete( $atts['user_id'], $atts['course_id'], $atts['post_id'] );
 			if ( ( learndash_lesson_progression_enabled() && ( true === $course_children_steps_completed ) ) || ( ! learndash_lesson_progression_enabled() ) || ( true === $bypass_course_limits_admin_users ) ) {
@@ -321,7 +340,7 @@ function learndash_course_content_shortcode( $atts = array(), $content = '', $sh
 		}
 	} elseif ( ( ! empty( $atts['post_id'] ) ) && ( ( learndash_get_post_type_slug( 'lesson' ) === get_post_type( $atts['post_id'] ) ) ) ) {
 		$post_post = get_post( $atts['post_id'] );
-		if ( learndash_lesson_hasassignments( $post_post ) && ! empty( $atts['user_id'] ) ) {
+		if ( learndash_lesson_hasassignments( $post_post ) && ! empty( $atts['user_id'] ) ) { // cspell:disable-line.
 			$bypass_course_limits_admin_users = learndash_can_user_bypass( $atts['user_id'], 'learndash_lesson_assignment' );
 			$course_children_steps_completed  = learndash_user_is_course_children_progress_complete( $atts['user_id'], $atts['course_id'], $atts['post_id'] );
 			if ( ( learndash_lesson_progression_enabled() && ( true === $course_children_steps_completed ) ) || ( ! learndash_lesson_progression_enabled() ) || ( true === $bypass_course_limits_admin_users ) ) {

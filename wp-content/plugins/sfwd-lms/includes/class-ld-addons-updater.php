@@ -40,7 +40,7 @@ if ( ! class_exists( 'LearnDash_Addon_Updater' ) ) {
 
 		/**
 		 * Holds reference to BitBucket API object. This is how the updatero class
-		 * retreives the repositories and add-on updates.
+		 * retrieves the repositories and add-on updates.
 		 *
 		 * @var object $pp_api
 		 */
@@ -633,7 +633,7 @@ if ( ! class_exists( 'LearnDash_Addon_Updater' ) ) {
 		}
 
 		/**
-		 * Update plugin readme. Retreives update via BB API.
+		 * Update plugin readme. Retrieves update via BB API.
 		 *
 		 * @param string  $plugin_slug Slug of plugin to update.
 		 * @param boolean $override_cache Flag to ignore cache.
@@ -719,7 +719,7 @@ if ( ! class_exists( 'LearnDash_Addon_Updater' ) ) {
 			$this->data['updates'] = array();
 			$all_plugins           = get_plugins();
 
-			// Then from the 'plugins' node. This lets us remove items we didn't retreive from 'repositories'.
+			// Then from the 'plugins' node. This lets us remove items we didn't retrieve from 'repositories'.
 			if ( ! empty( $this->data['plugins'] ) ) {
 				foreach ( $this->data['plugins'] as $plugin_slug => &$plugin_readme ) {
 

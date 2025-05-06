@@ -384,7 +384,7 @@ function learndash_certificate_options_metabox( $certificate ) {
  */
 function learndash_certificates_save_meta_box( $post_id ) {
 	// verify if this is an auto save routine.
-	// If it is our form has not been submitted, so we dont want to do anything.
+	// If it is our form has not been submitted, so we don't want to do anything.
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 		return;
 	}
@@ -435,8 +435,12 @@ add_action( 'save_post', 'learndash_certificates_save_meta_box' );
  * @return array Array of published/updated notice messages.
  */
 function learndash_certificates_post_updated_messages( $messages ) {
+	$post = get_post();
 
-	$post             = get_post();
+	if ( ! $post instanceof WP_Post ) {
+		return $messages;
+	}
+
 	$post_type        = get_post_type( $post );
 	$post_type_object = get_post_type_object( $post_type );
 
@@ -481,7 +485,7 @@ function learndash_certificates_post_updated_messages( $messages ) {
 			// translators: placeholder: Post Date.
 			esc_html_x( 'Certificate scheduled for: <strong>%s</strong>.', 'placeholder: Post Date', 'learndash' ),
 			// translators: Publish box date format, see https://secure.php.net/date.
-			date_i18n( __( 'M j, Y @ H:i', 'learndash' ), strtotime( $post->post_date ) )
+			learndash_adjust_date_time_display( (int) strtotime( $post->post_date_gmt ), __( 'M j, Y @ H:i', 'learndash' ) )
 		),
 		10 => esc_html__( 'Certificate draft updated.', 'learndash' ),
 	);
@@ -601,9 +605,11 @@ function learndash_certificate_display() {
 									 *
 									 * @since 3.2.0
 									 *
-									 * @param int $cert_id      Certificate Post ID.
-									 * @param int $cert_user_id User ID.
-									 * @param int post-id       Related Course, Quiz post ID.
+									 * @param array $args {
+									 *     @type int $cert_id      Certificate Post ID.
+									 *     @type int $cert_user_id User ID.
+									 *     @type int $post_id      Related Course, Quiz post ID.
+									 * } Args.
 									 */
 									do_action(
 										'learndash_tcpdf_init',

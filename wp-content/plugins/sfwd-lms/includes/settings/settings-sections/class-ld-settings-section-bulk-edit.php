@@ -38,6 +38,15 @@ if ( class_exists( 'LearnDash_Settings_Section' ) && ! class_exists( 'LearnDash_
 			$this->settings_section_label = esc_html__( 'Bulk Edit', 'learndash' );
 
 			parent::__construct();
+
+			add_filter(
+				'learndash_admin_settings_advanced_sections_with_hidden_metaboxes',
+				function( array $section_keys ) {
+					$section_keys[] = $this->settings_section_key;
+
+					return $section_keys;
+				}
+			);
 		}
 
 		/**
@@ -164,7 +173,7 @@ if ( class_exists( 'LearnDash_Settings_Section' ) && ! class_exists( 'LearnDash_
 			if ( ! isset( $learndash_assets_loaded['styles']['learndash-select2-jquery-style'] ) ) {
 				wp_enqueue_style(
 					'learndash-select2-jquery-style',
-					LEARNDASH_LMS_PLUGIN_URL . 'assets/vendor/select2-jquery/css/select2.min.css',
+					LEARNDASH_LMS_PLUGIN_URL . 'assets/vendor-libs/select2-jquery/css/select2.min.css',
 					array(),
 					LEARNDASH_SCRIPT_VERSION_TOKEN
 				);
@@ -174,7 +183,7 @@ if ( class_exists( 'LearnDash_Settings_Section' ) && ! class_exists( 'LearnDash_
 			if ( ! isset( $learndash_assets_loaded['scripts']['learndash-select2-jquery-script'] ) ) {
 				wp_enqueue_script(
 					'learndash-select2-jquery-script',
-					LEARNDASH_LMS_PLUGIN_URL . 'assets/vendor/select2-jquery/js/select2.full.min.js',
+					LEARNDASH_LMS_PLUGIN_URL . 'assets/vendor-libs/select2-jquery/js/select2.full.min.js',
 					array( 'jquery' ),
 					LEARNDASH_SCRIPT_VERSION_TOKEN,
 					true

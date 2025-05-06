@@ -23,7 +23,6 @@ if (
 	class Learndash_Admin_Export_File_Handler extends Learndash_Admin_Import_Export_File_Handler {
 		const EXPORT_DIRECTORY             = 'learndash' . DIRECTORY_SEPARATOR . 'export';
 		const LEARNDASH_EXPORT_ZIP_PATH_ID = 'learndash_export_zip';
-		const LEARNDASH_EXPORT_LOG_PATH_ID = 'learndash_export_log';
 
 		/**
 		 * Folders to include in the zip archive.
@@ -74,28 +73,6 @@ if (
 		 * @var resource
 		 */
 		private $file_stream;
-
-		/**
-		 * Returns the logger directory.
-		 *
-		 * @since 4.3.0
-		 *
-		 * @return string The logger directory.
-		 */
-		protected function get_logger_directory(): string {
-			return self::EXPORT_DIRECTORY;
-		}
-
-		/**
-		 * Returns the logger path ID.
-		 *
-		 * @since 4.3.0.1
-		 *
-		 * @return string The logger path ID.
-		 */
-		protected function get_logger_path_id(): string {
-			return self::LEARNDASH_EXPORT_LOG_PATH_ID;
-		}
 
 		/**
 		 * Constructor.
@@ -196,7 +173,7 @@ if (
 			}
 
 			$media_src_path = get_attached_file( $media_id );
-			if ( ! $media_src_path ) {
+			if ( ! $media_src_path || ! file_exists( $media_src_path ) ) {
 				return;
 			}
 
@@ -310,7 +287,7 @@ if (
 				throw new Exception( __( 'Unable to create the zip directory.', 'learndash' ) );
 			}
 
-			$this->add_index_file( $this->zip_dir_path );
+			learndash_put_directory_index_file( trailingslashit( $this->zip_dir_path ) . 'index.php' );
 
 			// check if the zip file already exists.
 			$zip_files = glob( $this->zip_dir_path . DIRECTORY_SEPARATOR . '*.zip' );

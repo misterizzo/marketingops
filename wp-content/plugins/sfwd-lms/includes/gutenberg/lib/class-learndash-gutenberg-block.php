@@ -26,6 +26,15 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block' ) ) {
 		protected $block_base = 'learndash';
 
 		/**
+		 * Block directory where block.json is located.
+		 *
+		 * @since 4.5.0
+		 *
+		 * @var string
+		 */
+		protected $block_dir;
+
+		/**
 		 * Shortcode slug
 		 *
 		 * @var string $shortcode_slug
@@ -86,8 +95,10 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block' ) ) {
 		 * @since 2.5.9
 		 */
 		public function register_blocks() {
+			$block_register = ! empty( $this->block_dir ) ? $this->block_dir : $this->block_base . '/' . $this->block_slug;
+
 			register_block_type(
-				$this->block_base . '/' . $this->block_slug,
+				$block_register,
 				array(
 					'render_callback' => array( $this, 'render_block' ),
 					'attributes'      => $this->block_attributes,
@@ -96,12 +107,12 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block' ) ) {
 		}
 
 		/**
-		 * Hook into 'the_content' WP filter and parse out our block. We want to convert the Gutenber Block notation to a normal LD shortcode.
+		 * Hook into 'the_content' WP filter and parse out our block. We want to convert the Gutenberg Block notation to a normal LD shortcode.
 		 * Called at high priority BEFORE do_shortcode() and do_blocks().
 		 *
 		 * @since 2.5.9
 		 *
-		 * @param string $content The post content containg all the inline HTML and blocks.
+		 * @param string $content The post content containing all the inline HTML and blocks.
 		 *
 		 * @return string $content.
 		 */
@@ -127,7 +138,7 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block' ) ) {
 		 *
 		 * @since 2.5.9
 		 *
-		 * @param array    $block_attributes The block attrbutes.
+		 * @param array    $block_attributes The block attributes.
 		 * @param string   $block_content    The block content.
 		 * @param WP_block $block            The block object.
 		 *
@@ -181,7 +192,7 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block' ) ) {
 		 *
 		 * @since 3.2.3
 		 *
-		 * @param array $block_attributes Shortcode attrbutes.
+		 * @param array $block_attributes Shortcode attributes.
 		 *
 		 * @return array $block_attributes
 		 */
@@ -278,7 +289,7 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block' ) ) {
 		 * @param string  $content Full page/post content to be searched.
 		 * @param string  $block_slug This is the block token pattern to search for. Ex: ld-user-meta, ld-visitor, ld-profile.
 		 * @param string  $shortcode_slug This is the actual shortcode token to be used.
-		 * @param boolean $self_closing true if not an innerblock.
+		 * @param boolean $self_closing true if not an inner block.
 		 * @return string $content
 		 */
 		public function convert_block_markers_to_shortcode( $content = '', $block_slug = '', $shortcode_slug = '', $self_closing = false ) {
@@ -358,7 +369,7 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block' ) ) {
 				} else {
 					/**
 					 * A non-self closing WP block will look like the following for the ld-student. The
-					 * patter will have an outer wrapper of the block whihc will be converted into a shortcode
+					 * patter will have an outer wrapper of the block which will be converted into a shortcode
 					 * wrapper like [ld_student]<content here>[/ld_student]
 					 *
 					 * <!-- wp:learndash/ld-student {"course_id":"109"} -->
@@ -452,7 +463,7 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block' ) ) {
 		 * @param array  $block_attributes The array of attributes parse from the block content.
 		 * @param string $shortcode_slug This will match the related LD shortcode ld_profile, ld_course_list, etc.
 		 * @param string $block_slug This is the block token being processed. Normally same as the shortcode but underscore replaced with dash.
-		 * @param string $content This is the orignal full content being parsed.
+		 * @param string $content This is the original full content being parsed.
 		 *
 		 * @return array $block_attributes.
 		 */
@@ -466,7 +477,7 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block' ) ) {
 		 *
 		 * @since 2.6.4
 		 *
-		 * @param string $content This is the orignal full content being parsed.
+		 * @param string $content This is the original full content being parsed.
 		 * @param array  $block_attributes The array of attributes parse from the block content.
 		 * @param string $shortcode_slug This will match the related LD shortcode ld_profile, ld_course_list, etc.
 		 * @param string $block_slug This is the block token being processed. Normally same as the shortcode but underscore replaced with dash.
@@ -480,7 +491,7 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block' ) ) {
 		/**
 		 * Common function used by the ld_course_list, ld_lesson_list, ld_topic_list,
 		 * and ld_quiz_list called from the render_block short/block processing function.
-		 * Converts the array of atrributes to a normalized shortcode parameter string.
+		 * Converts the array of attributes to a normalized shortcode parameter string.
 		 *
 		 * @since 2.6.4
 		 * @param array $block_attributes Array of block attributes.
@@ -497,7 +508,14 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block' ) ) {
 				if ( ( 'preview_show' === $key ) || ( 'editing_post_meta' === $key ) ) {
 					continue;
 				} elseif ( 'preview_user_id' === $key ) {
-					if ( ( ! isset( $block_attributes['user_id'] ) ) && ( 'preview_user_id' === $key ) && ( '' !== $val ) ) {
+					if ( ( isset( $block_attributes['user_id'] ) ) && ( ! empty( $block_attributes['user_id'] ) ) ) {
+						continue;
+					}
+
+					if ( ( 'preview_user_id' === $key ) && ( '' !== $val ) ) {
+						if ( ! $this->block_attributes_is_editing_post( $block_attributes ) ) {
+							continue;
+						}
 						if ( ! learndash_is_admin_user( get_current_user_id() ) ) {
 							if ( learndash_is_group_leader_user( get_current_user_id() ) ) {
 								// If group leader user we ensure the preview user_id is within their group(s).
@@ -605,7 +623,7 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block' ) ) {
 		 *
 		 * @since 3.1.0
 		 *
-		 * @param string $post_type Post Type Slug to retreive.
+		 * @param string $post_type Post Type Slug to retrieve.
 		 *
 		 * @return integer $post_id Post ID.
 		 */
@@ -633,7 +651,7 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block' ) ) {
 		 *
 		 * @since 4.0.0
 		 *
-		 * @param array $block_attributes The block attrbutes.
+		 * @param array $block_attributes The block attributes.
 		 *
 		 * @return boolean true if we are editing a post.
 		 */
@@ -651,7 +669,7 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block' ) ) {
 		 *
 		 * @since 4.0.0
 		 *
-		 * @param array  $block_attributes The block attrbutes.
+		 * @param array  $block_attributes The block attributes.
 		 * @param string $post_prefix     The post prefix to use. Example: 'course', 'quiz', 'group', etc.
 		 *
 		 * @return int Post ID.
@@ -677,7 +695,7 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block' ) ) {
 		 *
 		 * @since 4.0.0
 		 *
-		 * @param array $block_attributes The block attrbutes.
+		 * @param array $block_attributes The block attributes.
 		 *
 		 * @return int User ID.
 		 */
@@ -714,7 +732,7 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block' ) ) {
 		 *
 		 * @since 4.0.0
 		 *
-		 * @param array $block_attributes The block attrbutes.
+		 * @param array $block_attributes The block attributes.
 		 *
 		 * @return string Preview Post Type.
 		 */
@@ -727,7 +745,7 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block' ) ) {
 		 *
 		 * @since 4.0.0
 		 *
-		 * @param array $block_attributes The block attrbutes.
+		 * @param array $block_attributes The block attributes.
 		 *
 		 * @return int Edit Post ID.
 		 */
@@ -740,7 +758,7 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block' ) ) {
 		 *
 		 * @since 4.0.0
 		 *
-		 * @param array $block_attributes The block attrbutes.
+		 * @param array $block_attributes The block attributes.
 		 *
 		 * @return int Edit Course Post ID.
 		 */
@@ -753,7 +771,7 @@ if ( ! class_exists( 'LearnDash_Gutenberg_Block' ) ) {
 		 *
 		 * @since 4.0.0
 		 *
-		 * @param array  $block_attributes The block attrbutes.
+		 * @param array  $block_attributes The block attributes.
 		 * @param string $return_key       The post data key value to return.
 		 *
 		 * @return array Preview Post Data.

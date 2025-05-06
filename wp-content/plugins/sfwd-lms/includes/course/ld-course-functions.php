@@ -7,9 +7,13 @@
  * @package LearnDash\Course
  */
 
+use LearnDash\Core\Utilities\Cast;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+// cspell:ignore prerequities .
 
 /**
  * Gets the course ID for a resource.
@@ -75,18 +79,22 @@ function learndash_get_course_id( $id = null, $bypass_cb = false ) {
 		}
 
 		if ( ( isset( $_GET['course_id'] ) ) && ( ! empty( $_GET['course_id'] ) ) ) {
-			return intval( $_GET['course_id'] );
+			return absint( $_GET['course_id'] );
 		} elseif ( ( isset( $_GET['course'] ) ) && ( ! empty( $_GET['course'] ) ) ) {
-			return intval( $_GET['course'] );
+			return absint( $_GET['course'] );
 		} elseif ( ( isset( $_POST['course_id'] ) ) && ( ! empty( $_POST['course_id'] ) ) ) {
-			return intval( $_POST['course_id'] );
+			return absint( $_POST['course_id'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- legacy code.
 		} elseif ( ( isset( $_POST['course'] ) ) && ( ! empty( $_POST['course'] ) ) ) {
-			return intval( $_POST['course'] );
+			return absint( $_POST['course'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- legacy code.
 		} elseif ( ( isset( $_GET['post'] ) ) && ( ! empty( $_GET['post'] ) ) ) {
-			if ( get_post_type( intval( $_GET['post'] ) ) == 'sfwd-courses' ) {
-				return intval( $_GET['post'] );
+			if ( get_post_type( absint( $_GET['post'] ) ) == 'sfwd-courses' ) {
+				return absint( $_GET['post'] );
 			}
 		}
+	}
+
+	if ( learndash_get_post_type_slug( LDLMS_Post_Types::EXAM ) === $p->post_type ) {
+		return (int) get_post_meta( intval( $id ), 'exam_challenge_course_show', true );
 	}
 
 	return (int) get_post_meta( $id, 'course_id', true );
@@ -118,7 +126,7 @@ function learndash_get_lesson_id( $post_id = null, $course_id = null ) {
 		$post = get_post( $post_id );
 	}
 
-	if ( ( ! $post ) || ( ! is_a( $post, 'WP_Post' ) ) || ( ! in_array( $post->post_type, learndash_get_post_types( 'course' ) ) ) ) {
+	if ( ( ! $post ) || ( ! is_a( $post, 'WP_Post' ) ) || ( ! in_array( $post->post_type, learndash_get_post_types( 'course' ), true ) ) ) {
 		return false;
 	}
 
@@ -236,7 +244,7 @@ function learndash_get_course_prerequisites( $post_id = 0, $user_id = 0 ) {
 				}
 
 				foreach ( $course_pre as $c_id ) {
-					// Now check if the prerequities course is completed by user or not.
+					// Now check if the prerequisites course is completed by user or not.
 					$course_status = learndash_course_status( $c_id, $user_id, true );
 					if ( 'completed' === $course_status ) {
 						$courses_status_array[ $c_id ] = true;
@@ -324,29 +332,56 @@ function learndash_set_course_prerequisite( $course_id = 0, $course_pre = array(
 }
 
 /**
- * Checks whether the prerequisites are enabled for a course.
+ * Checks whether the course prerequisites requirement for enrollment setting is enabled for a course.
  *
  * @since 2.4.0
+ * @since 4.20.2 Add support for the new requirements_for_enrollment setting key.
  *
  * @param int $course_id The ID of the course.
  *
- * @return boolean Returns true if the prerequisites are enabled otherwise false.
+ * @return boolean Returns true if the course prerequisites requirement for enrollment setting is enabled, otherwise false.
  */
 function learndash_get_course_prerequisite_enabled( $course_id ) {
-	$course_pre_enabled = false;
-
-	$course_id = learndash_get_course_id( $course_id );
-	if ( ! empty( $course_id ) ) {
-		$course_pre_enabled = learndash_get_setting( $course_id, 'course_prerequisite_enabled' );
-		if ( 'on' === $course_pre_enabled ) {
-			$course_pre_courses = learndash_get_setting( $course_id, 'course_prerequisite' );
-			if ( ( is_array( $course_pre_courses ) ) && ( ! empty( $course_pre_courses ) ) ) {
-				$course_pre_enabled = true;
-			}
-		}
+	if ( empty( $course_id ) ) {
+		return false;
 	}
 
-	return $course_pre_enabled;
+	$course_id = learndash_get_course_id( $course_id );
+
+	if ( ! is_int( $course_id ) ) {
+		return false;
+	}
+
+	/**
+	 * We need to check if the course prerequisites setting is not empty. If the course prerequisite requirement for enrollment
+	 * setting is enabled, we also need to make sure that the courses for prerequisite setting is not empty.
+	 */
+
+	$course_pre_courses = learndash_get_setting( $course_id, 'course_prerequisite' );
+
+	if (
+		! is_array( $course_pre_courses )
+		|| empty( $course_pre_courses )
+	) {
+		return false;
+	}
+
+	// New setting key to check if the course prerequisites setting is enabled.
+	$requirements_for_enrollment = learndash_get_setting( $course_id, 'requirements_for_enrollment' );
+
+	if ( $requirements_for_enrollment === 'course_prerequisite_enabled' ) {
+		return true;
+	}
+
+	// Legacy setting key to check if the course prerequisites setting is enabled.
+	$course_pre_enabled = learndash_get_setting( $course_id, 'course_prerequisite_enabled' );
+
+	// We need to check the legacy key, the old setting key still might being used even after upgrading to LD core v4.20.0+.
+	if ( $course_pre_enabled === 'on' ) {
+		return true;
+	}
+
+	return false;
 }
 
 /**
@@ -379,7 +414,7 @@ function learndash_set_course_prerequisite_enabled( $course_id, $enabled = true 
  *
  * @param int $post_id The ID of the course.
  *
- * @return string The compare value for the prerequisite. Value can be 'ALL' or 'ANY' by default.
+ * @return 'ANY'|'ALL' The compare value for the prerequisite. Value can be 'ALL' or 'ANY' by default.
  */
 function learndash_get_course_prerequisite_compare( $post_id ) {
 
@@ -398,84 +433,102 @@ function learndash_get_course_prerequisite_compare( $post_id ) {
 }
 
 /**
- * Checks if the course points are enabled for a course.
+ * Checks if the course points requirement for enrollment setting is enabled for a course.
  *
  * @since 2.4.0
+ * @since 4.20.2 Add support for the new requirements_for_enrollment setting key.
  *
  * @param int $post_id Optional. The course ID. Default 0.
  *
- * @return bool Returns true if the course points are enabled otherwise false.
+ * @return bool Returns true if the course points requirement for enrollment setting is enabled, otherwise false.
  */
 function learndash_get_course_points_enabled( $post_id = 0 ) {
-	$course_points_enabled = false;
-
-	if ( ! empty( $post_id ) ) {
-		$course_id = learndash_get_course_id( $post_id );
-		if ( ! empty( $course_id ) ) {
-			$course_points_enabled = learndash_get_setting( $course_id, 'course_points_enabled' );
-			if ( 'on' === $course_points_enabled ) {
-				$course_points_enabled = true;
-			}
-		}
+	if ( empty( $post_id ) ) {
+		return false;
 	}
 
-	return $course_points_enabled;
+	$course_id = learndash_get_course_id( $post_id );
+
+	if ( ! is_int( $course_id ) ) {
+		return false;
+	}
+
+	// New setting key to check if the course points setting is enabled.
+	$requirements_for_enrollment = learndash_get_setting( $course_id, 'requirements_for_enrollment' );
+
+	if ( $requirements_for_enrollment === 'course_points_enabled' ) {
+		return true;
+	}
+
+	// Legacy setting key to check if the course points setting is enabled.
+	$course_points_enabled = learndash_get_setting( $course_id, 'course_points_enabled' );
+
+	// We check the legacy key because the old setting key still might being used even after upgrading to LD core v4.20.0+.
+	if ( $course_points_enabled === 'on' ) {
+		return true;
+	}
+
+	return false;
 }
 
 /**
- * Gets the course points for a given course ID.
+ * Retrieves the course completion points setting of a course.
  *
  * @since 2.4.0
+ * @since 4.20.2 The value is no longer dependent on the course points requirement for enrollment setting.
  *
  * @param int $post_id  Optional. Course Step or Course post ID. Default 0.
  * @param int $decimals Optional. Number of decimal places to round. Default 1.
  *
- * @return int|false Returns false if the course points are disabled otherwise returns course points.
+ * @return float|false Course completion points of a course if it exists, false otherwise.
  */
 function learndash_get_course_points( $post_id = 0, $decimals = 1 ) {
-	$course_points = false;
-
-	if ( ! empty( $post_id ) ) {
-		$course_id = learndash_get_course_id( $post_id );
-		if ( ! empty( $course_id ) ) {
-			if ( learndash_get_course_points_enabled( $course_id ) ) {
-				$course_points = 0;
-
-				$course_points = learndash_get_setting( $course_id, 'course_points' );
-				if ( ! empty( $course_points ) ) {
-					$course_points = learndash_format_course_points( $course_points, $decimals );
-				}
-			}
-		}
+	if ( empty( $post_id ) ) {
+		return false;
 	}
 
-	return $course_points;
+	$course_id = learndash_get_course_id( $post_id );
+
+	if ( empty( $course_id ) ) {
+		return false;
+	}
+
+	$course_points = learndash_get_setting( $course_id, 'course_points' );
+
+	if ( empty( $course_points ) ) {
+		return false;
+	}
+
+	return learndash_format_course_points( $course_points, $decimals );
 }
 
 /**
- * Gets the course points access for a given course ID.
+ * Retrieves the course points required to access a course.
+ *
+ * The value returned from this function is dependent on the course points requirement for enrollment setting. The requirement for enrollment setting must be set to "Course Points".
  *
  * @since 2.4.0
  *
  * @param int $post_id Optional. The ID of the course. Default 0.
  *
- * @return int|false Returns false if the course points are disabled otherwise returns course points.
+ * @return float|false Required course points to access a course, false otherwise.
  */
 function learndash_get_course_points_access( $post_id = 0 ) {
-	$course_points_access = false;
-
-	if ( ! empty( $post_id ) ) {
-		$course_id = learndash_get_course_id( $post_id );
-		if ( ! empty( $course_id ) ) {
-			if ( learndash_get_course_points_enabled( $course_id ) ) {
-				$course_points_access = 0;
-
-				$course_points_access = learndash_format_course_points( learndash_get_setting( $course_id, 'course_points_access' ) );
-			}
-		}
+	if ( empty( $post_id ) ) {
+		return false;
 	}
 
-	return $course_points_access;
+	$course_id = learndash_get_course_id( $post_id );
+
+	if ( empty( $course_id ) ) {
+		return false;
+	}
+
+	if ( ! learndash_get_course_points_enabled( $course_id ) ) {
+		return false;
+	}
+
+	return learndash_format_course_points( learndash_get_setting( $course_id, 'course_points_access' ) );
 }
 
 /**
@@ -665,7 +718,6 @@ function learndash_get_course_expired_access_from_meta( $course_id = 0 ) {
 	return array_map( 'absint', $expired_user_ids );
 }
 
-
 /**
  * Gets the course settings from the course meta.
  *
@@ -817,10 +869,10 @@ function learndash_user_get_course_completed_date( $user_id = 0, $course_id = 0 
 
 		if ( empty( $completed_on_timestamp ) ) {
 			$activity_query_args = array(
-				'post_ids'      => $course_id,
-				'user_ids'      => $user_id,
-				'activity_type' => 'course',
-				'per_page'      => 1,
+				'post_ids'       => $course_id,
+				'user_ids'       => $user_id,
+				'activity_types' => 'course',
+				'per_page'       => 1,
 			);
 
 			$activity = learndash_reports_get_activity( $activity_query_args );
@@ -912,7 +964,7 @@ function learndash_get_course_lessons_per_page( $course_id = 0 ) {
 }
 
 /**
- * Called from within the Coure Lessons List processing query SFWD_CPT::loop_shortcode.
+ * Called from within the Course Lessons List processing query SFWD_CPT::loop_shortcode.
  * This action will setup a global pager array to be used in templates.
  */
 
@@ -1020,7 +1072,7 @@ function learndash_process_lesson_topics_pager( $topics = array(), $args = array
 				foreach ( $topics_chunks as $topics_chunk_page => $topics_chunk_set ) {
 					$topics_ids = array_values( wp_list_pluck( $topics_chunk_set, 'ID' ) );
 
-					if ( ( ! empty( $topics_ids ) ) && ( in_array( (int) get_the_ID(), array_map( 'absint', $topics_ids ) ) ) ) {
+					if ( ( ! empty( $topics_ids ) ) && ( in_array( (int) get_the_ID(), array_map( 'absint', $topics_ids ), true ) ) ) {
 						$topics_paged = ++$topics_chunk_page;
 						break;
 					}
@@ -1110,7 +1162,7 @@ function learndash_get_course_lessons_order( $course_id = 0 ) {
 	/**
 	 * Filters course lessons order query arguments.
 	 *
-	 * @param array $course_lesson_args An arry of course lesson order arguments.
+	 * @param array $course_lesson_args An array of course lesson order arguments.
 	 * @param int   $course_id          Course ID.
 	 */
 	return apply_filters( 'learndash_course_lessons_order', $course_lessons_args, $course_id );
@@ -1170,7 +1222,7 @@ function learndash_get_course_topics_per_page( $course_id = 0, $lesson_id = 0 ) 
 	$course_topics_per_page = 0;
 
 	// From the WP > Settings > Reading > Posts per page.
-	$course_topics_per_page = (int) get_option( 'posts_per_page' );
+	$course_topics_per_page = intval( get_option( 'posts_per_page' ) );
 
 	// From the LearnDash > Settings > General > Global Pagination Settings > Shortcodes & Widgets per page.
 	$course_topics_per_page = LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Section_General_Per_Page', 'per_page', $course_topics_per_page );
@@ -1301,7 +1353,7 @@ function learndash_user_course_last_step( $user_id = 0, $course_id = 0 ) {
  * @param string $context The specific action to check for.
  * @param array  $args Optional array of args related to the
  * context. Typically starting with an step ID, Course ID, etc.
- * @return bool True if user can bypass. Otherwise fale.
+ * @return bool True if user can bypass. Otherwise false.
  */
 function learndash_can_user_bypass( $user_id = 0, $context = 'learndash_course_progression', $args = array() ) {
 	if ( empty( $user_id ) ) {
@@ -1381,7 +1433,7 @@ function learndash_can_user_autoenroll_courses( $user_id = 0 ) {
 /**
  * Utility function to check if Course Builder is enabled.
  *
- * @snce 3.4.0
+ * @since 3.4.0
  */
 function learndash_is_course_builder_enabled() {
 	if ( 'yes' === LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Courses_Management_Display', 'course_builder_enabled' ) ) {
@@ -1538,37 +1590,70 @@ function learndash_is_course_post( $post ): bool {
 }
 
 /**
- * Returns course enrollment url.
+ * Returns the page url a user is redirected to after completing a course.
+ * Priority is: Course level setting -> Courses level setting -> Course page url.
  *
- * @param WP_Post|int|null $post Post or Post ID.
+ * @since 4.11.0
  *
- * @since 4.1.0
+ * @param int $course_id Course ID.
  *
  * @return string
  */
-function learndash_get_course_enrollment_url( $post ): string {
-	if ( empty( $post ) ) {
-		return '';
+function learndash_course_get_completion_url( int $course_id ): string {
+	// Get the course completion page.
+	$page_id = learndash_get_setting( $course_id, 'course_completion_page' );
+
+	// If the course completion page is not set, then get the default course completion page.
+	if ( empty( $page_id ) ) {
+		$page_id = LearnDash_Settings_Section::get_section_setting(
+			'LearnDash_Settings_Courses_Management_Display',
+			'course_completion_page'
+		);
 	}
 
-	if ( is_int( $post ) ) {
-		$post = get_post( $post );
+	$page_id = Cast::to_int( $page_id );
 
-		if ( is_null( $post ) ) {
-			return '';
-		}
-	}
+	/**
+	 * Filters whether to redirect to the course completion page.
+	 *
+	 * @since 4.11.0
+	 *
+	 * @param bool $redirect_enabled Whether to redirect to the course completion page. Default true.
+	 * @param int  $course_id        Course ID.
+	 *
+	 * @return bool Whether to redirect to the course completion page.
+	 */
+	$course_completion_redirect_enabled = apply_filters(
+		'learndash_course_completion_page_redirect_enabled',
+		true,
+		$course_id
+	);
 
-	$url = get_permalink( $post );
+	$page_url = get_permalink(
+		$course_completion_redirect_enabled && $page_id > 0
+			? $page_id
+			: $course_id
+	);
+	$page_url = Cast::to_string( $page_url );
 
-	$settings = learndash_get_setting( $post );
-
-	if ( 'paynow' === $settings['course_price_type'] && ! empty( $settings['course_price_type_paynow_enrollment_url'] ) ) {
-		$url = $settings['course_price_type_paynow_enrollment_url'];
-	} elseif ( 'subscribe' === $settings['course_price_type'] && ! empty( $settings['course_price_type_subscribe_enrollment_url'] ) ) {
-		$url = $settings['course_price_type_subscribe_enrollment_url'];
-	}
-
-	/** This filter is documented in includes/course/ld-course-functions.php */
-	return apply_filters( 'learndash_course_join_redirect', $url, $post->ID );
+	/**
+	 * Filters the course completion URL.
+	 *
+	 * Before version 4.11.0, it was used to filter the ID/URL of the next course quiz which was incorrect.
+	 *
+	 * @since 2.1.0
+	 * @since 4.11.0 Added the `$page_id` parameter and `$page_url` parameter is always a string.
+	 *
+	 * @param string $page_url  The URL of the course completion page.
+	 * @param int    $course_id Course ID.
+	 * @param int    $page_id   The ID of the course completion page.
+	 *
+	 * @return string The URL of the course completion page.
+	 */
+	return apply_filters(
+		'learndash_course_completion_url',
+		$page_url,
+		$course_id,
+		$page_id
+	);
 }

@@ -29,7 +29,7 @@ if ( ( ! class_exists( 'LearnDash_Import_Course' ) ) && ( class_exists( 'LearnDa
 		 *
 		 * @var string $dest_post_type
 		 */
-		protected $dest_post_type   = 'sfwd-courses';
+		protected $dest_post_type = 'sfwd-courses';
 
 		/**
 		 * Source Post Type
@@ -44,13 +44,6 @@ if ( ( ! class_exists( 'LearnDash_Import_Course' ) ) && ( class_exists( 'LearnDa
 		 * @var string $dest_taxonomy
 		 */
 		protected $dest_taxonomy = 'ld_course_category';
-
-		/**
-		 * Constructor
-		 */
-		public function __construct() {
-			parent::__construct();
-		}
 
 		/**
 		 * Duplicate post
@@ -86,15 +79,15 @@ if ( ( ! class_exists( 'LearnDash_Import_Course' ) ) && ( class_exists( 'LearnDa
 		 * Prerequisite only support by Courses. (well and quizzes)
 		 * This function also enables course prerequisite
 		 *
-		 * @param int $dest_post_id   Destination Post ID.
-		 * @param int $prereq_post_id Prerequisite Post ID.
+		 * @param int $dest_post_id         Destination Post ID.
+		 * @param int $prerequisite_post_id Prerequisite Post ID.
 		 */
-		public function set_post_prerequisite( $dest_post_id = 0, $prereq_post_id = 0 ) {
-			if ( ( ! empty( $dest_post_id ) ) && ( ! empty( $prereq_post_id ) ) ) {
+		public function set_post_prerequisite( $dest_post_id = 0, $prerequisite_post_id = 0 ) {
+			if ( ( ! empty( $dest_post_id ) ) && ( ! empty( $prerequisite_post_id ) ) ) {
 				$this->set_course_prerequisite_enabled( $dest_post_id, true );
 
 				$prerequisite_posts   = learndash_get_course_prerequisite( $dest_post_id );
-				$prerequisite_posts[] = $prereq_post_id;
+				$prerequisite_posts[] = $prerequisite_post_id;
 				$this->set_course_prerequisite( $dest_post_id, $prerequisite_posts );
 			}
 		}

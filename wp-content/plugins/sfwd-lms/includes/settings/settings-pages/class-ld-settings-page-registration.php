@@ -30,7 +30,7 @@ if ( ( class_exists( 'LearnDash_Settings_Page' ) ) && ( ! class_exists( 'LearnDa
 			$this->settings_page_id     = 'learndash_lms_registration';
 
 			// translators: Course Shortcodes Label.
-			$this->settings_page_title   = esc_html_x( 'Registration', 'Registration Tab Label', 'learndash' );
+			$this->settings_page_title   = esc_html_x( 'Registration/Login', 'Registration/Login Tab Label', 'learndash' );
 			$this->settings_columns      = 2;
 			$this->show_quick_links_meta = false;
 

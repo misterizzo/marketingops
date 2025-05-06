@@ -58,14 +58,16 @@ if ( ( class_exists( 'LearnDash_Gutenberg_Block' ) ) && ( ! class_exists( 'Learn
 		 *
 		 * @since 2.5.9
 		 *
-		 * @param array    $block_attributes The block attrbutes.
-		 * @param string   $block_content    The block content.
-		 * @param WP_block $block            The block object.
+		 * @param array         $block_attributes The block attributes.
+		 * @param string        $block_content    The block content.
+		 * @param WP_Block|null $block            The block object.
 		 *
-		 * @return none The output is echoed.
+		 * @return string
 		 */
-		public function render_block( $block_attributes = array(), $block_content = '', WP_block $block = null ) {
-			$course_post = null;
+		public function render_block( $block_attributes = array(), $block_content = '', WP_Block $block = null ) {
+			$course_post            = null;
+			$registration_variation = learndash_registration_variation();
+			$variation_classic      = \LearnDash_Theme_Register_LD30::$variation_classic;
 
 			$block_attributes = $this->preprocess_block_attributes( $block_attributes );
 
@@ -168,7 +170,7 @@ if ( ( class_exists( 'LearnDash_Gutenberg_Block' ) ) && ( ! class_exists( 'Learn
 					if ( ( empty( $shortcode_out ) ) && ( $this->block_attributes_is_editing_post( $block_attributes ) ) ) {
 						$button_text = LearnDash_Custom_Label::get_label( 'button_take_this_course' );
 						if ( ! empty( $button_text ) ) {
-							$shortcode_out = '<a class="btn-join" href="#" id="btn-join">' . $button_text . '</a>';
+							$shortcode_out = '<a class="btn-join' . ( $registration_variation !== $variation_classic ? ' ld--ignore-inline-css' : '' ) . '" href="#" id="btn-join">' . $button_text . '</a>';
 							if ( ! empty( $shortcode_out ) ) {
 								$shortcode_out = $this->render_block_wrap( $shortcode_out );
 							}
@@ -203,7 +205,7 @@ if ( ( class_exists( 'LearnDash_Gutenberg_Block' ) ) && ( ! class_exists( 'Learn
 					if ( ( empty( $shortcode_out ) ) && ( $this->block_attributes_is_editing_post( $block_attributes ) ) ) {
 						$button_text = LearnDash_Custom_Label::get_label( 'button_take_this_group' );
 						if ( ! empty( $button_text ) ) {
-							$shortcode_out = '<a class="btn-join" href="#" id="btn-join">' . $button_text . '</a>';
+							$shortcode_out = '<a class="btn-join' . ( $registration_variation !== $variation_classic ? ' ld--ignore-inline-css' : '' ) . '" href="#" id="btn-join">' . $button_text . '</a>';
 							if ( ! empty( $shortcode_out ) ) {
 								$shortcode_out = $this->render_block_wrap( $shortcode_out );
 							}
@@ -213,6 +215,8 @@ if ( ( class_exists( 'LearnDash_Gutenberg_Block' ) ) && ( ! class_exists( 'Learn
 
 				return $shortcode_out;
 			}
+
+			return '';
 		}
 
 		// End of functions.

@@ -274,7 +274,7 @@ registerBlockType(
 					<TextControl
 						label={sprintf(
 							// translators: placeholder: Quizzes.
-							_x('%s per page', 'placeholder: Quizzess', 'learndash'), ldlms_get_custom_label('quizzes'))}
+							_x('%s per page', 'placeholder: Quizzes', 'learndash'), ldlms_get_custom_label('quizzes'))}
 						help={sprintf(
 							// translators: placeholder: per_page.
 							_x('Leave empty for default (%d) or 0 to show all items.', 'placeholder: per_page', 'learndash'), ldlms_get_per_page('per_page'))}

@@ -195,7 +195,7 @@ list-style: initial;
 	font-size: 12px;
 }
 
-.leardash-course-status-completed {
+.leardash-course-status-completed { /* cspell:disable-line */
 	color: green;
 }
 

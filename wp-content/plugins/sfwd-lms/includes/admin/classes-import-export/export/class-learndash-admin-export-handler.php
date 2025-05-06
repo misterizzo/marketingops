@@ -107,7 +107,7 @@ if (
 				return;
 			}
 
-			$this->logger->init( $this->file_handler->get_logger_path(), 'Export started.' );
+			$this->logger->info( 'Export started.' );
 
 			try {
 				$exporters_mapper = new Learndash_Admin_Export_Mapper( $this->file_handler, $this->logger );
@@ -139,7 +139,7 @@ if (
 					$this->get_scheduler_action_name()
 				);
 			} catch ( Exception $e ) {
-				$this->logger->log( 'Export exception: ' . $e->getMessage() );
+				$this->logger->error( 'Export exception: ' . $e->getMessage() );
 
 				Learndash_Admin_Action_Scheduler::add_admin_notice(
 					$e->getMessage(),
@@ -147,7 +147,7 @@ if (
 					$this->get_scheduler_action_name()
 				);
 			} finally {
-				$this->logger->finalize( 'Export finished.' );
+				$this->logger->info( 'Export finished.' . PHP_EOL );
 
 				/**
 				 * Fires after an export task is handled.

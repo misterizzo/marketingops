@@ -40,6 +40,7 @@ if ( ( class_exists( 'Learndash_Admin_Post_Edit' ) ) && ( ! class_exists( 'Learn
 			if ( $this->post_type_check() ) {
 
 				require_once LEARNDASH_LMS_PLUGIN_DIR . 'includes/settings/settings-metaboxes/class-ld-settings-metabox-group-display-content.php';
+				require_once LEARNDASH_LMS_PLUGIN_DIR . 'includes/settings/settings-metaboxes/class-ld-settings-metabox-group-access-extending.php';
 				require_once LEARNDASH_LMS_PLUGIN_DIR . 'includes/settings/settings-metaboxes/class-ld-settings-metabox-group-access-settings.php';
 
 				require_once LEARNDASH_LMS_PLUGIN_DIR . 'includes/settings/settings-metaboxes/class-ld-settings-metabox-group-users.php';
@@ -179,9 +180,9 @@ if ( ( class_exists( 'Learndash_Admin_Post_Edit' ) ) && ( ! class_exists( 'Learn
 				}
 			}
 
-			$group_leaders = [];
-			$group_users   = [];
-			$group_courses = [];
+			$group_leaders = array();
+			$group_users   = array();
+			$group_courses = array();
 
 			/**
 			 * Fires after the group post data is updated.
@@ -194,7 +195,7 @@ if ( ( class_exists( 'Learndash_Admin_Post_Edit' ) ) && ( ! class_exists( 'Learn
 			 * @param array   $group_users   An array of group users.
 			 * @param array   $group_courses An array of group courses.
 			 */
-			do_action_deprecated( 'ld_group_postdata_updated', [ $post_id, $group_leaders, $group_users, $group_courses ], '3.1.7' );
+			do_action_deprecated( 'ld_group_postdata_updated', array( $post_id, $group_leaders, $group_users, $group_courses ), '3.1.7' );
 		}
 
 		// End of functions.

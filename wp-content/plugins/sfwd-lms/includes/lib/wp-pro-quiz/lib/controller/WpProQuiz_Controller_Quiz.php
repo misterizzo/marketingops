@@ -1,9 +1,24 @@
 <?php
+/**
+ * WpProQuiz_Controller_Quiz class file.
+ *
+ * @since 1.2.7
+ *
+ * @package LearnDash\Core
+ */
+
+use LearnDash\Core\Utilities\Cast;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 // phpcs:disable WordPress.NamingConventions.ValidVariableName,WordPress.NamingConventions.ValidFunctionName,WordPress.NamingConventions.ValidHookName,PSR2.Classes.PropertyDeclaration.Underscore
 
+/**
+ * WpProQuiz_Controller_Quiz class.
+ *
+ * @since 1.2.7
+ */
 class WpProQuiz_Controller_Quiz extends WpProQuiz_Controller_Controller {
 	private $view;
 
@@ -98,7 +113,7 @@ class WpProQuiz_Controller_Quiz extends WpProQuiz_Controller_Controller {
 				$quiz = $data['quiz'];
 				$quiz->setId( $quizId );
 				$quiz->setName( $this->_post['name'] );
-				$quiz->setText( 'AAZZAAZZ' );
+				$quiz->setText( 'AAZZAAZZ' ); // cspell:disable-line.
 				$quizMapper->save( $quiz );
 				if ( empty( $quizId ) && ! empty( $get['post_id'] ) ) {
 					learndash_update_setting( $get['post_id'], 'quiz_pro', $quiz->getId() );
@@ -125,7 +140,7 @@ class WpProQuiz_Controller_Quiz extends WpProQuiz_Controller_Controller {
 
 			if ( $this->checkValidit( $this->_post ) ) {
 
-				$quiz->setText( 'AAZZAAZZ' );
+				$quiz->setText( 'AAZZAAZZ' ); // cspell:disable-line.
 
 				$quizMapper->save( $quiz );
 				if ( empty( $quizId ) && ! empty( $get['post_id'] ) ) {
@@ -143,7 +158,7 @@ class WpProQuiz_Controller_Quiz extends WpProQuiz_Controller_Controller {
 
 				if ( ! $this->formHandler( $quiz->getId(), $this->_post ) ) {
 					$quiz->setFormActivated( false );
-					$quiz->setText( 'AAZZAAZZ' );
+					$quiz->setText( 'AAZZAAZZ' ); // cspell:disable-line.
 					$quizMapper->save( $quiz );
 				}
 
@@ -243,7 +258,7 @@ class WpProQuiz_Controller_Quiz extends WpProQuiz_Controller_Controller {
 			}
 
 			if ( $this->checkValidit( $this->_post ) ) {
-				$quiz->setText( 'AAZZAAZZ' );
+				$quiz->setText( 'AAZZAAZZ' ); // cspell:disable-line.
 
 				$quiz2 = $quizMapper->save( $quiz );
 
@@ -267,7 +282,7 @@ class WpProQuiz_Controller_Quiz extends WpProQuiz_Controller_Controller {
 
 				if ( ! $this->formHandler( $quiz->getId(), $this->_post ) ) {
 					$quiz->setFormActivated( false );
-					$quiz->setText( ' AAZZAAZZ' );
+					$quiz->setText( ' AAZZAAZZ' ); // cspell:disable-line.
 					$quizMapper->save( $quiz );
 				}
 			} else {
@@ -325,7 +340,7 @@ class WpProQuiz_Controller_Quiz extends WpProQuiz_Controller_Controller {
 					$quiz = $data['quiz'];
 					$quiz->setId( $quizId );
 					$quiz->setName( $this->_post['name'] );
-					$quiz->setText( 'AAZZAAZZ' );
+					$quiz->setText( 'AAZZAAZZ' ); // cspell:disable-line.
 					$forms                = $data['forms'];
 					$prerequisiteQuizList = $data['prerequisiteQuizList'];
 				}
@@ -1125,12 +1140,19 @@ class WpProQuiz_Controller_Quiz extends WpProQuiz_Controller_Controller {
 		}
 	}
 
+	/**
+	 * Sends quiz notification email for user and admin after a user completes a quiz.
+	 *
+	 * @since 1.2.7
+	 *
+	 * @param WpProQuiz_Model_Quiz $quiz         Quiz object.
+	 * @param array<mixed>         $result       Quiz result.
+	 * @param array<mixed>         $categories   Quiz categories.
+	 *
+	 * @return void
+	 */
 	private function emailNote( WpProQuiz_Model_Quiz $quiz, $result, $categories ) {
-		$globalMapper = new WpProQuiz_Model_GlobalSettingsMapper();
-
-		$email_settings_admin = LearnDash_Settings_Section::get_section_settings_all( 'LearnDash_Settings_Quizzes_Admin_Email' );
-
-		$email_settings_user = LearnDash_Settings_Section::get_section_settings_all( 'LearnDash_Settings_Quizzes_User_Email' );
+		$email_settings = LearnDash_Settings_Section::get_section_settings_all( 'LearnDash_Settings_Quizzes_Email' );
 
 		$user = wp_get_current_user();
 
@@ -1150,8 +1172,8 @@ class WpProQuiz_Controller_Quiz extends WpProQuiz_Controller_Controller {
 		}
 
 		if ( $quiz->isUserEmailNotification() ) {
-			$user_mail_message = str_replace( array_keys( $r ), $r, $email_settings_user['user_mail_message'] );
-			$user_mail_subject = str_replace( array_keys( $r ), $r, $email_settings_user['user_mail_subject'] );
+			$user_mail_message = str_replace( array_keys( $r ), $r, $email_settings['user_mail_message'] );
+			$user_mail_subject = str_replace( array_keys( $r ), $r, $email_settings['user_mail_subject'] );
 
 			/**
 			 * Filters quiz email note user message.
@@ -1164,27 +1186,28 @@ class WpProQuiz_Controller_Quiz extends WpProQuiz_Controller_Controller {
 			 */
 			$user_mail_message = apply_filters( 'learndash_quiz_email_note_user_message', $user_mail_message, $r, $quiz, $result, $categories );
 
-			$headers = '';
+			if (
+				empty( $email_settings['user_mail_from_email'] )
+				|| ! is_email( $email_settings['user_mail_from_email'] )
+			) {
+				$email_settings['user_mail_from_email'] = get_option( 'admin_email' );
+			}
 
-			if ( ( isset( $email_settings_user['user_mail_from'] ) ) && ( ! empty( $email_settings_user['user_mail_from'] ) ) && ( is_email( $email_settings_user['user_mail_from'] ) ) ) {
-				if ( ( ! isset( $email_settings_user['user_mail_from_name'] ) ) || ( empty( $email_settings_user['user_mail_from_name'] ) ) ) {
-					$email_settings_user['user_mail_from_name'] = '';
+			if ( empty( $email_settings['user_mail_from_name'] ) ) {
+				$email_user = get_user_by( 'email', $email_settings['user_mail_from_email'] );
 
-					$email_user = get_user_by( 'email', $email_settings_user['user_mail_from'] );
-					if ( ( $email_user ) && ( is_a( $email_user, 'WP_User' ) ) ) {
-						$email_settings_user['user_mail_from_name'] = $email_user->display_name;
-					}
-				}
-
-				$headers .= 'From: ';
-				if ( ( isset( $email_settings_user['user_mail_from_name'] ) ) && ( ! empty( $email_settings_user['user_mail_from_name'] ) ) ) {
-					$headers .= $email_settings_user['user_mail_from_name'] . ' <' . $email_settings_user['user_mail_from'] . '>';
-				} else {
-					$headers .= $email_settings_user['user_mail_from'];
+				if ( $email_user && is_a( $email_user, 'WP_User' ) ) {
+					$email_settings['user_mail_from_name'] = $email_user->display_name;
 				}
 			}
 
-			if ( ( isset( $email_settings_user['user_mail_html'] ) ) && ( 'yes' === $email_settings_user['user_mail_html'] ) ) {
+			if ( ! empty( $email_settings['user_mail_from_name'] ) ) {
+				$headers = 'From: ' . $email_settings['user_mail_from_name'] . ' <' . $email_settings['user_mail_from_email'] . '>';
+			} else {
+				$headers = 'From: ' . $email_settings['user_mail_from_email'];
+			}
+
+			if ( ( isset( $email_settings['user_mail_html'] ) ) && ( 'yes' === $email_settings['user_mail_html'] ) ) {
 				add_filter( 'wp_mail_content_type', array( $this, 'htmlEmailContent' ) );
 				$user_mail_message = wpautop( $user_mail_message );
 			} else {
@@ -1207,7 +1230,7 @@ class WpProQuiz_Controller_Quiz extends WpProQuiz_Controller_Controller {
 			$email_params = apply_filters( 'learndash_quiz_email', $email_params, $quiz );
 			wp_mail( $email_params['email'], $email_params['subject'], $email_params['msg'], $email_params['headers'] );
 
-			if ( ( isset( $email_settings_user['user_mail_html'] ) ) && ( 'yes' === $email_settings_user['user_mail_html'] ) ) {
+			if ( ( isset( $email_settings['user_mail_html'] ) ) && ( 'yes' === $email_settings['user_mail_html'] ) ) {
 				remove_filter( 'wp_mail_content_type', array( $this, 'htmlEmailContent' ) );
 			}
 		}
@@ -1215,8 +1238,8 @@ class WpProQuiz_Controller_Quiz extends WpProQuiz_Controller_Controller {
 		if ( $quiz->getEmailNotification() == WpProQuiz_Model_Quiz::QUIZ_EMAIL_NOTE_ALL
 			|| ( get_current_user_id() > 0 && $quiz->getEmailNotification() == WpProQuiz_Model_Quiz::QUIZ_EMAIL_NOTE_REG_USER ) ) {
 
-			$admin_mail_message = str_replace( array_keys( $r ), $r, $email_settings_admin['admin_mail_message'] );
-			$admin_mail_subject = str_replace( array_keys( $r ), $r, $email_settings_admin['admin_mail_subject'] );
+			$admin_mail_message = str_replace( array_keys( $r ), $r, $email_settings['admin_mail_message'] );
+			$admin_mail_subject = str_replace( array_keys( $r ), $r, $email_settings['admin_mail_subject'] );
 
 			/**
 			 * Filters quiz email note admin message.
@@ -1228,33 +1251,35 @@ class WpProQuiz_Controller_Quiz extends WpProQuiz_Controller_Controller {
 			 * @param array                $categories Quiz categories
 			 */
 			$admin_mail_message = apply_filters( 'learndash_quiz_email_note_admin_message', $admin_mail_message, $r, $quiz, $result, $categories );
-			$headers            = '';
 
-			if ( ( ! isset( $email_settings_admin['admin_mail_from'] ) ) || ( empty( $email_settings_admin['admin_mail_from'] ) ) || ( ! is_email( $email_settings_admin['admin_mail_from'] ) ) ) {
-				$email_settings_admin['admin_mail_from'] = get_option( 'admin_email' );
+			if (
+				empty( $email_settings['admin_mail_from_email'] )
+				|| ! is_email( $email_settings['admin_mail_from_email'] )
+			) {
+				$email_settings['admin_mail_from_email'] = get_option( 'admin_email' );
 			}
 
-			if ( ( ! isset( $email_settings_admin['admin_mail_from_name'] ) ) || ( empty( $email_settings_admin['admin_mail_from_name'] ) ) ) {
-				$email_settings_admin['admin_mail_from_name'] = '';
+			if ( ! empty( $email_settings['admin_mail_to'] ) ) {
+				$email_settings['admin_mail_to'] = array_map( 'trim', explode( ',', Cast::to_string( $email_settings['admin_mail_to'] ) ) );
+			} else {
+				$email_settings['admin_mail_to'] = [ trim( Cast::to_string( get_option( 'admin_email' ) ) ) ];
+			}
 
-				if ( ! empty( $email_settings_admin['admin_mail_from'] ) ) {
-					$email_user = get_user_by( 'email', $email_settings_admin['admin_mail_from'] );
-					if ( ( $email_user ) && ( is_a( $email_user, 'WP_User' ) ) ) {
-						$email_settings_admin['admin_mail_from_name'] = $email_user->display_name;
-					}
+			if ( empty( $email_settings['admin_mail_from_name'] ) ) {
+				$email_user = get_user_by( 'email', $email_settings['admin_mail_from_email'] );
+
+				if ( $email_user && is_a( $email_user, 'WP_User' ) ) {
+					$email_settings['admin_mail_from_name'] = $email_user->display_name;
 				}
 			}
 
-			if ( ! empty( $email_settings_admin['admin_mail_from'] ) ) {
-				$headers .= 'From: ';
-				if ( ( isset( $email_settings_admin['admin_mail_from_name'] ) ) && ( ! empty( $email_settings_admin['admin_mail_from_name'] ) ) ) {
-					$headers .= $email_settings_admin['admin_mail_from_name'] . ' <' . $email_settings_admin['admin_mail_from'] . '>';
-				} else {
-					$headers .= $email_settings_admin['admin_mail_from'];
-				}
+			if ( ! empty( $email_settings['admin_mail_from_name'] ) ) {
+				$headers = 'From: ' . $email_settings['admin_mail_from_name'] . ' <' . $email_settings['admin_mail_from_email'] . '>';
+			} else {
+				$headers = 'From: ' . $email_settings['admin_mail_from_email'];
 			}
 
-			if ( ( isset( $email_settings_admin['admin_mail_html'] ) ) && ( $email_settings_admin['admin_mail_html'] ) ) {
+			if ( ( isset( $email_settings['admin_mail_html'] ) ) && ( $email_settings['admin_mail_html'] ) ) {
 				add_filter( 'wp_mail_content_type', array( $this, 'htmlEmailContent' ) );
 				$admin_mail_message = wpautop( $admin_mail_message );
 			} else {
@@ -1262,7 +1287,7 @@ class WpProQuiz_Controller_Quiz extends WpProQuiz_Controller_Controller {
 			}
 
 			$email_params = array(
-				'email'   => $email_settings_admin['admin_mail_to'],
+				'email'   => $email_settings['admin_mail_to'],
 				'subject' => $admin_mail_subject,
 				'msg'     => $admin_mail_message,
 				'headers' => $headers,
@@ -1277,7 +1302,7 @@ class WpProQuiz_Controller_Quiz extends WpProQuiz_Controller_Controller {
 			$email_params = apply_filters( 'learndash_quiz_email_admin', $email_params, $quiz );
 			wp_mail( $email_params['email'], $email_params['subject'], $email_params['msg'], $email_params['headers'] );
 
-			if ( ( isset( $email_settings_admin['admin_mail_html'] ) ) && ( 'yes' === $email_settings_admin['admin_mail_html'] ) ) {
+			if ( ( isset( $email_settings['admin_mail_html'] ) ) && ( 'yes' === $email_settings['admin_mail_html'] ) ) {
 				remove_filter( 'wp_mail_content_type', array( $this, 'htmlEmailContent' ) );
 			}
 		}

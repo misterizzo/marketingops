@@ -18,6 +18,23 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 	 * @since 3.6.0
 	 */
 	class LearnDash_Settings_Section_Registration_Pages extends LearnDash_Settings_Section {
+		/**
+		 * Setting key for registration appearance.
+		 *
+		 * @since 4.16.0
+		 *
+		 * @var string
+		 */
+		public static string $setting_registration_appearance = 'registration_appearance';
+
+		/**
+		 * Theme instance.
+		 *
+		 * @since 4.16.0
+		 *
+		 * @var LearnDash_Theme_Register
+		 */
+		protected $theme;
 
 		/**
 		 * Protected constructor for class
@@ -37,9 +54,13 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 			$this->settings_section_key = 'settings_registration_pages';
 
 			// Section label/header.
-			$this->settings_section_label = esc_html__( 'Registration Pages', 'learndash' );
+			$this->settings_section_label = esc_html__( 'Registration/Login Pages', 'learndash' );
 
 			parent::__construct();
+
+			$this->theme = LearnDash_Theme_Register::get_active_theme_instance();
+
+			$this->save_settings_fields();
 		}
 
 		/**
@@ -57,20 +78,41 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 			if ( ! isset( $this->setting_option_values['registration_success'] ) ) {
 				$this->setting_option_values['registration_success'] = '';
 			}
+
+			if ( ! isset( $this->setting_option_values['reset_password'] ) ) {
+				$this->setting_option_values['reset_password'] = '';
+			}
+
+			if ( ! isset( $this->setting_option_values['reset_password_success'] ) ) {
+				$this->setting_option_values['reset_password_success'] = '';
+			}
+
+			if ( empty( $this->setting_option_values[ static::$setting_registration_appearance ] ) ) {
+				$this->setting_option_values[ static::$setting_registration_appearance ] = $this->theme->get_default_variation();
+			}
 		}
 
 		/**
 		 * Initialize the metabox settings fields.
 		 *
 		 * @since 3.6.0
+		 * @since 4.21.0 Removed the Appearance field in favor of a new section in General.
 		 */
 		public function load_settings_fields() {
 			$this->setting_option_fields = array();
 
+			$this->setting_option_fields[ static::$setting_registration_appearance ] = [
+				'name'    => static::$setting_registration_appearance,
+				'type'    => LearnDash_Theme_Register::get_active_theme_key() === 'ld30' ? 'html' : 'hidden',
+				'label'   => esc_html__( 'Appearance', 'learndash' ),
+				'value'   => LearnDash_Theme_Register::get_active_theme_key() === 'ld30' ? $this->get_appearance_html() : $this->setting_option_values[ static::$setting_registration_appearance ],
+				'options' => $this->theme->get_variations(),
+			];
+
 			$this->setting_option_fields['registration'] = array(
 				'name'             => 'registration',
 				'type'             => 'select',
-				'label'            => esc_html__( 'Registration', 'learndash' ),
+				'label'            => esc_html__( 'Registration/Login', 'learndash' ),
 				'value'            => $this->setting_option_values['registration'],
 				'display_callback' => array( $this, 'display_pages_selector' ),
 			);
@@ -83,10 +125,49 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 				'display_callback' => array( $this, 'display_pages_selector' ),
 			);
 
+			$this->setting_option_fields['reset_password'] = array(
+				'name'             => 'reset_password',
+				'type'             => 'select',
+				'label'            => esc_html__( 'Reset Password', 'learndash' ),
+				'value'            => $this->setting_option_values['reset_password'],
+				'display_callback' => array( $this, 'display_pages_selector' ),
+			);
+
+			$this->setting_option_fields['reset_password_success'] = array(
+				'name'             => 'reset_password_success',
+				'type'             => 'select',
+				'label'            => esc_html__( 'Reset Password Success', 'learndash' ),
+				'value'            => $this->setting_option_values['reset_password_success'],
+				'display_callback' => array( $this, 'display_pages_selector' ),
+			);
+
 			/** This filter is documented in includes/settings/settings-metaboxes/class-ld-settings-metabox-course-access-settings.php */
 			$this->setting_option_fields = apply_filters( 'learndash_settings_fields', $this->setting_option_fields, $this->settings_section_key );
 
 			parent::load_settings_fields();
+		}
+
+		/**
+		 * Builds HTML for Appearance text.
+		 *
+		 * @since 4.21.0
+		 *
+		 * @return string
+		 */
+		public function get_appearance_html(): string {
+			$general_url = admin_url( 'admin.php?page=learndash_lms_settings#learndash_settings_appearance_settings_appearance' );
+
+			ob_start();
+			?>
+			<div>
+				<?php esc_html_e( 'This feature has been moved to general settings.', 'learndash' ); ?>
+				<a href="<?php echo esc_url( $general_url ); ?>">
+					<?php esc_html_e( 'View general settings', 'learndash' ); ?>
+				</a>
+			</div>
+			<?php
+
+			return (string) ob_get_clean();
 		}
 
 		/**
@@ -96,7 +177,7 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 		 *
 		 * @param array $field_args An array of field arguments used to process the output.
 		 */
-		public function display_pages_selector( $field_args = array() ) {
+		public static function display_pages_selector( $field_args = array() ) {
 			$html = '';
 
 			/** This filter is documented in includes/settings/settings-fields/class-ld-settings-fields-checkbox-switch.php */
@@ -104,7 +185,7 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 
 			if ( ( isset( $field_args['type'] ) ) && ( ! empty( $field_args['type'] ) ) ) {
 				$field_ref = LearnDash_Settings_Fields::get_field_instance( $field_args['type'] );
-				if ( ( $field_ref ) && ( is_a( $field_ref, 'LearnDash_Settings_Fields' ) ) ) {
+				if ( is_a( $field_ref, 'LearnDash_Settings_Fields' ) ) {
 
 					/** This filter is documented in includes/settings/settings-fields/class-ld-settings-fields-checkbox-switch.php */
 					$html = apply_filters( 'learndash_settings_field_html_before', '', $field_args );
@@ -142,6 +223,44 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 			}
 
 			echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Need to output HTML
+		}
+
+		/**
+		 * Save the metabox fields. This is needed due to special processing needs.
+		 *
+		 * @since 4.4.0
+		 *
+		 * @return void
+		 */
+		public function save_settings_fields(): void {
+			if ( ! isset( $_POST['_wpnonce'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+				return;
+			}
+
+			$reset_password_id = isset( $_POST[ $this->setting_field_prefix ]['reset_password'] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			? (int) (
+				sanitize_text_field(
+					wp_unslash( $_POST[ $this->setting_field_prefix ]['reset_password'] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
+				)
+			)
+			: '';
+
+			if ( empty( $reset_password_id ) ) {
+				return;
+			}
+
+			$content = get_the_content( '', false, $reset_password_id );
+
+			if ( ! strpos( $content, 'ld-reset-password' ) ) {
+				wp_update_post(
+					array(
+						'ID'           => $reset_password_id,
+						'post_title'   => get_the_title( $reset_password_id ),
+						'post_content' => $content . '<!-- wp:learndash/ld-reset-password {"width":""} /-->',
+						'post_type'    => 'page',
+					)
+				);
+			}
 		}
 
 		// End of functions.

@@ -89,7 +89,7 @@ class WpProQuiz_Model_CategoryMapper extends WpProQuiz_Model_Mapper {
 		return $category;
 	}
 
-	public function updateCatgoryName( $categoryId, $name ) {
+	public function updateCatgoryName( $categoryId, $name ) { // cspell:disable-line
 		return $this->_wpdb->update(
 			$this->_tableCategory,
 			array(

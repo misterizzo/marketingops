@@ -195,15 +195,22 @@ add_filter(
 		if ( learndash_is_admin_user() ) {
 			if ( 'new' === $ld_prior_version ) {
 				if ( ! isset( $pointers['learndash-new-install'] ) ) {
+
+					$setup_page_slug = LearnDash_Settings_Page_Setup::SETUP_SLUG;
+
+					if ( learndash_cloud_is_enabled() ) {
+						$setup_page_slug = LearnDash_Settings_Page_Setup::SETUP_SLUG_CLOUD;
+					}
+
 					$pointers['learndash-new-install'] = array(
 						'id'       => 'learndash-new-install',
 						'screen'   => '',
 						'target'   => '#toplevel_page_learndash-lms .wp-menu-name',
 						'title'    => '<span id="ld-pointer-title-learndash-new-install" class="ld-pointer-title">' . esc_html__( 'First time using LearnDash?', 'learndash' ) . '</span>',
 						'content'  => '<span class="ld-pointer-content">' . sprintf(
-							// translators: placeholder: Link to Bootcamp page.
-							esc_html_x( 'Go to the LearnDash %s', 'placeholder: Link to Bootcamp page', 'learndash' ),
-							'<a href="' . admin_url( 'admin.php?page=learndash_lms_overview' ) . '">' . esc_html__( 'mini-Bootcamp', 'learndash' ) . '</a>'
+							// translators: placeholder: Link to Setup page.
+							esc_html_x( 'Go to the LearnDash %s', 'placeholder: Link to Setup page', 'learndash' ),
+							'<a href="' . admin_url( 'admin.php?page=' ) . $setup_page_slug . '">' . esc_html__( 'setup', 'learndash' ) . '</a>'
 						) . '</span>',
 						'position' => array(
 							'edge'  => is_rtl() ? 'right' : 'left', // top, bottom, left, right.

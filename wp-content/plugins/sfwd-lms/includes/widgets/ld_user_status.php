@@ -43,7 +43,7 @@ if ( ( ! class_exists( 'LearnDash_User_Status_Widget' ) ) && ( class_exists( 'WP
 		 * @param  array $args     Widget arguments.
 		 * @param  array $instance Widget instance.
 		 *
-		 * @return string          widget output
+		 * @return void
 		 */
 		public function widget( $args, $instance ) {
 			global $learndash_shortcode_used;
@@ -143,7 +143,9 @@ if ( ( ! class_exists( 'LearnDash_User_Status_Widget' ) ) && ( class_exists( 'WP
 		 *
 		 * @since 2.1.0
 		 *
-		 * @param  array $instance Widget instance.
+		 * @param array $instance Widget instance.
+		 *
+		 * @return void
 		 */
 		public function form( $instance ) {
 			$instance = wp_parse_args(

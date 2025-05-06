@@ -88,7 +88,7 @@ if ( ( class_exists( 'Learndash_Admin_Posts_Listing' ) ) && ( ! class_exists( 'L
 
 							$link_aria_label = sprintf(
 								// translators: placeholder: Courses, Certificate.
-								esc_html_x( 'Filter %1$s by Certificate "%2$s"', 'placeholder: Courses, Certficate Post title', 'learndash' ),
+								esc_html_x( 'Filter %1$s by Certificate "%2$s"', 'placeholder: Courses, Certificate Post title', 'learndash' ),
 								LearnDash_Custom_Label::get_label( 'courses' ),
 								get_the_title( $post_id )
 							);
@@ -116,7 +116,7 @@ if ( ( class_exists( 'Learndash_Admin_Posts_Listing' ) ) && ( ! class_exists( 'L
 
 							$link_aria_label = sprintf(
 								// translators: placeholder: Quizzes, Certificate Post title.
-								esc_html_x( 'Filter %1$s by Certificate "%2$s"', 'placeholder: Quizzes, Certficate Post title', 'learndash' ),
+								esc_html_x( 'Filter %1$s by Certificate "%2$s"', 'placeholder: Quizzes, Certificate Post title', 'learndash' ),
 								LearnDash_Custom_Label::get_label( 'quizzes' ),
 								get_the_title( $post_id )
 							);
@@ -147,7 +147,7 @@ if ( ( class_exists( 'Learndash_Admin_Posts_Listing' ) ) && ( ! class_exists( 'L
 
 							$link_aria_label = sprintf(
 								// translators: placeholder: Groups, Certificate Post title.
-								esc_html_x( 'Filter %1$s by Certificate "%2$s"', 'placeholder: Groups, Certficate Post title', 'learndash' ),
+								esc_html_x( 'Filter %1$s by Certificate "%2$s"', 'placeholder: Groups, Certificate Post title', 'learndash' ),
 								LearnDash_Custom_Label::get_label( 'groups' ),
 								get_the_title( $post_id )
 							);

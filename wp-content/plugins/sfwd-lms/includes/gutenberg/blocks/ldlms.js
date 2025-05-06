@@ -14,8 +14,14 @@ import {
 
 import { __, _x } from "@wordpress/i18n";
 
+import '../../../src/assets/js/main';
+
+const ldlms_get_custom_label = learndash.customLabel.get,
+	ldlms_get_custom_label_lower = learndash.customLabel.getLower,
+	ldlms_get_custom_label_slug = learndash.customLabel.getSlug;
+
 /**
- * Will retrive meta information about the post being edited. For now
+ * Will retrieve meta information about the post being edited. For now
  * this is only loaded on post edit screen for Gutenberg. So no checks
  * are made to ensure that a post is being edited.
  *
@@ -33,7 +39,7 @@ export function ldlms_get_post_edit_meta(token = "") {
 }
 
 /**
- * Will retrive meta information about the post being edited. For now
+ * Will retrieve meta information about the post being edited. For now
  * this is only loaded on post edit screen for Gutenberg. So no checks
  * are made to ensure that a post is being edited.
  *
@@ -47,53 +53,11 @@ export function ldlms_get_setting(token = "", default_value) {
 	return default_value;
 }
 
-/**
- * Returns the label for custom label element
- *
- * @param {string} token Will represent the custom label field to retreive Course, Courses, Lesson, Quiz.
- */
-export function ldlms_get_custom_label(token = "") {
-	if (typeof ldlms_settings.meta.post !== "undefined" && token !== "") {
-		if (typeof ldlms_settings.settings.custom_labels[token] !== "undefined") {
-			return ldlms_settings.settings.custom_labels[token];
-		}
-	}
-	return token;
-}
-
-/**
- * Returns the lowercase label for custom label element
- *
- * @param {string} token Will represent the custom label field to retreive Course, Courses, Lesson, Quiz.
- */
-export function ldlms_get_custom_label_lower(token = "") {
-	if (typeof ldlms_settings.meta.post !== "undefined" && token !== "") {
-		if (
-			typeof ldlms_settings.settings.custom_labels[token + "_lower"] !==
-			"undefined"
-		) {
-			return ldlms_settings.settings.custom_labels[token + "_lower"];
-		}
-	}
-	return token;
-}
-
-/**
- * Returns the slug for custom label element
- *
- * @param {string} token Will represent the custom label field to retreive Course, Courses, Lesson, Quiz.
- */
-export function ldlms_get_custom_label_slug(token = "") {
-	if (token !== "") {
-		if (
-			typeof ldlms_settings.settings.custom_labels[token + "_slug"] !==
-			"undefined"
-		) {
-			return ldlms_settings.settings.custom_labels[token + "_slug"];
-		}
-	}
-	return token;
-}
+export {
+	ldlms_get_custom_label,
+	ldlms_get_custom_label_lower,
+	ldlms_get_custom_label_slug
+};
 
 /**
  * Will retrieve meta information about the post being edited. For now
@@ -115,7 +79,7 @@ export function ldlms_get_per_page(token = "") {
 /**
  * Returns integer value for variable.
  *
- * @param {any} var_value Variable to determin integer from.
+ * @param {any} var_value Variable to determine integer from.
  * @return {number} value of zero.
  */
 export function ldlms_get_integer_value(var_value) {
@@ -131,7 +95,7 @@ export function ldlms_get_integer_value(var_value) {
 }
 
 /**
- * Retrive the active template key/slug.
+ * Retrieve the active template key/slug.
  *
  * @since 4.0.0
  */
@@ -143,7 +107,7 @@ export function ldlms_templates_get_active_key() {
 }
 
 /**
- * Retrive the active template name.
+ * Retrieve the active template name.
  *
  * @since 4.0.0
  */
@@ -162,7 +126,7 @@ export function ldlms_templates_get_active_name() {
 }
 
 /**
- * Retrive the Legacy template not supported message block panel.
+ * Retrieve the Legacy template not supported message block panel.
  *
  * @since 4.0.0
  */
@@ -184,7 +148,7 @@ export function ldlms_get_block_legacy_support_panel() {
 }
 
 /**
- * Retrive the Legacy template not supported message text.
+ * Retrieve the Legacy template not supported message text.
  *
  * @since 4.0.0
  */

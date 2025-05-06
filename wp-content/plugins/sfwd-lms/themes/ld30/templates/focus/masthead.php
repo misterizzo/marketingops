@@ -3,6 +3,7 @@
  * LearnDash LD30 focus mode masthead.
  *
  * @since 3.0.0
+ * @version 4.21.1
  *
  * @package LearnDash\Templates\LD30
  */
@@ -70,7 +71,7 @@ if ( ! empty( $header['logo'] ) ) {
 	}
 }
 ?>
-<div class="ld-focus-header">
+<div class="ld-focus-header" role="banner">
 
 	<?php
 	/**

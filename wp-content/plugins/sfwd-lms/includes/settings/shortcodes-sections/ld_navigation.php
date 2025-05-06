@@ -63,11 +63,6 @@ if ( ( class_exists( 'LearnDash_Shortcodes_Section' ) ) && ( ! class_exists( 'Le
 						esc_html_x( '%s ID', 'placeholder: Course', 'learndash' ),
 						LearnDash_Custom_Label::get_label( 'course' )
 					),
-					'label'     => sprintf(
-						// translators: placeholder: Course.
-						esc_html_x( '%s ID', 'placeholder: Course', 'learndash' ),
-						LearnDash_Custom_Label::get_label( 'course' )
-					),
 					'help_text' => sprintf(
 						// translators: placeholders: Course, Course.
 						esc_html_x( 'Enter single %1$s ID. Leave blank for current %2$s.', 'placeholders: Course, Course', 'learndash' ),

@@ -7,6 +7,9 @@
  * @package LearnDash\Coupons
  */
 
+use LearnDash\Core\Models\Product;
+use LearnDash\Core\Models\Transaction;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -45,6 +48,21 @@ function learndash_check_coupon_is_valid( string $coupon_code, int $post_id ): a
 
 	$course_post_type = LDLMS_Post_Types::get_post_type_slug( LDLMS_Post_Types::COURSE );
 	$group_post_type  = LDLMS_Post_Types::get_post_type_slug( LDLMS_Post_Types::GROUP );
+
+	/**
+	 * Override the coupon check and return with the expected response array.
+	 *
+	 * @since 4.20.2
+	 *
+	 * @return null|array{
+	 *     is_valid: bool,
+	 *     error: string
+	 * }
+	 */
+	$response = apply_filters( 'learndash_coupon_check_is_valid', null, $coupon_code, $post_id, $errors );
+	if ( $response !== null ) {
+		return $response;
+	}
 
 	// Check if params are empty.
 
@@ -152,6 +170,22 @@ function learndash_check_coupon_is_valid( string $coupon_code, int $post_id ): a
 function learndash_calculate_coupon_discounted_price( int $coupon_id, float $price ): float {
 	$coupon = get_post( $coupon_id );
 
+	/**
+	 * Filters the calculated price for when a coupon would be applied.
+	 *
+	 * @since 4.20.2
+	 *
+	 * @param null|float   $new_price The new price if we are overriding.
+	 * @param null|WP_Post $coupon    The coupon WP_Post object if one is found.
+	 * @param float        $price     The price to be discounted by the coupon.
+	 *
+	 * @return float|null
+	 */
+	$new_price = apply_filters( 'learndash_coupon_discounted_price', null, $coupon, $price );
+	if ( $new_price !== null ) {
+		return $new_price;
+	}
+
 	if ( is_null( $coupon ) ) {
 		return $price;
 	}
@@ -179,7 +213,7 @@ function learndash_calculate_coupon_discounted_price( int $coupon_id, float $pri
 		$price = 0;
 	}
 
-	return $price;
+	return round( $price, 2 );
 }
 
 /**
@@ -212,7 +246,19 @@ function learndash_get_coupon_by_code( string $coupon_code ): ?WP_Post {
 
 	$query = new WP_Query( $query_args );
 
-	return empty( $query->posts ) ? null : $query->posts[0];
+	$post = empty( $query->posts ) ? null : $query->posts[0];
+
+	/**
+	 * Filter or override a WP_Post for a particular coupon code.
+	 *
+	 * @since 4.20.2
+	 *
+	 * @param null|WP_Post $post        The parameter to override the coupon fetching by coupon code.
+	 * @param string       $coupon_code The coupon string.
+	 *
+	 * @return WP_Post|null
+	 */
+	return apply_filters( 'learndash_coupon_get_by_code', $post, $coupon_code ); // @phpstan-ignore-line
 }
 
 /**
@@ -223,64 +269,76 @@ function learndash_get_coupon_by_code( string $coupon_code ): ?WP_Post {
  * @return bool
  */
 function learndash_active_coupons_exist(): bool {
+	/**
+	 * Override whether there is a valid coupon that exists.
+	 *
+	 * @since 4.20.2
+	 *
+	 * @param null|bool $coupons_exist Flag whether a valid coupon exists.
+	 */
+	$coupons_exist = apply_filters( 'learndash_coupon_exists_and_is_active', null );
+	if ( $coupons_exist !== null ) {
+		return $coupons_exist;
+	}
+
+	$coupon_post_type = LDLMS_Post_Types::get_post_type_slug( LDLMS_Post_Types::COUPON );
+
+	if ( 0 === wp_count_posts( strval( $coupon_post_type ) )->publish ) {
+		return false;
+	}
+
 	$current_time = time();
 
-	$query_args = array(
-		'post_type'      => LDLMS_Post_Types::get_post_type_slug( LDLMS_Post_Types::COUPON ),
-		'posts_per_page' => - 1,
-		'post_status'    => 'publish',
-		// phpcs:ignore
-		'meta_query'     => array(
-			'relation' => 'OR',
+	$meta_query_groups = array(
+		array(
+			'relation' => 'AND',
 			array(
-				'relation' => 'AND',
-				array(
-					'key'     => LEARNDASH_COUPON_META_KEY_START_DATE,
-					'compare' => '=',
-					'value'   => 0,
-				),
-				array(
-					'key'     => LEARNDASH_COUPON_META_KEY_END_DATE,
-					'compare' => '=',
-					'value'   => 0,
-				),
+				'key'     => LEARNDASH_COUPON_META_KEY_START_DATE,
+				'compare' => '<=',
+				'value'   => $current_time,
+				'type'    => 'NUMERIC',
 			),
 			array(
-				'relation' => 'AND',
-				array(
-					'key'     => LEARNDASH_COUPON_META_KEY_START_DATE,
-					'compare' => '<=',
-					'value'   => $current_time,
-					'type'    => 'NUMERIC',
-				),
-				array(
-					'key'     => LEARNDASH_COUPON_META_KEY_END_DATE,
-					'compare' => '>',
-					'value'   => $current_time,
-					'type'    => 'NUMERIC',
-				),
+				'key'     => LEARNDASH_COUPON_META_KEY_END_DATE,
+				'compare' => '>',
+				'value'   => $current_time,
+				'type'    => 'NUMERIC',
+			),
+		),
+		array(
+			'relation' => 'AND',
+			array(
+				'key'     => LEARNDASH_COUPON_META_KEY_START_DATE,
+				'compare' => '<=',
+				'value'   => $current_time,
+				'type'    => 'NUMERIC',
 			),
 			array(
-				'relation' => 'AND',
-				array(
-					'key'     => LEARNDASH_COUPON_META_KEY_START_DATE,
-					'compare' => '<=',
-					'value'   => $current_time,
-					'type'    => 'NUMERIC',
-				),
-				array(
-					'key'     => LEARNDASH_COUPON_META_KEY_END_DATE,
-					'compare' => '=',
-					'value'   => 0,
-					'type'    => 'NUMERIC',
-				),
+				'key'     => LEARNDASH_COUPON_META_KEY_END_DATE,
+				'compare' => '=',
+				'value'   => 0,
+				'type'    => 'NUMERIC',
 			),
 		),
 	);
 
-	$query = new WP_Query( $query_args );
+	foreach ( $meta_query_groups as $meta_query ) {
+		$query_args = array(
+			'post_type'      => $coupon_post_type,
+			'posts_per_page' => 1,
+			'post_status'    => 'publish',
+			'fields'         => 'ids',
+			'meta_query'     => $meta_query,
+		);
 
-	return $query->post_count > 0;
+		$query = new WP_Query( $query_args );
+
+		if ( $query->post_count > 0 ) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 /**
@@ -306,11 +364,33 @@ function learndash_increment_coupon_redemptions( int $coupon_id, int $post_id, i
 		LEARNDASH_COUPON_META_KEY_REDEMPTIONS
 	);
 
+	/**
+	 * Fires before coupon redemptions are incremented.
+	 *
+	 * @since 4.20.2
+	 *
+	 * @param int $coupon_id The coupon post ID.
+	 * @param int $post_id   The course post ID.
+	 * @param int $user_id   The user ID.
+	 */
+	do_action( 'learndash_coupon_before_redemption', $coupon_id, $post_id, $user_id );
+
 	learndash_update_setting(
 		$coupon_id,
 		LEARNDASH_COUPON_META_KEY_REDEMPTIONS,
 		$redemptions + 1
 	);
+
+	/**
+	 * Fires after coupon redemptions are incremented.
+	 *
+	 * @since 4.20.2
+	 *
+	 * @param int $coupon_id The coupon post ID.
+	 * @param int $post_id   The course post ID.
+	 * @param int $user_id   The user ID.
+	 */
+	do_action( 'learndash_coupon_after_redemption', $coupon_id, $post_id, $user_id );
 }
 
 /**
@@ -332,20 +412,55 @@ function learndash_attach_coupon( int $post_id, int $coupon_id, float $price, fl
 
 	$coupon_settings = learndash_get_setting( $coupon_id );
 
+	try {
+		$coupon_dto = Learndash_Coupon_DTO::create(
+			array(
+				'currency'                       => learndash_get_currency_code(),
+				'price'                          => $price,
+				'discount'                       => $price - $discounted_price,
+				'discounted_price'               => $discounted_price,
+				'coupon_id'                      => $coupon_id,
+				LEARNDASH_COUPON_META_KEY_CODE   => $coupon_settings[ LEARNDASH_COUPON_META_KEY_CODE ],
+				LEARNDASH_COUPON_META_KEY_TYPE   => $coupon_settings[ LEARNDASH_COUPON_META_KEY_TYPE ],
+				LEARNDASH_COUPON_META_KEY_AMOUNT => $coupon_settings[ LEARNDASH_COUPON_META_KEY_AMOUNT ],
+			)
+		);
+	} catch ( Learndash_DTO_Validation_Exception $e ) {
+		return;
+	}
+
+	/**
+	 * Filters the Learndash_Coupon_DTO when a coupon is being applied.
+	 *
+	 * @since 4.20.2
+	 *
+	 * @param Learndash_Coupon_DTO  $coupon_dto The computed price with discounts applied.
+	 * @param int                   $post_id    Product post ID.
+	 * @param int|null              $coupon_id  The coupon post ID.
+	 *
+	 * @return Learndash_Coupon_DTO
+	 */
+	$coupon_dto = apply_filters( 'learndash_coupon_to_attach', $coupon_dto, $post_id, $coupon_id );
+
 	set_transient(
 		learndash_map_coupon_transient_key( $post_id, get_current_user_id() ),
-		array(
-			'coupon_id'                      => $coupon_id,
-			'currency'                       => learndash_get_currency_code(),
-			'price'                          => $price,
-			'discount'                       => $price - $discounted_price,
-			'discounted_price'               => $discounted_price,
-			LEARNDASH_COUPON_META_KEY_CODE   => $coupon_settings[ LEARNDASH_COUPON_META_KEY_CODE ],
-			LEARNDASH_COUPON_META_KEY_TYPE   => $coupon_settings[ LEARNDASH_COUPON_META_KEY_TYPE ],
-			LEARNDASH_COUPON_META_KEY_AMOUNT => $coupon_settings[ LEARNDASH_COUPON_META_KEY_AMOUNT ],
-		),
+		$coupon_dto->to_array(),
 		DAY_IN_SECONDS
 	);
+
+	/**
+	 * Fires after a coupon is attached to a product.
+	 *
+	 * @since 4.20.1
+	 *
+	 * @param int                  $product_id Product ID.
+	 * @param int                  $coupon_id  Coupon ID.
+	 * @param int                  $user_id    User ID.
+	 * @param Learndash_Coupon_DTO $coupon_dto Coupon DTO.
+	 *
+	 * @return void
+	 */
+	do_action( 'learndash_coupon_attached', $post_id, $coupon_id, get_current_user_id(), $coupon_dto );
 }
 
 /**
@@ -362,6 +477,18 @@ function learndash_detach_coupon( int $post_id, int $user_id ): void {
 	delete_transient(
 		learndash_map_coupon_transient_key( $post_id, $user_id )
 	);
+
+	/**
+	 * Fires after a coupon is detached from a product.
+	 *
+	 * @since 4.20.1
+	 *
+	 * @param int $product_id Product ID.
+	 * @param int $user_id    User ID.
+	 *
+	 * @return void
+	 */
+	do_action( 'learndash_coupon_detached', $post_id, $user_id );
 }
 
 /**
@@ -372,9 +499,9 @@ function learndash_detach_coupon( int $post_id, int $user_id ): void {
  * @param int $post_id Course/Group ID.
  * @param int $user_id User ID.
  *
- * @return array|null
+ * @return Learndash_Coupon_DTO|null
  */
-function learndash_get_attached_coupon_data( int $post_id, int $user_id ): ?array {
+function learndash_get_attached_coupon_data( int $post_id, int $user_id ): ?Learndash_Coupon_DTO {
 	$attached_coupon_data = get_transient(
 		learndash_map_coupon_transient_key( $post_id, $user_id )
 	);
@@ -383,7 +510,22 @@ function learndash_get_attached_coupon_data( int $post_id, int $user_id ): ?arra
 		return null;
 	}
 
-	return $attached_coupon_data;
+	try {
+		/**
+		 * Filters the Learndash_Coupon_DTO for the coupon attached by the user.
+		 *
+		 * @since 4.20.2
+		 *
+		 * @param Learndash_Coupon_DTO $coupon_dto The DTO of the coupon being fetched.
+		 * @param int                  $post_id    Product post ID.
+		 * @param int                  $user_id    The user ID associated with the coupon.
+		 *
+		 * @return Learndash_Coupon_DTO
+		 */
+		return apply_filters( 'learndash_coupon_attached_data', Learndash_Coupon_DTO::create( (array) $attached_coupon_data ), $post_id, $user_id );
+	} catch ( Learndash_DTO_Validation_Exception $e ) {
+		return null;
+	}
 }
 
 /**
@@ -401,7 +543,18 @@ function learndash_post_has_attached_coupon( int $post_id, int $user_id ): bool 
 		learndash_map_coupon_transient_key( $post_id, $user_id )
 	);
 
-	return false !== $attached_coupon_data;
+	/**
+	 * Filters whether the post has an attached coupon for the user.
+	 *
+	 * @since 4.20.2
+	 *
+	 * @param bool $has_coupon Whether the post has an attached coupon.
+	 * @param int  $post_id    Product post ID.
+	 * @param int  $user_id    The user ID we are checking for a coupon.
+	 *
+	 * @return bool
+	 */
+	return apply_filters( 'learndash_coupon_is_attached_to_product', false !== $attached_coupon_data, $post_id, $user_id );
 }
 
 /**
@@ -434,11 +587,17 @@ function learndash_sync_coupon_associated_metas( int $post_id, string $field, ar
 		return;
 	}
 
-	$meta_prefix  = "{$field}_";
+	$meta_prefix = "{$field}_";
+
+	/**
+	 * Existing associated IDs.
+	 *
+	 * @var array<string> $existing_ids
+	 */
 	$existing_ids = (array) learndash_get_setting( $post_id, $field );
 
 	// Delete associated metas that we no longer need.
-	if ( ! empty( $existing_ids ) && is_array( $existing_ids ) ) {
+	if ( ! empty( $existing_ids ) ) {
 		foreach ( array_diff( $existing_ids, $ids ) as $id ) {
 			delete_post_meta( $post_id, "{$meta_prefix}{$id}" );
 		}
@@ -458,7 +617,11 @@ function learndash_sync_coupon_associated_metas( int $post_id, string $field, ar
  * @return void
  */
 function learndash_apply_coupon(): void {
-	if ( empty( $_POST['nonce'] ) || empty( $_POST['post_id'] ) || ! is_user_logged_in() ) {
+	if (
+		empty( $_POST['nonce'] ) ||
+		! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'learndash-coupon-nonce' ) ||
+		empty( $_POST['post_id'] ) ||
+		! is_user_logged_in() ) {
 		wp_send_json_error(
 			array(
 				'message' => __( 'Invalid request.', 'learndash' ),
@@ -474,30 +637,21 @@ function learndash_apply_coupon(): void {
 		);
 	}
 
-	$nonce       = sanitize_text_field( wp_unslash( $_POST['nonce'] ) );
-	$coupon_code = sanitize_text_field( wp_unslash( $_POST['coupon_code'] ) );
-	$post_id     = absint( $_POST['post_id'] ); // Course/Group ID.
-	$post        = get_post( $post_id );
+	$product = Product::find( (int) $_POST['post_id'] );
 
-	if ( is_null( $post ) ) {
+	if ( ! $product ) {
 		wp_send_json_error(
 			array(
-				'message' => __( 'Course or group not found.', 'learndash' ),
-			)
-		);
-	}
-
-	if ( ! wp_verify_nonce( $nonce, 'learndash-coupon-nonce' ) ) {
-		wp_send_json_error(
-			array(
-				'message' => __( 'Invalid nonce.', 'learndash' ),
+				'message' => __( 'Product not found.', 'learndash' ),
 			)
 		);
 	}
 
 	// Check if the coupon code is valid.
 
-	$coupon_validation_result = learndash_check_coupon_is_valid( $coupon_code, $post_id );
+	$coupon_code = sanitize_text_field( wp_unslash( $_POST['coupon_code'] ) );
+
+	$coupon_validation_result = learndash_check_coupon_is_valid( $coupon_code, $product->get_id() );
 
 	if ( ! $coupon_validation_result['is_valid'] ) {
 		wp_send_json_error(
@@ -507,43 +661,38 @@ function learndash_apply_coupon(): void {
 		);
 	}
 
-	// Check if we are processing a course/group and "buy now" pricing.
+	// Check if we are processing the "subscribe" pricing.
 
-	if ( learndash_is_course_post( $post ) ) {
-		$pricing = learndash_get_course_price( $post );
-	} elseif ( learndash_is_group_post( $post ) ) {
-		$pricing = learndash_get_group_price( $post );
-	} else {
+	if ( $product->is_price_type_subscribe() ) {
 		wp_send_json_error(
 			array(
-				'message' => __( 'Invalid course or group.', 'learndash' ),
-			)
-		);
-	}
-
-	if ( 'paynow' !== $pricing['type'] ) {
-		wp_send_json_error(
-			array(
-				'message' => __( 'Only "buy now" prices are supported.', 'learndash' ),
+				'message' => __( 'Subscriptions are not supported for now.', 'learndash' ),
 			)
 		);
 	}
 
 	// Process an action.
 
-	$coupon = learndash_get_coupon_by_code( $coupon_code );
-
-	$price = learndash_get_price_as_float( $pricing['price'] );
-
-	$discounted_price = learndash_calculate_coupon_discounted_price( $coupon->ID, $price );
-	$discount         = ( $price - $discounted_price ) * - 1;
-
-	$stripe_price = $discounted_price;
-	if ( ! learndash_is_zero_decimal_currency( learndash_get_currency_code() ) ) {
-		$stripe_price *= 100;
+	try {
+		$product_pricing = $product->get_pricing();
+	} catch ( Learndash_DTO_Validation_Exception $e ) {
+		wp_send_json_error(
+			array(
+				'message' => __( 'Something went wrong.', 'learndash' ),
+			)
+		);
 	}
 
-	learndash_attach_coupon( $post_id, $coupon->ID, $price, $discounted_price );
+	$coupon           = learndash_get_coupon_by_code( $coupon_code );
+	$discounted_price = learndash_calculate_coupon_discounted_price( $coupon->ID, $product_pricing->price );
+	$discount         = ( $product_pricing->price - $discounted_price ) * -1;
+
+	$price = $discounted_price;
+	if ( ! learndash_is_zero_decimal_currency( learndash_get_currency_code() ) ) {
+		$price = intval( $price * 100 );
+	}
+
+	learndash_attach_coupon( $product->get_id(), $coupon->ID, $product_pricing->price, $discounted_price );
 
 	wp_send_json_success(
 		array(
@@ -553,7 +702,7 @@ function learndash_apply_coupon(): void {
 			),
 			'total'       => array(
 				'value'        => $discounted_price,
-				'stripe_value' => $stripe_price,
+				'stripe_value' => $price,
 				'formatted'    => esc_html(
 					learndash_get_price_formatted( $discounted_price )
 				),
@@ -571,7 +720,11 @@ function learndash_apply_coupon(): void {
  * @return void
  */
 function learndash_remove_coupon(): void {
-	if ( empty( $_POST['nonce'] ) || empty( $_POST['post_id'] ) || ! is_user_logged_in() ) {
+	if (
+		empty( $_POST['nonce'] ) ||
+		! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'learndash-coupon-nonce' ) ||
+		empty( $_POST['post_id'] ) ||
+		! is_user_logged_in() ) {
 		wp_send_json_error(
 			array(
 				'message' => __( 'Invalid request.', 'learndash' ),
@@ -579,62 +732,44 @@ function learndash_remove_coupon(): void {
 		);
 	}
 
-	$nonce   = sanitize_text_field( wp_unslash( $_POST['nonce'] ) );
-	$post_id = absint( $_POST['post_id'] ); // Course/Group ID.
-	$post    = get_post( $post_id );
-
-	if ( is_null( $post ) ) {
-		wp_send_json_error(
-			array(
-				'message' => __( 'Course or group not found.', 'learndash' ),
-			)
-		);
-	}
-
-	if ( ! wp_verify_nonce( $nonce, 'learndash-coupon-nonce' ) ) {
-		wp_send_json_error(
-			array(
-				'message' => __( 'Invalid nonce.', 'learndash' ),
-			)
-		);
-	}
-
 	// Check if we are processing a course/group.
 
-	if ( learndash_is_course_post( $post ) ) {
-		$pricing = learndash_get_course_price( $post );
-	} elseif ( learndash_is_group_post( $post ) ) {
-		$pricing = learndash_get_group_price( $post );
-	} else {
+	$product = Product::find( (int) $_POST['post_id'] );
+
+	if ( ! $product ) {
 		wp_send_json_error(
 			array(
-				'message' => __( 'Invalid course or group.', 'learndash' ),
+				'message' => __( 'Invalid product.', 'learndash' ),
 			)
 		);
 	}
 
 	// Detach the coupon.
 
-	learndash_detach_coupon( $post_id, get_current_user_id() );
+	learndash_detach_coupon( $product->get_id(), get_current_user_id() );
 
 	// Calculate the price.
 
-	$stripe_price = $pricing['price'];
-	if ( ! empty( $stripe_price ) && ! learndash_is_zero_decimal_currency( learndash_get_currency_code() ) ) {
-		$stripe_price *= 100;
+	try {
+		$product_pricing = $product->get_pricing();
+	} catch ( Learndash_DTO_Validation_Exception $e ) {
+		wp_send_json_error(
+			array(
+				'message' => __( 'Something went wrong.', 'learndash' ),
+			)
+		);
 	}
 
 	wp_send_json_success(
 		array(
 			'total'   => array(
-				'value'        => number_format(
-					$pricing['price'],
-					2,
-					'.',
-					''
+				'value'        => number_format( $product_pricing->price, 2, '.', '' ),
+				'stripe_value' => learndash_is_zero_decimal_currency( $product_pricing->currency )
+					? $product_pricing->price
+					: intval( $product_pricing->price * 100 ),
+				'formatted'    => esc_html(
+					learndash_get_price_formatted( $product_pricing->price )
 				),
-				'stripe_value' => $stripe_price,
-				'formatted'    => esc_html( learndash_get_price_formatted( $pricing['price'] ) ),
 			),
 			'message' => __( 'Coupon removed.', 'learndash' ),
 		)
@@ -651,33 +786,53 @@ function learndash_remove_coupon(): void {
  * @return void
  */
 function learndash_process_coupon_after_transaction( int $transaction_id ): void {
-	if ( is_null( get_post( $transaction_id ) ) ) {
+	$transaction = Transaction::find( $transaction_id );
+
+	if ( ! $transaction ) {
 		return;
 	}
 
-	$post_id = get_post_meta( $transaction_id, 'post_id', true );
-	$user_id = get_post_meta( $transaction_id, 'user_id', true );
+	$product = $transaction->get_product();
+	$user    = $transaction->get_user();
 
-	if ( empty( $post_id ) || empty( $user_id ) ) {
+	if ( ! $product || 0 === $user->ID ) {
 		return;
 	}
 
-	if ( ! learndash_post_has_attached_coupon( $post_id, $user_id ) ) {
+	if ( ! learndash_post_has_attached_coupon( $product->get_id(), $user->ID ) ) {
 		return;
 	}
 
-	$coupon_data = learndash_get_attached_coupon_data( $post_id, $user_id );
+	$coupon_data = learndash_get_attached_coupon_data( $product->get_id(), $user->ID );
 
-	update_post_meta( $transaction_id, LEARNDASH_TRANSACTION_COUPON_META_KEY, $coupon_data );
+	if ( ! $coupon_data ) {
+		return;
+	}
+
+	try {
+		update_post_meta(
+			$transaction_id,
+			LEARNDASH_TRANSACTION_COUPON_META_KEY,
+			Learndash_Transaction_Coupon_DTO::create( $coupon_data->to_array() )->to_array()
+		);
+
+		update_post_meta(
+			$transaction_id,
+			Transaction::$meta_key_pricing_info,
+			Learndash_Pricing_DTO::create( $coupon_data->to_array() )->to_array()
+		);
+	} catch ( Learndash_DTO_Validation_Exception $e ) {
+		return;
+	}
 
 	// Maybe we'll need to filter transactions by a coupon code.
 	update_post_meta(
 		$transaction_id,
 		LEARNDASH_TRANSACTION_COUPON_META_KEY . '_code',
-		$coupon_data[ LEARNDASH_COUPON_META_KEY_CODE ]
+		$coupon_data->code
 	);
 
-	learndash_increment_coupon_redemptions( $coupon_data['coupon_id'], $post_id, $user_id );
+	learndash_increment_coupon_redemptions( $coupon_data->coupon_id, $product->get_id(), $user->ID );
 }
 
 /**
@@ -702,7 +857,11 @@ function learndash_get_price_by_coupon( float $price, int $post_id, ?int $user_i
 
 	$attached_coupon_data = learndash_get_attached_coupon_data( $post_id, $user_id );
 
-	return (float) $attached_coupon_data['discounted_price'];
+	if ( ! $attached_coupon_data ) {
+		return $price;
+	}
+
+	return $attached_coupon_data->discounted_price;
 }
 
 /**
@@ -713,7 +872,12 @@ function learndash_get_price_by_coupon( float $price, int $post_id, ?int $user_i
  * @return void
  */
 function learndash_enroll_with_zero_price(): void {
-	if ( empty( $_POST['nonce'] ) || empty( $_POST['post_id'] ) || ! is_user_logged_in() ) {
+	if (
+		empty( $_POST['nonce'] ) ||
+		! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'learndash-coupon-nonce' ) ||
+		empty( (int) $_POST['post_id'] ) ||
+		! is_user_logged_in()
+	) {
 		wp_send_json_error(
 			array(
 				'message' => __( 'Invalid request.', 'learndash' ),
@@ -721,46 +885,42 @@ function learndash_enroll_with_zero_price(): void {
 		);
 	}
 
-	$nonce   = sanitize_text_field( wp_unslash( $_POST['nonce'] ) );
-	$user    = wp_get_current_user();
-	$post_id = absint( $_POST['post_id'] ); // Course/Group ID.
-	$post    = get_post( $post_id );
-
-	if ( is_null( $post ) ) {
-		wp_send_json_error(
-			array(
-				'message' => __( 'Course or group not found.', 'learndash' ),
-			)
-		);
-	}
-
-	if ( ! wp_verify_nonce( $nonce, 'learndash-coupon-nonce' ) ) {
-		wp_send_json_error(
-			array(
-				'message' => __( 'Invalid nonce.', 'learndash' ),
-			)
-		);
-	}
-
 	// Check if we are processing a course/group.
 
-	if ( learndash_is_course_post( $post ) ) {
-		$pricing = learndash_get_course_price( $post );
-	} elseif ( learndash_is_group_post( $post ) ) {
-		$pricing = learndash_get_group_price( $post );
-	} else {
+	$product = Product::find( (int) $_POST['post_id'] );
+
+	if ( ! $product ) {
 		wp_send_json_error(
 			array(
-				'message' => __( 'Invalid course or group.', 'learndash' ),
+				'message' => __( 'Product not found.', 'learndash' ),
+			)
+		);
+	}
+
+	if ( ! $product->can_be_purchased() ) {
+		wp_send_json_error(
+			array(
+				'message' => __( 'Product can not be purchased.', 'learndash' ),
 			)
 		);
 	}
 
 	// Check if the price by coupon is 0.
 
-	$price = learndash_get_price_by_coupon( floatval( $pricing['price'] ), $post_id, $user->ID );
+	try {
+		$product_pricing = $product->get_pricing();
+	} catch ( Learndash_DTO_Validation_Exception $e ) {
+		wp_send_json_error(
+			array(
+				'message' => __( 'Something went wrong.', 'learndash' ),
+			)
+		);
+	}
 
-	if ( 0.0 !== $price ) {
+	$user  = wp_get_current_user();
+	$price = learndash_get_price_by_coupon( $product_pricing->price, $product->get_id(), $user->ID );
+
+	if ( $price > 0 ) {
 		wp_send_json_error(
 			array(
 				'message' => __( 'You have to pay for access.', 'learndash' ),
@@ -768,39 +928,80 @@ function learndash_enroll_with_zero_price(): void {
 		);
 	}
 
+	// Attach a coupon.
+
+	$coupon_data = learndash_get_attached_coupon_data( $product->get_id(), $user->ID );
+
+	if ( empty( $coupon_data ) ) {
+		wp_send_json_error(
+			array(
+				'message' => __( 'Something went wrong.', 'learndash' ),
+			)
+		);
+	}
+
+	learndash_attach_coupon( $product->get_id(), $coupon_data->coupon_id, $product_pricing->price, 0 );
+
 	// Create a transaction.
 
-	$transaction_data = array(
-		'is_zero_price' => true,
-		'user_id'       => $user->ID,
-		'post_id'       => $post->ID,
+	$transaction_id = learndash_transaction_create(
+		array(
+			Transaction::$meta_key_is_free => true,
+		),
+		$product->get_post(),
+		$user
 	);
 
-	learndash_transaction_create( $transaction_data, $post, $user );
+	$transaction = Transaction::find( $transaction_id );
 
-	// Enroll, map the redirect url and send the response.
-
-	$redirect_url = '';
-
-	if ( learndash_is_course_post( $post ) ) {
-		ld_update_course_access( $user->ID, $post->ID );
-
-		$redirect_url = learndash_get_course_enrollment_url( $post );
-	} elseif ( learndash_is_group_post( $post ) ) {
-		ld_update_group_access( $user->ID, $post->ID );
-
-		$redirect_url = learndash_get_group_enrollment_url( $post );
+	if ( ! $transaction ) {
+		wp_send_json_error(
+			array(
+				'message' => __( 'Something went wrong.', 'learndash' ),
+			)
+		);
 	}
+
+	// Enroll.
+
+	$product->enroll( $user );
+
+	/**
+	 * Fires when a user was enrolled to a product when the price was calculated to zero.
+	 *
+	 * @since 4.20.2
+	 *
+	 * @param Product     $product  Product model.
+	 * @param WP_User     $user     The WP_User being enrolled.
+	 *
+	 * @return void
+	 */
+	do_action( 'learndash_coupon_user_enrolled_with_zero_price', $product, $user );
+
+	// Redirect.
 
 	wp_send_json_success(
 		array(
-			'redirect_url' => $redirect_url,
+			'redirect_url' => Learndash_Unknown_Gateway::get_url_success(
+				array( $product )
+			),
 		)
 	);
 }
 
-add_action( 'wp_ajax_learndash_apply_coupon', 'learndash_apply_coupon' );
-add_action( 'wp_ajax_learndash_remove_coupon', 'learndash_remove_coupon' );
-add_action( 'wp_ajax_learndash_enroll_with_zero_price', 'learndash_enroll_with_zero_price' );
-add_action( 'learndash_transaction_created', 'learndash_process_coupon_after_transaction' );
-add_filter( 'learndash_get_price_by_coupon', 'learndash_get_price_by_coupon', 10, 3 );
+if ( ! function_exists( 'learndash_coupons_init' ) ) {
+	/**
+	 * Add filters and actions for the coupon functionality.
+	 *
+	 * @since 4.5.0
+	 *
+	 * @return void
+	 */
+	function learndash_coupons_init() {
+		add_action( 'wp_ajax_learndash_apply_coupon', 'learndash_apply_coupon' );
+		add_action( 'wp_ajax_learndash_remove_coupon', 'learndash_remove_coupon' );
+		add_action( 'wp_ajax_learndash_enroll_with_zero_price', 'learndash_enroll_with_zero_price' );
+		add_action( 'learndash_transaction_created', 'learndash_process_coupon_after_transaction' );
+		add_filter( 'learndash_get_price_by_coupon', 'learndash_get_price_by_coupon', 10, 3 );
+	}
+}

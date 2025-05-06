@@ -78,7 +78,7 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 								update_option( 'active_plugins', $active_plugins );
 
 								// Hook into our own deactivate function.
-								$sfwd_lms->deactivate();
+								learndash_deactivated();
 
 								// finally redirect the admin to the plugins listing.
 								learndash_safe_redirect( admin_url( 'plugins.php' ) );

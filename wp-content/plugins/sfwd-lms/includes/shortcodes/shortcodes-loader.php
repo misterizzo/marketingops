@@ -9,6 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// Shortcode functions.
+require_once __DIR__ . '/shortcodes-functions.php';
+
 require_once __DIR__ . '/ld_course_content.php';
 require_once __DIR__ . '/ld_usermeta.php';
 require_once __DIR__ . '/ld_course_certificate.php';
@@ -49,3 +52,4 @@ require_once __DIR__ . '/ld_infobar.php';
 require_once __DIR__ . '/ld_materials.php';
 require_once __DIR__ . '/learndash_user_status.php';
 require_once __DIR__ . '/ld_navigation.php';
+require_once __DIR__ . '/ld_reset_password.php';

@@ -107,6 +107,11 @@ if ( ( ! class_exists( 'Learndash_Admin_Data_Reports_Courses' ) ) && ( class_exi
 				'class'    => get_class( $this ),
 				'instance' => $this,
 				'slug'     => $this->data_slug,
+				'text'     => sprintf(
+					// Translators: placeholders: Custom Course Label.
+					__( 'Export User %s Data', 'learndash' ),
+					learndash_get_custom_label( 'course' )
+				),
 			);
 
 			$this->set_report_headers();
@@ -496,11 +501,24 @@ if ( ( ! class_exists( 'Learndash_Admin_Data_Reports_Courses' ) ) && ( class_exi
 			$ld_file_part = '/learndash/reports/learndash_reports_' . str_replace( array( 'ld_data_reports_', '-' ), array( '', '_' ), $this->transient_key ) . '.csv';
 
 			$ld_wp_upload_filename = $wp_upload_dir['basedir'] . $ld_file_part;
-			if ( wp_mkdir_p( dirname( $ld_wp_upload_filename ) ) === false ) {
-				$data['error_message'] = esc_html__( 'ERROR: Cannot create working folder. Check that the parent folder is writable', 'learndash' ) . ' ' . $ld_wp_upload_filename;
-				return $data;
+
+			if ( ! file_exists( dirname( $ld_wp_upload_filename ) ) ) {
+				if ( wp_mkdir_p( dirname( $ld_wp_upload_filename ) ) === false ) {
+					$data['error_message'] = esc_html__( 'ERROR: Cannot create working folder. Check that the parent folder is writable', 'learndash' ) . ' ' . $ld_wp_upload_filename;
+					return $data;
+				}
 			}
+
 			learndash_put_directory_index_file( trailingslashit( dirname( $ld_wp_upload_filename ) ) . 'index.php' );
+
+			Learndash_Admin_File_Download_Handler::register_file_path(
+				'learndash-reports',
+				dirname( $ld_wp_upload_filename )
+			);
+
+			Learndash_Admin_File_Download_Handler::try_to_protect_file_path(
+				dirname( $ld_wp_upload_filename )
+			);
 
 			/**
 			 * Filters data report file path.

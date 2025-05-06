@@ -72,27 +72,6 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 			}
 		}
 
-			/**
-			 * Validate Settings Currency field.
-			 *
-			 * @since 4.1.0
-			 *
-			 * @param string $val to be validated.
-			 * @param string $key Settings key.
-			 * @param array  $args Settings field args.
-			 *
-			 * @return string $val.
-			 */
-		public static function validate_currency( $val, $key, $args = array() ) {
-				$val = sanitize_text_field( $val );
-
-			if ( ! empty( $val ) && 3 !== strlen( $val ) ) {
-				add_settings_error( $args['setting_option_key'], $key, esc_html__( 'Currency Code should be 3 letters.', 'learndash' ), 'error' );
-			}
-
-			return strtoupper( $val );
-		}
-
 		/**
 		 * Initialize the metabox settings fields.
 		 *
@@ -102,17 +81,24 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 			$this->setting_option_fields = array();
 
 			$this->setting_option_fields['currency'] = array(
-				'name'              => 'currency',
-				'type'              => 'text',
-				'label'             => esc_html__( 'Currency', 'learndash' ),
-				'help_text'         => sprintf(
+				'name'             => 'currency',
+				'type'             => 'select',
+				'label'            => esc_html__( 'Currency', 'learndash' ),
+				'help_text'        => sprintf(
 					// translators: placeholder: Link to ISO 4217.
 					esc_html_x( 'Enter the currency code for transactions. It should be one currency code from the %s list.', 'placeholder: URL to ISO 4217', 'learndash' ),
 					'<a href="https://en.wikipedia.org/wiki/ISO_4217#Active_codes" target="_blank">' . esc_html__( 'ISO 4217', 'learndash' ) . '</a>'
 				),
-				'value'             => $this->setting_option_values['currency'] ?? '',
-				'class'             => 'regular-text',
-				'validate_callback' => array( $this, 'validate_currency' ),
+				'value'            => $this->setting_option_values['currency'] ?? '',
+				'class'            => 'regular-text',
+				'display_callback' => array( $this, 'display_currency_selector' ),
+			);
+
+			$this->setting_option_fields['country'] = array(
+				'name'  => 'country',
+				'label' => __( 'Country', 'learndash' ),
+				'type'  => 'hidden',
+				'value' => $this->setting_option_values['country'] ?? '',
 			);
 
 			/** This filter is documented in includes/settings/settings-metaboxes/class-ld-settings-metabox-course-access-settings.php */
@@ -120,9 +106,80 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 
 			parent::load_settings_fields();
 		}
-		// End of functions.
+
+		/**
+		 * Display function for custom selectors.
+		 *
+		 * @since 4.4.0
+		 *
+		 * @param array $field_args An array of field arguments used to process the output.
+		 *
+		 * @return void
+		 */
+		public function display_currency_selector( $field_args = array() ): void {
+			$html = '';
+
+			/** This filter is documented in includes/settings/settings-fields/class-ld-settings-fields-checkbox-switch.php */
+			$field_args = apply_filters( 'learndash_settings_field', $field_args );
+
+			if ( ( isset( $field_args['type'] ) ) && ( ! empty( $field_args['type'] ) ) ) {
+				$field_ref = LearnDash_Settings_Fields::get_field_instance( $field_args['type'] );
+				if ( $field_ref instanceof LearnDash_Settings_Fields ) {
+					/** This filter is documented in includes/settings/settings-fields/class-ld-settings-fields-checkbox-switch.php */
+					$html = apply_filters( 'learndash_settings_field_html_before', '', $field_args );
+
+					$html .= '<span class="ld-select">';
+
+					$field_name  = $field_ref->get_field_attribute_name( $field_args, false );
+					$field_id    = $field_ref->get_field_attribute_id( $field_args, false );
+					$field_class = $field_ref->get_field_attribute_class( $field_args, false );
+
+					$currency_country    = LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Section_Payments_Defaults', 'country' ) ?? '';
+					$currency_codes_list = learndash_currency_codes_list();
+
+					$select_html = '<select name="' . $field_name . '" class="' . $field_class . '" id="' . $field_id . '">';
+
+					if ( empty( $currency_country ) ) {
+						$old_currency = $this->setting_option_values['currency'];
+						$select_html .= sprintf(
+							'<option value="%1$s">%2$s</option>',
+							$old_currency,
+							! empty( $old_currency ) ? $old_currency : esc_html__( 'Select your country', 'learndash' )
+						);
+					}
+
+					foreach ( $currency_codes_list as $currency_codes_list_item ) {
+						$option_is_selected = $currency_country === $currency_codes_list_item['country']
+							&& $this->setting_option_values['currency'] === $currency_codes_list_item['currency_code'];
+
+						$select_html .= sprintf(
+							'<option %1$s value="%2$s" data-country="%3$s">%4$s</option>',
+							$option_is_selected ? 'selected' : '',
+							$currency_codes_list_item['currency_code'],
+							$currency_codes_list_item['country'],
+							$currency_codes_list_item['option_label']
+						);
+					}
+
+					$select_html .= '</select>';
+
+					if ( learndash_use_select2_lib() ) {
+						$select_html = str_replace( '<select ', '<select data-ld-select2="1" ', $select_html );
+					}
+					$html .= $select_html;
+
+					$html .= '</span>';
+
+					/** This filter is documented in includes/settings/settings-fields/class-ld-settings-fields-checkbox-switch.php */
+					$html = apply_filters( 'learndash_settings_field_html_after', $html, $field_args );
+				}
+			}
+
+			echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Need to output HTML
+		}
 	}
 }
+
 add_action(
 	'learndash_settings_sections_init',
 	function() {

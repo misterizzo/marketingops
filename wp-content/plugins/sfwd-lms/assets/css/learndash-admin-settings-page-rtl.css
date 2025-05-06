@@ -32,7 +32,7 @@ span.learndash-description {
   font-style: italic;
 }
 
-.sfwd_options .sfwd_option_label .descripton {
+.sfwd_options .sfwd_option_label .descripton { /* cspell:disable-line */
   clear: both;
   display: block;
   float: right;
@@ -47,70 +47,6 @@ span.learndash-description {
   border-right: 1px solid #ccc;
 }
 
-/*
-.sfwd_options .ld-settings-sub-level-1 .sfwd_input:before{
-  content: "";
-  position: absolute;
-  border-left: 1px solid #ccc;
-
-  left: 0px;
-  bottom: 0px;
-  height: 100%;
-  width: 1px;
-  top: 0px;
-}
-*/
-/*
-.sfwd_options .ld-settings-sub-level-1 .sfwd_input:first-child:before {
-  content: "";
-  position: absolute;
-  border-left: 1px solid #ccc;
-
-  left: 0px;
-  bottom: 0px;
-  height: 100%;
-  width: 1px;
-  top: 10px;
-}
-*/
-/*
-.sfwd_options .ld-settings-sub-level-1 .sfwd_input:last-child:before {
-  content: "";
-  position: absolute;
-  border-left: 1px solid #ccc;
-
-  left: 0px;
-  bottom: 0px;
-  height: 75%;
-  width: 1px;
-  top: 0px;
-}
-*/
-/*
-.sfwd_options .ld-settings-sub-level-1 .sfwd_input:first-child:nth-last-child(1) {
-  content: "";
-  position: absolute;
-  border-left: 1px solid #ccc;
-
-  left: 0px;
-  bottom: 0px;
-  height: 75%;
-  width: 1px;
-  top: 10px;
-}
-*/
-
-/*
-.sfwd_options .ld-settings-sub-level-1 .sfwd_input:first-child:nth-last-child(1) {
-  border-left: 0px;
-}
-*/
-
-/*
-.sfwd_options .ld-settings-sub-level-1 .sfwd_input .sfwd_option_label {
-    max-width: 279px;
-}
-*/
 .sfwd_options .ld-settings-sub-level-1 .ld-settings-sub-level-2 {
   margin-right: 10px;
   padding-right: 5px;
@@ -128,11 +64,7 @@ span.learndash-description {
   padding-right: 20px;
   border-right: 1px solid #ccc;
 }
-/*
-.sfwd_options .ld-settings-inner .sfwd_input:first-child:nth-last-child(1) {
-  border-left: 0px;
-}
-*/
+
 .sfwd_options .ld-settings-inner .sfwd_input .sfwd_option_label {
   margin-left: 0px;
   margin-right: 0px;
@@ -162,12 +94,6 @@ span.learndash-description {
   float: none;
 }
 
-/*
-.sfwd_options .ld-settings-inner .sfwd_input .sfwd_label {
-    max-width: 100px;
-    width: 100px !important;
-}
-*/
 /* Settings Fields CSS */
 /* Switch toggle CSS */
 
@@ -175,11 +101,7 @@ span.learndash-description {
   display: flex;
   margin-top: 5px;
 }
-/*
-.sfwd_options .ld-settings-inner .ld-switch-wrapper {
-  margin-top: 0px;
-}
-*/
+
 .sfwd_options .ld-switch {
   margin-left: 16px;
   position: relative;
@@ -424,7 +346,8 @@ span.learndash-description {
 }
 
 /* Text Input CSS */
-.sfwd_options .learndash-section-field-text {
+.sfwd_options .learndash-section-field-text,
+.sfwd_options .learndash-section-field-password {
   border-radius: 2px;
   border: 1px solid #ddd;
   box-shadow: none;
@@ -521,13 +444,6 @@ span.learndash-description {
     background-color: #11a0d2  !important;
 }
 
-/*
-.sfwd_options .ld-select-multiple.ld-select2 ul.select2-selection__rendered li,
-.sfwd_options .ld-select-multiple.ld-select2 ul.select2-selection__rendered li input {
-  width: 100%;
-}
-*/
-
 .sfwd_options .ld-select-multiple.ld-select2 .select2-container .select2-selection__rendered > *:first-child.select2-search--inline {
 width: 100% !important;
 }
@@ -584,12 +500,6 @@ width: 100% !important;
     height: 100%;
 }
 
-/*
-.sfwd_options .ld-select2 .select2-container .select2-selection--single .select2-selection__rendered {
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-*/
 .sfwd_options .ld-select2 .select2-container--learndash .select2-selection--single {
   padding-top: 3px;
   padding-bottom: 3px;
@@ -600,11 +510,7 @@ width: 100% !important;
 .sfwd_options .ld-select2 .select2-container--learndash .select2-selection--single .select2-selection__arrow {
   height: 100%;
 }
-/*
-.sfwd_options .ld-select2 .select2-container--learndash .select2-selection--single .select2-selection__placeholder {
-  color: inherit;
-}
-*/
+
 .sfwd_options .ld-select2 .select2-container--learndash .select2-selection--single .select2-selection__arrow b {
   border-top-color: inherit;
 }
@@ -617,15 +523,6 @@ width: 100% !important;
     color: #444 !important;
 }
 
-/*
-.select2-container--learndash .select2-selection--single {
-    background-color: #fff;
-    border: 1px solid #aaa;
-    border-radius: 4px;
-    height: 100%;
-}
-*/
-
 /* Select2 Post Type listing selectors */
 body.edit-php .tablenav.top .select2-container--learndash,
 body.users-php .tablenav.top .select2-container--learndash {
@@ -637,7 +534,6 @@ body.users-php .tablenav.top .select2-container--learndash {
 	border-color: #7e8993;
 	box-shadow: none;
 	border-radius: 3px;
-	/* padding: 0 24px 0 8px; */
 	min-height: 30px;
 	max-width: 25rem;
 	-webkit-appearance: none;
@@ -655,7 +551,7 @@ body.users-php .tablenav.top .select2-container--learndash .select2-selection--s
 	border: 1px solid #7e8993;
 	background-color: #fff;
 	color: #32373c !important;
-	background: #fff url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%206l5%205%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E') no-repeat left 5px top 55%;
+	background: #fff url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%206l5%205%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E') no-repeat left 5px top 55%; /* cspell:disable-line -- url. */
   background-size: 16px 16px;
 }
 
@@ -669,24 +565,6 @@ body.edit-php .tablenav.top .select2-container--learndash .select2-selection--si
 body.users-php .tablenav.top .select2-container--learndash .select2-selection--single .select2-selection__arrow {
   display: none;
 }
-
-/* Settings Row CSS */
-/*
-.sfwd_options .sfwd_input {
-  align-items: flex-start;
-  box-sizing: border-box;
-  display: flex;
-  flex-wrap: wrap;
-  padding-top: 20px;
-}
-*/
-/*
-.sfwd_options .sfwd_input > .sfwd_input {
-  border-left: 2px solid #ddd;
-  flex: 1 0 100%;
-  padding-left: 20px;
-}
-*/
 
 .sfwd_options .sfwd_option_div p.ld-radio-input-wrapper {
   margin-bottom: 1px;
@@ -714,8 +592,7 @@ body.users-php .tablenav.top .select2-container--learndash .select2-selection--s
   flex: 1 0 100%;
   font-weight: 700;
   margin-bottom: 10px;
-  padding-left: 0px; /* 20px;*/
-  /* position: relative; */
+  padding-left: 0px;
 }
 
 .sfwd_options .sfwd_option_input {
@@ -761,42 +638,6 @@ body.users-php .tablenav.top .select2-container--learndash .select2-selection--s
   width: auto;
 }
 
-/*
-.sfwd_options .sfwd_help_text_div {
-  display: block;
-  position: absolute;
-  top: 20px;
-  border: 2px solid black;
-  padding: 5px;
-  background-color: yellow;
-  color: black;
-  z-index: 99;
-}
-*/
-
-/*
-@media screen and (min-width: 768px) {
-  .sfwd_options .sfwd_option_label {
-    flex: 1 0 300px;
-    margin-bottom: 0;
-  }
-
-  .sfwd_options .sfwd_option_input {
-    flex: 1 0 calc(100% - 300px);
-    margin-bottom: 0;
-  }
-
-  .sfwd_options .sfwd_input > .sfwd_input .sfwd_option_label {
-    flex: 1 0 278px;
-  }
-
-  .sfwd_options .sfwd_input > .sfwd_input .sfwd_option_input {
-    flex: 1 0 calc(100% - 278px);
-  }
-}
-*/
-
-
 .sfwd_options .tooltip {
   position: relative;
   display: inline-block;
@@ -838,28 +679,8 @@ body.users-php .tablenav.top .select2-container--learndash .select2-selection--s
   margin-right: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: #11a0d2 /* #1e8cbe */ transparent transparent transparent;
+  border-color: #11a0d2 transparent transparent transparent;
 }
-
-
-/* Tooltip to right of element */
-/*
-.sfwd_options .tooltip .tooltiptext {
-  top: -5px;
-  left: 120%;
-}
-
-.sfwd_options .tooltip .tooltiptext::after {
-  content: " ";
-  position: absolute;
-  top: 50%;
-  right: 100%;
-  margin-top: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent #1e8cbe transparent transparent;
-}
-*/
 
 /**
  * Quiz Custom Fields style
@@ -879,7 +700,7 @@ body.users-php .tablenav.top .select2-container--learndash .select2-selection--s
 
 .sfwd_options .form_table_wrapper #form_add {
   background-color: transparent;
-  background-image: url("data:image/svg+xml,%3Csvg width='256' height='256' viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23007cba' d='M185.066 128c0 3.534-2.866 6-6.4 6H134v44.666c0 3.534-2.467 6.399-6 6.399-3.534 0-6-2.865-6-6.399V134H77.332c-3.535 0-6.4-2.466-6.4-6s2.866-6 6.4-6H122V77.331c0-3.534 2.466-6.4 6-6.4 3.533 0 6 2.866 6 6.4V122h44.666c3.534 0 6.4 2.466 6.4 6zM256 128C256 57.42 198.58 0 128 0S0 57.42 0 128s57.42 128 128 128 128-57.42 128-128zm-12.8 0c0 63.521-51.679 115.2-115.2 115.2-63.522 0-115.2-51.679-115.2-115.2C12.8 64.478 64.478 12.8 128 12.8c63.521 0 115.2 51.678 115.2 115.2z' fill-rule='nonzero'%3E%3C/path%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='256' height='256' viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23007cba' d='M185.066 128c0 3.534-2.866 6-6.4 6H134v44.666c0 3.534-2.467 6.399-6 6.399-3.534 0-6-2.865-6-6.399V134H77.332c-3.535 0-6.4-2.466-6.4-6s2.866-6 6.4-6H122V77.331c0-3.534 2.466-6.4 6-6.4 3.533 0 6 2.866 6 6.4V122h44.666c3.534 0 6.4 2.466 6.4 6zM256 128C256 57.42 198.58 0 128 0S0 57.42 0 128s57.42 128 128 128 128-57.42 128-128zm-12.8 0c0 63.521-51.679 115.2-115.2 115.2-63.522 0-115.2-51.679-115.2-115.2C12.8 64.478 64.478 12.8 128 12.8c63.521 0 115.2 51.678 115.2 115.2z' fill-rule='nonzero'%3E%3C/path%3E%3C/svg%3E"); /* cspell:disable-line -- url. */
   background-position: center right 3px;
   background-repeat: no-repeat;
   background-size: 16px 16px;
@@ -893,7 +714,7 @@ body.users-php .tablenav.top .select2-container--learndash .select2-selection--s
 }
 
 .sfwd_options .form_table_wrapper #form_add:hover {
-  background-image: url("data:image/svg+xml,%3Csvg width='256' height='256' viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%2311a0d2' d='M185.066 128c0 3.534-2.866 6-6.4 6H134v44.666c0 3.534-2.467 6.399-6 6.399-3.534 0-6-2.865-6-6.399V134H77.332c-3.535 0-6.4-2.466-6.4-6s2.866-6 6.4-6H122V77.331c0-3.534 2.466-6.4 6-6.4 3.533 0 6 2.866 6 6.4V122h44.666c3.534 0 6.4 2.466 6.4 6zM256 128C256 57.42 198.58 0 128 0S0 57.42 0 128s57.42 128 128 128 128-57.42 128-128zm-12.8 0c0 63.521-51.679 115.2-115.2 115.2-63.522 0-115.2-51.679-115.2-115.2C12.8 64.478 64.478 12.8 128 12.8c63.521 0 115.2 51.678 115.2 115.2z' fill-rule='nonzero'%3E%3C/path%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='256' height='256' viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%2311a0d2' d='M185.066 128c0 3.534-2.866 6-6.4 6H134v44.666c0 3.534-2.467 6.399-6 6.399-3.534 0-6-2.865-6-6.399V134H77.332c-3.535 0-6.4-2.466-6.4-6s2.866-6 6.4-6H122V77.331c0-3.534 2.466-6.4 6-6.4 3.533 0 6 2.866 6 6.4V122h44.666c3.534 0 6.4 2.466 6.4 6zM256 128C256 57.42 198.58 0 128 0S0 57.42 0 128s57.42 128 128 128 128-57.42 128-128zm-12.8 0c0 63.521-51.679 115.2-115.2 115.2-63.522 0-115.2-51.679-115.2-115.2C12.8 64.478 64.478 12.8 128 12.8c63.521 0 115.2 51.678 115.2 115.2z' fill-rule='nonzero'%3E%3C/path%3E%3C/svg%3E"); /* cspell:disable-line -- url. */
   color: #11a0d2;
 }
 
@@ -903,7 +724,7 @@ body.users-php .tablenav.top .select2-container--learndash .select2-selection--s
 
 .sfwd_options .form_table_wrapper .form_delete {
   background-color: transparent;
-  background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' role='img' focusable='false' class='dashicon dashicons-dismiss' xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath fill='%23a00' d='M10 2c4.42 0 8 3.58 8 8s-3.58 8-8 8-8-3.58-8-8 3.58-8 8-8zm5 11l-3-3 3-3-2-2-3 3-3-3-2 2 3 3-3 3 2 2 3-3 3 3z'%3E%3C/path%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' role='img' focusable='false' class='dashicon dashicons-dismiss' xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath fill='%23a00' d='M10 2c4.42 0 8 3.58 8 8s-3.58 8-8 8-8-3.58-8-8 3.58-8 8-8zm5 11l-3-3 3-3-2-2-3 3-3-3-2 2 3 3-3 3 2 2 3-3 3 3z'%3E%3C/path%3E%3C/svg%3E"); /* cspell:disable-line -- url. */
   background-position: center right 3px;
   background-repeat: no-repeat;
   border: 0;
@@ -981,17 +802,12 @@ Quiz Edit Result Text lists
 
   margin-bottom: 5px;
   padding: 10px;
-  background-color:#ebebeb; /* rgb(207, 207, 207); */
-}
-
-#learndash-quiz-resultList ul#resultList li .resultEditor {
-
-  /*margin: 20px; */
+  background-color:#ebebeb;
 }
 
 #learndash-quiz-resultList input.addResult {
   background-color: transparent;
-  background-image: url("data:image/svg+xml,%3Csvg width='256' height='256' viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23007cba' d='M185.066 128c0 3.534-2.866 6-6.4 6H134v44.666c0 3.534-2.467 6.399-6 6.399-3.534 0-6-2.865-6-6.399V134H77.332c-3.535 0-6.4-2.466-6.4-6s2.866-6 6.4-6H122V77.331c0-3.534 2.466-6.4 6-6.4 3.533 0 6 2.866 6 6.4V122h44.666c3.534 0 6.4 2.466 6.4 6zM256 128C256 57.42 198.58 0 128 0S0 57.42 0 128s57.42 128 128 128 128-57.42 128-128zm-12.8 0c0 63.521-51.679 115.2-115.2 115.2-63.522 0-115.2-51.679-115.2-115.2C12.8 64.478 64.478 12.8 128 12.8c63.521 0 115.2 51.678 115.2 115.2z' fill-rule='nonzero'%3E%3C/path%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='256' height='256' viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23007cba' d='M185.066 128c0 3.534-2.866 6-6.4 6H134v44.666c0 3.534-2.467 6.399-6 6.399-3.534 0-6-2.865-6-6.399V134H77.332c-3.535 0-6.4-2.466-6.4-6s2.866-6 6.4-6H122V77.331c0-3.534 2.466-6.4 6-6.4 3.533 0 6 2.866 6 6.4V122h44.666c3.534 0 6.4 2.466 6.4 6zM256 128C256 57.42 198.58 0 128 0S0 57.42 0 128s57.42 128 128 128 128-57.42 128-128zm-12.8 0c0 63.521-51.679 115.2-115.2 115.2-63.522 0-115.2-51.679-115.2-115.2C12.8 64.478 64.478 12.8 128 12.8c63.521 0 115.2 51.678 115.2 115.2z' fill-rule='nonzero'%3E%3C/path%3E%3C/svg%3E"); /* cspell:disable-line -- url. */
   background-position: center right 3px;
   background-repeat: no-repeat;
   background-size: 16px 16px;
@@ -1006,7 +822,7 @@ Quiz Edit Result Text lists
 #learndash-quiz-resultList ul#resultList li input.deleteResult {
   float: left;
   background-color: transparent;
-  background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' role='img' focusable='false' class='dashicon dashicons-dismiss' xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath fill='%23a00' d='M10 2c4.42 0 8 3.58 8 8s-3.58 8-8 8-8-3.58-8-8 3.58-8 8-8zm5 11l-3-3 3-3-2-2-3 3-3-3-2 2 3 3-3 3 2 2 3-3 3 3z'%3E%3C/path%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' role='img' focusable='false' class='dashicon dashicons-dismiss' xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath fill='%23a00' d='M10 2c4.42 0 8 3.58 8 8s-3.58 8-8 8-8-3.58-8-8 3.58-8 8-8zm5 11l-3-3 3-3-2-2-3 3-3-3-2 2 3 3-3 3 2 2 3-3 3 3z'%3E%3C/path%3E%3C/svg%3E"); /* cspell:disable-line -- url. */
   background-position: center right 3px;
   background-repeat: no-repeat;
   border: 0;
@@ -1035,17 +851,7 @@ Quiz Edit Result Text lists
   transform: rotate(-180deg);
 }
 
-/*
-#learndash-quiz-admin-data-handling-settings_toplistDataAddBlock_field,
-#learndash-quiz-admin-data-handling-settings_statisticsIpLock_field,
-#learndash-quiz-admin-data-handling-settings_emailNotification_field,
-#learndash-quiz-admin-data-handling-settings_timeLimitCookie_field {
-  margin-left: 0;
-  padding-left: 0;
-}
-*/
-
-.sfwd_options .sfwd_option_label .descripton p {
+.sfwd_options .sfwd_option_label .descripton p { /* cspell:disable-line -- used everywhere. */
   margin-bottom: 0;
 }
 
@@ -1104,21 +910,12 @@ Quiz Edit Result Text lists
 .sfwd_options #learndash-quiz-access-settings_visible_after_field,
 .sfwd_options #learndash-quiz-access-settings_visible_after_specific_date_field {
   border-right: none;
- /* padding-left: 5px; */
- padding-right: 0;
+  padding-right: 0;
 }
 
 .sfwd_options #learndash-quiz-results-options_resultText_field {
   padding-right: 10px;
 }
-
-/*
-.sfwd_options #learndash-quiz-display-content-settings_quizModus_single_feedback_field,
-.sfwd_options #learndash-quiz-display-content-settings_quizModus_single_back_button_field,
-.sfwd_options #learndash-quiz-display-content-settings_showMaxQuestion_field {
-  margin-left: 30px;
-}
-*/
 
 .sfwd_options input[name="templateLoad"],
 .sfwd_options input[name="templateName"] {
@@ -1204,11 +1001,11 @@ Quiz Edit Result Text lists
 }
 
 /**
- * Added to bring back the visible indicator on checkbox in Builder sodebar elements
+ * Added to bring back the visible indicator on checkbox in Builder sidebar elements
  * See LEARNDASH-4114
  */
 .ld__builder-sidebar-widget .components-checkbox-control__input[type="checkbox"]:checked::before {
-  content: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2020%2020%27%3E%3Cpath%20d%3D%27M14.83%204.89l1.34.94-5.81%208.38H9.02L5.78%209.67l1.34-1.25%202.57%202.4z%27%20fill%3D%27%231e8cbe%27%2F%3E%3C%2Fsvg%3E");
+  content: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2020%2020%27%3E%3Cpath%20d%3D%27M14.83%204.89l1.34.94-5.81%208.38H9.02L5.78%209.67l1.34-1.25%202.57%202.4z%27%20fill%3D%27%231e8cbe%27%2F%3E%3C%2Fsvg%3E"); /* cspell:disable-line -- url. */
 }
 
 .plugin-update p.ld-plugin-update-notice::before {
@@ -1218,15 +1015,10 @@ Quiz Edit Result Text lists
 
 .plugin-update .ld-plugin-update-notice,
 .notice.ld-plugin-update-notice {
-  /* background-color: #d54e21;  */
 	padding: 10px;
-	/* color: #f9f9f9; */
 	margin-top: 10px;
 }
 
-.plugin-update .ld-plugin-update-notice {
-  /* border-top: 3px solid #d54e21; */
-}
 .ld-plugin-update-notice .version {
   font-weight: 700;
 }
@@ -1305,13 +1097,7 @@ table.learndash-settings-table-sortable td.col-name-move {
   cursor: grab;
 }
 
-/*
-.sfwd_options .ld-settings-info-banner.ld-settings-info-banner-success p::before {
-	color: #46b450;
-}
-*/
-
-/** Settiings for Group Attributes metabox */
+/** Settings for Group Attributes metabox */
 
 .edit-post-sidebar #learndash_group_attributes_metabox select#group_parent_id {
   max-width: 85%;
@@ -1371,6 +1157,10 @@ body[data-active-tab="learndash_quiz_builder"] .postbox-header .handle-actions .
 
 /* Stripe Payments Settings */
 
+.learndash-settings-page-wrap .notice.connect-stripe a {
+	margin-right: 22px;
+}
+
 .sfwd_options .learndash-stripe-connect, .notice.connect-stripe .learndash-stripe-connect {
 	align-items: center;
 	background: #6772e5;
@@ -1379,11 +1169,30 @@ body[data-active-tab="learndash_quiz_builder"] .postbox-header .handle-actions .
 	display: flex;
 	font-size: 16px;
 	justify-content: center;
-	letter-spacing: .6px;
+	letter-spacing: 0.6px;
 	padding: 6px 24px;
 	text-decoration: none;
 	transition: all .3s ease;
 	width: 200px;
+}
+
+@media screen and (max-width: 720px) {
+
+	.sfwd_options .learndash-stripe-connect, .notice.connect-stripe {
+		align-items: flex-start;
+		flex-direction: column;
+		gap: 15px;
+		margin-right: 0;
+	}
+
+	.sfwd_options .learndash-stripe-connect {
+		align-self: stretch;
+		justify-content: center;
+	}
+
+	.learndash-settings-page-wrap .notice.connect-stripe a {
+		margin-right: 0;
+	}
 }
 
 .sfwd_options .learndash-stripe-connect:active, .learndash-stripe-connect:focus, .learndash-stripe-connect:hover, .notice.connect-stripe .learndash-stripe-connect:active, .notice.connect-stripe .learndash-stripe-connect:focus, .notice.connect-stripe .learndash-stripe-connect:hover {
@@ -1393,6 +1202,66 @@ body[data-active-tab="learndash_quiz_builder"] .postbox-header .handle-actions .
 
 .sfwd_options .learndash-stripe-connect .stripe-logo, .notice.connect-stripe .learndash-stripe-connect .stripe-logo {
 	padding: 2px 0 0 10px;
+}
+
+.sfwd_options .learndash-stripe-webhook-url {
+	align-items: center;
+	display: flex;
+	width: 100%;
+}
+
+.sfwd_input.sfwd_input_type_text--learndash_stripe_connection_settings_webhook_status_message_live,
+.sfwd_input.sfwd_input_type_text--learndash_stripe_connection_settings_webhook_status_message_test,
+.sfwd_input.sfwd_input_type_text--learndash_stripe_connection_settings_webhook_validation_button {
+	padding: 0;
+}
+
+.ld-stripe-webhook-live-status__message svg,
+.ld-stripe-webhook-test-status__message svg {
+	width: 15px;
+	height: 15px;
+}
+
+/* Logs Settings */
+
+#learndash-options-logs { /* Quick fixes for now. */
+	padding: 0 10px;
+	width: 98%;
+}
+
+#learndash-options-logs h4 {
+	padding: 6px 0;
+}
+
+#learndash-options-logs .tabs {
+	display: flex;
+}
+
+#learndash-options-logs .tabs .tab {
+	background: #F8FAFC;
+	color: #6B7280;
+	font-size: .85rem;
+	padding: 7px 12px;
+	margin-left: 12px;
+	border-radius: 4px;
+	font-weight: 500;
+	cursor: pointer;
+}
+
+#learndash-options-logs .tabs .tab.selected {
+	background: #E5E7EB;
+}
+
+#learndash-options-logs .tab-content {
+	padding-left: 20px;
+}
+
+#learndash-options-logs .learndash-options-logs-list-item-content {
+	display: block;
+	width: 100%;
+	height: 50vh;
+	background: #FFF;
+	margin-bottom: 20px;
 }
 
 /* Bulk Edit Settings */
@@ -1555,3 +1424,76 @@ body[data-active-tab="learndash_quiz_builder"] .postbox-header .handle-actions .
 #learndash_import_export_settings_import_export .button {
 	margin-top: 20px;
 }
+
+.col-name-modern-ui-header {
+	margin-left: 8px;
+}
+
+.ld-settings__badge {
+	border-radius: 3px;
+	border: 1px solid #586679;
+	color: #586679;
+	display: inline-flex;
+	line-height: 12px;
+	padding: 6px;
+}
+
+.ld-settings__badge--beta {
+	align-items: center;
+	column-gap: 4px;
+	justify-content: center;
+}
+
+.ld-settings__badge-label--beta {
+	font-size: 10px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 7px;
+}
+
+#learndash_settings_terms_pages_terms_page_field,
+#learndash_settings_terms_pages_privacy_page_field {
+	border-right: 1px solid #CCC;
+	padding-right: 15px;
+}
+
+#learndash_settings_terms_pages_terms_page_field .sfwd_option_input_note,
+#learndash_settings_terms_pages_privacy_page_field .sfwd_option_input_note {
+	display: block;
+	margin-top: 15px;
+}
+
+/** Action Items **/
+.learndash-settings-page-wrap .button .icon {
+	display: block;
+	margin: auto;
+}
+.learndash-settings-page-wrap .action-items {
+	background: #fff;
+	border: 1px solid #2271b1;
+	border-radius: 3px;
+	margin: 0;
+	padding: 10px;
+	position: absolute;
+	width: 100px;
+	z-index: 999;
+}
+.learndash-settings-page-wrap .action-items--closed {
+	display: none;
+}
+.learndash-settings-page-wrap .action-items--open {
+	display: block;
+}
+.learndash-settings-page-wrap .action-items:after {
+	border: 10px solid transparent;
+	border-bottom: 10px solid #2271b1;
+	border-top: none;
+	content: " ";
+	position: absolute;
+	left: 10px;
+	top: -10px;
+}
+.learndash-settings-page-wrap .action-items .action-item:last-child {
+	margin: 0;
+}
+/** end Action Items **/

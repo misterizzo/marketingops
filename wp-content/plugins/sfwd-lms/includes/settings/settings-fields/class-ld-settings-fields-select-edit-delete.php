@@ -81,6 +81,7 @@ if ( ( class_exists( 'LearnDash_Settings_Fields' ) ) && ( ! class_exists( 'Learn
 				if ( ( isset( $field_args['buttons'] ) ) && ( ! empty( $field_args['buttons'] ) ) ) {
 					$html .= '<div class="ld-setting-field-sub">';
 					foreach ( $field_args['buttons'] as $button_key => $button_label ) {
+						// cspell:disable-next-line.
 						$html .= '<input type="button" disabled="disabled" value="' . esc_attr( $button_label ) . '" class="button-secondary ld-settings-fiels-button" data-action="' . esc_attr( $button_key ) . '" />';
 					}
 

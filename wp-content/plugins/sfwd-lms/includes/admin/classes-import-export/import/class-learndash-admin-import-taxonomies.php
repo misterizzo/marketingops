@@ -48,6 +48,10 @@ if (
 				}
 
 				foreach ( $taxonomy['wp_taxonomy_terms'] as $importing_term ) {
+					if ( ! taxonomy_exists( $importing_term['taxonomy'] ) ) {
+						continue;
+					}
+
 					$has_parent    = 0 !== intval( $importing_term['parent'] );
 					$existing_term = term_exists( $importing_term['name'], $importing_term['taxonomy'] );
 

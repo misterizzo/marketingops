@@ -29,7 +29,7 @@ if ( ( ! class_exists( 'LearnDash_Import_Topic' ) ) && ( class_exists( 'LearnDas
 		 *
 		 * @var string $dest_post_type
 		 */
-		protected $dest_post_type   = 'sfwd-topic';
+		protected $dest_post_type = 'sfwd-topic';
 
 		/**
 		 * Source Post Type
@@ -44,13 +44,6 @@ if ( ( ! class_exists( 'LearnDash_Import_Topic' ) ) && ( class_exists( 'LearnDas
 		 * @var string $dest_taxonomy
 		 */
 		protected $dest_taxonomy = 'ld_topic_tag';
-
-		/**
-		 * Constructor
-		 */
-		public function __construct() {
-			parent::__construct();
-		}
 
 		/**
 		 * Duplicate post

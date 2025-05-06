@@ -63,27 +63,19 @@ if ( ( class_exists( 'LearnDash_Gutenberg_Block' ) ) && ( ! class_exists( 'Learn
 		 *
 		 * @since 2.5.9
 		 *
-		 * @param array    $block_attributes The block attrbutes.
-		 * @param string   $block_content    The block content.
-		 * @param WP_block $block            The block object.
-		 * @return none The output is echoed.
+		 * @param array         $block_attributes The block attributes.
+		 * @param string        $block_content    The block content.
+		 * @param WP_Block|null $block            The block object.
+		 *
+		 * @return string $block_content The block content.
 		 */
-		public function render_block( $block_attributes = array(), $block_content = '', WP_block $block = null ) {
+		public function render_block( $block_attributes = array(), $block_content = '', WP_Block $block = null ) {
 			$block_attributes = $this->preprocess_block_attributes( $block_attributes );
 
 			if ( $this->block_attributes_is_editing_post( $block_attributes ) ) {
 				/** This block does not support the Legacy template. */
 				if ( 'legacy' === LearnDash_Theme_Register::get_active_theme_key() ) {
 					return '';
-					/*
-					$this->render_block_wrap(
-						'<span class="learndash-block-error-message">' . sprintf(
-							// translators: placeholder: Active Template Name.
-							esc_html_x( 'The current LearnDash template (%s) does not support this block. Not output will be generated.', 'placeholder: Active Template Name', 'learndash' ),
-							LearnDash_Theme_Register::get_active_theme_name()
-						) . '</span>'
-					);
-					*/
 				}
 
 				/**

@@ -7,7 +7,7 @@
  * Author: LearnDash
  * Author URI: http://www.learndash.com
  * Text Domain: ld-multisite
- * Doman Path: /languages/
+ * Domain Path: /languages/
  *
  * @since 3.1.8
  *
@@ -110,11 +110,11 @@ if ( ! class_exists( 'LD_Multisite' ) ) {
 		 */
 		public function allowed_redirect_hosts( $known_hosts = array(), $dest_host = '' ) {
 			if ( ( is_multisite() ) && ( ! empty( $dest_host ) ) ) {
-				$http_post = ( 'POST' === $_SERVER['REQUEST_METHOD'] );
+				$http_post = isset( $_SERVER['REQUEST_METHOD'] ) && ( 'POST' === $_SERVER['REQUEST_METHOD'] );
 				// Check that we are handling the 'lostpassword' action.
 				if ( ( isset( $_GET['action'] ) ) && ( 'lostpassword' === $_GET['action'] ) && ( true === $http_post ) ) {
-					// Also check that we are handling the LD 'resetpw' logic.
-					if ( ( isset( $_POST['redirect_to'] ) ) && ( strpos( $_POST['redirect_to'], 'ld-resetpw=true' ) !== false ) ) {
+					// Also check that we are handling the LD 'resetpw' logic. // cspell:disable-line.
+					if ( ( isset( $_POST['redirect_to'] ) ) && ( strpos( $_POST['redirect_to'], 'ld-resetpw=true' ) !== false ) ) { // cspell:disable-line.
 						// If here we query the site table for the $dest_host.
 						$args = array(
 							'domain__in' => array( $dest_host ),
@@ -224,7 +224,7 @@ if ( ! class_exists( 'LD_Multisite' ) ) {
 				}
 			}
 
-			// Alwats return $url.
+			// Always return $url.
 			return $url;
 		}
 

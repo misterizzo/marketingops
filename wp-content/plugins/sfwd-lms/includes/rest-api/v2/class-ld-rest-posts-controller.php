@@ -554,16 +554,18 @@ if ( ( ! class_exists( 'LD_REST_Posts_Controller_V2' ) ) && ( class_exists( 'WP_
 								$field_value = learndash_get_setting( $ld_post, $field_set['settings_field']['name'] );
 							}
 						}
-						if ( ( isset( $field_set['settings_field']['args']['validate_callback'] ) ) && ( ! empty( $field_set['settings_field']['args']['validate_callback'] ) ) && ( is_callable( $field_set['settings_field']['args']['validate_callback'] ) ) ) {
-							$validate_args['field'] = $field_set['settings_field']['args'];
-							$field_value            = call_user_func( $field_set['settings_field']['args']['validate_callback'], $field_value, $field_name, $validate_args );
 
-							$field_instance = LearnDash_Settings_Fields::get_field_instance( $field_set['settings_field']['args']['type'] );
-							if ( ( $field_instance ) && ( 'LearnDash_Settings_Fields' === get_parent_class( $field_instance ) ) ) {
-								$field_value = $field_instance->field_value_to_rest_value( $field_value, $field_name, $validate_args, $request );
-							}
-						} else {
-							$field_value = $field_value;
+						$field_args = [
+							'field' => $field_set['settings_field']['args'] ?? [],
+						];
+
+						$field_instance = LearnDash_Settings_Fields::get_field_instance( $field_set['settings_field']['args']['type'] ?? '' );
+
+						if (
+							$field_instance
+							&& get_parent_class( $field_instance ) === 'LearnDash_Settings_Fields'
+						) {
+							$field_value = $field_instance->field_value_to_rest_value( $field_value, $field_name, $field_args, $request );
 						}
 					}
 					return $field_value;
@@ -836,25 +838,24 @@ if ( ( ! class_exists( 'LD_REST_Posts_Controller_V2' ) ) && ( class_exists( 'WP_
 		}
 
 		/**
-		 * Check if we are allowing the post type to be publicly viewed
-		 * without restrictions to course_id.
+		 * Checks if we are allowing the post type to be viewed without restrictions for an admin user.
+		 * The method name does not reflect the actual functionality, but is kept for backward compatibility.
 		 *
 		 * @since 3.3.0
+		 * @since 4.10.3 Removed the archive setting dependency.
 		 *
 		 * @param string $post_type_slug The post type slug to check.
 		 *
 		 * @return bool true if has archive.
 		 */
 		protected function rest_post_type_has_archive( $post_type_slug = '' ) {
+			$learndash_rest_archive_bypass = false;
+
 			if ( learndash_is_admin_user() ) {
 				$learndash_rest_archive_bypass = LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Section_General_Admin_User', 'bypass_course_limits_admin_users' );
 				if ( 'yes' === $learndash_rest_archive_bypass ) {
 					$learndash_rest_archive_bypass = true;
-				} else {
-					$learndash_rest_archive_bypass = learndash_post_type_has_archive( $post_type_slug );
 				}
-			} else {
-				$learndash_rest_archive_bypass = learndash_post_type_has_archive( $post_type_slug );
 			}
 
 			// If the archive setting is enabled it means any user can see all of that post type.

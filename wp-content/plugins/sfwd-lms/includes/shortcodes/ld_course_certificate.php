@@ -60,6 +60,12 @@ function ld_course_certificate_shortcode( $atts = array(), $content = '', $short
 	 * @param int    $course_id          Course ID.
 	 * @param int    $user_id            User ID.
 	 */
-	return apply_filters( 'ld_course_certificate', "<div id='learndash_course_certificate'><a href='" . $link . "' class='btn-blue' target='_blank'>" . apply_filters( 'ld_certificate_link_label', esc_html__( 'PRINT YOUR CERTIFICATE', 'learndash' ), $user_id, $course_id ) . '</a></div>', $link, $course_id, $user_id ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+	return apply_filters( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+		'ld_course_certificate',
+		"<div id='learndash_course_certificate'><a href='" . $link . "' class='btn-blue' target='_blank'>" . apply_filters( 'ld_certificate_link_label', esc_html__( 'PRINT YOUR CERTIFICATE', 'learndash' ), $user_id, $course_id ) . '</a></div>',
+		$link,
+		$course_id,
+		$user_id
+	);
 }
 add_shortcode( 'ld_course_certificate', 'ld_course_certificate_shortcode', 10, 3 );

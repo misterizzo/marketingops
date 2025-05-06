@@ -21,15 +21,6 @@ if ( ! class_exists( 'LDLMS_Sort_Answer' ) ) {
 	 * @package Learndash
 	 */
 	class LDLMS_Sort_Answer extends LDLMS_Base_Answer_Type {
-
-		/**
-		 * Override parent function call.
-		 */
-		public function setup() {
-			parent::setup();
-			// add_filter( 'learndash_rest_statistic_answer_node_data', array( $this, 'student_answers_value_key' ), 30, 5 );
-		}
-
 		/**
 		 * Get answers data in the form of array.
 		 *
@@ -51,6 +42,8 @@ if ( ! class_exists( 'LDLMS_Sort_Answer' ) ) {
 				 * @param array  $answer_node_data The answer node.
 				 * @param string $type             Whether the node is answer node or student answer node.
 				 * @param mixed  $data             Individual answer data.
+				 * @param int    $question_id      Question ID.
+				 * @param int    $position         Position of the answer.
 				 */
 				$answers[ $this->get_answer_key( (string) $position ) ] = apply_filters(
 					'learndash_rest_statistic_answer_node_data',
@@ -122,7 +115,6 @@ if ( ! class_exists( 'LDLMS_Sort_Answer' ) ) {
 			switch ( $answer_type ) {
 
 				case 'answer':
-					// unset( $answer_data['label'] );
 					unset( $answer_data['points'] );
 					break;
 				case 'student':

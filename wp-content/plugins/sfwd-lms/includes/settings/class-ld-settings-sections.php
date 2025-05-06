@@ -18,7 +18,6 @@ if ( ! class_exists( 'LearnDash_Settings_Section' ) ) {
 	 * @since 2.4.0
 	 */
 	class LearnDash_Settings_Section {
-
 		/**
 		 * Static array of section instances.
 		 *
@@ -50,7 +49,7 @@ if ( ! class_exists( 'LearnDash_Settings_Section' ) ) {
 		/**
 		 * Holds the values for the fields. Read in from the wp_options item.
 		 *
-		 * @var array $setting_option_values Array of section values.
+		 * @var array<int|string,mixed> $setting_option_values Array of section values.
 		 */
 		protected $setting_option_values = array();
 
@@ -227,6 +226,14 @@ if ( ! class_exists( 'LearnDash_Settings_Section' ) ) {
 		 */
 		protected $settings_bypass_nonce_check = false;
 
+		/**
+		 * Check if the setting option has been initialized.
+		 *
+		 * @since 4.15.0
+		 *
+		 * @var bool
+		 */
+		protected bool $setting_option_initialized = false;
 
 		/**
 		 * Public constructor for class
@@ -260,6 +267,17 @@ if ( ! class_exists( 'LearnDash_Settings_Section' ) ) {
 					}
 				}
 			}
+		}
+
+		/**
+		 * Returns the placeholder text for keys.
+		 *
+		 * @since 4.6.0
+		 *
+		 * @return string
+		 */
+		protected static function get_placeholder_for_keys(): string {
+			return esc_attr__( 'This key is stored secretly.', 'learndash' );
 		}
 
 		/**
@@ -392,8 +410,17 @@ if ( ! class_exists( 'LearnDash_Settings_Section' ) ) {
 			$this->settings_values_loaded = true;
 
 			if ( true === $this->load_options ) {
-				$this->setting_option_values = get_option( $this->setting_option_key );
-				if ( ( false === $this->setting_option_values ) || ( '' === $this->setting_option_values ) ) {
+				/**
+				 * Option values.
+				 *
+				 * @var array<mixed>|mixed $setting_option_values
+				 */
+				$setting_option_values = get_option( $this->setting_option_key );
+
+				$this->setting_option_initialized = $setting_option_values !== false;
+				$this->setting_option_values      = is_array( $setting_option_values ) ? $setting_option_values : [];
+
+				if ( ( false === $setting_option_values ) || ( '' === $setting_option_values ) ) {
 					// Track that the option value is not set. See after_load_settings_values().
 					$this->settings_values_save_on_load = true;
 				} else {
@@ -594,6 +621,17 @@ if ( ! class_exists( 'LearnDash_Settings_Section' ) ) {
 
 			if ( ! (bool) $this->verify_metabox_nonce_field() ) {
 				return $old_value;
+			}
+
+			if ( is_array( $value ) ) {
+				foreach ( $value as $key => $val ) {
+					if (
+						'password' === ( $this->setting_option_fields[ $key ]['type'] ?? '' )
+						&& $val === self::get_placeholder_for_keys()
+					) {
+						$value[ $key ] = $old_value[ $key ];
+					}
+				}
 			}
 
 			/**
@@ -1080,8 +1118,10 @@ if ( ! class_exists( 'LearnDash_Settings_Section' ) ) {
 		 *
 		 * @since 2.4.0
 		 *
-		 * @param string $section_org Settings Section.
-		 * @param string $field       Settings Section field key.
+		 * @param string $section_org       Settings Section.
+		 * @param string $field             Settings Section field key.
+
+		 * @return null|array<string,mixed> If found returns the field values.
 		 */
 		public static function get_section_settings_all( $section_org = '', $field = 'value' ) {
 			if ( empty( $section_org ) ) {
@@ -1112,6 +1152,8 @@ if ( ! class_exists( 'LearnDash_Settings_Section' ) ) {
 
 				return $fields_values;
 			}
+
+			return null;
 		}
 
 		/**

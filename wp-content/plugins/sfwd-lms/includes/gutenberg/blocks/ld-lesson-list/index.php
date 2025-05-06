@@ -105,7 +105,7 @@ if ( ( class_exists( 'LearnDash_Gutenberg_Block' ) ) && ( ! class_exists( 'Learn
 		 *
 		 * @since 2.5.9
 		 *
-		 * @param array    $block_attributes The block attrbutes.
+		 * @param array    $block_attributes The block attributes.
 		 * @param string   $block_content    The block content.
 		 * @param WP_block $block            The block object.
 		 *
@@ -119,18 +119,6 @@ if ( ( class_exists( 'LearnDash_Gutenberg_Block' ) ) && ( ! class_exists( 'Learn
 				$block_attributes['user_id']   = $this->block_attributes_get_user_id( $block_attributes );
 				$block_attributes['course_id'] = $this->block_attributes_get_post_id( $block_attributes, 'course' );
 
-				/*
-				if ( empty( $block_attributes['course_id'] ) ) {
-					return $this->render_block_wrap(
-						'<span class="learndash-block-error-message">' . sprintf(
-						// translators: placeholder: Course, Course.
-							_x( '%1$s ID is required when not used within a %2$s.', 'placeholder: Course, Course', 'learndash' ),
-							LearnDash_Custom_Label::get_label( 'course' ),
-							LearnDash_Custom_Label::get_label( 'course' )
-						) . '</span>'
-					);
-				}
-				*/
 				if ( ! empty( $block_attributes['course_id'] ) ) {
 					$course_post = get_post( $block_attributes['course_id'] );
 					if ( ( ! is_a( $course_post, 'WP_Post' ) ) || ( learndash_get_post_type_slug( 'course' ) !== $course_post->post_type ) ) {
@@ -176,7 +164,7 @@ if ( ( class_exists( 'LearnDash_Gutenberg_Block' ) ) && ( ! class_exists( 'Learn
 		 * @param array  $block_attributes The array of attributes parse from the block content.
 		 * @param string $shortcode_slug This will match the related LD shortcode ld_profile, ld_course_list, etc.
 		 * @param string $block_slug This is the block token being processed. Normally same as the shortcode but underscore replaced with dash.
-		 * @param string $content This is the orignal full content being parsed.
+		 * @param string $content This is the original full content being parsed.
 		 *
 		 * @return array $block_attributes.
 		 */

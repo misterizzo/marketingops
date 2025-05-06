@@ -7,14 +7,20 @@
  * @package LearnDash\User
  */
 
+use LearnDash\Core\Models\Product;
+use LearnDash\Core\Utilities\Cast;
+use StellarWP\Learndash\StellarWP\DB\DB;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// cspell:ignore childen .
+
 /**
  * Checks if the user has access to a course.
  *
- * @todo  duplicate function, exists in other places
+ * @todo duplicate function, exists in other places
  *        check it's use and consolidate
  *
  * @since 2.1.0
@@ -45,7 +51,6 @@ function ld_course_check_user_access( $course_id, $user_id = null ) {
  * @return array An array of courses accessible to user.
  */
 function ld_get_mycourses( $user_id = null, $atts = array() ) {
-
 	$defaults = array(
 		'order'   => 'DESC',
 		'orderby' => 'ID',
@@ -71,7 +76,6 @@ function ld_get_mycourses( $user_id = null, $atts = array() ) {
  * @return bool Returns true if the user has access.
  */
 function sfwd_lms_has_access( $post_id, $user_id = null ) {
-
 	/**
 	 * Filters whether a user has access to the course.
 	 *
@@ -119,20 +123,25 @@ function sfwd_lms_has_access_fn( $post_id, $user_id = null ) {
 		return true;
 	}
 
-	$meta = learndash_get_setting( $course_id );
+	/**
+	 * Settings of the course.
+	 *
+	 * @var array<string, mixed> $course_settings
+	 */
+	$course_settings = learndash_get_setting( $course_id );
 
-	if ( ( isset( $meta['course_price_type'] ) ) && ( $meta['course_price_type'] === 'open' ) ) {
+	if ( ( isset( $course_settings['course_price_type'] ) ) && ( $course_settings['course_price_type'] === 'open' ) ) {
 		return true;
 	}
 
-	if ( ( isset( $meta['course_price_type'] ) ) && ( $meta['course_price_type'] === 'paynow' ) ) {
+	if ( ( isset( $course_settings['course_price_type'] ) ) && ( $course_settings['course_price_type'] === 'paynow' ) ) {
 		// Allow for the course price field to be empty or not present.
-		if ( ! isset( $meta['course_price'] ) || ( empty( $meta['course_price'] ) ) ) {
+		if ( ! isset( $course_settings['course_price'] ) || ( empty( $course_settings['course_price'] ) ) ) {
 			return true;
 		}
 	}
 
-	if ( ( isset( $meta['course_join'] ) ) && ( empty( $meta['course_join'] ) ) ) {
+	if ( ( isset( $course_settings['course_join'] ) ) && ( empty( $course_settings['course_join'] ) ) ) {
 		return true;
 	}
 
@@ -141,8 +150,8 @@ function sfwd_lms_has_access_fn( $post_id, $user_id = null ) {
 	}
 
 	if ( true === learndash_use_legacy_course_access_list() ) {
-		if ( ! empty( $meta['course_access_list'] ) ) {
-			$course_access_list = learndash_convert_course_access_list( $meta['course_access_list'], true );
+		if ( ! empty( $course_settings['course_access_list'] ) ) {
+			$course_access_list = learndash_convert_course_access_list( $course_settings['course_access_list'], true );
 		} else {
 			$course_access_list = array();
 		}
@@ -154,14 +163,40 @@ function sfwd_lms_has_access_fn( $post_id, $user_id = null ) {
 		}
 	} else {
 		$course_user_meta = get_user_meta( $user_id, 'course_' . $course_id . '_access_from', true );
-		if ( ( ! empty( $course_user_meta ) ) || ( learndash_user_group_enrolled_to_course( $user_id, $course_id ) ) ) {
-			$expired = ld_course_access_expired( $course_id, $user_id );
-			return ! $expired; // True if not expired.
-		} else {
+		$access_by_group  = learndash_user_group_enrolled_to_course( $user_id, $course_id );
+		if (
+			empty( $course_user_meta ) &&
+			! $access_by_group
+		) {
 			return false;
 		}
-	}
 
+		// Prevent access before the start date and after the end date.
+
+		if ( ! $access_by_group ) {
+			/**
+			 * Product object.
+			 *
+			 * @var Product|null $product
+			 */
+			$product = Product::find( (int) $course_id );
+
+			if (
+				$product
+				&& (
+					! $product->has_started()
+					|| $product->has_ended( $user_id )
+				)
+			) {
+				return false;
+			}
+		}
+
+		// Check access expiration.
+		$expired = ld_course_access_expired( $course_id, $user_id );
+
+		return ! $expired; // True if not expired.
+	}
 }
 
 /**
@@ -207,9 +242,7 @@ function ld_course_access_expired( $course_id, $user_id ) {
 
 	if ( empty( $course_access_upto ) ) {
 		return false;
-	} else {
-
-		if ( time() >= $course_access_upto ) {
+	} elseif ( time() >= $course_access_upto ) {
 			/**
 			 * Filters whether the course is expired for a user or not.
 			 *
@@ -220,35 +253,33 @@ function ld_course_access_expired( $course_id, $user_id ) {
 			 * @param int     $course_id          Course ID.
 			 * @param int     $course_access_upto Course expiration timestamp.
 			 */
-			if ( apply_filters( 'learndash_process_user_course_access_expire', true, $user_id, $course_id, $course_access_upto ) ) {
+		if ( apply_filters( 'learndash_process_user_course_access_expire', true, $user_id, $course_id, $course_access_upto ) ) {
+			/**
+			 * As of LearnDash 2.3.0.3 we store the GMT timestamp as the meta value. In prior versions we stored 1
+			*/
+			update_user_meta( $user_id, 'learndash_course_expired_' . $course_id, time() );
+			ld_update_course_access( $user_id, $course_id, true );
 
-				/**
-				 * As of LearnDash 2.3.0.3 we store the GMT timestamp as the meta value. In prior versions we stored 1
-				*/
-				update_user_meta( $user_id, 'learndash_course_expired_' . $course_id, time() );
-				ld_update_course_access( $user_id, $course_id, true );
+			/**
+			 * Fires when the user course access is expired.
+			 *
+			 * @since 2.6.2
+			 *
+			 * @param int $user_id   User ID.
+			 * @param int $course_id Course ID.
+			 */
+			do_action( 'learndash_user_course_access_expired', $user_id, $course_id );
 
-				/**
-				 * Fires when the user course access is expired.
-				 *
-				 * @since 2.6.2
-				 *
-				 * @param int $user_id   User ID.
-				 * @param int $course_id Course ID.
-				 */
-				do_action( 'learndash_user_course_access_expired', $user_id, $course_id );
-
-				$delete_course_progress = learndash_get_setting( $course_id, 'expire_access_delete_progress' );
-				if ( ! empty( $delete_course_progress ) ) {
-					learndash_delete_course_progress( $course_id, $user_id );
-				}
-				return true;
-			} else {
-				return false;
+			$delete_course_progress = learndash_get_setting( $course_id, 'expire_access_delete_progress' );
+			if ( ! empty( $delete_course_progress ) ) {
+				learndash_delete_course_progress( $course_id, $user_id );
 			}
+			return true;
 		} else {
 			return false;
 		}
+	} else {
+		return false;
 	}
 }
 
@@ -308,8 +339,8 @@ add_action( 'wp_head', 'ld_course_access_expired_alert', 1 );
  *
  * @since 2.1.0
  *
- * @param int $course_id Course ID.
- * @param int $user_id   User ID.
+ * @param int $course_id The course ID.
+ * @param int $user_id   The user ID.
  *
  * @return int The timestamp for course access expiration.
  */
@@ -327,7 +358,6 @@ function ld_course_access_expires_on( $course_id, $user_id ) {
 
 	// If we have a non-empty access from...
 	if ( abs( intval( $courses_access_from ) ) ) {
-
 		// Check the course is using expire access.
 		$expire_access = learndash_get_setting( $course_id, 'expire_access' );
 		// The value stored in the post meta for 'expire_access' is 'on' not true/false 1 or 0. The string 'on'.
@@ -336,6 +366,19 @@ function ld_course_access_expires_on( $course_id, $user_id ) {
 			if ( abs( intval( $expire_access_days ) ) > 0 ) {
 				$course_access_upto = abs( intval( $courses_access_from ) ) + ( abs( intval( $expire_access_days ) ) * DAY_IN_SECONDS );
 			}
+		}
+	}
+
+	// Check if the user has an access extension.
+
+	if ( ! empty( $course_access_upto ) ) {
+		$extended_access = learndash_course_get_extended_access_timestamp( $course_id, $user_id );
+
+		if (
+			! empty( $extended_access )
+			&& $extended_access > $course_access_upto
+		) {
+			$course_access_upto = $extended_access;
 		}
 	}
 
@@ -352,14 +395,19 @@ function ld_course_access_expires_on( $course_id, $user_id ) {
 }
 
 /**
- * Gets the amount of time when the lesson becomes available to a user.
+ * Returns the date when a course becomes available for a user (does not work for open courses).
+ *
+ * It can return a future date if the course has not started yet (course with a start date).
+ * Admin users don't have an enrollment date even if they have access to the course.
+ *
+ * Open courses don't have an access date too unless the user is enrolled in a group. In that case, the access date is the group access date.
  *
  * @since 2.1.0
  *
  * @param int $course_id Optional. Course ID to check. Default 0.
  * @param int $user_id   Optional. User ID to check. Default 0.
  *
- * @return int The timestamp of when the course can be accessed from.
+ * @return int|bool The date when a course becomes available for a user or false if the meta value does not exist.
  */
 function ld_course_access_from( $course_id = 0, $user_id = 0 ) {
 	static $courses = array();
@@ -367,7 +415,7 @@ function ld_course_access_from( $course_id = 0, $user_id = 0 ) {
 	$course_id = absint( $course_id );
 	$user_id   = absint( $user_id );
 
-	// If Shared Steps enabled we need to ensure both Course ID and User ID and not empty.
+	// If Shared Steps is enabled we need to ensure both Course ID and User ID are not empty.
 	if ( 'yes' === LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Courses_Builder', 'shared_steps' ) ) {
 		if ( ( empty( $course_id ) ) || ( empty( $user_id ) ) ) {
 			return false;
@@ -414,11 +462,11 @@ function ld_course_access_from( $course_id = 0, $user_id = 0 ) {
 	}
 
 	/**
-	 * Filters the amount of time when a lesson becomes available to the user.
+	 * Filters the date when a course  becomes available for a user.
 	 *
 	 * @since 3.0.7
 	 *
-	 * @param int $access_from The timestamp of when the lesson wil become availble to user.
+	 * @param int $access_from The timestamp of when the lesson wil become available to user.
 	 * @param int $course_id   Course ID.
 	 * @param int $user_id     User ID.
 	 */
@@ -426,7 +474,7 @@ function ld_course_access_from( $course_id = 0, $user_id = 0 ) {
 }
 
 /**
- * Updates the course access time for a user.
+ * Updated the date when a course  becomes available for a user.
  *
  * @since 3.0.0
  *
@@ -439,9 +487,8 @@ function ld_course_access_from( $course_id = 0, $user_id = 0 ) {
  */
 function ld_course_access_from_update( $course_id, $user_id, $access = '', $is_gmt = false ) {
 	if ( ( ! empty( $course_id ) ) && ( ! empty( $user_id ) ) && ( ! empty( $access ) ) ) {
-
 		if ( ! is_numeric( $access ) ) {
-			// If we a non-numberic value like a date stamp Y-m-d hh:mm:ss we want to convert it to a GMT timestamp.
+			// If we a non-numeric value like a date stamp Y-m-d hh:mm:ss we want to convert it to a GMT timestamp.
 			$access_time = learndash_get_timestamp_from_date_string( $access, ! $is_gmt );
 		} elseif ( is_string( $access ) ) {
 			if ( ! $is_gmt ) {
@@ -479,21 +526,28 @@ function ld_course_access_from_update( $course_id, $user_id, $access = '', $is_g
  *
  * @since 2.1.0
  *
- * @param  int     $user_id   User ID.
- * @param  int     $course_id Course ID.
- * @param  boolean $remove    Optional. Whether to remove course access for the user. Default false.
+ * @param int     $user_id   User ID.
+ * @param int     $course_id Course ID.
+ * @param boolean $remove    Optional. Whether to remove course access for the user. Default false.
  *
- * @return boolean|void Returns true if the user course access updation was successful otherwise false.
+ * @return bool Returns true if the user course access update was successful otherwise false.
  */
-function ld_update_course_access( $user_id, $course_id, $remove = false ) {
+function ld_update_course_access( $user_id, $course_id, $remove = false ): bool {
 	$action_success = false;
 
 	$user_id            = absint( $user_id );
 	$course_id          = absint( $course_id );
 	$course_access_list = null;
 
+	/**
+	 * Product object.
+	 *
+	 * @var Product|null $product
+	 */
+	$product = Product::find( $course_id );
+
 	if ( ( empty( $user_id ) ) || ( empty( $course_id ) ) ) {
-		return;
+		return false;
 	}
 
 	if ( true === learndash_use_legacy_course_access_list() ) {
@@ -515,15 +569,24 @@ function ld_update_course_access( $user_id, $course_id, $remove = false ) {
 	$user_course_access_time = 0;
 	if ( empty( $remove ) ) {
 		$user_course_access_time = get_user_meta( $user_id, 'course_' . $course_id . '_access_from', true );
+
 		if ( empty( $user_course_access_time ) ) {
-			$user_course_access_time = time();
+			// set the course access time to the course start date if it exists to avoid issues with content dripping.
+			$start_date              = $product ? $product->get_start_date() : null;
+			$user_course_access_time = ! is_null( $start_date ) ? $start_date : time();
+
 			update_user_meta( $user_id, 'course_' . $course_id . '_access_from', $user_course_access_time );
+			update_user_meta( $user_id, 'learndash_course_' . $course_id . '_enrolled_at', time() );
+
 			$action_success = true;
 		}
 	} else {
 		$user_course_access_time = get_user_meta( $user_id, 'course_' . $course_id . '_access_from', true );
+
 		if ( ! empty( $user_course_access_time ) ) {
 			delete_user_meta( $user_id, 'course_' . $course_id . '_access_from' );
+			// we don't delete the course enrollment date because it is used in reports.
+
 			$action_success = true;
 		}
 	}
@@ -595,7 +658,7 @@ function ld_update_course_access( $user_id, $course_id, $remove = false ) {
 }
 
 /**
- * Gets the timestamp of when a user can access the lesson.
+ * Returns the date when a lesson  becomes available for a user.
  *
  * @since 2.1.0
  *
@@ -620,9 +683,8 @@ function ld_lesson_access_from( $lesson_id, $user_id, $course_id = null, $bypass
 
 	$visible_after = learndash_get_setting( $lesson_id, 'visible_after' );
 	if ( $visible_after > 0 ) {
-
-		// Adjust the Course acces from by the number of days. Use abs() to ensure no negative days.
-		$lesson_access_from = $courses_access_from + abs( $visible_after ) * 24 * 60 * 60;
+		// Adjust the Course access from by the number of days. Use abs() to ensure no negative days.
+		$lesson_access_from = intval( $courses_access_from ) + abs( $visible_after ) * 24 * 60 * 60;
 		/**
 		 * Filters the timestamp of when lesson will be visible after.
 		 *
@@ -640,7 +702,7 @@ function ld_lesson_access_from( $lesson_id, $user_id, $course_id = null, $bypass
 		$visible_after_specific_date = learndash_get_setting( $lesson_id, 'visible_after_specific_date' );
 		if ( ! empty( $visible_after_specific_date ) ) {
 			if ( ! is_numeric( $visible_after_specific_date ) ) {
-				// If we a non-numberic value like a date stamp Y-m-d hh:mm:ss we want to convert it to a GMT timestamp.
+				// If we a non-numeric value like a date stamp Y-m-d hh:mm:ss we want to convert it to a GMT timestamp.
 				$visible_after_specific_date = learndash_get_timestamp_from_date_string( $visible_after_specific_date, true );
 			}
 
@@ -660,7 +722,7 @@ function ld_lesson_access_from( $lesson_id, $user_id, $course_id = null, $bypass
 	}
 
 	/**
-	 * Filters the timestamp of when the user will have access to the lesson.
+	 * Filters the date when a lesson  becomes available for a user.
 	 *
 	 * @param int $timestamp The timestamp of when the lesson can be accessed.
 	 * @param int $lesson_id Lesson ID.
@@ -669,21 +731,6 @@ function ld_lesson_access_from( $lesson_id, $user_id, $course_id = null, $bypass
 	return apply_filters( 'ld_lesson_access_from', $return, $lesson_id, $user_id );
 }
 
-/**
- * Gets when the lesson will be available.
- *
- * Fires on `learndash_content` hook.
- * 
- * This function is not reentrant. If called using a Topic post it will recursively
- * call itself for the parent Lesson post.
- *
- * @since 2.1.0
- *
- * @param string  $content The content of lesson.
- * @param WP_Post $post    The `WP_Post` object.
- *
- * @return string The output of when the lesson will be available.
- */
 /**
  * Gets when the lesson will be available.
  *
@@ -706,7 +753,7 @@ function lesson_visible_after( string $content = '', $post = null ) {
 			}
 		}
 	}
-	
+
 	if ( ! in_array( $post->post_type, learndash_get_post_types(), true ) ) {
 		return $content;
 	}
@@ -721,7 +768,15 @@ function lesson_visible_after( string $content = '', $post = null ) {
 
 	// For logged in users to allow an override filter.
 	/** This filter is documented in includes/course/ld-course-progress.php */
-	if ( apply_filters( 'learndash_prerequities_bypass', $bypass_course_limits_admin_users, $user_id, $post->ID, $post ) ) {
+	if (
+		apply_filters(
+			'learndash_prerequities_bypass', // cspell:disable-line -- prerequities are prerequisites...
+			$bypass_course_limits_admin_users,
+			$user_id,
+			$post->ID,
+			$post
+		)
+	) {
 		return $content;
 	}
 
@@ -792,12 +847,9 @@ function learndash_get_users_for_course( $course_id = 0, $query_args = array(), 
 	$course_price_type = learndash_get_course_meta_setting( $course_id, 'course_price_type' );
 
 	if ( 'open' === $course_price_type ) {
-
 		$user_query = new WP_User_Query( $query_args );
 		return $user_query;
-
 	} else {
-
 		if ( true === learndash_use_legacy_course_access_list() ) {
 			$course_access_list = learndash_get_course_meta_setting( $course_id, 'course_access_list' );
 			$course_user_ids    = array_merge( $course_user_ids, $course_access_list );
@@ -839,9 +891,7 @@ function learndash_get_users_for_course( $course_id = 0, $query_args = array(), 
  * @param array $course_users_new Optional. An array of user IDs to set course access. Default empty array.
  */
 function learndash_set_users_for_course( $course_id = 0, $course_users_new = array() ) {
-
 	if ( ! empty( $course_id ) ) {
-
 		if ( ! empty( $course_users_new ) ) {
 			$course_users_new = learndash_convert_course_access_list( $course_users_new, true );
 		} else {
@@ -870,10 +920,6 @@ function learndash_set_users_for_course( $course_id = 0, $course_users_new = arr
 				ld_update_course_access( $user_id, $course_id, true );
 			}
 		}
-
-		// Finally clear our cache for other services
-		// $transient_key = "learndash_group_courses_" . $group_id;
-		// LDLMS_Transients::delete( $transient_key );
 	}
 }
 
@@ -960,7 +1006,7 @@ function learndash_user_is_course_children_progress_complete( $user_id = 0, $cou
 	$step_id   = absint( $step_id );
 
 	if ( ( ! empty( $course_id ) ) && ( ! empty( $step_id ) ) && ( ! empty( $user_id ) ) ) {
-		$user_children_progress = learndash_user_get_course_childen_progress( $user_id, $course_id, $step_id );
+		$user_children_progress = learndash_user_get_course_childen_progress( $user_id, $course_id, $step_id ); // cspell:disable-line.
 		if ( ( is_array( $user_children_progress ) ) && ( array_sum( $user_children_progress ) === count( $user_children_progress ) ) ) {
 			return true;
 		}
@@ -972,6 +1018,9 @@ function learndash_user_is_course_children_progress_complete( $user_id = 0, $cou
 
 /**
  * Gets the course step available date.
+ *
+ * It's used in the LD30 legacy templates only.
+ * For new code, please use the `Step::get_available_on_date()` method instead.
  *
  * @since 4.2.0
  *
@@ -1022,7 +1071,7 @@ function learndash_course_step_available_date( int $step_id = 0, int $course_id 
 		if ( count( $step_ids ) > 1 ) {
 			$step_ids = array_reverse( $step_ids );
 		}
-	} 
+	}
 	$step_ids = array_merge( array( $step_id ), $step_ids );
 
 	if ( ! empty( $step_ids ) ) {
@@ -1035,4 +1084,100 @@ function learndash_course_step_available_date( int $step_id = 0, int $course_id 
 	}
 
 	return $available_timestamp;
+}
+
+/**
+ * Extend the user's access to a course to a new expiration date.
+ *
+ * @since 4.8.0
+ *
+ * @param int        $course_id           The course ID.
+ * @param array<int> $user_ids            Array of user IDs.
+ * @param int        $new_expiration_date New expiration date timestamp.
+ * @param ?int       $access_by_group_id  The group ID if the user has access by group. Default null.
+ *
+ * @return void
+ */
+function learndash_course_extend_user_access(
+	int $course_id,
+	array $user_ids,
+	int $new_expiration_date,
+	int $access_by_group_id = null
+): void {
+	if (
+		empty( $course_id )
+		|| empty( $user_ids )
+		|| empty( $new_expiration_date )
+	) {
+		return;
+	}
+
+	$product = Product::find( $course_id );
+
+	if ( ! $product ) {
+		return;
+	}
+
+	foreach ( $user_ids as $user_id ) {
+		// Revert the course expiration if it was expired.
+
+		delete_user_meta( $user_id, 'learndash_course_expired_' . $course_id );
+
+		// Update the extended access meta.
+
+		update_user_meta(
+			$user_id,
+			'learndash_course_' . $course_id . '_access_extended_until',
+			$new_expiration_date
+		);
+
+		/**
+		 * If the user has access by group, we don't need to update the access_from meta.
+		 * This meta is only used for direct access and is deleted when it expires.
+		 *
+		 * In the case of access by group, the related meta is not deleted when the access expires.
+		 * So we don't need to update anything.
+		 */
+
+		if ( empty( $access_by_group_id ) ) {
+			update_user_meta(
+				$user_id,
+				'course_' . $course_id . '_access_from',
+				$product->get_enrollment_date( $user_id ) ?? time()
+			);
+		}
+	}
+}
+
+/**
+ * Returns the extended access for a user.
+ *
+ * @since 4.8.0
+ *
+ * @param int $course_id The course ID.
+ * @param int $user_id   The user ID.
+ *
+ * @return ?int The extended access timestamp. Null if the user has not an extended access for the course.
+ */
+function learndash_course_get_extended_access_timestamp( int $course_id, $user_id ): ?int {
+	$extended_access_timestamp = Cast::to_int(
+		get_user_meta( $user_id, 'learndash_course_' . $course_id . '_access_extended_until', true )
+	);
+
+	// Normalize the value.
+
+	$extended_access_timestamp = empty( $extended_access_timestamp ) ? null : $extended_access_timestamp;
+
+	/**
+	 * Filters the extended access for a user.
+	 *
+	 * @since 4.8.0
+	 *
+	 * @param ?int $extended_access Course extended access for a user.
+	 * @param int  $course_id       The course ID.
+	 * @param int  $user_id         The user ID.
+	 *
+	 * @return ?int The extended access timestamp. Null if the user has not an extended access for the course.
+	 */
+	return apply_filters( 'learndash_course_get_extended_access_timestamp', $extended_access_timestamp, $course_id, $user_id );
 }

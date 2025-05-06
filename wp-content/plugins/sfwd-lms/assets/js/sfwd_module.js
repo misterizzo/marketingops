@@ -138,8 +138,8 @@ function toggleVisibility( id ) {
 	}
 }
 
-function countChars( field, cntfield ) {
-	cntfield.value = field.value.length;
+function countChars( field, cntfield ) { // cspell:disable-line
+	cntfield.value = field.value.length; // cspell:disable-line
 }
 
 jQuery( '.sfwd_datepicker' ).each( function() {
@@ -149,11 +149,11 @@ jQuery( '.sfwd_datepicker' ).each( function() {
 function sfwd_do_condshow_match( index, value ) {
 	if ( typeof value !== 'undefined' ) {
 		matches = true;
-		jQuery.each( value, function( subopt, setting ) {
-			cur = jQuery( '[name=' + subopt + ']' );
+		jQuery.each( value, function( subopt, setting ) { // cspell:disable-line
+			cur = jQuery( '[name=' + subopt + ']' ); // cspell:disable-line
 			type = cur.attr( 'type' );
 			if ( type == 'checkbox' || type == 'radio' ) {
-				cur = jQuery( 'input[name=' + subopt + ']:checked' );
+				cur = jQuery( 'input[name=' + subopt + ']:checked' ); // cspell:disable-line
 			}
 			cur = cur.val();
 			if ( cur != setting ) {
@@ -173,8 +173,8 @@ function sfwd_do_condshow_match( index, value ) {
 
 function sfwd_add_condshow_handlers( index, value ) {
 	if ( typeof value !== 'undefined' ) {
-		jQuery.each( value, function( subopt, setting ) {
-			jQuery( '[name=' + subopt + ']' ).change( function() {
+		jQuery.each( value, function( subopt, setting ) { // cspell:disable-line
+			jQuery( '[name=' + subopt + ']' ).change( function() { // cspell:disable-line
 				sfwd_do_condshow_match( index, value );
 			} );
 		} );
@@ -217,15 +217,15 @@ jQuery( function() {
 	jQuery( '.sfwd_upload_image_button' ).on( 'click', function() {
 		window.send_to_editor = newSendToEditor;
 		image_field = jQuery( this ).next();
-		formfield = image_field.attr( 'name' );
+		formfield = image_field.attr( 'name' ); // cspell:disable-line
 		tb_show( '', 'media-upload.php?type=image&amp;TB_iframe=true' );
 		return false;
 	} );
 
 	storeSendToEditor 	= window.send_to_editor;
 	newSendToEditor		= function( html ) {
-		imgurl = jQuery( 'img', html ).attr( 'src' );
-		image_field.val( imgurl );
+		img_url = jQuery( 'img', html ).attr( 'src' );
+		image_field.val( img_url );
 		tb_remove();
 		window.send_to_editor = storeSendToEditor;
 	};
@@ -237,15 +237,14 @@ jQuery( function() {
  * their on state. This is not still happening. So we are no longer using this code.
  */
 
-// props to commentluv for this fix
 // workaround for bug that causes radio inputs to lose settings when meta box is dragged.
 // http://core.trac.wordpress.org/ticket/16972
 /*
 jQuery( function(){
     // listen for drag drop of metaboxes , bind mousedown to .hndle so it only fires when starting to drag
     jQuery('.hndle').mousedown(function(){
-        // set live event listener for mouse up on the content .wrap and wait a tick to give the dragged div time to settle before firing the reclick function
-        jQuery('.wrap').mouseup(function(){store_radio(); setTimeout('reclick_radio();',50);});
+        // set live event listener for mouse up on the content .wrap and wait a tick to give the dragged div time to settle before firing the re-click function
+        jQuery('.wrap').mouseup(function(){store_radio(); setTimeout('reclick_radio();',50);}); // cspell:disable-line
     })
 });
 */
@@ -269,8 +268,8 @@ if(typeof store_radio != 'function') {
  * detect mouseup and restore all radio buttons that were checked
  */
 /*
-if(typeof reclick_radio != 'function') {
-	function reclick_radio(){
+if(typeof reclick_radio != 'function') { // cspell:disable-line
+	function reclick_radio(){ // cspell:disable-line
 	    // get object of checked radio button names and values
 	    var radios = jQuery(document).data('radioshack');
 	    //step thru each object element and trigger a click on it's corresponding radio button
@@ -294,11 +293,11 @@ jQuery( function() {
 	jQuery( '.sfwd_tab:not(:first)' ).hide();
 	jQuery( '.sfwd_tab:first' ).show();
 	jQuery( '.sfwd_header_tabs a' ).on( 'click', function() {
-		stringref = jQuery( this ).attr( 'href' ).split( '#' )[1];
-		jQuery( '.sfwd_tab:not(#' + stringref + ')' ).hide();
-		jQuery( '.sfwd_tab#' + stringref ).show();
-		jQuery( '.sfwd_header_tab[href!=#' + stringref + ']' ).removeClass( 'active' );
-		jQuery( '.sfwd_header_tab#[href=#' + stringref + ']' ).addClass( 'active' );
+		string_ref = jQuery( this ).attr( 'href' ).split( '#' )[1];
+		jQuery( '.sfwd_tab:not(#' + string_ref + ')' ).hide();
+		jQuery( '.sfwd_tab#' + string_ref ).show();
+		jQuery( '.sfwd_header_tab[href!=#' + string_ref + ']' ).removeClass( 'active' );
+		jQuery( '.sfwd_header_tab#[href=#' + string_ref + ']' ).addClass( 'active' );
 		return false;
 	} );
 
@@ -720,8 +719,8 @@ function learndash_quiz_edit_page_javascript() {
 			//jQuery("select[name=sfwd-topic_lesson]").val(window['sfwd_topic_lesson']);
 		}, 'json' );
 	} );
-	//jQuery("#postimagediv").addClass("hidden_by_sfwd_lms_sfwd_module.js");
-	//jQuery("#postimagediv").hide(); //Hide the Featured Image Metabox
+	//jQuery("#postimagediv").addClass("hidden_by_sfwd_lms_sfwd_module.js"); // cspell:disable-line
+	//jQuery("#postimagediv").hide(); //Hide the Featured Image Metabox // cspell:disable-line
 }
 
 // Handle logic for Assignments
@@ -1043,7 +1042,7 @@ function learndash_element_lazy_loader( load_el, query_data ) {
 	} );
 }
 
-function update_user_course_progess_input( type, user_course_data, action ) {
+function update_user_course_progess_input( type, user_course_data, action ) { // cspell:disable-line
 	if ( ( typeof user_course_data === 'undefined' ) || ( user_course_data == '' ) ) {
 		return;
 	}
@@ -1327,7 +1326,7 @@ jQuery( function() {
 		var checkbox_data = lesson_checkbox.attr( 'data-name' );
 		if ( ( typeof checkbox_data !== 'undefined' ) && ( checkbox_data != '' ) ) {
 			checkbox_data = JSON.parse( checkbox_data );
-			update_user_course_progess_input( 'lesson', checkbox_data, _click_checked );
+			update_user_course_progess_input( 'lesson', checkbox_data, _click_checked ); // cspell:disable-line
 		}
 
 		if ( _click_type == 'lesson' ) {
@@ -1382,7 +1381,7 @@ jQuery( function() {
 		var checkbox_data = topic_checkbox.attr( 'data-name' );
 		if ( ( typeof checkbox_data !== 'undefined' ) && ( checkbox_data != '' ) ) {
 			checkbox_data = JSON.parse( checkbox_data );
-			update_user_course_progess_input( 'topic', checkbox_data, _click_checked );
+			update_user_course_progess_input( 'topic', checkbox_data, _click_checked ); // cspell:disable-line
 		}
 
 		if ( _click_type == 'topic' ) {
@@ -1440,7 +1439,7 @@ jQuery( function() {
 		var checkbox_data = jQuery( this ).attr( 'data-name' );
 		if ( ( typeof checkbox_data !== 'undefined' ) && ( checkbox_data != '' ) ) {
 			checkbox_data = JSON.parse( checkbox_data );
-			update_user_course_progess_input( 'quiz', checkbox_data, _click_checked );
+			update_user_course_progess_input( 'quiz', checkbox_data, _click_checked ); // cspell:disable-line
 		}
 
 		if ( _click_type == 'quiz' ) {
@@ -1984,3 +1983,27 @@ jQuery(function () {
 		}
 	}
 });
+
+/**
+ * Handles the dismissible notices. We want to dismiss the notice forever sometimes.
+ *
+ * @since 4.12.0
+ */
+if (jQuery('.learndash-notice-permanently-dismissible').length) {
+	jQuery( '.learndash-notice-permanently-dismissible' ).on(
+		'click',
+		'.notice-dismiss',
+		function( event, el ) {
+			jQuery.ajax( {
+				type: 'POST',
+				url: ajaxurl,
+				dataType: 'json',
+				data: {
+					action: 'learndash_notice_dismiss_permanently',
+					nonce: jQuery( event.currentTarget ).parent( '.learndash-notice-permanently-dismissible' ).data( 'nonce' ),
+					id: jQuery( event.currentTarget ).parent( '.learndash-notice-permanently-dismissible' ).data( 'id' ),
+				}
+			} );
+		},
+	);
+}

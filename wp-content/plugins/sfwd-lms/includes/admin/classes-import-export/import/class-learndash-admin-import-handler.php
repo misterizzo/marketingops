@@ -2,7 +2,7 @@
 /**
  * LearnDash Admin Import Handler.
  *
- * @since   4.3.0
+ * @since 4.3.0
  *
  * @package LearnDash
  */
@@ -25,35 +25,6 @@ if (
 		const SCHEDULER_ACTION_NAME = 'learndash_import_action';
 
 		/**
-		 * List of LearnDash post types.
-		 *
-		 * @since 4.3.0
-		 *
-		 * @var array
-		 */
-		private $ld_post_types;
-
-		/**
-		 * Constructor.
-		 *
-		 * @since 4.3.0
-		 *
-		 * @param Learndash_Admin_Import_Export_File_Handler $file_handler     File handler class instance.
-		 * @param Learndash_Admin_Action_Scheduler           $action_scheduler Action Scheduler class instance.
-		 * @param Learndash_Admin_Import_Export_Logger       $logger           Logger class instance.
-		 *
-		 * @return void
-		 */
-		public function __construct(
-			Learndash_Admin_Import_Export_File_Handler $file_handler,
-			Learndash_Admin_Action_Scheduler $action_scheduler,
-			Learndash_Admin_Import_Export_Logger $logger
-		) {
-			$this->ld_post_types = LDLMS_Post_Types::get_post_types();
-			parent::__construct( $file_handler, $action_scheduler, $logger );
-		}
-
-		/**
 		 * Handles Import.
 		 *
 		 * @since 4.3.0
@@ -64,8 +35,12 @@ if (
 			$this->validate();
 
 			$file_path = sanitize_text_field(
-				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.NonceVerification.Missing
-				wp_unslash( $_FILES['file']['tmp_name'] )
+				wp_unslash(
+					wp_normalize_path(
+						// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+						$_FILES['file']['tmp_name']
+					)
+				)
 			);
 
 			$task_enqueued = $this->enqueue_import_task( $file_path );
@@ -89,37 +64,6 @@ if (
 		}
 
 		/**
-		 * Overrides the WP post slug for better performance during importing.
-		 *
-		 * @since 4.3.0
-		 *
-		 * @param string|null $override_slug Short-circuit return value.
-		 * @param string      $slug          The desired slug (post_name).
-		 * @param int         $post_ID       Post ID.
-		 * @param string      $post_status   The post status.
-		 * @param string      $post_type     Post type.
-		 *
-		 * @return string|null The post slug.
-		 */
-		public function unique_post_slug(
-			?string $override_slug,
-			string $slug,
-			int $post_ID,
-			string $post_status,
-			string $post_type
-		): ?string {
-			if ( ! in_array( $post_type, $this->ld_post_types, true ) ) {
-				return $override_slug;
-			}
-
-			if ( $post_ID ) {
-				return (string) $post_ID;
-			}
-
-			return uniqid( $post_type . '-', true );
-		}
-
-		/**
 		 * Handles the import action.
 		 *
 		 * @since 4.3.0
@@ -135,17 +79,10 @@ if (
 				return;
 			}
 
-			add_filter(
-				'pre_wp_unique_post_slug',
-				array( $this, 'unique_post_slug' ),
-				10,
-				5
-			);
-
 			try {
 				$this->import( $options, $working_directory, $user_id );
 			} catch ( Exception $e ) {
-				$this->logger->log( 'Import exception: ' . $e->getMessage() );
+				$this->logger->error( 'Import exception: ' . $e->getMessage() );
 
 				Learndash_Admin_Action_Scheduler::add_admin_notice(
 					$e->getMessage(),
@@ -154,9 +91,7 @@ if (
 				);
 			} finally {
 				$this->clean( $working_directory );
-				$this->logger->finalize( 'Import finished.' );
-
-				remove_filter( 'pre_wp_unique_post_slug', array( $this, 'unique_post_slug' ) );
+				$this->logger->info( 'Import finished.' . PHP_EOL );
 
 				/**
 				 * Fires after an import task is handled.
@@ -256,7 +191,7 @@ if (
 		 * @return void
 		 */
 		protected function import( array $options, string $working_directory, int $user_id ): void {
-			$this->logger->init( $this->file_handler->get_logger_path(), 'Import started.' );
+			$this->logger->info( 'Import started.' );
 			$this->logger->log_options( $options );
 
 			$this->file_handler->set_working_directory( $working_directory );
@@ -366,22 +301,60 @@ if (
 		 *
 		 * @param string $file_path Import file path.
 		 *
-		 * @return bool|WP_Error True on success. WP_Error if an error occurred.
+		 * @return true|WP_Error True on success. WP_Error if an error occurred.
 		 */
 		public function enqueue_import_task( string $file_path ) {
 			$zip_archive = new ZipArchive();
 			$zip_archive->open( $file_path );
 
-			$import_options = $zip_archive->getFromName(
-				Learndash_Admin_Export_Configuration::FILE_NAME .
-				Learndash_Admin_Import_Export_File_Handler::FILE_EXTENSION
-			);
+			$options_file_name = Learndash_Admin_Export_Configuration::FILE_NAME . Learndash_Admin_Import_Export_File_Handler::FILE_EXTENSION;
 
-			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-			if ( false === $import_options || $zip_archive->numFiles < 2 ) {
+			$import_options = $zip_archive->getFromName( $options_file_name );
+
+			if ( false === $import_options ) {
 				return new WP_Error(
 					'ld_import_invalid_archive',
-					esc_html__( 'Invalid import archive.', 'learndash' )
+					sprintf(
+						// Translators: placeholder: File name.
+						__( 'Invalid import archive. Import configuration file "%s" not found.', 'learndash' ),
+						$options_file_name
+					)
+				);
+			}
+
+			$import_files_found = false;
+
+			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+			for ( $i = 0; $i < $zip_archive->numFiles; $i++ ) {
+				$file = $zip_archive->statIndex( $i );
+
+				if ( ! $file ) {
+					continue;
+				}
+
+				$file_name = $file['name'];
+
+				// If a file has .ld extension and is not inside a folder, and it's not a config file - it's a valid LD import file.
+				if (
+					$file_name !== $options_file_name
+					&& Learndash_Admin_Import_Export_File_Handler::FILE_EXTENSION === mb_substr( $file_name, - mb_strlen( Learndash_Admin_Import_Export_File_Handler::FILE_EXTENSION ) )
+					&& false === mb_strpos( $file_name, '/' ) // Protection from cases like "__MACOSX/._configuration.ld".
+				) {
+					$import_files_found = true;
+
+					break;
+				}
+			}
+
+			if ( ! $import_files_found ) {
+				return new WP_Error(
+					'ld_import_invalid_archive',
+					sprintf(
+						// Translators: placeholder: File extension, file name.
+						__( 'Invalid import archive. Files with the "%1$s" extension except the configuration file "%2$s" were not found.', 'learndash' ),
+						Learndash_Admin_Import_Export_File_Handler::FILE_EXTENSION,
+						$options_file_name
+					)
 				);
 			}
 

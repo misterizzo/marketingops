@@ -1,6 +1,9 @@
 <?php
 /**
- * LearnDash LD30 Displays the infobar in course context
+ * LearnDash LD30 Displays the infobar in course context.
+ *
+ * @since   3.0.0
+ * @version 4.21.3
  *
  * Will have access to same variables as course.php
  *
@@ -27,8 +30,6 @@
  * $has_topics                 : (true/false)
  * $lesson_topics              : (array) lessons topics
  *
- * @since 3.0.0
- *
  * @package LearnDash\Templates\LD30\Modules
  */
 
@@ -36,7 +37,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use LearnDash\Core\Models\Product;
+use LearnDash\Core\Utilities\Cast;
+
+/**
+ * Product object.
+ *
+ * @var Product $ld_product
+ */
+$ld_product     = Product::find( $course_id );
 $course_pricing = learndash_get_course_price( $course_id );
+
+$user_id = Cast::to_int( $user_id );
 
 if ( is_user_logged_in() && isset( $has_access ) && $has_access ) :
 	?>
@@ -109,7 +121,7 @@ if ( is_user_logged_in() && isset( $has_access ) && $has_access ) :
 		do_action( 'learndash-course-infobar-noaccess-status-before', get_post_type(), $course_id, $user_id );
 		?>
 
-		<div class="ld-course-status-segment ld-course-status-seg-status">
+		<section class="ld-course-status-segment ld-course-status-seg-status">
 
 			<?php
 			/**
@@ -123,19 +135,115 @@ if ( is_user_logged_in() && isset( $has_access ) && $has_access ) :
 			 */
 			do_action( 'learndash-course-infobar-status-cell-before', get_post_type(), $course_id, $user_id );
 			?>
-
-			<span class="ld-course-status-label"><?php echo esc_html__( 'Current Status', 'learndash' ); ?></span>
+		
+			<h2 class="ld-course-status-label" id="ld-course-enrolled-status-label"><?php echo esc_html__( 'Current Status', 'learndash' ); ?></h2>
 			<div class="ld-course-status-content">
-				<span class="ld-status ld-status-waiting ld-tertiary-background" data-ld-tooltip="
 				<?php
-					printf(
-						// translators: placeholder: course.
-						esc_attr_x( 'Enroll in this %s to get access', 'placeholder: course', 'learndash' ),
-						esc_html( learndash_get_custom_label_lower( 'course' ) )
-					);
+				$ld_seats_available      = $ld_product->get_seats_available( $user_id );
+				$ld_seats_available_text = ( ! empty( $ld_seats_available )
+											? sprintf(
+												// translators: placeholder: number of places remaining.
+												_nx(
+													'(%s place remaining)',
+													'(%s places remaining)',
+													$ld_seats_available,
+													'placeholder: number of places remaining',
+													'learndash'
+												),
+												number_format_i18n( $ld_seats_available )
+											)
+											: '' );
 				?>
-				">
-				<?php esc_html_e( 'Not Enrolled', 'learndash' ); ?></span>
+				<?php if ( $ld_product->has_ended( $user_id ) ) : ?>
+					<div class="ld-status ld-status-waiting ld-tertiary-background ld-tooltip">
+						<span
+							aria-describedby="ld-infobar__course-status-tooltip--ended"
+							tabindex="0"
+						>
+							<?php esc_html_e( 'Ended', 'learndash' ); ?>
+						</span>
+
+						<div
+							class="ld-tooltip__text"
+							id="ld-infobar__course-status-tooltip--ended"
+							role="tooltip"
+						>
+							<?php
+							printf(
+								// translators: placeholder: course.
+								esc_attr_x( 'This %s has ended', 'placeholder: course', 'learndash' ),
+								esc_html( learndash_get_custom_label_lower( 'course' ) )
+							);
+							?>
+						</div>
+					</div>
+				<?php elseif ( ! $ld_product->has_started() ) : ?>
+					<div class="ld-status ld-status-waiting ld-tertiary-background ld-tooltip">
+						<span
+							aria-describedby="ld-infobar__course-status-tooltip--pre-order"
+							tabindex="0"
+						>
+							<?php esc_html_e( 'Pre-order', 'learndash' ); ?>
+							<?php echo esc_html( $ld_seats_available_text ); ?>
+						</span>
+
+						<div
+							id="ld-infobar__course-status-tooltip--pre-order"
+							class="ld-tooltip__text"
+							role="tooltip"
+						>
+							<?php
+							if ( ! $ld_product->can_be_purchased( $user_id ) ) :
+								printf(
+									// translators: placeholder: course, course start date.
+									esc_attr_x( 'This %1$s starts on %2$s', 'placeholder: course, course start date', 'learndash' ),
+									esc_html( learndash_get_custom_label_lower( 'course' ) ),
+									esc_html( learndash_adjust_date_time_display( $ld_product->get_start_date() ) )
+								);
+							else :
+								printf(
+									// translators: placeholder: course, course start date.
+									esc_attr_x( 'It is a pre-order. Enroll in this %1$s to get access after %2$s', 'placeholder: course, course start date', 'learndash' ),
+									esc_html( learndash_get_custom_label_lower( 'course' ) ),
+									esc_html( learndash_adjust_date_time_display( $ld_product->get_start_date() ) )
+								);
+							endif;
+							?>
+						</div>
+					</div>
+				<?php else : ?>
+					<div class="ld-status ld-status-waiting ld-tertiary-background ld-tooltip">
+						<span
+							aria-describedby="ld-infobar__course-status-tooltip--not-enrolled"
+							tabindex="0"
+						>
+							<?php esc_html_e( 'Not Enrolled', 'learndash' ); ?>
+							<?php echo esc_html( $ld_seats_available_text ); ?>
+						</span>
+
+						<div
+							class="ld-tooltip__text"
+							id="ld-infobar__course-status-tooltip--not-enrolled"
+							role="tooltip"
+						>
+							<?php
+							if ( $ld_product->can_be_purchased( $user_id ) ) :
+								printf(
+								// translators: placeholder: course.
+									esc_attr_x( 'Enroll in this %s to get access', 'placeholder: course', 'learndash' ),
+									esc_html( learndash_get_custom_label_lower( 'course' ) )
+								);
+							else :
+								printf(
+								// translators: placeholder: course.
+									esc_attr_x( 'This %s is not available', 'placeholder: course', 'learndash' ),
+									esc_html( learndash_get_custom_label_lower( 'course' ) )
+								);
+							endif;
+							?>
+						</div>
+					</div>
+				<?php endif; ?>
 			</div>
 
 			<?php
@@ -151,7 +259,7 @@ if ( is_user_logged_in() && isset( $has_access ) && $has_access ) :
 			do_action( 'learndash-course-infobar-status-cell-after', get_post_type(), $course_id, $user_id );
 			?>
 
-		</div> <!--/.ld-course-status-segment-->
+		</section> <!--/.ld-course-status-segment-->
 
 		<?php
 		/**
@@ -166,7 +274,7 @@ if ( is_user_logged_in() && isset( $has_access ) && $has_access ) :
 		do_action( 'learndash-course-infobar-noaccess-price-before', get_post_type(), $course_id, $user_id );
 		?>
 
-		<div class="ld-course-status-segment ld-course-status-seg-price ld-course-status-mode-<?php echo esc_attr( $course_pricing['type'] ); ?>">
+		<section class="ld-course-status-segment ld-course-status-seg-price ld-course-status-mode-<?php echo esc_attr( $course_pricing['type'] ); ?>">
 
 			<?php
 			/**
@@ -181,7 +289,7 @@ if ( is_user_logged_in() && isset( $has_access ) && $has_access ) :
 			do_action( 'learndash-course-infobar-price-cell-before', get_post_type(), $course_id, $user_id );
 			?>
 
-			<span class="ld-course-status-label"><?php echo esc_html__( 'Price', 'learndash' ); ?></span>
+			<h2 class="ld-course-status-label" id="ld-course-status-price-label"><?php echo esc_html__( 'Price', 'learndash' ); ?></h2>
 
 			<div class="ld-course-status-content">
 			<?php
@@ -213,8 +321,7 @@ if ( is_user_logged_in() && isset( $has_access ) && $has_access ) :
 					$course_pricing['repeat_frequency'] = '';
 				} else {
 					if ( empty( $course_pricing['trial_price'] ) ) {
-						$course_pricing['trial_interval']  = '';
-						$course_pricing['trial_frequency'] = '';
+						$course_pricing['trial_price'] = 0;
 					} elseif ( ( empty( $course_pricing['trial_interval'] ) ) || ( empty( $course_pricing['trial_frequency'] ) ) ) {
 						$course_pricing['trial_price'] = '';
 					}
@@ -226,10 +333,7 @@ if ( is_user_logged_in() && isset( $has_access ) && $has_access ) :
 				<span class="ld-course-status-price">
 					<?php
 					if ( ! empty( $course_pricing['price'] ) ) {
-						if ( is_numeric( $course_pricing['price'] ) ) {
-							echo '<span class="ld-currency">' . wp_kses_post( learndash_get_currency_symbol() ) . '</span>';
-						}
-						echo wp_kses_post( $course_pricing['price'] );
+						echo wp_kses_post( learndash_get_price_formatted( $course_pricing['price'] ) );
 					} elseif ( in_array( $course_pricing['type'], array( 'closed', 'free' ), true ) ) {
 							/**
 							 * Filters label to be displayed when there is no price set for a course or it is closed.
@@ -246,15 +350,12 @@ if ( is_user_logged_in() && isset( $has_access ) && $has_access ) :
 				<?php
 			} elseif ( 'subscribe' === $course_pricing['type'] ) {
 				if ( ! empty( $course_pricing['price'] ) ) {
-					if ( ! empty( $course_pricing['trial_price'] ) ) {
+					if ( ! empty( $course_pricing['trial_frequency'] ) ) {
 						?>
 						<span class="ld-course-status-trial-price">
 						<?php
 						echo '<p class="ld-text ld-trial-text">';
-						if ( is_numeric( $course_pricing['trial_price'] ) ) {
-							echo '<span class="ld-currency">' . wp_kses_post( learndash_get_currency_symbol() ) . '</span>';
-						}
-						echo wp_kses_post( $course_pricing['trial_price'] );
+						echo wp_kses_post( learndash_get_price_formatted( $course_pricing['trial_price'] ) );
 						echo '</p>';
 						echo '<p class="ld-trial-pricing ld-pricing">';
 						if ( ( ! empty( $course_pricing['trial_interval'] ) ) && ( ! empty( $course_pricing['trial_frequency'] ) ) ) {
@@ -271,10 +372,7 @@ if ( is_user_logged_in() && isset( $has_access ) && $has_access ) :
 						<span class="ld-course-status-course-price">
 							<?php
 							echo '<p class="ld-text ld-course-text">';
-							if ( is_numeric( $course_pricing['price'] ) ) {
-								echo '<span class="ld-currency">' . wp_kses_post( learndash_get_currency_symbol() ) . '</span>';
-							}
-							echo wp_kses_post( $course_pricing['price'] );
+							echo wp_kses_post( learndash_get_price_formatted( $course_pricing['price'] ) );
 							echo '</p>';
 							echo '<p class="ld-course-pricing ld-pricing">';
 
@@ -307,10 +405,7 @@ if ( is_user_logged_in() && isset( $has_access ) && $has_access ) :
 						<span class="ld-course-status-price">
 						<?php
 						if ( ! empty( $course_pricing['price'] ) ) {
-							if ( is_numeric( $course_pricing['price'] ) ) {
-								echo wp_kses_post( '<span class="ld-currency">' . learndash_get_currency_symbol() . '</span>' );
-							}
-							echo wp_kses_post( $course_pricing['price'] );
+							echo wp_kses_post( learndash_get_price_formatted( $course_pricing['price'] ) );
 						}
 						?>
 						</span>
@@ -356,7 +451,7 @@ if ( is_user_logged_in() && isset( $has_access ) && $has_access ) :
 			do_action( 'learndash-course-infobar-price-cell-after', get_post_type(), $course_id, $user_id );
 			?>
 
-		</div> <!--/.ld-course-status-segment-->
+		</section> <!--/.ld-course-status-segment-->
 
 		<?php
 		/**
@@ -384,8 +479,14 @@ if ( is_user_logged_in() && isset( $has_access ) && $has_access ) :
 		);
 		?>
 
-		<div class="<?php echo esc_attr( $course_status_class ); ?>">
-			<span class="ld-course-status-label"><?php echo esc_html_e( 'Get Started', 'learndash' ); ?></span>
+		<section class="<?php echo esc_attr( $course_status_class ); ?>">
+			<h2 class="ld-course-status-label" id="ld-course-status-action-label">
+				<?php
+				if ( $ld_product->can_be_purchased( $user_id ) ) {
+					echo esc_html_e( 'Get Started', 'learndash' );
+				}
+				?>
+			</h2>
 			<div class="ld-course-status-content">
 				<div class="ld-course-status-action">
 					<?php
@@ -417,26 +518,42 @@ if ( is_user_logged_in() && isset( $has_access ) && $has_access ) :
 							 * @param int     $course_id        Course ID.
 							 * @param int     $user_id          User ID.
 							 */
-							if ( apply_filters( 'learndash_login_modal', true, $course_id, $user_id ) && ! is_user_logged_in() ) :
-								echo '<a class="ld-button" href="' . esc_url( $login_url ) . '">' . esc_html__( 'Login to Enroll', 'learndash' ) . '</a></span>';
-								else :
-									echo learndash_payment_buttons( $post ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Outputs Payment button HTML
-								endif;
+							if (
+								apply_filters( 'learndash_login_modal', true, $course_id, $user_id )
+								&& ! is_user_logged_in()
+								&& $ld_product->can_be_purchased( $user_id )
+							) :
+								if ( $login_model === 'yes' ) {
+									echo '<button aria-controls="ld-login-modal" aria-haspopup="dialog" class="ld-button" data-ld-login-modal-trigger>' . esc_html__( 'Log In to Enroll', 'learndash' ) . '</button>';
+								} else {
+									echo '<a class="ld-button" href="' . esc_url( $login_url ) . '">' . esc_html__( 'Log In to Enroll', 'learndash' ) . '</a></span>';
+								}
+							else :
+								echo learndash_payment_buttons( $post ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Outputs Payment button HTML
+							endif;
 							break;
 						case ( 'paynow' ):
 						case ( 'subscribe' ):
-							// Price (Free / Price).
 							$ld_payment_buttons = learndash_payment_buttons( $post );
 							echo $ld_payment_buttons; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Outputs Button HTML
 
 							/** This filter is documented in themes/ld30/templates/modules/infobar/course.php */
-							if ( apply_filters( 'learndash_login_modal', true, $course_id, $user_id ) && ! is_user_logged_in() ) :
+							if (
+								apply_filters( 'learndash_login_modal', true, $course_id, $user_id )
+								&& ! is_user_logged_in()
+								&& $ld_product->can_be_purchased( $user_id )
+							) :
 								echo '<span class="ld-text">';
 								if ( ! empty( $ld_payment_buttons ) ) {
 									esc_html_e( 'or', 'learndash' );
 								}
-								echo '<a class="ld-login-text" href="' . esc_url( $login_url ) . '">' . esc_html__( 'Login', 'learndash' ) . '</a></span>';
-								endif;
+
+								if ( $login_model === 'yes' ) {
+									echo '<button aria-controls="ld-login-modal" aria-haspopup="dialog" class="ld-login-text" data-ld-login-modal-trigger>' . esc_html__( 'Log In', 'learndash' ) . '</button>';
+								} else {
+									echo '<a class="ld-login-text" href="' . esc_url( $login_url ) . '">' . esc_html__( 'Log In', 'learndash' ) . '</a></span>';
+								}
+							endif;
 							break;
 						case ( 'closed' ):
 							$button = learndash_payment_buttons( $post );
@@ -466,7 +583,7 @@ if ( is_user_logged_in() && isset( $has_access ) && $has_access ) :
 					?>
 				</div>
 			</div>
-		</div> <!--/.ld-course-status-action-->
+		</section> <!--/.ld-course-status-action-->
 
 		<?php
 		/**

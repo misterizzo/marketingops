@@ -100,10 +100,9 @@ if (
 			 *
 			 * @return array Settings media ids.
 			 */
-			$media_ids = apply_filters( 'learndash_export_settings_media_ids', $media_ids );
-
-			return array_values(
-				array_filter( $media_ids )
+			return apply_filters(
+				'learndash_export_settings_media_ids',
+				array_values( array_filter( $media_ids ) )
 			);
 		}
 
@@ -114,7 +113,7 @@ if (
 		 *
 		 * @return array
 		 */
-		protected function get_sections(): array {
+		private function get_sections(): array {
 			$sections = array();
 
 			foreach ( LearnDash_Settings_Page::get_global_settings_page_names() as $page ) {

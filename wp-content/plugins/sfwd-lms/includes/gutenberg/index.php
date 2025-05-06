@@ -11,7 +11,6 @@ defined( 'ABSPATH' ) || exit;
 
 // Enqueue JS and CSS.
 require plugin_dir_path( __FILE__ ) . 'lib/enqueue-scripts.php';
-require plugin_dir_path( __FILE__ ) . 'lib/class-ld-rest-gutenberg-posts-controller.php';
 require plugin_dir_path( __FILE__ ) . 'lib/class-learndash-gutenberg-block.php';
 
 // Dynamic Blocks.
@@ -53,3 +52,5 @@ require plugin_dir_path( __FILE__ ) . 'blocks/ld-user-status/index.php';
 require plugin_dir_path( __FILE__ ) . 'blocks/ld-navigation/index.php';
 
 require plugin_dir_path( __FILE__ ) . 'blocks/ld-exam/index.php';
+
+require plugin_dir_path( __FILE__ ) . 'blocks/ld-reset-password/index.php';

@@ -155,7 +155,7 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 					'value'             => $this->setting_option_values['progress_num'],
 					'attrs'             => array(
 						'step' => 1,
-						'min'  => 0,
+						'min'  => 1,
 					),
 					'input_label'       => sprintf(
 						// translators: placeholder: courses.
@@ -179,7 +179,7 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 					'value'             => $this->setting_option_values['quiz_num'],
 					'attrs'             => array(
 						'step' => 1,
-						'min'  => 0,
+						'min'  => 1,
 					),
 					'input_label'       => sprintf(
 						// translators: placeholder: quizzes.
@@ -201,7 +201,7 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 					'value'             => $this->setting_option_values['per_page'],
 					'attrs'             => array(
 						'step' => 1,
-						'min'  => 0,
+						'min'  => 1,
 					),
 					'validate_callback' => array( $this, 'validate_section_field_per_page' ),
 					'validate_args'     => array(
@@ -226,7 +226,7 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 					'value'             => $this->setting_option_values['question_num'],
 					'attrs'             => array(
 						'step' => 1,
-						'min'  => 0,
+						'min'  => 1,
 					),
 					'validate_callback' => array( $this, 'validate_section_field_per_page' ),
 					'validate_args'     => array(

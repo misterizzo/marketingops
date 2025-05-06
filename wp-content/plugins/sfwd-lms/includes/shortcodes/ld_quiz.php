@@ -7,6 +7,8 @@
  * @package LearnDash\Shortcodes
  */
 
+use LearnDash\Core\Models\Product;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -45,6 +47,27 @@ function learndash_quiz_shortcode( $atts = array(), $content = '', $show_materia
  * @return string The `ld_quiz` shortcode output.
  */
 function learndash_quiz_shortcode_function( $atts = array(), $content = '', $shortcode_slug = 'ld_quiz' ) {
+	/**
+	 * Should quiz output be overridden?
+	 *
+	 * @since 4.6.0
+	 *
+	 * @param boolean $override_quiz_output Whether to override quiz output.
+	 * @param array   $atts                 Array of shortcode attributes.
+	 */
+	$should_override = apply_filters( 'learndash_quiz_shortcode_override_output', false, $atts );
+
+	if ( $should_override ) {
+		/**
+		 * Filter quiz output.
+		 *
+		 * @since 4.6.0
+		 *
+		 * @param string $output Quiz output.
+		 * @param array  $atts   Array of shortcode attributes.
+		 */
+		return apply_filters( 'learndash_quiz_shortcode_output', '', $atts );
+	}
 
 	global $learndash_shortcode_used, $learndash_shortcode_atts;
 
@@ -70,6 +93,15 @@ function learndash_quiz_shortcode_function( $atts = array(), $content = '', $sho
 		$atts['show_materials'] = true;
 	} else {
 		$atts['show_materials'] = false;
+	}
+
+	// Protect post data.
+
+	if (
+		! learndash_shortcode_can_current_user_access_post( $course_id )
+		|| ! learndash_shortcode_can_current_user_access_post( $quiz_id )
+	) {
+		return '';
 	}
 
 	if ( empty( $atts['quiz_id'] ) ) {
@@ -114,7 +146,7 @@ function learndash_quiz_shortcode_function( $atts = array(), $content = '', $sho
 			$has_access = sfwd_lms_has_access( $course_id, $user_id );
 		}
 
-		$show_content   = ! ( ! empty( $lesson_progression_enabled ) && ! learndash_is_quiz_accessable( $user_id, $quiz_post, false, $course_id ) );
+		$show_content   = ! ( ! empty( $lesson_progression_enabled ) && ! learndash_is_quiz_accessable( $user_id, $quiz_post, false, $course_id ) ); // cspell:disable-line.
 		$attempts_count = 0;
 		$repeats        = ( isset( $quiz_settings['repeats'] ) ) ? trim( $quiz_settings['repeats'] ) : '';
 		if ( '' === $repeats ) {
@@ -188,7 +220,7 @@ function learndash_quiz_shortcode_function( $atts = array(), $content = '', $sho
 
 		// For logged in users to allow an override filter.
 		/** This filter is documented in includes/course/ld-course-progress.php */
-		$bypass_course_limits_admin_users = apply_filters( 'learndash_prerequities_bypass', $bypass_course_limits_admin_users, $user_id, $course_id, $quiz_post );
+		$bypass_course_limits_admin_users = apply_filters( 'learndash_prerequities_bypass', $bypass_course_limits_admin_users, $user_id, $course_id, $quiz_post ); // cspell:disable-line -- prerequities are prerequisites...
 		if ( ( true === $bypass_course_limits_admin_users ) && ( ! $attempts_left ) ) {
 			$attempts_left = 1;
 		}
@@ -208,7 +240,7 @@ function learndash_quiz_shortcode_function( $atts = array(), $content = '', $sho
 		$attempts_left = apply_filters( 'learndash_quiz_attempts', $attempts_left, absint( $attempts_count ), absint( $user_id ), absint( $quiz_post->ID ) );
 		$attempts_left = absint( $attempts_left );
 
-		if ( ! empty( $lesson_progression_enabled ) && ! learndash_is_quiz_accessable( $user_id, $quiz_post, false, $course_id ) ) {
+		if ( ! empty( $lesson_progression_enabled ) && ! learndash_is_quiz_accessable( $user_id, $quiz_post, false, $course_id ) ) { // cspell:disable-line.
 			add_filter( 'comments_array', 'learndash_remove_comments', 1, 2 );
 		}
 
@@ -221,11 +253,11 @@ function learndash_quiz_shortcode_function( $atts = array(), $content = '', $sho
 		 *
 		 * @since 2.1.0
 		 *
-		 * @param string $message The content access message.
-		 * @param WP_Post $quiz_post    Quiz WP_Post object.
+		 * @param string  $message   The content access message.
+		 * @param WP_Post $quiz_post Quiz WP_Post object.
 		 */
-		$access_message = apply_filters( 'learndash_content_access', null, $quiz_post );
-		if ( ! is_null( $access_message ) ) {
+		$access_message = apply_filters( 'learndash_content_access', '', $quiz_post );
+		if ( ! empty( $access_message ) ) {
 			$quiz_content = $access_message;
 		} else {
 			if ( true === $atts['show_materials'] ) {
@@ -237,7 +269,7 @@ function learndash_quiz_shortcode_function( $atts = array(), $content = '', $sho
 				}
 
 				if ( ( 'on' === $quiz_settings['quiz_materials_enabled'] ) && ( ! empty( $quiz_settings['quiz_materials'] ) ) ) {
-					$materials = wp_specialchars_decode( $quiz_settings['quiz_materials'], ENT_QUOTES );
+					$materials = wp_specialchars_decode( strval( $quiz_settings['quiz_materials'] ), ENT_QUOTES );
 					if ( ! empty( $materials ) ) {
 						$materials = do_shortcode( $materials );
 						$materials = wpautop( $materials );
@@ -292,17 +324,83 @@ function learndash_quiz_shortcode_function( $atts = array(), $content = '', $sho
 			$quiz_content = apply_filters( 'learndash_quiz_content', $quiz_content, $quiz_post );
 		}
 
-		$level = ob_get_level();
-		ob_start();
-		$template_file = SFWD_LMS::get_template( 'quiz', null, null, true );
-		if ( ! empty( $template_file ) ) {
-			include $template_file;
+		if ( LearnDash_Theme_Register::get_active_theme_instance()->supports_views( LDLMS_Post_Types::QUIZ ) ) {
+			// TODO: This $show_content mapping was inside a template file. I would prefer us to review the logic.
+			$show_content         = true;
+			$last_incomplete_step = null;
+
+			if ( ! empty( $lesson_progression_enabled ) && $user_id > 0 ) {
+				if ( ! learndash_user_progress_is_step_complete( $user_id, $course_id, $quiz_post->ID ) ) {
+					if ( $bypass_course_limits_admin_users ) {
+						remove_filter( 'learndash_content', 'lesson_visible_after', 1 );
+					} else {
+						$previous_step_post_id = learndash_user_progress_get_parent_incomplete_step( $user_id, $course_id, $quiz_post->ID );
+						if ( ! empty( $previous_step_post_id ) && $previous_step_post_id !== $quiz_post->ID ) {
+							$show_content = false;
+
+							$last_incomplete_step = get_post( $previous_step_post_id );
+						} else {
+							$previous_step_post_id = learndash_user_progress_get_previous_incomplete_step( $user_id, $course_id, $quiz_post->ID );
+
+							if ( ! empty( $previous_step_post_id ) && $previous_step_post_id !== $quiz_post->ID ) {
+								$show_content = false;
+
+								$last_incomplete_step = get_post( $previous_step_post_id );
+							}
+						}
+
+						// This filter is documented in themes/ld30/templates/quiz.php.
+						$show_content = apply_filters( 'learndash_previous_step_completed', $show_content, $quiz_post->ID, $user_id );
+					}
+				}
+
+				if ( learndash_is_sample( $quiz_post ) ) {
+					$show_content = true;
+				} elseif ( $last_incomplete_step instanceof WP_Post ) {
+					$show_content = false;
+				}
+			}
+
+			$content = SFWD_LMS::get_template(
+				'quiz',
+				// TODO: Refactor arguments.
+				array(
+					'show_content'         => $show_content,
+					'content'              => $quiz_content,
+					'post'                 => $quiz_post,
+					'course_model'         => Product::find( $course_id ),
+					'attempts_left_number' => $attempts_left,
+					'attempts_made_number' => $attempts_count,
+					'tabs'                 => array(
+						array(
+							'id'      => 'content',
+							'icon'    => 'ld-icon-content',
+							'label'   => LearnDash_Custom_Label::get_label( 'quiz' ),
+							'content' => $content,
+						),
+						array(
+							'id'        => 'materials',
+							'icon'      => 'ld-icon-materials',
+							'label'     => __( 'Materials', 'learndash' ),
+							'content'   => $materials,
+							'condition' => ! empty( $materials ),
+						),
+					),
+				)
+			);
+		} else {
+			$level = ob_get_level();
+			ob_start();
+			$template_file = SFWD_LMS::get_template( 'quiz', null, null, true );
+			if ( ! empty( $template_file ) ) {
+				include $template_file;
+			}
+
+			$content = learndash_ob_get_clean( $level );
 		}
 
-		$content = learndash_ob_get_clean( $level );
-
 		// Added this defined wrap in v2.1.8 as it was effecting <pre></pre>, <code></code> and other formatting of the content.
-		// See wrike https://www.wrike.com/open.htm?id=77352698 as to why this define exists.
+		// See https://www.wrike.com/open.htm?id=77352698 as to why this define exists.
 		if ( ( defined( 'LEARNDASH_NEW_LINE_AND_CR_TO_SPACE' ) ) && ( LEARNDASH_NEW_LINE_AND_CR_TO_SPACE == true ) ) {
 
 			// Why is this here?

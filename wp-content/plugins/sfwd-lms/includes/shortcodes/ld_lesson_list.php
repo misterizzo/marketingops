@@ -43,6 +43,12 @@ function ld_lesson_list( $attr = array(), $content = '', $shortcode_slug = 'ld_l
 	// If we have a course_id. Then we set the orderby to match the items within the course.
 	if ( ( isset( $attr['course_id'] ) ) && ( ! empty( $attr['course_id'] ) ) ) {
 		$attr['course_id'] = absint( $attr['course_id'] );
+
+		// Check post access.
+		if ( ! learndash_shortcode_can_current_user_access_post( $attr['course_id'] ) ) {
+			return '';
+		}
+
 		$course_steps      = learndash_course_get_steps_by_type( $attr['course_id'], $attr['post_type'] );
 		if ( ! empty( $course_steps ) ) {
 			$attr['post__in'] = $course_steps;

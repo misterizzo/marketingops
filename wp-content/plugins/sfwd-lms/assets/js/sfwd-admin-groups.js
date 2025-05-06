@@ -33,12 +33,12 @@ function SelectAll( ID ) {
 function group_user_search() {
 	SS1 = document.getElementById( 'learndash_group_users_search' );
 	SS_View = document.getElementById( 'learndash_group_users_view' );
-	searchfor = document.getElementById( 'search_group' ).value.toLowerCase();
+	search_for = document.getElementById( 'search_group' ).value.toLowerCase();
 	SS_View.options.length = 0;
 	length = 0;
 	for ( i = 0; i < SS1.options.length; i++ ) {
 		SelText = SS1.options[i].text;
-		if ( SelText.toLowerCase().search( searchfor ) < 0 && searchfor.length > 0 ) {
+		if ( SelText.toLowerCase().search( search_for ) < 0 && search_for.length > 0 ) {
 			SS1.options[i].disabled = true;
 		} else {
 			SS1.options[i].disabled = false;

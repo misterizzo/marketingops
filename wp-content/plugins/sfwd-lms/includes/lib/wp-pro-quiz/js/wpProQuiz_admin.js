@@ -10,7 +10,7 @@ jQuery( function($) {
 		};
 
 		var init = function() {
-			$('.wpProQuiz_prview').on( 'click', function(e) {
+			$('.wpProQuiz_prview').on( 'click', function(e) { // cspell:disable-line
 				methods.openPreview(this);
 				e.preventDefault();
 			});
@@ -1617,7 +1617,7 @@ jQuery( function($) {
 						if(!elements.pointsModus.is(':checked')) {
 							var p = elements.gPoints.val();
 
-							if(!global.isNumber(p) || p < 1) {
+							if(!global.isNumber(p)) {
 								alert(wpProQuizLocalize.no_nummber_points);
 
 								return false;
@@ -1726,7 +1726,7 @@ jQuery( function($) {
 						var findPoints = 0;
 
 						$('.classic_answer .answerList').children().each(function() {
-							
+
 							var t = $(this);
 							if(!global.isEmpty(t.find('textarea.wpProQuiz_single_text').val())) {
 								findText++;
@@ -1736,7 +1736,7 @@ jQuery( function($) {
 								}
 
 								var p = t.find('input.wpProQuiz_points').val();
-								if(global.isNumber(p) && p >= 0) {
+								if(global.isNumber(p)) {
 									findPoints++;
 								}
 							}
@@ -1793,7 +1793,7 @@ jQuery( function($) {
 
 								var p = t.find('input.wpProQuiz_points').val();
 
-								if(global.isNumber(p) && p >= 0) {
+								if(global.isNumber(p)) {
 									findPoints++;
 								}
 							}
@@ -1830,14 +1830,14 @@ jQuery( function($) {
 									sortString = false;
 								}
 
-								if(global.isNumber(p) && p >= 0) {
+								if(global.isNumber(p)) {
 									findPoints++;
 								}
 							} else {
 								if(!global.isEmpty(t.find('textareawpProQuiz_matrix_sort_string').val())) {
 									menge++;
 
-									if(global.isNumber(p) && p >= 0) {
+									if(global.isNumber(p)) {
 										findPoints++;
 									}
 								}
@@ -1914,10 +1914,10 @@ jQuery( function($) {
 							v = 'classic_answer';
 
 							$('input[name="points"]').attr('disabled', points_enabled);
-							
+
 							$('#wpProQuiz_answerPointsActivated').show();
 							$('input[name="answerPointsActivated"]').attr('disabled', false);
-							
+
 							$('input[name="correctSameText"]').attr('disabled', false);
 
 							$('.wpProQuiz_classCorrect').each(function() {
@@ -1928,31 +1928,31 @@ jQuery( function($) {
 							}).remove();
 						} else if ( v == 'free_answer' ) {
 							$('input[name="points"]').attr('disabled', points_enabled);
-							
+
 							$('#wpProQuiz_answerPointsActivated').show();
 							$('input[name="answerPointsActivated"]').attr('disabled', false);
-							
+
 							$('input[name="correctSameText"]').attr('disabled', false);
 						} else if ( v == 'sort_answer' ) {
 							$('input[name="points"]').attr('disabled', points_enabled);
-							
+
 							$('#wpProQuiz_answerPointsActivated').show();
 							$('input[name="answerPointsActivated"]').attr('disabled', false);
-							
+
 							$('input[name="correctSameText"]').attr('disabled', false);
 						} else if ( v == 'matrix_sort_answer' ) {
 							$('input[name="points"]').attr('disabled', points_enabled);
-							
+
 							$('#wpProQuiz_answerPointsActivated').show();
 							$('input[name="answerPointsActivated"]').attr('disabled', false);
-							
+
 							$('input[name="correctSameText"]').attr('disabled', false);
 						} else if ( v == 'cloze_answer' ) {
 							$('input[name="points"]').attr('disabled', points_enabled);
-							
+
 							$('#wpProQuiz_answerPointsActivated').show();
 							$('input[name="answerPointsActivated"]').attr('disabled', false);
-							
+
 							$('input[name="correctSameText"]').attr('disabled', false);
 						} else if ( v == 'assessment_answer' ) {
 							$('input[name="points"]').attr('disabled', points_enabled);
@@ -2077,7 +2077,7 @@ jQuery( function($) {
 						} else {
 							$('.classic_answer .wpProQuiz_classCorrect').parent().parent().show();
 							$('input[name="disableCorrect"]').attr('disabled', 'disabled');
-							
+
 							$('input[name="showPointsInBox"]').attr( 'disabled', true);
 						}
 					}).change();
@@ -2832,7 +2832,7 @@ jQuery( function($) {
 						if ((typeof nonce === 'undefined') || (nonce === '')) {
 							return null;
 						}
-						
+
 						// Trigger change when the selector is cleared.
 						jQuery(el).on('select2:unselect', function (e) {
 							jQuery(el).trigger('change');
@@ -2870,7 +2870,7 @@ jQuery( function($) {
 
 
 				var init = function() {
-					
+
 					historyNavigator = new Navigator($('#historyNavigation'), {
 						onChange: function() {
 							methode.loadHistoryAjax();
@@ -2903,7 +2903,7 @@ jQuery( function($) {
 									select2_args.ajax = methode.usersSelect2Ajax(item);
 								}
 
-								jQuery(item).select2(select2_args);							
+								jQuery(item).select2(select2_args);
 							});
 						}
 					}

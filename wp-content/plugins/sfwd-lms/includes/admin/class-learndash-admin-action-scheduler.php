@@ -11,9 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// including action scheduler.
-require_once LEARNDASH_LMS_PLUGIN_DIR . 'includes/lib/action-scheduler/action-scheduler.php';
-
 if ( ! class_exists( 'Learndash_Admin_Action_Scheduler' ) ) {
 	/**
 	 * LearnDash admin action scheduler class.
@@ -26,7 +23,7 @@ if ( ! class_exists( 'Learndash_Admin_Action_Scheduler' ) ) {
 		const SCHEDULER_NOTICES_OPTION_KEY     = 'learndash_scheduler_notices';
 		const SCHEDULER_FATAL_TASKS_OPTION_KEY = 'learndash_scheduler_fatal_tasks';
 		const LD_GROUP_NAME_PREFIX             = 'learndash';
-		const SCHEDULER_TIMEOUT                = 600; // 10 minutes.
+		const SCHEDULER_TIMEOUT                = 3600; // 1 hour.
 
 
 		/**
@@ -130,6 +127,14 @@ if ( ! class_exists( 'Learndash_Admin_Action_Scheduler' ) ) {
 			// scheduler timeout.
 			add_filter(
 				'action_scheduler_timeout_period',
+				function() {
+					return self::SCHEDULER_TIMEOUT;
+				}
+			);
+
+			// failure timeout.
+			add_filter(
+				'action_scheduler_failure_period',
 				function() {
 					return self::SCHEDULER_TIMEOUT;
 				}

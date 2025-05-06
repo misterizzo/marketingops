@@ -115,14 +115,16 @@ if ( ! class_exists( 'LDLMS_Base_Answer_Type' ) ) {
 				 * @param array  $answer_node_data The answer node.
 				 * @param string $type             Whether the node is answer node or student answer node.
 				 * @param mixed  $data             Individual answer data.
+				 * @param int    $question_id      Question ID.
 				 */
-				$answer_node_data                                       = apply_filters(
+				$answer_node_data = apply_filters(
 					'learndash_rest_statistic_answer_node_data',
 					$answer_node_data,
 					'answer',
 					$data,
 					$this->question->getId()
 				);
+
 				$answers[ $this->get_answer_key( (string) $position ) ] = $answer_node_data;
 			}
 
@@ -153,6 +155,7 @@ if ( ! class_exists( 'LDLMS_Base_Answer_Type' ) ) {
 				 * @param array  $answer_node_data The answer node.
 				 * @param string $type             Whether the node is answer node or student answer node.
 				 * @param mixed  $data             Individual answer data.
+				 * @param int    $question_id      Question ID.
 				 */
 				$answers[ $position ] = apply_filters(
 					'learndash_rest_statistic_answer_node_data',

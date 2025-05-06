@@ -85,20 +85,14 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 		public function load_settings_values() {
 			parent::load_settings_values();
 
-			// If the settings set as a whole is empty then we set a default.
-			if ( ( false === $this->setting_option_values ) || ( '' === $this->setting_option_values ) ) {
-				if ( '' === $this->setting_option_values ) {
-					$this->setting_option_values = array();
-				}
+			if (
+				! $this->setting_option_initialized
+				&& empty( $this->setting_option_values )
+			) {
 				$this->transition_deprecated_settings();
 
-				if ( ! isset( $this->setting_option_values['course_builder_enabled'] ) ) {
-					$this->setting_option_values['course_builder_enabled'] = 'yes';
-				}
-			}
-
-			if ( '' === $this->setting_option_values ) {
-				$this->setting_option_values = array();
+				$this->setting_option_values['course_builder_enabled']      = 'yes';
+				$this->setting_option_values['course_builder_shared_steps'] = 'yes';
 			}
 
 			if ( ! isset( $this->setting_option_values['course_builder_enabled'] ) ) {
@@ -127,6 +121,7 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 			}
 
 			if ( ! isset( $this->setting_option_values['course_pagination_topics'] ) ) {
+				// @phpstan-ignore-next-line -- It is indeed not nullable, but I don't want to touch it. Fix one day.
 				if ( isset( $this->setting_option_values['course_pagination_lessons'] ) ) {
 					$this->setting_option_values['course_pagination_topics'] = absint( $this->setting_option_values['course_pagination_lessons'] );
 				} else {
@@ -159,6 +154,10 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 				} else {
 					$this->setting_option_values['course_mark_incomplete_enabled'] = false;
 				}
+			}
+
+			if ( ! isset( $this->setting_option_values['course_completion_page'] ) ) {
+				$this->setting_option_values['course_completion_page'] = '';
 			}
 		}
 
@@ -391,6 +390,26 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 							'yes' => '',
 						),
 					),
+					'course_completion_page' => [
+						'name'             => 'course_completion_page',
+						'type'             => 'select',
+						'label'            => sprintf(
+							// translators: placeholder: Course.
+							esc_html_x( 'Global %1$s Completion Page', 'placeholder: Course', 'learndash' ),
+							learndash_get_custom_label( 'course' )
+						),
+						'help_text'        => sprintf(
+							// translators: placeholders: course.
+							esc_html_x(
+								'The page students are redirected to after %1$s completion. Used when there is no individual %1$s completion page configured.',
+								'placeholder: course',
+								'learndash'
+							),
+							learndash_get_custom_label_lower( 'course' )
+						),
+						'value'            => $this->setting_option_values['course_completion_page'],
+						'display_callback' => [ LearnDash_Settings_Section_Registration_Pages::class, 'display_pages_selector' ],
+					],
 				)
 			);
 
@@ -462,16 +481,9 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 				}
 
 				if ( ( isset( $current_values['course_builder_enabled'] ) ) && ( 'yes' === $current_values['course_builder_enabled'] ) && ( isset( $current_values['course_builder_shared_steps'] ) ) && ( 'yes' === $current_values['course_builder_shared_steps'] ) ) {
-
-					$ld_permalink_options = get_option( 'learndash_settings_permalinks', array() );
-					if ( ! isset( $ld_permalink_options['nested_urls'] ) ) {
-						$ld_permalink_options['nested_urls'] = 'no';
-					}
-
-					if ( 'yes' !== $ld_permalink_options['nested_urls'] ) {
-						$ld_permalink_options['nested_urls'] = 'yes';
-
-						update_option( 'learndash_settings_permalinks', $ld_permalink_options );
+					$ld_permalink_options = LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Section_Permalinks', 'nested_urls', 'no' );
+					if ( 'yes' !== $ld_permalink_options ) {
+						LearnDash_Settings_Section::set_section_setting( 'LearnDash_Settings_Section_Permalinks', 'nested_urls', 'yes' );
 
 						learndash_setup_rewrite_flush();
 					}
@@ -479,6 +491,10 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 
 				if ( ! isset( $current_values['course_mark_incomplete_enabled'] ) ) {
 					$current_values['course_mark_incomplete_enabled'] = '';
+				}
+
+				if ( ! isset( $current_values['course_completion_page'] ) ) {
+					$current_values['course_completion_page'] = '';
 				}
 			}
 

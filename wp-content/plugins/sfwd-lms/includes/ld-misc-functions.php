@@ -7,6 +7,8 @@
  * @package LearnDash\Misc
  */
 
+use LearnDash\Core\Utilities\Cast;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -125,39 +127,6 @@ if ( ! function_exists( 'sfwd_lms_get_post_options' ) ) {
 		return $ret;
 	}
 }
-
-/**
- * Prints the dropdown button to the footer.
- *
- * Fires on `wp_footer` hook.
- *
- * @global string $dropdown_button Dropdown button markup.
- */
-function learndash_footer_payment_buttons() {
-	global $dropdown_button;
-
-	if ( ! empty( $dropdown_button ) ) {
-		echo $dropdown_button; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Need to output HTML.
-	}
-}
-add_action( 'wp_footer', 'learndash_footer_payment_buttons' );
-
-/**
- * Dequeues the jquery dropdown js if dropdown button is empty.
- *
- * @global string $dropdown_button Dropdown button markup.
- */
-function learndash_get_footer() {
-	if ( is_admin() ) {
-		return;
-	}
-
-	global $dropdown_button;
-	if ( empty( $dropdown_button ) ) {
-		wp_dequeue_script( 'jquery-dropdown-js' );
-	}
-}
-add_action( 'get_footer', 'learndash_get_footer' );
 
 /**
  * Checks if a lesson, topic, or quiz is a sample or not.
@@ -563,45 +532,56 @@ function learndash_seconds_to_time( $input_seconds = 0 ) {
 }
 
 /**
- * Converts a timestamp to local timezone adjusted display.
+ * Converts a GMT timestamp to local timezone adjusted display.
  *
  * @since 2.2.0
  *
- * @param int    $timestamp      Optional. The timestamp to display. Default 0.
- * @param string $display_format Optional. The time display format. Default empty.
+ * @param int    $timestamp      Optional. The Unix timestamp to display. Default 0.
+ * @param string $display_format Optional. The time display format. Default empty. If empty, uses the format defined for WordPress under Settings -> General.
  *
  * @return string The adjusted date time display.
  */
 function learndash_adjust_date_time_display( $timestamp = 0, $display_format = '' ) {
 	$date_time_display = '';
 
-	if ( ! empty( $timestamp ) ) {
-		if ( empty( $display_format ) ) {
-			$date_format = get_option( 'date_format', 'Y-m-d' );
-			if ( empty( $date_format ) ) {
-				$date_format = 'Y-m-d';
-			}
+	if ( $timestamp <= 0 ) {
+		return $date_time_display;
+	}
 
-			$time_format = get_option( 'time_format', 'H:i:s' );
-			if ( empty( $time_format ) ) {
-				$time_format = 'H:i:s';
-			}
-
-			/**
-			 * Filters LearnDash date and time format.
-			 *
-			 * @param string  $format Format to display the date.
-			 */
-			$display_format = apply_filters( 'learndash_date_time_formats', $date_format . ' ' . $time_format );
+	if ( empty( $display_format ) ) {
+		$date_format = get_option( 'date_format', 'Y-m-d' );
+		if ( empty( $date_format ) ) {
+			$date_format = 'Y-m-d';
 		}
 
-		// First we convert the timestamp to local Y-m-d H:i:s format.
-		$date_time_display = get_date_from_gmt( date( 'Y-m-d H:i:s', $timestamp ), 'Y-m-d H:i:s' ); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+		$time_format = get_option( 'time_format', 'H:i:s' );
+		if ( empty( $time_format ) ) {
+			$time_format = 'H:i:s';
+		}
 
-		// Then we take that value and reconvert it to a timestamp and call date_i18n to translate the month, date name etc.
-		$date_time_display = date_i18n( $display_format, strtotime( $date_time_display ) );
+		$display_format = $date_format . ' ' . $time_format;
 	}
-	return $date_time_display;
+
+	/**
+	 * Filters LearnDash date and time format.
+	 *
+	 * @since 2.2.0
+	 * @since 4.20.0 This filter is now also applied when a format was specified rather than only to the default.
+	 *
+	 * @param string $display_format Format to display the date.
+	 *
+	 * @return string
+	 */
+	$display_format = apply_filters(
+		'learndash_date_time_formats',
+		$display_format
+	);
+
+	// First we convert the timestamp to local Y-m-d H:i:s format.
+	$date_time_display = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $timestamp ), 'Y-m-d H:i:s' );
+
+	// Then we take that value and reconvert it to a timestamp and call date_i18n to translate the month, date name etc.
+	return date_i18n( $display_format, strtotime( $date_time_display ) );
 }
 
 /**
@@ -672,25 +652,47 @@ function learndash_array_map_r( $func, $arr ) {
 }
 
 /**
- * Formats course points.
+ * Formats course points to the specified decimal value.
  *
- * @param string $points   Course points.
- * @param int    $decimals Optional. The decimal values to round the course points. Default 1.
+ * @since 2.1.0
+ * @since 4.14.0 $decimal parameter changed from 1 to 2 by default.
  *
- * @return float Formated course points.
+ * @param mixed $points   Course points.
+ * @param int   $decimals Optional. The decimal values to round the course points. Default 2.
+ *
+ * @return float Course points.
  */
-function learndash_format_course_points( $points, $decimals = 1 ) {
+function learndash_format_course_points( $points, $decimals = 2 ) {
+	if ( is_string( $points ) ) {
+		$points = preg_replace( '/[^0-9.-]/', '', $points ); // Allow only numbers, hyphen and dot in the string.
+		$points = preg_replace( '/-+/', '-', Cast::to_string( $points ) ); // Allow only one hyphen in the string.
+	}
 
-	$points = preg_replace( '/[^0-9.]/', '', $points );
+	$points = Cast::to_float( $points );
 
 	/**
-	 * Filters course points format round decimal value.
-	 *
-	 * @param int $decimals the number of decimal digits to round to.
-	 */
-	$points = round( floatval( $points ), apply_filters( 'learndash_course_points_format_round', $decimals ) );
+	* Filters course points format round decimal value.
+	*
+	* @since 2.1.0
+	*
+	* @param int $decimals The number of decimal digits to round to.
+	*
+	* @return int
+	*/
+	$decimals = apply_filters( 'learndash_course_points_format_round', $decimals );
 
-	return floatval( $points );
+	// Catch intentional zero values.
+
+	if ( $decimals === 0 ) {
+		return round( $points );
+	}
+
+	$decimals = Cast::to_int( $decimals );
+
+	return round(
+		$points,
+		$decimals > 0 ? $decimals : 2 // If $decimals is invalid, use the default value.
+	);
 }
 
 /**
@@ -764,7 +766,7 @@ add_action( 'update_post_meta', 'learndash_update_post_meta', 20, 4 );
  *
  * @since 2.4.7
  *
- * @returns array An array of MySQL privelage grants.
+ * @return array<mixed> An array of MySQL privilege grants.
  */
 function learndash_get_db_user_grants() {
 	global $wpdb;
@@ -973,7 +975,7 @@ function learndash_get_allowed_upload_mime_extensions_for_post( $post_id = 0 ) {
 		 *
 		 * @since 3.1.7
 		 *
-		 * @param array   $ld_allowed_extensions Array of alowed upload file extensions.
+		 * @param array   $ld_allowed_extensions Array of allowed upload file extensions.
 		 * @param integer $post_id               $Post ID receiving the upload.
 		 */
 		$ld_allowed_extensions = apply_filters( 'learndash_allowed_upload_extensions', $ld_allowed_extensions, $post_id );
@@ -1137,7 +1139,7 @@ function learndash_post_type_supports_comments( $feed_post_type = '' ) {
  *
  * @param array $post_messages Optional. An array of post updated messages by post_type. Default empty array.
  *
- * @return array An array of post upadated messages.
+ * @return array An array of post updated messages.
  */
 function learndash_post_updated_messages( $post_messages = array() ) {
 	global $pagenow, $post_ID, $post_type, $post_type_object, $post;
@@ -1176,28 +1178,28 @@ function learndash_post_updated_messages( $post_messages = array() ) {
 		}
 
 		// translators: Publish box date format, see https://secure.php.net/date.
-		$scheduled_date = date_i18n( __( 'M j, Y @ H:i', 'learndash' ), strtotime( $post->post_date ) );
+		$scheduled_date = learndash_adjust_date_time_display( (int) strtotime( $post->post_date_gmt ), __( 'M j, Y @ H:i', 'learndash' ) );
 
 		$post_messages[ $post_type ] = array(
 			0  => '', // Unused. Messages start at index 1.
-			// translators: placeholder: Post Type Singlular Label.
-			1  => sprintf( _x( '%s updated.', 'placeholder: Post Type Singlular Label', 'learndash' ), $post_type_object->labels->singular_name ) . $view_post_link_html,
+			// translators: placeholder: Post Type Singular Label.
+			1  => sprintf( _x( '%s updated.', 'placeholder: Post Type Singular Label', 'learndash' ), $post_type_object->labels->singular_name ) . $view_post_link_html,
 			2  => __( 'Custom field updated.', 'learndash' ),
 			3  => __( 'Custom field deleted.', 'learndash' ),
-			// translators: placeholder: Post Type Singlular Label.
-			4  => sprintf( _x( '%s updated.', 'placeholder: Post Type Singlular Label', 'learndash' ), $post_type_object->labels->singular_name ),
+			// translators: placeholder: Post Type Singular Label.
+			4  => sprintf( _x( '%s updated.', 'placeholder: Post Type Singular Label', 'learndash' ), $post_type_object->labels->singular_name ),
 			// translators: placeholders: Post Type Singular Label, Revision Title.
 			5  => isset( $_GET['revision'] ) ? sprintf( _x( '%1$s restored to revision from %2$s.', 'placeholder: Post Type Singular Label, Revision Title', 'learndash' ), $post_type_object->labels->singular_name, wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
 			// translators: placeholder: Post Type Singular Label.
-			6  => sprintf( _x( '%s published.', 'placeholder: Post Type Singlular Label', 'learndash' ), $post_type_object->labels->singular_name ) . $view_post_link_html,
+			6  => sprintf( _x( '%s published.', 'placeholder: Post Type Singular Label', 'learndash' ), $post_type_object->labels->singular_name ) . $view_post_link_html,
 			// translators: placeholder: Post Type Singular Label.
-			7  => sprintf( _x( '%s saved.', 'placeholder: Post Type Singlular Label', 'learndash' ), $post_type_object->labels->singular_name ),
+			7  => sprintf( _x( '%s saved.', 'placeholder: Post Type Singular Label', 'learndash' ), $post_type_object->labels->singular_name ),
 			// translators: placeholder: Post Type Singular Label.
-			8  => sprintf( _x( '%s submitted.', 'placeholder: Post Type Singlular Label', 'learndash' ), $post_type_object->labels->singular_name ) . $preview_post_link_html,
-			// translators: placeholder: Post Type Singlular Label, scheduled date.
-			9  => sprintf( _x( '%1$s scheduled for: %2$s.', 'placeholder: Post Type Singlular Label, scheduled date', 'learndash' ), $post_type_object->labels->singular_name, '<strong>' . $scheduled_date . '</strong>' ) . $scheduled_post_link_html,
+			8  => sprintf( _x( '%s submitted.', 'placeholder: Post Type Singular Label', 'learndash' ), $post_type_object->labels->singular_name ) . $preview_post_link_html,
+			// translators: placeholder: Post Type Singular Label, scheduled date.
+			9  => sprintf( _x( '%1$s scheduled for: %2$s.', 'placeholder: Post Type Singular Label, scheduled date', 'learndash' ), $post_type_object->labels->singular_name, '<strong>' . $scheduled_date . '</strong>' ) . $scheduled_post_link_html,
 			// translators: placeholder: Post Type Singular Label.
-			10 => sprintf( _x( '%s draft updated.', 'placeholder: Post Type Singlular Label', 'learndash' ), $post_type_object->labels->singular_name ) . $preview_post_link_html,
+			10 => sprintf( _x( '%s draft updated.', 'placeholder: Post Type Singular Label', 'learndash' ), $post_type_object->labels->singular_name ) . $preview_post_link_html,
 		);
 	}
 
@@ -1445,7 +1447,6 @@ function learndash_is_protected_meta( $protected = false, $meta_key = '', $meta_
 			}
 		}
 
-		// If post type is not empty and onf othe LD types.
 		if ( ( ! empty( $post_type ) ) && ( in_array( $post_type, learndash_get_post_types(), true ) ) ) {
 			$protected_meta_keys = array( 'course_id', 'lesson_id', 'course_price_billing_p3', 'course_price_billing_t3', 'course_sections', 'ld_course_steps', 'course_access_list', 'quiz_pro_id', 'ld_course_steps_dirty', 'ld_auto_enroll_group_courses', 'group_price_billing_p3', 'group_price_billing_t3', 'ld_auto_enroll_group_course_ids', 'question_pro_id', 'course_points', 'ld_quiz_questions', 'ld_quiz_questions_dirty', 'learndash_certificate_options', 'question_id', 'ld_essay_grading_response', 'question_points', 'question_type', 'question_pro_id', 'question_pro_category', 'course_trial_duration_p1', 'course_trial_duration_t1', 'course_price_type_subscribe_billing_recurring_times', 'group_trial_duration_p1', 'group_trial_duration_t1', 'group_price_type_subscribe_billing_recurring_times', 'exam_challenge_course_show', 'exam_challenge_course_passed' );
 
@@ -1673,7 +1674,7 @@ function learndash_body_classes( $classes = array() ) {
 		/**
 		 * Filters list of body tag CSS classes.
 		 *
-		 * @param string       $custom_classes Body css classes.
+		 * @param array        $custom_classes Body css classes.
 		 * @param string|false $post_type      Post Type slug.
 		 * @param int|false    $post_id        Post ID.
 		 */
@@ -1689,7 +1690,7 @@ function learndash_body_classes( $classes = array() ) {
 add_filter( 'body_class', 'learndash_body_classes', 100, 1 );
 
 /**
- * Recalcuates the length of string vars within serialized data.
+ * Recalculates the length of string vars within serialized data.
  *
  * Taken from http://lea.verou.me/2011/02/convert-php-serialized-data-to-unicode/
  *
@@ -1764,6 +1765,8 @@ function learndash_get_single_post( $post_type = '' ) {
  * but they only sanitize the data element not the key. This function
  * is recursive to handle nests arrays.
  *
+ * @since 3.2.0
+ *
  * @param array $data_in Source array to clean.
  */
 function learndash_array_sanitize_keys_and_values( $data_in = array() ) {
@@ -1771,7 +1774,7 @@ function learndash_array_sanitize_keys_and_values( $data_in = array() ) {
 		$data_out = array();
 		foreach ( $data_in as $i_key => $i_val ) {
 			$i_key = sanitize_text_field( $i_key );
-			if ( ( is_array( $i_val ) ) && ( ! empty( $i_val ) ) ) {
+			if ( is_array( $i_val ) ) {
 				$i_val = learndash_array_sanitize_keys_and_values( $i_val );
 			} elseif ( ( is_string( $i_val ) ) && ( '' !== $i_val ) ) {
 				$i_val = wp_kses_post( $i_val );
@@ -1834,10 +1837,10 @@ function learndash_safe_redirect( $location = '', $status = null, $exit = true, 
 			 *
 			 * @since 3.2.3
 			 *
-			 * @param bool   true      True to call nocache_headers().
-			 * @param string $location The URL to redirect the user to.
-			 * @param int    $status   The HTTP Status to set. Default 302.
-			 * @param string $context  Unique string provided by the caller to help filter conditions.
+			 * @param bool   $call_nocache_headers Call nocache_headers(). Default true.
+			 * @param string $location             The URL to redirect the user to.
+			 * @param int    $status               The HTTP Status to set. Default 302.
+			 * @param string $context              Unique string provided by the caller to help filter conditions.
 			 */
 			if ( apply_filters( 'learndash_safe_redirect_nocache_header', true, $location, $status, $context ) ) {
 				nocache_headers();
@@ -1848,10 +1851,10 @@ function learndash_safe_redirect( $location = '', $status = null, $exit = true, 
 			 *
 			 * @since 3.3.0.2
 			 *
-			 * @param bool   true      True to call wp_safe_redirect().
-			 * @param string $location The URL to redirect the user to.
-			 * @param int    $status   The HTTP Status to set. Default 302.
-			 * @param string $context  Unique string provided by the caller to help filter conditions.
+			 * @param bool   $call_wp_safe_redirect Call wp_safe_redirect(). Default LEARNDASH_USE_WP_SAFE_REDIRECT constant value.
+			 * @param string $location              The URL to redirect the user to.
+			 * @param int    $status                The HTTP Status to set. Default 302.
+			 * @param string $context               Unique string provided by the caller to help filter conditions.
 			 */
 			if ( apply_filters( 'learndash_use_wp_safe_redirect', LEARNDASH_USE_WP_SAFE_REDIRECT, $location, $status, $context ) ) {
 				$redirect_status = wp_safe_redirect( $location, $status );
@@ -1901,7 +1904,7 @@ function learndash_use_select2_lib_ajax_fetch() {
 		/**
 		 * Filters whether the select2 is used to fetch AJAX data.
 		 *
-		 * @param boolean $learndash_select2_ajax_featch whether the select2 library is used to fetch AJAX data.
+		 * @param boolean $learndash_select2_ajax_fetch whether the select2 library is used to fetch AJAX data.
 		 */
 		if ( ( defined( 'LEARNDASH_SELECT2_LIB_AJAX_FETCH' ) ) && ( true === apply_filters( 'learndash_select2_lib_ajax_fetch', LEARNDASH_SELECT2_LIB_AJAX_FETCH ) ) ) {
 			return true;
@@ -1911,21 +1914,19 @@ function learndash_use_select2_lib_ajax_fetch() {
 }
 
 /**
- * Add index file to directory
+ * Add an index file to directory.
  *
  * @param string $index_filename File name.
+ *
+ * @return void
  */
 function learndash_put_directory_index_file( $index_filename = '' ) {
-	if ( ! empty( $index_filename ) ) {
-		global $wp_filesystem;
-
-		// Initialize the WP filesystem, no more using 'file-put-contents' function.
-		if ( empty( $wp_filesystem ) ) {
-			require_once ABSPATH . '/wp-admin/includes/file.php';
-			WP_Filesystem();
-		}
-
-		$wp_filesystem->put_contents( $index_filename, '//LearnDash is THE Best LMS', FS_CHMOD_FILE );
+	if (
+		! empty( $index_filename )
+		&& ! file_exists( $index_filename )
+		&& is_writable( dirname( $index_filename ) )
+	) {
+		file_put_contents( $index_filename, '//LearnDash is THE Best LMS' );
 	}
 }
 
@@ -1952,7 +1953,7 @@ function learndash_the_content( $content = '', $context = '' ) {
 		 */
 		do_action( 'learndash_before_normal_the_content_filter', $context );
 
-		$content = apply_filters( 'the_content', $content );
+		$content = apply_filters( 'the_content', $content ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WP core filter.
 
 		/**
 		 * Action to allow custom logic after the normal 'the_content' filter is called.
@@ -2014,7 +2015,6 @@ function learndash_the_content( $content = '', $context = '' ) {
  * @return array An array of quiz attempts, otherwise false.
  */
 function learndash_get_user_profile_quiz_attempts( $user_id = 0 ) {
-
 	$user_id = absint( $user_id );
 	$user    = get_user_by( 'id', $user_id );
 
@@ -2027,30 +2027,31 @@ function learndash_get_user_profile_quiz_attempts( $user_id = 0 ) {
 	$usermeta           = get_user_meta( $user_id, '_sfwd-quizzes', true );
 	$quiz_attempts_meta = empty( $usermeta ) ? false : $usermeta;
 
-	if ( ! empty( $quiz_attempts_meta ) ) {
-
-		foreach ( $quiz_attempts_meta as $quiz_attempt ) {
-			$c                    = learndash_certificate_details( $quiz_attempt['quiz'], $user_id );
-			$quiz_attempt['post'] = get_post( $quiz_attempt['quiz'] );
-
-			if ( get_current_user_id() == $user_id && ! empty( $c['certificateLink'] ) && ( ( isset( $quiz_attempt['percentage'] ) && $quiz_attempt['percentage'] >= $c['certificate_threshold'] * 100 ) ) ) {
-				$quiz_attempt['certificate'] = $c;
-				if ( ( isset( $quiz_attempt['certificate']['certificateLink'] ) ) && ( ! empty( $quiz_attempt['certificate']['certificateLink'] ) ) ) {
-					$quiz_attempt['certificate']['certificateLink'] = add_query_arg( array( 'time' => $quiz_attempt['time'] ), $quiz_attempt['certificate']['certificateLink'] );
-				}
-			}
-
-			if ( ! isset( $quiz_attempt['course'] ) ) {
-				$quiz_attempt['course'] = learndash_get_course_id( $quiz_attempt['quiz'] );
-			}
-			$course_id = intval( $quiz_attempt['course'] );
-
-			$quiz_attempts[ $course_id ][] = $quiz_attempt;
-
-		}
-
+	if ( empty( $quiz_attempts_meta ) ) {
 		return $quiz_attempts;
 	}
+
+	foreach ( $quiz_attempts_meta as $quiz_attempt ) {
+		$c                    = learndash_certificate_details( $quiz_attempt['quiz'], $user_id );
+		$quiz_attempt['post'] = get_post( $quiz_attempt['quiz'] );
+
+		if ( get_current_user_id() == $user_id && ! empty( $c['certificateLink'] ) && ( ( isset( $quiz_attempt['percentage'] ) && $quiz_attempt['percentage'] >= $c['certificate_threshold'] * 100 ) ) ) {
+			$quiz_attempt['certificate'] = $c;
+			if ( ( isset( $quiz_attempt['certificate']['certificateLink'] ) ) && ( ! empty( $quiz_attempt['certificate']['certificateLink'] ) ) ) {
+				$quiz_attempt['certificate']['certificateLink'] = add_query_arg( array( 'time' => $quiz_attempt['time'] ), $quiz_attempt['certificate']['certificateLink'] );
+			}
+		}
+
+		if ( ! isset( $quiz_attempt['course'] ) ) {
+			$quiz_attempt['course'] = learndash_get_course_id( $quiz_attempt['quiz'] );
+		}
+		$course_id = intval( $quiz_attempt['course'] );
+
+		$quiz_attempts[ $course_id ][] = $quiz_attempt;
+
+	}
+
+	return $quiz_attempts;
 }
 
 /**
@@ -2081,123 +2082,128 @@ function learndash_get_post_title_filter( $post_title = '', $post_id = 0 ) {
 
 	return $post_title;
 }
+
 add_filter( 'the_title', 'learndash_get_post_title_filter', 99, 2 );
 
 /**
- * Generates file name for purchase invoice PDF
+ * Shows admin deprecation notice if Stripe addon plugin activated.
  *
- * @since 4.1.0
+ * @since 4.5.2
  *
- * @param int $user_id User ID.
- * @param int $post_id Post ID.
- *
- * @return string $filename File name of the purchase invoice PDF
+ * @return void
  */
-function learndash_purchase_invoice_filename( $user_id = 0, $post_id = 0 ) {
+function learndash_stripe_addon_deprecation_notice() {
+	$class   = 'notice notice-warning is-dismissible';
+	$title   = __( 'LearnDash Stripe Addon Deprecation', 'learndash' );
+	$message = __( 'As of June 13, 2023 the Stripe plugin will no longer receive feature updates. We encourage you to switch over to Stripe Connect, however you can continue to utilize the plugin without upgrading. ', 'learndash' );
+	$links   = __( '<a href="admin.php?page=learndash_lms_payments&section-payment=settings_stripe_connection">Setup Stripe Connect</a> - <a href="https://www.learndash.com/support/docs/core/settings/stripe-add-on-deprecation-faq/">Stripe Deprecation FAQ</a>', 'learndash' );
 
-	$user_id = absint( $user_id );
-
-	if ( empty( $user_id ) ) {
-		return false;
+	if ( ! function_exists( 'is_plugin_active' ) ) {
+		include_once ABSPATH . 'wp-admin/includes/plugin.php';
 	}
 
-	$post_id = absint( $post_id );
-	if ( empty( $post_id ) ) {
-		return false;
+	if ( is_plugin_active( 'learndash-stripe/learndash-stripe.php' ) && current_user_can( 'administrator' ) ) {
+		printf(
+			'<div class="%1$s">
+				<p><strong>%2$s</strong></p>
+				<p>%3$s</p>
+				<p>%4$s</p>
+			</div>',
+			esc_attr( $class ),
+			esc_html( $title ),
+			esc_html( $message ),
+			wp_kses_post( $links )
+		);
+	}
+}
+
+add_action( 'admin_notices', 'learndash_stripe_addon_deprecation_notice' );
+
+/**
+ * Shows admin notice warning if Licensing & Management plugin is not activated.
+ *
+ * @since 4.6.0
+ * @deprecated 4.18.0 -- This is now included in LearnDash - LMS.
+ *
+ * @return void
+ */
+function learndash_hub_deactivated_notice() {
+	_deprecated_function( __FUNCTION__, '4.18.0' );
+
+	if (
+		learndash_is_learndash_hub_active()
+		|| ! current_user_can( 'administrator' )
+	) {
+		return;
 	}
 
-	$post = get_post( $post_id );
-	if ( ( ! $post ) || ( ! is_a( $post, 'WP_Post' ) ) ) {
-		return false;
+	if ( learndash_is_learndash_hub_installed() ) {
+		$activation_url = wp_nonce_url( admin_url( 'plugins.php?action=activate&plugin=' . LEARNDASH_HUB_PLUGIN_SLUG ), 'activate-plugin_' . LEARNDASH_HUB_PLUGIN_SLUG );
+
+		$message = sprintf(
+			// translators: %1$s: opening anchor tag, %2$s: closing anchor tag.
+			esc_html__( 'Important! The LearnDash Licensing & Management plugin is deactivated. Please %1$sclick here%2$s to activate the plugin to ensure your LearnDash license works correctly. ', 'learndash' ), // cspell: disable-line -- HTML link.
+			'<a href="' . $activation_url . '">',
+			'</a>'
+		);
+	} else {
+		$message = esc_html__( 'Important! The LearnDash Licensing & Management plugin is missing. Please install the plugin to ensure your LearnDash license works correctly. ', 'learndash' );
 	}
 
-	if ( ! in_array( $post->post_type, learndash_get_post_type_slug( array( 'course', 'group' ) ), true ) ) {
-		return false;
-	}
+	$class = 'notice notice-warning is-dismissible';
+	$title = __( 'LearnDash Licensing & Management', 'learndash' );
+	$links = __( '<a href="https://www.learndash.com/support/docs/core/learndash-licensing-and-management/">LearnDash Licensing Guide</a>', 'learndash' );
 
-	$post_title = wp_strip_all_tags( $post->post_title );
-
-	$file_time = microtime( true ) * 100;
-	$filename  = sprintf( 'purchase_invoice_%d_%d_%d', $post_id, $file_time, $user_id );
-
-	/**
-	 * Filters the purchase invoice upload file name.
-	 *
-	 * @since 4.1.0
-	 *
-	 * @param string $filename   File name.
-	 * @param int    $post_id    Post ID.
-	 * @param int    $file_time  Unix timestamp.
-	 * @param int    $user_id    User ID
-	 */
-	$filename = apply_filters( 'learndash_purchase_invoice_filename', $filename, $post_id, $file_time, $user_id );
-
-	$filename = basename( $filename );
-	$filename = substr( $filename, 0, 255 );
-	$filename = sanitize_file_name( $filename );
-	$filename = $filename . '.pdf';
-
-	return $filename;
+	printf(
+		'<div class="%1$s">
+			<p><strong>%2$s</strong></p>
+			<p>%3$s</p>
+			<p>%4$s</p>
+		</div>',
+		esc_attr( $class ),
+		esc_html( $title ),
+		$message, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Need to output HTML.
+		wp_kses_post( $links )
+	);
 }
 
 /**
- * Generates file path for purchase invoice PDF
+ * Creates a cryptographic token tied to a specific action, user, user session, and window of time.
+ * Adds the `learndash_` prefix to the action.
  *
- * @since 4.1.0
+ * @since 4.12.0
  *
- * @param int $post_id Post ID.
+ * @param string $action String value to add context to the nonce.
  *
- * @return string $filepath File path of the purchase invoice PDF
+ * @return string The token.
  */
-function learndash_purchase_invoice_filepath( $post_id = 0 ) {
+function learndash_create_nonce( string $action ): string {
+	return wp_create_nonce( 'learndash_' . $action );
+}
 
-	$post_id = absint( $post_id );
-	if ( empty( $post_id ) ) {
-		return false;
+/**
+ * Sanitizes a given version string to ensure that it follows SemVer properly.
+ *
+ * @since 4.18.1
+ * @since 4.21.1 Added support for WordPress Beta and Nightly version strings.
+ *
+ * @param string $version Version string.
+ *
+ * @return string
+ */
+function learndash_sanitize_version_string( string $version ): string {
+	$modifier = '';
+
+	// Extracts the "modifier" to add it back later. Example: -RC2, -dev.hash, -beta1-hash, etc.
+	if ( strpos( $version, '-' ) !== false ) {
+		$modifier = Cast::to_string( preg_replace( '/^[^-]*(.*$)/', '$1', $version ) );
+		$version  = str_replace( $modifier, '', $version );
 	}
 
-	$post = get_post( $post_id );
-	if ( ( ! $post ) || ( ! is_a( $post, 'WP_Post' ) ) ) {
-		return false;
+	// Ensure that the version string has at least 3 parts.
+	for ( $count = count( explode( '.', $version ) ); $count < 3; $count++ ) {
+		$version .= '.0';
 	}
 
-	if ( ! in_array( $post->post_type, learndash_get_post_type_slug( array( 'course', 'group' ) ), true ) ) {
-		return false;
-	}
-
-	$upload_dir      = wp_upload_dir();
-	$upload_dir_base = str_replace( '\\', '/', $upload_dir['basedir'] );
-	$upload_url_base = $upload_dir['baseurl'];
-	$ld_upload_dir   = $upload_dir_base . '/learndash';
-
-	$time = current_time( 'mysql' );
-
-	$y      = substr( $time, 0, 4 );
-	$m      = substr( $time, 5, 2 );
-	$subdir = "/$y/$m";
-
-	$post_name = $post->post_name;
-
-	if ( ( $ld_upload_dir ) && ( ! empty( $ld_upload_dir ) ) && ( file_exists( $ld_upload_dir ) ) && ( is_writable( $ld_upload_dir ) ) ) {
-		$ld_upload_purchase_invoices_dir = trailingslashit( $ld_upload_dir ) . 'purchase_invoices/' . $post_name . trailingslashit( $subdir );
-		if ( ! file_exists( $ld_upload_purchase_invoices_dir ) ) {
-			if ( wp_mkdir_p( $ld_upload_purchase_invoices_dir ) !== false ) {
-				// To prevent security browsing add an index.php file.
-				learndash_put_directory_index_file( trailingslashit( $ld_upload_purchase_invoices_dir ) . 'index.php' );
-			}
-		}
-		$filepath = $ld_upload_purchase_invoices_dir;
-	}
-
-	/**
-	 * Filters the purchase invoice upload file path.
-	 *
-	 * @since 4.1.0
-	 *
-	 * @param string $filename   File name.
-	 * @param string $$ld_upload_purchase_invoices_dir Directory location to save purchase invoice.
-	 */
-	$filepath = apply_filters( 'learndash_purchase_invoice_filepath', $filepath, $ld_upload_purchase_invoices_dir );
-
-	return $filepath;
+	return $version . $modifier;
 }

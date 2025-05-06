@@ -7,6 +7,8 @@
  * @package LearnDash\Users
  */
 
+use LearnDash\Core\Utilities\Cast;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -29,151 +31,179 @@ function learndash_delete_user_data( $user_id ) {
 		return;
 	}
 
-	$user_id = intval( $user_id );
-	if ( ! empty( $user_id ) ) {
-		$user = get_user_by( 'id', $user_id );
+	$user_id = Cast::to_int( $user_id );
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$ref_ids = $wpdb->get_col(
-			$wpdb->prepare(
-				'SELECT statistic_ref_id FROM ' . esc_sql( LDLMS_DB::get_table_name( 'quiz_statistic_ref' ) ) . ' WHERE  user_id = %d ',
-				absint( $user->ID )
-			)
+	if ( empty( $user_id ) ) {
+		return;
+	}
+
+	$user = get_user_by( 'id', $user_id );
+
+	if ( ! $user ) {
+		return;
+	}
+
+	$ref_ids = $wpdb->get_col(
+		$wpdb->prepare(
+			'SELECT statistic_ref_id FROM ' . esc_sql( LDLMS_DB::get_table_name( 'quiz_statistic_ref' ) ) . ' WHERE  user_id = %d ',
+			$user->ID
+		)
+	);
+
+	if ( ! empty( $ref_ids[0] ) ) {
+		$ref_ids = array_map( 'absint', $ref_ids );
+		$wpdb->query(
+			// phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.PreparedSQL.NotPrepared -- IN clause
+			$wpdb->prepare( 'DELETE FROM ' . esc_sql( LDLMS_DB::get_table_name( 'quiz_statistic' ) ) . ' WHERE statistic_ref_id IN (' . LDLMS_DB::escape_IN_clause_placeholders( $ref_ids ) . ')', LDLMS_DB::escape_IN_clause_values( $ref_ids ) )
 		);
+	}
 
-		if ( ! empty( $ref_ids[0] ) ) {
+	$wpdb->delete(
+		LDLMS_DB::get_table_name( 'quiz_statistic_ref' ),
+		array(
+			'user_id' => $user->ID,
+		)
+	);
 
-			$ref_ids = array_map( 'absint', $ref_ids );
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-			$wpdb->query(
-				// phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.PreparedSQL.NotPrepared -- IN clause
-				$wpdb->prepare( 'DELETE FROM ' . esc_sql( LDLMS_DB::get_table_name( 'quiz_statistic' ) ) . ' WHERE statistic_ref_id IN (' . LDLMS_DB::escape_IN_clause_placeholders( $ref_ids ) . ')', LDLMS_DB::escape_IN_clause_values( $ref_ids ) )
+	$wpdb->delete(
+		$wpdb->usermeta,
+		array(
+			'meta_key' => '_sfwd-quizzes',
+			'user_id'  => $user->ID,
+		)
+	);
+
+	$wpdb->delete(
+		$wpdb->usermeta,
+		array(
+			'meta_key' => '_sfwd-course_progress',
+			'user_id'  => $user->ID,
+		)
+	);
+
+	$wpdb->delete(
+		$wpdb->usermeta,
+		array(
+			'meta_key' => 'learndash-last-login',
+			'user_id'  => $user->ID,
+		)
+	);
+
+	$wpdb->query(
+		$wpdb->prepare(
+			"DELETE FROM {$wpdb->usermeta} WHERE meta_key LIKE %s AND user_id = %d",
+			'completed_%',
+			$user->ID
+		)
+	);
+
+	$wpdb->query(
+		$wpdb->prepare(
+			"DELETE FROM {$wpdb->usermeta} WHERE meta_key LIKE %s AND user_id = %d",
+			'course_%_access_from',
+			$user->ID
+		)
+	);
+
+	$wpdb->query(
+		$wpdb->prepare(
+			"DELETE FROM {$wpdb->usermeta} WHERE meta_key LIKE %s AND user_id = %d",
+			'group_%_access_from',
+			$user->ID
+		)
+	);
+
+	$wpdb->query(
+		$wpdb->prepare(
+			"DELETE FROM {$wpdb->usermeta} WHERE meta_key LIKE %s AND user_id = %d",
+			'course_completed_%',
+			$user->ID
+		)
+	);
+
+	$wpdb->query(
+		$wpdb->prepare(
+			"DELETE FROM {$wpdb->usermeta} WHERE meta_key LIKE %s AND user_id = %d",
+			'learndash_course_expired_%',
+			$user->ID
+		)
+	);
+
+	$wpdb->query(
+		$wpdb->prepare(
+			"DELETE FROM {$wpdb->usermeta} WHERE meta_key LIKE %s AND user_id = %d",
+			'learndash_course_%',
+			$user->ID
+		)
+	);
+
+	$wpdb->query(
+		$wpdb->prepare(
+			"DELETE FROM {$wpdb->usermeta} WHERE meta_key LIKE %s AND user_id = %d",
+			'learndash_group_%',
+			$user->ID
+		)
+	);
+
+	learndash_report_clear_user_activity_by_types( $user->ID );
+
+	$wpdb->delete( LDLMS_DB::get_table_name( 'quiz_lock' ), array( 'user_id' => $user->ID ) );
+
+	$wpdb->delete( LDLMS_DB::get_table_name( 'quiz_toplist' ), array( 'user_id' => $user->ID ) );
+
+	// Permanently delete assignments uploaded by the user.
+
+	$user_assignments_query_args = array(
+		'fields'    => 'ids',
+		'post_type' => 'sfwd-assignment',
+		'nopaging'  => true,
+		'author'    => $user->ID,
+	);
+
+	$user_assignments_query = new WP_Query( $user_assignments_query_args );
+	if ( $user_assignments_query->have_posts() ) {
+		foreach ( $user_assignments_query->posts as $assignment_post_id ) {
+			wp_delete_post(
+				Cast::to_int( $assignment_post_id ),
+				true
 			);
 		}
-
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$wpdb->delete(
-			LDLMS_DB::get_table_name( 'quiz_statistic_ref' ),
-			array(
-				'user_id' => $user->ID,
-			)
-		);
-
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$wpdb->delete(
-			$wpdb->usermeta,
-			array(
-				'meta_key' => '_sfwd-quizzes', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-				'user_id'  => $user->ID,
-			)
-		);
-
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$wpdb->delete(
-			$wpdb->usermeta,
-			array(
-				'meta_key' => '_sfwd-course_progress', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-				'user_id'  => $user->ID,
-			)
-		);
-
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$wpdb->query(
-			$wpdb->prepare(
-				"DELETE FROM {$wpdb->usermeta} WHERE meta_key LIKE %s AND user_id = %d",
-				'completed_%',
-				absint( $user->ID )
-			)
-		);
-
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$wpdb->query(
-			$wpdb->prepare(
-				"DELETE FROM {$wpdb->usermeta} WHERE meta_key LIKE %s AND user_id = %d",
-				'course_%_access_from',
-				absint( $user->ID )
-			)
-		);
-
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$wpdb->query(
-			$wpdb->prepare(
-				"DELETE FROM {$wpdb->usermeta} WHERE meta_key LIKE %s AND user_id = %d",
-				'course_completed_%',
-				absint( $user->ID )
-			)
-		);
-
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$wpdb->query(
-			$wpdb->prepare(
-				"DELETE FROM {$wpdb->usermeta} WHERE meta_key LIKE %s AND user_id = %d",
-				'learndash_course_expired_%',
-				absint( $user->ID )
-			)
-		);
-
-		// Added in v2.3.1 to remove the quiz locks for user.
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$wpdb->query(
-			$wpdb->prepare(
-				'DELETE FROM ' . esc_sql( LDLMS_DB::get_table_name( 'quiz_lock' ) ) . ' WHERE user_id = %d',
-				absint( $user->ID )
-			)
-		);
-
-		learndash_report_clear_user_activity_by_types( $user_id );
-
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$wpdb->delete( LDLMS_DB::get_table_name( 'quiz_lock' ), array( 'user_id' => $user->ID ) );
-
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$wpdb->delete( LDLMS_DB::get_table_name( 'quiz_toplist' ), array( 'user_id' => $user->ID ) );
-
-		// Move user uploaded Assignments to Trash.
-		$user_assignments_query_args = array(
-			'post_type'   => 'sfwd-assignment',
-			'post_status' => 'publish',
-			'nopaging'    => true,
-			'author'      => $user->ID,
-		);
-
-		$user_assignments_query = new WP_Query( $user_assignments_query_args );
-		if ( $user_assignments_query->have_posts() ) {
-
-			foreach ( $user_assignments_query->posts as $assignment_post ) {
-				wp_trash_post( $assignment_post->ID );
-			}
-		}
-		wp_reset_postdata();
-
-		// Move user uploaded Essay to Trash.
-		$user_essays_query_args = array(
-			'post_type' => 'sfwd-essays',
-			'nopaging'  => true,
-			'author'    => $user->ID,
-		);
-
-		$user_essays_query = new WP_Query( $user_essays_query_args );
-		if ( $user_essays_query->have_posts() ) {
-
-			foreach ( $user_essays_query->posts as $essay_post ) {
-				wp_trash_post( $essay_post->ID );
-			}
-		}
-		wp_reset_postdata();
-
-		/**
-		 * Fires after deleting user data.
-		 *
-		 * @param int $user_id User ID.
-		 */
-		do_action( 'learndash_delete_user_data', $user_id );
 	}
+	wp_reset_postdata();
+
+	// Permanently delete essays uploaded by the user.
+
+	$user_essays_query_args = array(
+		'fields'    => 'ids',
+		'post_type' => 'sfwd-essays',
+		'nopaging'  => true,
+		'author'    => $user->ID,
+	);
+
+	$user_essays_query = new WP_Query( $user_essays_query_args );
+	if ( $user_essays_query->have_posts() ) {
+		foreach ( $user_essays_query->posts as $essay_post_id ) {
+			wp_delete_post(
+				Cast::to_int( $essay_post_id ),
+				true
+			);
+		}
+	}
+	wp_reset_postdata();
+
+	// flush user meta cache.
+
+	wp_cache_delete( $user->ID, 'user_meta' );
+
+	/**
+	 * Fires after deleting user data.
+	 *
+	 * @param int $user_id User ID.
+	 */
+	do_action( 'learndash_delete_user_data', $user->ID );
 }
 
 add_action( 'delete_user', 'learndash_delete_user_data' );
-
 
 /**
  * Gets the list of all courses enrolled by the user.
@@ -411,7 +441,7 @@ function learndash_save_user_course_complete( $user_id = 0 ) {
 			if ( wp_verify_nonce( $_POST[ 'user_progress-' . $user_id . '-nonce' ], 'user_progress-' . $user_id ) ) {
 				$user_progress = (array) json_decode( stripslashes( $_POST['user_progress'][ $user_id ] ) );
 				$user_progress = json_decode( wp_json_encode( $user_progress ), true );
-				learndash_process_user_course_progress_update( $user_id, $user_progress );
+				learndash_process_user_course_progress_update( $user_id, $user_progress, true );
 			}
 		}
 	}
@@ -421,8 +451,12 @@ function learndash_save_user_course_complete( $user_id = 0 ) {
  * Process user course progress changes.
  *
  * @since 4.0.0
+ * @since 4.12.1 Added $force parameter.
+ * @since 4.21.2 Lessons and Topics will now fire the appropriate actions when marked complete.
+ *
  * @param int   $user_id       User ID to update.
  * @param array $user_progress User progress array.
+ * @param bool  $force         Optional. Whether to force the progress update to bypass requirements. Default false.
  *
  * @return array Array of processed course IDs.
  *
@@ -455,7 +489,7 @@ function learndash_save_user_course_complete( $user_id = 0 ) {
  *   )
  * )
  */
-function learndash_process_user_course_progress_update( $user_id = 0, $user_progress = array() ) {
+function learndash_process_user_course_progress_update( $user_id = 0, $user_progress = array(), $force = false ) {
 	$processed_course_ids = array();
 
 	if ( empty( $user_id ) ) {
@@ -472,13 +506,73 @@ function learndash_process_user_course_progress_update( $user_id = 0, $user_prog
 
 			$processed_course_ids[ intval( $course_id ) ] = intval( $course_id );
 
-			if ( isset( $course_progress[ $course_id ] ) ) {
+			if ( isset( $course_progress[ $course_id ] ) ) { // @phpstan-ignore-line -- legacy code.
 				$course_data_old = $course_progress[ $course_id ];
 			} else {
-				$course_data_old = array();
+				$course_data_old = [];
+			}
+
+			if ( ! is_array( $course_data_old ) ) {
+				$course_data_old = [];
 			}
 
 			$course_data_new = learndash_course_item_to_activity_sync( $user_id, $course_id, $course_data_new, $course_data_old );
+
+			if ( is_array( $course_data_new ) ) {
+				foreach ( $course_data_new['lessons'] as $lesson_id => $lesson_new_status ) {
+					// Only run the Lesson completion action if the Lesson is newly completed.
+					if (
+						! $lesson_new_status
+						|| (
+							isset( $course_data_old['lessons'] )
+							&& isset( $course_data_old['lessons'][ $lesson_id ] )
+							&& $course_data_old['lessons'][ $lesson_id ]
+						)
+					) {
+						continue;
+					}
+
+					do_action(
+						/** This action is documented in includes/course/ld-course-progress.php */
+						'learndash_lesson_completed',
+						[
+							'user'     => new WP_User( $user_id ),
+							'course'   => get_post( Cast::to_int( $course_id ) ),
+							'lesson'   => get_post( Cast::to_int( $lesson_id ) ),
+							'progress' => $course_progress,
+						]
+					);
+				}
+
+				foreach ( $course_data_new['topics'] as $lesson_id => $topics ) {
+					foreach ( $topics as $topic_id => $topic_new_status ) {
+						// Only run the Topic completion action if the Topic is newly completed.
+						if (
+							! $topic_new_status
+							|| (
+								isset( $course_data_old['topics'] )
+								&& isset( $course_data_old['topics'][ $lesson_id ] )
+								&& isset( $course_data_old['topics'][ $lesson_id ][ $topic_id ] )
+								&& $course_data_old['topics'][ $lesson_id ][ $topic_id ]
+							)
+						) {
+							continue;
+						}
+
+						do_action(
+							/** This action is documented in includes/course/ld-course-progress.php */
+							'learndash_topic_completed',
+							[
+								'user'     => new WP_User( $user_id ),
+								'course'   => get_post( Cast::to_int( $course_id ) ),
+								'lesson'   => get_post( Cast::to_int( $lesson_id ) ),
+								'topic'    => get_post( Cast::to_int( $topic_id ) ),
+								'progress' => $course_progress,
+							]
+						);
+					}
+				}
+			}
 
 			$course_progress[ $course_id ] = $course_data_new;
 
@@ -492,9 +586,9 @@ function learndash_process_user_course_progress_update( $user_id = 0, $user_prog
 
 	if ( ( isset( $user_progress['quiz'] ) ) && ( ! empty( $user_progress['quiz'] ) ) ) {
 
-		$usermeta       = get_user_meta( $user_id, '_sfwd-quizzes', true );
-		$quizz_progress = empty( $usermeta ) ? array() : $usermeta;
-		$quiz_changed   = false; // Simple flag to let us know we changed the quiz data so we can save it back to user meta.
+		$usermeta      = get_user_meta( $user_id, '_sfwd-quizzes', true );
+		$quiz_progress = empty( $usermeta ) ? array() : $usermeta;
+		$quiz_changed  = false; // Simple flag to let us know we changed the quiz data so we can save it back to user meta.
 
 		foreach ( $user_progress['quiz'] as $course_id => $course_quiz_set ) {
 			foreach ( $course_quiz_set as  $quiz_id => $quiz_new_status ) {
@@ -523,28 +617,28 @@ function learndash_process_user_course_progress_update( $user_id = 0, $user_prog
 							// If the admin is marking the quiz complete AND the quiz is NOT already complete...
 							// Then we add the minimal quiz data to the user profile.
 							$quizdata = array(
-								'quiz'         => $quiz_id,
-								'score'        => 0,
-								'count'        => 0,
+								'quiz'                => $quiz_id,
+								'score'               => 0,
+								'count'               => 0,
 								'question_show_count' => 0,
-								'pass'         => true,
-								'rank'         => '-',
-								'time'         => time(),
-								'pro_quizid'   => absint( $quiz_meta['sfwd-quiz_quiz_pro'] ),
-								'course'       => $course_id,
-								'lesson'       => $lesson_id,
-								'topic'        => $topic_id,
-								'points'       => 0,
-								'total_points' => 0,
-								'percentage'   => 0,
-								'timespent'    => 0,
-								'has_graded'   => false,
-								'statistic_ref_id' => 0,
-								'm_edit_by'    => get_current_user_id(), // Manual Edit By ID.
-								'm_edit_time'  => time(), // Manual Edit timestamp.
+								'pass'                => true,
+								'rank'                => '-',
+								'time'                => time(),
+								'pro_quizid'          => absint( $quiz_meta['sfwd-quiz_quiz_pro'] ),
+								'course'              => $course_id,
+								'lesson'              => $lesson_id,
+								'topic'               => $topic_id,
+								'points'              => 0,
+								'total_points'        => 0,
+								'percentage'          => 0,
+								'timespent'           => 0,
+								'has_graded'          => false,
+								'statistic_ref_id'    => 0,
+								'm_edit_by'           => get_current_user_id(), // Manual Edit By ID.
+								'm_edit_time'         => time(), // Manual Edit timestamp.
 							);
 
-							$quizz_progress[] = $quizdata;
+							$quiz_progress[] = $quizdata;
 
 							if ( true === $quizdata['pass'] ) {
 								$quizdata_pass = true;
@@ -555,15 +649,15 @@ function learndash_process_user_course_progress_update( $user_id = 0, $user_prog
 							// Then we add the quiz entry to the activity database.
 							learndash_update_user_activity(
 								array(
-									'course_id' => $course_id,
-									'user_id' => $user_id,
-									'post_id' => $quiz_id,
-									'activity_type' => 'quiz',
-									'activity_action' => 'insert',
-									'activity_status' => $quizdata_pass,
-									'activity_started' => $quizdata['time'],
+									'course_id'          => $course_id,
+									'user_id'            => $user_id,
+									'post_id'            => $quiz_id,
+									'activity_type'      => 'quiz',
+									'activity_action'    => 'insert',
+									'activity_status'    => $quizdata_pass,
+									'activity_started'   => $quizdata['time'],
 									'activity_completed' => $quizdata['time'],
-									'activity_meta' => $quizdata,
+									'activity_meta'      => $quizdata,
 								)
 							);
 
@@ -591,19 +685,19 @@ function learndash_process_user_course_progress_update( $user_id = 0, $user_prog
 
 						}
 					} elseif ( true !== $quiz_new_status ) {
-						// If we are unsetting a quiz ( changing from complete to incomplete). We need to do some complicated things...
+						// If we are un-setting a quiz ( changing from complete to incomplete). We need to do some complicated things...
 						if ( true === $quiz_old_status ) {
 
-							if ( ! empty( $quizz_progress ) ) {
-								foreach ( $quizz_progress as $quiz_idx => $quiz_item ) {
+							if ( ! empty( $quiz_progress ) ) {
+								foreach ( $quiz_progress as $quiz_idx => $quiz_item ) {
 
-									if ( ( $quiz_item['quiz'] == $quiz_id ) && ( true === $quiz_item['pass'] ) ) {
-										$quizz_progress[ $quiz_idx ]['pass'] = false;
+									if ( $quiz_item['quiz'] == $quiz_id && true === (bool) $quiz_item['pass'] ) {
+										$quiz_progress[ $quiz_idx ]['pass'] = false;
 
 										// We need to update the activity database records for this quiz_id.
 										$activity_query_args = array(
-											'post_ids'      => $quiz_id,
-											'user_ids'      => $user_id,
+											'post_ids' => $quiz_id,
+											'user_ids' => $user_id,
 											'activity_type' => 'quiz',
 										);
 										$quiz_activity       = learndash_reports_get_activity( $activity_query_args );
@@ -652,13 +746,13 @@ function learndash_process_user_course_progress_update( $user_id = 0, $user_prog
 		}
 
 		if ( true === $quiz_changed ) {
-			update_user_meta( $user_id, '_sfwd-quizzes', $quizz_progress );
+			update_user_meta( $user_id, '_sfwd-quizzes', $quiz_progress );
 		}
 	}
 
 	if ( ! empty( $processed_course_ids ) ) {
 		foreach ( array_unique( $processed_course_ids ) as $course_id ) {
-			learndash_process_mark_complete( $user_id, $course_id );
+			learndash_process_mark_complete( $user_id, $course_id, false, 0, $force );
 			learndash_update_group_course_user_progress( $course_id, $user_id, true );
 		}
 	}
@@ -935,11 +1029,11 @@ function learndash_user_course_complete_all_steps( $user_id = 0, $course_id = 0 
 		}
 	}
 
-	$user_progress = array(
+	$user_progress         = array(
 		'course' => array(
 			$course_id => $course_progress_steps_legacy,
 		),
-		'quiz' => array(
+		'quiz'   => array(
 			$course_id => $quiz_progress,
 		),
 	);

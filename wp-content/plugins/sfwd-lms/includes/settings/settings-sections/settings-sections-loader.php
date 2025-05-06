@@ -50,12 +50,14 @@ require_once __DIR__ . '/class-ld-settings-section-groups-membership.php';
 
 // Settings General tab.
 require_once __DIR__ . '/class-ld-settings-section-courses-themes.php';
+require_once __DIR__ . '/class-ld-settings-section-general-appearance.php';
 require_once __DIR__ . '/class-ld-settings-section-general-per-page.php';
 require_once __DIR__ . '/class-ld-settings-section-general-admin-user.php';
 
 // Registration.
 require_once __DIR__ . '/class-ld-settings-section-registration-fields.php';
 require_once __DIR__ . '/class-ld-settings-section-registration-pages.php';
+require_once __DIR__ . '/class-ld-settings-section-terms-pages.php';
 
 // Emails.
 require_once __DIR__ . '/class-ld-settings-section-emails-list.php';
@@ -98,9 +100,16 @@ require_once __DIR__ . '/class-ld-settings-section-custom-labels.php';
 require_once __DIR__ . '/class-ld-settings-section-bulk-edit.php';
 require_once __DIR__ . '/class-ld-settings-section-data-upgrades.php';
 require_once __DIR__ . '/class-ld-settings-section-import-export.php';
+require_once __DIR__ . '/class-ld-settings-section-logs.php';
 if ( ( defined( 'LEARNDASH_REST_API_ENABLED' ) ) && ( true === LEARNDASH_REST_API_ENABLED ) ) {
 	require_once __DIR__ . '/class-ld-settings-section-general-rest-api.php';
 }
+require_once __DIR__ . '/class-ld-settings-section-telemetry.php';
+require_once __DIR__ . '/class-ld-settings-section-ai-integrations.php';
+require_once __DIR__ . '/class-ld-settings-section-backups.php';
+
+// Experiments.
+require_once __DIR__ . '/class-ld-settings-section-experiments-list.php';
 
 // Assignments.
 require_once __DIR__ . '/class-ld-settings-section-assignments-cpt.php';

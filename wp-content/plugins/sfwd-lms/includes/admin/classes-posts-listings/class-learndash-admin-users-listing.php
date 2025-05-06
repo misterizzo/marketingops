@@ -258,7 +258,7 @@ if ( ( class_exists( 'Learndash_Admin_Posts_Listing' ) ) && ( ! class_exists( 'L
 								$user_ids = wp_list_pluck( $admin_users, 'ID' );
 								if ( ! empty( $user_ids ) ) {
 									$user_ids = array_map( 'absint', $user_ids );
-									$user_ids = array_diff( $user_ids, [ 0 ] );
+									$user_ids = array_diff( $user_ids, array( 0 ) );
 								}
 								if ( ! empty( $user_ids ) ) {
 									$q_vars['include'] = array_merge( $q_vars['include'], $user_ids );

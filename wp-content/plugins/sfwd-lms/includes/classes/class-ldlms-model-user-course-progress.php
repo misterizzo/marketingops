@@ -434,7 +434,7 @@ if ( ( ! class_exists( 'LDLMS_Model_User_Course_Progress' ) ) && ( class_exists(
 			return $progress_co;
 		}
 
-		
+
 		/**
 		 * Build the Course Progress Completes Steps Count.
 		 *
@@ -753,6 +753,8 @@ function learndash_user_progress_get_previous_incomplete_step( $user_id = 0, $co
 			}
 		}
 	}
+
+	return false;
 }
 
 /**
@@ -914,6 +916,37 @@ function learndash_user_progression_get_incomplete_child_steps( $user_id = 0, $c
 }
 
 /**
+ * Utility function to return completed course step within a parent step.
+ *
+ * @since 4.4.0
+ *
+ * @param integer $user_id   User ID.
+ * @param integer $course_id Course ID.
+ * @param integer $step_id   Course Step ID.
+ *
+ * @return array Array of completed step IDs.
+ */
+function learndash_user_progression_get_complete_child_steps( $user_id = 0, $course_id = 0, $step_id = 0 ) {
+
+	$complete_child_steps = array();
+
+	$user_id   = absint( $user_id );
+	$course_id = absint( $course_id );
+	$step_id   = absint( $step_id );
+
+	$child_steps = learndash_course_get_children_of_step( $course_id, $step_id, '', 'ids', true );
+	if ( ! empty( $child_steps ) ) {
+		foreach ( $child_steps as $child_step_id ) {
+			if ( true === learndash_user_progress_is_step_complete( $user_id, $course_id, $child_step_id ) ) {
+				$complete_child_steps[] = absint( $child_step_id );
+			}
+		}
+	}
+
+	return $complete_child_steps;
+}
+
+/**
  * Utility function to get check if the course step is complete.
  *
  * @since 3.4.0
@@ -1013,7 +1046,7 @@ function learndash_user_progress_get_parent_incomplete_step( $user_id = 0, $cour
 							}
 						}
 					}
-				}		
+				}
 			}
 		}
 	}

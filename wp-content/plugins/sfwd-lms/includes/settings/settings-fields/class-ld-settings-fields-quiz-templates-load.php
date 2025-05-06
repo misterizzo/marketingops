@@ -144,6 +144,7 @@ if ( ( class_exists( 'LearnDash_Settings_Fields' ) ) && ( ! class_exists( 'Learn
 			$html .= '</span><br />';
 
 			if ( 'yes' !== LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Courses_Builder', 'shared_steps' ) ) {
+				// cspell:disable-next-line.
 				$html .= '<p><label for="templateload-option-replace-course"><input type="checkbox" id="templateload-option-replace-course" name="templateLoadReplaceCourse" />' . sprintf(
 					// translators: placeholders: course, lessons, topics.
 					esc_html_x( 'Replace associated steps (%1$s, %2$s, or %3$s) with values from template.', 'placeholders: course, lessons, topics.', 'learndash' ),
@@ -162,7 +163,7 @@ if ( ( class_exists( 'LearnDash_Settings_Fields' ) ) && ( ! class_exists( 'Learn
 		}
 
 		/**
-		 * Default validation function. Should be overriden in Field subclass.
+		 * Default validation function. Should be overridden in Field subclass.
 		 *
 		 * @since 3.0.0
 		 *
@@ -175,7 +176,7 @@ if ( ( class_exists( 'LearnDash_Settings_Fields' ) ) && ( ! class_exists( 'Learn
 		public function validate_section_field( $val, $key, $args = array() ) {
 			if ( ( isset( $args['field']['type'] ) ) && ( $args['field']['type'] === $this->field_type ) ) {
 				if ( ! empty( $val ) ) {
-					$val = wp_check_invalid_utf8( $val );
+					$val = wp_check_invalid_utf8( strval( $val ) );
 					if ( ! empty( $val ) ) {
 						$val = sanitize_post_field( 'post_content', $val, 0, 'db' );
 					}

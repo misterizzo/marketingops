@@ -35,7 +35,7 @@ if ( ( ! class_exists( 'LDLMS_Quiz_Questions' ) ) && ( class_exists( 'LDLMS_Mode
 
 		/**
 		 * Quiz ID Primary for settings.
-		 * When sharing via Associated Settiings.
+		 * When sharing via Associated Settings.
 		 *
 		 * @var integer $quiz_primary_id
 		 */
@@ -95,7 +95,7 @@ if ( ( ! class_exists( 'LDLMS_Quiz_Questions' ) ) && ( class_exists( 'LDLMS_Mode
 		}
 
 		/**
-		 * Iniitialize object vars.
+		 * Initialize object vars.
 		 *
 		 * @since 2.6.0
 		 */
@@ -232,7 +232,7 @@ if ( ( ! class_exists( 'LDLMS_Quiz_Questions' ) ) && ( class_exists( 'LDLMS_Mode
 							'meta_query'     => $questions_query_meta_query,
 						);
 
-						// Exlude the found items from the first step above.
+						// Exclude the found items from the first step above.
 						if ( ( isset( $this->questions['post_ids'] ) ) && ( ! empty( $this->questions['post_ids'] ) ) ) {
 							$questions_query_args['post__not_in'] = array_keys( $this->questions['post_ids'] );
 						}
@@ -459,7 +459,6 @@ if ( ( ! class_exists( 'LDLMS_Quiz_Questions' ) ) && ( class_exists( 'LDLMS_Mode
 				'quiz_id',
 				$this->quiz_primary_id
 			);
-			// error_log('sql_str['. $sql_str .']');
 
 			$quiz_questions_primary = $wpdb->get_col( $sql_str );
 			if ( ! empty( $quiz_questions_primary ) ) {

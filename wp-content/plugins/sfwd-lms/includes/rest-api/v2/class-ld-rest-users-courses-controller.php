@@ -172,27 +172,14 @@ if ( ( ! class_exists( 'LD_REST_Users_Courses_Controller_V2' ) ) && ( class_exis
 				);
 			}
 
-			$user_courses = array();
-
 			$course_ids = learndash_user_get_enrolled_courses( $user_id, array(), true );
-			if ( ! empty( $course_ids ) ) {
-
-				$route_url = '/' . $this->namespace . '/' . $this->get_rest_base( 'courses' );
-				$request   = new WP_REST_Request( 'GET', $route_url );
-				$request->set_query_params( array( 'include' => $course_ids ) );
-
-				$response     = rest_do_request( $request );
-				$server       = rest_get_server();
-				$user_courses = $server->response_to_data( $response, false );
+			if ( empty( $course_ids ) ) {
+				$course_ids = [ 0 ]; // Don't return anything.
 			}
 
-			// Create the response object.
-			$response = rest_ensure_response( $user_courses );
+			$request->set_query_params( [ 'include' => $course_ids ] );
 
-			// Add a custom status code.
-			$response->set_status( 200 );
-
-			return $response;
+			return $this->get_items( $request );
 		}
 
 		/**
@@ -226,8 +213,6 @@ if ( ( ! class_exists( 'LD_REST_Users_Courses_Controller_V2' ) ) && ( class_exis
 		public function update_user_courses_permissions_check( $request ) {
 			if ( learndash_is_admin_user() ) {
 				return true;
-			} elseif ( get_current_user_id() == $request['id'] ) {
-				return true;
 			} else {
 				return new WP_Error( 'ld_rest_cannot_view', esc_html__( 'Sorry, you are not allowed to view this item.', 'learndash' ), array( 'status' => rest_authorization_required_code() ) );
 			}
@@ -244,8 +229,6 @@ if ( ( ! class_exists( 'LD_REST_Users_Courses_Controller_V2' ) ) && ( class_exis
 		 */
 		public function delete_user_courses_permissions_check( $request ) {
 			if ( learndash_is_admin_user() ) {
-				return true;
-			} elseif ( get_current_user_id() == $request['id'] ) {
 				return true;
 			} else {
 				return new WP_Error( 'ld_rest_cannot_view', esc_html__( 'Sorry, you are not allowed to view this item.', 'learndash' ), array( 'status' => rest_authorization_required_code() ) );

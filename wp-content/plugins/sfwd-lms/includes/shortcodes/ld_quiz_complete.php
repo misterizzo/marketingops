@@ -59,7 +59,7 @@ function ld_quiz_complete_shortcode( $atts = array(), $content = '', $shortcode_
 	}
 
 	$learndash_shortcode_used = true;
-	if ( ( ! empty( $atts['quiz_id'] ) ) && ( ! empty( $atts['user_id'] ) ) ) {
+	if ( ( ! empty( $atts['quiz_id'] ) ) && ( ! empty( $atts['user_id'] ) ) && ( get_current_user_id() === $atts['user_id'] ) ) {
 		if ( learndash_is_quiz_complete( $atts['user_id'], $atts['quiz_id'], $atts['course_id'] ) ) {
 			$content = do_shortcode( $content );
 		} else {

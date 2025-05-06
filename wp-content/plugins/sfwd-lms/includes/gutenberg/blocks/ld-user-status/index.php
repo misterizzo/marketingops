@@ -64,7 +64,7 @@ if ( ( class_exists( 'LearnDash_Gutenberg_Block' ) ) && ( ! class_exists( 'Learn
 		 *
 		 * @since 2.5.9
 		 *
-		 * @param array    $block_attributes The block attrbutes.
+		 * @param array    $block_attributes The block attributes.
 		 * @param string   $block_content    The block content.
 		 * @param WP_block $block            The block object.
 		 * @return none The output is echoed.
@@ -81,7 +81,7 @@ if ( ( class_exists( 'LearnDash_Gutenberg_Block' ) ) && ( ! class_exists( 'Learn
 
 			// Only the 'editing_post_meta' element will be sent from within the post edit screen.
 			if ( $this->block_attributes_is_editing_post( $block_attributes ) ) {
-				$block_attributes['user_id']   = $this->block_attributes_get_user_id( $block_attributes );
+				$block_attributes['user_id'] = $this->block_attributes_get_user_id( $block_attributes );
 			}
 
 			/** This filter is documented in includes/gutenberg/blocks/ld-course-list/index.php */

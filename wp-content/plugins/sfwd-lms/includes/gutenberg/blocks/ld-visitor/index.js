@@ -255,17 +255,6 @@ registerBlockType(block_key, {
 					);
 				}
 			}
-		} else {
-			ld_block_error_message = sprintf(
-				// translators: placeholders: Course, Group.
-				_x(
-					"Select %1$s or %2$s display type.",
-					"placeholders: Course, Group",
-					"learndash"
-				),
-				ldlms_get_custom_label("course"),
-				ldlms_get_custom_label("group")
-			);
 		}
 
 		if (ld_block_error_message.length) {

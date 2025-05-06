@@ -475,7 +475,7 @@ if ( ( ! class_exists( 'Learndash_Admin_Metabox_Course_Builder' ) ) && ( class_e
 		 * @return array Pager Button(s) array.
 		 */
 		public function build_selector_pages_buttons_json( $post_type_query ) {
-			$pager_buttons = [
+			$pager_buttons = array(
 				'first_page'    => 1,
 				'last_page'     => 1,
 				'prev_page'     => null,
@@ -483,7 +483,7 @@ if ( ( ! class_exists( 'Learndash_Admin_Metabox_Course_Builder' ) ) && ( class_e
 				'next_page'     => null,
 				'next_disabled' => false,
 				'current_page'  => null,
-			];
+			);
 
 			if ( $post_type_query instanceof WP_Query ) {
 				$pager_buttons['first_page'] = 1;
@@ -550,19 +550,19 @@ if ( ( ! class_exists( 'Learndash_Admin_Metabox_Course_Builder' ) ) && ( class_e
 		 * @param object $post_type_query WP_Query instance.
 		 */
 		public function build_selector_rows_json( $post_type_query ) {
-			$selector_rows = [];
+			$selector_rows = array();
 
 			if ( $post_type_query instanceof WP_Query ) {
 				$selector_post_type = $post_type_query->query['post_type'];
 
 				foreach ( $post_type_query->posts as $p ) {
-					$selector_rows[] = [
+					$selector_rows[] = array(
 						'ID'          => $p->ID,
 						'post_title'  => wp_kses_post( $p->post_title ),
 						'post_status' => learndash_get_step_post_status_slug( $p ),
 						'type'        => $selector_post_type,
 						'edit_link'   => get_edit_post_link( $p->ID, '' ),
-					];
+					);
 				}
 			}
 
@@ -864,7 +864,7 @@ if ( ( ! class_exists( 'Learndash_Admin_Metabox_Course_Builder' ) ) && ( class_e
 					$course_builder_data = wp_unslash( $_POST[ $this->builder_prefix ][ $this->builder_post_type ][ $post_id ] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 					if ( '' !== $course_builder_data ) {
 						$this->ld_course_steps_object = LDLMS_Factory_Post::course_steps( $post_id );
-						$course_steps = (array) json_decode( $course_builder_data, true );
+						$course_steps                 = (array) json_decode( $course_builder_data, true );
 						if ( ( is_array( $course_steps ) ) && ( ! empty( $course_steps ) ) ) {
 							$course_steps_split = LDLMS_Course_Steps::steps_split_keys( $course_steps );
 						} else {
@@ -891,8 +891,8 @@ if ( ( ! class_exists( 'Learndash_Admin_Metabox_Course_Builder' ) ) && ( class_e
 			$reply_data = array();
 
 			if ( isset( $query_args['format'] ) && 'json' === $query_args['format'] ) {
-				$reply_data['selector_pager'] = [];
-				$reply_data['selector_rows']  = [];
+				$reply_data['selector_pager'] = array();
+				$reply_data['selector_rows']  = array();
 			} else {
 				$reply_data['selector_pager'] = '';
 				$reply_data['selector_rows']  = '';
@@ -933,8 +933,8 @@ if ( ( ! class_exists( 'Learndash_Admin_Metabox_Course_Builder' ) ) && ( class_e
 			$reply_data = array();
 
 			if ( isset( $query_args['format'] ) && 'json' === $query_args['format'] ) {
-				$reply_data['selector_pager'] = [];
-				$reply_data['selector_rows']  = [];
+				$reply_data['selector_pager'] = array();
+				$reply_data['selector_rows']  = array();
 			} else {
 				$reply_data['selector_pager'] = '';
 				$reply_data['selector_rows']  = '';
@@ -1033,7 +1033,7 @@ if ( ( ! class_exists( 'Learndash_Admin_Metabox_Course_Builder' ) ) && ( class_e
 								$quiz_mapper = new WpProQuiz_Model_QuizMapper();
 								$quiz_pro    = new WpProQuiz_Model_Quiz();
 								$quiz_pro->setName( $post_args['post_title'] );
-								$quiz_pro->setText( 'AAZZAAZZ' );
+								$quiz_pro->setText( 'AAZZAAZZ' ); // cspell:disable-line.
 								$quiz_pro    = $quiz_mapper->save( $quiz_pro );
 								$quiz_pro_id = $quiz_pro->getId();
 								$quiz_pro_id = absint( $quiz_pro_id );

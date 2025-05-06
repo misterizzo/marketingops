@@ -335,7 +335,7 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 							'label'       => esc_html__( 'Basic', 'learndash' ),
 							'description' => sprintf(
 								// translators: placeholder: Group leader, groups.
-								esc_html_x( '%1$s can only create, manage, and delete his / her own %2$s only.', 'placeholder: Group leader, Groups', 'learndash' ),
+								esc_html_x( '%1$s can only create, manage, and delete their own %2$s only.', 'placeholder: Group leader, Groups', 'learndash' ),
 								learndash_get_custom_label( 'group_leader' ),
 								learndash_get_custom_label_lower( 'groups' )
 							),
@@ -383,7 +383,7 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 							'label'       => esc_html__( 'Basic', 'learndash' ),
 							'description' => sprintf(
 								// translators: placeholder: Group leader, courses.
-								esc_html_x( '%1$s can only create, manage, and delete his / her own %2$s only.', 'placeholder: Group leader, courses', 'learndash' ),
+								esc_html_x( '%1$s can only create, manage, and delete their own %2$s only.', 'placeholder: Group leader, courses', 'learndash' ),
 								learndash_get_custom_label( 'group_leader' ),
 								learndash_get_custom_label_lower( 'courses' )
 							),
@@ -426,7 +426,7 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 							'label'       => esc_html__( 'Basic', 'learndash' ),
 							'description' => sprintf(
 								// translators: placeholder: Group leader, courses.
-								esc_html_x( '%1$s can only manage users within his / her assigned %2$s only.', 'placeholder: Group leader, courses', 'learndash' ),
+								esc_html_x( '%1$s can only manage users within their assigned %2$s only.', 'placeholder: Group leader, courses', 'learndash' ),
 								learndash_get_custom_label( 'group_leader' ),
 								learndash_get_custom_label_lower( 'courses' )
 							),
@@ -544,7 +544,7 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 						$gl_user_query_args['meta_value'] = 1; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 					}
 
-					$wp_user_query = new WP_User_Query( $gl_user_query_args );
+					$wp_user_query = new WP_User_Query( $gl_user_query_args ); // @phpstan-ignore-line -- legacy code.
 
 					$users = $wp_user_query->get_results();
 					if ( ! empty( $users ) ) {

@@ -40,9 +40,9 @@ if ( ! class_exists( 'LDLMS_Transients' ) ) {
 		 *
 		 * @since 3.1.0
 		 *
-		 * @param string $transient_key The transient key to retreive.
+		 * @param string $transient_key The transient key to retrieve.
 		 *
-		 * @return mixed $transient_data the retreived transient data or false if expired.
+		 * @return mixed $transient_data the retrieved transient data or false if expired.
 		 */
 		public static function get( $transient_key = '' ) {
 			$transient_data = false;
@@ -70,7 +70,7 @@ if ( ! class_exists( 'LDLMS_Transients' ) ) {
 					 * @param string  $transient_key  Transient Key.
 					 */
 					if ( apply_filters( 'learndash_object_cache_enabled', LEARNDASH_OBJECT_CACHE_ENABLED, $transient_key ) ) {
-						$found = false;
+						$found          = false;
 						$transient_data = wp_cache_get( $transient_key, self::$cache_group, false, $found );
 						if ( false === $found ) {
 							$transient_data = false;

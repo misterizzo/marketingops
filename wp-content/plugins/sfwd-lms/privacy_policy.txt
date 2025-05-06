@@ -11,9 +11,9 @@ When you purchase from us, we’ll ask you to provide email address. We’ll use
 
 If you register a free account then we will store your email address.
 
-We store information about you for as long as your account exists. 
+We store information about you for as long as your account exists.
 
-We store course progress, including completion status, quiz scores, assignments and/or essay submissions (if applicable). 
+We store course progress, including completion status, quiz scores, assignments and/or essay submissions (if applicable).
 
 We will also store comments on courses, lessons, topics, assignments, and essays if you choose to leave them.
 
@@ -21,9 +21,9 @@ We will also store comments on courses, lessons, topics, assignments, and essays
 
 Members of our team have access to the information you provide us. For example, both Administrators and Group Leaders can access:
 
---Order information such as your enrolled courses, course progress and username / email address. 
+--Order information such as your enrolled courses, course progress and username / email address.
 
-Any additional information added in your WordPress User Profile can also be visible to the administrator(s). 
+Any additional information added in your WordPress User Profile can also be visible to the administrator(s).
 
 <h2>What we share with others</h2>
 

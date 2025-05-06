@@ -414,7 +414,6 @@ if ( ( ! class_exists( 'LD_REST_Questions_Controller_V2' ) ) && ( class_exists( 
 			if ( ( true === $return ) && ( 'view' === $request['context'] ) ) {
 				$this->rest_init_request_posts( $request );
 
-				// If the archive setting is enabled we allow full listing.
 				if ( ! $this->rest_post_type_has_archive( $this->post_type ) ) {
 					if ( is_null( $this->quiz_post ) ) {
 						return new WP_Error(
@@ -432,13 +431,33 @@ if ( ( ! class_exists( 'LD_REST_Questions_Controller_V2' ) ) && ( class_exists( 
 						);
 					}
 
-					if ( ! sfwd_lms_has_access( $this->quiz_post->ID ) ) {
-						return new WP_Error( 'ld_rest_cannot_view', esc_html__( 'Sorry, you are not allowed to view this item.', 'learndash' ), array( 'status' => rest_authorization_required_code() ) );
-					}
+					return new WP_Error( 'ld_rest_cannot_view', esc_html__( 'Sorry, you are not allowed to view this item.', 'learndash' ), array( 'status' => rest_authorization_required_code() ) );
 				}
 			}
 
 			return $return;
+		}
+
+		/**
+		 * Checks if a given request has access to read a post.
+		 * We override this to implement our own permissions check.
+		 *
+		 * @since 4.10.3
+		 *
+		 * @param WP_REST_Request $request Full details about the request.
+		 *
+		 * @return true|WP_Error True if the request has read access for the item, WP_Error object or false otherwise.
+		 */
+		public function get_item_permissions_check( $request ) {
+			if ( learndash_is_admin_user() ) {
+				return true;
+			}
+
+			return new WP_Error(
+				'ld_rest_cannot_view',
+				esc_html__( 'Sorry, you are not allowed to view this item.', 'learndash' ),
+				[ 'status' => rest_authorization_required_code() ]
+			);
 		}
 
 		/**

@@ -75,7 +75,7 @@ class WpProQuiz_View_Import extends WpProQuiz_View_View {
 					<th><?php echo wp_kses_post( $master->getName() ); ?></th>
 					<th>
 						<ul class="wpProQuiz_importList">
-						<?php if ( isset( $this->import['question'][ $master->getId() ] ) ) { ?>
+						<?php if ( ( isset( $this->import['question'][ $master->getId() ] ) ) && ( is_array( $this->import['question'][ $master->getId() ] ) ) ) { ?>
 							<?php foreach ( $this->import['question'][ $master->getId() ] as $question ) { ?>
 							<li><?php echo wp_kses_post( $question->getTitle() ); ?></li>
 								<?php

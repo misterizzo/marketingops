@@ -46,12 +46,17 @@ if (
 		 * Returns rows chunk size.
 		 *
 		 * @since 4.3.0
+		 * @since 4.4.1 Deprecated `chunk_size` argument.
 		 *
-		 * @param int $chunk_size Chunk size.
+		 * @param mixed $chunk_size Deprecated argument.
 		 *
 		 * @return int
 		 */
-		protected function get_chunk_size_rows( int $chunk_size = self::CHUNK_SIZE_ROWS ): int {
+		protected function get_chunk_size_rows( $chunk_size = null ): int {
+			if ( ! is_null( $chunk_size ) ) {
+				_deprecated_argument( 'chunk_size', '4.4.1', 'Passing chunk_size to get_chunk_size_rows is deprecated and has no effect.' );
+			}
+
 			/**
 			 * Filters the rows chunk size.
 			 *
@@ -61,7 +66,7 @@ if (
 			 *
 			 * @return int Chunk size.
 			 */
-			return (int) apply_filters( 'learndash_export_chunk_size_rows', $chunk_size );
+			return (int) apply_filters( 'learndash_export_chunk_size_rows', static::CHUNK_SIZE_ROWS );
 		}
 
 		/**
@@ -81,7 +86,7 @@ if (
 			 *
 			 * @return int Chunk size.
 			 */
-			return (int) apply_filters( 'learndash_export_chunk_size_media', self::CHUNK_SIZE_MEDIA );
+			return (int) apply_filters( 'learndash_export_chunk_size_media', static::CHUNK_SIZE_MEDIA );
 		}
 
 		/**

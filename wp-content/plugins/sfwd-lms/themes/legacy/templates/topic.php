@@ -186,7 +186,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	<?php endif; ?>
 
-	<?php if ( ( learndash_lesson_hasassignments( $post ) ) && ( ! empty( $user_id ) ) ) : ?>
+	<?php if ( ( learndash_lesson_hasassignments( $post ) ) && ( ! empty( $user_id ) ) ) : // cspell:disable-line. ?>
 		<?php
 			$ret = SFWD_LMS::get_template(
 				'learndash_lesson_assignment_uploads_list.php',

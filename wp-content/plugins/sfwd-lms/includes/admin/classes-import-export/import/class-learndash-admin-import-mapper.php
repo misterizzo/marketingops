@@ -31,8 +31,9 @@ if ( ! class_exists( 'Learndash_Admin_Import_Mapper' ) ) {
 		 * Logger class instance.
 		 *
 		 * @since 4.3.0
+		 * @since 4.5.0   Changed to the `Learndash_Import_Export_Logger` class.
 		 *
-		 * @var Learndash_Admin_Import_Export_Logger
+		 * @var Learndash_Import_Export_Logger
 		 */
 		private $logger;
 
@@ -40,13 +41,14 @@ if ( ! class_exists( 'Learndash_Admin_Import_Mapper' ) ) {
 		 * Constructor.
 		 *
 		 * @since 4.3.0
+		 * @since 4.5.0   Changed the $logger param to the `Learndash_Import_Export_Logger` class.
 		 *
-		 * @param Learndash_Admin_Import_File_Handler  $file_handler File Handler class instance.
-		 * @param Learndash_Admin_Import_Export_Logger $logger       Logger class instance.
+		 * @param Learndash_Admin_Import_File_Handler $file_handler File Handler class instance.
+		 * @param Learndash_Import_Export_Logger      $logger       Logger class instance.
 		 */
 		public function __construct(
 			Learndash_Admin_Import_File_Handler $file_handler,
-			Learndash_Admin_Import_Export_Logger $logger
+			Learndash_Import_Export_Logger $logger
 		) {
 			$this->file_handler = $file_handler;
 			$this->logger       = $logger;
@@ -78,24 +80,37 @@ if ( ! class_exists( 'Learndash_Admin_Import_Mapper' ) ) {
 				new Learndash_Admin_Import_Media( ...$default_importer_args ),
 			);
 
-			if ( ! empty( $import_options['post_types'] ) ) {
-				$importers[] = new Learndash_Admin_Import_Taxonomies( ...$default_importer_args );
-
-				if (
-					in_array(
-						LDLMS_Post_Types::get_post_type_slug( LDLMS_Post_Types::QUIZ ),
-						$import_options['post_types'],
-						true
-					)
-				) {
-					$importers[] = new Learndash_Admin_Import_Proquiz(
-						$user_id,
-						new WpProQuiz_Helper_Import(),
-						...$default_importer_args
-					);
-				}
+			// Post type settings must be imported before everything else because settings there may affect the import process.
+			foreach ( $import_options['post_type_settings'] as $post_type ) {
+				$importers[] = new Learndash_Admin_Import_Post_Type_Settings(
+					$post_type,
+					...$default_importer_args
+				);
 			}
 
+			// Taxonomies must be imported before posts.
+			if ( ! empty( $import_options['post_types'] ) ) {
+				$importers[] = new Learndash_Admin_Import_Taxonomies( ...$default_importer_args );
+			}
+
+			// Quizzes must be imported before posts.
+			// The reason is we are using the legacy importer for quizzes, and the imported quizzes will be
+			// additionally processed in the posts' importer.
+			if (
+				in_array(
+					LDLMS_Post_Types::get_post_type_slug( LDLMS_Post_Types::QUIZ ),
+					$import_options['post_types'],
+					true
+				)
+			) {
+				$importers[] = new Learndash_Admin_Import_Proquiz(
+					$user_id,
+					new WpProQuiz_Helper_Import(),
+					...$default_importer_args
+				);
+			}
+
+			// Import posts.
 			foreach ( $import_options['post_types'] as $post_type ) {
 				$importers[] = new Learndash_Admin_Import_Posts(
 					$post_type,
@@ -104,13 +119,7 @@ if ( ! class_exists( 'Learndash_Admin_Import_Mapper' ) ) {
 				);
 			}
 
-			foreach ( $import_options['post_type_settings'] as $post_type ) {
-				$importers[] = new Learndash_Admin_Import_Post_Type_Settings(
-					$post_type,
-					...$default_importer_args
-				);
-			}
-
+			// Import users.
 			if ( ! empty( $import_options['users'] ) ) {
 				$importers[] = new Learndash_Admin_Import_Users(
 					$import_options['info']['db_prefix'],
@@ -118,6 +127,7 @@ if ( ! class_exists( 'Learndash_Admin_Import_Mapper' ) ) {
 					...$default_importer_args
 				);
 
+				// Import quiz statistics and user activity.
 				if ( $with_progress ) {
 					$importers[] = new Learndash_Admin_Import_Proquiz_Statistics(
 						new WpProQuiz_Model_StatisticRefMapper(),
@@ -127,6 +137,7 @@ if ( ! class_exists( 'Learndash_Admin_Import_Mapper' ) ) {
 				}
 			}
 
+			// Import pages and settings.
 			if ( in_array( 'settings', $import_options['other'], true ) ) {
 				$importers[] = new Learndash_Admin_Import_Pages( $user_id, ...$default_importer_args );
 				$importers[] = new Learndash_Admin_Import_Settings(

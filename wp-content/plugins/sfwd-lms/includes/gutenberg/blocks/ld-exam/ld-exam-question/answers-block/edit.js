@@ -31,8 +31,8 @@ const Edit = ( props ) => {
                 clientId={ clientId }
                 type={ questionType }
                 attributes={ [ ...answers ] }
-                setAttributes={ ( newAnsers ) =>
-                    setAttributes( { answers: [ ...newAnsers ] } )
+                setAttributes={ ( newAnswers ) =>
+                    setAttributes( { answers: [ ...newAnswers ] } )
                 }
             />
 }

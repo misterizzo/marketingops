@@ -43,8 +43,9 @@ if (
 		 * Logger class instance.
 		 *
 		 * @since 4.3.0
+		 * @since 4.5.0   Changed to the `Learndash_Import_Export_Logger` class.
 		 *
-		 * @var Learndash_Admin_Import_Export_Logger
+		 * @var Learndash_Import_Export_Logger
 		 */
 		protected $logger;
 
@@ -98,17 +99,18 @@ if (
 		 * Constructor.
 		 *
 		 * @since 4.3.0
+		 * @since 4.5.0   Changed the $logger param to the `Learndash_Import_Export_Logger` class.
 		 *
-		 * @param string                               $home_url     The previous home url.
-		 * @param Learndash_Admin_Import_File_Handler  $file_handler File Handler class instance.
-		 * @param Learndash_Admin_Import_Export_Logger $logger       Logger class instance.
+		 * @param string                              $home_url     The previous home url.
+		 * @param Learndash_Admin_Import_File_Handler $file_handler File Handler class instance.
+		 * @param Learndash_Import_Export_Logger      $logger       Logger class instance.
 		 *
 		 * @return void
 		 */
 		public function __construct(
 			string $home_url,
 			Learndash_Admin_Import_File_Handler $file_handler,
-			Learndash_Admin_Import_Export_Logger $logger
+			Learndash_Import_Export_Logger $logger
 		) {
 			$this->file_handler      = $file_handler;
 			$this->logger            = $logger;
@@ -192,7 +194,7 @@ if (
 			);
 
 			$result = array_column(
-				$wpdb->get_results( $sql, ARRAY_A ), // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+				$wpdb->get_results( $sql, ARRAY_A ), // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 				'user_id',
 				'meta_value' // Old User ID.
 			);
@@ -280,7 +282,6 @@ if (
 				$meta_value  = intval( $meta_value );
 			}
 
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$value = $wpdb->get_var(
 				// phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber
 				$wpdb->prepare(

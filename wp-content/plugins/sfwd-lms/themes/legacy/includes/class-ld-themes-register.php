@@ -1,6 +1,6 @@
 <?php
 /**
- * LearnDash LearnDash Legacy Theme Register.
+ * LearnDash Legacy Theme Register.
  *
  * @since 3.0.0
  *
@@ -11,14 +11,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ( class_exists( 'LearnDash_Theme_Register' ) ) && ( ! class_exists( 'LearnDash_Theme_Register_Legacy' ) ) ) {
+if ( class_exists( 'LearnDash_Theme_Register' ) && ! class_exists( 'LearnDash_Theme_Register_Legacy' ) ) {
 	/**
 	 * Class to create the settings section.
+	 *
+	 * @since 3.0.0
 	 */
 	class LearnDash_Theme_Register_Legacy extends LearnDash_Theme_Register {
-
 		/**
-		 * Protected constructor for class
+		 * Protected constructor for class.
+		 *
+		 * @since 3.0.0
+		 *
+		 * @return void
 		 */
 		protected function __construct() {
 			$this->theme_key          = 'legacy';
@@ -27,6 +32,9 @@ if ( ( class_exists( 'LearnDash_Theme_Register' ) ) && ( ! class_exists( 'LearnD
 			$this->theme_base_url     = trailingslashit( LEARNDASH_LMS_PLUGIN_URL ) . 'themes/' . $this->theme_key;
 			$this->theme_template_dir = $this->theme_base_dir . '/templates';
 			$this->theme_template_url = $this->theme_base_url . '/templates';
+			$this->supports_views     = false;
+
+			parent::__construct();
 		}
 	}
 }

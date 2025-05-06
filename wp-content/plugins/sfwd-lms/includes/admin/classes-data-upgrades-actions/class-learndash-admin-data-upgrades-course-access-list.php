@@ -67,7 +67,7 @@ if ( ( class_exists( 'Learndash_Admin_Data_Upgrades' ) ) && ( ! class_exists( 'L
 					</p>
 					<p class="description"><?php echo esc_html( $this->get_last_run_info() ); ?></p>
 					<?php
-					$show_progess         = false;
+					$show_progress        = false;
 					$this->transient_key  = $this->data_slug;
 					$this->transient_data = $this->get_transient( $this->transient_key );
 					if ( ! empty( $this->transient_data ) ) {
@@ -84,7 +84,7 @@ if ( ( class_exists( 'Learndash_Admin_Data_Upgrades' ) ) && ( ! class_exists( 'L
 
 						if ( ( ! empty( $this->transient_data['result_count'] ) ) && ( ! empty( $this->transient_data['total_count'] ) ) && ( $this->transient_data['result_count'] != $this->transient_data['total_count'] ) ) {
 
-							$show_progess = true;
+							$show_progress = true;
 							?>
 							<p id="learndash-data-upgrades-continue-<?php echo esc_attr( $this->data_slug ); ?>" class="learndash-data-upgrades-continue"><input type="checkbox" name="learndash-data-upgrades-continue" value="1" /> <?php esc_html_e( 'Continue previous upgrade processing?', 'learndash' ); ?></p>
 							<?php
@@ -96,7 +96,7 @@ if ( ( class_exists( 'Learndash_Admin_Data_Upgrades' ) ) && ( ! class_exists( 'L
 					$progress_label       = '';
 					$progress_slug        = '';
 
-					if ( true === $show_progess ) {
+					if ( true === $show_progress ) {
 						$progress_style = '';
 						$data           = $this->transient_data;
 						$data           = $this->build_progress_output( $data );

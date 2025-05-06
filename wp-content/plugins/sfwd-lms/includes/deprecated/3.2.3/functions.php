@@ -94,7 +94,7 @@ if ( ! function_exists( 'learndash_modify_admin_essay_listing_query' ) ) {
 	}
 }
 
-if ( ! function_exists( 'learndash_essays_remove_subbmitdiv_metabox' ) ) {
+if ( ! function_exists( 'learndash_essays_remove_subbmitdiv_metabox' ) ) { // cspell:disable-line.
 	/**
 	 * Removes the default submitdiv meta box from the essay post type in the admin edit screen.
 	 *
@@ -103,7 +103,7 @@ if ( ! function_exists( 'learndash_essays_remove_subbmitdiv_metabox' ) ) {
 	 * @since 2.2.0
 	 * @deprecated 3.2.3
 	 */
-	function learndash_essays_remove_subbmitdiv_metabox() {
+	function learndash_essays_remove_subbmitdiv_metabox() { // cspell:disable-line.
 		if ( function_exists( '_deprecated_function' ) ) {
 			_deprecated_function( __FUNCTION__, '3.2.3' );
 		}

@@ -255,6 +255,9 @@ if ( ! function_exists( 'enhanced_paypal_shortcode' ) ) {
 	 * @return string The `paypal` shortcode output.
 	 */
 	function enhanced_paypal_shortcode( $atts ) {
+		$registration_variation = learndash_registration_variation();
+		$variation_classic      = \LearnDash_Theme_Register_LD30::$variation_classic;
+
 		$atts = shortcode_atts(
 			array(
 				'type'                           => '',
@@ -304,19 +307,14 @@ if ( ! function_exists( 'enhanced_paypal_shortcode' ) ) {
 				'sra'                            => 1,
 				'modify'                         => '',
 				'custom'                         => '',
+				'button_label'                   => __( 'Use PayPal', 'learndash' ),
+				'button_aria_label'              => '',
 			),
 			$atts
 		);
 
-		$user_id = get_current_user_id();
-		if ( ( isset( $atts['itemno'] ) ) && ( get_post_type( absint( $atts['itemno'] ) ) === learndash_get_post_type_slug( 'course' ) ) ) {
-			$button_text = LearnDash_Custom_Label::get_label( 'button_take_this_course' );
-		} elseif ( ( isset( $atts['itemno'] ) ) && ( get_post_type( absint( $atts['itemno'] ) ) === learndash_get_post_type_slug( 'group' ) ) ) {
-			$button_text = LearnDash_Custom_Label::get_label( 'button_take_this_group' );
-
-		} else {
-			$button_text = LearnDash_Custom_Label::get_label( 'button_take_this_course' );
-		}
+		$button_text = $atts['button_label'];
+		$button_aria_label = empty( $atts['button_aria_label'] ) ? $button_text : $atts['button_aria_label'];
 
 		switch ( $atts['type'] ) :
 			case 'paynow':
@@ -330,26 +328,18 @@ if ( ! function_exists( 'enhanced_paypal_shortcode' ) ) {
 				}
 				if ( $atts['float'] ) {
 					   $code .= 'float: ' . $atts['float'] . ';';
-				} else {
-					   $code .= 'margin:0 auto;';
 				}
 				if ( $atts['marginleft'] > -1 ) {
 					   $code .= 'margin-left: ' . $atts['marginleft'] . ';';
 				}
 				if ( $atts['marginright'] > -1 ) {
 					   $code .= 'margin-right: ' . $atts['marginright'] . ';';
-				} else {
-					   $code .= 'margin-top: 10px;';
 				}
 				if ( $atts['margintop'] > -1 ) {
 					   $code .= 'margin-top: ' . $atts['margintop'] . ';';
-				} else {
-					   $code .= 'margin-top: 10px;';
 				}
 				if ( $atts['marginbottom'] > -1 ) {
 					   $code .= 'margin-bottom: ' . $atts['marginbottom'] . ';';
-				} else {
-					   $code .= 'margin-bottom: 10px;';
 				}
 				$paypalUrl = 'https://www.paypal.com/cgi-bin/webscr';
 				$pixelUrl  = 'https://www.paypal.com/en_US/i/scr/pixel.gif';
@@ -378,7 +368,7 @@ if ( ! function_exists( 'enhanced_paypal_shortcode' ) ) {
 				//          $atts['amount'] = number_format(floatval($course_price), 2, '.', '' );
 				//      }
 
-				$code .= '"><form name="buynow" action="' . $paypalUrl . '" method="post">
+				$code .= '"><form class="learndash-payment-gateway-form-paypal" name="buynow" action="' . $paypalUrl . '" method="post">
         <input type="hidden" name="cmd" value="_xclick" />
 		<input type="image" src="' . $pixelUrl . '" border="0" alt="" width="1" height="1" class="ppalholder">
 		<input type="hidden" name="bn" value="PP-BuyNowBF" />
@@ -415,7 +405,9 @@ if ( ! function_exists( 'enhanced_paypal_shortcode' ) ) {
 				} else {
 					$code .= '<input type="hidden" src="' . $buttonUrl . '" border="0" name="submit" alt="' . ALT_ADD . '" class="ppalbtn">';
 				}
-				$code .= '<input type="submit" value="' . $button_text . '" class="btn-join" id="btn-join">';
+				$code .= '<button aria-label="' . $button_aria_label . '" type="submit" class="' . Learndash_Payment_Button::map_button_class_name() . '" id="' . Learndash_Payment_Button::map_button_id() . '">';
+				$code .= esc_html( $button_text );
+				$code .= '</button>';
 
 				if ( $atts['noshipping'] > -1 ) {
 					$code .= '
@@ -499,8 +491,6 @@ if ( ! function_exists( 'enhanced_paypal_shortcode' ) ) {
 
 				if ($atts['float']) {
 				$code.='float: '.$atts['float'].';';
-				} else {
-				$code.='margin:0 auto;';
 				}
 
 				if ($atts['marginleft'] > -1 ) {
@@ -509,27 +499,21 @@ if ( ! function_exists( 'enhanced_paypal_shortcode' ) ) {
 
 				if ($atts['marginright'] > -1 ) {
 				$code.='margin-right: '.$atts['marginright'].';';
-				} else {
-				$code.='margin-top: 10px;';
 				}
 
 				if ($atts['margintop'] > -1 ) {
 				   $code.='margin-top: '.$atts['margintop'].';';
-				} else {
-				   $code.='margin-top: 10px;';
 				}
 
 				if ($atts['marginbottom'] > -1 ) {
 				   $code.='margin-bottom: '.$atts['marginbottom'].';';
-				} else {
-				   $code.='margin-bottom: 10px;';
 				}
 				*/
 				$paypalUrl = 'https://www.paypal.com/cgi-bin/webscr';
 				if ( $atts['sandbox'] == 1 ) {
 					$paypalUrl = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
 				}
-				$code .= '<form name="subscribewithpaypal" action="' . esc_url( $paypalUrl ) . '" method="post">
+				$code .= '<form class="learndash-payment-gateway-form-paypal" name="subscribewithpaypal" action="' . esc_url( $paypalUrl ) . '" method="post">
         <input type="hidden" name="cmd" value="_xclick-subscriptions" />
 
 		<input type="image" src="https://www.paypal.com/en_US/i/scr/pixel.gif" border="0" alt="" width="1" height="1" class="ppalholder">';
@@ -543,7 +527,10 @@ if ( ! function_exists( 'enhanced_paypal_shortcode' ) ) {
 				} else {
 					$code .= '<input type="hidden" src="https://www.paypal.com/en_AU/i/btn/btn_subscribeCC_LG.gif" border="0" name="submit" alt="' . esc_html__( 'PayPal - The safer, easier way to pay online.', 'learndash' ) . '" class="ppalbtn">';
 				}
-				$code .= '<input type="submit" value="' . $button_text . '" class="btn-join" id="btn-join">';
+
+				$code .= '<button aria-label="' . $button_aria_label . '" type="submit" class="btn-join button button-primary button-large wp-element-button' . ( $registration_variation !== $variation_classic ? ' ld--ignore-inline-css' : '' ) . '" id="btn-join">';
+				$code .= esc_html( $button_text );
+				$code .= '</button>';
 
 				if ( $atts['email'] ) {
 					 $code .= '<input type="hidden" name="business" value="' . $atts['email'] . '">';
@@ -702,8 +689,6 @@ if ( ! function_exists( 'enhanced_paypal_shortcode' ) ) {
 
 				if ( $atts['float'] ) {
 					$code .= 'float: ' . $atts['float'] . ';';
-				} else {
-					$code .= 'margin:0 auto;';
 				}
 
 				if ( $atts['marginleft'] > -1 ) {
@@ -712,23 +697,17 @@ if ( ! function_exists( 'enhanced_paypal_shortcode' ) ) {
 
 				if ( $atts['marginright'] > -1 ) {
 					$code .= 'margin-right: ' . $atts['marginright'] . ';';
-				} else {
-					$code .= 'margin-top: 10px;';
 				}
 
 				if ( $atts['margintop'] > -1 ) {
 					$code .= 'margin-top: ' . $atts['margintop'] . ';';
-				} else {
-					$code .= 'margin-top: 10px;';
 				}
 
 				if ( $atts['marginbottom'] > -1 ) {
 					$code .= 'margin-bottom: ' . $atts['marginbottom'] . ';';
-				} else {
-					$code .= 'margin-bottom: 10px;';
 				}
 
-				$code .= '"><form name="" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+				$code .= '"><form class="learndash-payment-gateway-form-paypal" name="" action="https://www.paypal.com/cgi-bin/webscr" method="post">
         <input type="hidden" name="cmd" value="_s-xclick">
 		<input type="hidden" name="hosted_button_id" value="' . $atts['buttonid'] . '">
 		<input type="image" src="https://www.paypal.com/en_US/i/scr/pixel.gif" border="0" alt="" width="1" height="1">';
@@ -742,7 +721,9 @@ if ( ! function_exists( 'enhanced_paypal_shortcode' ) ) {
 				} else {
 					$code .= '<input type="hidden" src="https://www.paypal.com/en_AU/i/btn/btn_subscribeCC_LG.gif" border="0" name="submit" alt="' . esc_html__( 'PayPal - The safer, easier way to pay online.', 'learndash' ) . '" class="ppalbtn">';
 				}
-				$code .= '<input type="submit" value="' . $button_text . '" class="btn-join" id="btn-join">';
+				$code .= '<button aria-label="' . $button_aria_label . '" type="submit" class="btn-join' . ( $registration_variation !== $variation_classic ? ' ld--ignore-inline-css' : '' ) . '" id="btn-join">';
+				$code .= esc_html( $button_text );
+				$code .= '</button>';
 
 				$code .= '<img alt="" border="0" src="https://www.paypal.com/en_AU/i/scr/pixel.gif" width="1" height="1" class="ppalholder">
        </form></div>';
@@ -760,8 +741,6 @@ if ( ! function_exists( 'enhanced_paypal_shortcode' ) ) {
 
 				if ( $atts['float'] ) {
 					$code .= 'float: ' . $atts['float'] . ';';
-				} else {
-					$code .= 'margin:0 auto;';
 				}
 
 				if ( $atts['marginleft'] > -1 ) {
@@ -770,22 +749,16 @@ if ( ! function_exists( 'enhanced_paypal_shortcode' ) ) {
 
 				if ( $atts['marginright'] > -1 ) {
 					$code .= 'margin-right: ' . $atts['marginright'] . ';';
-				} else {
-					$code .= 'margin-top: 10px;';
 				}
 
 				if ( $atts['margintop'] > -1 ) {
 					$code .= 'margin-top: ' . $atts['margintop'] . ';';
-				} else {
-					$code .= 'margin-top: 10px;';
 				}
 
 				if ( $atts['marginbottom'] > -1 ) {
 					$code .= 'margin-bottom: ' . $atts['marginbottom'] . ';';
-				} else {
-					$code .= 'margin-bottom: 10px;';
 				}
-				$code .= '"><form target="paypal" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+				$code .= '"><form class="learndash-payment-gateway-form-paypal" target="paypal" action="https://www.paypal.com/cgi-bin/webscr" method="post">
 		<input type="hidden" name="cmd" value="_cart">
 		<input type="hidden" name="bn" value="PP-ShopCartBF:btn_cart_LG.gif:NonHosted">
 		<input type="hidden" name="add" value="1">';
@@ -881,7 +854,9 @@ if ( ! function_exists( 'enhanced_paypal_shortcode' ) ) {
 				} else {
 					$code .= '<input type="hidden" src="https://www.paypalobjects.com/en_AU/i/btn/btn_cart_LG.gif" border="0" name="submit" alt="' . ALT_ADD . '" class="ppalbtn">';
 				}
-				$code .= '<input type="submit" value="' . $button_text . '" class="btn-join" id="btn-join">';
+				$code .= '<button aria-label="' . $button_aria_label . '" type="submit" class="btn-join' . ( $registration_variation !== $variation_classic ? ' ld--ignore-inline-css' : '' ) . '" id="btn-join">';
+				$code .= esc_html( $button_text );
+				$code .= '</button>';
 
 				$code .= '<img alt="" border="0" src="https://www.paypal.com/en_AU/i/scr/pixel.gif" width="1" height="1" class="ppalholder">
        </form></div>';

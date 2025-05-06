@@ -532,7 +532,7 @@ if ( ! class_exists( 'LearnDash_BitBucket_API' ) ) {
 		}
 
 
-		/* The calling function get_bitbucket_repositories() connects to bitbucket and retreives
+		/* The calling function get_bitbucket_repositories() connects to bitbucket and retrieves
 		 * a file respoitories.txt. Each line of the file represents a repository and contains
 		 * three fields separated by '|'.
 		 * 1. repository slug

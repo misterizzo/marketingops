@@ -52,7 +52,7 @@ if ( ( class_exists( 'LearnDash_Gutenberg_Block' ) ) && ( ! class_exists( 'Learn
 		 *
 		 * @since 4.0.0
 		 *
-		 * @param array    $block_attributes The block attrbutes.
+		 * @param array    $block_attributes The block attributes.
 		 * @param string   $block_content    The block content.
 		 * @param WP_block $block            The block object.
 		 *

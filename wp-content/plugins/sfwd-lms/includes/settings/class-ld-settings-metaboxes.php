@@ -9,11 +9,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use LearnDash\Core\Validations\Validators\Validator;
+
 if ( ! class_exists( 'LearnDash_Settings_Metabox' ) ) {
 	/**
 	 * Class for LearnDash Settings Sections.
 	 */
 	class LearnDash_Settings_Metabox {
+		/**
+		 * The validator instance.
+		 *
+		 * @since 4.8.0
+		 *
+		 * @var Validator|null
+		 */
+		protected $validator;
 
 		/**
 		 * Static array of section instances.
@@ -205,10 +215,12 @@ if ( ! class_exists( 'LearnDash_Settings_Metabox' ) ) {
 		}
 
 		/**
-		 * Initialize Metabox instance.
+		 * Initialize the Metabox instance.
 		 *
-		 * @param WP_Post $post Post object instance to initialize instance.
-		 * @param boolean $force True to force init. This will load values and settings again.
+		 * @param WP_Post $post  The WP_Post object to initialize the instance.
+		 * @param bool    $force True to force the initialization. This will load values and settings again. Default false.
+		 *
+		 * @return false|void False if the post is not valid, otherwise void.
 		 */
 		public function init( $post = null, $force = false ) {
 			if ( ( ! $post ) || ( ! is_a( $post, 'WP_Post' ) ) ) {
@@ -237,6 +249,19 @@ if ( ! class_exists( 'LearnDash_Settings_Metabox' ) ) {
 			if ( ! $this->settings_fields_loaded ) {
 				$this->load_settings_fields();
 			}
+
+			/**
+			 * Fires after a metabox is initialized.
+			 *
+			 * @since 4.8.0
+			 *
+			 * @param WP_Post                     $post    The WP_Post object.
+			 * @param bool                        $force   True to force the initialization. This will load values and settings again. Default false.
+			 * @param LearnDash_Settings_Metabox  $metabox Current metabox instance.
+			 *
+			 * @return void
+			 */
+			do_action( 'learndash_metabox_initialized', $post, $force, $this );
 		}
 
 		/**
@@ -524,18 +549,41 @@ if ( ! class_exists( 'LearnDash_Settings_Metabox' ) ) {
 		/**
 		 * Save Settings Metabox
 		 *
-		 * @param integer $post_id $Post ID is post being saved.
-		 * @param object  $saved_post WP_Post object being saved.
-		 * @param boolean $update If update true, otherwise false.
-		 * @param array   $settings_field_updates array of settings fields to update.
+		 * @param int          $post_id                The post ID.
+		 * @param WP_Post|null $saved_post             WP_Post object being saved.
+		 * @param boolean      $update                 If update true, otherwise false.
+		 * @param array        $settings_field_updates Array of settings fields to update.
+		 *
+		 * @return void
 		 */
 		public function save_post_meta_box( $post_id = 0, $saved_post = null, $update = null, $settings_field_updates = null ) {
+			if ( ! $post_id || ! $saved_post ) {
+				return;
+			}
+
 			if ( is_null( $settings_field_updates ) ) {
 				$settings_field_updates = $this->get_post_settings_field_updates( $post_id, $saved_post, $update );
+			} else {
+				$settings_field_updates = $this->validate_fields_with_validator( $settings_field_updates );
 			}
+
 			if ( ( ! empty( $settings_field_updates ) ) && ( is_array( $settings_field_updates ) ) ) {
 				foreach ( $settings_field_updates as $_key => $_val ) {
+					$old_value = $this->setting_option_values[ $_key ] ?? null;
+
 					learndash_update_setting( $saved_post, $_key, $_val );
+
+					/**
+					 * Fires after a settings field is updated.
+					 *
+					 * @since 4.7.0
+					 *
+					 * @param WP_Post $post        WP_Post object being saved.
+					 * @param string  $setting_key Setting key updated.
+					 * @param mixed   $new_value   New value of the field.
+					 * @param mixed   $old_value   Old value of the field.
+					 */
+					do_action( 'learndash_metabox_updated_field', $saved_post, $_key, $_val, $old_value );
 				}
 			}
 		}
@@ -626,12 +674,48 @@ if ( ! class_exists( 'LearnDash_Settings_Metabox' ) ) {
 						} else {
 							$post_value = esc_attr( $post_value );
 						}
-						$settings_field_updates[ $_legacy ] = $post_value;
+						$settings_field_updates[ strval( $_legacy ) ] = $post_value;
 					}
 				}
+
+				// Validate all fields if we have a validator.
+
+				$settings_field_updates = $this->validate_fields_with_validator( $settings_field_updates );
 			}
 
 			return $settings_field_updates;
+		}
+
+		/**
+		 * Validate all fields with the validator, if we have one.
+		 *
+		 * @since 4.8.0
+		 *
+		 * @param array<string,mixed> $fields Array of fields to validate. [field_id => field_value].
+		 *
+		 * @return array<string,mixed> Array of fields with validated values. [field_id => field_value].
+		 */
+		protected function validate_fields_with_validator( array $fields ): array {
+			if ( ! $this->validator ) {
+				return $fields;
+			}
+
+			$validation_result = $this->validator->validate( $fields );
+			$validation_errors = $validation_result->errors();
+			$validated_values  = $validation_result->validated();
+
+			// Updating the fields values with validated values and set old values for fields with errors.
+
+			foreach ( $fields as $key => $value ) {
+				if ( isset( $validation_errors[ $key ] ) ) {
+					$fields[ $key ] = $this->setting_option_values[ $key ];
+				} else {
+					// We may have a field that is not in the validator, as it is a new approach.
+					$fields[ $key ] = $validated_values[ $key ] ?? $value;
+				}
+			}
+
+			return $fields;
 		}
 
 		/**
@@ -918,7 +1002,7 @@ if ( ! class_exists( 'LearnDash_Settings_Metabox' ) ) {
 									$data['quiz']->setId( $pro_quiz_edit[ $pro_quiz_id ]['quiz']->getId() );
 									$data['quiz']->setPostId( $post->ID );
 									$data['quiz']->setName( $pro_quiz_edit[ $pro_quiz_id ]['quiz']->getName() );
-									$data['quiz']->setText( 'AAZZAAZZ' );
+									$data['quiz']->setText( 'AAZZAAZZ' ); // cspell:disable-line.
 								} else {
 									$data['quiz'] = $quiz_mapper->fetch( 0 );
 								}

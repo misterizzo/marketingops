@@ -209,7 +209,7 @@ if ( ! class_exists( 'LearnDash_Settings_Pages_Deprecated' ) ) {
 				 * @since 3.6.0
 				 *
 				 * @param string $redirect_url     Redirect URL.
-				 * @param string $page_slug        The foriginal page slug as in 'page=<page_slug>'.
+				 * @param string $page_slug        The original page slug as in 'page=<page_slug>'.
 				 * @param string $version          The version of LearnDash that deprecated the function.
 				 * @param array  $replacement_args Optional. An array of replacement page args used to
 				 * generate the `$redirect_url`.

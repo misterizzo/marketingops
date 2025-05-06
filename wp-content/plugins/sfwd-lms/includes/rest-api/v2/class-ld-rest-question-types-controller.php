@@ -1,6 +1,6 @@
 <?php
 /**
- * LearnDash REST API V2 Qestion Types Controller.
+ * LearnDash REST API V2 Question Types Controller.
  *
  * @since 3.3.0
  * @package LearnDash\REST\V2
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ( ! class_exists( 'LD_REST_Question_Types_Controller_V2' ) ) && ( class_exists( 'WP_REST_Controller' ) ) ) {
 
 	/**
-	 * Class LearnDash REST API V2 Qestion Types Controller.
+	 * Class LearnDash REST API V2 Question Types Controller.
 	 *
 	 * @since 3.3.0
 	 * @uses WP_REST_Controller

@@ -3,6 +3,7 @@
  * LearnDash LD30 Displays a user's profile course progress row.
  *
  * @since 3.0.0
+ * @version 4.21.3
  *
  * @package LearnDash\Templates\LD30
  */
@@ -11,8 +12,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use LearnDash\Core\Models\Product;
+
 $course      = get_post( $course_id );
 $course_link = get_permalink( $course_id );
+
+/**
+ * Product object.
+ *
+ * @var Product $ld_product
+ */
+$ld_product = Product::create_from_post( $course );
+
+$ld_user = get_user_by( 'id', $user_id );
 
 $progress = learndash_course_progress(
 	array(
@@ -48,8 +60,30 @@ $course_class = apply_filters(
 
 		<a href="<?php echo esc_url( get_the_permalink( $course_id ) ); ?>" class="ld-item-name">
 			<?php learndash_status_icon( $status, get_post_type(), null, true ); ?>
-			<span class="ld-course-title"><?php echo esc_html( get_the_title( $course_id ) ); ?></span>
+			<span
+				aria-level="4"
+				class="ld-course-title"
+				role="heading"
+			>
+				<?php echo esc_html( get_the_title( $course_id ) ); ?>
+			</span>
 		</a> <!--/.ld-course-name-->
+
+		<?php
+		// add badge according to course Start/End Date.
+		$ld_badge_text = '';
+		if ( $ld_product->has_ended( $ld_user ) ) {
+			$ld_badge_text = __( 'Ended', 'learndash' );
+		} elseif ( $ld_product->is_pre_ordered( $ld_user ) ) {
+			$ld_badge_text = __( 'Pre-ordered', 'learndash' );
+		}
+		?>
+
+		<?php if ( ! empty( $ld_badge_text ) ) : ?>
+			<span class="ld-status">
+				<?php echo esc_html( $ld_badge_text ); ?>
+			</span>
+		<?php endif; ?>
 
 		<div class="ld-item-details">
 
@@ -62,19 +96,35 @@ $course_class = apply_filters(
 
 			<?php echo wp_kses_post( learndash_status_bubble( $status ) ); ?>
 
-			<div class="ld-expand-button ld-primary-background ld-compact ld-not-mobile" data-ld-expands="<?php echo esc_attr( 'ld-course-list-item-' . $course_id ); ?>">
+			<button
+				aria-controls="<?php echo esc_attr( 'ld-course-list-item-' . $course_id . '-container' ); ?>"
+				aria-expanded="false"
+				class="ld-expand-button ld-primary-background ld-compact ld-not-mobile"
+				data-ld-expands="<?php echo esc_attr( 'ld-course-list-item-' . $course_id . '-container' ); ?>"
+			>
 				<span class="ld-icon-arrow-down ld-icon"></span>
-			</div> <!--/.ld-expand-button-->
+			</button> <!--/.ld-expand-button-->
 
-			<div class="ld-expand-button ld-button-alternate ld-mobile-only" data-ld-expands="<?php echo esc_attr( 'ld-course-list-item-' . $course_id ); ?>"  data-ld-expand-text="<?php esc_html_e( 'Expand', 'learndash' ); ?>" data-ld-collapse-text="<?php esc_html_e( 'Collapse', 'learndash' ); ?>">
+			<button
+				aria-controls="<?php echo esc_attr( 'ld-course-list-item-' . $course_id . '-container' ); ?>"
+				aria-expanded="false"
+				class="ld-expand-button ld-button-alternate ld-mobile-only"
+				data-ld-expands="<?php echo esc_attr( 'ld-course-list-item-' . $course_id . '-container' ); ?>"
+				data-ld-expand-text="<?php esc_html_e( 'Expand', 'learndash' ); ?>"
+				data-ld-collapse-text="<?php esc_html_e( 'Collapse', 'learndash' ); ?>"
+			>
 				<span class="ld-icon-arrow-down ld-icon"></span>
 				<span class="ld-text ld-primary-color"><?php esc_html_e( 'Expand', 'learndash' ); ?></span>
-			</div> <!--/.ld-expand-button-->
+			</button> <!--/.ld-expand-button-->
 
 		</div> <!--/.ld-course-details-->
 
 	</div> <!--/.ld-course-preview-->
-	<div class="ld-item-list-item-expanded" data-ld-expand-id="<?php echo esc_attr( 'ld-course-list-item-' . $course_id ); ?>">
+	<div
+		class="ld-item-list-item-expanded"
+		data-ld-expand-id="<?php echo esc_attr( 'ld-course-list-item-' . $course_id ); ?>"
+		id="<?php echo esc_attr( 'ld-course-list-item-' . $course_id . '-container' ); ?>"
+	>
 
 		<?php
 		learndash_get_template_part(

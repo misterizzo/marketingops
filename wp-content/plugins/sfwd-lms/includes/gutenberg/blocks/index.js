@@ -33,6 +33,7 @@ import './ld-infobar';
 import './ld-materials';
 import './ld-user-status';
 import './ld-navigation';
+import './ld-reset-password';
 
 import './ld-exam';
 import './ld-exam/ld-exam-question';

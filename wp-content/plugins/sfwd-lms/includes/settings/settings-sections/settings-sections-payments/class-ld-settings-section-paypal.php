@@ -6,6 +6,8 @@
  * @package LearnDash\Settings\Sections
  */
 
+use LearnDash\Core\Utilities\Cast;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -57,9 +59,10 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 		public function load_settings_values() {
 			parent::load_settings_values();
 
-			$new_settings = false;
-
-			if ( false === $this->setting_option_values ) {
+			if (
+				! $this->setting_option_initialized
+				&& empty( $this->setting_option_values )
+			) {
 				$sfwd_cpt_options = get_option( 'sfwd_cpt_options' );
 
 				if ( ( isset( $sfwd_cpt_options['modules']['sfwd-courses_options'] ) ) && ( ! empty( $sfwd_cpt_options['modules']['sfwd-courses_options'] ) ) ) {
@@ -73,7 +76,7 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 							}
 						}
 
-						$this->setting_option_values[ $key ] = $val;
+						$this->setting_option_values[ Cast::to_string( $key ) ] = $val;
 					}
 				}
 			}
@@ -109,14 +112,6 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 		 * @since 2.4.0
 		 */
 		public function load_settings_fields() {
-			global $wp_rewrite;
-
-			if ( ( isset( $wp_rewrite ) ) && ( $wp_rewrite->using_permalinks() ) ) {
-				$default_paypal_notifyurl = trailingslashit( get_home_url() ) . 'sfwd-lms/paypal';
-			} else {
-				$default_paypal_notifyurl = add_query_arg( 'sfwd-lms', 'paypal', get_home_url() );
-			}
-
 			$this->setting_option_fields = array(
 				'enabled'          => array(
 					'name'    => 'enabled',
@@ -182,8 +177,16 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 					'type'      => 'text',
 					'label'     => esc_html__( 'Webhook URL', 'learndash' ),
 					'help_text' => esc_html__( 'Enter the URL used for IPN notifications.', 'learndash' ),
-					'value'     => ( ( isset( $this->setting_option_values['paypal_notifyurl'] ) ) && ( ! empty( $this->setting_option_values['paypal_notifyurl'] ) ) ) ? $this->setting_option_values['paypal_notifyurl'] : $default_paypal_notifyurl,
+					'value'     => ! empty( $this->setting_option_values['paypal_notifyurl'] )
+						? $this->setting_option_values['paypal_notifyurl']
+						: add_query_arg( array( 'learndash-integration' => 'paypal_ipn' ), esc_url_raw( get_site_url() ) ),
 					'class'     => 'regular-text',
+					'attrs'     => defined( 'LEARNDASH_DEBUG' ) && LEARNDASH_DEBUG // @phpstan-ignore-line -- Constant can be true/false.
+						? array()
+						: array(
+							'readonly' => 'readonly',
+							'disable'  => 'disable',
+						),
 				),
 			);
 
@@ -264,6 +267,13 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 					}
 
 					$value = $old_value;
+				}
+
+				if (
+				isset( $value['paypal_notifyurl'] ) &&
+				( ! isset( $old_value['paypal_notifyurl'] ) || $value['paypal_notifyurl'] !== $old_value['paypal_notifyurl'] )
+				) {
+					learndash_setup_rewrite_flush();
 				}
 			}
 

@@ -2,9 +2,11 @@
 /**
  * LearnDash class for displaying the setup wizard.
  *
- * @package    LearnDash\Search
- * @since      4.0.0
+ * @package LearnDash
+ * @since 4.0.0
  */
+
+use LearnDash\Core\Modules\Payments\Gateways\Stripe\Connection_Handler;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -36,14 +38,8 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 		const LICENSE_KEY       = 'nss_plugin_license_sfwd_lms';
 		const LICENSE_EMAIL_KEY = 'nss_plugin_license_email_sfwd_lms';
 
-		const FINAL_ADMIN_REDIRECT_PAGE = 'admin.php?page=learndash_lms_overview';
-
-		/**
-		 * Array of LearnDash plugins slug.
-		 *
-		 * @var array LearnDash plugins slug.
-		 */
-		private static $learndash_plugins_slug = array( 'learndash-certificate-builder', 'learndash-course-grid', 'learndash-woocommerce' );
+		const ADMIN_REDIRECT_PAGE       = 'admin.php?page=learndash-setup';
+		const FINAL_ADMIN_REDIRECT_PAGE = 'admin.php?page=learndash-setup';
 
 		/**
 		 * The single instance of the class.
@@ -53,7 +49,7 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 				return;
 			}
 
-			add_action( 'shutdown', array( $this, 'wp_shutdown' ) );
+			add_action( 'learndash_activated', array( $this, 'set_redirect_flag' ) );
 			add_action( 'admin_init', array( $this, 'redirect_after_activation' ), 1 );
 			add_action( 'admin_menu', array( $this, 'register_menu' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
@@ -65,27 +61,37 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 		}
 
 		/**
-		 * Enable stripe connect and then redirect to the wizard again.
+		 * Enables the Stripe connect and then redirect to the wizard again.
+		 *
+		 * @since 4.0.0
+		 *
+		 * @return void
 		 */
-		public function enable_stripe_connect_and_redirect() {
-			// enable stripe connect.
+		public function enable_stripe_connect_and_redirect(): void {
+			// Enable stripe connect.
 			if ( LearnDash_Settings_Section_Stripe_Connect::is_stripe_connected() ) {
 				LearnDash_Settings_Section::set_section_setting( 'LearnDash_Settings_Section_Stripe_Connect', 'enabled', 'yes' );
 			}
 
-			// force update wizard data.
+			// Force update wizard data.
 			$this->update_data( 'charge', 'yes' );
 			$this->update_data( 'charge_method', 'stripe' );
+
+			// Create a transient to flag that we need to create webhooks.
+			set_transient( 'learndash_stripe_connect_create_webhooks', true, HOUR_IN_SECONDS );
 
 			learndash_safe_redirect( admin_url( 'admin.php?page=' . self::HANDLE ) );
 		}
 
 		/**
 		 * Check when we need to show the wizard and set an option for that.
+		 *
+		 * @since 4.5.0
+		 *
+		 * @return void
 		 */
-		public function wp_shutdown() {
-			$learndash_activated = defined( 'LEARNDASH_ACTIVATED' ) && LEARNDASH_ACTIVATED;
-			if ( ! $learndash_activated || ! $this->should_display() ) {
+		public function set_redirect_flag() {
+			if ( ! $this->should_display() ) {
 				return;
 			}
 
@@ -96,7 +102,7 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 		 * Redirect to the setup wizard after an activation.
 		 */
 		public function redirect_after_activation() {
-			$should_redirect = get_option( 'learndash_setup_wizard_redirect', false );
+			$should_redirect = get_option( 'learndash_setup_wizard_redirect' );
 			if ( ! $should_redirect ) {
 				return;
 			}
@@ -125,7 +131,7 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 
 			update_option( self::STATUS_KEY, self::STATUS_CLOSED );
 
-			learndash_safe_redirect( admin_url() );
+			learndash_safe_redirect( admin_url( self::ADMIN_REDIRECT_PAGE ) );
 		}
 
 		/**
@@ -159,23 +165,42 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 				wp_send_json_error();
 			}
 
+			/**
+			 * React data.
+			 *
+			 * @var array $data
+			 */
 			$data = isset( $_POST['data'] ) ? wp_unslash( $_POST['data'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			$done = false;
 
 			switch ( $data['step'] ) {
 				case 'save_default_currency':
-					LearnDash_Settings_Section::set_section_setting( 'LearnDash_Settings_Section_Payments_Defaults', 'currency', $data['currency'] );
+					LearnDash_Settings_Section::set_section_settings_all(
+						'LearnDash_Settings_Section_Payments_Defaults',
+						array(
+							'country'  => $data['currency_country'],
+							'currency' => $data['currency'],
+						)
+					);
 					break;
 				case 'create_registration_pages':
 					// enable anyone can register option and create registration pages.
 					update_option( 'users_can_register', true );
 					$this->create_registration_pages();
+					$this->create_profile_page();
 					break;
 				case 'process_course_listing':
-					// download and setup course grid, create course listing page.
+					// Import demo course.
+					// phpcs:ignore Generic.CodeAnalysis.EmptyStatement -- TODO: Remove this comment later.
+					if ( 'yes' === $data['course_demo'] ) {
+						Learndash_Admin_Import_Export::import_demo_content();
+					}
+
+					// Create course listing page.
 					if ( 'multiple' === $data['courses_amount'] ) {
 						$this->create_courses_listing_page();
 					}
+
 					// install course grid plugin.
 					if ( 'true' === $data['course_grid'] ) {
 						$ret = $this->maybe_install_a_plugin( self::COURSE_GRID_SLUG );
@@ -231,6 +256,7 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 			$result_data = array(
 				'completed' => $done,
 			);
+
 			if ( $done ) {
 				$result_data['redirect'] = $this->get_completed_redirect_url();
 
@@ -250,15 +276,13 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 		 *
 		 * @param string $slug The plugin slug.
 		 *
-		 * @return array|bool|object|WP_Error
+		 * @return bool
 		 */
 		protected function maybe_install_a_plugin( string $slug ) {
 			$plugins = get_plugins();
 
 			if ( isset( $plugins[ $slug ] ) && is_plugin_inactive( $slug ) ) {
-				// this plugin is installed but not activate, do it.
-				activate_plugin( $slug );
-				return true;
+				return true; // plugin is installed but not activated.
 			}
 
 			if ( ! function_exists( 'plugins_api' ) ) {
@@ -274,13 +298,13 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 			);
 
 			if ( is_wp_error( $api ) ) {
-				return $api;
+				WP_DEBUG && error_log( $api->get_error_message() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+				return false;
 			}
 
 			$status = install_plugin_install_status( $api );
 
 			if ( 'install' === $status['status'] ) {
-				// install it.
 				return $this->install( $slug );
 			}
 
@@ -291,18 +315,23 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 		 * Install a plugin
 		 *
 		 * @param string $slug Plugin slug.
-		 * @return bool|WP_Error
+		 *
+		 * @return bool
 		 */
 		public function install( string $slug ) {
 			// prepare for install.
 			include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 			include_once ABSPATH . 'wp-admin/includes/plugin-install.php';
-			include_once ABSPATH . 'wp-admin/includes/theme-install.php';
 			include_once ABSPATH . 'wp-admin/includes/plugin.php';
 			include_once ABSPATH . 'wp-admin/includes/file.php';
 
-			$skin = new \WP_Ajax_Upgrader_Skin();
+			$skin = new WP_Ajax_Upgrader_Skin();
 
+			/**
+			 * Response object.
+			 *
+			 * @var object api
+			 */
 			$api = plugins_api(
 				'plugin_information',
 				array(
@@ -312,17 +341,19 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 			);
 
 			if ( is_wp_error( $api ) ) {
+				WP_DEBUG && error_log( $api->get_error_message() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 				return false;
 			}
 
-			$upgrade_er = new \Plugin_Upgrader( $skin );
-			$result     = $upgrade_er->install( $api->download_link );
+			$upgrade_er = new Plugin_Upgrader( $skin );
+			$result     = $upgrade_er->install( isset( $api->download_link ) ? $api->download_link : $api->download_url );
 
-			if ( true === $result ) {
-				return true;
+			if ( is_wp_error( $result ) ) {
+				WP_DEBUG && error_log( $result->get_error_message() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+				return false;
 			}
 
-			return new \WP_Error( 'err', implode( PHP_EOL, $upgrade_er->skin->get_upgrade_messages() ) );
+			return $result;
 		}
 
 		/**
@@ -342,43 +373,71 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 		}
 
 		/**
-		 * Creating registration page and registration success page.
+		 * Create profile page during Setup Wizard completion.
+		 *
+		 * @since 4.4.1
+		 *
+		 * @return void
+		 */
+		protected function create_profile_page(): void {
+			wp_insert_post(
+				array(
+					'post_title'   => __( 'Profile', 'learndash' ),
+					'post_content' => '<!-- wp:learndash/ld-profile /-->',
+					'post_status'  => 'publish',
+					'post_type'    => 'page',
+				)
+			);
+		}
+
+		/**
+		 * Create registration, registration success, reset password and profile pages.
 		 */
 		protected function create_registration_pages() {
-			$settings = LearnDash_Settings_Section::get_section_settings_all( 'LearnDash_Settings_Section_Registration_Pages' );
+			// Data for each of the pages being created.
+			$page_data = array(
+				array(
+					'identifier' => 'registration',
+					'title'      => 'Registration',
+					'content'    => '<!-- wp:learndash/ld-registration /-->',
+				),
+				array(
+					'identifier' => 'registration_success',
+					'title'      => 'Registration Success',
+					'content'    => '<!-- wp:paragraph --><p>' . __( 'Welcome', 'learndash' ) . '</p><!-- /wp:paragraph -->',
+				),
+				array(
+					'identifier' => 'reset_password',
+					'title'      => 'Reset Password',
+					'content'    => '<!-- wp:learndash/ld-reset-password {"width":""} /-->',
+				),
+			);
 
-			$post_status = isset( $settings['registration'] ) && ! empty( $settings['registration'] ) ? get_post_status( $settings['registration'] ) : '';
-			if ( 'publish' !== $post_status ) {
-				$settings['registration'] = wp_insert_post(
-					array(
-						'post_title'   => __( 'Registration', 'learndash' ),
-						'post_content' => '<!-- wp:learndash/ld-registration /-->',
-						'post_status'  => 'publish',
-						'post_type'    => 'page',
+			foreach ( $page_data as $page_values ) {
+				$page_id = LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Section_Registration_Pages', $page_values['identifier'] );
+
+				if ( ! empty( $page_id ) ) {
+					continue;
+				}
+
+				LearnDash_Settings_Section::set_section_setting(
+					'LearnDash_Settings_Section_Registration_Pages',
+					$page_values['identifier'],
+					wp_insert_post(
+						array(
+							'post_title'   => $page_values['title'],
+							'post_content' => $page_values['content'],
+							'post_status'  => 'publish',
+							'post_type'    => 'page',
+						)
 					)
 				);
-				LearnDash_Settings_Section::set_section_setting( 'LearnDash_Settings_Section_Registration_Pages', 'registration', $settings['registration'] );
 			}
-
-			$post_status = isset( $settings['registration_success'] ) && ! empty( $settings['registration_success'] ) ? get_post_status( $settings['registration_success'] ) : '';
-			if ( 'publish' !== $post_status ) {
-				$settings['registration_success'] = wp_insert_post(
-					array(
-						'post_title'   => __( 'Registration Success', 'learndash' ),
-						'post_content' => '<!-- wp:paragraph -->' .
-															'<p>' . __( 'Welcome', 'learndash' ) . '</p>' .
-															'<!-- /wp:paragraph -->',
-						'post_status'  => 'publish',
-						'post_type'    => 'page',
-					)
-				);
-			}
-			LearnDash_Settings_Section::set_section_setting( 'LearnDash_Settings_Section_Registration_Pages', 'registration_success', $settings['registration_success'] );
 		}
 
 		/**
 		 * An ajax endpoint for saving wizard data. When the
-		 * user mve to next step, we will store the current state in the db.
+		 * user move to next step, we will store the current state in the db.
 		 */
 		public function save_data() {
 			$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
@@ -388,9 +447,8 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 			}
 
 			$data = isset( $_POST['data'] )
-				? $this->sanitize_text_fields( wp_unslash( $_POST['data'] ) ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				? $this->sanitize_text_fields( (array) wp_unslash( $_POST['data'] ) ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 				: array();
-
 			foreach ( $data as $key => $val ) {
 				$this->update_data( $key, $val );
 			}
@@ -418,29 +476,9 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 			update_option( self::LICENSE_KEY, $license_key );
 			update_option( self::LICENSE_EMAIL_KEY, $email );
 
-			$license_status = false;
-			if ( learndash_is_learndash_hub_active() ) {
-				$license_status = learndash_validate_hub_license( $email, $license_key );
-			} else {
-				$updater_sfwd_lms = learndash_get_updater_instance( true );
-				if ( ( $updater_sfwd_lms ) && ( is_a( $updater_sfwd_lms, 'nss_plugin_updater_sfwd_lms' ) ) ) {
-					/**
-					 * Remove the time to check timestamp. Within the getRemote_license() method
-					 * is calls time_to_recheck_license() which uses this option to determine if
-					 * the license needs to be checked again.
-					 */
-					delete_option( 'nss_plugin_check_sfwd_lms' );
-					$license_status = $updater_sfwd_lms->getRemote_license();
-				}
+			// Licensing validation.
 
-				// The return from getRemote_license() is literally "1" (string) for valid. Anything else is invalid.
-				if ( '1' !== $license_status ) {
-					wp_send_json_error();
-				}
-
-				// license is valid.
-				$license_status = true;
-			}
+			$license_status = learndash_validate_hub_license( $email, $license_key, true );
 
 			if ( ! $license_status ) {
 				wp_send_json_error();
@@ -509,7 +547,7 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 					'next'        => isset( $keys[ $pos + 1 ] ) ? $keys[ $pos + 1 ] : '',
 					'prev'        => isset( $keys[ $pos - 1 ] ) ? $keys[ $pos - 1 ] : '',
 				);
-				$pos++;
+				++$pos;
 			}
 
 			return $scenes;
@@ -536,18 +574,28 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 					constant( 'SCRIPT_DEBUG' ) === true ? time() : LEARNDASH_VERSION,
 					true
 				);
-				$data          = get_option( self::DATA_KEY );
-				$currency_code = learndash_get_currency_code();
+
+				$data = get_option( self::DATA_KEY );
+				if ( ! is_array( $data ) ) {
+					$data = [];
+				}
+
+				$currency_code    = learndash_get_currency_code();
+				$currency_country = LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Section_Payments_Defaults', 'country' ) ?? '';
 
 				// scenes processing.
 				$scenes        = $this->get_scenes();
 				$current_scene = isset( $data['scene'] ) && isset( $scenes[ $data['scene'] ] ) ? $data['scene'] : array_keys( $scenes )[0];
 
+				// Define if we need to create webhooks.
+				$stripe_create_webhooks = get_transient( 'learndash_stripe_connect_create_webhooks' );
+				delete_transient( 'learndash_stripe_connect_create_webhooks' );
+
 				wp_localize_script(
 					self::HANDLE,
 					'ldSetupWizard',
 					array(
-						'urls'    => array(
+						'urls'           => array(
 							'assets'         => LEARNDASH_LMS_PLUGIN_URL . 'assets/js/setup-wizard/dist/',
 							'dismiss'        => admin_url(
 								wp_sprintf(
@@ -561,33 +609,41 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 							'iso_4217'       => 'https://en.wikipedia.org/wiki/ISO_4217#Active_codes',
 							'no_step_url'    => $this->get_completed_redirect_url(),
 						),
-						'nonces'  => array(
-							'verify'   => wp_create_nonce( 'ld_setup_wizard_verify_license' ),
-							'save'     => wp_create_nonce( 'ld_setup_wizard_save_data' ),
-							'finalize' => wp_create_nonce( 'ld_setup_wizard_finalize' ),
+						'nonces'         => array(
+							'verify'                   => wp_create_nonce( 'ld_setup_wizard_verify_license' ),
+							'save'                     => wp_create_nonce( 'ld_setup_wizard_save_data' ),
+							'finalize'                 => wp_create_nonce( 'ld_setup_wizard_finalize' ),
+							'stripe_ajax_post_connect' => wp_create_nonce( Connection_Handler::$ajax_action_post_connect ),
 						),
-						'data'    => array(
-							'scenes'                => $scenes,
-							'scene'                 => $current_scene,
-							'email'                 => $data['email'] ?? get_option( self::LICENSE_EMAIL_KEY, '' ),
-							'license_key'           => $data['license_key'] ?? get_option( self::LICENSE_KEY, '' ),
-							'use_registered_email'  => $data['use_registered_email'] ?? 'yes',
-							'notification_email'    => $data['notification_email'] ?? '',
-							'license_validated'     => $data['license_validated'] ?? 'no',
-							'courses_amount'        => $data['courses_amount'] ?? 'single',
-							'course_type'           => $data['course_type'] ?? array(),
-							'group_access'          => $data['group_access'] ?? 'no',
-							'group_leader'          => $data['group_leader'] ?? 'no',
-							'charge'                => $data['charge'] ?? 'no',
-							'charge_method'         => $data['charge_method'] ?? '',
-							'currency'              => ! empty( $currency_code ) ? $currency_code : ( $data['currency'] ?? '' ),
-							'stripe_connected'      => LearnDash_Settings_Section_Stripe_Connect::is_stripe_connected(),
-							'stripe_webhook_notice' => wp_kses_post( LearnDash_Settings_Section_Stripe_Connect::get_stripe_webhook_notice() ),
-						),
-						'plugins' => array(
+						'data'           => [
+							'scenes'                   => $scenes,
+							'scene'                    => $current_scene,
+							'email'                    => $data['email'] ?? get_option( self::LICENSE_EMAIL_KEY, '' ),
+							'license_key'              => $data['license_key'] ?? get_option( self::LICENSE_KEY, '' ),
+							'use_registered_email'     => $data['use_registered_email'] ?? 'yes',
+							'notification_email'       => $data['notification_email'] ?? '',
+							'license_validated'        => $data['license_validated'] ?? 'no',
+							'course_demo'              => $data['course_demo'] ?? 'no',
+							'courses_amount'           => $data['courses_amount'] ?? 'single',
+							'course_type'              => $data['course_type'] ?? array(),
+							'group_access'             => $data['group_access'] ?? 'no',
+							'group_leader'             => $data['group_leader'] ?? 'no',
+							'charge'                   => $data['charge'] ?? 'no',
+							'charge_method'            => $data['charge_method'] ?? '',
+							'currency'                 => ! empty( $currency_code ) ? $currency_code : '',
+							'currency_country'         => ! empty( $currency_country ) ? $currency_country : '',
+							'currency_select2_default' => ! empty( $currency_country ) ? ucwords( mb_strtolower( $currency_country ) ) . ' (' . learndash_get_currency_symbol( $currency_code ) . ') ' : '',
+							'stripe_connected'         => LearnDash_Settings_Section_Stripe_Connect::is_stripe_connected(),
+							'stripe_webhook_notice'    => wp_kses_post( LearnDash_Settings_Section_Stripe_Connect::get_stripe_webhook_notice() ),
+							'stripe_create_webhooks'   => $stripe_create_webhooks ? 'yes' : 'no',
+						],
+						'plugins'        => array(
 							'certificate_builder' => is_plugin_active( self::CERTIFICATE_BUILDER_SLUG ),
 							'course_grid'         => is_plugin_active( self::COURSE_GRID_SLUG ),
 							'woocommerce'         => is_plugin_active( self::WOOCOMMERCE_SLUG ),
+						),
+						'currency_codes' => array(
+							'list' => learndash_currency_codes_list(),
 						),
 					)
 				);
@@ -619,6 +675,16 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 
 			// Hide the admin menu item, the page stays available.
 			remove_menu_page( self::HANDLE );
+
+			if (
+				isset( $_GET['page'] )
+				&& self::HANDLE === sanitize_text_field( wp_unslash( $_GET['page'] ) )
+			) {
+				// remove_menu_page() call affects the global title and makes it null in the end,
+				// which causes a deprecation error in WP core cause it requires it to be a string.
+				global $title;
+				$title = ''; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- It's intentional.
+			}
 		}
 
 		/**

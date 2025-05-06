@@ -15,6 +15,64 @@ if ( ! class_exists( 'LearnDash_Settings_Page' ) ) {
 	 * Class for LearnDash Settings Pages.
 	 *
 	 * @since 2.4.0
+	 *
+	 * @phpstan-type Header_Button array{
+	 *     text: string,
+	 *     href?: string,
+	 *     target?: string,
+	 *     data: array<int|string, mixed>,
+	 *     class?: string,
+	 * }
+	 *
+	 * @phpstan-type Header_Data array{
+	 *     buttons: Header_Button[],
+	 *     tabs: array{
+	 *         id: string,
+	 *         name: string,
+	 *         link: string,
+	 *         isExternal: string,
+	 *         actions: array{
+	 *             title: string,
+	 *             link: string,
+	 *             isExternal: string,
+	 *             metaboxes: string[],
+	 *         },
+	 *         metaboxes: string[],
+	 *     },
+	 *     currentTab: string,
+	 *     editing: int,
+	 *     ajaxurl: string,
+	 *     adminurl: string,
+	 *     quizImportUrl: string,
+	 *     postadminurl: string,
+	 *     back_to_title: string,
+	 *     back_to_url: string,
+	 *     error_messages: array<string, string>,
+	 *     labels: array<string, string>,
+	 *     sfwdMap: array<string, string>,
+	 *     rest: array{
+	 *         namespace: string,
+	 *         base: array{
+	 *             lessons: string,
+	 *             topic: string,
+	 *             quiz: string,
+	 *             question: string,
+	 *         },
+	 *         root: string,
+	 *         nonce: string,
+	 *     },
+	 *     post_data?: array{
+	 *         builder_post_id: int|false,
+	 *         builder_post_title: string,
+	 *         builder_post_type: string,
+	 *     },
+	 *     posts_per_page: string|int,
+	 *     lessons: array<int|string, mixed>,
+	 *     topics: array<int|string, mixed>,
+	 *     quizzes: array<int|string, mixed>,
+	 *     questions: array<int|string, mixed>,
+	 *     i18n: array<string, string|array<string, string>>,
+	 * }
 	 */
 	class LearnDash_Settings_Page {
 
@@ -57,6 +115,15 @@ if ( ! class_exists( 'LearnDash_Settings_Page' ) ) {
 		 * @var string $settings_page_id
 		 */
 		protected $settings_page_id = '';
+
+		/**
+		 * Priority for the menu item. Default null.
+		 *
+		 * @since 4.19.0
+		 *
+		 * @var int|null
+		 */
+		protected ?int $settings_menu_item_priority = null;
 
 		/**
 		 * Title for page <h1></h1> string
@@ -129,6 +196,15 @@ if ( ! class_exists( 'LearnDash_Settings_Page' ) ) {
 		protected $page_sections = null;
 
 		/**
+		 * Header Buttons.
+		 *
+		 * @since 4.17.0
+		 *
+		 * @var Header_Button[]
+		 */
+		protected $buttons = [];
+
+		/**
 		 * Public constructor for class
 		 *
 		 * @since 2.4.0
@@ -156,6 +232,76 @@ if ( ! class_exists( 'LearnDash_Settings_Page' ) ) {
 			if ( true === $this->settings_metabox_as_sub ) {
 				add_filter( 'learndash_show_section', array( $this, 'should_show_settings_section' ), 10, 3 );
 			}
+
+			add_filter(
+				'learndash_header_data',
+				[ $this, 'add_header_data' ],
+				10
+			);
+		}
+
+		/**
+		 * Adds header data like a post title, back link, etc.
+		 *
+		 * @since 4.17.0
+		 *
+		 * @param Header_Data $header_data Header data.
+		 *
+		 * @return Header_Data
+		 */
+		public function add_header_data( $header_data ) {
+			$screen = get_current_screen();
+
+			if (
+				! $screen instanceof WP_Screen
+				|| "learndash-lms_page_{$this->settings_page_id}" !== $screen->id
+			) {
+				return $header_data;
+			}
+
+			$this->set_header_page_title( $header_data );
+
+			$this->set_header_buttons( $header_data );
+
+			return $header_data;
+		}
+
+		/**
+		 * Sets the "Page Title" shown within the LearnDash Global Header.
+		 *
+		 * @since 4.17.0
+		 *
+		 * @param Header_Data $header_data Header data, passed by reference.
+		 *
+		 * @return void
+		 */
+		public function set_header_page_title( array &$header_data ): void { // phpcs:ignore Squiz.Commenting.FunctionComment.IncorrectTypeHint -- Type hint is correct.
+			if ( empty( $this->settings_page_title ) ) {
+				return;
+			}
+
+			if ( ! isset( $header_data['post_data'] ) ) {
+				$header_data['post_data'] = [];
+			}
+
+			$header_data['post_data']['builder_post_title'] = esc_html( $this->settings_page_title );
+		}
+
+		/**
+		 * Sets the buttons shown within the LearnDash Global Header.
+		 *
+		 * @since 4.17.0
+		 *
+		 * @param Header_Data $header_data Header data, passed by reference.
+		 *
+		 * @return void
+		 */
+		public function set_header_buttons( array &$header_data ): void { // phpcs:ignore Squiz.Commenting.FunctionComment.IncorrectTypeHint -- Type hint is correct.
+			if ( empty( $this->buttons ) ) {
+				return;
+			}
+
+			$header_data['buttons'] = $this->buttons;
 		}
 
 		/**
@@ -271,7 +417,7 @@ if ( ! class_exists( 'LearnDash_Settings_Page' ) ) {
 			 * @param bool   $show_quick_links_meta show section quick links.
 			 * @param string $settings_page_id Settings Page ID.
 			 */
-			if ( true === apply_filters( 'learndash_settings_show_section_quick_liinks', $this->show_quick_links_meta, $this->settings_page_id )  ) {
+			if ( true === apply_filters( 'learndash_settings_show_section_quick_liinks', $this->show_quick_links_meta, $this->settings_page_id ) ) { // cspell:disable-line.
 				$ql_obj = new LearnDash_Settings_Section_Side_Quick_Links(
 					array(
 						'settings_screen_id' => $this->settings_screen_id,
@@ -294,9 +440,11 @@ if ( ! class_exists( 'LearnDash_Settings_Page' ) ) {
 					$this->settings_page_title,
 					$this->menu_page_capability,
 					$this->settings_page_id,
-					array( $this, 'show_settings_page' )
+					[ $this, 'show_settings_page' ],
+					$this->settings_menu_item_priority
 				);
 			}
+
 			add_action( 'load-' . $this->settings_screen_id, array( $this, 'load_settings_page' ) );
 		}
 
@@ -631,7 +779,7 @@ if ( ! class_exists( 'LearnDash_Settings_Page' ) ) {
 			/**
 			 * Filters whether the admin settings page title should be displayed or not.
 			 *
-			 * @param array $flag Whether to display page title or not.
+			 * @param bool $flag Whether to display page title or not. Default false.
 			 */
 			if ( true === apply_filters( 'learndash_admin_page_title_should_display', false ) ) {
 				/**
@@ -815,7 +963,7 @@ function learndash_admin_settings_page_assets() {
 		if ( ! isset( $learndash_assets_loaded['styles']['learndash-select2-jquery-style'] ) ) {
 			wp_enqueue_style(
 				'learndash-select2-jquery-style',
-				LEARNDASH_LMS_PLUGIN_URL . 'assets/vendor/select2-jquery/css/select2.min.css',
+				LEARNDASH_LMS_PLUGIN_URL . 'assets/vendor-libs/select2-jquery/css/select2.min.css',
 				array(),
 				LEARNDASH_SCRIPT_VERSION_TOKEN
 			);
@@ -825,7 +973,7 @@ function learndash_admin_settings_page_assets() {
 		if ( ! isset( $learndash_assets_loaded['scripts']['learndash-select2-jquery-script'] ) ) {
 			wp_enqueue_script(
 				'learndash-select2-jquery-script',
-				LEARNDASH_LMS_PLUGIN_URL . 'assets/vendor/select2-jquery/js/select2.full.min.js',
+				LEARNDASH_LMS_PLUGIN_URL . 'assets/vendor-libs/select2-jquery/js/select2.full.min.js',
 				array( 'jquery' ),
 				LEARNDASH_SCRIPT_VERSION_TOKEN,
 				true
@@ -857,35 +1005,39 @@ function learndash_admin_settings_page_assets() {
 
 		$script_data = array();
 
-		if ( ! isset( $script_data['ajaxurl'] ) ) {
-			$script_data['ajaxurl'] = admin_url( 'admin-ajax.php' );
-		}
-		if ( ! isset( $script_data['admin_notice_settings_fields_errors'] ) ) {
-			$script_data['admin_notice_settings_fields_errors_container'] = '<div id="learndash-settings-fields-notice-errors" class="learndash-settings-fields-notice-errors notice notice-error"><p class="errors-header">' . esc_html__( 'You have errors on the following settings', 'learndash' ) . '</p><ul class="errors-list"></ul></div>';
+		$script_data['themes_inheriting_settings'] = array();
+
+		foreach ( LearnDash_Theme_Register::get_themes() as $theme ) {
+			$theme_instance = LearnDash_Theme_Register::get_theme_instance( $theme['theme_key'] );
+
+			if ( ! $theme_instance ) {
+				continue;
+			}
+
+			foreach ( $theme_instance->get_themes_inheriting_settings() as $child_theme_key ) {
+				$script_data['themes_inheriting_settings'][ $child_theme_key ] = $theme['theme_key'];
+			}
 		}
 
-		if ( ! isset( $script_data['selec2_language'] ) ) {
-			$script_data['selec2_language'] = array(
-				'loadingMore'    => esc_html__( 'Loading more results…', 'learndash' ),
-				'noResults'      => esc_html__( 'No results found', 'learndash' ),
-				'searching'      => esc_html__( 'Searching…', 'learndash' ),
-				'removeAllItems' => esc_html__( 'Remove all items', 'learndash' ),
-				'removeItem'     => esc_html__( 'Remove item', 'learndash' ),
-			);
-		}
-
-		if ( ! isset( $script_data['settings_fields_errors'] ) ) {
-			$script_data['settings_fields_errors'] = array(
-				'number' => array(
-					'invalid'  => esc_html__( 'Entered value is invalid.', 'learndash' ),
-					'empty'    => esc_html__( 'Value cannot be empty.', 'learndash' ),
-					'negative' => esc_html__( 'Entered value cannot be negative.', 'learndash' ),
-					'decimal'  => esc_html__( 'Entered value cannot contain decimal.', 'learndash' ),
-					'minimum'  => esc_html__( 'Entered value less than minimum.', 'learndash' ),
-					'maximum'  => esc_html__( 'Entered value greater than maximum.', 'learndash' ),
-				),
-			);
-		}
+		$script_data['ajaxurl']                                       = admin_url( 'admin-ajax.php' );
+		$script_data['admin_notice_settings_fields_errors_container'] = '<div id="learndash-settings-fields-notice-errors" class="learndash-settings-fields-notice-errors notice notice-error"><p class="errors-header">' . esc_html__( 'You have errors on the following settings', 'learndash' ) . '</p><ul class="errors-list"></ul></div>';
+		$script_data['selec2_language']                               = array(
+			'loadingMore'    => esc_html__( 'Loading more results…', 'learndash' ),
+			'noResults'      => esc_html__( 'No results found', 'learndash' ),
+			'searching'      => esc_html__( 'Searching…', 'learndash' ),
+			'removeAllItems' => esc_html__( 'Remove all items', 'learndash' ),
+			'removeItem'     => esc_html__( 'Remove item', 'learndash' ),
+		);
+		$script_data['settings_fields_errors']                        = array(
+			'number' => array(
+				'invalid'  => esc_html__( 'Entered value is invalid.', 'learndash' ),
+				'empty'    => esc_html__( 'Value cannot be empty.', 'learndash' ),
+				'negative' => esc_html__( 'Entered value cannot be negative.', 'learndash' ),
+				'decimal'  => esc_html__( 'Entered value cannot contain decimal.', 'learndash' ),
+				'minimum'  => esc_html__( 'Entered value less than minimum.', 'learndash' ),
+				'maximum'  => esc_html__( 'Entered value greater than maximum.', 'learndash' ),
+			),
+		);
 
 		/**
 		 * Filters admin settings script data.

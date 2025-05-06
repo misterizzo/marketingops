@@ -1,6 +1,6 @@
 <?php
 /**
- * LearnDash Settings Section Question Mangement and Display.
+ * LearnDash Settings Section Question Management and Display.
  *
  * @since 3.0.0
  * @package LearnDash\Settings\Sections

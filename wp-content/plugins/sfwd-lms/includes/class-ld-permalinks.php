@@ -32,7 +32,7 @@ if ( ! class_exists( 'LearnDash_Permalinks' ) ) {
 		}
 
 		/**
-		 * Setup custom rewrtie URLs.
+		 * Setup custom rewrite URLs.
 		 *
 		 * Important note: This is very much dependant on the order of the registered post types. This is import when WP goes to parse the request. See
 		 * the logic in wp-includes/class-wp.php starting in the loop at line 289 where it loops the registered CPTs. Within this loop at line 311 it
@@ -157,12 +157,12 @@ if ( ! class_exists( 'LearnDash_Permalinks' ) ) {
 		/**
 		 * This second filter will correct calls to the WordPress get_permalink() function to use the new structure
 		 *
-		 * @param strng  $post_link The post's permalink.
-		 * @param Object $post      The WP_Post post in question.
-		 * @param bool   $leavename Whether to keep the post name.
-		 * @param bool   $sample    Is it a sample permalink.
+		 * @param string $post_link  The post's permalink.
+		 * @param Object $post       The WP_Post post in question.
+		 * @param bool   $leave_name Whether to keep the post name.
+		 * @param bool   $sample     Is it a sample permalink.
 		 */
-		public function post_type_link( $post_link = '', $post = null, $leavename = false, $sample = false ) {
+		public function post_type_link( $post_link = '', $post = null, $leave_name = false, $sample = false ) {
 			global $pagenow, $wp_rewrite;
 
 			$url_part_old = '';
@@ -219,7 +219,13 @@ if ( ! class_exists( 'LearnDash_Permalinks' ) ) {
 					 * @param string  $post_link Post Link.
 					 * @param WP_Post $post      Post Object.
 					 */
-					$course_id = apply_filters( 'learndash_post_link_course_id', learndash_get_course_id( $lesson->ID ), $post_link, $post );
+					$course_id = apply_filters(
+						'learndash_post_link_course_id',
+						learndash_get_course_id( $lesson->ID ),
+						$post_link,
+						$post
+					);
+
 					if ( ! empty( $course_id ) ) {
 						$course = get_post( $course_id );
 						if ( $course instanceof WP_Post ) {
@@ -567,7 +573,7 @@ if ( ! class_exists( 'LearnDash_Permalinks' ) ) {
 
 
 		/**
-		 * Action for comment form when nested URLs are enabled. This way ther user is returned to this course step URL
+		 * Action for comment form when nested URLs are enabled. This way the user is returned to this course step URL
 		 *
 		 * @since 2.5.5
 		 */
@@ -597,11 +603,12 @@ if ( ! class_exists( 'LearnDash_Permalinks' ) ) {
 		 * Add the course_id to comment meta
 		 *
 		 * @since 2.5.5
+		 *
 		 * @param int        $comment_id       The comment ID.
 		 * @param int|string $comment_approved Comment Approve Status, 1 if the comment is approved, 0 if not, 'spam' if spam.
-		 * @param array      $commentdata      Comment data.
+		 * @param array      $comment_data     Comment data.
 		 */
-		public function comment_post( $comment_id, $comment_approved, $commentdata ) {
+		public function comment_post( $comment_id, $comment_approved, $comment_data ) {
 			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ( isset( $_POST['course_id'] ) ) && ( ! empty( $_POST['course_id'] ) ) ) {
 				// phpcs:ignore WordPress.Security.NonceVerification.Missing
@@ -636,7 +643,7 @@ function learndash_get_step_permalink( $step_id = 0, $step_course_id = null ) {
 			add_filter(
 				'learndash_post_link_course_id',
 				function( $course_id ) {
-					if ( ( isset( $GLOBALS['step_course_id'] ) ) && ( ! is_null( $GLOBALS['step_course_id'] ) ) ) {
+					if ( ( isset( $GLOBALS['step_course_id'] ) ) && ( ! is_null( $GLOBALS['step_course_id'] ) ) ) { // @phpstan-ignore-line -- filter is processed later.
 						$course_id = $GLOBALS['step_course_id'];
 					}
 					return $course_id;

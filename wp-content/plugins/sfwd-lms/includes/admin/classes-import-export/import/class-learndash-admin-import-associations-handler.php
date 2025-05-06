@@ -2,10 +2,12 @@
 /**
  * LearnDash Admin Import Associations Handler.
  *
- * @since   4.3.0
+ * @since 4.3.0
  *
  * @package LearnDash
  */
+
+use LearnDash\Core\Utilities\Cast;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -39,6 +41,18 @@ if ( ! class_exists( 'Learndash_Admin_Import_Associations_Handler' ) ) {
 		private $old_user_id_new_user_id_hash;
 
 		/**
+		 * Flag for the course shared steps mode. Default is `true`.
+		 *
+		 * It helps to skip some unnecessary operations.
+		 * It will be overridden in the `setup` method with the actual value from the `learndash_is_course_shared_steps_enabled` function.
+		 *
+		 * @since 4.18.0
+		 *
+		 * @var bool
+		 */
+		private bool $is_course_shared_steps_enabled = true;
+
+		/**
 		 * Updates associations that we could not match in importers.
 		 *
 		 * @since 4.3.0
@@ -46,10 +60,7 @@ if ( ! class_exists( 'Learndash_Admin_Import_Associations_Handler' ) ) {
 		 * @return void
 		 */
 		public function handle(): void {
-			$old_new_statistic_ref_id_hash       = get_transient( Learndash_Admin_Import::TRANSIENT_KEY_STATISTIC_REF_IDS );
-			$this->old_new_statistic_ref_id_hash = is_array( $old_new_statistic_ref_id_hash ) ? $old_new_statistic_ref_id_hash : array();
-
-			$this->old_user_id_new_user_id_hash = Learndash_Admin_Import::get_old_user_id_new_user_id_hash();
+			$this->setup();
 
 			$this->update_lessons();
 			$this->update_topics();
@@ -62,6 +73,7 @@ if ( ! class_exists( 'Learndash_Admin_Import_Associations_Handler' ) ) {
 			$this->update_coupons();
 			$this->update_transactions();
 			$this->update_users();
+			$this->update_post_authors();
 		}
 
 		/**
@@ -93,7 +105,7 @@ if ( ! class_exists( 'Learndash_Admin_Import_Associations_Handler' ) ) {
 			foreach ( $this->get_imported_post_ids( LDLMS_Post_Types::COURSE ) as $post_id ) {
 				$this->update_setting( $post_id, LDLMS_Post_Types::CERTIFICATE );
 				$this->update_setting( $post_id, 'exam_challenge' );
-				learndash_course_set_steps_dirty( $post_id ); // Force recreation of the course steps.
+				$this->update_course_steps( $post_id );
 			}
 		}
 
@@ -105,9 +117,13 @@ if ( ! class_exists( 'Learndash_Admin_Import_Associations_Handler' ) ) {
 		 * @return void
 		 */
 		protected function update_lessons(): void {
+			// We must not update course associations for lessons in this case.
+			if ( $this->is_course_shared_steps_enabled ) {
+				return;
+			}
+
 			foreach ( $this->get_imported_post_ids( LDLMS_Post_Types::LESSON ) as $post_id ) {
 				$this->update_setting( $post_id, LDLMS_Post_Types::COURSE );
-				$this->update_shared_steps_associations( $post_id );
 			}
 		}
 
@@ -119,10 +135,14 @@ if ( ! class_exists( 'Learndash_Admin_Import_Associations_Handler' ) ) {
 		 * @return void
 		 */
 		protected function update_topics(): void {
+			// We must not update course associations for topics in this case.
+			if ( $this->is_course_shared_steps_enabled ) {
+				return;
+			}
+
 			foreach ( $this->get_imported_post_ids( LDLMS_Post_Types::TOPIC ) as $post_id ) {
 				$this->update_setting( $post_id, LDLMS_Post_Types::COURSE );
 				$this->update_setting( $post_id, LDLMS_Post_Types::LESSON );
-				$this->update_shared_steps_associations( $post_id );
 			}
 		}
 
@@ -136,9 +156,12 @@ if ( ! class_exists( 'Learndash_Admin_Import_Associations_Handler' ) ) {
 		protected function update_quizzes(): void {
 			foreach ( $this->get_imported_post_ids( LDLMS_Post_Types::QUIZ ) as $post_id ) {
 				$this->update_setting( $post_id, LDLMS_Post_Types::CERTIFICATE );
-				$this->update_setting( $post_id, LDLMS_Post_Types::COURSE );
-				$this->update_setting( $post_id, LDLMS_Post_Types::LESSON );
-				$this->update_shared_steps_associations( $post_id );
+
+				// We only must update course associations for quizzes in this case.
+				if ( ! $this->is_course_shared_steps_enabled ) {
+					$this->update_setting( $post_id, LDLMS_Post_Types::COURSE );
+					$this->update_setting( $post_id, LDLMS_Post_Types::LESSON );
+				}
 			}
 		}
 
@@ -164,7 +187,8 @@ if ( ! class_exists( 'Learndash_Admin_Import_Associations_Handler' ) ) {
 		 * @return void
 		 */
 		protected function update_essays(): void {
-			$this->update_assignments( LDLMS_Post_Types::ESSAY );
+			// All logic has been moved to the `update_post_authors` method.
+			// Keep this method for backward compatibility and in case we need some specific logic in the future.
 		}
 
 		/**
@@ -172,31 +196,11 @@ if ( ! class_exists( 'Learndash_Admin_Import_Associations_Handler' ) ) {
 		 *
 		 * @since 4.3.0
 		 *
-		 * @param string $post_type Post Type.
-		 *
 		 * @return void
 		 */
-		protected function update_assignments( string $post_type = LDLMS_Post_Types::ASSIGNMENT ): void {
-			foreach ( $this->get_imported_post_ids( $post_type ) as $post_id ) {
-				$old_user_id = get_post_meta(
-					$post_id,
-					Learndash_Admin_Import::META_KEY_IMPORTED_FROM_USER_ID,
-					true
-				);
-				$new_user_id = $this->old_user_id_new_user_id_hash[ $old_user_id ] ?? null;
-
-				if ( is_null( $new_user_id ) ) {
-					wp_delete_post( $post_id, true );
-					continue;
-				}
-
-				wp_update_post(
-					array(
-						'ID'          => $post_id,
-						'post_author' => $new_user_id,
-					)
-				);
-			}
+		protected function update_assignments(): void {
+			// All logic has been moved to the `update_post_authors` method.
+			// Keep this method for backward compatibility and in case we need some specific logic in the future.
 		}
 
 		/**
@@ -246,7 +250,7 @@ if ( ! class_exists( 'Learndash_Admin_Import_Associations_Handler' ) ) {
 					Learndash_Admin_Import::META_KEY_IMPORTED_FROM_USER_ID,
 					true
 				);
-				$new_user_id = $this->old_user_id_new_user_id_hash[ $old_user_id ] ?? null;
+				$new_user_id = intval( $this->old_user_id_new_user_id_hash[ $old_user_id ] ?? 0 );
 
 				// Attached course/group ID.
 				$purchased_post_field  = 'post_id';
@@ -262,26 +266,32 @@ if ( ! class_exists( 'Learndash_Admin_Import_Associations_Handler' ) ) {
 					$old_purchased_post_id = get_post_meta( $post_id, $purchased_post_field, true );
 				}
 
-				$new_purchased_id = Learndash_Admin_Import::get_new_post_id_by_old_post_id(
+				$new_purchased_post_id = (int) Learndash_Admin_Import::get_new_post_id_by_old_post_id(
 					(int) $old_purchased_post_id
 				);
 
-				if ( is_null( $new_user_id ) || is_null( $new_purchased_id ) ) {
-					wp_delete_post( $post_id, true );
+				// Update user ID and post parent ID.
 
-					continue;
-				}
+				$post_object = get_post( $post_id );
 
 				wp_update_post(
 					array(
 						'ID'          => $post_id,
 						'post_author' => $new_user_id,
+						'post_parent' => (int) Learndash_Admin_Import::get_new_post_id_by_old_post_id(
+							$post_object ? $post_object->post_parent : 0
+						),
 					)
 				);
 
 				update_post_meta( $post_id, 'user_id', $new_user_id );
-				update_post_meta( $post_id, 'post_id', $new_purchased_id );
-				update_post_meta( $post_id, $purchased_post_field, $new_purchased_id );
+
+				// Update purchased post ID.
+				update_post_meta( $post_id, 'post_id', $new_purchased_post_id );
+
+				// Delete legacy meta keys.
+				delete_post_meta( $post_id, 'course_id' );
+				delete_post_meta( $post_id, 'group_id' );
 			}
 		}
 
@@ -357,17 +367,21 @@ if ( ! class_exists( 'Learndash_Admin_Import_Associations_Handler' ) ) {
 		 *
 		 * @since 4.3.0
 		 *
-		 * @param string $post_type_name Post type name.
+		 * @param string $post_type_name Post type name. Optional.
 		 *
 		 * @return int[]
 		 */
-		protected function get_imported_post_ids( string $post_type_name ): array {
+		protected function get_imported_post_ids( string $post_type_name = '' ): array {
 			$args = array(
 				'fields'      => 'ids',
-				'post_type'   => LDLMS_Post_Types::get_post_type_slug( $post_type_name ),
+				'post_type'   => empty( $post_type_name )
+					? array_merge(
+						array_values( LDLMS_Post_Types::get_all_post_types_set() ),
+						array( 'page' )
+					)
+					: LDLMS_Post_Types::get_post_type_slug( $post_type_name ),
 				'post_status' => 'any',
 				'numberposts' => -1,
-				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 				'meta_query'  => array(
 					array(
 						'key'     => Learndash_Admin_Import::META_KEY_IMPORTED_FROM_POST_ID,
@@ -377,40 +391,6 @@ if ( ! class_exists( 'Learndash_Admin_Import_Associations_Handler' ) ) {
 			);
 
 			return get_posts( $args );
-		}
-
-		/**
-		 * Updates metas related to shared steps.
-		 *
-		 * @since 4.3.0
-		 *
-		 * @param int $post_id Post ID.
-		 *
-		 * @return void
-		 */
-		private function update_shared_steps_associations( int $post_id ): void {
-			global $wpdb;
-
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-			$shared_metas = $wpdb->get_results(
-				$wpdb->prepare(
-					"SELECT `meta_key`, `meta_value` FROM $wpdb->postmeta WHERE `post_id` = %d AND `meta_key` LIKE %s",
-					$post_id,
-					$wpdb->esc_like( 'ld_course_' ) . '%'
-				)
-			);
-
-			foreach ( $shared_metas as $shared_meta ) {
-				$old_post_id = intval( $shared_meta->meta_value );
-				$new_post_id = Learndash_Admin_Import::get_new_post_id_by_old_post_id( $old_post_id );
-
-				if ( empty( $new_post_id ) ) {
-					continue;
-				}
-
-				delete_post_meta( $post_id, $shared_meta->meta_key );
-				add_post_meta( $post_id, 'ld_course_' . $new_post_id, $new_post_id );
-			}
 		}
 
 		/**
@@ -435,6 +415,196 @@ if ( ! class_exists( 'Learndash_Admin_Import_Associations_Handler' ) ) {
 				$setting,
 				Learndash_Admin_Import::get_new_post_id_by_old_post_id( $old_id )
 			);
+		}
+
+		/**
+		 * Updates course steps meta.
+		 *
+		 * @since 4.18.0
+		 *
+		 * @param int $post_id Course Post ID.
+		 *
+		 * @return void
+		 */
+		private function update_course_steps( int $post_id ): void {
+			// Get course steps handler. If not found, return as we can't update the course steps.
+
+			$course_steps_handler = LDLMS_Factory_Post::course_steps( $post_id );
+
+			if ( ! $course_steps_handler instanceof LDLMS_Course_Steps ) {
+				return;
+			}
+
+			/*
+			 * The current course steps metadata structure can look like this.
+			 * Please unserialize the example to see the actual structure, it would take too much space to write it here.
+			 *
+			 * Example:
+			 * `a:7:{s:5:"steps";a:1:{s:1:"h";a:2:{s:12:"sfwd-lessons";a:1:{i:7031;a:2:{s:10:"sfwd-topic";a:1:{i:7033;a:1:{s:9:"sfwd-quiz";a:1:{i:7025;a:0:{}}}}s:9:"sfwd-quiz";a:1:{i:7027;a:0:{}}}}s:9:"sfwd-quiz";a:1:{i:7023;a:0:{}}}}s:9:"course_id";i:7029;s:7:"version";s:7:"4.8.0.1";s:5:"empty";b:0;s:22:"course_builder_enabled";b:1;s:27:"course_shared_steps_enabled";b:1;s:11:"steps_count";i:3;}`.
+			 */
+			$existing_course_steps_metadata = get_post_meta( $post_id, 'ld_course_steps', true );
+
+			// If the course steps metadata is not found or is not in the expected format, we need to build it later.
+			if (
+				! is_array( $existing_course_steps_metadata )
+				|| ! isset( $existing_course_steps_metadata['steps'] )
+				|| ! isset( $existing_course_steps_metadata['steps']['h'] )
+				|| ! is_array( $existing_course_steps_metadata['steps']['h'] )
+			) {
+				// Set a flag to update the course steps after the import is completed.
+				update_post_meta( $post_id, 'course_steps_update_after_import_is_needed', true );
+
+				return;
+			}
+
+			// Get existing course steps.
+			$existing_course_steps = $existing_course_steps_metadata['steps']['h'];
+
+			// Get post type slugs.
+
+			$lesson_post_type = LDLMS_Post_Types::get_post_type_slug( LDLMS_Post_Types::LESSON );
+			$quiz_post_type   = LDLMS_Post_Types::get_post_type_slug( LDLMS_Post_Types::QUIZ );
+			$topic_post_type  = LDLMS_Post_Types::get_post_type_slug( LDLMS_Post_Types::TOPIC );
+
+			// Create new empty course steps.
+			$new_course_steps = [
+				$lesson_post_type => [],
+				$quiz_post_type   => [],
+			];
+
+			// Map lessons.
+
+			if ( isset( $existing_course_steps[ $lesson_post_type ] ) ) {
+				$existing_lessons_data = $existing_course_steps[ $lesson_post_type ];
+
+				foreach ( array_keys( $existing_lessons_data ) as $lesson_id ) {
+					$new_lesson_id = Learndash_Admin_Import::get_new_post_id_by_old_post_id(
+						Cast::to_int( $lesson_id )
+					);
+
+					if ( is_null( $new_lesson_id ) ) {
+						continue;
+					}
+
+					$new_course_steps[ $lesson_post_type ][ $new_lesson_id ] = [];
+
+					// Map lesson topics.
+					if ( isset( $existing_lessons_data[ $lesson_id ][ $topic_post_type ] ) ) {
+						foreach ( array_keys( $existing_lessons_data[ $lesson_id ][ $topic_post_type ] ) as $topic_id ) {
+							$new_topic_id = Learndash_Admin_Import::get_new_post_id_by_old_post_id(
+								Cast::to_int( $topic_id )
+							);
+
+							if ( is_null( $new_topic_id ) ) {
+								continue;
+							}
+
+							$new_course_steps[ $lesson_post_type ][ $new_lesson_id ][ $topic_post_type ][ $new_topic_id ] = [];
+
+							// Map topic quizzes.
+							if ( isset( $existing_lessons_data[ $lesson_id ][ $topic_post_type ][ $topic_id ][ $quiz_post_type ] ) ) {
+								foreach ( array_keys( $existing_lessons_data[ $lesson_id ][ $topic_post_type ][ $topic_id ][ $quiz_post_type ] ) as $quiz_id ) {
+									$new_quiz_id = Learndash_Admin_Import::get_new_post_id_by_old_post_id(
+										Cast::to_int( $quiz_id )
+									);
+
+									if ( ! is_null( $new_quiz_id ) ) {
+										$new_course_steps[ $lesson_post_type ][ $new_lesson_id ][ $topic_post_type ][ $new_topic_id ][ $quiz_post_type ][ $new_quiz_id ] = [];
+									}
+								}
+							}
+						}
+					}
+
+					// Map lesson quizzes.
+					if ( isset( $existing_lessons_data[ $lesson_id ][ $quiz_post_type ] ) ) {
+						foreach ( array_keys( $existing_lessons_data[ $lesson_id ][ $quiz_post_type ] ) as $quiz_id ) {
+							$new_quiz_id = Learndash_Admin_Import::get_new_post_id_by_old_post_id( Cast::to_int( $quiz_id ) );
+
+							if ( ! is_null( $new_quiz_id ) ) {
+								$new_course_steps[ $lesson_post_type ][ $new_lesson_id ][ $quiz_post_type ][ $new_quiz_id ] = [];
+							}
+						}
+					}
+				}
+			}
+
+			// Map final quizzes.
+
+			if ( isset( $existing_course_steps[ $quiz_post_type ] ) ) {
+				foreach ( array_keys( $existing_course_steps[ $quiz_post_type ] ) as $quiz_id ) {
+					$new_quiz_id = Learndash_Admin_Import::get_new_post_id_by_old_post_id(
+						Cast::to_int( $quiz_id )
+					);
+
+					if ( ! is_null( $new_quiz_id ) ) {
+						$new_course_steps[ $quiz_post_type ][ $new_quiz_id ] = [];
+					}
+				}
+			}
+
+			// Update course steps.
+
+			$course_steps_handler->set_steps_dirty();
+			$course_steps_handler->set_steps_keeping_sections( $new_course_steps );
+		}
+
+		/**
+		 * Assigns post authors where possible. Deletes essay and assignment posts if the author is not found.
+		 *
+		 * @since 4.5.1
+		 *
+		 * @return void
+		 */
+		private function update_post_authors(): void {
+			foreach ( $this->get_imported_post_ids() as $post_id ) {
+				$old_user_id = get_post_meta(
+					$post_id,
+					Learndash_Admin_Import::META_KEY_IMPORTED_FROM_USER_ID,
+					true
+				);
+				$new_user_id = $this->old_user_id_new_user_id_hash[ $old_user_id ] ?? null;
+
+				if ( ! is_null( $new_user_id ) ) {
+					// Assign original post author with the new user ID.
+					wp_update_post(
+						array(
+							'ID'          => $post_id,
+							'post_author' => $new_user_id,
+						)
+					);
+				} else {
+					// Delete essay and assignment posts where the author is not found.
+					if (
+						in_array(
+							LDLMS_Post_Types::get_post_type_key(
+								strval( get_post_type( $post_id ) )
+							),
+							array( LDLMS_Post_Types::ESSAY, LDLMS_Post_Types::ASSIGNMENT ),
+							true
+						)
+					) {
+						wp_delete_post( $post_id, true );
+					}
+
+					// For other post types, the post has been assigned with the user running import, let's keep it.
+				}
+			}
+		}
+
+		/**
+		 * Sets up the handler.
+		 *
+		 * @since 4.18.0
+		 *
+		 * @return void
+		 */
+		private function setup(): void {
+			$old_new_statistic_ref_id_hash = get_transient( Learndash_Admin_Import::TRANSIENT_KEY_STATISTIC_REF_IDS );
+
+			$this->old_new_statistic_ref_id_hash  = is_array( $old_new_statistic_ref_id_hash ) ? $old_new_statistic_ref_id_hash : array();
+			$this->old_user_id_new_user_id_hash   = Learndash_Admin_Import::get_old_user_id_new_user_id_hash();
+			$this->is_course_shared_steps_enabled = learndash_is_course_shared_steps_enabled();
 		}
 	}
 }

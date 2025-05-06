@@ -46,11 +46,12 @@ if (
 		 * Constructor.
 		 *
 		 * @since 4.3.0
+		 * @since 4.5.0   Changed the $logger param to the `Learndash_Import_Export_Logger` class.
 		 *
-		 * @param WpProQuiz_Model_StatisticRefMapper   $statistic_ref_mapper Statistic Ref Mapper class instance.
-		 * @param string                               $home_url             The previous home url.
-		 * @param Learndash_Admin_Import_File_Handler  $file_handler         File Handler class instance.
-		 * @param Learndash_Admin_Import_Export_Logger $logger               Logger class instance.
+		 * @param WpProQuiz_Model_StatisticRefMapper  $statistic_ref_mapper Statistic Ref Mapper class instance.
+		 * @param string                              $home_url             The previous home url.
+		 * @param Learndash_Admin_Import_File_Handler $file_handler         File Handler class instance.
+		 * @param Learndash_Import_Export_Logger      $logger               Logger class instance.
 		 *
 		 * @return void
 		 */
@@ -58,7 +59,7 @@ if (
 			WpProQuiz_Model_StatisticRefMapper $statistic_ref_mapper,
 			string $home_url,
 			Learndash_Admin_Import_File_Handler $file_handler,
-			Learndash_Admin_Import_Export_Logger $logger
+			Learndash_Import_Export_Logger $logger
 		) {
 			$this->statistic_ref_mapper = $statistic_ref_mapper;
 

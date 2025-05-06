@@ -8,7 +8,7 @@
  */
 
 /**
- * Removed in LD 3.0 because we are not loading directlty into wp.i18n
+ * Removed in LD 3.0 because we are not loading directly into wp.i18n
  * via the PHP function learndash_load_inline_script_locale_data
  */
 /*

@@ -295,7 +295,14 @@ if ( ( class_exists( 'LearnDash_Settings_Metabox' ) ) && ( ! class_exists( 'Lear
 					}
 				}
 
-				if ( ( 'on' === $this->setting_option_values['showPoints'] ) || ( 'on' === $this->setting_option_values['showCategory'] ) || ( 'on' === $this->setting_option_values['hideQuestionPositionOverview'] ) || ( 'on' === $this->setting_option_values['hideQuestionNumbering'] ) || ( 'on' === $this->setting_option_values['numberedAnswer'] ) ) {
+				if (
+					'on' === $this->setting_option_values['showPoints']
+					|| 'on' === $this->setting_option_values['showCategory']
+					|| 'on' === $this->setting_option_values['hideQuestionPositionOverview']
+					|| 'on' === $this->setting_option_values['hideQuestionNumbering']
+					|| 'on' === $this->setting_option_values['numberedAnswer']
+					|| 'on' === $this->setting_option_values['answerRandom']
+				) {
 					$this->setting_option_values['custom_question_elements'] = 'on';
 				} else {
 					$this->setting_option_values['custom_question_elements'] = '';
@@ -627,6 +634,12 @@ if ( ( class_exists( 'LearnDash_Settings_Metabox' ) ) && ( ! class_exists( 'Lear
 						'on' => '',
 					),
 					'parent_setting' => 'showReviewQuestion',
+					'help_text'      => sprintf(
+						// translators: placeholders: question, question.
+						esc_html_x( 'Must use the "One %1$s at a time" and "Display results after each submitted answer" settings in the %2$s Display setting above.', 'placeholders: question, question', 'learndash' ),
+						learndash_get_custom_label_lower( 'question' ),
+						learndash_get_custom_label( 'question' )
+					),
 					'rest'           => array(
 						'show_in_rest' => LearnDash_REST_API::enabled(),
 						'rest_args'    => array(

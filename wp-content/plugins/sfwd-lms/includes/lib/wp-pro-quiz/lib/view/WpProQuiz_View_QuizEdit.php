@@ -628,7 +628,7 @@ class WpProQuiz_View_QuizEdit extends WpProQuiz_View_View {
 								<p class="description">
 									<?php
 									// translators: placeholder: course.
-									echo sprintf( esc_html_x( 'If you enable this option, an email is sent with his %s result to the user. (only registered users)', 'placeholder: course', 'learndash' ), esc_html( learndash_get_custom_label_lower( 'course' ) ) );
+									echo sprintf( esc_html_x( 'If you enable this option, an email is sent with their %s result to the user. (only registered users)', 'placeholder: course', 'learndash' ), esc_html( learndash_get_custom_label_lower( 'course' ) ) );
 									?>
 								</p>
 								<p class="description">

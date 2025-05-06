@@ -78,7 +78,7 @@ if ( ! class_exists( 'LearnDash_Import_Post' ) ) {
 				);
 
 				/**
-				 * Filters post duplicate URL paramaters.
+				 * Filters post duplicate URL parameters.
 				 *
 				 * Used in `get_duplicate_link` function to get duplicate post link.
 				 *
@@ -88,13 +88,15 @@ if ( ! class_exists( 'LearnDash_Import_Post' ) ) {
 
 				if ( ! empty( $url_params ) ) {
 					$url = add_query_arg( $url_params, admin_url( 'admin.php' ) );
+
 					/**
 					 * Filters duplicate URL link.
 					 *
 					 * Used in `get_duplicate_link` function to get duplicate post link.
 					 *
-					 * @param array  $url        Duplicate link for a post.
+					 * @param string $url        Duplicate link for a post.
 					 * @param array  $url_params An array of URL parameters.
+					 * @param int    $post_id    Post ID.
 					 * @param string $action     URL action.
 					 */
 					return apply_filters( 'ld_sensei_url_link', $url, $url_params, $post_id, $action );
@@ -126,7 +128,7 @@ if ( ! class_exists( 'LearnDash_Import_Post' ) ) {
 						$dest_post = array();
 
 						foreach ( $source_post as $k => $v ) {
-							if ( ! in_array( $k, array( 'ID', 'post_type', 'guid', 'post_parent', 'comment_count', 'to_ping' ) ) ) {
+							if ( ! in_array( $k, array( 'ID', 'post_type', 'guid', 'post_parent', 'comment_count', 'to_ping' ), true ) ) {
 								$dest_post[ $k ] = $v;
 							}
 						}
@@ -140,12 +142,13 @@ if ( ! class_exists( 'LearnDash_Import_Post' ) ) {
 						 *
 						 * Used in `duplicate_post` function to create duplicate post of any post.
 						 *
-						 * @param array $dest_post An array of duplicate post arguments.
+						 * @param array   $dest_post   An array of duplicate post arguments.
+						 * @param WP_Post $source_post Source post object.
 						 */
 						$dest_post    = apply_filters( 'learndash_duplicate_post_array', $dest_post, $source_post );
 						$dest_post_id = wp_insert_post( $dest_post );
 
-						if ( ! is_wp_error( $dest_post_id ) ) {
+						if ( $dest_post_id > 0 ) {
 
 							$dest_post = get_post( $dest_post_id );
 

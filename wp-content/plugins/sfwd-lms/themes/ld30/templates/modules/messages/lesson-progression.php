@@ -98,7 +98,7 @@ $alert = apply_filters( 'learndash_' . $context . '_progress_alert', $alert, get
  * @param int|false $post_id   Post ID.
  * @param int       $course_id Course ID.
  */
-do_action( 'learndash-' . $context . '-progession-alert-before', get_the_ID(), $course_id );
+do_action( 'learndash-' . $context . '-progession-alert-before', get_the_ID(), $course_id ); // cspell:disable-line.
 
 learndash_get_template_part( 'modules/alert.php', $alert, true );
 
@@ -113,4 +113,4 @@ learndash_get_template_part( 'modules/alert.php', $alert, true );
  * @param int|false $post_id   Post ID.
  * @param int       $course_id Course ID.
  */
-do_action( 'learndash-' . $context . '-progession-alert-after', get_the_ID(), $course_id );
+do_action( 'learndash-' . $context . '-progession-alert-after', get_the_ID(), $course_id ); // cspell:disable-line.

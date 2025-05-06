@@ -301,7 +301,7 @@ jQuery( function( $ ) {
 				var question_id = jQuery( question_item ).data( 'ld-id' );
 				var points = jQuery( '.ld-course-builder-points', question_item ).data( 'ld-points' );
 
-				builder_items_points = parseInt( builder_items_points ) + parseInt( points );
+				builder_items_points = parseFloat( builder_items_points ) + parseFloat( points );
 
 				builder_items_count += 1;
 				builder_items['sfwd-question:' + question_id.toString()] = {};
@@ -372,7 +372,7 @@ jQuery( function( $ ) {
 		},
 	};
 
-	// Common helper function for the draggables
+	// Common helper function for the draggable objects.
 	function ld_course_builder_draggable_helper( selected ) {
 		var container = $( '<div/>' ).attr( 'id', 'ld-selector-draggable-group' );
 
@@ -1041,7 +1041,7 @@ jQuery( function( $ ) {
 				jQuery( '.ld-course-builder-actions', parent_el ).show();
 
 				if ( jQuery( '.ld-course-builder-action-show-hide', parent_el ).length ) {
-					var selector_container = course_buider_get_parent_selector_container( parent_el );
+					var selector_container = course_buider_get_parent_selector_container( parent_el ); // cspell:disable-line
 					if ( ( typeof selector_container !== 'undefined' ) && ( jQuery( selector_container ).hasClass( 'learndash_builder_items' ) ) ) {
 						jQuery( '.ld-course-builder-action-show-hide', parent_el ).show();
 					}
@@ -1052,7 +1052,7 @@ jQuery( function( $ ) {
 	}
 
 	// Utility function. We need to see if an element is on the left or right side of CB.
-	function course_buider_get_parent_selector_container( el ) {
+	function course_buider_get_parent_selector_container( el ) { // cspell:disable-line
 		if ( typeof el !== 'undefined' ) {
 			var selector_container = jQuery( el ).closest( '.learndash_selectors' );
 			if ( ( typeof selector_container !== 'undefined' ) && ( selector_container.length > 0 ) ) {

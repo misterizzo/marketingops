@@ -114,7 +114,9 @@ if ( ( class_exists( 'LearnDash_Settings_Metabox' ) ) && ( ! class_exists( 'Lear
 					$this->setting_option_values['threshold'] = '80';
 				}
 
-				$this->setting_option_values['quiz_resume'] = learndash_get_setting( $this->_post->ID, 'quiz_resume' );
+				if ( ! isset( $_GET['templateLoadId'] ) ) {
+					$this->setting_option_values['quiz_resume'] = learndash_get_setting( $this->_post->ID, 'quiz_resume' );
+				}
 				if ( true === (bool) $this->setting_option_values['quiz_resume'] ) {
 					$this->setting_option_values['quiz_resume'] = 'on';
 				} else {
@@ -123,7 +125,7 @@ if ( ( class_exists( 'LearnDash_Settings_Metabox' ) ) && ( ! class_exists( 'Lear
 
 				if ( ( isset( $this->setting_option_values['quiz_resume_cookie_send_timer'] ) ) && ( '' !== $this->setting_option_values['quiz_resume_cookie_send_timer'] ) ) {
 					$this->setting_option_values['quiz_resume_cookie_send_timer'] = absint( $this->setting_option_values['quiz_resume_cookie_send_timer'] );
-					if ( LEARNDASH_QUIZ_RESUME_COOKIE_SEND_TIMER_MIN < $this->setting_option_values['quiz_resume_cookie_send_timer'] ) {
+					if ( LEARNDASH_QUIZ_RESUME_COOKIE_SEND_TIMER_MIN > $this->setting_option_values['quiz_resume_cookie_send_timer'] ) {
 						$this->setting_option_values['quiz_resume_cookie_send_timer'] = LEARNDASH_QUIZ_RESUME_COOKIE_SEND_TIMER_MIN;
 					}
 				} else {

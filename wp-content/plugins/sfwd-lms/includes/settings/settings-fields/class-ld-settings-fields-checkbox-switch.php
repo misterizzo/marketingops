@@ -157,8 +157,7 @@ if ( ( class_exists( 'LearnDash_Settings_Fields' ) ) && ( ! class_exists( 'Learn
 
 				$html .= '<span class="label-text';
 				if ( count( $field_args['options'] ) > 1 ) {
-					 // phpcs:ignore CSpell: CSS changes needed when updating spelling. 
-					$html .= ' label-text-multple';
+					$html .= ' label-text-multiple';
 				}
 				$html .= '">';
 

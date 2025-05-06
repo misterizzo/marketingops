@@ -3,6 +3,7 @@
  * LearnDash LD30 Displays course navigation quiz row
  *
  * @since 3.0.0
+ * @version 4.21.3
  *
  * @package LearnDash\Templates\LD30\Widgets
  */
@@ -39,15 +40,30 @@ if ( ! empty( $learndash_quiz_available_date ) ) {
 			<?php learndash_status_icon( $quiz['status'], 'sfwd-quiz', null, true ); ?>
 
 			<div class="<?php echo esc_attr( $classes['title'] ); ?>"><?php
-			echo wp_kses_post( apply_filters( 'the_title', $quiz['post']->post_title, $quiz['post']->ID ) ); 
+			echo wp_kses_post( apply_filters( 'the_title', $quiz['post']->post_title, $quiz['post']->ID ) );
 			if ( ! empty( $attributes ) ) :
 				foreach ( $attributes as $attribute ) :
-					?>
-				<span class="ld-status-icon <?php echo esc_attr( $attribute['class'] ); ?>" data-ld-tooltip="<?php echo esc_attr( $attribute['label'] ); ?>"><span class="ld-icon <?php echo esc_attr( $attribute['icon'] ); ?>"></span></span>
-					<?php
+				?>
+					<span class="ld-status-icon ld-tooltip <?php echo esc_attr( $attribute['class'] ); ?>">
+						<span
+							aria-describedby="ld-navigation-widget__quiz-row-tooltip--<?php echo esc_attr( $attribute['icon'] ); ?>"
+							class="ld-icon <?php echo esc_attr( $attribute['icon'] ); ?>"
+							tabindex="0"
+						></span>
+
+						<span
+							class="ld-tooltip__text"
+							id="ld-navigation-widget__quiz-row-tooltip--<?php echo esc_attr( $attribute['icon'] ); ?>"
+							role="tooltip"
+						>
+							<?php echo esc_html( $attribute['label'] ); ?>
+						</span>
+					</span>
+				<?php
 				endforeach;
 			endif;
-			?> </div> <?php // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound ?>
+			?>
+			</div> <?php // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound ?>
 			<!--/.ld-lesson-title-->
 
 		</a> <!--/.ld-lesson-item-preview-heading-->

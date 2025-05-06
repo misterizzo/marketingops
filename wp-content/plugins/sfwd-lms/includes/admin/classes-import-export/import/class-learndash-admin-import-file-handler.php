@@ -21,32 +21,7 @@ if (
 	 * @since 4.3.0
 	 */
 	class Learndash_Admin_Import_File_Handler extends Learndash_Admin_Import_Export_File_Handler {
-		const IMPORT_DIRECTORY             = 'learndash' . DIRECTORY_SEPARATOR . 'import';
-		const LEARNDASH_IMPORT_LOG_PATH_ID = 'learndash_import_log';
-
-		/**
-		 * Get the logger directory.
-		 *
-		 * @since 4.3.0
-		 *
-		 * @return string The logger directory.
-		 */
-		protected function get_logger_directory(): string {
-			return self::IMPORT_DIRECTORY;
-		}
-
-
-		/**
-		 * Returns the logger path ID.
-		 *
-		 * @since 4.3.0.1
-		 *
-		 * @return string The logger path ID.
-		 */
-		protected function get_logger_path_id(): string {
-			return self::LEARNDASH_IMPORT_LOG_PATH_ID;
-		}
-
+		const IMPORT_DIRECTORY = 'learndash' . DIRECTORY_SEPARATOR . 'import';
 
 		/**
 		 * Init.
@@ -115,7 +90,7 @@ if (
 		 * @return Generator
 		 */
 		public function get_items( string $file_path ): Generator {
-			if ( ! $file_path ) {
+			if ( ! file_exists( $file_path ) || 0 === filesize( $file_path ) ) {
 				return;
 			}
 

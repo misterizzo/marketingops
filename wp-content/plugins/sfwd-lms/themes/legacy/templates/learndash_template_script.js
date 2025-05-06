@@ -32,23 +32,29 @@ if ( typeof flip_collapse_all === 'undefined' ) {
 	}
 }
 
-String.prototype.toHHMMSS = function() {
-	sec_numb = parseInt( this, 10 );
-	var hours = Math.floor( sec_numb / 3600 );
-	var minutes = Math.floor( ( sec_numb - ( hours * 3600 ) ) / 60 );
-	var seconds = sec_numb - ( hours * 3600 ) - ( minutes * 60 );
-	if ( hours < 10 ) {
-		hours = '0' + hours;
-	}
-	if ( minutes < 10 ) {
-		minutes = '0' + minutes;
-	}
-	if ( seconds < 10 ) {
-		seconds = '0' + seconds;
-	}
-	var time = hours + ':' + minutes + ':' + seconds;
-	return time;
-};
+Object.defineProperty( String.prototype, 'toHHMMSS', {
+	value() {
+		const secNumb = parseInt( this, 10 );
+		let hours = Math.floor( secNumb / 3600 );
+		let minutes = Math.floor( ( secNumb - hours * 3600 ) / 60 );
+		let seconds = secNumb - ( hours * 3600 ) - ( minutes * 60 );
+
+		if ( hours < 10 ) {
+			hours = '0' + hours;
+		}
+
+		if ( minutes < 10 ) {
+			minutes = '0' + minutes;
+		}
+
+		if ( seconds < 10 ) {
+			seconds = '0' + seconds;
+		}
+
+		return hours + ':' + minutes + ':' + seconds;
+	},
+	enumerable: false,
+} );
 
 jQuery( function() {
 	if ( jQuery( '.learndash_timer' ).length ) {

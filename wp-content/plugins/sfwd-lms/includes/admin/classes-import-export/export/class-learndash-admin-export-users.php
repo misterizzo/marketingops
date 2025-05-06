@@ -55,11 +55,12 @@ if (
 		 * Constructor.
 		 *
 		 * @since 4.3.0
+		 * @since 4.5.0   Changed the $logger param to the `Learndash_Import_Export_Logger` class.
 		 *
-		 * @param bool                                 $with_progress   The flag to identify if we need to export progress.
-		 * @param bool                                 $groups_exported The flag to identify if we need to export groups meta.
-		 * @param Learndash_Admin_Export_File_Handler  $file_handler    File Handler class instance.
-		 * @param Learndash_Admin_Import_Export_Logger $logger          Logger class instance.
+		 * @param bool                                $with_progress   The flag to identify if we need to export progress.
+		 * @param bool                                $groups_exported The flag to identify if we need to export groups meta.
+		 * @param Learndash_Admin_Export_File_Handler $file_handler    File Handler class instance.
+		 * @param Learndash_Import_Export_Logger      $logger          Logger class instance.
 		 *
 		 * @return void
 		 */
@@ -67,7 +68,7 @@ if (
 			bool $with_progress,
 			bool $groups_exported,
 			Learndash_Admin_Export_File_Handler $file_handler,
-			Learndash_Admin_Import_Export_Logger $logger
+			Learndash_Import_Export_Logger $logger
 		) {
 			$this->with_progress           = $with_progress;
 			$this->ignored_meta_keys_regex = implode(

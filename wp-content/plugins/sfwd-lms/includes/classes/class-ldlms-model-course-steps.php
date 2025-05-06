@@ -119,6 +119,14 @@ if ( ( ! class_exists( 'LDLMS_Course_Steps' ) ) && ( class_exists( 'LDLMS_Model'
 				if ( true === $this->meta['empty'] ) {
 					// Note here since we are loading the steps via legacy methods we don't need to validate.
 					$this->steps['h'] = $this->load_steps_legacy();
+
+					// I don't want to affect the default flow, so this is a safe way to do this step after it was imported only.
+					if ( get_post_meta( $this->course_id, 'course_steps_update_after_import_is_needed', true ) ) {
+						// This is necessary to rebuild the steps after the import.
+						$steps_h = $this->steps['h'];
+
+						delete_post_meta( $this->course_id, 'course_steps_update_after_import_is_needed' );
+					}
 				}
 
 				$this->build_steps();
@@ -188,11 +196,6 @@ if ( ( ! class_exists( 'LDLMS_Course_Steps' ) ) && ( class_exists( 'LDLMS_Model'
 				$this->meta['steps'] = array();
 			}
 
-			// Future Implementation logic to handle changes in meta structure between versions.
-			// if ( isset( $this->meta['version'] ) ) {
-				// We need to perform any needed upgrade logic.
-			// }
-
 			/**
 			 * We check the 'course_id' to verify the step metadata. This helps
 			 * with clone plugins that will copy the post_meta. In theory.
@@ -261,7 +264,6 @@ if ( ( ! class_exists( 'LDLMS_Course_Steps' ) ) && ( class_exists( 'LDLMS_Model'
 
 			$this->set_steps_count_meta();
 		}
-
 
 		/**
 		 * Sets the Course steps dirty flag and will force the steps to be
@@ -456,7 +458,7 @@ if ( ( ! class_exists( 'LDLMS_Course_Steps' ) ) && ( class_exists( 'LDLMS_Model'
 		}
 
 		/**
-		 * This converts the normal hierachy steps into an array groups be the post type. This is easier for search.
+		 * This converts the normal hierarchy steps into an array groups be the post type. This is easier for search.
 		 *
 		 * @since 2.5.0
 		 *
@@ -637,7 +639,7 @@ if ( ( ! class_exists( 'LDLMS_Course_Steps' ) ) && ( class_exists( 'LDLMS_Model'
 				if ( ( ! property_exists( $section, 'ID' ) ) || ( empty( $section->ID ) ) ) {
 					continue;
 				}
-				
+
 				if ( ! property_exists( $section, 'order' ) ) {
 					continue;
 				}
@@ -649,7 +651,7 @@ if ( ( ! class_exists( 'LDLMS_Course_Steps' ) ) && ( class_exists( 'LDLMS_Model'
 				if ( ( ! property_exists( $section, 'type' ) ) || ( empty( $section->type ) ) ) {
 					continue;
 				}
-				
+
 				array_splice( $lessons, (int) $section->order, 0, array( $section ) );
 			}
 
@@ -731,7 +733,7 @@ if ( ( ! class_exists( 'LDLMS_Course_Steps' ) ) && ( class_exists( 'LDLMS_Model'
 			 * @since 3.4.2
 			 *
 			 * @param array $steps_query_args Array of query args.
-			 * @param int   $coure_id         Course ID.
+			 * @param int   $course_id        Course ID.
 			 */
 			$steps_query_args = apply_filters( 'learndash_course_steps_objects_query_args', $steps_query_args, $this->course_id );
 			if ( ( is_array( $steps_query_args ) ) && ( ! empty( $steps_query_args ) ) ) {
@@ -756,6 +758,56 @@ if ( ( ! class_exists( 'LDLMS_Course_Steps' ) ) && ( class_exists( 'LDLMS_Model'
 				 * flag and abort. This will cause the process to restart.
 				 */
 				if ( true !== $this->meta['course_shared_steps_enabled'] ) {
+					/**
+					 * If here we have a mismatch of the number of steps in the structure
+					 * vs. the number of objects queried. So we try and reconcile. Otherwise
+					 * this causes the 'dirty' logic to be triggered over and over.
+					 * See LEARNDASH-6721 for example.
+					 */
+					$all_intersect_ids = array_intersect( $all_steps_ids, $all_objects_ids );
+					if ( count( $all_intersect_ids ) ) {
+						$all_diff_ids = array_diff( $all_objects_ids, $all_intersect_ids );
+						if ( ! empty( $all_diff_ids ) ) {
+							foreach ( $all_diff_ids as $all_diff_id ) {
+								if ( ( isset( $this->objects[ $all_diff_id ] ) ) && ( is_a( $this->objects[ $all_diff_id ], 'WP_Post' ) ) ) {
+									$diff_post = $this->objects[ $all_diff_id ];
+
+									/**
+									 * We only handle 'topic' items here because a topic needs both the
+									 * 'course' and 'lesson' post meta. If a lesson or quiz is missing
+									 * the 'course' it will auto-reconcile via the 'dirty' processing.
+									 */
+									if ( learndash_get_post_type_slug( 'topic' ) === $diff_post->post_type ) {
+										$valid_post = true;
+
+										/**
+										 * We need to check the post_meta as well as the settings since they are
+										 * stored separately. The post_meta can be changed outside of LD logic.
+										 */
+										$course_id_post_meta = (int) get_post_meta( $diff_post->ID, 'course_id', true );
+										$course_id_setting   = (int) learndash_get_setting( $diff_post->ID, 'course' );
+
+										if ( ( empty( $course_id_post_meta ) ) || ( empty( $course_id_setting ) ) || ( $course_id_setting !== $course_id_post_meta ) ) {
+											$valid_post = false;
+										} else {
+											$lesson_id_post_meta = (int) get_post_meta( $diff_post->ID, 'lesson_id', true );
+											$lesson_id_setting   = (int) learndash_get_setting( $diff_post->ID, 'lesson' );
+
+											if ( ( empty( $lesson_id_post_meta ) ) || ( empty( $lesson_id_setting ) ) || ( $lesson_id_setting !== $lesson_id_post_meta ) ) {
+												$valid_post = false;
+											}
+										}
+
+										// If we have an invalid post we clear the course and lesson references.
+										if ( true !== $valid_post ) {
+											learndash_update_setting( $diff_post->ID, 'course', 0 );
+											learndash_update_setting( $diff_post->ID, 'lesson', 0 );
+										}
+									}
+								}
+							}
+						}
+					}
 					$this->set_steps_dirty();
 					$this->objects        = array();
 					$this->objects_loaded = false;
@@ -956,20 +1008,38 @@ if ( ( ! class_exists( 'LDLMS_Course_Steps' ) ) && ( class_exists( 'LDLMS_Model'
 		 * This is generally called when editing the course and the course steps has been changed.
 		 *
 		 * @since 2.5.0
+		 * @since 4.10.0   Add $keep_sections parameter to keep sections when updating steps.
 		 *
-		 * @param array $course_steps Array of Course steps.
+		 * @param array $course_steps  Array of Course steps.
+		 * @param bool  $keep_sections Whether to keep the existing sections when setting steps or not. Default false.
+		 *
+		 * @return void
 		 */
-		public function set_steps( $course_steps = array() ) {
+		public function set_steps( $course_steps = array(), bool $keep_sections = false ): void {
 			if ( ! empty( $this->course_id ) ) {
 				$this->saving_steps = true;
 
 				$this->load_steps_meta();
 
-				if ( isset( $course_steps['section-heading'] ) ) {
-					$this->set_section_headings( $course_steps['section-heading'] );
-					unset( $course_steps['section-heading'] );
+				if ( $keep_sections ) {
+					// Get the value directly from meta data to keep the structure of the sections unchanged to maintain its function in the course builder.
+
+					$course_sections = get_post_meta( $this->course_id, 'course_sections', true );
+
+					if ( is_string( $course_sections ) ) {
+						$course_sections = json_decode( $course_sections, true );
+					}
+
+					$course_sections = is_array( $course_sections ) ? $course_sections : [];
+
+					$this->set_section_headings( $course_sections );
 				} else {
-					$this->set_section_headings( array() );
+					if ( isset( $course_steps['section-heading'] ) ) {
+						$this->set_section_headings( $course_steps['section-heading'] );
+						unset( $course_steps['section-heading'] );
+					} else {
+						$this->set_section_headings( array() );
+					}
 				}
 
 				$this->steps['h'] = $course_steps;
@@ -996,6 +1066,19 @@ if ( ( ! class_exists( 'LDLMS_Course_Steps' ) ) && ( class_exists( 'LDLMS_Model'
 		}
 
 		/**
+		 * Set course steps while keeping the sections.
+		 *
+		 * @since 4.10.0
+		 *
+		 * @param array<string, array<mixed>> $course_steps Course steps.
+		 *
+		 * @return void
+		 */
+		public function set_steps_keeping_sections( array $course_steps = [] ): void {
+			$this->set_steps( $course_steps, true );
+		}
+
+		/**
 		 * Set Course Section Headings.
 		 *
 		 * @since 3.5.0
@@ -1007,17 +1090,16 @@ if ( ( ! class_exists( 'LDLMS_Course_Steps' ) ) && ( class_exists( 'LDLMS_Model'
 		public function set_section_headings( $sections = array() ) {
 			// This probably should call the REST endpoint.
 			if ( ! empty( $sections ) ) {
-				foreach( $sections as &$section ) {
+				foreach ( $sections as &$section ) {
 					if ( ! isset( $section['post_title'] ) ) {
 						$section['post_title'] = '';
 					} elseif ( ! empty( $section['post_title'] ) ) {
-
-						$section['post_title'] = strip_tags( $section['post_title'] );
-						//$section['post_title'] = wp_kses_post( $section['post_title'] );
+						$section['post_title'] = wp_strip_all_tags( $section['post_title'] );
 					}
 				}
 
 				$sections_json = wp_slash( wp_json_encode( array_values( $sections ), JSON_UNESCAPED_UNICODE ) );
+
 				return update_post_meta( $this->course_id, 'course_sections', $sections_json );
 			} else {
 				return delete_post_meta( $this->course_id, 'course_sections' );
@@ -1545,11 +1627,11 @@ if ( ( ! class_exists( 'LDLMS_Course_Steps' ) ) && ( class_exists( 'LDLMS_Model'
 		}
 
 		/**
-		 * Get Course Step parents.
+		 * Returns the parent steps for a given step. Empty array if no parent steps.
 		 *
 		 * @since 2.5.0
 		 *
-		 * @param int    $post_id Current step post ID.
+		 * @param int    $post_id   Current step post ID.
 		 * @param string $post_type Parent step post_type to.
 		 */
 		public function get_item_parent_steps( $post_id = 0, $post_type = '' ) {
@@ -1573,7 +1655,7 @@ if ( ( ! class_exists( 'LDLMS_Course_Steps' ) ) && ( class_exists( 'LDLMS_Model'
 		}
 
 		/**
-		 * Get Single Course Step parent.
+		 * Returns the parent step ID for a given step. 0 if no parent step.
 		 *
 		 * @since 2.5.0
 		 *

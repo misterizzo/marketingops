@@ -103,8 +103,8 @@ if ( ( ! class_exists( 'LD_REST_Quiz_Statistics_Controller_V2' ) ) && class_exis
 		 *
 		 * @return mixed
 		 */
+		#[\ReturnTypeWillChange]
 		public function current() {
-
 			return $this->stat_refs[ $this->position ];
 		}
 
@@ -113,8 +113,8 @@ if ( ( ! class_exists( 'LD_REST_Quiz_Statistics_Controller_V2' ) ) && class_exis
 		 *
 		 * @since 3.3.0
 		 */
+		#[\ReturnTypeWillChange]
 		public function next() {
-
 			++$this->position;
 		}
 
@@ -125,8 +125,8 @@ if ( ( ! class_exists( 'LD_REST_Quiz_Statistics_Controller_V2' ) ) && class_exis
 		 *
 		 * @return bool|float|int|string|null
 		 */
+		#[\ReturnTypeWillChange]
 		public function key() {
-
 			return $this->position;
 		}
 
@@ -137,6 +137,7 @@ if ( ( ! class_exists( 'LD_REST_Quiz_Statistics_Controller_V2' ) ) && class_exis
 		 *
 		 * @return bool
 		 */
+		#[\ReturnTypeWillChange]
 		public function valid() {
 			return isset( $this->stat_refs[ $this->position ] );
 		}
@@ -148,8 +149,8 @@ if ( ( ! class_exists( 'LD_REST_Quiz_Statistics_Controller_V2' ) ) && class_exis
 		 *
 		 * @return void
 		 */
+		#[\ReturnTypeWillChange]
 		public function rewind() {
-
 			$this->position = 0;
 		}
 
@@ -412,7 +413,7 @@ if ( ( ! class_exists( 'LD_REST_Quiz_Statistics_Controller_V2' ) ) && class_exis
 					 *
 					 * @since 3.3.0
 					 *
-					 * @param stdClass                          $question_response Response object for question.
+					 * @param array                             $question_response Response array for question.
 					 * @param WpProQuiz_Model_Question          $question          Question object.
 					 * @param string                            $student_answers   Submitted answer data by student.
 					 * @param WpProQuiz_Model_StatisticRefModel $stat_ref_model    Statistics ref model.
@@ -1084,7 +1085,7 @@ if ( ( ! class_exists( 'LD_REST_Quiz_Statistics_Controller_V2' ) ) && class_exis
 			if ( learndash_is_admin_user() ) {
 				$this->users_for_stats = array();
 			} elseif ( learndash_is_group_leader_user() ) {
-				if ( learndash_get_group_leader_manage_courses() ) {
+				if ( learndash_get_group_leader_manage_courses() === 'advanced' ) {
 					/**
 					 * If the Group Leader can manage_courses they have will access
 					 * to all quizzes. So they are treated like the admin user.

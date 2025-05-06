@@ -369,6 +369,19 @@ function learndash_update_setting( $post, $setting, $value ) {
 		$meta[ $post->post_type . '_' . $setting ] = $value;
 
 		$return = update_post_meta( $post->ID, '_' . $post->post_type, $meta );
+
+		if ( $return ) {
+			/**
+			 * Fires after a LearnDash post setting is updated.
+			 *
+			 * @since 4.13.0
+			 *
+			 * @param WP_Post $post    The WP_Post object.
+			 * @param string  $setting The key of the setting to update.
+			 * @param mixed   $value   The new value of setting to be updated.
+			 */
+			do_action( 'learndash_post_setting_updated', $post, $setting, $value );
+		}
 	}
 
 	return $return;

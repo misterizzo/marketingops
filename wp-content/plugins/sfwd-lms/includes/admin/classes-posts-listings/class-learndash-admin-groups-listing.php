@@ -223,10 +223,13 @@ if ( ( class_exists( 'Learndash_Admin_Posts_Listing' ) ) && ( ! class_exists( 'L
 		 */
 		protected function show_column_course_users( $post_id = 0, $column_name = '' ) {
 			if ( ( ! empty( $post_id ) ) && ( 'groups_courses_users' === $column_name ) ) {
-				$hidden = (array) get_hidden_columns( get_current_screen()->id );
-				if ( in_array( $column_name, $hidden, true ) ) {
-					echo esc_html__( 'reload', 'learndash' );
-					return;
+				if ( get_current_screen() ) {
+					$hidden = (array) get_hidden_columns( get_current_screen()->id );
+					if ( in_array( $column_name, $hidden, true ) ) {
+						echo esc_html__( 'reload', 'learndash' );
+
+						return;
+					}
 				}
 
 				$group_users = learndash_get_groups_user_ids( $post_id );

@@ -23,10 +23,10 @@ if ( ( ! class_exists( 'LDLMS_Model_User_Quiz_Progress' ) ) && ( class_exists( '
 		/**
 		 * User Progress Loaded flag.
 		 *
-		 * @var boolean $progess_loaded Set to false initially. Set to true once user
+		 * @var boolean $progress_loaded Set to false initially. Set to true once user
 		 * progress has been loaded.
 		 */
-		private $progess_loaded = false;
+		private $progress_loaded = false;
 
 		/**
 		 * User Quiz Progress Meta Key.
@@ -36,7 +36,7 @@ if ( ( ! class_exists( 'LDLMS_Model_User_Quiz_Progress' ) ) && ( class_exists( '
 		private $progress_meta_key = '_sfwd-quizzes';
 
 		/**
-		 * Legacy User Course Progiress array.
+		 * Legacy User Course Progress array.
 		 *
 		 * This array structure is the current stored in user meta.
 		 *
@@ -51,16 +51,9 @@ if ( ( ! class_exists( 'LDLMS_Model_User_Quiz_Progress' ) ) && ( class_exists( '
 		 * of the data model. One nice 'co' will be the completion order of the
 		 * course steps.
 		 *
-		 * @var array $progeess Array of user course progress.
+		 * @var array $progress Array of user course progress.
 		 */
 		protected $progress = array();
-
-		/**
-		 * Progress loaded
-		 *
-		 * @var bool
-		 */
-		protected $progress_loaded;
 
 		/**
 		 * Public constructor for class.
@@ -129,7 +122,7 @@ if ( ( ! class_exists( 'LDLMS_Model_User_Quiz_Progress' ) ) && ( class_exists( '
 		 * @since 3.2.0
 		 */
 		public function load_progress() {
-			if ( ! $this->progess_loaded ) {
+			if ( ! $this->progress_loaded ) {
 				$this->progress_loaded = true;
 
 				$this->progress_legacy = get_user_meta( $this->user_id, $this->progress_meta_key, true );
@@ -244,14 +237,14 @@ if ( ( ! class_exists( 'LDLMS_Model_User_Quiz_Progress' ) ) && ( class_exists( '
 
 		/**
 		 * Sets the Progress loaded flag to false and clears all data
-		 * structures. Thisand will force the progress to be reloaded
+		 * structures. Thousand will force the progress to be reloaded
 		 * from meta.
 		 *
 		 * @since 3.2.0
 		 */
 		public function set_progress_unloaded() {
 			if ( ! empty( $this->user_id ) ) {
-				$this->progess_loaded  = false;
+				$this->progress_loaded = false;
 				$this->progress        = array();
 				$this->progress_legacy = array();
 			}
@@ -297,7 +290,7 @@ if ( ( ! class_exists( 'LDLMS_Model_User_Quiz_Progress' ) ) && ( class_exists( '
 				if ( ! empty( $course_id ) ) {
 					$this->load_progress();
 					$this->progress[ $course_id ] = $progress;
-					$this->progess_loaded         = false;
+					$this->progress_loaded        = false;
 					return update_user_meta( $this->user_id, $this->progress_meta_key, $this->progress );
 				}
 			}

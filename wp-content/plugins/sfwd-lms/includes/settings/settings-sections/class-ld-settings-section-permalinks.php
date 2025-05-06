@@ -88,9 +88,10 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 		public function load_settings_values() {
 			parent::load_settings_values();
 
-			if ( false === $this->setting_option_values ) {
-				$this->setting_option_values = array();
-
+			if (
+				! $this->setting_option_initialized
+				&& empty( $this->setting_option_values )
+			) {
 				// On the initial if we don't have saved values we grab them from the Custom Labels.
 				$custom_label_settings = get_option( 'learndash_custom_label_settings', array() );
 
@@ -134,13 +135,20 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 			$this->setting_option_values = wp_parse_args(
 				$this->setting_option_values,
 				array(
-					'courses' => 'courses',
-					'lessons' => 'lessons',
-					'topics'  => 'topic',
-					'quizzes' => 'quizzes',
-					'groups'  => 'groups',
+					'courses'     => 'courses',
+					'lessons'     => 'lessons',
+					'topics'      => 'topic',
+					'quizzes'     => 'quizzes',
+					'groups'      => 'groups',
+					'nested_urls' => '',
 				)
 			);
+
+			if ( ( learndash_is_course_shared_steps_enabled() ) && ( 'yes' !== $this->setting_option_values['nested_urls'] ) ) {
+				$this->setting_option_values['nested_urls'] = 'yes';
+				update_option( $this->settings_section_key, $this->setting_option_values );
+				learndash_setup_rewrite_flush();
+			}
 		}
 
 		/**

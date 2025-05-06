@@ -13,11 +13,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $post;
 
-$course_id = $shortcode_atts['course_id'];
+$course_id = (int) $shortcode_atts['course_id'];
 
 if ( is_user_logged_in() ) {
-	$cuser   = wp_get_current_user();
-	$user_id = $cuser->ID;
+	$user_id = get_current_user_id();
 } else {
 	$user_id = false;
 }
@@ -27,12 +26,13 @@ if ( is_user_logged_in() ) {
 	<div class="ld-item-list">
 		<div class="ld-item-list-item">
 			<div class="ld-item-list-item-preview">
-				<?php if ( LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Groups_CPT', 'public' ) !== 'yes' && $shortcode_atts['post_type'] === 'groups' ) {
+				<?php
+				if ( LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Groups_CPT', 'public' ) !== 'yes' && $shortcode_atts['post_type'] === 'groups' ) {
 					echo esc_html( get_the_title() );
 				} else {
-				?>
+					?>
 					<a class="ld-item-name ld-primary-color-hover" href="<?php echo esc_url( learndash_get_step_permalink( get_the_ID() ) ); ?>"><?php echo esc_html( get_the_title() ); ?></a>
-				<?php
+					<?php
 				}
 				?>
 			</div>

@@ -6,6 +6,8 @@
  * @package LearnDash\Shortcodes
  */
 
+use LearnDash\Core\Utilities\Cast;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -59,6 +61,15 @@ function learndash_materials_shortcode_function( $atts = array(), $content = '',
 		$atts['post_id'] = absint( get_the_ID() );
 	}
 
+	// Check post access.
+	if (
+		! learndash_shortcode_can_current_user_access_post(
+			Cast::to_int( $atts['post_id'] )
+		)
+	) {
+		return '';
+	}
+
 	$post = get_post( $atts['post_id'] );
 
 	if ( in_array( $post->post_type, learndash_get_post_types(), true ) ) {
@@ -68,7 +79,7 @@ function learndash_materials_shortcode_function( $atts = array(), $content = '',
 		$materials = learndash_get_setting( $atts['post_id'] );
 		if ( isset( $materials[ $context . '_materials_enabled' ] ) && 'on' === $materials[ $context . '_materials_enabled' ] ) {
 			if ( ( isset( $materials[ $context . '_materials' ] ) ) && ( ! empty( $materials[ $context . '_materials' ] ) ) ) {
-				$materials_out = wp_specialchars_decode( $materials[ $context . '_materials' ], ENT_QUOTES );
+				$materials_out = wp_specialchars_decode( strval( $materials[ $context . '_materials' ] ), ENT_QUOTES );
 				if ( 'true' === $atts['autop'] ) {
 					$materials_out = wpautop( $materials_out );
 				}

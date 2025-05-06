@@ -13,6 +13,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// cspell:ignore accessable .
+
 /**
  * Gets the lesson list for a course.
  *
@@ -133,8 +135,8 @@ function learndash_get_course_lessons_list_legacy( $course = null, $user_id = nu
 	$course_settings = learndash_get_setting( $course );
 	$lessons_options = learndash_get_option( 'sfwd-lessons' );
 
-	$orderby = ( empty( $course_settings['course_lesson_orderby'] ) ) ? @$lessons_options['orderby'] : $course_settings['course_lesson_orderby'];
-	$order   = ( empty( $course_settings['course_lesson_order'] ) ) ? @$lessons_options['order'] : $course_settings['course_lesson_order'];
+	$orderby = ( empty( $course_settings['course_lesson_orderby'] ) ) ? ( $lessons_options['orderby'] ?? '' ) : $course_settings['course_lesson_orderby'];
+	$order   = ( empty( $course_settings['course_lesson_order'] ) ) ? ( $lessons_options['order'] ?? '' ) : $course_settings['course_lesson_order'];
 
 	$lesson_query_pagination = 'true';
 	if ( ( isset( $lessons_args['num'] ) ) && ( $lessons_args['num'] !== false ) ) {
@@ -343,8 +345,8 @@ function learndash_get_course_quiz_list_legacy( $course = null, $user_id = null 
 
 	$course_settings = learndash_get_setting( $course );
 	$lessons_options = learndash_get_option( 'sfwd-lessons' );
-	$orderby         = ( empty( $course_settings['course_lesson_orderby'] ) ) ? @$lessons_options['orderby'] : $course_settings['course_lesson_orderby'];
-	$order           = ( empty( $course_settings['course_lesson_order'] ) ) ? @$lessons_options['order'] : $course_settings['course_lesson_order'];
+	$orderby         = ( empty( $course_settings['course_lesson_orderby'] ) ) ? ( $lessons_options['orderby'] ?? '' ) : $course_settings['course_lesson_orderby'];
+	$order           = ( empty( $course_settings['course_lesson_order'] ) ) ? ( $lessons_options['order'] ?? '' ) : $course_settings['course_lesson_order'];
 	$opt             = array(
 		'post_type'      => 'sfwd-quiz',
 		'meta_key'       => 'course_id',
@@ -406,8 +408,8 @@ function learndash_get_lesson_quiz_list_legacy( $lesson, $user_id = null, $cours
 
 	$course_settings = learndash_get_setting( $course_id );
 	$lessons_options = learndash_get_option( 'sfwd-lessons' );
-	$orderby         = ( empty( $course_settings['course_lesson_orderby'] ) ) ? @$lessons_options['orderby'] : $course_settings['course_lesson_orderby'];
-	$order           = ( empty( $course_settings['course_lesson_order'] ) ) ? @$lessons_options['order'] : $course_settings['course_lesson_order'];
+	$orderby         = ( empty( $course_settings['course_lesson_orderby'] ) ) ? ( $lessons_options['orderby'] ?? '' ) : $course_settings['course_lesson_orderby'];
+	$order           = ( empty( $course_settings['course_lesson_order'] ) ) ? ( $lessons_options['order'] ?? '' ) : $course_settings['course_lesson_order'];
 	$opt             = array(
 		'post_type'      => 'sfwd-quiz',
 		'meta_key'       => 'lesson_id',
@@ -465,7 +467,7 @@ function learndash_get_global_quiz_list_legacy( $id = null ) {
 		}
 	}
 
-	// COURSEIDCHANGE.
+	// COURSE ID CHANGE.
 	$course_id = learndash_get_course_id( $id );
 	if ( ! empty( $course_id ) ) {
 		if ( learndash_is_course_shared_steps_enabled() ) {
@@ -489,8 +491,8 @@ function learndash_get_global_quiz_list_legacy( $id = null ) {
 
 				$course_settings = learndash_get_setting( $course_id );
 				$lessons_options = learndash_get_option( 'sfwd-lessons' );
-				$orderby         = ( empty( $course_settings['course_lesson_orderby'] ) ) ? @$lessons_options['orderby'] : $course_settings['course_lesson_orderby'];
-				$order           = ( empty( $course_settings['course_lesson_order'] ) ) ? @$lessons_options['order'] : $course_settings['course_lesson_order'];
+				$orderby         = ( empty( $course_settings['course_lesson_orderby'] ) ) ? ( $lessons_options['orderby'] ?? '' ) : $course_settings['course_lesson_orderby'];
+				$order           = ( empty( $course_settings['course_lesson_order'] ) ) ? ( $lessons_options['order'] ?? '' ) : $course_settings['course_lesson_order'];
 
 				$quizzes = get_posts(
 					array(
@@ -738,7 +740,7 @@ function learndash_course_status_legacy( $id, $user_id = null, $return_slug = fa
 	} else {
 		$course_progress = get_user_meta( $user_id, '_sfwd-course_progress', true );
 		/**
-		 * We need a better solution for this. A central class to ennsure
+		 * We need a better solution for this. A central class to ensure
 		 * correct data compliance and required elements are present. But
 		 * for now adding this here.
 		 * LEARNDASH-4868
@@ -761,17 +763,17 @@ function learndash_course_status_legacy( $id, $user_id = null, $return_slug = fa
 		 *
 		 * @since 3.3.0
 		 *
-		 * @param bool  true             Recalculate course total steps.
-		 * @param array $course_progress Array of course progress.
-		 * @param int   $user_id         User ID;
-		 * @param int   $course_id       Course ID;
+		 * @param bool  $recalculate_course_total_steps Recalculate course total steps. Default true.
+		 * @param array $course_progress                Array of course progress.
+		 * @param int   $user_id                        User ID.
+		 * @param int   $course_id                      Course ID.
 		 */
 		if ( apply_filters( 'learndash_course_status_recalc_total_steps', true, $course_progress[ $id ], $user_id, $id ) ) {
 			$course_steps_count = learndash_get_course_steps_count( $id );
 			if ( ( ! empty( $course_steps_count ) ) && ( $course_steps_count < absint( $course_progress[ $id ]['total'] ) ) ) {
 				$course_progress[ $id ]['total'] = $course_steps_count;
 
-				// We also need to update the user meta since other functions will retreive this data.
+				// We also need to update the user meta since other functions will retrieve this data.
 				update_user_meta( $user_id, '_sfwd-course_progress', $course_progress );
 			}
 		}
@@ -825,13 +827,13 @@ function learndash_course_status_legacy( $id, $user_id = null, $return_slug = fa
 				 *
 				 * @since 3.2.3
 				 *
-				 * @param bool false                Action to auto complete course step.
-				 * @param int $id                   Course ID
-				 * @param int $user_id              User ID
-				 * @param array $quizzes            Course Global Quiz Posts.
-				 * @param array $quizzes_incomplete Array of incomplete Quizzes IDs.
+				 * @param bool  $autocomplete_course_step Autocomplete course step. Default false.
+				 * @param int   $id                       Course ID
+				 * @param int   $user_id                  User ID
+				 * @param array $quizzes                  Course Global Quiz Posts.
+				 * @param array $quizzes_incomplete       Array of incomplete Quizzes IDs.
 				 *
-				 * @return true to auto complete step.
+				 * @return bool True auto complete step, false do not auto complete step.
 				 */
 				$quiz_notstarted = apply_filters(
 					'learndash_course_autocompletion_multiple_final_quizzes_step',
@@ -856,13 +858,24 @@ function learndash_course_status_legacy( $id, $user_id = null, $return_slug = fa
 			} else {
 				$course_status_str = esc_html__( 'Not Started', 'learndash' );
 			}
-		} elseif ( empty( $course_progress[ $id ] ) || @$course_progress[ $id ]['completed'] < @$course_progress[ $id ]['total'] ) {
+		} elseif (
+			empty( $course_progress[ $id ] )
+			|| (
+				isset( $course_progress[ $id ]['completed'] )
+				&& isset( $course_progress[ $id ]['total'] )
+				&& $course_progress[ $id ]['completed'] < $course_progress[ $id ]['total']
+			)
+		) {
 			if ( true === $return_slug ) {
 				$course_status_str = 'in-progress';
 			} else {
 				$course_status_str = esc_html__( 'In Progress', 'learndash' );
 			}
-		} elseif ( absint( $course_progress[ $id ]['completed'] ) == absint( $course_progress[ $id ]['total'] ) ) {
+		} elseif (
+			isset( $course_progress[ $id ]['completed'] )
+			&& isset( $course_progress[ $id ]['total'] )
+			&& absint( $course_progress[ $id ]['completed'] ) === absint( $course_progress[ $id ]['total'] )
+		) {
 			if ( true === $return_slug ) {
 				$course_status_str = 'completed';
 			} else {
@@ -1127,7 +1140,10 @@ function learndash_get_course_progress_legacy( $user_id = null, $postid = null, 
 		}
 	}
 
-	$temp = $prev_p = $next_p = $this_p = '';
+	$temp   = '';
+	$prev_p = '';
+	$next_p = '';
+	$this_p = '';
 
 	if ( ! empty( $posts ) ) {
 		foreach ( $posts as $k => $post ) {
@@ -1332,18 +1348,6 @@ function learndash_process_mark_complete_legacy( $user_id = null, $postid = null
 
 	$lessons = learndash_get_lesson_list( $course_id, array( 'num' => 0 ) );
 
-	if ( learndash_has_global_quizzes( $postid ) ) {
-		$globalquiz = 1;
-	} else {
-		$globalquiz = 0;
-	}
-
-	if ( $globalquiz && learndash_is_all_global_quizzes_complete( $user_id, $postid ) ) {
-		$globalquizcompleted = 1;
-	} else {
-		$globalquizcompleted = 0;
-	}
-
 	$course_progress = get_user_meta( $user_id, '_sfwd-course_progress', true );
 
 	if ( ( empty( $course_progress ) ) || ( ! is_array( $course_progress ) ) ) {
@@ -1387,8 +1391,7 @@ function learndash_process_mark_complete_legacy( $user_id = null, $postid = null
 	$completed = learndash_course_get_completed_steps( $user_id, $course_id, $course_progress[ $course_id ] );
 
 	$course_progress[ $course_id ]['completed'] = $completed;
-	// 2016-07-16 v2.3 Changed the logic on the count here. In the previous logic the count of lessons and 1 or 0 for global quiz.
-	// $course_progress[ $course_id ]['total'] = count( $lessons ) + $globalquiz;
+
 	// New logic includes lessons and topics.
 	$course_progress[ $course_id ]['total'] = learndash_get_course_steps_count( $course_id );
 

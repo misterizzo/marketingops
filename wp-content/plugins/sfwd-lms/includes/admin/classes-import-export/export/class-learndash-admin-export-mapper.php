@@ -31,8 +31,9 @@ if ( ! class_exists( 'Learndash_Admin_Export_Mapper' ) ) {
 		 * Logger class instance.
 		 *
 		 * @since 4.3.0
+		 * @since 4.5.0   Changed to the `Learndash_Import_Export_Logger` class.
 		 *
-		 * @var Learndash_Admin_Import_Export_Logger
+		 * @var Learndash_Import_Export_Logger
 		 */
 		private $logger;
 
@@ -40,13 +41,14 @@ if ( ! class_exists( 'Learndash_Admin_Export_Mapper' ) ) {
 		 * Constructor.
 		 *
 		 * @since 4.3.0
+		 * @since 4.5.0   Changed the $logger param to the `Learndash_Import_Export_Logger` class.
 		 *
-		 * @param Learndash_Admin_Export_File_Handler  $file_handler File Handler class instance.
-		 * @param Learndash_Admin_Import_Export_Logger $logger       Logger class instance.
+		 * @param Learndash_Admin_Export_File_Handler $file_handler File Handler class instance.
+		 * @param Learndash_Import_Export_Logger      $logger       Logger class instance.
 		 */
 		public function __construct(
 			Learndash_Admin_Export_File_Handler $file_handler,
-			Learndash_Admin_Import_Export_Logger $logger
+			Learndash_Import_Export_Logger $logger
 		) {
 			$this->file_handler = $file_handler;
 			$this->logger       = $logger;

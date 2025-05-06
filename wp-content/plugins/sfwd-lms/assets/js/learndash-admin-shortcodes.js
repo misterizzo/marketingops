@@ -88,11 +88,11 @@ var learndash_shortcodes = jQuery.extend( learndash_shortcodes || {}, {
 
 		/**
 		 * Adjust position if RTL. for some reason the WordPress jQuery Dialog logic
-		 * positions the popup relative to the left insteadof the right. This pushes
+		 * positions the popup relative to the left instead of the right. This pushes
 		 * the popup against the right side right:0px instead of centered. So the
 		 * code below to adjust that but might find a more correct solution later.
 		 *
-		 * @added LD 3.0.7
+		 * @since 3.0.7
 		 */
 		if ( window.isRtl ) {
 			var dialog_position_left = parseInt( jQuery( '.ui-dialog.ld-shortcodes' ).css( 'left' ) );
@@ -147,10 +147,10 @@ var learndash_shortcodes = jQuery.extend( learndash_shortcodes || {}, {
 		obj.parent().addClass( 'current' );
 	},
 	get_selected_text: function() {
-		var txtarea = document.getElementById( 'content' );
-		var start = txtarea.selectionStart;
-		var finish = txtarea.selectionEnd;
-		return txtarea.value.substring( start, finish );
+		var textarea = document.getElementById( 'content' );
+		var start = textarea.selectionStart;
+		var finish = textarea.selectionEnd;
+		return textarea.value.substring( start, finish );
 	},
 	popup_submit: function( form ) {
 		if ( learndash_admin_shortcodes_assets.popup_type === 'jQuery-dialog' ) {
@@ -178,7 +178,7 @@ var learndash_shortcodes = jQuery.extend( learndash_shortcodes || {}, {
 				var field_shortcode_exclude = field.getAttribute(
 					"data-shortcode-exclude"
 				);
-				
+
 				// Skip excluded shortcode fields.
 				if ( ( typeof field_shortcode_exclude !== 'undefined' ) && ( field_shortcode_exclude == '1' ) ) {
 					continue;

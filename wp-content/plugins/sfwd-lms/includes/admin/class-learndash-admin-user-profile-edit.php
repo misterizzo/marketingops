@@ -257,7 +257,7 @@ if ( ! class_exists( 'Learndash_Admin_User_Profile_Edit' ) ) {
 							?>
 								<p><label for="">
 								<?php
-								wp_kses_post(
+								echo wp_kses_post(
 									sprintf(
 										// translators: placeholder: quiz.
 										esc_html_x( 'Remove the %s lock(s) for this user.', 'placeholder: quiz', 'learndash' ),
@@ -467,20 +467,48 @@ if ( ! class_exists( 'Learndash_Admin_User_Profile_Edit' ) ) {
 		 *
 		 * @since 2.2.1
 		 *
-		 * @param WP_User $user wp_user object.
+		 * @param WP_User $user A user whose profile we are editing.
 		 */
-		private function show_leader_groups( WP_User $user ) {
-			if ( current_user_can( 'edit_users' ) ) {
-				if ( learndash_is_group_leader_user( $user->ID ) ) {
-					$ld_binary_selector_leader_groups = new Learndash_Binary_Selector_Leader_Groups(
-						array(
-							'user_id'      => $user->ID,
-							'selected_ids' => learndash_get_administrators_group_ids( $user->ID, true ),
-						)
-					);
-					$ld_binary_selector_leader_groups->show();
-				}
+		private function show_leader_groups( WP_User $user ): void {
+			if (
+				! current_user_can( 'edit_users' )
+				|| ! learndash_is_group_leader_user( $user->ID )
+			) {
+				return;
 			}
+
+			if ( learndash_is_admin_user() ) {
+				$current_user_can_edit = true;
+			} else {
+				/**
+				 * Filters an ability of a group leader to edit the groups list they lead or other group leaders lead.
+				 *
+				 * @since 4.5.0
+				 *
+				 * @param bool    $can_edit     A flag indicating if a user can edit group leaders. Default false.
+				 * @param WP_User $group_leader A group leader user object.
+				 *
+				 * @return bool True if a group leader is allowed to edit group leaders.
+				 */
+				$current_user_can_edit = apply_filters(
+					'learndash_group_leader_can_edit_group_leaders',
+					false,
+					$user
+				);
+			}
+
+			if ( ! $current_user_can_edit ) {
+				return;
+			}
+
+			$ld_binary_selector_leader_groups = new Learndash_Binary_Selector_Leader_Groups(
+				array(
+					'user_id'      => $user->ID,
+					'selected_ids' => learndash_get_administrators_group_ids( $user->ID, true ),
+				)
+			);
+
+			$ld_binary_selector_leader_groups->show();
 		}
 
 		/**

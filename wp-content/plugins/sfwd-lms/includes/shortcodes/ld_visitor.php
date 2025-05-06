@@ -7,6 +7,8 @@
  * @package LearnDash\Shortcodes
  */
 
+use LearnDash\Core\Models\Product;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -86,7 +88,7 @@ function learndash_visitor_check_shortcode( $atts = array(), $content = '', $sho
 		/**
 		 * Filters visitor shortcode attributes.
 		 *
-		 * @param array $attributes An array of shortcode attributes.
+		 * @param array $atts An array of shortcode attributes.
 		 */
 		$atts = apply_filters( 'learndash_visitor_shortcode_atts', $atts );
 
@@ -97,20 +99,52 @@ function learndash_visitor_check_shortcode( $atts = array(), $content = '', $sho
 		$view_content = false;
 
 		if ( ( empty( $atts['user_id'] ) ) || ( get_current_user_id() === $atts['user_id'] ) ) {
-			if ( ! empty( $atts['course_id'] ) ) {
-				if ( ( ! is_user_logged_in() ) && ( empty( $atts['user_id'] ) ) ) {
+			if (
+				! empty( $atts['course_id'] )
+				|| ! empty( $atts['group_id'] )
+			) {
+				if ( empty( $atts['user_id'] ) ) {
 					$view_content = true;
-				} elseif ( ! sfwd_lms_has_access( $atts['course_id'], $atts['user_id'] ) ) {
-					$view_content = true;
+				} else {
+					$product_id = ! empty( $atts['course_id'] ) ? $atts['course_id'] : $atts['group_id'];
+
+					/**
+					 * The product object.
+					 *
+					 * @var Product|null $product
+					 */
+					$product = Product::find( $product_id );
+
+					$view_content = ! $product
+									|| (
+										! $product->user_has_access( $atts['user_id'] )
+										&& ! $product->is_pre_ordered( $atts['user_id'] )
+									);
 				}
-			} elseif ( ! empty( $atts['group_id'] ) ) {
-				if ( ( ! is_user_logged_in() ) && ( empty( $atts['user_id'] ) ) ) {
-					$view_content = true;
-				} elseif ( ! learndash_is_user_in_group( $atts['user_id'], $atts['group_id'] ) ) {
+			} else {
+				if ( get_current_user_id() ) {
+					$user_enrolled_courses = learndash_user_get_enrolled_courses( get_current_user_id(), array() );
+					$user_enrolled_groups  = learndash_get_users_group_ids( get_current_user_id() );
+
+					// If the user is not enrolled in any courses or groups then we show the content.
+					if ( ( ! count( $user_enrolled_courses ) ) && ( ! count( $user_enrolled_groups ) ) ) {
+						$view_content = true;
+					}
+				} else {
 					$view_content = true;
 				}
 			}
 		}
+
+		/**
+		 * Filters visitor shortcode if user can view content.
+		 *
+		 * @since 4.4.0
+		 *
+		 * @param bool  $view_content Whether to view content.
+		 * @param array $atts         An array of shortcode attributes.
+		 */
+		$view_content = apply_filters( 'learndash_visitor_shortcode_view_content', $view_content, $atts );
 
 		if ( $view_content ) {
 			$learndash_shortcode_used = true;

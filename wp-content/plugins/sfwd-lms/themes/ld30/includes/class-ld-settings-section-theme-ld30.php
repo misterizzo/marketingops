@@ -45,8 +45,8 @@ if ( ( class_exists( 'LearnDash_Theme_Settings_Section' ) ) && ( ! class_exists(
 			$this->settings_theme_key = 'ld30';
 
 			$ld30_colors_defs = array(
-				'LD_30_COLOR_PRIMARY'   => '#00a2e8',
-				'LD_30_COLOR_SECONDARY' => '#019e7c',
+				'LD_30_COLOR_PRIMARY'   => '#235af3',
+				'LD_30_COLOR_SECONDARY' => '#235af3',
 				'LD_30_COLOR_TERTIARY'  => '#ffd200',
 			);
 
@@ -89,15 +89,15 @@ if ( ( class_exists( 'LearnDash_Theme_Settings_Section' ) ) && ( ! class_exists(
 			}
 
 			if ( ( ! isset( $this->setting_option_values['color_primary'] ) ) || ( empty( $this->setting_option_values['color_primary'] ) ) ) {
-				$this->setting_option_values['color_primary'] = '';
+				$this->setting_option_values['color_primary'] = LD_30_COLOR_PRIMARY;
 			}
 
 			if ( ( ! isset( $this->setting_option_values['color_secondary'] ) ) || ( empty( $this->setting_option_values['color_secondary'] ) ) ) {
-				$this->setting_option_values['color_secondary'] = '';
+				$this->setting_option_values['color_secondary'] = LD_30_COLOR_SECONDARY;
 			}
 
 			if ( ( ! isset( $this->setting_option_values['color_tertiary'] ) ) || ( empty( $this->setting_option_values['color_tertiary'] ) ) ) {
-				$this->setting_option_values['color_tertiary'] = '';
+				$this->setting_option_values['color_tertiary'] = LD_30_COLOR_TERTIARY;
 			}
 
 			if ( ( ! isset( $this->setting_option_values['focus_mode_content_width'] ) ) || ( empty( $this->setting_option_values['focus_mode_content_width'] ) ) ) {
@@ -117,52 +117,40 @@ if ( ( class_exists( 'LearnDash_Theme_Settings_Section' ) ) && ( ! class_exists(
 		public function load_settings_fields() {
 			$this->setting_option_fields = array(
 
-				'color_primary'            => array(
-					'name'              => 'color_primary',
-					'type'              => 'colorpicker',
-					'label'             => esc_html__( 'Accent Color', 'learndash' ),
-					'help_text'         => esc_html__( 'Main color used throughout the theme (buttons, action items, and highlights).', 'learndash' ),
-					'value'             => ! empty( $this->setting_option_values['color_primary'] ) ? $this->setting_option_values['color_primary'] : '',
-					'validate_callback' => array( $this, 'validate_section_field_colors' ),
-					'validate_args'     => array(
-						'allow_empty' => 1,
-					),
-					'attrs'             => array(
+				'color_primary'               => array(
+					'name'      => 'color_primary',
+					'type'      => 'colorpicker',
+					'label'     => esc_html__( 'Accent Color', 'learndash' ),
+					'help_text' => esc_html__( 'Main color used throughout the theme (buttons, action items, and highlights).', 'learndash' ),
+					'value'     => ! empty( $this->setting_option_values['color_primary'] ) ? $this->setting_option_values['color_primary'] : '',
+					'attrs'     => array(
 						'data-default-color' => LD_30_COLOR_PRIMARY,
 						'placeholder'        => LD_30_COLOR_PRIMARY,
 					),
 				),
-				'color_secondary'          => array(
-					'name'              => 'color_secondary',
-					'type'              => 'colorpicker',
-					'label'             => esc_html__( 'Progress Color', 'learndash' ),
-					'help_text'         => esc_html__( 'Color used for all successful progress-related items (completed items, certificates, and progress bars).', 'learndash' ),
-					'value'             => ! empty( $this->setting_option_values['color_secondary'] ) ? $this->setting_option_values['color_secondary'] : '',
-					'validate_callback' => array( $this, 'validate_section_field_colors' ),
-					'validate_args'     => array(
-						'allow_empty' => 1,
-					),
-					'attrs'             => array(
+				'color_secondary'             => array(
+					'name'      => 'color_secondary',
+					'type'      => 'colorpicker',
+					'label'     => esc_html__( 'Progress Color', 'learndash' ),
+					'help_text' => esc_html__( 'Color used for all successful progress-related items (completed items, certificates, and progress bars).', 'learndash' ),
+					'value'     => ! empty( $this->setting_option_values['color_secondary'] ) ? $this->setting_option_values['color_secondary'] : '',
+					'attrs'     => array(
 						'data-default-color' => LD_30_COLOR_SECONDARY,
 						'placeholder'        => LD_30_COLOR_SECONDARY,
 					),
 				),
-				'color_tertiary'           => array(
-					'name'              => 'color_tertiary',
-					'type'              => 'colorpicker',
-					'label'             => esc_html__( 'Notifications, Warnings, etc...', 'learndash' ),
-					'help_text'         => esc_html__( 'This color is used when there are warning, important messages.', 'learndash' ),
-					'value'             => ! empty( $this->setting_option_values['color_tertiary'] ) ? $this->setting_option_values['color_tertiary'] : '',
-					'validate_callback' => array( $this, 'validate_section_field_colors' ),
-					'validate_args'     => array(
-						'allow_empty' => 1,
-					),
-					'attrs'             => array(
+				'color_tertiary'              => array(
+					'name'      => 'color_tertiary',
+					'type'      => 'colorpicker',
+					'label'     => esc_html__( 'Notifications, Warnings, etc...', 'learndash' ),
+					'help_text' => esc_html__( 'This color is used when there are warning, important messages.', 'learndash' ),
+					'value'     => ! empty( $this->setting_option_values['color_tertiary'] ) ? $this->setting_option_values['color_tertiary'] : '',
+					'attrs'     => array(
 						'data-default-color' => LD_30_COLOR_TERTIARY,
 						'placeholder'        => LD_30_COLOR_TERTIARY,
 					),
 				),
-				'focus_mode_enabled'       => array(
+				'focus_mode_enabled'          => array(
 					'name'                => 'focus_mode_enabled',
 					'type'                => 'checkbox-switch',
 					'label'               => esc_html__( 'Focus Mode', 'learndash' ),
@@ -183,7 +171,7 @@ if ( ( class_exists( 'LearnDash_Theme_Settings_Section' ) ) && ( ! class_exists(
 					),
 					'child_section_state' => ( 'yes' === $this->setting_option_values['focus_mode_enabled'] ) ? 'open' : 'closed',
 				),
-				'focus_mode_content_width' => array(
+				'focus_mode_content_width'    => array(
 					'name'           => 'focus_mode_content_width',
 					'type'           => 'select',
 					'label'          => esc_html__( 'Focus Mode Content Width', 'learndash' ),
@@ -207,7 +195,7 @@ if ( ( class_exists( 'LearnDash_Theme_Settings_Section' ) ) && ( ! class_exists(
 					'options'        => $this->focus_mode_sidebar_position_options(),
 					'parent_setting' => 'focus_mode_enabled',
 				),
-				'login_mode_enabled'       => array(
+				'login_mode_enabled'          => array(
 					'name'      => 'login_mode_enabled',
 					'type'      => 'checkbox-switch',
 					'label'     => esc_html__( 'Login & Registration', 'learndash' ),
@@ -226,7 +214,7 @@ if ( ( class_exists( 'LearnDash_Theme_Settings_Section' ) ) && ( ! class_exists(
 						),
 					),
 				),
-				'login_logo'               => array(
+				'login_logo'                  => array(
 					'name'              => 'login_logo',
 					'type'              => 'media-upload',
 					'label'             => esc_html__( 'Logo Upload', 'learndash' ),
@@ -237,7 +225,7 @@ if ( ( class_exists( 'LearnDash_Theme_Settings_Section' ) ) && ( ! class_exists(
 						'allow_empty' => 1,
 					),
 				),
-				'responsive_video_enabled' => array(
+				'responsive_video_enabled'    => array(
 					'name'      => 'responsive_video_enabled',
 					'type'      => 'checkbox-switch',
 					'label'     => esc_html__( 'Video Responsive CSS', 'learndash' ),
@@ -293,43 +281,6 @@ if ( ( class_exists( 'LearnDash_Theme_Settings_Section' ) ) && ( ! class_exists(
 			$val = absint( $val );
 			if ( ( isset( $args['field']['validate_args']['allow_empty'] ) ) && ( true == $args['field']['validate_args']['allow_empty'] ) && ( empty( $val ) ) ) {
 				$val = '';
-			}
-			return $val;
-		}
-
-		/**
-		 * Validate color selection settings fields.
-		 *
-		 * @since 3.1.0
-		 *
-		 * @param string $val Value to be validated.
-		 * @param string $key settings fields key.
-		 * @param array  $args Settings field args array.
-		 *
-		 * @return integer $val.
-		 */
-		public function validate_section_field_colors( $val, $key, $args = array() ) {
-			switch ( $key ) {
-				case 'color_primary':
-					if ( LD_30_COLOR_PRIMARY == $val ) {
-						$val = '';
-					}
-					break;
-
-				case 'color_secondary':
-					if ( LD_30_COLOR_SECONDARY == $val ) {
-						$val = '';
-					}
-					break;
-
-				case 'color_tertiary':
-					if ( LD_30_COLOR_TERTIARY == $val ) {
-						$val = '';
-					}
-					break;
-
-				default:
-					break;
 			}
 			return $val;
 		}

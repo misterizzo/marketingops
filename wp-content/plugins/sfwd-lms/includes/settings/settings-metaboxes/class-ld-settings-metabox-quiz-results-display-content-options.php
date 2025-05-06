@@ -90,9 +90,8 @@ if ( ( class_exists( 'LearnDash_Settings_Metabox' ) ) && ( ! class_exists( 'Lear
 				$this->quiz_edit = $this->init_quiz_edit( $this->_post, $reload_pro_quiz );
 
 				if ( ( isset( $this->quiz_edit['quiz'] ) ) && ( ! empty( $this->quiz_edit['quiz'] ) ) ) {
-					$this->setting_option_values['resultGradeEnabled'] = $this->quiz_edit['quiz']->isResultGradeEnabled();
-					if ( true === $this->setting_option_values['resultGradeEnabled'] ) {
-						$this->setting_option_values['resultGradeEnabled'] = true;
+					if ( $this->quiz_edit['quiz']->is_result_message_enabled() ) {
+						$this->setting_option_values['resultGradeEnabled'] = 'on';
 					} else {
 						$this->setting_option_values['resultGradeEnabled'] = '';
 					}
@@ -183,7 +182,6 @@ if ( ( class_exists( 'LearnDash_Settings_Metabox' ) ) && ( ! class_exists( 'Lear
 					$this->setting_option_values['resultTextGrade'] = array();
 					$this->setting_option_values['resultText']      = $this->quiz_edit['quiz']->getResultText();
 					if ( ( '' === $this->setting_option_values['resultText'] ) || ( isset( $this->setting_option_values['resultText']['text'][0] ) ) && ( ! empty( $this->setting_option_values['resultText']['text'][0] ) ) ) {
-						$this->setting_option_values['resultGradeEnabled'] = 'on';
 						if ( is_array( $this->setting_option_values['resultText'] ) ) {
 							$this->setting_option_values['resultTextGrade'] = $this->setting_option_values['resultText'];
 						} else {
@@ -191,8 +189,6 @@ if ( ( class_exists( 'LearnDash_Settings_Metabox' ) ) && ( ! class_exists( 'Lear
 							$this->setting_option_values['resultTextGrade']['prozent'][0] = '0';
 							$this->setting_option_values['resultTextGrade']['activ'][0]   = '1';
 						}
-					} else {
-						$this->setting_option_values['resultGradeEnabled'] = '';
 					}
 				}
 			}

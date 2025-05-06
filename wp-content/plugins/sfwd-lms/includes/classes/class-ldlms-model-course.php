@@ -125,7 +125,7 @@ if ( ( ! class_exists( 'LDLMS_Model_Course' ) ) && ( class_exists( 'LDLMS_Model_
 			/**
 			 * Filters course lessons order query arguments.
 			 *
-			 * @param array $course_lesson_args An arry of course lesson order arguments.
+			 * @param array $course_lesson_args An array of course lesson order arguments.
 			 * @param int   $course_id          Course ID.
 			 */
 			return apply_filters( 'learndash_course_lessons_order', $course_lessons_args, $this->post_id );
@@ -255,7 +255,7 @@ if ( ( ! class_exists( 'LDLMS_Model_Course' ) ) && ( class_exists( 'LDLMS_Model_
 			/**
 			 * Filters user can view/read course step.
 			 *
-			 * @siince 3.4.0
+			 * @since 3.4.0
 			 *
 			 * @param boolean  $user_can_read_post True if user can read step post.
 			 * @param integer  $step_post_id       Step Post ID.

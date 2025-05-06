@@ -41,6 +41,15 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 			add_action( 'learndash_settings_page_load', array( $this, 'load_settings_page' ), 30, 2 );
 
 			parent::__construct();
+
+			add_filter(
+				'learndash_admin_settings_advanced_sections_with_hidden_metaboxes',
+				function( array $section_keys ) {
+					$section_keys[] = $this->settings_section_key;
+
+					return $section_keys;
+				}
+			);
 		}
 
 		/**

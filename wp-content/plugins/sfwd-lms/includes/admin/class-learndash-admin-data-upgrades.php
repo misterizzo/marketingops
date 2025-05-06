@@ -219,9 +219,11 @@ if ( ! class_exists( 'Learndash_Admin_Data_Upgrades' ) ) {
 		}
 
 		/**
-		 * Initialize the LearnDash Settings array
+		 * Initialize the LearnDash Settings array.
+		 * Important: We don't want to officially deprecate this yet, but we don't want to rely on it either. Start using Version_Tracker.
 		 *
 		 * @since 2.6.0
+		 * @todo We are now using the Version_Tracker to handle these version fields. We need to deprecate this system when we can investigate ramifications.
 		 *
 		 * @param bool $force_reload optional to force reload from database.
 		 *
@@ -585,10 +587,24 @@ if ( ! class_exists( 'Learndash_Admin_Data_Upgrades' ) ) {
 					$ld_file_part = '/learndash/cache/learndash_data_upgrade_' . $options_key . '.txt';
 
 					$ld_transient_filename = $wp_upload_dir['basedir'] . $ld_file_part;
-					if ( wp_mkdir_p( dirname( $ld_transient_filename ) ) === false ) {
-						$data['error_message'] = esc_html__( 'ERROR: Cannot create working folder. Check that the parent folder is writable', 'learndash' ) . ' ' . dirname( $ld_transient_filename );
-						return;
+
+					if ( ! file_exists( dirname( $ld_transient_filename ) ) ) {
+						if ( wp_mkdir_p( dirname( $ld_transient_filename ) ) === false ) {
+							$data['error_message'] = esc_html__( 'ERROR: Cannot create working folder. Check that the parent folder is writable', 'learndash' ) . ' ' . dirname( $ld_transient_filename );
+							return;
+						}
 					}
+
+					learndash_put_directory_index_file( trailingslashit( dirname( $ld_transient_filename ) ) . 'index.php' );
+
+					Learndash_Admin_File_Download_Handler::register_file_path(
+						'learndash-cache',
+						dirname( $ld_transient_filename )
+					);
+
+					Learndash_Admin_File_Download_Handler::try_to_protect_file_path(
+						dirname( $ld_transient_filename )
+					);
 
 					if ( file_exists( $ld_transient_filename ) ) {
 						$transient_fp = fopen( $ld_transient_filename, 'r' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen
@@ -633,10 +649,23 @@ if ( ! class_exists( 'Learndash_Admin_Data_Upgrades' ) ) {
 
 						$ld_transient_filename = $wp_upload_dir['basedir'] . $ld_file_part;
 
-						if ( wp_mkdir_p( dirname( $ld_transient_filename ) ) === false ) {
-							$data['error_message'] = esc_html__( 'ERROR: Cannot create working folder. Check that the parent folder is writable', 'learndash' ) . ' ' . dirname( $ld_transient_filename );
-							return;
+						if ( ! file_exists( dirname( $ld_transient_filename ) ) ) {
+							if ( wp_mkdir_p( dirname( $ld_transient_filename ) ) === false ) {
+								$data['error_message'] = esc_html__( 'ERROR: Cannot create working folder. Check that the parent folder is writable', 'learndash' ) . ' ' . dirname( $ld_transient_filename );
+								return;
+							}
 						}
+
+						learndash_put_directory_index_file( trailingslashit( dirname( $ld_transient_filename ) ) . 'index.php' );
+
+						Learndash_Admin_File_Download_Handler::register_file_path(
+							'learndash-cache',
+							dirname( $ld_transient_filename )
+						);
+
+						Learndash_Admin_File_Download_Handler::try_to_protect_file_path(
+							dirname( $ld_transient_filename )
+						);
 
 						$transient_fp = fopen( $ld_transient_filename, 'w' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen
 						if ( $transient_fp ) {

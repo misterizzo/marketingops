@@ -39,12 +39,12 @@ if (
 			);
 
 			$sql = $wpdb->prepare(
-				'SELECT * FROM ' . $table_name . ' ORDER BY activity_id ASC LIMIT %d OFFSET %d', // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				'SELECT * FROM ' . $table_name . ' ORDER BY activity_id ASC LIMIT %d OFFSET %d', // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 				$this->get_chunk_size_rows(),
 				$this->offset_rows
 			);
 
-			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			$user_activities = $wpdb->get_results( $sql, ARRAY_A );
 
 			if ( empty( $user_activities ) ) {

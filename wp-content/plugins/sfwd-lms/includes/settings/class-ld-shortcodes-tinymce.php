@@ -179,10 +179,8 @@ if ( ! class_exists( 'LearnDash_Shortcodes_TinyMCE' ) ) {
 			);
 			$learndash_assets_loaded['scripts']['sfwd-module-script'] = __FUNCTION__;
 
-			$data = array();
-			if ( ! isset( $data['ajaxurl'] ) ) {
-				$data['ajaxurl'] = admin_url( 'admin-ajax.php' );
-			}
+			$data            = array();
+			$data['ajaxurl'] = admin_url( 'admin-ajax.php' );
 
 			$data = array( 'json' => wp_json_encode( $data ) );
 			wp_localize_script( 'sfwd-module-script', 'sfwd_data', $data );
@@ -238,7 +236,7 @@ if ( ! class_exists( 'LearnDash_Shortcodes_TinyMCE' ) ) {
 				die();
 			}
 
-			if ( ( empty( $fields_args['post_type'] ) ) && ( ! empty( $fields_args['typenow'] ) ) ) {
+			if ( ( empty( $fields_args['post_type'] ) ) && ( ! empty( $fields_args['typenow'] ) ) ) { // @phpstan-ignore-line -- false positive of does not exist.
 				$fields_args['post_type'] = $fields_args['typenow'];
 			}
 

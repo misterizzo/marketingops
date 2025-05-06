@@ -1,6 +1,6 @@
 <?php
 /**
- * Enqueue scripts and stylsheets for Blocks
+ * Enqueue scripts and stylesheets for Blocks
  *
  * @package LearnDash
  * @since 2.5.8
@@ -33,7 +33,7 @@ function learndash_editor_scripts() {
 	);
 
 	// @TODO: This needs to move to an external JS library since it will be used globally.
-	$ldlms                                       = array(
+	$ldlms = array(
 		'settings' => array(),
 	);
 
@@ -78,6 +78,7 @@ function learndash_editor_scripts() {
 
 	/**
 	 * Include the LD post types with key.
+	 *
 	 * @since 4.0.0
 	 */
 	$ldlms_settings['post_types'] = LDLMS_Post_Types::get_all_post_types_set();
@@ -186,7 +187,7 @@ function learndash_enqueue_course_grid_scripts() {
 
 	// Check if Course Grid add-on is installed.
 	if ( ( defined( 'LEARNDASH_COURSE_GRID_FILE' ) ) && ( file_exists( LEARNDASH_COURSE_GRID_FILE ) ) ) {
-		// Newer versions of Coure Grid have a function to load resources.
+		// Newer versions of Course Grid have a function to load resources.
 		if ( function_exists( 'learndash_course_grid_load_resources' ) ) {
 			learndash_course_grid_load_resources();
 			return true;
@@ -287,7 +288,7 @@ function learndash_register_block_patterns() {
 	);
 }
 
-add_filter(
+add_action(
 	'learndash_init',
 	function() {
 		global $wp_version;
@@ -305,9 +306,9 @@ add_filter(
 
 /**
  * Get the Legacy template not supported message.
- * 
+ *
  * This message is shows on blocks and shortcodes which don't support the "Legacy"
- * templates. 
+ * templates.
  *
  * @since 4.0.0
  */
@@ -318,8 +319,8 @@ function learndash_get_legacy_not_supported_message() {
 			// translators: placeholder: current template name.
 			esc_html_x(
 				'The current LearnDash template "%s" may not support this block. Please select a different template.',
-				"placeholder: current template name",
-				"learndash"
+				'placeholder: current template name',
+				'learndash'
 			),
 			LearnDash_Theme_Register::get_active_theme_name()
 		);

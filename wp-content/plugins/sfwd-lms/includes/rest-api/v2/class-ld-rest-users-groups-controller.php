@@ -161,8 +161,6 @@ if ( ( ! class_exists( 'LD_REST_Users_Groups_Controller_V2' ) ) && ( class_exist
 		public function update_user_groups_permissions_check( $request ) {
 			if ( learndash_is_admin_user() ) {
 				return true;
-			} elseif ( get_current_user_id() == $request['id'] ) {
-				return true;
 			} else {
 				return new WP_Error( 'ld_rest_cannot_view', esc_html__( 'Sorry, you are not allowed to view this item.', 'learndash' ), array( 'status' => rest_authorization_required_code() ) );
 			}
@@ -179,8 +177,6 @@ if ( ( ! class_exists( 'LD_REST_Users_Groups_Controller_V2' ) ) && ( class_exist
 		 */
 		public function delete_user_groups_permissions_check( $request ) {
 			if ( learndash_is_admin_user() ) {
-				return true;
-			} elseif ( get_current_user_id() == $request['id'] ) {
 				return true;
 			} else {
 				return new WP_Error( 'ld_rest_cannot_view', esc_html__( 'Sorry, you are not allowed to view this item.', 'learndash' ), array( 'status' => rest_authorization_required_code() ) );

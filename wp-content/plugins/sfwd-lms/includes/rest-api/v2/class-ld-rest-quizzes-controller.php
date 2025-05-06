@@ -211,11 +211,6 @@ if ( ( ! class_exists( 'LD_REST_Quizzes_Controller_V2' ) ) && ( class_exists( 'L
 					$GLOBALS['course_id'] = $course_id;
 				}
 
-				$quiz_id = (int) $request['id'];
-				if ( ( $quiz_id ) && ( sfwd_lms_has_access( $quiz_id ) ) ) {
-					return true;
-				}
-
 				// If we don't have a course parameter we need to get all the courses the user has access to and all
 				// the courses the lesson is available in and compare.
 				if ( empty( $course_id ) ) {
@@ -258,12 +253,12 @@ if ( ( ! class_exists( 'LD_REST_Quizzes_Controller_V2' ) ) && ( class_exists( 'L
 					}
 					$this->ld_course_steps_object = LDLMS_Factory_Post::course_steps( $this->course_post->ID );
 					$this->ld_course_steps_object->load_steps();
-					$lesson_ids = $this->ld_course_steps_object->get_children_steps( $this->course_post->ID, $this->post_type );
-					if ( empty( $lesson_ids ) ) {
+					$quiz_ids = $this->ld_course_steps_object->get_children_steps( $this->course_post->ID, $this->post_type, 'ids', true );
+					if ( empty( $quiz_ids ) ) {
 						return new WP_Error( 'ld_rest_cannot_view', esc_html__( 'Sorry, you are not allowed to view this item.', 'learndash' ), array( 'status' => rest_authorization_required_code() ) );
 					}
 
-					if ( ! in_array( absint( $request['id'] ), $lesson_ids, true ) ) {
+					if ( ! in_array( absint( $request['id'] ), $quiz_ids, true ) ) {
 						return new WP_Error( 'ld_rest_cannot_view', esc_html__( 'Sorry, you are not allowed to view this item.', 'learndash' ), array( 'status' => rest_authorization_required_code() ) );
 					}
 				}
@@ -285,7 +280,6 @@ if ( ( ! class_exists( 'LD_REST_Quizzes_Controller_V2' ) ) && ( class_exists( 'L
 			$this->rest_init_request_posts( $request );
 			if ( ( true === $return ) && ( 'view' === $request['context'] ) && ( ! learndash_is_admin_user() ) ) {
 
-				// If the archive setting is enabled we allow full listing.
 				if ( ! $this->rest_post_type_has_archive( $this->post_type ) ) {
 					if ( is_null( $this->course_post ) ) {
 						return new WP_Error(
@@ -367,23 +361,7 @@ if ( ( ! class_exists( 'LD_REST_Quizzes_Controller_V2' ) ) && ( class_exists( 'L
 					$query_args['post__in'] = array( 0 );
 				}
 			} else {
-				if ( get_current_user_id() ) {
-					/**
-					 * If the user is logged in they can see all GLOBAL quizzes or those not
-					 * associated with a course.
-					 */
-					$step_ids = learndash_get_non_course_qizzes();
-				} else {
-					/**
-					 * If the user is NOT logged in they can see all OPEN quizzes or those not
-					 * associated with a course AND allowed to be viewed by non-logged in users.
-					 */
-					$step_ids = learndash_get_open_quizzes( true );
-				}
-
-				if ( ! empty( $step_ids ) ) {
-					$query_args['post__in'] = $query_args['post__in'] ? array_intersect( $step_ids, $query_args['post__in'] ) : $step_ids;
-				}
+				$query_args['post__in'] = [ 0 ];
 			}
 
 			return $query_args;

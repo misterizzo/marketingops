@@ -1,50 +1,46 @@
 <?php
-/*
-Plugin Name: WP-Pro-Quiz
-Plugin URI: http://wordpress.org/extend/plugins/wp-pro-quiz
-Description: A powerful and beautiful quiz plugin for WordPress.
-Version: 0.28
-Author: Julius Fischer
-Author URI: http://www.it-gecko.de
-Text Domain: wp-pro-quiz
-Domain Path: /languages
-// phpcs:disable WordPress.NamingConventions.ValidVariableName,WordPress.NamingConventions.ValidFunctionName,WordPress.NamingConventions.ValidHookName
-*/
+/**
+ *
+ * Plugin Name: WP-Pro-Quiz
+ * Plugin URI: http://wordpress.org/extend/plugins/wp-pro-quiz
+ * Description: A powerful and beautiful quiz plugin for WordPress.
+ * Version: 0.28
+ * Author: Julius Fischer
+ * Author URI: http://www.it-gecko.de
+ * Text Domain: wp-pro-quiz
+ * Domain Path: /languages
+ *
+ * @package LearnDash/Core
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 /**
- * @ignore
- */
-define( 'WPPROQUIZ_VERSION', '0.28' );
+ * @ignore */
+define( 'WPPROQUIZ_VERSION', '0.29' );
 
 /**
- * @ignore
- */
-define( 'WPPROQUIZ_PATH', dirname( __FILE__ ) );
+ * @ignore */
+define( 'WPPROQUIZ_PATH', __DIR__ );
 
 /**
- * @ignore
- */
+ * @ignore */
 define( 'WPPROQUIZ_URL', plugins_url( '', __FILE__ ) );
 
 /**
- * @ignore
- */
+ * @ignore */
 define( 'WPPROQUIZ_FILE', __FILE__ );
 
 $wpproquiz_upload_dir = wp_upload_dir();
 
 /**
- * @ignore
- */
+ * @ignore */
 define( 'WPPROQUIZ_CAPTCHA_DIR', $wpproquiz_upload_dir['basedir'] . '/wp_pro_quiz_captcha' );
 
 /**
- * @ignore
- */
+ * @ignore */
 define( 'WPPROQUIZ_CAPTCHA_URL', $wpproquiz_upload_dir['baseurl'] . '/wp_pro_quiz_captcha' );
 
 spl_autoload_register( 'wpProQuiz_autoload' );
@@ -104,7 +100,6 @@ function wpProQuiz_autoload( $class ) {
  * Fires on `plugins_loaded` hook.
  */
 function wpProQuiz_pluginLoaded() {
-
 	if ( get_option( 'wpProQuiz_version' ) !== WPPROQUIZ_VERSION ) {
 		WpProQuiz_Helper_Upgrade::upgrade();
 	}
@@ -123,7 +118,6 @@ function wpProQuiz_pluginLoaded() {
  * @return array An array of cloze question data.
  */
 function learndash_question_cloze_fetch_data( $answer_text, $convert_to_lower = true ) {
-
 	/**
 	 * Filters the value of quiz question answer before processing.
 	 *
@@ -151,10 +145,7 @@ function learndash_question_cloze_fetch_data( $answer_text, $convert_to_lower = 
 				}
 				$multiText_clean = trim( html_entity_decode( $multiText, ENT_QUOTES ) );
 
-				$item_points = absint( $item_points );
-				if ( ! $item_points ) {
-					$item_points = 1;
-				}
+				$item_points = learndash_format_course_points( $item_points );
 
 				/**
 				 * Filters whether to convert quiz question cloze to lowercase or not.
@@ -180,7 +171,7 @@ function learndash_question_cloze_fetch_data( $answer_text, $convert_to_lower = 
 			list( $multiText, $item_points ) = explode( '|', $text );
 
 			$multiText_clean = trim( html_entity_decode( $multiText, ENT_QUOTES ) );
-			$item_points     = absint( $item_points );
+			$item_points     = learndash_format_course_points( $item_points );
 
 			/**
 			 * Filters whether to convert quiz question cloze to lowercase or not.
@@ -201,9 +192,8 @@ function learndash_question_cloze_fetch_data( $answer_text, $convert_to_lower = 
 			$multiTextData[] = $x;
 			$rowText[]       = $multiText;
 			$points[]        = $item_points;
-
 		} else {
-			$item_points = ! empty( $v[2] ) ? (int) $v[2] : 1;
+			$item_points = ! empty( $v[2] ) ? learndash_format_course_points( $v[2] ) : 1;
 			$text_clean  = trim( html_entity_decode( $text, ENT_QUOTES ) );
 			/** This filter is documented in includes/lib/wp-pro-quiz/wp-pro-quiz.php */
 			if ( apply_filters( 'learndash_quiz_question_cloze_answers_to_lowercase', $convert_to_lower ) ) {
@@ -232,11 +222,16 @@ function learndash_question_cloze_fetch_data( $answer_text, $convert_to_lower = 
 
 		$input_max = $input_size + 5;
 
-		$a  = '<span class="wpProQuiz_cloze"><input autocomplete="off" data-wordlen="' . absint( $input_size ) . '" type="text" value="" size="' . absint( $input_size ) . '" maxlength="' . absint( $input_max ) . '"> ';
+		$a = '<span class="wpProQuiz_cloze"><input autocomplete="off" data-wordlen="' . absint( $input_size ) . '" type="text" value="" size="' . absint( $input_size ) . '" maxlength="' . absint( $input_max ) . '"> ';
 
 		$a .= '<span class="wpProQuiz_clozeCorrect" style="display: none;"></span></span>';
 
 		$replace_key = '@@wpProQuizCloze-' . $k . '@@';
+
+		// Make sure the points are formatted correctly.
+		foreach ( $points as &$point ) {
+			$point = learndash_format_course_points( $point );
+		}
 
 		$data['correct'][]            = $multiTextData;
 		$data['points'][]             = $points;
@@ -244,17 +239,48 @@ function learndash_question_cloze_fetch_data( $answer_text, $convert_to_lower = 
 
 		$pos = strpos( $data['replace'], $v[0] );
 		if ( false !== $pos ) {
-    		$data['replace'] = substr_replace( $data['replace'], $replace_key, $pos, strlen($v[0] ) );
+			$data['replace'] = substr_replace( $data['replace'], $replace_key, $pos, strlen( $v[0] ) );
 		}
 	}
 
-	/**
-	 * Filters the value of quiz question answer after processing.
-	 *
-	 * @param string $answer  The quiz question anser text.
-	 * @param string $context The context of type of question.
-	 */
-	$data['replace'] = apply_filters( 'learndash_quiz_question_answer_postprocess', $data['replace'], 'cloze' );
+	if ( isset( $data['replace'] ) ) {
+		/**
+		 * Filters the value of quiz question answer after processing.
+		 *
+		 * @param string $answer  The quiz question anser text.
+		 * @param string $context The context of type of question.
+		 */
+		$data['replace'] = apply_filters( 'learndash_quiz_question_answer_postprocess', $data['replace'], 'cloze' );
+	}
+
+	// Validate points: each blank space must have at least one answer with points greater or equal to zero.
+
+	if ( isset( $data['points'] ) ) {
+		foreach ( $data['points'] as $points ) {
+			$poins_greater_or_equal_to_zero = array_filter(
+				$points,
+				function ( $point ) {
+					return $point >= 0;
+				}
+			);
+
+			if ( empty( $poins_greater_or_equal_to_zero ) ) {
+				// Invalid points. Reset all points to 0.
+
+				$data['points'] = array_map(
+					function ( $point ) {
+						return array_map(
+							'__return_zero',
+							$point
+						);
+					},
+					$data['points']
+				);
+
+				break;
+			}
+		}
+	}
 
 	return $data;
 }
@@ -282,10 +308,20 @@ function learndash_question_cloze_prepare_output( $cloze_data = array() ) {
 	return $cloze_output;
 }
 
-function learndash_question_assessment_fetch_data( $answerText, $quizId = 0, $questionId = 0 ) {
-
+/**
+ * Returns the question data for a assessment question type.
+ *
+ * @since 3.5.0
+ *
+ * @param string $answer_text The answer text.
+ * @param int    $quiz_id     The quiz ID.
+ * @param int    $question_id The question ID.
+ *
+ * @return array{'correct': array<mixed>, 'points': array<mixed>, 'data': array<mixed>, 'replace': string, 'answer_text': string} The question data.
+ */
+function learndash_question_assessment_fetch_data( $answer_text, $quiz_id = 0, $question_id = 0 ) {
 	/** This filter is documented in includes/lib/wp-pro-quiz/wp-pro-quiz.php */
-	$answerText = apply_filters( 'learndash_quiz_question_answer_preprocess', $answerText, 'assessment' );
+	$answer_text = apply_filters( 'learndash_quiz_question_answer_preprocess', $answer_text, 'assessment' );
 
 	$data = array(
 		'correct'     => [],
@@ -295,10 +331,10 @@ function learndash_question_assessment_fetch_data( $answerText, $quizId = 0, $qu
 		'answer_text' => '',
 	);
 
-	if ( ! empty( $answerText ) ) {
-		$data['answer_text'] = $answerText;
+	if ( ! empty( $answer_text ) ) {
+		$data['answer_text'] = $answer_text;
 
-		preg_match_all( '#\{(.*?)\}#im', $answerText, $matches );
+		preg_match_all( '#\{(.*?)\}#im', $answer_text, $matches );
 		if ( ( isset( $matches[1] ) ) && ( ! empty( $matches[1] ) ) ) {
 			foreach ( $matches[1] as $match_idx => $match ) {
 				$a = '';
@@ -310,6 +346,7 @@ function learndash_question_assessment_fetch_data( $answerText, $quizId = 0, $qu
 						$data['correct'][ $label_idx ] = $label;
 
 						if ( ( isset( $m_values[2][ $label_idx ] ) ) && ( '' !== $m_values[2][ $label_idx ] ) ) {
+							// Assessments don't support negative and decimal points at the moment, so it's okay to cast to int.
 							$data['points'][ $label_idx ] = absint( $m_values[2][ $label_idx ] );
 						} else {
 							$data['points'][ $label_idx ] = $label_idx + 1;
@@ -323,14 +360,14 @@ function learndash_question_assessment_fetch_data( $answerText, $quizId = 0, $qu
 						 * fetchAllAnswerData() the value is assigned to the data-index array
 						 * position. And it needs to be in the '0' position.
 						 */
-						$a .= '<label><input type="radio" value="' . $field_value . '" name="question_' . $quizId . '_' . $questionId . '_' . "0" . '" class="wpProQuiz_questionInput" data-index="0">' . $data['correct'][ $label_idx ] . '</label>';
+						$a .= '<label><input type="radio" value="' . $field_value . '" name="question_' . $quiz_id . '_' . $question_id . '_0" class="wpProQuiz_questionInput" data-index="0">' . $data['correct'][ $label_idx ] . '</label>';
 					}
 				}
 
 				$replace_key                  = '@@wpProQuizAssessment-' . $match_idx . '@@';
 				$count                        = 1;
 				$data['data'][ $replace_key ] = $a;
-				$data['replace']              = preg_replace( '#\{(.*?)\}#im', $replace_key, $answerText, $count );
+				$data['replace']              = preg_replace( '#\{(.*?)\}#im', $replace_key, $answer_text, $count );
 			}
 		}
 	}
@@ -389,6 +426,14 @@ function learndash_cast_WpProQuiz_Model_AnswerTypes( $instance, $className ) {
 	);
 }
 
+/**
+ * Returns the question data for a free text question type.
+ *
+ * @param WpProQuiz_Model_AnswerTypes $data     The answer data.
+ * @param WpProQuiz_Model_Question    $question The question.
+ *
+ * @return array{correct?: array<mixed>, points?: float[]}
+ */
 function learndash_question_free_get_answer_data( $data, $question = null ) {
 	$question_data = array();
 
@@ -409,9 +454,28 @@ function learndash_question_free_get_answer_data( $data, $question = null ) {
 			continue;
 		}
 
-		//$question_data['correct'][] = esc_attr( $item_value );
 		$question_data['correct'][] = $item_value;
-		$question_data['points'][]  = (int) $item_points;
+		$question_data['points'][]  = learndash_format_course_points( $item_points );
+	}
+
+	// Validate points: At least one correct answer must have a point greater or equal to zero.
+
+	if ( isset( $question_data['points'] ) ) {
+		$poins_greater_or_equal_to_zero = array_filter(
+			$question_data['points'],
+			function ( $point ) {
+				return $point >= 0;
+			}
+		);
+
+		if ( empty( $poins_greater_or_equal_to_zero ) ) {
+			// Invalid points. Reset all points to 0.
+
+			$question_data['points'] = array_map(
+				'__return_zero',
+				$question_data['points']
+			);
+		}
 	}
 
 	return $question_data;

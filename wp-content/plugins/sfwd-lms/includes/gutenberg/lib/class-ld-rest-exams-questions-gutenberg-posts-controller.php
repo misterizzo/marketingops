@@ -23,7 +23,8 @@ if ( ( ! class_exists( 'LD_REST_Exams_Questions_Gutenberg_Controller' ) ) && ( c
 	 * @since 4.0.0
 	 * @uses WP_REST_Posts_Controller
 	 */
-	class LD_REST_Exams_Questions_Gutenberg_Controller extends WP_REST_Posts_Controller { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+	class LD_REST_Exams_Questions_Gutenberg_Controller extends WP_REST_Posts_Controller {
+ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 		// ToDo: Better error handling.
 
 		/**
@@ -131,7 +132,7 @@ if ( ( ! class_exists( 'LD_REST_Exams_Questions_Gutenberg_Controller' ) ) && ( c
 				return new WP_Error(
 					'rest_get-ld_question',
 					__( 'Error while trying to get the item', 'learndash' ),
-					[ 'status' => 400 ]
+					array( 'status' => 400 )
 				);
 			}
 		}
@@ -147,20 +148,20 @@ if ( ( ! class_exists( 'LD_REST_Exams_Questions_Gutenberg_Controller' ) ) && ( c
 		private function get_ld_question_block_content( $post_id ) {
 			$post           = $this->get_post( $post_id );
 			$answer_meta    = get_post_meta( $post_id, 'answer', true );
-			$answer         = [
-				'answer' => $answer_meta ?? [],
-			];
+			$answer         = array(
+				'answer' => $answer_meta ?? array(),
+			);
 			$question_title = $post->post_title;
 
 			return serialize_block(
-				[
+				array(
 					'blockName'    => 'learndash/ld-exam-question',
-					'innerContent' => [ $post->post_content ],
-					'attrs'        => [
+					'innerContent' => array( $post->post_content ),
+					'attrs'        => array(
 						'question_title' => $question_title,
 						'answer'         => $answer,
-					],
-				]
+					),
+				)
 			);
 		}
 
@@ -206,31 +207,31 @@ if ( ( ! class_exists( 'LD_REST_Exams_Questions_Gutenberg_Controller' ) ) && ( c
 			try {
 				$attrs        = $block['attrs'];
 				$inner_blocks = serialize_blocks( $block['innerBlocks'] );
-				$question     = array_merge( $attrs, [ 'inner_blocks_content' => $inner_blocks ] );
+				$question     = array_merge( $attrs, array( 'inner_blocks_content' => $inner_blocks ) );
 
 				if ( empty( $question['question_title'] ) ) {
 					return new WP_Error(
 						'rest_post-ld_question',
 						__( 'Missing question_title', 'learndash' ),
-						[ 'status' => 400 ]
+						array( 'status' => 400 )
 					);
 				}
 
-				$post_args = [
+				$post_args = array(
 					'ID'           => $post_id,
 					'post_title'   => $question['question_title'],
 					'post_type'    => 'ld_question',
 					'post_content' => $question['inner_blocks_content'],
 					'post_status'  => $status,
 					'meta_input'   => $question['answer'],
-				];
+				);
 
 				return wp_insert_post( $post_args );
 			} catch ( Exception $e ) {
 				return new WP_Error(
 					'rest_post-ld_question',
 					__( 'Error', 'learndash' ),
-					[ 'status' => 400 ]
+					array( 'status' => 400 )
 				);
 			}
 		}
@@ -248,7 +249,7 @@ if ( ( ! class_exists( 'LD_REST_Exams_Questions_Gutenberg_Controller' ) ) && ( c
 				return new WP_Error(
 					'rest_post-ld_question',
 					__( 'Missing content', 'learndash' ),
-					[ 'status' => 400 ]
+					array( 'status' => 400 )
 				);
 			}
 			$block = parse_blocks( trim( $request['content'] ) );
@@ -256,7 +257,7 @@ if ( ( ! class_exists( 'LD_REST_Exams_Questions_Gutenberg_Controller' ) ) && ( c
 				return new WP_Error(
 					'rest_post-ld_question',
 					__( 'Missing learndash/ld-exam-question block', 'learndash' ),
-					[ 'status' => 400 ]
+					array( 'status' => 400 )
 				);
 			}
 

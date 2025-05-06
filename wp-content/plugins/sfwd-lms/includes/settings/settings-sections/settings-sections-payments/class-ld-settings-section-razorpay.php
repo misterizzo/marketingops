@@ -169,6 +169,12 @@ if ( class_exists( 'LearnDash_Settings_Section' ) && ! class_exists( 'LearnDash_
 					'help_text' => esc_html__( 'You have to add this URL in the webhooks section of your Razorpay Dashboard.', 'learndash' ),
 					'value'     => $this->get_webhook_url(),
 					'class'     => 'regular-text',
+					'attrs'     => defined( 'LEARNDASH_DEBUG' ) && LEARNDASH_DEBUG // @phpstan-ignore-line -- Constant can be true/false.
+						? array()
+						: array(
+							'readonly' => 'readonly',
+							'disable'  => 'disable',
+						),
 				),
 			);
 

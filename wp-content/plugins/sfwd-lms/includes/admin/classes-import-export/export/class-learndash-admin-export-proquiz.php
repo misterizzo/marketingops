@@ -67,13 +67,14 @@ if (
 		 * Constructor.
 		 *
 		 * @since 4.3.0
+		 * @since 4.5.0   Changed the $logger param to the `Learndash_Import_Export_Logger` class.
 		 *
-		 * @param bool                                 $with_progress        The flag to identify if we need to export statistics.
-		 * @param WpProQuiz_Model_StatisticRefMapper   $statistic_ref_mapper Statistic Ref Mapper class instance.
-		 * @param WpProQuiz_Model_StatisticMapper      $statistic_mapper     Statistic Mapper class instance.
-		 * @param WpProQuiz_Helper_Export              $quiz_exporter        Quiz exporter class instance.
-		 * @param Learndash_Admin_Export_File_Handler  $file_handler         File Handler class instance.
-		 * @param Learndash_Admin_Import_Export_Logger $logger               Logger class instance.
+		 * @param bool                                $with_progress        The flag to identify if we need to export statistics.
+		 * @param WpProQuiz_Model_StatisticRefMapper  $statistic_ref_mapper Statistic Ref Mapper class instance.
+		 * @param WpProQuiz_Model_StatisticMapper     $statistic_mapper     Statistic Mapper class instance.
+		 * @param WpProQuiz_Helper_Export             $quiz_exporter        Quiz exporter class instance.
+		 * @param Learndash_Admin_Export_File_Handler $file_handler         File Handler class instance.
+		 * @param Learndash_Import_Export_Logger      $logger               Logger class instance.
 		 *
 		 * @return void
 		 */
@@ -83,7 +84,7 @@ if (
 			WpProQuiz_Model_StatisticMapper $statistic_mapper,
 			WpProQuiz_Helper_Export $quiz_exporter,
 			Learndash_Admin_Export_File_Handler $file_handler,
-			Learndash_Admin_Import_Export_Logger $logger
+			Learndash_Import_Export_Logger $logger
 		) {
 			$this->with_progress        = $with_progress;
 			$this->statistic_ref_mapper = $statistic_ref_mapper;
@@ -105,7 +106,7 @@ if (
 				'fields'         => 'ids',
 				'post_type'      => LDLMS_Post_Types::get_post_type_slug( LDLMS_Post_Types::QUIZ ),
 				'post_status'    => 'any',
-				'posts_per_page' => $this->get_chunk_size_rows( self::CHUNK_SIZE_ROWS ), // phpcs:ignore WordPress.WP.PostsPerPage
+				'posts_per_page' => $this->get_chunk_size_rows(), // phpcs:ignore WordPress.WP.PostsPerPage
 				'offset'         => $this->offset_rows,
 			);
 
@@ -171,7 +172,6 @@ if (
 		public function get_media(): array {
 			global $wpdb;
 
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$question_media_fields = $wpdb->get_results(
 				$wpdb->prepare(
 					"

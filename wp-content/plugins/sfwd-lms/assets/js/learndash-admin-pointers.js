@@ -20,7 +20,7 @@ jQuery( function( $ ) {
 			} ).pointer( 'open' );
 		} );
 
-		// On the new install we need to push the top down sice it will get cut off by the top of the screen.
+		// On the new install we need to push the top down since it will get cut off by the top of the screen.
 		if ( jQuery( '.wp-pointer #ld-pointer-title-learndash-new-install' ).length ) {
 			jQuery( '.wp-pointer #ld-pointer-title-learndash-new-install' ).each( function( idx, item ) {
 				var pointer_el = jQuery( item ).parents( '.wp-pointer' );

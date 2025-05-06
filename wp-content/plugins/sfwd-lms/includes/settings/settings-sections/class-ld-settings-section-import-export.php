@@ -27,15 +27,6 @@ if ( class_exists( 'LearnDash_Settings_Section' ) && ! class_exists( 'LearnDash_
 		private $export_file_handler;
 
 		/**
-		 * Import file handler class instance.
-		 *
-		 * @since 4.3.0
-		 *
-		 * @var Learndash_Admin_Import_File_Handler
-		 */
-		private $import_file_handler;
-
-		/**
 		 * Protected constructor for class.
 		 *
 		 * @since 4.3.0
@@ -58,11 +49,19 @@ if ( class_exists( 'LearnDash_Settings_Section' ) && ! class_exists( 'LearnDash_
 			parent::__construct();
 
 			$this->export_file_handler = new Learndash_Admin_Export_File_Handler();
-			$this->import_file_handler = new Learndash_Admin_Import_File_Handler();
 
 			add_action( 'admin_notices', array( $this, 'add_notices' ) );
 
-			add_filter( 'learndash_admin_settings_data', array( $this, 'learndash_admin_settings_data' ), 30, 1 );
+			add_filter( 'learndash_admin_settings_data', array( $this, 'learndash_admin_settings_data' ), 30 );
+
+			add_filter(
+				'learndash_admin_settings_advanced_sections_with_hidden_metaboxes',
+				function( array $section_keys ) {
+					$section_keys[] = $this->settings_section_key;
+
+					return $section_keys;
+				}
+			);
 		}
 
 		/**
@@ -75,7 +74,6 @@ if ( class_exists( 'LearnDash_Settings_Section' ) && ! class_exists( 'LearnDash_
 		 * @return array $script_data
 		 */
 		public function learndash_admin_settings_data( array $script_data = array() ): array {
-
 			$script_data['import_file_size_limit'] = wp_max_upload_size();
 
 			$script_data['import_file_empty'] = esc_html__( 'Please select a valid file to import.', 'learndash' );
@@ -108,29 +106,9 @@ if ( class_exists( 'LearnDash_Settings_Section' ) && ! class_exists( 'LearnDash_
 				return;
 			}
 			?>
-				<?php
-				$export_protect_instructions = $this->export_file_handler->get_protect_instructions();
-				$import_protect_instructions = $this->import_file_handler->get_protect_instructions();
-				?>
-				<div
-					class="notice notice-info is-dismissible"
-					style="<?php echo esc_attr( ! empty( $export_protect_instructions ) || ! empty( $import_protect_instructions ) ? '' : 'display: none' ); ?>;"
-				>
-					<?php
-					if ( ! empty( $export_protect_instructions ) ) {
-						echo '<p>' . wp_kses_post( $export_protect_instructions ) . '</p>';
-					}
-
-					if ( ! empty( $import_protect_instructions ) ) {
-						echo '<p>' . wp_kses_post( $import_protect_instructions ) . '</p>';
-					}
-					?>
-
-				</div>
-
 				<div
 					id="learndash-export-success"
-					class="notice notice-success is-dismissible"
+					class="notice notice-success"
 					style="<?php echo esc_attr( $this->export_file_handler->zip_archive_exists() ? '' : 'display: none' ); ?>;"
 				>
 					<p>
@@ -148,31 +126,6 @@ if ( class_exists( 'LearnDash_Settings_Section' ) && ! class_exists( 'LearnDash_
 						</a>
 					</p>
 				</div>
-
-				<?php if ( isset( $_GET['LD_DEBUG'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
-					<div class="notice notice-info is-dismissible">
-						<?php
-							$export_log_url = $this->export_file_handler->get_log_file_url();
-							$import_log_url = $this->import_file_handler->get_log_file_url();
-						?>
-
-						<?php if ( ! empty( $export_log_url ) ) : ?>
-							<p>
-								<a href="<?php echo esc_url( $export_log_url ); ?>">
-									<?php esc_html_e( 'Download last export log', 'learndash' ); ?>
-								</a>
-							</p>
-						<?php endif; ?>
-
-						<?php if ( ! empty( $import_log_url ) ) : ?>
-							<p>
-								<a href="<?php echo esc_url( $import_log_url ); ?>">
-									<?php esc_html_e( 'Download last import log', 'learndash' ); ?>
-								</a>
-							</p>
-						<?php endif; ?>
-					</div>
-				<?php endif; ?>
 
 				<div id="learndash-export-info" class="notice notice-info is-dismissible" style="display: none">
 					<p>

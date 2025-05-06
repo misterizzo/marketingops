@@ -52,7 +52,6 @@
 	display: inline-block;
 	position: absolute;
 	left: 0;
-	top: 30px;
 }
 
 .is-selected .learndash-exam-question-empty-correct {
@@ -65,7 +64,7 @@
 .is-selected .learndash-exam-question-empty-answers {
 	display: inline-block;
 	position: absolute;
-	right: 41px;
+	left: 0;
 	bottom: 100%;
 }
 
@@ -102,7 +101,7 @@ div.learndash-exam-question-single-answer .learndash-exam-question-single-answer
 }
 
 span.learndash-exam-question-answer-toggle {
-	margin-left: auto
+	margin-right: auto
 }
 
 span.learndash-exam-question-answer-input {
@@ -143,12 +142,11 @@ div.wp-block[data-type="learndash/ld-exam-question"] .learndash-exam-question-al
 	display: inline-block;
 	position: absolute;
 	left: 0;
-	top: 0;
 }
 
 div.wp-block[data-type="learndash/ld-exam-question"] .learndash-exam-question-allow-validations .learndash-exam-question-empty-answers {
 	display: inline-block;
 	position: absolute;
-	right: 410px;
+	left: 90px;
 	bottom: 45px;
 }

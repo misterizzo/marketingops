@@ -255,7 +255,8 @@ if ( ( class_exists( 'Learndash_Admin_Posts_Listing' ) ) && ( ! class_exists( 'L
 			if ( ( ! isset( $question_values['points'] ) ) || ( empty( $question_values['points'] ) ) ) {
 				$question_values['points'] = 1;
 			}
-			echo absint( $question_values['points'] );
+
+			echo esc_attr( (string) learndash_format_course_points( $question_values['points'] ) );
 		}
 
 		/**

@@ -58,7 +58,7 @@ if ( ( class_exists( 'LearnDash_Settings_Fields' ) ) && ( ! class_exists( 'Learn
 			$html .= ' id="' . esc_attr( $this->get_field_attribute_id( $field_args, false ) ) . '_wrapper" ';
 			$html .= '>';
 
-			$default_img_url = LEARNDASH_LMS_PLUGIN_URL . 'assets/images/nologo.jpg';
+			$default_img_url = LEARNDASH_LMS_PLUGIN_URL . 'assets/images/nologo.jpg'; // cspell:disable-line.
 
 			$image_id  = 0;
 			$image_url = $default_img_url;

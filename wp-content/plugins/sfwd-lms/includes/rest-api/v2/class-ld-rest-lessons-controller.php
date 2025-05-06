@@ -200,7 +200,6 @@ if ( ( ! class_exists( 'LD_REST_Lessons_Controller_V2' ) ) && ( class_exists( 'L
 			$return = parent::get_items_permissions_check( $request );
 			$this->rest_init_request_posts( $request );
 			if ( ( true === $return ) && ( 'view' === $request['context'] ) && ( ! learndash_is_admin_user() ) ) {
-				// If the archive setting is enabled we allow full listing.
 				if ( ! $this->rest_post_type_has_archive( $this->post_type ) ) {
 					if ( is_null( $this->course_post ) ) {
 						return new WP_Error(

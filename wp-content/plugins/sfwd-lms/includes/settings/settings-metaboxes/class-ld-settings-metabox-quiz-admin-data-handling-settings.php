@@ -699,7 +699,7 @@ if ( ( class_exists( 'LearnDash_Settings_Metabox' ) ) && ( ! class_exists( 'Lear
 						'show_in_rest' => LearnDash_REST_API::enabled(),
 						'rest_args'    => array(
 							'schema' => array(
-								'field_key' => 'toplist_data_showin_enabled',
+								'field_key' => 'toplist_data_showin_enabled', // cspell:disable-line.
 								'type'      => 'boolean',
 								'default'   => false,
 							),

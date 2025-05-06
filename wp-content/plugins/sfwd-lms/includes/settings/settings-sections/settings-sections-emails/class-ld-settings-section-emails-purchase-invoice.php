@@ -52,11 +52,9 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 		public function load_settings_values() {
 			parent::load_settings_values();
 
-			$new_settings = false;
-			if ( ! is_array( $this->setting_option_values ) ) {
-				$new_settings                = true;
-				$this->setting_option_values = array();
-			}
+			$new_settings =
+				! $this->setting_option_initialized
+				&& empty( $this->setting_option_values );
 
 			if ( ! isset( $this->setting_option_values['enabled'] ) ) {
 				if ( true === $new_settings ) {
@@ -234,13 +232,13 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 			);
 
 			$this->setting_option_fields['logo_location'] = array(
-				'name'              => 'logo_location',
-				'type'              => 'select',
-				'label'             => esc_html__( 'Logo Location', 'learndash' ),
-				'help_text'         => 'Whether to display the logo on the left or right of the purchase invoice.',
-				'value'             => $this->setting_option_values['logo_location'],
-				'default' => 'right',
-				'options' => array(
+				'name'      => 'logo_location',
+				'type'      => 'select',
+				'label'     => esc_html__( 'Logo Location', 'learndash' ),
+				'help_text' => 'Whether to display the logo on the left or right of the purchase invoice.',
+				'value'     => $this->setting_option_values['logo_location'],
+				'default'   => 'right',
+				'options'   => array(
 					'right' => esc_html__( 'Right', 'learndash' ),
 					'left'  => esc_html__( 'Left', 'learndash' ),
 				),

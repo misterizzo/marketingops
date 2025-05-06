@@ -127,11 +127,29 @@ function ld_certificate_shortcode( $atts = array(), $content = '', $shortcode_sl
 			$learndash_shortcode_used = true;
 			$cert_button_html         = '';
 			if ( ! empty( $atts['quiz_id'] ) ) {
-				// Ensure the user passed the Quiz.
-				if ( learndash_is_quiz_complete( $atts['user_id'], $atts['quiz_id'], $atts['course_id'] ) ) {
-					$cert_details = learndash_certificate_details( $atts['quiz_id'], $atts['user_id'] );
-					if ( ( isset( $cert_details['certificateLink'] ) ) && ( ! empty( $cert_details['certificateLink'] ) ) ) {
-						$atts['cert_url'] = $cert_details['certificateLink'];
+				$cert_details = learndash_certificate_details( $atts['quiz_id'], $atts['user_id'] );
+				if ( isset( $cert_details['certificateLink'] ) && ! empty( $cert_details['certificateLink'] ) ) {
+					if ( ! isset( $cert_details['certificate_threshold'] ) ) {
+						$cert_details['certificate_threshold'] = floatval( 0.0 );
+					} else {
+						$cert_details['certificate_threshold'] = floatval( $cert_details['certificate_threshold'] ) * 100;
+					}
+
+					$user_quiz_progress = learndash_user_get_quiz_progress( $atts['user_id'], $atts['quiz_id'], $atts['course_id'] );
+					if ( ( is_array( $user_quiz_progress ) ) && ( count( $user_quiz_progress ) ) ) {
+						ksort( $user_quiz_progress );
+
+						foreach ( $user_quiz_progress as $quiz_attempt ) {
+							if ( $cert_details['certificate_threshold'] > '0.0' ) {
+								if ( $quiz_attempt['percentage'] >= $cert_details['certificate_threshold'] ) {
+									$atts['cert_url'] = add_query_arg( 'time', $quiz_attempt['time'], $cert_details['certificateLink'] );
+									break;
+								}
+							} else {
+								$atts['cert_url'] = add_query_arg( 'time', $quiz_attempt['time'], $cert_details['certificateLink'] );
+								break;
+							}
+						}
 					}
 				}
 			} elseif ( ! empty( $atts['course_id'] ) ) {
@@ -218,4 +236,4 @@ function ld_certificate_shortcode( $atts = array(), $content = '', $shortcode_sl
 
 	return $content;
 }
-add_shortcode( 'ld_certificate', 'ld_certificate_shortcode', 10, 3 );
+add_shortcode( 'ld_certificate', 'ld_certificate_shortcode' );

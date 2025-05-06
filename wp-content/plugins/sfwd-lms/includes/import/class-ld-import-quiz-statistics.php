@@ -101,39 +101,51 @@ if ( ( ! class_exists( 'LearnDash_Import_Quiz_Statistics' ) ) && ( class_exists(
 
 				// get file info.
 				// @fixme: wp checks the file extension....
-				$filetype  = wp_check_filetype( basename( $filename ), null );
-				$filetitle = preg_replace( '/\.[^.]+$/', '', basename( $filename ) );
-				$filename  = sprintf( 'question_%d_%s.%s', $question_id, $filetitle, $filetype['ext'] );
+				$filetype   = wp_check_filetype( basename( $filename ), null );
+				$file_title = preg_replace( '/\.[^.]+$/', '', basename( $filename ) );
+				$filename   = sprintf( 'question_%d_%s.%s', $question_id, $file_title, $filetype['ext'] );
 				/**
 				 * Filters essay upload file name.
 				 *
 				 * Used in `migrate_file_upload_to_essay` to migrate existing files to essays.
 				 *
-				 * @param string $filename     Essay file name.
+				 * @param string $filename    Essay file name.
 				 * @param int    $question_id Question ID.
-				 * @param string $filetitle    File title.
+				 * @param string $file_title  File title.
 				 * @param string $extension   File extension.
 				 */
-				$filename        = apply_filters( 'learndash_essay_upload_filename', $filename, $question_id, $filetitle, $filetype['ext'] );
+				$filename        = apply_filters( 'learndash_essay_upload_filename', $filename, $question_id, $file_title, $filetype['ext'] );
 				$upload_dir      = wp_upload_dir();
 				$upload_dir_base = $upload_dir['basedir'];
 				$upload_url_base = $upload_dir['baseurl'];
+
 				/**
 				 * Filters essay upload directory base.
 				 *
 				 * @param string $dir_base   Directory Base.
-				 * @param string $filename    Essay file name.
-				 * @param string $upload_dir Uploads directory path.
+				 * @param string $filename   Essay file name.
+				 * @param array  $upload_dir Uploads directory info.
 				 */
-				$upload_dir_path = $upload_dir_base . apply_filters( 'learndash_essay_upload_dirbase', '/essays', $filename, $upload_dir );
+				$upload_dir_path = $upload_dir_base . apply_filters(
+					'learndash_essay_upload_dirbase',
+					'/essays',
+					$filename,
+					$upload_dir
+				);
+
 				/**
 				 * Filters essay upload url base.
 				 *
 				 * @param string $url_base   URL Base.
-				 * @param string $filename    Essay file name.
-				 * @param string $upload_dir Uploads directory path.
+				 * @param string $filename   Essay file name.
+				 * @param array  $upload_dir Uploads directory info.
 				 */
-				$upload_url_path = $upload_url_base . apply_filters( 'learndash_essay_upload_urlbase', '/essays/', $filename, $upload_dir );
+				$upload_url_path = $upload_url_base . apply_filters(
+					'learndash_essay_upload_urlbase',
+					'/essays/',
+					$filename,
+					$upload_dir
+				);
 
 				if ( ! file_exists( $upload_dir_path ) ) {
 					mkdir( $upload_dir_path );
@@ -147,7 +159,7 @@ if ( ( ! class_exists( 'LearnDash_Import_Quiz_Statistics' ) ) && ( class_exists(
 
 				while ( file_exists( $upload_dir_path . '/' . $filename ) ) {
 					$i++;
-					$filename = sprintf( 'question_%d_%s_%d.%s', $question_id, $filetitle, $i, $filetype['ext'] );
+					$filename = sprintf( 'question_%d_%s_%d.%s', $question_id, $file_title, $i, $filetype['ext'] );
 					/**
 					 * Filters essay upload duplicate file name.
 					 *
@@ -155,68 +167,22 @@ if ( ( ! class_exists( 'LearnDash_Import_Quiz_Statistics' ) ) && ( class_exists(
 					 *
 					 * @param string $filename     Essay file name.
 					 * @param int    $question_id Question ID.
-					 * @param string $filetitle    File title.
+					 * @param string $file_title    File title.
 					 * @param int    $index       Index of file.
 					 * @param string $extension   File extension.
 					 */
-					$filename = apply_filters( 'learndash_essay_upload_filename_dup', $filename, $question_id, $filetitle, $i, $filetype['ext'] );
+					$filename = apply_filters( 'learndash_essay_upload_filename_dup', $filename, $question_id, $file_title, $i, $filetype['ext'] );
 				}
 
-				$filedest = $upload_dir_path . '/' . $filename;
+				$file_dest = $upload_dir_path . '/' . $filename;
 
-				$copy_ret = copy( $file_upload_full, $filedest );
+				$copy_ret = copy( $file_upload_full, $file_dest );
 				if ( true === $copy_ret ) {
 					return $upload_url_path . $filename;
 				}
 			}
 			return '';
 		}
-
-
-		/*
-		[20-May-2017 16:53:07 UTC] user_quizzes<pre>Array
-		(
-			[0] => Array
-				(
-					[quiz] => 927
-					[score] => 5
-					[count] => 6
-					[question_show_count] => 6
-					[pass] => 0
-					[rank] => -
-					[time] => 1495293659
-					[pro_quizid] => 1
-					[points] => 25
-					[total_points] => 55
-					[percentage] => 45.45
-					[timespent] => 29.681
-					[has_graded] => 1
-					[statistic_ref_id] => 1
-					[started] => 1495293628
-					[completed] => 1495293658
-					[graded] => Array
-						(
-							[1] => Array
-								(
-									[post_id] => 960
-									[status] => graded
-									[points_awarded] => 12
-								)
-
-							[2] => Array
-								(
-									[post_id] => 961
-									[status] => not_graded
-									[points_awarded] => 0
-								)
-
-						)
-
-				)
-
-		)
-		</pre>
-		*/
 
 		/**
 		 * Add quiz attempts to user

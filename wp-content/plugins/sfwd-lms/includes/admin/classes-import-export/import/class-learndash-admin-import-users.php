@@ -73,12 +73,13 @@ if (
 		 * Constructor.
 		 *
 		 * @since 4.3.0
+		 * @since 4.5.0   Changed the $logger param to the `Learndash_Import_Export_Logger` class.
 		 *
-		 * @param string                               $previous_db_prefix The exported DB prefix.
-		 * @param bool                                 $with_progress      The flag to identify if we need to process progress metas.
-		 * @param string                               $home_url           The previous home url.
-		 * @param Learndash_Admin_Import_File_Handler  $file_handler       File Handler class instance.
-		 * @param Learndash_Admin_Import_Export_Logger $logger             Logger class instance.
+		 * @param string                              $previous_db_prefix The exported DB prefix.
+		 * @param bool                                $with_progress      The flag to identify if we need to process progress metas.
+		 * @param string                              $home_url           The previous home url.
+		 * @param Learndash_Admin_Import_File_Handler $file_handler       File Handler class instance.
+		 * @param Learndash_Import_Export_Logger      $logger             Logger class instance.
 		 *
 		 * @return void
 		 */
@@ -87,7 +88,7 @@ if (
 			bool $with_progress,
 			string $home_url,
 			Learndash_Admin_Import_File_Handler $file_handler,
-			Learndash_Admin_Import_Export_Logger $logger
+			Learndash_Import_Export_Logger $logger
 		) {
 			global $wpdb;
 
@@ -211,7 +212,6 @@ if (
 		protected function update_user_password_with_hash( int $user_id, string $password_hash ): void {
 			global $wpdb;
 
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 			$wpdb->update(
 				$wpdb->users,
 				array(

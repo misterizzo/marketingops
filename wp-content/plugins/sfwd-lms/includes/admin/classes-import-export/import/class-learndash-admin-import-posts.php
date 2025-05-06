@@ -28,12 +28,13 @@ if (
 		 * Constructor.
 		 *
 		 * @since 4.3.0
+		 * @since 4.5.0   Changed the $logger param to the `Learndash_Import_Export_Logger` class.
 		 *
-		 * @param string                               $post_type    Post Type.
-		 * @param int                                  $user_id      User ID. All posts are attached to this user.
-		 * @param string                               $home_url     The previous home url.
-		 * @param Learndash_Admin_Import_File_Handler  $file_handler File Handler class instance.
-		 * @param Learndash_Admin_Import_Export_Logger $logger       Logger class instance.
+		 * @param string                              $post_type    Post Type.
+		 * @param int                                 $user_id      User ID. All posts are attached to this user.
+		 * @param string                              $home_url     The previous home url.
+		 * @param Learndash_Admin_Import_File_Handler $file_handler File Handler class instance.
+		 * @param Learndash_Import_Export_Logger      $logger       Logger class instance.
 		 *
 		 * @return void
 		 */
@@ -42,7 +43,7 @@ if (
 			int $user_id,
 			string $home_url,
 			Learndash_Admin_Import_File_Handler $file_handler,
-			Learndash_Admin_Import_Export_Logger $logger
+			Learndash_Import_Export_Logger $logger
 		) {
 			$this->post_type = $post_type;
 			$this->user_id   = $user_id;
@@ -59,26 +60,36 @@ if (
 		 */
 		protected function import(): void {
 			foreach ( $this->get_file_lines() as $item ) {
+				/**
+				 * Item.
+				 *
+				 * @phpstan-var array{
+				 *     wp_post: array{ID: int, post_author: int},
+				 *     wp_post_meta: array<string, mixed>,
+				 *     wp_post_terms: array<string, int[]>,
+				 *     wp_post_permalink: string
+				 * } $item
+				 *
+				 * @var array $item Item.
+				 */
+
 				$this->processed_items_count++;
 
-				if (
-					in_array(
-						$this->post_type,
-						array(
-							LDLMS_Post_Types::get_post_type_slug( LDLMS_Post_Types::QUIZ ),
-							LDLMS_Post_Types::get_post_type_slug( LDLMS_Post_Types::QUESTION ),
-						),
-						true
-					)
-				) {
-					$post_id = self::get_new_post_id_by_old_post_id( $item['wp_post']['ID'] );
-					$is_quiz = true;
-				} else {
-					$post_id = wp_insert_post(
+				$is_quiz = in_array(
+					$this->post_type,
+					array(
+						LDLMS_Post_Types::get_post_type_slug( LDLMS_Post_Types::QUIZ ),
+						LDLMS_Post_Types::get_post_type_slug( LDLMS_Post_Types::QUESTION ),
+					),
+					true
+				);
+
+				// If the post is a quiz/question, we need to find the post ID imported via the ProQuiz importer, otherwise insert the post.
+				$post_id = $is_quiz
+					? self::get_new_post_id_by_old_post_id( $item['wp_post']['ID'] )
+					: wp_insert_post(
 						$this->map_post_data( $item['wp_post'] )
 					);
-					$is_quiz = false;
-				}
 
 				if ( empty( $post_id ) ) {
 					continue;
@@ -86,18 +97,20 @@ if (
 
 				$this->imported_items_count++;
 
+				if ( $is_quiz ) {
+					update_post_meta(
+						$post_id,
+						Learndash_Admin_Import::META_KEY_IMPORTED_FROM_USER_ID,
+						$item['wp_post']['post_author']
+					);
+				}
+
 				$new_post = get_post( $post_id );
 
 				$this->update_content_after_insertion( $new_post, $item['wp_post_permalink'] );
 				$this->update_post_meta( $new_post, $item['wp_post_meta'], $is_quiz );
 				$this->update_meta_after_insertion( $new_post );
 				$this->update_post_terms( $new_post->ID, $item['wp_post_terms'] );
-
-				// remove course steps metadata.
-				if ( $this->post_type === LDLMS_Post_Types::get_post_type_slug( LDLMS_Post_Types::COURSE ) ) {
-					delete_post_meta( $new_post->ID, 'ld_course_steps' );
-					delete_post_meta( $new_post->ID, '_ld_course_steps_count' );
-				}
 
 				Learndash_Admin_Import::clear_wpdb_query_cache();
 			}
@@ -289,15 +302,13 @@ if (
 					array(
 						'taxonomy'   => $taxonomy_name,
 						'fields'     => 'ids',
-						// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 						'meta_key'   => Learndash_Admin_Import::META_KEY_IMPORTED_FROM_TERM_ID,
-						// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 						'meta_value' => $term_ids,
 						'hide_empty' => false,
 					)
 				);
 
-				if ( empty( $new_term_ids ) ) {
+				if ( ! is_array( $new_term_ids ) || empty( $new_term_ids ) ) {
 					continue;
 				}
 

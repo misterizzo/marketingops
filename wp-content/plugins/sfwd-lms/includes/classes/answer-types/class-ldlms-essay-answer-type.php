@@ -24,7 +24,7 @@ if ( ! class_exists( 'LDLMS_Essay_Answer' ) ) {
 		 */
 		public function setup() {
 			parent::setup();
-			add_filter( 'learndash_quiz_statistics_question_rest_response', array( $this, 'add_links' ), 10, 4 );
+			add_filter( 'learndash_quiz_statistics_question_rest_response', array( $this, 'add_links' ), 10, 2 );
 		}
 
 		/**

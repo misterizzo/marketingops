@@ -28,11 +28,12 @@ if (
 		 * Constructor.
 		 *
 		 * @since 4.3.0
+		 * @since 4.5.0   Changed the $logger param to the `Learndash_Import_Export_Logger` class.
 		 *
-		 * @param int                                  $user_id      User ID. All posts are attached to this user.
-		 * @param string                               $home_url     The previous home url.
-		 * @param Learndash_Admin_Import_File_Handler  $file_handler File Handler class instance.
-		 * @param Learndash_Admin_Import_Export_Logger $logger       Logger class instance.
+		 * @param int                                 $user_id      User ID. All posts are attached to this user.
+		 * @param string                              $home_url     The previous home url.
+		 * @param Learndash_Admin_Import_File_Handler $file_handler File Handler class instance.
+		 * @param Learndash_Import_Export_Logger      $logger       Logger class instance.
 		 *
 		 * @return void
 		 */
@@ -40,7 +41,7 @@ if (
 			int $user_id,
 			string $home_url,
 			Learndash_Admin_Import_File_Handler $file_handler,
-			Learndash_Admin_Import_Export_Logger $logger
+			Learndash_Import_Export_Logger $logger
 		) {
 			parent::__construct( 'page', $user_id, $home_url, $file_handler, $logger );
 		}

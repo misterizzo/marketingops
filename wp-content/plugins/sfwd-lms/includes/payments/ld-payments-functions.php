@@ -7,19 +7,28 @@
  * @package LearnDash
  */
 
+use LearnDash\Core\Utilities\Cast;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+const LEARNDASH_PRICE_TYPE_OPEN      = 'open';
+const LEARNDASH_PRICE_TYPE_CLOSED    = 'closed';
+const LEARNDASH_PRICE_TYPE_FREE      = 'free';
 const LEARNDASH_PRICE_TYPE_PAYNOW    = 'paynow';
 const LEARNDASH_PRICE_TYPE_SUBSCRIBE = 'subscribe';
+
+require_once LEARNDASH_LMS_PLUGIN_DIR . 'includes/payments/class-learndash-payment-button.php';
 
 /**
  * Outputs the LearnDash global currency symbol.
  *
  * @since 4.1.0
+ *
+ * @return void
  */
-function learndash_the_currency_symbol() {
+function learndash_the_currency_symbol(): void {
 	echo wp_kses_post( learndash_get_currency_symbol() );
 }
 
@@ -27,22 +36,20 @@ function learndash_the_currency_symbol() {
  * Gets the LearnDash global currency symbol.
  *
  * @since 4.1.0
- * @since 4.2.0 Add $currency_code parameter
+ * @since 4.2.0 Added $currency_code parameter.
  *
  * @param string $currency_code Optional. The country currency code (@since 4.2.0).
  *
- * @return string Returns currency symbol.
+ * @return string Currency symbol.
  */
-function learndash_get_currency_symbol( $currency_code = '' ) {
-	if ( ! empty( $currency_code ) ) {
-		$currency = $currency_code;
-	} else {
-		$currency = learndash_get_currency_code();
-	}
+function learndash_get_currency_symbol( string $currency_code = '' ): string {
+	$currency = ! empty( $currency_code ) ? $currency_code : learndash_get_currency_code();
 
 	if ( ! empty( $currency ) && class_exists( 'NumberFormatter' ) ) {
-		$locale        = get_locale();
-		$number_format = new NumberFormatter( $locale . '@currency=' . $currency, NumberFormatter::CURRENCY );
+		$number_format = new NumberFormatter(
+			get_locale() . '@currency=' . $currency,
+			NumberFormatter::CURRENCY
+		);
 		$currency      = $number_format->getSymbol( NumberFormatter::CURRENCY_SYMBOL );
 	}
 
@@ -61,10 +68,15 @@ function learndash_get_currency_symbol( $currency_code = '' ) {
  *
  * @since 4.1.0
  *
- * @return string Returns currency code.
+ * @return string Currency code.
  */
-function learndash_get_currency_code() {
-	$currency = LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Section_Payments_Defaults', 'currency' );
+function learndash_get_currency_code(): string {
+	$currency = LearnDash_Settings_Section::get_section_setting(
+		'LearnDash_Settings_Section_Payments_Defaults',
+		'currency'
+	);
+
+	$currency = trim( $currency );
 
 	/**
 	 * Filter the LearnDash global currency code.
@@ -73,55 +85,55 @@ function learndash_get_currency_code() {
 	 *
 	 * @param string $currency The currency code.
 	 */
-	return apply_filters( 'learndash_currency_code', trim( $currency ) );
+	return apply_filters( 'learndash_currency_code', $currency );
 }
 
 /**
  * Gets the price formatted based on the LearnDash global currency configuration.
  *
  * @since 4.1.0
- * @since 4.2.0 Added $currency_code parameter
+ * @since 4.2.0 Added $currency_code parameter.
+ * @since 4.16.0   Enforce string return type.
  *
- * @param mixed  $price The price to format.
+ * @param mixed  $price         The price to format.
  * @param string $currency_code Optional. The country currency code (@since 4.2.0).
  *
  * @return string Returns price formatted.
  */
-function learndash_get_price_formatted( $price, $currency_code = '' ) {
-	if ( ! empty( $currency_code ) ) {
-		$currency_code = $currency_code;
-	} else {
-		$currency_code = learndash_get_currency_code();
-	}
-
+function learndash_get_price_formatted( $price, string $currency_code = '' ): string {
+	// Empty prices should not be displayed.
 	if ( '' === $price ) {
-		return ''; // empty prices should not be displayed.
+		return '';
 	}
 
+	$currency_code = ! empty( $currency_code ) ? $currency_code : learndash_get_currency_code();
+
+	// Price is shown as is if no currency set.
 	if ( empty( $currency_code ) ) {
-		return $price; // no currency set.
+		return Cast::to_string( $price );
 	}
 
+	// Price is shown as is if non-numeric.
 	if ( ! is_numeric( $price ) ) {
-		return $price; // non-numeric price is shown as is.
+		return Cast::to_string( $price );
 	}
 
 	if ( class_exists( 'NumberFormatter' ) ) {
-		$locale          = get_locale();
-		$number_format   = new NumberFormatter( $locale . '@currency=' . $currency_code, NumberFormatter::CURRENCY );
-		$price_formatted = $number_format->format( floatval( $price ) );
-	} else {
-		$currency_symbol = learndash_get_currency_symbol( $currency_code );
-		if ( strlen( $currency_symbol ) > 1 ) {
-			// it's currency code: we should display at the end of the price.
-			$price_formatted = "$price $currency_symbol";
-		} else {
-			// show the currency symbol at the beginning of the price (en_US style).
-			$price_formatted = "$currency_symbol{$price}";
-		}
+		$number_format = new NumberFormatter(
+			get_locale() . '@currency=' . $currency_code,
+			NumberFormatter::CURRENCY
+		);
+
+		return $number_format->format(
+			floatval( $price )
+		);
 	}
 
-	return $price_formatted;
+	$currency_symbol = learndash_get_currency_symbol( $currency_code );
+
+	return strlen( $currency_symbol ) > 1
+		? "$price $currency_symbol" // it's currency code: we should display at the end of the price.
+		: "$currency_symbol{$price}"; // show the currency symbol at the beginning of the price (en_US style).
 }
 
 
@@ -200,62 +212,23 @@ function learndash_is_zero_decimal_currency( string $currency = '' ): bool {
 }
 
 /**
- * Maps the payment button label.
- *
- * @since 4.2.0
- *
- * @param WP_Post|int|null $post Post or Post ID.
- *
- * @return string
- */
-function learndash_get_payment_button_label( $post ): string {
-	if ( empty( $post ) ) {
-		return '';
-	}
-
-	if ( is_int( $post ) ) {
-		$post = get_post( $post );
-
-		if ( is_null( $post ) ) {
-			return '';
-		}
-	}
-
-	$button_label = '';
-
-	if ( class_exists( 'LearnDash_Custom_Label' ) ) {
-		if ( learndash_is_course_post( $post ) ) {
-			$button_label = LearnDash_Custom_Label::get_label( 'button_take_this_course' );
-		} elseif ( learndash_is_group_post( $post ) ) {
-			$button_label = LearnDash_Custom_Label::get_label( 'button_take_this_group' );
-		}
-	} else {
-		if ( learndash_is_course_post( $post ) ) {
-			$button_label = __( 'Take This Course', 'learndash' );
-		} elseif ( learndash_is_group_post( $post ) ) {
-			$button_label = __( 'Enroll in Group', 'learndash' );
-		}
-	}
-
-	return $button_label;
-}
-
-/**
  * Gets the course price.
  *
  * Return an array of price type, amount and cycle.
  *
  * @since 3.0.0
  * @since 4.1.0 Optional $user_id param added.
+ * @since 4.5.0   Param $user_id is not nullable.
  *
- * @param int|object|null $course  Course `WP_Post` object or post ID. Default to global $post.
- * @param int|null        $user_id User ID. Default to current user id.
+ * @global WP_Post $post Global post object.
+ *
+ * @param int|WP_Post|null $course  Course `WP_Post` object or post ID. Default to global $post.
+ * @param int              $user_id User ID. Default to current user ID.
  *
  * @return array Course price details.
- * @global WP_Post $post Global post object.
  */
-function learndash_get_course_price( $course = null, ?int $user_id = null ): array {
-	if ( null === $course ) {
+function learndash_get_course_price( $course = null, int $user_id = 0 ): array {
+	if ( is_null( $course ) ) {
 		global $post;
 		$course = $post;
 	}
@@ -271,47 +244,52 @@ function learndash_get_course_price( $course = null, ?int $user_id = null ): arr
 	// Get the course price.
 	$meta = get_post_meta( $course->ID, '_sfwd-courses', true );
 
-	$course_price = array(
-		'type'  => ! empty( $meta['sfwd-courses_course_price_type'] ) ? $meta['sfwd-courses_course_price_type'] : LEARNDASH_DEFAULT_COURSE_PRICE_TYPE,
-		'price' => ! empty( $meta['sfwd-courses_course_price'] ) ? $meta['sfwd-courses_course_price'] : '',
+	$pricing = array(
+		'type'  => ! empty( $meta['sfwd-courses_course_price_type'] )
+			? $meta['sfwd-courses_course_price_type']
+			: LEARNDASH_DEFAULT_COURSE_PRICE_TYPE,
+		'price' => ! empty( $meta['sfwd-courses_course_price'] )
+			? $meta['sfwd-courses_course_price']
+			: '',
 	);
 
 	// Get the price a user had when was applying a coupon.
 
-	if ( is_null( $user_id ) || 0 === $user_id ) {
+	if ( 0 === $user_id ) {
 		$user_id = get_current_user_id();
 	}
 
-	if ( $user_id > 0 && learndash_post_has_attached_coupon( $course->ID, $user_id ) ) {
+	if (
+		$user_id > 0 &&
+		learndash_get_price_as_float( strval( $pricing['price'] ) ) > 0 &&
+		learndash_post_has_attached_coupon( $course->ID, $user_id )
+	) {
 		$attached_coupon_data = learndash_get_attached_coupon_data( $course->ID, $user_id );
 
 		if ( ! empty( $attached_coupon_data ) ) {
-			$course_price['price'] = $attached_coupon_data['price'];
+			$pricing['price'] = $attached_coupon_data->price;
 		}
 	}
 
 	// Add subscription data.
-	if ( 'subscribe' === $course_price['type'] ) {
-		$interval        = learndash_get_setting( $course->ID, 'course_price_billing_p3' );
-		$frequency       = learndash_get_setting( $course->ID, 'course_price_billing_t3' );
-		$repeats         = learndash_get_setting( $course->ID, 'course_no_of_cycles' );
-		$trial_interval  = learndash_get_setting( $course->ID, 'course_trial_duration_p1' );
-		$trial_frequency = learndash_get_setting( $course->ID, 'course_trial_duration_t1' );
+	if ( LEARNDASH_PRICE_TYPE_SUBSCRIBE === $pricing['type'] ) {
+		$interval        = intval( learndash_get_setting( $course->ID, 'course_price_billing_p3' ) );
+		$frequency       = strval( learndash_get_setting( $course->ID, 'course_price_billing_t3' ) );
+		$repeats         = intval( learndash_get_setting( $course->ID, 'course_no_of_cycles' ) );
+		$trial_interval  = intval( learndash_get_setting( $course->ID, 'course_trial_duration_p1' ) );
+		$trial_frequency = strval( learndash_get_setting( $course->ID, 'course_trial_duration_t1' ) );
 
-		$course_price['interval']  = $interval;
-		$course_price['frequency'] = learndash_get_grammatical_number_label_for_interval( $interval, $frequency );
+		$pricing['interval']      = $interval;
+		$pricing['frequency']     = learndash_get_grammatical_number_label_for_interval( $interval, $frequency );
+		$pricing['frequency_raw'] = $frequency;
 
-		if ( ! empty( $repeats ) ) {
-			$course_price['repeats']          = $repeats;
-			$course_price['repeat_frequency'] = learndash_get_grammatical_number_label_for_interval( $repeats, $frequency );
-		}
+		$pricing['repeats']          = $repeats;
+		$pricing['repeat_frequency'] = empty( $repeats ) ? '' : learndash_get_grammatical_number_label_for_interval( $repeats, $frequency );
 
-		$course_price['trial_price'] = ! empty( learndash_get_setting( $course->ID, 'course_trial_price' ) ) ? learndash_get_setting( $course->ID, 'course_trial_price' ) : '';
-
-		if ( ! empty( $trial_interval ) ) {
-			$course_price['trial_interval']  = $trial_interval;
-			$course_price['trial_frequency'] = learndash_get_grammatical_number_label_for_interval( $trial_interval, $trial_frequency );
-		}
+		$pricing['trial_price']         = strval( learndash_get_setting( $course->ID, 'course_trial_price' ) );
+		$pricing['trial_interval']      = $trial_interval;
+		$pricing['trial_frequency']     = empty( $trial_interval ) ? '' : learndash_get_grammatical_number_label_for_interval( $trial_interval, $trial_frequency );
+		$pricing['trial_frequency_raw'] = $trial_frequency;
 	}
 
 	/**
@@ -319,9 +297,9 @@ function learndash_get_course_price( $course = null, ?int $user_id = null ): arr
 	 *
 	 * @since 3.0.0
 	 *
-	 * @param array $course_price Course price details.
+	 * @param array $pricing Course price details.
 	 */
-	return apply_filters( 'learndash_get_course_price', $course_price );
+	return apply_filters( 'learndash_get_course_price', $pricing );
 }
 
 /**
@@ -331,14 +309,15 @@ function learndash_get_course_price( $course = null, ?int $user_id = null ): arr
  *
  * @since 3.2.0
  * @since 4.1.0 Optional $user_id param added.
+ * @since 4.5.0   Param $user_id is not nullable.
  *
- * @param int|object|null $group   Course `WP_Post` object or post ID. Default to global $post.
- * @param int|null        $user_id User ID. Default to current user id.
+ * @param int|WP_Post|null $group   Group `WP_Post` object or post ID. Default to global $post.
+ * @param int              $user_id User ID. Default to current user id.
  *
  * @return array price details.
  */
-function learndash_get_group_price( $group = null, ?int $user_id = null ): array {
-	if ( null === $group ) {
+function learndash_get_group_price( $group = null, int $user_id = 0 ): array {
+	if ( is_null( $group ) ) {
 		global $post;
 		$group = $post;
 	}
@@ -355,48 +334,53 @@ function learndash_get_group_price( $group = null, ?int $user_id = null ): array
 
 	$meta = get_post_meta( $group->ID, '_groups', true );
 
-	$group_price = array(
-		'type'  => ! empty( $meta['groups_group_price_type'] ) ? $meta['groups_group_price_type'] : LEARNDASH_DEFAULT_GROUP_PRICE_TYPE,
-		'price' => ! empty( $meta['groups_group_price'] ) ? $meta['groups_group_price'] : '',
+	$pricing = array(
+		'type'  => ! empty( $meta['groups_group_price_type'] )
+			? $meta['groups_group_price_type']
+			: LEARNDASH_DEFAULT_GROUP_PRICE_TYPE,
+		'price' => ! empty( $meta['groups_group_price'] )
+			? $meta['groups_group_price']
+			: '',
 	);
 
 	// Get the price a user had when was applying a coupon.
 
-	if ( is_null( $user_id ) || 0 === $user_id ) {
+	if ( 0 === $user_id ) {
 		$user_id = get_current_user_id();
 	}
 
-	if ( $user_id > 0 && learndash_post_has_attached_coupon( $group->ID, $user_id ) ) {
+	if (
+		$user_id > 0 &&
+		learndash_get_price_as_float( strval( $pricing['price'] ) ) > 0 &&
+		learndash_post_has_attached_coupon( $group->ID, $user_id )
+	) {
 		$attached_coupon_data = learndash_get_attached_coupon_data( $group->ID, $user_id );
 
 		if ( ! empty( $attached_coupon_data ) ) {
-			$group_price['price'] = $attached_coupon_data['price'];
+			$pricing['price'] = $attached_coupon_data->price;
 		}
 	}
 
 	// Add subscription data.
 
-	if ( 'subscribe' === $group_price['type'] ) {
-		$frequency       = learndash_get_setting( $group->ID, 'group_price_billing_t3' );
-		$interval        = learndash_get_setting( $group->ID, 'group_price_billing_p3' );
-		$repeats         = learndash_get_setting( $group->ID, 'post_no_of_cycles' );
-		$trial_interval  = learndash_get_setting( $group->ID, 'group_trial_duration_p1' );
-		$trial_frequency = learndash_get_setting( $group->ID, 'group_trial_duration_t1' );
+	if ( LEARNDASH_PRICE_TYPE_SUBSCRIBE === $pricing['type'] ) {
+		$interval        = intval( learndash_get_setting( $group->ID, 'group_price_billing_p3' ) );
+		$frequency       = strval( learndash_get_setting( $group->ID, 'group_price_billing_t3' ) );
+		$repeats         = intval( learndash_get_setting( $group->ID, 'post_no_of_cycles' ) );
+		$trial_interval  = intval( learndash_get_setting( $group->ID, 'group_trial_duration_p1' ) );
+		$trial_frequency = strval( learndash_get_setting( $group->ID, 'group_trial_duration_t1' ) );
 
-		$group_price['interval']  = $interval;
-		$group_price['frequency'] = learndash_get_grammatical_number_label_for_interval( $interval, $frequency );
+		$pricing['interval']      = $interval;
+		$pricing['frequency']     = learndash_get_grammatical_number_label_for_interval( $interval, $frequency );
+		$pricing['frequency_raw'] = $frequency;
 
-		if ( ! empty( $repeats ) ) {
-			$group_price['repeats']          = $repeats;
-			$group_price['repeat_frequency'] = learndash_get_grammatical_number_label_for_interval( $repeats, $frequency );
-		}
+		$pricing['repeats']          = $repeats;
+		$pricing['repeat_frequency'] = empty( $repeats ) ? '' : learndash_get_grammatical_number_label_for_interval( $repeats, $frequency );
 
-		$group_price['trial_price'] = ! empty( learndash_get_setting( $group->ID, 'group_trial_price' ) ) ? learndash_get_setting( $group->ID, 'group_trial_price' ) : '';
-
-		if ( ! empty( $trial_interval ) ) {
-			$group_price['trial_interval']  = $trial_interval;
-			$group_price['trial_frequency'] = learndash_get_grammatical_number_label_for_interval( $trial_interval, $trial_frequency );
-		}
+		$pricing['trial_price']         = strval( learndash_get_setting( $group->ID, 'group_trial_price' ) );
+		$pricing['trial_interval']      = $trial_interval;
+		$pricing['trial_frequency']     = empty( $trial_interval ) ? '' : learndash_get_grammatical_number_label_for_interval( $trial_interval, $trial_frequency );
+		$pricing['trial_frequency_raw'] = $trial_frequency;
 	}
 
 	/**
@@ -404,37 +388,120 @@ function learndash_get_group_price( $group = null, ?int $user_id = null ): array
 	 *
 	 * @since 3.2.0
 	 *
-	 * @param array $group_price Group Price Details array.
+	 * @param array $pricing Group Price Details array.
 	 */
-	return apply_filters( 'learndash_get_group_price', $group_price );
+	return apply_filters( 'learndash_get_group_price', $pricing );
 }
 
 /**
  * Get the singular or plural label for recurring payment intervals
  *
  * @since 3.6.0
+ * @since 4.5.0   $interval must be integer.
  *
- * @param string $interval  Number of payment intervals.
- * @param string $frequency PayPal symbol for day, week, month or year.
+ * @param int    $interval      Number of payment intervals.
+ * @param string $frequency     A symbol for day, week, month or year.
+ * @param bool   $short_version Whether to return the short version of the label.
  *
  * @return string
  */
-function learndash_get_grammatical_number_label_for_interval( $interval, $frequency ) {
-	$interval = intval( $interval );
+function learndash_get_grammatical_number_label_for_interval( int $interval, string $frequency, bool $short_version = false ): string {
 	switch ( $frequency ) {
 		case ( 'D' ):
 			return _n( 'day', 'days', $interval, 'learndash' );
 
 		case ( 'W' ):
-			return _n( 'week', 'weeks', $interval, 'learndash' );
+			return $short_version
+				? _n( 'wk', 'wks', $interval, 'learndash' )
+				: _n( 'week', 'weeks', $interval, 'learndash' );
 
 		case ( 'M' ):
-			return _n( 'month', 'months', $interval, 'learndash' );
+			return $short_version
+				? _n( 'mo', 'mos', $interval, 'learndash' )
+				: _n( 'month', 'months', $interval, 'learndash' );
 
 		case ( 'Y' ):
-			return _n( 'year', 'years', $interval, 'learndash' );
+			return $short_version
+				? _n( 'yr', 'yrs', $interval, 'learndash' )
+				: _n( 'year', 'years', $interval, 'learndash' );
 
 		default:
 			return '';
 	}
+}
+
+/**
+ * Generates the LearnDash payment buttons output.
+ *
+ * @since 2.1.0
+ *
+ * @param int|WP_Post $post Post ID or `WP_Post` object.
+ *
+ * @return string The payment buttons HTML output.
+ */
+function learndash_payment_buttons( $post ): string {
+	$payment_button_generator = new Learndash_Payment_Button( $post );
+
+	/**
+	 * Filters payment button HTML right before output. Fires in the end.
+	 *
+	 * @since 4.5.0
+	 *
+	 * @param string $button Payment button HTML markup. Can contain all types of buttons.
+	 *
+	 * @return string Payment button HTML markup.
+	 */
+	$button = (string) apply_filters( 'learndash_payment_button_markup', $payment_button_generator->map() );
+
+	/**
+	 * Fires when the payment button is added.
+	 *
+	 * @since 4.5.0
+	 *
+	 * @param string $button Payment button HTML markup. Can contain all types of buttons.
+	 */
+	do_action( 'learndash_payment_button_added', $button );
+
+	return $button;
+}
+
+/**
+ * Output array of country currency code data.
+ *
+ * @since 4.4.0
+ *
+ * @return array
+ */
+function learndash_currency_codes_list(): array {
+	$currency_codes       = array();
+	$currency_codes_array = array_map( 'str_getcsv', file( LEARNDASH_LMS_PLUGIN_DIR . 'assets/misc/payment-currencies.csv' ) );
+	// Remove CSV headers from array.
+	unset( $currency_codes_array[0] );
+
+	foreach ( $currency_codes_array as $code ) {
+		[
+			$country,
+			$currency,
+			$currency_code,
+			$numeric_code,
+			$minor_unit,
+			$withdrawal_date,
+		] = $code;
+
+		$currency_codes[] = array(
+			'currency_code' => $currency_code,
+			'option_label'  => ucwords( mb_strtolower( $country ) ) . ' (' . learndash_get_currency_symbol( $currency_code ) . ') ',
+			'country'       => $country,
+			'currency'      => mb_strtoupper( $currency ),
+		);
+	}
+
+	/**
+	 * Filters list of currency codes.
+	 *
+	 * @since 4.4.0
+	 *
+	 * @param array $currency_codes List of currency codes.
+	 */
+	return apply_filters( 'learndash_currency_code_list', $currency_codes );
 }

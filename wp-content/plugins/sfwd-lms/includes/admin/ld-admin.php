@@ -6,6 +6,8 @@
  * @package LearnDash
  */
 
+use StellarWP\Learndash\StellarWP\Assets\Asset;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -130,6 +132,26 @@ function learndash_load_admin_resources() {
 	global $pagenow, $post, $typenow;
 	global $learndash_assets_loaded;
 
+	wp_register_style(
+		'ld-tailwindcss',
+		LEARNDASH_LMS_PLUGIN_URL . 'assets/css/ld-tailwind.css',
+		array(),
+		LEARNDASH_SCRIPT_VERSION_TOKEN
+	);
+
+	wp_style_add_data( 'ld-tailwindcss', 'rtl', 'replace' );
+
+	wp_register_style(
+		'learndash-admin',
+		LEARNDASH_LMS_PLUGIN_URL . 'src/assets/dist/css/admin/styles.css',
+		[],
+		LEARNDASH_SCRIPT_VERSION_TOKEN
+	);
+
+	wp_style_add_data( 'learndash-admin', 'rtl', 'replace' );
+
+	wp_enqueue_style( 'learndash-admin' );
+
 	wp_enqueue_style(
 		'learndash-admin-menu-style',
 		LEARNDASH_LMS_PLUGIN_URL . 'assets/css/learndash-admin-menu' . learndash_min_asset() . '.css',
@@ -232,6 +254,13 @@ function learndash_load_admin_resources() {
 		wp_style_add_data( 'ld-datepicker-ui-css', 'rtl', 'replace' );
 		$learndash_assets_loaded['styles']['ld-datepicker-ui-css'] = __FUNCTION__;
 	}
+
+	Asset::add( 'learndash-copy-text-button', 'copy-text/button.js' )
+		->add_dependency( 'jquery' )
+		->set_path( 'src/assets/dist/js/admin', false )
+		->set_condition( 'learndash_should_load_admin_assets' )
+		->set_action( 'admin_enqueue_scripts' )
+		->enqueue();
 }
 add_action( 'admin_enqueue_scripts', 'learndash_load_admin_resources' );
 
@@ -764,8 +793,8 @@ function learndash_check_other_lms_plugins() {
 			'label'  => 'WP Courses LMS',
 			'plugin' => 'wp-courses/wp-courses.php',
 		),
-		'wp-courseware/wp-courseware.php' => array(
-			'label'    => 'WP Courseware',
+		'wp-courseware/wp-courseware.php' => array( // cspell:disable-line.
+			'label'    => 'WP Courseware', // cspell:disable-line.
 			'function' => 'WPCW_plugin_init',
 		),
 		'WPLMS'                           => array(

@@ -37,17 +37,18 @@ if (
 		 * Constructor.
 		 *
 		 * @since 4.3.0
+		 * @since 4.5.0   Changed the $logger param to the `Learndash_Import_Export_Logger` class.
 		 *
-		 * @param array                                $post_types   Post types.
-		 * @param Learndash_Admin_Export_File_Handler  $file_handler File Handler class instance.
-		 * @param Learndash_Admin_Import_Export_Logger $logger       Logger class instance.
+		 * @param array                               $post_types   Post types.
+		 * @param Learndash_Admin_Export_File_Handler $file_handler File Handler class instance.
+		 * @param Learndash_Import_Export_Logger      $logger       Logger class instance.
 		 *
 		 * @return void
 		 */
 		public function __construct(
 			array $post_types,
 			Learndash_Admin_Export_File_Handler $file_handler,
-			Learndash_Admin_Import_Export_Logger $logger
+			Learndash_Import_Export_Logger $logger
 		) {
 			$this->post_types = $post_types;
 
@@ -71,20 +72,21 @@ if (
 				);
 			}
 
-			$taxonomy_names = array_values(
-				array_unique( $taxonomy_names )
-			);
-
 			/**
 			 * Filters the list of taxonomies to export.
 			 *
 			 * @since 4.3.0
 			 *
-			 * @param string[] $taxonomy_names Taxonomies.
+			 * @param string[] $taxonomy_names Taxonomy names.
 			 *
-			 * @return array Taxonomies.
+			 * @return string[] Taxonomy names.
 			 */
-			$taxonomy_names = apply_filters( 'learndash_export_taxonomies', $taxonomy_names );
+			$taxonomy_names = apply_filters(
+				'learndash_export_taxonomies',
+				array_values(
+					array_unique( $taxonomy_names )
+				)
+			);
 
 			$result = array();
 

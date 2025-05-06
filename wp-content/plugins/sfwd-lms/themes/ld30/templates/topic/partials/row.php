@@ -101,7 +101,7 @@ do_action( 'learndash-topic-row-before', $topic->ID, $course_id, $user_id ); ?>
 		do_action( 'learndash-topic-row-title-before', $topic->ID, $course_id, $user_id );
 		?>
 		<span class="ld-topic-title"><?php echo wp_kses_post( apply_filters( 'the_title', $topic->post_title, $topic->ID ) ); ?></span> <?php // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
-		
+
 		/**
 		 * Fires after the topic title.
 		 *
@@ -117,9 +117,12 @@ do_action( 'learndash-topic-row-before', $topic->ID, $course_id, $user_id ); ?>
 	<?php
 		if ( ! empty( $attributes ) ) :
 			foreach ( $attributes as $attribute ) :
+				$ld_icon_class = isset( $attribute['icon'] ) && ! empty( $attribute['icon'] )
+								? 'ld-icon ' . $attribute['icon']
+								: '';
 				?>
-			<span class="<?php echo esc_attr( 'ld-status ' . $attribute['class'] ); ?>">
-				<span class="<?php echo esc_attr( 'ld-icon ' . $attribute['icon'] ); ?>"></span>
+			<span class="<?php echo esc_attr( 'ld-status ' . ( $attribute['class'] ?? '' ) ); ?>">
+				<span class="<?php echo esc_attr( $ld_icon_class ); ?>"></span>
 				<?php echo esc_html( $attribute['label'] ); ?>
 			</span>
 				<?php

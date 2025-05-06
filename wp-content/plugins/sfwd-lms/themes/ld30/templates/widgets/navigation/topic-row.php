@@ -3,6 +3,7 @@
  * LearnDash LD30 Displays the course navigation widget topic row.
  *
  * @since 3.0.0
+ * @version 4.21.3
  *
  * @package LearnDash\Templates\LD30
  */
@@ -46,7 +47,21 @@ if ( ! empty( $learndash_available_date ) ) {
 		if ( ! empty( $attributes ) ) :
 			foreach ( $attributes as $attribute ) :
 				?>
-			<span class="ld-status-icon <?php echo esc_attr( $attribute['class'] ); ?>" data-ld-tooltip="<?php echo esc_attr( $attribute['label'] ); ?>"><span class="ld-icon <?php echo esc_attr( $attribute['icon'] ); ?>"></span></span>
+				<span class="ld-status-icon ld-tooltip <?php echo esc_attr( $attribute['class'] ?? '' ); ?>">
+					<span
+						aria-describedby="ld-navigation-widget__topic-row-tooltip--<?php echo esc_attr( $attribute['icon'] ); ?>"
+						class="ld-icon <?php echo esc_attr( $attribute['icon'] ); ?>"
+						tabindex="0"
+					></span>
+
+					<span
+						class="ld-tooltip__text"
+						id="ld-navigation-widget__topic-row-tooltip--<?php echo esc_attr( $attribute['icon'] ); ?>"
+						role="tooltip"
+					>
+						<?php echo esc_html( $attribute['label'] ); ?>
+					</span>
+				</span>
 				<?php
 			endforeach;
 		endif;

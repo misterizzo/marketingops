@@ -98,8 +98,6 @@ if ( ! class_exists( 'LDLMS_Free_Answer' ) ) {
 
 			$question_answer_sets = $this->get_answers();
 
-			// $answer_sets = wp_list_pluck( $this->parsed_answers, 'label' );
-
 			foreach ( $this->student_answers as $student_answer_key => $student_answer ) {
 				$answers[ $student_answer_key ] = array(
 					'answer_key' => $this->get_answer_key( $student_answer_key ),
@@ -121,8 +119,8 @@ if ( ! class_exists( 'LDLMS_Free_Answer' ) ) {
 						 *
 						 * @since 3.5.0
 						 *
-						 * @param boolean $conver_to_lower Whether to convert quiz question free to lower case.
-						 * @param object  $question        WpProQuiz_Model_Question Question Model instance.
+						 * @param bool   $convert_to_lower Whether to convert quiz question free to lower case.
+						 * @param object $question         WpProQuiz_Model_Question Question Model instance.
 						*/
 						if ( apply_filters( 'learndash_quiz_question_free_answers_to_lowercase', true, $this->question ) ) {
 							if ( function_exists( 'mb_strtolower' ) ) {

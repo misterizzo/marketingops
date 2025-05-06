@@ -11,6 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use LearnDash\Core\Utilities\Cast;
+
 if (
 	class_exists( 'Learndash_Admin_Import' ) &&
 	trait_exists( 'Learndash_Admin_Import_Export_Settings' ) &&
@@ -46,17 +48,18 @@ if (
 		 * Constructor.
 		 *
 		 * @since 4.3.0
+		 * @since 4.5.0   Changed the $logger param to the `Learndash_Import_Export_Logger` class.
 		 *
-		 * @param string                               $home_url     The previous home url.
-		 * @param Learndash_Admin_Import_File_Handler  $file_handler File Handler class instance.
-		 * @param Learndash_Admin_Import_Export_Logger $logger       Logger class instance.
+		 * @param string                              $home_url     The previous home url.
+		 * @param Learndash_Admin_Import_File_Handler $file_handler File Handler class instance.
+		 * @param Learndash_Import_Export_Logger      $logger       Logger class instance.
 		 *
 		 * @return void
 		 */
 		public function __construct(
 			string $home_url,
 			Learndash_Admin_Import_File_Handler $file_handler,
-			Learndash_Admin_Import_Export_Logger $logger
+			Learndash_Import_Export_Logger $logger
 		) {
 			$this->fields_with_media_id         = $this->get_fields_with_media_id();
 			$this->fields_containing_media_urls = $this->get_fields_containing_media_urls();
@@ -79,14 +82,15 @@ if (
 			}
 
 			foreach ( $sections as $section ) {
-				$this->processed_items_count++;
-				$this->imported_items_count++;
+				++$this->processed_items_count;
 
 				foreach ( $section['fields'] as $field_key => &$field_value ) {
 					$field_value = $this->map_field_value( $section['name'], $field_key, $field_value );
 				}
 
 				LearnDash_Settings_Section::set_section_settings_all( $section['name'], $section['fields'] );
+
+				++$this->imported_items_count;
 			}
 		}
 
@@ -107,14 +111,14 @@ if (
 			}
 
 			if ( 'LearnDash_Settings_Section_Registration_Pages' === $section_name ) {
-				return $this->get_new_post_id_by_old_post_id( $field_value );
+				return $this->get_new_post_id_by_old_post_id( Cast::to_int( $field_value ) );
 			}
 
 			if (
 				isset( $this->fields_with_media_id[ $section_name ] ) &&
 				in_array( $field_key, $this->fields_with_media_id[ $section_name ], true )
 			) {
-				return $this->get_new_post_id_by_old_post_id( $field_value );
+				return $this->get_new_post_id_by_old_post_id( Cast::to_int( $field_value ) );
 			}
 
 			if (

@@ -330,7 +330,7 @@ if ( ( class_exists( 'LDLMS_Model_Post' ) ) && ( ! class_exists( 'LDLMS_Model_Ex
 				}
 
 				if ( isset( $_POST['exam_started'] ) ) {
-					// The 'exam_started' timestamp is set in the Exam JS inlcudes microtime.
+					// The 'exam_started' timestamp is set in the Exam JS includes microtime.
 					$this->student_submit_data['started'] = absint( $_POST['exam_started'] ) / 1000;
 				} else {
 					$this->student_submit_data['started'] = 0;
@@ -457,15 +457,19 @@ if ( ( class_exists( 'LDLMS_Model_Post' ) ) && ( ! class_exists( 'LDLMS_Model_Ex
 				 *
 				 * @since 4.0.0
 				 *
-				 * * @param array $exam_result_button {
-				 *    An array of attributes.
+				 * @param array $exam_result_button {
 				 *    @type string $button_label Button label.
 				 *    @type string $redirect_url Button URL.
-				 * }
+				 * } An array of attributes.
 				 * @param int    $exam_id            Exam Post ID.
 				 * @param string $exam_status        Exam Status slug.
 				*/
-				$exam_result_button = apply_filters( 'learndash_exam_challenge_to_course_passed_redirect', $exam_result_button, $this->post->ID, $exam_status_slug );
+				$exam_result_button = apply_filters(
+					'learndash_exam_challenge_to_course_passed_redirect',
+					$exam_result_button,
+					$this->post->ID,
+					$exam_status_slug
+				);
 
 			} else {
 				// If the exam is not graded then there are not values to set here.
@@ -588,7 +592,7 @@ if ( ( class_exists( 'LDLMS_Model_Post' ) ) && ( ! class_exists( 'LDLMS_Model_Ex
 		 *
 		 * @since 4.0.0
 		 *
-		 * @return int The inserted/updated activity ID for the Exam.
+		 * @return int The inserted/updated activity ID for the Exam or 0 if activity not found.
 		 */
 		protected function set_exam_activity() {
 			$exam_meta = $this->prepare_exam_activity_meta();
@@ -605,17 +609,20 @@ if ( ( class_exists( 'LDLMS_Model_Post' ) ) && ( ! class_exists( 'LDLMS_Model_Ex
 				'activity_meta'      => $exam_meta,
 			);
 			$exam_activity = learndash_get_user_activity( $activity_args, true );
+
 			if ( ( is_a( $exam_activity, 'LDLMS_Model_Activity' ) ) && ( property_exists( $exam_activity, 'activity_id' ) ) && ( ! empty( $exam_activity->activity_id ) ) ) {
 				return $exam_activity->activity_id;
 			}
+
+			return 0;
 		}
 
 		/**
-		 * Prepare the Activity metafor the exam.
+		 * Prepare the Activity meta for the exam.
 		 *
 		 * @since 4.0.0
 		 *
-		 * return array Array of Exam meta data.
+		 * @return array Exam meta data.
 		 */
 		protected function prepare_exam_activity_meta() {
 			$exam_meta = array(
@@ -689,7 +696,7 @@ if ( ( class_exists( 'LDLMS_Model_Post' ) ) && ( ! class_exists( 'LDLMS_Model_Ex
 		 *
 		 * @return bool True is course is set as complete. False otherwise.
 		 */
-		protected function set_course_complete() {
+		protected function set_course_complete(): bool {
 			if ( true === $this->exam_grade ) {
 				$exam_challenge_passed = learndash_get_setting( $this->post_id, 'exam_challenge_course_passed' );
 				if ( empty( $exam_challenge_passed ) ) {
@@ -707,8 +714,8 @@ if ( ( class_exists( 'LDLMS_Model_Post' ) ) && ( ! class_exists( 'LDLMS_Model_Ex
 					}
 				}
 			}
-		}
 
-		// End of functions.
+			return false;
+		}
 	}
 }

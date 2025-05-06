@@ -175,7 +175,7 @@ window.learndash.admin.overview = {
 			return;
 		}
 
-		// Prevent unnecesary DOM manipulation.
+		// Prevent unnecessary DOM manipulation.
 		if ( 'false' === toggle.getAttribute( 'aria-selected' ) ) {
 			return;
 		}

@@ -43,9 +43,10 @@ if ( ! class_exists( 'Learndash_Admin_Import_Export_Handler' ) ) {
 		/**
 		 * Logger class instance.
 		 *
-		 * @since 4.3.0
+		 * @since 4.3.0 d
+		 * @since TBA   Changed to the `Learndash_Import_Export_Logger` class.
 		 *
-		 * @var Learndash_Admin_Import_Export_Logger
+		 * @var Learndash_Import_Export_Logger
 		 */
 		protected $logger;
 
@@ -53,17 +54,18 @@ if ( ! class_exists( 'Learndash_Admin_Import_Export_Handler' ) ) {
 		 * Constructor.
 		 *
 		 * @since 4.3.0
+		 * @since 4.5.0   Changed the $logger param to the `Learndash_Import_Export_Logger` class.
 		 *
 		 * @param Learndash_Admin_Import_Export_File_Handler $file_handler     File handler class instance.
 		 * @param Learndash_Admin_Action_Scheduler           $action_scheduler Action Scheduler class instance.
-		 * @param Learndash_Admin_Import_Export_Logger       $logger           Logger class instance.
+		 * @param Learndash_Import_Export_Logger             $logger           Logger class instance.
 		 *
 		 * @return void
 		 */
 		public function __construct(
 			Learndash_Admin_Import_Export_File_Handler $file_handler,
 			Learndash_Admin_Action_Scheduler $action_scheduler,
-			Learndash_Admin_Import_Export_Logger $logger
+			Learndash_Import_Export_Logger $logger
 		) {
 			// @phpstan-ignore-next-line -- Learndash_Admin_Import_Export_File_Handler is the parent class.
 			$this->file_handler     = $file_handler;

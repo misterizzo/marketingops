@@ -6,6 +6,8 @@
  * @package LearnDash\Builder
  */
 
+use LearnDash\Core\Utilities\Cast;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -228,12 +230,16 @@ if ( ! class_exists( 'Learndash_Admin_Builder' ) ) {
 			wp_enqueue_script(
 				'learndash-force-metaboxes',
 				LEARNDASH_LMS_PLUGIN_URL . 'assets/js/builder/dist/metaboxes' . learndash_min_builder_asset() . '.js',
-				array( 'wp-data', 'jquery' ),
+				[ 'wp-data', 'jquery', 'learndash-main' ],
 				LEARNDASH_SCRIPT_VERSION_TOKEN,
 				true
 			);
 
-			$metaboxes = array();
+			$metaboxes = [
+				'wp_version' => learndash_sanitize_version_string(
+					Cast::to_string( get_bloginfo( 'version' ) )
+				),
+			];
 
 			if ( ( function_exists( 'use_block_editor_for_post' ) ) && ( use_block_editor_for_post( $post ) ) ) {
 				$this->builder_assets[ $this->builder_post_type ]['post_data']['builder_editor'] = 'block';
@@ -380,7 +386,7 @@ if ( ! class_exists( 'Learndash_Admin_Builder' ) ) {
 									</p>
 								</div>
 								<div class="learndash-selector-search"><input type="text" placeholder="<?php esc_html_e( 'Search...', 'learndash' ); ?>" /></div>
-								<ul id="learndash-selector-post-listing-<?php echo esc_attr( $selector_post_type ); ?>" class="learndash-selector-post-listing dropfalse">
+								<ul id="learndash-selector-post-listing-<?php echo esc_attr( $selector_post_type ); ?>" class="learndash-selector-post-listing dropfalse"> <?php // cspell:disable-line. ?>
 									<?php
 									if ( $post_type_query->have_posts() ) {
 										echo $this->build_selector_rows( $post_type_query ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Need to output HTML
