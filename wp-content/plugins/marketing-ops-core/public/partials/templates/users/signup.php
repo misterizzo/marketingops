@@ -4,7 +4,7 @@
  *
  * This template can be overridden by copying it to yourtheme/marketing-ops-core/users/login.php.
  *
- * @see         https://marketingops.com/
+ * @see         http://mops.local/
  * @author      Adarsh Verma
  * @package     Marketing_Ops_Core
  * @category    Template

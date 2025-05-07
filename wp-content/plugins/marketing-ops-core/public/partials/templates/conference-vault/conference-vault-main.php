@@ -4,7 +4,7 @@
  *
  * This template can be overridden by copying it to activetheme/marketing-ops-core/conference-vault/conference-vault-main.php
  *
- * @see         https://marketingops.com/
+ * @see         http://mops.local/
  * @author      Adarsh Verma
  * @package     Marketing_Ops_Core
  * @category    Template

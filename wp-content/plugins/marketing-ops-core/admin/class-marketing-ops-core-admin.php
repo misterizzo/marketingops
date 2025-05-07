@@ -1586,6 +1586,11 @@ class Marketing_Ops_Core_Admin {
 			$cols['agency_owner'] = __( 'Agency Owner', 'marketingops' );
 		}
 
+		// If the array key doesn't exist for featured agency.
+		if ( ! array_key_exists( 'featured_agency', $cols ) ) {
+			$cols['featured_agency'] = '<i class="fa fa-star" aria-hidden="true"></i>';
+		}
+
 		return $cols;
 	}
 
@@ -1598,7 +1603,7 @@ class Marketing_Ops_Core_Admin {
 	 * @since 1.0.0
 	 */
 	public function moc_manage_agency_posts_custom_column_callback( $column_name, $post_id ) {
-		// Print the content for "template file" column name.
+		// Print the content for "agency owner" column name.
 		if ( 'agency_owner' === $column_name ) {
 			$agency_owner = (int) get_field( 'agency_owner', $post_id );
 
@@ -1613,6 +1618,11 @@ class Marketing_Ops_Core_Admin {
 			} else {
 				echo wp_kses_post( sprintf( __( '%1$sNo agency owner added.%2$s', 'marketingops' ), '<p>', '</p>' ) );
 			}
+		}
+
+		// Print the content for "featured agency" column name.
+		if ( 'featured_agency' === $column_name ) {
+			echo '<i class="fa fa-star" aria-hidden="true"></i>';
 		}
 	}
 }

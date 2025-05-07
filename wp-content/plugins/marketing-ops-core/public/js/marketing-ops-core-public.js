@@ -2104,16 +2104,16 @@ jQuery( document ).ready( function( $ ) {
 	});
 
 	// jQuery For Open Popup
-	$(document).on('click', '.moc_host_a_workshop_btn', function(evt) {
-		evt.preventDefault();
-		moc_open_popup($('.moc_host_workshop'));
-		$('#moc_host_workshop_subject').text('');
-		$('#moc_host_workshop_description').text('');
-		$('.moc_error span').text('');
-		$('#moc_host_workshop_subject').css('border', '1px solid #E7EFEF');
-		$('#moc_host_workshop_description').css('border', '1px solid #E7EFEF');
-
-	});
+	// This code has been commented to work on the task: https://app.clickup.com/t/868dv7wgt
+	// $( document ).on( 'click', '.moc_host_a_workshop_btn', function( evt ) {
+	// 	evt.preventDefault();
+	// 	moc_open_popup( $( '.moc_host_workshop' ) );
+	// 	$( '#moc_host_workshop_subject' ).text('');
+	// 	$( '#moc_host_workshop_description' ).text('');
+	// 	$( '.moc_error span' ).text( '' );
+	// 	$( '#moc_host_workshop_subject' ).css( 'border', '1px solid #E7EFEF' );
+	// 	$( '#moc_host_workshop_description' ).css( 'border', '1px solid #E7EFEF' );
+	// } );
 
 	// jQuery For close	 Popup
 	$(document).on('click', '.moc_profile_popup .popup_close', function() {

@@ -3419,7 +3419,7 @@ if ( ! function_exists( 'moc_host_a_workshop_html' ) ) {
 				</div>
 				<p><?php echo wp_kses_post( $workshop_desc ); ?></p>
 				<div class="text_box_btn">
-					<a href="javascript:void(0)" class="btn moc_host_a_workshop_btn">
+					<a href="https://forms.clickup.com/42117651/f/185agk-10251/Y6O5GAMD8FZXUJAXTJ" target="_blank" class="btn moc_host_a_workshop_btn">
 						<span class="text"><?php echo wp_kses_post( $workshop_btn_txt ); ?></span>
 						<span class="svg">
 							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="11" viewBox="0 0 20 11" fill="#fff">
