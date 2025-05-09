@@ -1,24 +1,59 @@
-(function ($) {
-  
-  	// Localized variables.
+jQuery( document ).ready( function ( $ ) {
+	// Localized variables.
 	var ajaxurl = Moc_Admin_JS_Obj.ajaxurl;
-  	// Add this for making job location field required.
-  	if (0 < $('#_job_location').length) {
-		$('#_job_location').attr("required", "true");
+
+	// Mark agency featured.
+	$( document ).on( 'click', '.featured-agency', function() {
+		var this_element = $( this );
+
+		$.ajax( {
+			dataType: 'json',
+			url: ajaxurl,
+			type: 'POST',
+			data: {
+				action: 'feature_agency',
+				is_featured: ( this_element.find( 'span' ).hasClass( 'dashicons-star-empty' ) ) ? 'yes' : 'no',
+				agency_id: parseInt( this_element.parents( 'tr' ).attr( 'id' ).replace( 'post-', '' ) ),
+			},
+			beforeSend: function() {
+				// Block element.
+				block_element( this_element.parents( 'tr' ) );
+			},
+			success: function ( response ) {
+				if ( 'agency-featured-updated' === response.data.code ) {
+					this_element.find( 'span' ).attr( 'class', response.data.icon_new_class );
+					this_element.siblings( 'p.featured-agency-success-message' ).text( response.data.toast_message );
+
+					setTimeout( function() {
+						this_element.siblings( 'p.featured-agency-success-message' ).text( '' );
+					}, 2000 );
+				}
+				
+			},
+			complete: function() {
+				// Unblock element.
+				unblock_element( this_element.parents( 'tr' ) );
+			},
+		} );
+	} );
+
+	// Add this for making job location field required.
+	if ( 0 < $( '#_job_location' ).length ) {
+		$( '#_job_location' ).attr( 'required', 'required' );
 	}
-	$('.tab').find('.tablinks').click(function (e) {
+	$( '.tab' ).find( '.tablinks' ).click( function ( e ) {
 		e.preventDefault();
-		var data_src = $(this).data('src');
-		$('.tablinks').removeClass('active');
-		$('.tabcontent').removeClass('active');
-		$(this).addClass('active');
-		$('body').find('#' + data_src).addClass('active');
-	});
+		var data_src = $( this ).data( 'src' );
+		$( '.tablinks' ).removeClass( 'active' );
+		$( '.tabcontent' ).removeClass( 'active' );
+		$( this ).addClass( 'active' );
+		$( 'body' ).find( '#' + data_src ).addClass( 'active' );
+	} );
   	// jQuery to change valued on slider range.
 	$( document ).on( 'change', 'input[type="range"]', function() {
-    	var this_element            = $( this );
+		var this_element            = $( this );
 		var closest_skill_level_btn = this_element.closest( 'td' ).find( '.moc_skill_span' );
-    	var range_value             = parseInt( this_element.val() );
+		var range_value             = parseInt( this_element.val() );
 		var text_to_change          = '';
 
 		if ( 1 === range_value ) {
@@ -37,28 +72,19 @@
 	//jQuery to pass ajax to enable disable value of show in frontend.
 	$( document ).on( 'change', 'input[name="moc_show_on_frontend[]"]', function() {
 		var this_element = $( this );
-		var checkbox_val = '';
-		if ( this_element.is(":checked")) {
-			checkbox_val = 'yes';
-		} else {
-			checkbox_val = 'no';
-		}
-		
-		
-		var term_id = this_element.data( 'termid' );
-		var data = {
-			action: 'moc_make_enable_disable_show_in_frontend',
-			checkbox_val: checkbox_val,
-			term_id: term_id,
-		};
-		block_element( $( '.wp-admin table.wp-list-table' ) );
-		// console.log( 'data', data );
-		// return false;
+
 		$.ajax( {
 			dataType: 'json',
 			url: ajaxurl,
 			type: 'POST',
-			data: data,
+			data: {
+				action: 'moc_make_enable_disable_show_in_frontend',
+				checkbox_val: ( this_element.is( ':checked' ) ) ? 'yes' : 'no',
+				term_id: this_element.data( 'termid' ),
+			},
+			beforeSend: function() {
+				block_element( $( '.wp-admin table.wp-list-table' ) );
+			},
 			success: function ( response ) {
 				// Check for invalid ajax request.
 				if ( 0 === response ) {
@@ -75,6 +101,7 @@
 			},
 		} );
 	} );
+
 	$( document ).on( 'click', 'input[name="moc_all_show_on_frontend[]"]', function() {
 		$( 'input[name="moc_show_on_frontend[]"]' ).not(this).prop('checked', this.checked);
 		var checkbox_arr = [];
@@ -144,10 +171,10 @@
 		$('.options_group.pricing, .general_tab').show()
 	}
 	var pricingPane = $( '#woocommerce-product-data' );
-    // productType = $( 'select#product-type' ).val();
+	// productType = $( 'select#product-type' ).val();
 	if( pricingPane.length ) {
 		console.log( "in ", pricingPane.length );
-        pricingPane.find( '.inventory_tab' ).addClass( 'show_if_course' ).end();
+		pricingPane.find( '.inventory_tab' ).addClass( 'show_if_course' ).end();
 		pricingPane.find( '.shipping_tab' ).addClass( 'show_if_simple' ).end();
 		var inventory_product_data = $( '#inventory_product_data' );
 		if( inventory_product_data.length ) {
@@ -236,4 +263,4 @@
 	function unblock_element( element ) {
 		element.removeClass( 'non-clickable' );
 	}
-})(jQuery);
+} );

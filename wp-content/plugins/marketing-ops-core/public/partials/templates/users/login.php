@@ -4,7 +4,7 @@
  *
  * This template can be overridden by copying it to yourtheme/marketing-ops-core/users/login.php.
  *
- * @see         http://mops.local/
+ * @see         https://marketingops.com/
  * @author      Adarsh Verma
  * @package     Marketing_Ops_Core
  * @category    Template
@@ -43,7 +43,7 @@ if ( is_user_logged_in() ) {
 				<div class="elementor-widget-wrap elementor-element-populated">
 					<div class="elementor-element elementor-element-5dd7f05 elementor-widget elementor-widget-image" data-id="5dd7f05" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
-													<img fetchpriority="high" decoding="async" width="455" height="455" src="http://mops.local/wp-content/uploads/2022/04/Asset-1-3.png" class="attachment-large size-large wp-image-165577" alt="Asset 1 3" srcset="http://mops.local/wp-content/uploads/2022/04/Asset-1-3.png 455w, http://mops.local/wp-content/uploads/2022/04/Asset-1-3-300x300.png 300w, http://mops.local/wp-content/uploads/2022/04/Asset-1-3-150x150.png 150w, http://mops.local/wp-content/uploads/2022/04/Asset-1-3-100x100.png 100w" sizes="(max-width: 455px) 100vw, 455px" title="Log In">													</div>
+													<img fetchpriority="high" decoding="async" width="455" height="455" src="https://marketingops.com/wp-content/uploads/2022/04/Asset-1-3.png" class="attachment-large size-large wp-image-165577" alt="Asset 1 3" srcset="https://marketingops.com/wp-content/uploads/2022/04/Asset-1-3.png 455w, https://marketingops.com/wp-content/uploads/2022/04/Asset-1-3-300x300.png 300w, https://marketingops.com/wp-content/uploads/2022/04/Asset-1-3-150x150.png 150w, https://marketingops.com/wp-content/uploads/2022/04/Asset-1-3-100x100.png 100w" sizes="(max-width: 455px) 100vw, 455px" title="Log In">													</div>
 				</div>
 				</div>	
 			</div>	
@@ -81,7 +81,7 @@ if ( is_user_logged_in() ) {
 				<div class="elementor-widget-wrap elementor-element-populated">
 					<div class="elementor-element elementor-element-5dd7f05 elementor-widget elementor-widget-image" data-id="5dd7f05" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
-													<img fetchpriority="high" decoding="async" width="455" height="455" src="http://mops.local/wp-content/uploads/2022/04/Asset-1-3.png" class="attachment-large size-large wp-image-165577" alt="Asset 1 3" srcset="http://mops.local/wp-content/uploads/2022/04/Asset-1-3.png 455w, http://mops.local/wp-content/uploads/2022/04/Asset-1-3-300x300.png 300w, http://mops.local/wp-content/uploads/2022/04/Asset-1-3-150x150.png 150w, http://mops.local/wp-content/uploads/2022/04/Asset-1-3-100x100.png 100w" sizes="(max-width: 455px) 100vw, 455px" title="Log In">													</div>
+													<img fetchpriority="high" decoding="async" width="455" height="455" src="https://marketingops.com/wp-content/uploads/2022/04/Asset-1-3.png" class="attachment-large size-large wp-image-165577" alt="Asset 1 3" srcset="https://marketingops.com/wp-content/uploads/2022/04/Asset-1-3.png 455w, https://marketingops.com/wp-content/uploads/2022/04/Asset-1-3-300x300.png 300w, https://marketingops.com/wp-content/uploads/2022/04/Asset-1-3-150x150.png 150w, https://marketingops.com/wp-content/uploads/2022/04/Asset-1-3-100x100.png 100w" sizes="(max-width: 455px) 100vw, 455px" title="Log In">													</div>
 				</div>
 				</div>	
 			</div>	

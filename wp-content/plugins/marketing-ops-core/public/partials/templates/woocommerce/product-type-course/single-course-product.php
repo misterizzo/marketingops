@@ -516,7 +516,7 @@ section.othermodulerbox button.slick-next.slick-arrow {
 
 <section class="cource_video">
     <div class="cource-inner-container">
-        <video id="video" poster="http://mops.local/wp-content/uploads/2024/03/image-111.png">
+        <video id="video" poster="https://marketingops.com/wp-content/uploads/2024/03/image-111.png">
             <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
         </video>
         <div class="play-button-wrapper">
@@ -566,7 +566,7 @@ section.othermodulerbox button.slick-next.slick-arrow {
             </ul>
         </div>
         <div class="cource-inner-container_right">
-            <img src="http://mops.local/wp-content/uploads/2024/03/image-97.png" alt="img" />
+            <img src="https://marketingops.com/wp-content/uploads/2024/03/image-97.png" alt="img" />
             <div class="cource-lock-img">
                 <svg xmlns="http://www.w3.org/2000/svg" width="124" height="90" viewBox="0 0 124 90" fill="none">
                     <path opacity="0.9" d="M62.3333 16C56.4659 16 51.6667 20.7992 51.6667 26.6667V32H47C43.692 32 41 34.692 41 38V63.3333C41 66.6413 43.692 69.3333 47 69.3333H77.6667C80.9747 69.3333 83.6667 66.6413 83.6667 63.3333V38C83.6667 34.692 80.9747 32 77.6667 32H73V26.6667C73 20.7992 68.2008 16 62.3333 16ZM62.3333 20C66.0392 20 69 22.9608 69 26.6667V32H55.6667V26.6667C55.6667 22.9608 58.6274 20 62.3333 20ZM62.3333 46.6667C64.5427 46.6667 66.3333 48.4573 66.3333 50.6667C66.3333 52.876 64.5427 54.6667 62.3333 54.6667C60.124 54.6667 58.3333 52.876 58.3333 50.6667C58.3333 48.4573 60.124 46.6667 62.3333 46.6667Z" fill="white"/>
@@ -610,7 +610,7 @@ section.othermodulerbox button.slick-next.slick-arrow {
             </ul>
         </div>
         <div class="cource-inner-container_right">
-            <img src="http://mops.local/wp-content/uploads/2024/03/image-98.png" alt="img" />
+            <img src="https://marketingops.com/wp-content/uploads/2024/03/image-98.png" alt="img" />
             <div class="cource-lock-img">
                 <svg xmlns="http://www.w3.org/2000/svg" width="124" height="90" viewBox="0 0 124 90" fill="none">
                     <path opacity="0.9" d="M62.3333 16C56.4659 16 51.6667 20.7992 51.6667 26.6667V32H47C43.692 32 41 34.692 41 38V63.3333C41 66.6413 43.692 69.3333 47 69.3333H77.6667C80.9747 69.3333 83.6667 66.6413 83.6667 63.3333V38C83.6667 34.692 80.9747 32 77.6667 32H73V26.6667C73 20.7992 68.2008 16 62.3333 16ZM62.3333 20C66.0392 20 69 22.9608 69 26.6667V32H55.6667V26.6667C55.6667 22.9608 58.6274 20 62.3333 20ZM62.3333 46.6667C64.5427 46.6667 66.3333 48.4573 66.3333 50.6667C66.3333 52.876 64.5427 54.6667 62.3333 54.6667C60.124 54.6667 58.3333 52.876 58.3333 50.6667C58.3333 48.4573 60.124 46.6667 62.3333 46.6667Z" fill="white"/>
@@ -654,7 +654,7 @@ section.othermodulerbox button.slick-next.slick-arrow {
             </ul>
         </div>
         <div class="cource-inner-container_right">
-            <img src="http://mops.local/wp-content/uploads/2024/03/image-99.png" alt="img" />
+            <img src="https://marketingops.com/wp-content/uploads/2024/03/image-99.png" alt="img" />
             <div class="cource-lock-img">
                 <svg xmlns="http://www.w3.org/2000/svg" width="124" height="90" viewBox="0 0 124 90" fill="none">
                     <path opacity="0.9" d="M62.3333 16C56.4659 16 51.6667 20.7992 51.6667 26.6667V32H47C43.692 32 41 34.692 41 38V63.3333C41 66.6413 43.692 69.3333 47 69.3333H77.6667C80.9747 69.3333 83.6667 66.6413 83.6667 63.3333V38C83.6667 34.692 80.9747 32 77.6667 32H73V26.6667C73 20.7992 68.2008 16 62.3333 16ZM62.3333 20C66.0392 20 69 22.9608 69 26.6667V32H55.6667V26.6667C55.6667 22.9608 58.6274 20 62.3333 20ZM62.3333 46.6667C64.5427 46.6667 66.3333 48.4573 66.3333 50.6667C66.3333 52.876 64.5427 54.6667 62.3333 54.6667C60.124 54.6667 58.3333 52.876 58.3333 50.6667C58.3333 48.4573 60.124 46.6667 62.3333 46.6667Z" fill="white"/>
@@ -698,7 +698,7 @@ section.othermodulerbox button.slick-next.slick-arrow {
             </ul>
         </div>
         <div class="cource-inner-container_right">
-            <img src="http://mops.local/wp-content/uploads/2024/03/image-100.png" alt="img" />
+            <img src="https://marketingops.com/wp-content/uploads/2024/03/image-100.png" alt="img" />
             <div class="cource-lock-img">
                 <svg xmlns="http://www.w3.org/2000/svg" width="124" height="90" viewBox="0 0 124 90" fill="none">
                     <path opacity="0.9" d="M62.3333 16C56.4659 16 51.6667 20.7992 51.6667 26.6667V32H47C43.692 32 41 34.692 41 38V63.3333C41 66.6413 43.692 69.3333 47 69.3333H77.6667C80.9747 69.3333 83.6667 66.6413 83.6667 63.3333V38C83.6667 34.692 80.9747 32 77.6667 32H73V26.6667C73 20.7992 68.2008 16 62.3333 16ZM62.3333 20C66.0392 20 69 22.9608 69 26.6667V32H55.6667V26.6667C55.6667 22.9608 58.6274 20 62.3333 20ZM62.3333 46.6667C64.5427 46.6667 66.3333 48.4573 66.3333 50.6667C66.3333 52.876 64.5427 54.6667 62.3333 54.6667C60.124 54.6667 58.3333 52.876 58.3333 50.6667C58.3333 48.4573 60.124 46.6667 62.3333 46.6667Z" fill="white"/>
@@ -742,7 +742,7 @@ section.othermodulerbox button.slick-next.slick-arrow {
             </ul>
         </div>
         <div class="cource-inner-container_right">
-            <img src="http://mops.local/wp-content/uploads/2024/03/image-101.png" alt="img" />
+            <img src="https://marketingops.com/wp-content/uploads/2024/03/image-101.png" alt="img" />
             <div class="cource-lock-img">
                 <svg xmlns="http://www.w3.org/2000/svg" width="124" height="90" viewBox="0 0 124 90" fill="none">
                     <path opacity="0.9" d="M62.3333 16C56.4659 16 51.6667 20.7992 51.6667 26.6667V32H47C43.692 32 41 34.692 41 38V63.3333C41 66.6413 43.692 69.3333 47 69.3333H77.6667C80.9747 69.3333 83.6667 66.6413 83.6667 63.3333V38C83.6667 34.692 80.9747 32 77.6667 32H73V26.6667C73 20.7992 68.2008 16 62.3333 16ZM62.3333 20C66.0392 20 69 22.9608 69 26.6667V32H55.6667V26.6667C55.6667 22.9608 58.6274 20 62.3333 20ZM62.3333 46.6667C64.5427 46.6667 66.3333 48.4573 66.3333 50.6667C66.3333 52.876 64.5427 54.6667 62.3333 54.6667C60.124 54.6667 58.3333 52.876 58.3333 50.6667C58.3333 48.4573 60.124 46.6667 62.3333 46.6667Z" fill="white"/>
@@ -786,7 +786,7 @@ section.othermodulerbox button.slick-next.slick-arrow {
             </ul>
         </div>
         <div class="cource-inner-container_right">
-            <img src="http://mops.local/wp-content/uploads/2024/03/image-102.png" alt="img" />
+            <img src="https://marketingops.com/wp-content/uploads/2024/03/image-102.png" alt="img" />
             <div class="cource-lock-img">
                 <svg xmlns="http://www.w3.org/2000/svg" width="124" height="90" viewBox="0 0 124 90" fill="none">
                     <path opacity="0.9" d="M62.3333 16C56.4659 16 51.6667 20.7992 51.6667 26.6667V32H47C43.692 32 41 34.692 41 38V63.3333C41 66.6413 43.692 69.3333 47 69.3333H77.6667C80.9747 69.3333 83.6667 66.6413 83.6667 63.3333V38C83.6667 34.692 80.9747 32 77.6667 32H73V26.6667C73 20.7992 68.2008 16 62.3333 16ZM62.3333 20C66.0392 20 69 22.9608 69 26.6667V32H55.6667V26.6667C55.6667 22.9608 58.6274 20 62.3333 20ZM62.3333 46.6667C64.5427 46.6667 66.3333 48.4573 66.3333 50.6667C66.3333 52.876 64.5427 54.6667 62.3333 54.6667C60.124 54.6667 58.3333 52.876 58.3333 50.6667C58.3333 48.4573 60.124 46.6667 62.3333 46.6667Z" fill="white"/>
@@ -847,7 +847,7 @@ section.othermodulerbox button.slick-next.slick-arrow {
             </ul>
         </div>
         <div class="cource-inner-container_right">
-            <img src="http://mops.local/wp-content/uploads/2024/03/image-102.png" alt="img" />
+            <img src="https://marketingops.com/wp-content/uploads/2024/03/image-102.png" alt="img" />
             <div class="cource-lock-img">
                 <svg width="124" height="90" viewBox="0 0 124 90" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g opacity="0.4">
@@ -885,7 +885,7 @@ section.othermodulerbox button.slick-next.slick-arrow {
             </ul>
         </div>
         <div class="cource-inner-container_right">
-            <img src="http://mops.local/wp-content/uploads/2024/03/image-102.png" alt="img" />
+            <img src="https://marketingops.com/wp-content/uploads/2024/03/image-102.png" alt="img" />
             <div class="cource-lock-img">
                 <svg width="124" height="90" viewBox="0 0 124 90" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g opacity="0.4">
@@ -1033,7 +1033,7 @@ section.othermodulerbox button.slick-next.slick-arrow {
 
 <section class="cource_video">
     <div class="cource-inner-container">
-        <video id="video" poster="http://mops.local/wp-content/uploads/2024/03/image-111.png">
+        <video id="video" poster="https://marketingops.com/wp-content/uploads/2024/03/image-111.png">
             <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
         </video>
         <div class="play-button-wrapper">
@@ -1203,7 +1203,7 @@ section.othermodulerbox button.slick-next.slick-arrow {
 
 <section class="cource_video pink">
     <div class="cource-inner-container">
-        <video id="video" poster="http://mops.local/wp-content/uploads/2024/03/image-111.png">
+        <video id="video" poster="https://marketingops.com/wp-content/uploads/2024/03/image-111.png">
             <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
         </video>
         <div class="play-button-wrapper">

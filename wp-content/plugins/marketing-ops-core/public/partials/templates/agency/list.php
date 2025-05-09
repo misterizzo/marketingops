@@ -4,7 +4,7 @@
  *
  * This template can be overridden by copying it to yourtheme/marketing-ops-core/agency/list.php
  *
- * @see         http://mops.local/
+ * @see         https://marketingops.com/
  * @author      Adarsh Verma
  * @package     Marketing_Ops_Core
  * @category    Template
@@ -18,6 +18,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header();
 
 global $post, $current_user, $wpdb;
+
+// Fetch the featured agencies, first.
+$featured_agency_query = new WP_Query(
+	array(
+		'post_type'      => 'agency',
+		'post_status'    => 'publish',
+		'posts_per_page' => -1,
+		'fields'         => 'ids',
+		'order'          => 'ASC',
+		'orderby'        => 'date',
+		'meta_query'     => array(
+			array(
+				'key'     => 'is_featured',
+				'value'   => 'yes',
+				'compare' => '=',
+			),
+		),
+	)
+);
+$featured_agencies = ( ! empty( $featured_agency_query->posts ) && is_array( $featured_agency_query->posts ) ) ? $featured_agency_query->posts : array();
 
 // Fetch the agencies.
 $paid_agency_members_query = new WP_Query(
@@ -126,6 +146,26 @@ $agency_services          = get_terms( // Get the agency services.
 			<div class="agency-mainlistboxs">
 				<ul class="innermainlistboxs">
 					<?php
+					// Loop through the featured agencies members.
+					foreach ( $featured_agencies as $featured_agency_id ) {
+						$agency_member = get_posts(
+							array(
+								'post_type'      => 'wc_user_membership',
+								'post_author'    => $featured_agency_id,
+								'post_status'    => 'wcm-active',
+								'posts_per_page' => 1,
+							)
+						);
+
+						// If the agency member (agency owner) is not found, skip.
+						if ( ! isset( $agency_member[0] ) || ! is_a( $agency_member[0], 'WP_Post' ) ) {
+							continue;
+						}
+
+						// Print the agency list item.
+						echo mops_agency_list_item( $featured_agency_id, $agency_member, 'paid' );
+					}
+
 					// Loop through the paid agencies members.
 					foreach ( $paid_agency_members as $agency_member ) {
 						// Get the agency ID.
@@ -133,6 +173,13 @@ $agency_services          = get_terms( // Get the agency services.
 
 						// Skip, if the agency ID is not found.
 						if ( empty( $agency_id['post_id'] ) ) {
+							continue;
+						}
+
+						// Skip, if the agency ID is featured.
+						$is_featured = $wpdb->get_row( "SELECT `meta_value` FROM `{$wpdb->postmeta}` WHERE `post_id` = {$agency_id['post_id']} AND `meta_key` = 'is_featured'", ARRAY_A );
+
+						if ( ! empty( $is_featured['meta_value'] ) && 'yes' === $is_featured['meta_value'] ) {
 							continue;
 						}
 
@@ -150,6 +197,13 @@ $agency_services          = get_terms( // Get the agency services.
 
 						// Skip, if the agency ID is not found.
 						if ( empty( $agency_id['post_id'] ) ) {
+							continue;
+						}
+
+						// Skip, if the agency ID is featured.
+						$is_featured = $wpdb->get_row( "SELECT `meta_value` FROM `{$wpdb->postmeta}` WHERE `post_id` = {$agency_id['post_id']} AND `meta_key` = 'is_featured'", ARRAY_A );
+
+						if ( ! empty( $is_featured['meta_value'] ) && 'yes' === $is_featured['meta_value'] ) {
 							continue;
 						}
 

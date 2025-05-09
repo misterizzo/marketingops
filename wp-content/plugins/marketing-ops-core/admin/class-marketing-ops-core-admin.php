@@ -1128,6 +1128,8 @@ class Marketing_Ops_Core_Admin {
 		if ( 'sfwd-courses' === $post->post_type ) {
 			// Remove the "Clone" action.
 			unset( $actions['learndash_cloning_action_course'] );
+		} elseif ( 'agency' === $post->post_type ) {
+			$actions['post_ID'] = 'ID: ' . $post->ID;
 		}
 
 		return $actions;
@@ -1588,7 +1590,7 @@ class Marketing_Ops_Core_Admin {
 
 		// If the array key doesn't exist for featured agency.
 		if ( ! array_key_exists( 'featured_agency', $cols ) ) {
-			$cols['featured_agency'] = '<i class="fa fa-star" aria-hidden="true"></i>';
+			$cols['featured_agency'] = '<span class="dashicons dashicons-star-filled"></span>';
 		}
 
 		return $cols;
@@ -1622,7 +1624,46 @@ class Marketing_Ops_Core_Admin {
 
 		// Print the content for "featured agency" column name.
 		if ( 'featured_agency' === $column_name ) {
-			echo '<i class="fa fa-star" aria-hidden="true"></i>';
+			$is_featured = get_post_meta( $post_id, 'is_featured', true );
+			$icon_class  = ( 'yes' === $is_featured ) ? 'dashicons dashicons-star-filled' : 'dashicons dashicons-star-empty';
+			echo '<a href="javascript:void(0);" class="featured-agency unfeatured"><span class="' . $icon_class . '"></span></a><p class="featured-agency-success-message"></p>';
 		}
+	}
+
+	/**
+	 * AJAX for toggling featured agency.
+	 *
+	 * @since 1.0.0
+	 */
+	public function moc_feature_agency_callback() {
+		$agency_id   = filter_input( INPUT_POST, 'agency_id', FILTER_SANITIZE_NUMBER_INT );
+		$is_featured = filter_input( INPUT_POST, 'is_featured', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+
+		// If the agency ID is unavailable.
+		if ( empty( $agency_id ) ) {
+			wp_send_json_error(
+				array(
+					'code'          => 'agency-id-not-found',
+					'toast_message' => __( 'Agency ID not found.', 'marketingops' ),
+				)
+			);
+			wp_die();
+		}
+
+		if ( 'yes' === $is_featured ) {
+			update_post_meta( $agency_id, 'is_featured', 'yes' ); // Update the post meta.
+		} else {
+			update_post_meta( $agency_id, 'is_featured', 'no' ); // Update the post meta.
+		}
+
+		// Send the AJAX response now.
+		wp_send_json_success(
+			array(
+				'code'           => 'agency-featured-updated',
+				'toast_message'  => ( 'yes' === $is_featured ) ? __( 'Agency featured.', 'marketingops' ) : __( 'Agency unfeatured.', 'marketingops' ),
+				'icon_new_class' => ( 'yes' === $is_featured ) ? 'dashicons dashicons-star-filled' : 'dashicons dashicons-star-empty',
+			)
+		);
+		wp_die();
 	}
 }
