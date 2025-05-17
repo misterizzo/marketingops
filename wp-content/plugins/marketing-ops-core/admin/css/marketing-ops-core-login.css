@@ -38,6 +38,9 @@ body.login div#login h1 a {background-image: url('/wp-content/uploads/2022/08/cr
    padding: 13% 0;
 }
 
+
+.login .register_page.login_page.loginformnew{padding:100px 0;}
+
 section.loginformnew .register_page.login_page{ padding: 85px 0px 50px 0px;}    
 
 section.loginformnew form#loginform input#user_login,
