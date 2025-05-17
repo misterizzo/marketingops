@@ -3,8 +3,6 @@ jQuery( document ).ready( function( $ ) {
 
 	var siteurl = MOC_Login_Script.siteurl;
 
-	console.log( 'siteurl', siteurl );
-
 	const $loginDiv        = $( '#login' );
 	const $section         = $( '<section>', {
 		class: 'loginformnew elementor-section elementor-top-section elementor-element elementor-element-44abb172 register_page login_page elementor-section-boxed elementor-section-height-default elementor-section-height-default'
@@ -17,7 +15,7 @@ jQuery( document ).ready( function( $ ) {
 			<div class="elementor-widget-wrap elementor-element-populated">
 				<div class="elementor-element elementor-element-5dd7f05 elementor-widget elementor-widget-image" data-id="5dd7f05" data-element_type="widget" data-widget_type="image.default">
 					<div class="elementor-widget-container">
-						<img fetchpriority="high" decoding="async" width="455" height="455" src="https://marketingops.com/wp-content/uploads/2022/04/Asset-1-3.png" class="attachment-large size-large wp-image-165577" alt="Asset 1 3" srcset="https://marketingops.com/wp-content/uploads/2022/04/Asset-1-3.png 455w, https://marketingops.com/wp-content/uploads/2022/04/Asset-1-3-300x300.png 300w, https://marketingops.com/wp-content/uploads/2022/04/Asset-1-3-150x150.png 150w, https://marketingops.com/wp-content/uploads/2022/04/Asset-1-3-100x100.png 100w" sizes="(max-width: 455px) 100vw, 455px" title="Log In">
+						<img fetchpriority="high" decoding="async" width="455" height="455" src="`+ siteurl +`/wp-content/uploads/2022/04/Asset-1-3.png" class="attachment-large size-large wp-image-165577" alt="Asset 1 3" srcset="`+ siteurl +`/wp-content/uploads/2022/04/Asset-1-3.png 455w, `+ siteurl +`/wp-content/uploads/2022/04/Asset-1-3-300x300.png 300w, `+ siteurl +`/wp-content/uploads/2022/04/Asset-1-3-150x150.png 150w, `+ siteurl +`/wp-content/uploads/2022/04/Asset-1-3-100x100.png 100w" sizes="(max-width: 455px) 100vw, 455px" title="Log In">
 					</div>
 				</div>
 			</div>
