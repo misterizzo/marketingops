@@ -55,3 +55,30 @@ section.loginformnew form#loginform label {margin: 10px 0 15px;color: #6D7B83;fo
 .forgetmenot input:checked[type="checkbox"] {background: linear-gradient(100deg, #FD4B7A 0%, #4D00AE 100%);}
 .forgetmenot input[type="checkbox"]:before {content: '';position: absolute;width: 25px;height: 25px;border-radius: 20px;top: -3px;left: 0;background: #fff;transform: scale(1.1);box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);transition: .5s;margin: 0 0px;}
 .forgetmenot input:checked[type="checkbox"]:before {left: 30px;}
+#login form p.forgetmenot{margin-bottom:0;margin:15px 0;padding:0;}
+.forgetmenot{position:relative;top:50%;left:50%;transform:translate(-50%,-50%);}
+.forgetmenot input[type="checkbox"]{position:relative;width:50px;height:20px;-webkit-appearance:none;background:#c6c6c6;outline:none;border-radius:20px;box-shadow:none;transition:0.7s;margin:0 15px 0 10px;border:none;}
+.forgetmenot input:checked[type="checkbox"]{background:linear-gradient(100deg,#FD4B7A 0%,#4D00AE 100%);}
+.forgetmenot input[type="checkbox"]:before{content:'';position:absolute;width:25px;height:25px;border-radius:20px;top:-3px;left:0;background:#fff;transform:scale(1.1);box-shadow:0 2px 5px rgba(0,0,0,0.2);transition:.5s;margin:0 0px;}
+.forgetmenot input:checked[type="checkbox"]:before{left:30px;  /* top: -3px; */}
+@media (min-width:992px) and (max-width:1199px){
+	.login .register_page.login_page.loginformnew .elementor-container.elementor-column-gap-default{display:flex;padding:0 30px;}
+	.login .loginformnew div#login{max-width:320px;width:100%!important;padding:0!important;}
+	body.login div#login h1 a{background-image:url('/wp-content/uploads/2022/08/cropped-cropped-logo_inst.png');max-width:400px;background-size:contain;background-position:center;width:100%;}
+	body.login img.attachment-large.size-large.wp-image-165577{width:auto;height:auto;max-width:100%;}
+}
+@media (min-width:768px) and (max-width:991px){
+	.login .register_page.login_page.loginformnew .elementor-container.elementor-column-gap-default{display:flex;padding:0 30px;}
+	.login .loginformnew div#login{max-width:320px;width:100%!important;padding:0!important;}
+	body.login div#login h1 a{background-image:url('/wp-content/uploads/2022/08/cropped-cropped-logo_inst.png');max-width:400px;background-size:contain;background-position:center;width:100%;}
+	body.login img.attachment-large.size-large.wp-image-165577{width:auto;height:auto;max-width:100%;}
+}
+@media (max-width:767px){
+	.login .register_page.login_page.loginformnew .elementor-container.elementor-column-gap-default{display:flex;flex-wrap:wrap;}
+	.login .register_page.login_page.loginformnew .elementor-column.elementor-col-50.elementor-top-column.elementor-element{order:1;padding:0 15px;}
+	.elementor-column.elementor-col-50.elementor-top-column.elementor-element.elementor-element-ea2a0bd.register_img{order:2!important;width:100%;}
+	.login .register_page.login_page.loginformnew .elementor-widget-container img{max-width:227px;height:auto;margin:0 auto;display:flex;}
+	#login form p.submit{margin:0 auto 50px;}
+	body.login div#login h1 a{background-image:url('/wp-content/uploads/2022/08/cropped-cropped-logo_inst.png');max-width:400px;width:80%;background-size:contain;background-position:center;}
+	.login .g-recaptcha{transform:scale(0.89);transform-origin:left;margin:0 0 15px;}
+}
