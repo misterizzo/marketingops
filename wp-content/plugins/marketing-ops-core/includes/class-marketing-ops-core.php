@@ -128,6 +128,7 @@ class Marketing_Ops_Core {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'moc_admin_enqueue_scripts_callback' );
 		$this->loader->add_action( 'login_enqueue_scripts', $plugin_admin, 'moc_login_enqueue_scripts_callback' );
+		$this->loader->add_filter( 'login_headerurl', $plugin_admin, 'moc_login_headerurl_callback' );
 		$this->loader->add_action( 'job_manager_job_listing_data_fields', $plugin_admin, 'moc_get_job_custome_meta_fields' );
 		$this->loader->add_action( 'acf/init', $plugin_admin, 'moc_function_run_on_admin_init_callbak' );
 		$this->loader->add_filter( 'job_manager_default_company_logo', $plugin_admin, 'moc_company_placeholder_image_callback' );

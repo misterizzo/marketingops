@@ -114,6 +114,15 @@ class Marketing_Ops_Core_Admin {
 		);
 	}
 
+	/**
+	 * Change the header logo URL.
+	 *
+	 * @since 1.0.0
+	 */
+	public function moc_login_headerurl_callback() {
+
+		return home_url();
+	}
 
 	/**
 	 * Function to return Unset company details from job edit metabox.
