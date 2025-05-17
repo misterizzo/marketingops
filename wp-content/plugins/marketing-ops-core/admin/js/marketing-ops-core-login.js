@@ -1,4 +1,4 @@
-jquery( document ).ready( function( $ ) {
+jQuery( document ).ready( function( $ ) {
 	'use-strict';
 
 	var siteurl = MOC_Login_Script.siteurl;
