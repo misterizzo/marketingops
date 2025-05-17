@@ -112,6 +112,24 @@ class Marketing_Ops_Core_Admin {
 			filemtime( MOC_PLUGIN_PATH . 'admin/css/marketing-ops-core-login.css' ),
 			'all'
 		);
+
+		// Custom login js.
+		wp_enqueue_script(
+			$this->plugin_name . '-moc-wp-login',
+			MOC_PLUGIN_URL . 'admin/js/marketing-ops-core-login.js',
+			array( 'jquery' ),
+			filemtime( MOC_PLUGIN_PATH . 'admin/js/marketing-ops-core-login.js' ),
+			true
+		);
+
+		// Localize the login script.
+		wp_localize_script(
+			$this->plugin_name . '-moc-wp-login',
+			'MOC_Login_Script',
+			array(
+				'siteurl' => site_url(),
+			)
+		);
 	}
 
 	/**
