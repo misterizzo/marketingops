@@ -1,4 +1,4 @@
-body.login div#login h1 a {background-image: url('/wp-content/uploads/2022/08/cropped-cropped-logo_inst.png');width: 200px;background-size: contain;background-position: center;}
+body.login div#login h1 a {background-image: url('/wp-content/uploads/2022/08/cropped-cropped-logo_inst.png');width: 400px;background-size: contain;background-position: center;}
 .login .g-recaptcha {transform: scale(0.89);transform-origin: left;margin: 0 0 15px;}
 
 
@@ -37,6 +37,9 @@ body.login div#login h1 a {background-image: url('/wp-content/uploads/2022/08/cr
     margin-bottom: 0px;
    padding: 13% 0;
 }
+
+
+.login .register_page.login_page.loginformnew{padding:100px 0;}
 
 section.loginformnew .register_page.login_page{ padding: 85px 0px 50px 0px;}    
 
@@ -210,4 +213,54 @@ section.loginformnew form#loginform label {
     border-color:transparent !important;
     box-shadow: none !important;
     outline: none !important;
+}
+
+#login form p.forgetmenot {
+    margin-bottom: 0;
+    margin: 15px 0;
+    padding: 0;
+}
+
+.forgetmenot {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.forgetmenot input[type="checkbox"] {
+    position: relative;
+    width: 50px;
+    height: 20px;
+    -webkit-appearance: none;
+    background: #c6c6c6;
+    outline: none;
+    border-radius: 20px;
+    box-shadow: none;
+    transition: 0.7s;
+    margin: 0 15px 0 10px;
+    border: none;
+}
+
+.forgetmenot input:checked[type="checkbox"] {
+  background: linear-gradient(100deg, #FD4B7A 0%, #4D00AE 100%);
+}
+
+.forgetmenot input[type="checkbox"]:before {
+  content: '';
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border-radius: 20px;
+  top: -3px;
+  left: 0;
+  background: #fff;
+  transform: scale(1.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: .5s;
+  margin: 0 0px;
+}
+
+.forgetmenot input:checked[type="checkbox"]:before {
+  left: 30px;
+  /* top: -3px; */
 }
