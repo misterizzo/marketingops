@@ -3974,8 +3974,6 @@ class Marketing_Ops_Core_Public {
 								<?php
 							}
 
-							var_dump( $member_slug );
-
 							if ( ! empty( $member_slug ) && ( in_array( 'mo-pros-monthly-member', $member_slug, true ) || in_array( 'mo-pros-yearly-member', $member_slug, true ) ) ) { ?>
 								<div class="profile_menu_box_btn moc_community_forum_btn">
 									<div class="profile_pro_btn">

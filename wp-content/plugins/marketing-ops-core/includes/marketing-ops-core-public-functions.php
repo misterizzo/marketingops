@@ -5592,9 +5592,8 @@ if ( ! function_exists( 'moc_script_settings' ) ) {
  */
 if ( ! function_exists( 'moc_get_membership_plan_object' ) ) {
 	function moc_get_membership_plan_object() {
-		$args  = array( 'status' => array( 'active' ));
-		
-		return wc_memberships_get_user_memberships( get_current_user_id(), $args );
+
+		return wc_memberships_get_user_memberships( get_current_user_id(), array( 'status' => array( 'active', 'complimentary' ) ) );
 	}
 }
 
