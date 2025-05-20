@@ -3194,7 +3194,6 @@ class Marketing_Ops_Core_Public {
 					$get_product_permalink = get_the_permalink( $add_to_cart );
 					$redirect_url          = $get_product_permalink;
 				} else {
-					// $redirect_url = site_url() . '/profile-success';
 					$redirect_url = 'https://community.marketingops.com/';
 				}
 
@@ -3224,7 +3223,6 @@ class Marketing_Ops_Core_Public {
 				$get_product_permalink = get_the_permalink( $add_to_cart );
 				$redirect_url          = $get_product_permalink;
 			} else {
-				// $redirect_url = site_url() . '/profile-success';
 				$redirect_url = 'https://community.marketingops.com/';
 			}
 

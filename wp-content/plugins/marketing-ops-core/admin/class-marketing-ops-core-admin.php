@@ -1006,35 +1006,47 @@ class Marketing_Ops_Core_Admin {
 		wp_die();
 	}
 
-	public function moc_wc_membership_plan_data_tabs_callback( $fields ) {
+	/**
+	 * Function to return add new tab in membership plan.
+	 *
+	 * @param array $data_panels This variable holds the data panels.
+	 *
+	 * @return array
+	 *
+	 * @since 1.0.0
+	 */
+	public function moc_wc_membership_plan_data_tabs_callback( $data_panels ) {
 		// If not the index already exists, add it.
-		if ( ! array_key_exists( 'membership_restrict_popup', $fields ) ) {
-			$fields['membership_restrict_popup'] = array(
-				'label'  => __( 'Membership Restriction Modal', 'marketingops' ),
-				'target' => 'membership-restrict-popup-content',
-				'class'  => '',
+		if ( ! array_key_exists( 'restrict_popup_content', $data_panels ) ) {
+			$data_panels['restrict_popup_content'] = array(
+				'label'  => __( 'Restriction Modal', 'marketingops' ),
+				'target' => 'restrict-popup-content',
 			);
 		}
 
 		// If not the index already exists, add it.
-		if ( ! array_key_exists( 'membership_signup_redirect', $fields ) ) {
-			$fields['membership_signup_redirect'] = array(
-				'label'  => __( 'Membership Signup Redirect', 'marketingops' ),
-				'target' => 'membership-signup-redirect-content',
-				'class'  => '',
+		if ( ! array_key_exists( 'signup_redirect', $data_panels ) ) {
+			$data_panels['signup_redirect'] = array(
+				'label'  => __( 'Signup Redirect', 'marketingops' ),
+				'target' => 'signup-redirect-content',
 			);
 		}
 
-		return $fields;
+		return $data_panels;
 	}
 
+	/**
+	 * Function 
+	 *
+	 * @since 1.0.0
+	 */
 	public function moc_wc_membership_plan_data_panels_callback() {
 		global $post;
 
 		// Start preparing the HTML.
 		ob_start();
 		?>
-		<div id="membership-restrict-popup-content" class="panel woocommerce_options_panel">
+		<div id="restrict-popup-content" class="panel woocommerce_options_panel">
 			<div class="options_group">
 				<?php
 				woocommerce_wp_text_input( 
@@ -1087,6 +1099,23 @@ class Marketing_Ops_Core_Admin {
 				?>
 			</div>
 		</div>
+		<div id="signup-redirect-content" class="panel woocommerce_options_panel">
+			<div class="options_group">
+				<?php
+				woocommerce_wp_text_input( 
+					array( 
+						'id'          => 'signup_redirect_url',
+						'name'        => 'signup_redirect_url',
+						'label'       => __( 'Redirect URL', 'marketingops' ),
+						'placeholder' => __( 'https://example.com', 'marketingops' ),
+						'desc_tip'    => 'true',
+						'description' => __( 'The URL where the signing up user should be redirected to after the profile setup is completed. Please enter full URL whether it is native or external.', 'marketingops' ),
+						'value'       => get_post_meta( $post->ID, '_signup_redirect', true ),
+					)
+				);
+				?>
+			</div>
+		</div>
 		<?php
 
 		echo ob_get_clean();
@@ -1100,21 +1129,26 @@ class Marketing_Ops_Core_Admin {
 	 */
 	public function moc_save_data_on_save_callback( $post_id ) {
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return $post_id;
-		
+
 		if ( ! current_user_can( 'edit_post', $post_id ) ) return $post_id;
 
 		$post = get_post( $post_id );
 
-		/* save data only for membership plan custom post type */
+		// Save data only for membership plan custom post type.
 		if ( 'wc_membership_plan' === $post->post_type ) {
-			/* Update custom data to membership plan */
-			update_post_meta( $post_id, 'membership_restrict_popup_title', filter_input( INPUT_POST, 'membership_restrict_popup_title', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
-			update_post_meta( $post_id, 'membership_restrict_popup_description', filter_input( INPUT_POST, 'membership_restrict_popup_description', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
-			update_post_meta( $post_id, 'membership_restrict_popup_btn_title', filter_input( INPUT_POST, 'membership_restrict_popup_btn_title', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
-			update_post_meta( $post_id, 'membership_restrict_popup_btn_link', filter_input( INPUT_POST, 'membership_restrict_popup_btn_link', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
-		}
+			// Update custom data to membership plan.
+			$restrict_popup_title       = filter_input( INPUT_POST, 'membership_restrict_popup_title', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+			$restrict_popup_description = filter_input( INPUT_POST, 'membership_restrict_popup_description', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+			$restrict_popup_btn_title   = filter_input( INPUT_POST, 'membership_restrict_popup_btn_title', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+			$restrict_popup_btn_link    = filter_input( INPUT_POST, 'membership_restrict_popup_btn_link', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+			$signup_redirect_url        = filter_input( INPUT_POST, 'signup_redirect_url', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
-		return $post_id;
+			update_post_meta( $post_id, 'membership_restrict_popup_title', $restrict_popup_title );
+			update_post_meta( $post_id, 'membership_restrict_popup_description', $restrict_popup_description );
+			update_post_meta( $post_id, 'membership_restrict_popup_btn_title', $restrict_popup_btn_title );
+			update_post_meta( $post_id, 'membership_restrict_popup_btn_link', $restrict_popup_btn_link );
+			update_post_meta( $post_id, '_signup_redirect', $signup_redirect_url );
+		}
 	}
 
 	/**

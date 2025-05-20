@@ -158,8 +158,8 @@ class Marketing_Ops_Core {
 		$this->loader->add_filter( 'manage_users_sortable_columns', $plugin_admin, 'moc_manage_users_sortable_columns_callback', 99 );
 		$this->loader->add_action( 'wp_ajax_toggle_user_visiblity', $plugin_admin, 'moc_toggle_user_visiblity_callback' );
 		$this->loader->add_action( 'wp_ajax_toggle_user_conference_vault_access', $plugin_admin, 'moc_toggle_user_conference_vault_access_callback' );
-		// $this->loader->add_filter( 'wc_membership_plan_data_tabs', $plugin_admin, 'moc_wc_membership_plan_data_tabs_callback', 99 );
-		// $this->loader->add_action( 'wc_membership_plan_data_panels', $plugin_admin, 'moc_wc_membership_plan_data_panels_callback' );
+		$this->loader->add_filter( 'wc_membership_plan_data_tabs', $plugin_admin, 'moc_wc_membership_plan_data_tabs_callback', 99 );
+		$this->loader->add_action( 'wc_membership_plan_data_panels', $plugin_admin, 'moc_wc_membership_plan_data_panels_callback' );
 		$this->loader->add_filter( 'learndash_achievements_triggers', $plugin_admin, 'moc_add_more_triggers_in_ld_achivements', 99 );
 		$this->loader->add_action( 'init', $plugin_admin, 'moc_admin_init_callback', 999 );
 		// $this->loader->add_action( 'learndash_course_completed', $plugin_admin, 'moc_learndash_course_completed_callback' );
@@ -276,7 +276,6 @@ class Marketing_Ops_Core {
 		$this->loader->add_action( 'wp_ajax_moc_register_user', $plugin_public, 'moc_register_user_callback' );
 		$this->loader->add_action( 'wp_ajax_nopriv_moc_verify_create_user', $plugin_public, 'moc_verify_create_user_callback' );
 		$this->loader->add_action( 'wp_ajax_moc_verify_create_user', $plugin_public, 'moc_verify_create_user_callback' );
-		$this->loader->add_action( 'wp_ajax_nopriv_moc_profile_setup_process', $plugin_public, 'moc_profile_setup_process_callback' );
 		$this->loader->add_action( 'wp_ajax_moc_profile_setup_process', $plugin_public, 'moc_profile_setup_process_callback' );
 		$this->loader->add_action( 'woocommerce_thankyou', $plugin_public, 'moc_redirect_after_checkout' );
 		$this->loader->add_filter( 'woocommerce_product_tabs', $plugin_public, 'moc_remove_additional_info_tab_callback' );
