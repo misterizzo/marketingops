@@ -26,7 +26,7 @@ if ( is_user_logged_in() ) {
 	$all_user_meta        = get_user_meta( get_current_user_id() );
 	$first_name           = ! empty ( $all_user_meta['first_name'][0] ) ? $all_user_meta['first_name'][0] : '';
 	$lastname             = ! empty( $all_user_meta['last_name'][0] ) ? $all_user_meta['last_name'][0] : '';
-	$location             = ! empty( $all_user_meta['country'][0] ) ? $all_user_meta['country'][0] : $all_user_meta['billing_country'][0];
+	$location             = ! empty( $all_user_meta['country'][0] ) ? $all_user_meta['country'][0] : ( ! empty( $all_user_meta['billing_country'][0] ) ? $all_user_meta['billing_country'][0] : '' );
 	$location            = ! empty( $location ) ? $location : '';
 	$profetional_title    = ! empty( get_user_meta( get_current_user_id(), 'profetional_title', true ) ) ? get_user_meta( get_current_user_id(), 'profetional_title', true ) : '';
 	$wipm                 = ! empty( get_user_meta( get_current_user_id(), 'experience', true ) ) ? get_user_meta( get_current_user_id(), 'experience', true ) : '';
