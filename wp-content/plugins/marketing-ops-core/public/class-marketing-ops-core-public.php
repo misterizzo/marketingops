@@ -3128,7 +3128,6 @@ class Marketing_Ops_Core_Public {
 		WP_Filesystem();
 		$message           = '';
 		$toast_message     = '';
-		$redirect_url      = '';
 		$posted_array      = filter_input_array( INPUT_POST );
 		$first_name        = $posted_array['first_name'];
 		$last_name         = $posted_array['last_name'];
@@ -3140,15 +3139,15 @@ class Marketing_Ops_Core_Public {
 		$previously_img_id = $posted_array['previously_img_id'];
 		$previously_img_id = ! empty( $previously_img_id ) ? $previously_img_id : '';
 		$user_id           = (int) $posted_array['user_id'];
-		$name              = isset( $_FILES['user_avtar']['name'] ) ? $_FILES['user_avtar']['name'] : array();
-		$tmp_names         = isset( $_FILES['user_avtar']['tmp_name'] ) ? $_FILES['user_avtar']['tmp_name'] : array();
-		$image_info        = getimagesize( $tmp_names );
-		$image_width       = $image_info[0];
-		$image_height      = $image_info[1];
 		$add_to_cart       = ! empty( $posted_array['add_to_cart'] ) ? $posted_array['add_to_cart'] : '';
 
 		if ( ! empty( $_FILES ) ) {
 			if ( ( 212 <= $image_width && 212 <= $image_height ) && ( 512 >= $image_width && 512 >= $image_height ) ) {
+				$name             = isset( $_FILES['user_avtar']['name'] ) ? $_FILES['user_avtar']['name'] : array();
+				$tmp_names        = isset( $_FILES['user_avtar']['tmp_name'] ) ? $_FILES['user_avtar']['tmp_name'] : array();
+				$image_info       = getimagesize( $tmp_names );
+				$image_width      = $image_info[0];
+				$image_height     = $image_info[1];
 				$types            = isset( $_FILES['user_avtar']['type'] ) ? $_FILES['user_avtar']['type'] : array();
 				$sizes            = isset( $_FILES['user_avtar']['size'] ) ? $_FILES['user_avtar']['size'] : array();
 				$errors           = isset( $_FILES['user_avtar']['error'] ) ? $_FILES['user_avtar']['error'] : array();
@@ -3193,10 +3192,10 @@ class Marketing_Ops_Core_Public {
 
 				if ( ! empty( $add_to_cart ) ) {
 					$get_product_permalink = get_the_permalink( $add_to_cart );
-					$redirect_url      .= $get_product_permalink;
+					$redirect_url          = $get_product_permalink;
 				} else {
-					// $redirect_url      .= site_url() . '/profile-success';
-					$redirect_url      .= 'https://community.marketingops.com/';
+					// $redirect_url = site_url() . '/profile-success';
+					$redirect_url = 'https://community.marketingops.com/';
 				}
 
 				update_user_meta( $user_id, 'first_name', $first_name );
@@ -3220,13 +3219,15 @@ class Marketing_Ops_Core_Public {
 		} else {
 			$message            = 'marketingops-success-final-steps';
 			$toast_message      = __( 'Profile data updated.', 'marketingops' );
+
 			if ( ! empty( $add_to_cart ) ) {
 				$get_product_permalink = get_the_permalink( $add_to_cart );
-				$redirect_url      .= $get_product_permalink;
+				$redirect_url          = $get_product_permalink;
 			} else {
-				// $redirect_url      .= site_url() . '/profile-success';
-				$redirect_url .= 'https://community.marketingops.com/';
+				// $redirect_url = site_url() . '/profile-success';
+				$redirect_url = 'https://community.marketingops.com/';
 			}
+
 			update_user_meta( $user_id, 'first_name', $first_name );
 			update_user_meta( $user_id, 'last_name', $last_name );
 			update_user_meta( $user_id, 'billing_country', $location );
