@@ -3195,7 +3195,8 @@ class Marketing_Ops_Core_Public {
 					$get_product_permalink = get_the_permalink( $add_to_cart );
 					$redirect_url      .= $get_product_permalink;
 				} else {
-					$redirect_url      .= site_url() . '/profile-success';
+					// $redirect_url      .= site_url() . '/profile-success';
+					$redirect_url      .= 'https://community.marketingops.com/';
 				}
 
 				update_user_meta( $user_id, 'first_name', $first_name );
@@ -3223,7 +3224,8 @@ class Marketing_Ops_Core_Public {
 				$get_product_permalink = get_the_permalink( $add_to_cart );
 				$redirect_url      .= $get_product_permalink;
 			} else {
-				$redirect_url      .= site_url() . '/profile-success';
+				// $redirect_url      .= site_url() . '/profile-success';
+				$redirect_url .= 'https://community.marketingops.com/';
 			}
 			update_user_meta( $user_id, 'first_name', $first_name );
 			update_user_meta( $user_id, 'last_name', $last_name );
