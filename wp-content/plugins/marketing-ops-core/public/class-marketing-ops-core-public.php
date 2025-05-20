@@ -3924,7 +3924,7 @@ class Marketing_Ops_Core_Public {
 					</a>
 					<ul class="menu_hover">
 						<li>
-							<div class="profile_menu_box 1">
+							<div class="profile_menu_box">
 								<div class="profile_menu_icon">
 									<a href="#">
 										<span class="svg">
@@ -3973,6 +3973,8 @@ class Marketing_Ops_Core_Public {
 								</div>
 								<?php
 							}
+
+							var_dump( $member_slug );
 
 							if ( ! empty( $member_slug ) && ( in_array( 'mo-pros-monthly-member', $member_slug, true ) || in_array( 'mo-pros-yearly-member', $member_slug, true ) ) ) { ?>
 								<div class="profile_menu_box_btn moc_community_forum_btn">
@@ -4172,7 +4174,7 @@ class Marketing_Ops_Core_Public {
 															</a>
 															<ul class="menu_hover profile-menu--close">
 																<li>
-																	<div class="profile_menu_box 2">
+																	<div class="profile_menu_box">
 																		<div class="profile_menu_icon">
 																			<a href="#">
 																				<span class="svg">
