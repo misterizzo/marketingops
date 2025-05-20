@@ -1007,11 +1007,23 @@ class Marketing_Ops_Core_Admin {
 	}
 
 	public function moc_wc_membership_plan_data_tabs_callback( $fields ) {
-		$fields['membership_restrict_popup'] = array(
-			'label'  => __( 'Membership restrct popup content', 'marketingops' ),
-			'target' => 'membership-restrict-popup-content',
-			'class'  => '',
-		);
+		// If not the index already exists, add it.
+		if ( ! array_key_exists( 'membership_restrict_popup', $fields ) ) {
+			$fields['membership_restrict_popup'] = array(
+				'label'  => __( 'Membership Restriction Modal', 'marketingops' ),
+				'target' => 'membership-restrict-popup-content',
+				'class'  => '',
+			);
+		}
+
+		// If not the index already exists, add it.
+		if ( ! array_key_exists( 'membership_signup_redirect', $fields ) ) {
+			$fields['membership_signup_redirect'] = array(
+				'label'  => __( 'Membership Signup Redirect', 'marketingops' ),
+				'target' => 'membership-signup-redirect-content',
+				'class'  => '',
+			);
+		}
 
 		return $fields;
 	}
