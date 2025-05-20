@@ -3924,7 +3924,7 @@ class Marketing_Ops_Core_Public {
 					</a>
 					<ul class="menu_hover">
 						<li>
-							<div class="profile_menu_box">
+							<div class="profile_menu_box 1">
 								<div class="profile_menu_icon">
 									<a href="#">
 										<span class="svg">
@@ -4172,7 +4172,7 @@ class Marketing_Ops_Core_Public {
 															</a>
 															<ul class="menu_hover profile-menu--close">
 																<li>
-																	<div class="profile_menu_box">
+																	<div class="profile_menu_box 2">
 																		<div class="profile_menu_icon">
 																			<a href="#">
 																				<span class="svg">
