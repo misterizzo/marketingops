@@ -446,6 +446,7 @@ class Marketing_Ops_Core_Admin {
 				<?php
 				$community_badges = get_field( 'community_badges', 'option' );
 				$user_badges      = get_user_meta( $user->ID, 'moc_community_badges', true );
+				$user_badges      = ( ! empty( $user_badges ) && is_array( $user_badges ) ) ? $user_badges : array();
 				?>
 				<tr>
 					<th><?php esc_html_e( 'Community Badges', 'marketingops' ); ?></th>
