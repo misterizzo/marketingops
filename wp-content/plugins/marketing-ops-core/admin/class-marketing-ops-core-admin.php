@@ -218,9 +218,10 @@ class Marketing_Ops_Core_Admin {
 		$moc_cl_skill_info = ! empty( $user_all_info['moc_cl_skill_info'] ) ? $user_all_info['moc_cl_skill_info'] : array();
 		$moc_martech_info  = ! empty( $user_all_info['moc_martech_info'] ) ? $user_all_info['moc_martech_info'] : array();
 		$all_user_meta     = get_user_meta( $user->ID );
+		$update_value_arr  = array();
 
 		foreach( $moc_certificates as $moc_certificate ) {
-			$update_value_arr[] = ( int )$moc_certificate;
+			$update_value_arr[] = (int) $moc_certificate;
 		}
 		?>
 		<div class="tab">
