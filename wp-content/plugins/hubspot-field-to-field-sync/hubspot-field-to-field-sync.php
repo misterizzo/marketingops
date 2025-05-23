@@ -16,7 +16,7 @@
  * Plugin Name:       HubSpot Field to Field Sync
  * Plugin URI:        https://makewebbetter.com/hubspot-field-to-field-sync
  * Description:       Automatically creates a field to field sync between HubSpot contact properties and WordPress user's fields and updates the data over HubSpot.
- * Version:           1.0.7
+ * Version:           1.0.8
  * Requires at least: 	4.4.0
  * Tested up to: 		6.1.1
  * WC requires at least:	3.0.0
@@ -86,7 +86,7 @@ if ( $hubwoo_ftf_activated ) {
 	*/
 	function hubwoo_ftf_define_constants() {
 
-		hubwoo_ftf_define( 'HUBWOO_FTF_VERSION', '1.0.7' );
+		hubwoo_ftf_define( 'HUBWOO_FTF_VERSION', '1.0.8' );
 		hubwoo_ftf_define( 'HUBWOO_FTF_PLUGINS_PATH', plugin_dir_path( __DIR__ ) );
 		hubwoo_ftf_define( 'HUBWOO_FTF_SPECIAL_SECRET_KEY', '59f32ad2f20102.74284991' );
 		hubwoo_ftf_define( 'HUBWOO_FTF_LICENSE_SERVER_URL', 'https://makewebbetter.com' );
@@ -200,3 +200,11 @@ define( 'HUBWOO_FTF_LICENSE_KEY', $hubwoo_ftf_license_key );
 define( 'HUBWOO_FTF_BASE_FILE', __FILE__ );
 $hubwoo_ftf_update_check = "https://makewebbetter.com/pluginupdates/hubspot-field-to-field-sync/update.php";
 require_once('mwb-hubwoo-ftf-update.php');
+
+
+// Declare support for HPOS features
+add_action( 'before_woocommerce_init', function () {
+	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+	}
+} );

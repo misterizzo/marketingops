@@ -74,7 +74,7 @@ class Hubspot_Field_To_Field_Sync {
 		}
 		else {
 
-			$this->version = '1.0.7';
+			$this->version = '1.0.8';
 		}
 		
 		$this->plugin_name = 'hubspot-field-to-field-sync';

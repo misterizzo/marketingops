@@ -41,7 +41,7 @@ if( !class_exists( 'HubSpotMembershipsConnectionMananager' ) ) {
 	}
 	elseif( in_array( 'hubspot-for-woocommerce/hubspot-for-woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 
-		if( file_exists( HUBWOO_MS_DEAL_PLUGINS_PATH . 'hubspot-for-woocommerce/includes/class-hubwooconnectionmananager' ) ) {
+		if( file_exists( HUBWOO_MS_DEAL_PLUGINS_PATH . 'hubspot-for-woocommerce/includes/class-hubwooconnectionmananager.php' ) ) {
 
 			require_once ( HUBWOO_MS_DEAL_PLUGINS_PATH . 'hubspot-for-woocommerce/includes/class-hubwooconnectionmananager.php' );
 		}

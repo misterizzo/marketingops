@@ -378,7 +378,7 @@ class Hubspot_Field_To_Field_Sync_Admin {
 
 				if ( $prop_type == "enumeration" ) {
 
-					if ( count( $prop_values ) ) {
+					if ( ! empty( $prop_values ) ) {
 						$prop_value = Hubspot_Field_To_Field_Sync_Admin::hubwoo_ftf_format_array( $prop_values );
 					}
 					else {

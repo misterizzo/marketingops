@@ -1,0 +1,20 @@
+{
+    "name" : "HubSpot Deals for WooCommerce Memberships",
+    "slug" : "hubspot-deals-for-woocommerce-memberships",
+    "version" : "1.0.3",
+    "requires" : "4.4",
+    "tested" : "6.2",
+    "last_updated" : "2023-05-02 01:07:08",
+    "upgrade_notice" : "Compatibility with latest Hubspot for WooCommerce",
+    "author" : "MakeWebBetter",
+    "author_homepage" : "https://makewebbetter.com",
+    "sections" : {
+        "description" : "Auto creates a new Deal on HubSpot for every new Membership on your woocommerce store.",
+        "installation" : "<b>Minimum Requirements</b></br><ul><li>WordPress 4.4 or greater</li><li>Woocommerce 3.0.0 or greater</li><li>PHP version 5.2.4 or greater</li><li>MySQL version 5.0 or greater</li></ul></br><b>Automatic installation</b></br><p>Automatic installation is the easiest option as WordPress handles the file transfers itself and you donâ€™t need to leave your web browser. To do an automatic install of Extension, log in to your WordPress dashboard, navigate to the Plugins menu and click Add New.</br>Then click <b>Upload Plugin</b> from the browse button you can choose the hubspot-deals-for-woocommerce-memberships.zip file and press ok, you can install it by simply clicking â€œInstall Nowâ€.</p></br><b>Manual installation</b></br><p>The manual installation method involves downloading our extension and uploading it to your webserver via your favourite FTP application.</p></br></p>",
+        "changelog" : "Changelog <p><strong>New Version 1.0.2</strong><ul><li>Latest HubSpot for WooCommerce Compatibility</li></ul>"
+    },
+    "banners" : {
+		"low" : "https://makewebbetter.com/pluginupdates/hubspot-deals-for-woocommerce-memberships/banner/lower.jpg",
+		"high" : "https://makewebbetter.com/pluginupdates/hubspot-deals-for-woocommerce-memberships/banner/high.jpg"
+    }
+}

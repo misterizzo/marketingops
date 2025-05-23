@@ -74,7 +74,7 @@ class Hubspot_Deals_For_Woocommerce_Memberships {
 		}
 		else {
 
-			$this->version = '1.0.2';
+			$this->version = '1.0.3';
 		}
 
 		$this->plugin_name = 'hubspot-deals-for-woocommerce-memberships';

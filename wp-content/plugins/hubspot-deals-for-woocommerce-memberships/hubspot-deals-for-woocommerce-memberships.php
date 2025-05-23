@@ -16,7 +16,7 @@
  * Plugin Name:       HubSpot Deals for WooCommerce Memberships
  * Plugin URI:        https://makewebbetter.com/products/hubspot-deals-for-woocommerce-memberships
  * Description:       Auto creates a new Deal on HubSpot for every new Membership on your woocommerce store.
- * Version:           1.0.2
+ * Version:           1.0.3
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com
  * License:           MakeWebBetter License
@@ -90,7 +90,7 @@ if ( $membership_deals_activated ) {
 
 		hubwoo_ms_deal_define( 'HUBWOO_MS_DEAL_PLUGINS_PATH', plugin_dir_path( __DIR__ ) );
 
-		hubwoo_ms_deal_define( 'HUBWOO_MS_DEAL_VERSION', '1.0.2' );
+		hubwoo_ms_deal_define( 'HUBWOO_MS_DEAL_VERSION', '1.0.3' );
 
 		hubwoo_ms_deal_define( 'HUBWOO_MS_DEAL_CLIENTID', '769fa3e6-79b1-412d-b69c-6b8242b2c62a' );
 			
