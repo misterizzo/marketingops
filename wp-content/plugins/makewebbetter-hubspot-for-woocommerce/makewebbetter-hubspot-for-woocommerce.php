@@ -15,7 +15,7 @@
  * Plugin Name:          MWB HubSpot for WooCommerce
  * Plugin URI:           https://wordpress.org/plugins/makewebbetter-hubspot-for-woocommerce
  * Description:          Integrate WooCommerce with HubSpot’s free CRM, abandoned cart tracking, email marketing, marketing automation, analytics & more.
- * Version:              1.6.1
+ * Version:              6.0.0
  * Requires at least:    4.4.0
  * Tested up to:         6.7.2
  * WC requires at least: 3.5.0
