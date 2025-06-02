@@ -4936,7 +4936,7 @@ if ( ! function_exists( 'moc_no_bs_demo_coupons_lists_loop_html' ) ) {
 			$description                  = strip_tags( $content );
 			$post_image_id                = get_post_thumbnail_id( $no_bs_demo );
 			$post_image_array             = ! empty( $post_image_id ) ? wp_get_attachment_image_src( $post_image_id, 'single-post-thumbnail' ) : array();
-			$post_image_url               = ! empty( $post_image_array ) ? $post_image_array[0] : array( get_field( 'moc_workshop_default_image', 'option' ) );
+			$post_image_url               = ! empty( $post_image_array[0] ) ? $post_image_array[0] : array( get_field( 'moc_workshop_default_image', 'option' ) );
 			$approved_text                = sprintf( __( 'approved by: %1$s 122 %2$s ', 'marketingops' ), '<b>','</b>' );
 			$approved_text                = '';
 			$assign_coupons_to_demo_query = moc_posts_by_meta_key_value( 'no_bs_demo', 1, -1, 'select_coupon_code', $no_bs_demo, '=' );
