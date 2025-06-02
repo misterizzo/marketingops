@@ -4943,9 +4943,6 @@ if ( ! function_exists( 'moc_no_bs_demo_coupons_lists_loop_html' ) ) {
 			$assign_coupons_to_demo       = $assign_coupons_to_demo_query->posts;
 			$coupon_link                  = get_field( 'coupon_offer_link', $no_bs_demo );
 			$rule_args                    = moc_restricted_rules_based_argument( $no_bs_demo );
-
-			var_dump( $post_image_url );
-
 			?>
 			<div class="box_content moc_loop_no_bs_demo_coupon">
 				<div class="blog_popup non-active no_bs_demo_popup">
@@ -4961,7 +4958,7 @@ if ( ! function_exists( 'moc_no_bs_demo_coupons_lists_loop_html' ) ) {
 				<div class="content_container">
 					<!-- img box -->
 					<div class="img_box">
-						<img src="<?php echo esc_url( $post_image_url ); ?>" alt="img_1." />
+						<img src="<?php echo $post_image_url; ?>" alt="img_1." />
 					</div>
 					<!-- content box -->
 					<div class="bs_content">
