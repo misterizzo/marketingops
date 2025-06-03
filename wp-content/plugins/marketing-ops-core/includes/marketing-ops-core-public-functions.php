@@ -9809,7 +9809,7 @@ if ( ! function_exists( 'mops_agency_list_item' ) ) {
 				<!-- show the overlay if the current user is not agency member -->
 				<div class="overlayonhover" style="visibility: visible;opacity: 1;">
 					<h2><?php esc_html_e( 'Apply for an agency profile at no charge.', 'marketingops' ); ?></h2>
-					<p><?php esc_html_e( 'Share your story with the MarketingOPS community:', 'marketingops' ); ?></p>
+					<p><?php echo sprintf( wp_kses_post( __( 'Share your story with the %1$sMarketingOps.com%2$s community:', 'marketingops' ) ), '<a href="' . home_url() . '">', '</a>' ); ?></p>
 					<a href="/subscribe/agency/" class="apllyfreebtns"><?php esc_html_e( 'Apply for free', 'marketingops' ); ?> <i><svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none"><g clip-path="url(#clip0_63_608)"><path d="M11.0262 2.99457C10.7892 2.98546 10.5693 3.12103 10.4725 3.3375C10.3745 3.55396 10.4167 3.80688 10.5807 3.98005L12.3728 5.91682H1.09283C0.882065 5.9134 0.687248 6.02391 0.581296 6.20619C0.474204 6.38734 0.474204 6.61292 0.581296 6.79406C0.687248 6.97634 0.882065 7.08685 1.09283 7.08344H12.3728L10.5807 9.02021C10.4349 9.17287 10.3836 9.39161 10.4452 9.59326C10.5067 9.79492 10.6719 9.94758 10.8769 9.99315C11.0831 10.0387 11.2973 9.96922 11.4375 9.81314L14.501 6.50013L11.4375 3.18711C11.3326 3.0709 11.1834 3.00027 11.0262 2.99457Z" fill="#911D9B"/></g><defs><clipPath id="clip0_63_608"><rect width="15" height="10" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg></i></a>
 				</div>
 			</li>
