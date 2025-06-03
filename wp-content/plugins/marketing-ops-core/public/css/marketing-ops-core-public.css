@@ -8715,16 +8715,8 @@ section.profile_setup .content_boxed label:after {
 	visibility: hidden;
 }
 
-/*.agency-mainlistboxs ul.innermainlistboxs>li:hover .overlayonhover {
-	opacity: 1;
-	visibility: visible;
-}*/
-
-
-.agency-mainlistboxs ul.innermainlistboxs>li:hover .inneragencylistbox .learnmorebtnagency {
-	background: var(--horizontal-grad-1,linear-gradient(90deg,#FD4B7A -2.36%,#4D00AE 159.05%));
-	color: #fff;
-}
+.overlayonhover a {color: #fff;text-decoration: underline;}
+.agency-mainlistboxs ul.innermainlistboxs>li:hover .inneragencylistbox .learnmorebtnagency {background: var(--horizontal-grad-1,linear-gradient(90deg,#FD4B7A -2.36%,#4D00AE 159.05%));color: #fff;}
 
 .agency-mainlistboxs ul.innermainlistboxs>li:hover .inneragencylistbox .learnmorebtnagency svg path {
 	fill: #fff;
