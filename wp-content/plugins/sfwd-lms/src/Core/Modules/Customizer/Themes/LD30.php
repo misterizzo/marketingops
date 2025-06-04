@@ -37,14 +37,26 @@ class LD30 extends Theme {
 	 * @return void
 	 */
 	public function __construct() {
+		$colors = wp_parse_args(
+			array_filter(
+				[
+					'primary'   => sanitize_hex_color( LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Theme_LD30', 'color_primary' ) ),
+					'secondary' => sanitize_hex_color( LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Theme_LD30', 'color_secondary' ) ),
+					'tertiary'  => sanitize_hex_color( LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Theme_LD30', 'color_tertiary' ) ),
+				]
+			),
+			// If the values are empty or invalid, we want to keep them in this case.
+			[
+				'primary'   => sanitize_hex_color( constant( 'LD_30_COLOR_PRIMARY' ) ),
+				'secondary' => sanitize_hex_color( constant( 'LD_30_COLOR_SECONDARY' ) ),
+				'tertiary'  => sanitize_hex_color( constant( 'LD_30_COLOR_TERTIARY' ) ),
+			]
+		);
+
 		/** This filter is documented in themes/ld30/includes/helpers.php */
 		$this->colors = apply_filters(
 			'learndash_30_custom_colors',
-			array(
-				'primary'   => LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Theme_LD30', 'color_primary' ),
-				'secondary' => LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Theme_LD30', 'color_secondary' ),
-				'tertiary'  => LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Theme_LD30', 'color_tertiary' ),
-			)
+			$colors
 		);
 	}
 

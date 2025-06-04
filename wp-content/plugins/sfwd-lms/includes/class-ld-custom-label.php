@@ -196,7 +196,7 @@ class LearnDash_Custom_Label {
 					break;
 
 				case 'button_click_here_to_continue':
-					$label = esc_html__( 'Click Here to Continue', 'learndash' );
+					$label = esc_html__( 'Continue', 'learndash' );
 					break;
 
 				case 'terms_of_service':

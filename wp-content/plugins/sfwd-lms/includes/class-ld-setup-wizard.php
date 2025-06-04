@@ -7,6 +7,8 @@
  */
 
 use LearnDash\Core\Modules\Payments\Gateways\Stripe\Connection_Handler;
+use LearnDash\Core\Utilities\Cast;
+use LearnDash\Core\Utilities\Location;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -29,7 +31,6 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 		const DATA_KEY = 'learndash_setup_wizard';
 
 		const CERTIFICATE_BUILDER_SLUG   = 'learndash-certificate-builder/learndash-certificate-builder.php';
-		const COURSE_GRID_SLUG           = 'learndash-course-grid/learndash_course_grid.php';
 		const WOOCOMMERCE_SLUG           = 'woocommerce/woocommerce.php';
 		const LEARNDASH_WOOCOMMERCE_SLUG = 'learndash-woocommerce/learndash_woocommerce.php';
 
@@ -40,6 +41,15 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 
 		const ADMIN_REDIRECT_PAGE       = 'admin.php?page=learndash-setup';
 		const FINAL_ADMIN_REDIRECT_PAGE = 'admin.php?page=learndash-setup';
+
+		/**
+		 * The option key for the StellarSites integration.
+		 *
+		 * @since 4.21.5
+		 *
+		 * @var string
+		 */
+		private const LEARNDASH_SETUP_WIZARD_STELLARSITES = 'learndash_setup_wizard_stellarsites_triggered';
 
 		/**
 		 * The single instance of the class.
@@ -58,6 +68,70 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 			add_action( 'wp_ajax_learndash_setup_wizard_save_data', array( $this, 'save_data' ) );
 			add_action( 'wp_ajax_learndash_finalize', array( $this, 'finalize_setup' ) );
 			add_action( 'admin_post_stripe_connect_wizard_process', array( $this, 'enable_stripe_connect_and_redirect' ) );
+			add_action( 'current_screen', [ $this, 'redirect_after_stellar_sites_plugin_activation' ] );
+		}
+
+		/**
+		 * Check if this is a LearnDash submenu item click and handle wizard redirect if StellarSites MU plugin is active.
+		 *
+		 * @since 4.21.5
+		 *
+		 * @return void
+		 */
+		public function redirect_after_stellar_sites_plugin_activation( WP_Screen $screen ): void {
+			if ( ! Location::is_learndash_admin_page() ) {
+				return;
+			}
+
+			// Check if the StellarSites MU plugin is active.
+			if ( ! class_exists( '\StellarWP\StellarSites\Plugin' ) ) {
+				return;
+			}
+
+			// Check if the wizard has already been triggered.
+			$wizard_triggered = get_option( self::LEARNDASH_SETUP_WIZARD_STELLARSITES, false );
+
+			if ( $wizard_triggered ) {
+				return;
+			}
+
+			// Get wizard status.
+			$wizard_status = get_option( self::STATUS_KEY );
+
+			// Only redirect if the wizard hasn't been completed or dismissed.
+			if (
+				$wizard_status !== self::STATUS_COMPLETED
+				&& $wizard_status !== self::STATUS_CLOSED
+			) {
+				// Mark the wizard as triggered to prevent future redirects.
+				update_option( self::LEARNDASH_SETUP_WIZARD_STELLARSITES, true );
+
+				// Redirect to wizard.
+				learndash_safe_redirect( admin_url( 'admin.php?page=' . self::HANDLE ) );
+			}
+		}
+
+		/**
+		 * Retrieves the wizard status.
+		 *
+		 * @since 4.21.5
+		 *
+		 * @return string The value of the wizard status from the options.
+		 */
+		public static function get_status(): string {
+			/**
+			 * Filters the status of the setup wizard.
+			 *
+			 * @since 4.21.5
+			 *
+			 * @param string $status The value of the wizard status from the options.
+			 */
+			return apply_filters(
+				'learndash_setup_wizard_status',
+				Cast::to_string(
+					get_option( self::STATUS_KEY )
+				)
+			);
 		}
 
 		/**
@@ -199,14 +273,6 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 					// Create course listing page.
 					if ( 'multiple' === $data['courses_amount'] ) {
 						$this->create_courses_listing_page();
-					}
-
-					// install course grid plugin.
-					if ( 'true' === $data['course_grid'] ) {
-						$ret = $this->maybe_install_a_plugin( self::COURSE_GRID_SLUG );
-						if ( true === $ret ) {
-							activate_plugin( self::COURSE_GRID_SLUG );
-						}
 					}
 					break;
 				case 'process_certificate_builder':
@@ -639,7 +705,6 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 						],
 						'plugins'        => array(
 							'certificate_builder' => is_plugin_active( self::CERTIFICATE_BUILDER_SLUG ),
-							'course_grid'         => is_plugin_active( self::COURSE_GRID_SLUG ),
 							'woocommerce'         => is_plugin_active( self::WOOCOMMERCE_SLUG ),
 						),
 						'currency_codes' => array(
@@ -695,15 +760,26 @@ if ( ! class_exists( 'LearnDash_Setup_Wizard' ) ) {
 		protected function should_display(): bool {
 			$should_display = false;
 
-			$wizard_status = get_option( self::STATUS_KEY );
+			$wizard_status = self::get_status();
 			// The wizard is in progress, but closed by an accident or something like that.
 			if ( self::STATUS_ONGOING === $wizard_status ) {
 				$should_display = true;
 			}
 
+			// No license key/email.
 			if (
-			empty( get_option( self::LICENSE_KEY ) ) ||
-			empty( get_option( self::LICENSE_EMAIL_KEY ) )
+				empty( get_option( self::LICENSE_KEY ) )
+				|| empty( get_option( self::LICENSE_EMAIL_KEY ) )
+			) {
+				$should_display = true;
+			}
+
+			// Add StellarSites MU plugin integration check.
+			if (
+				class_exists( '\StellarWP\StellarSites\Plugin' )
+				&& ! get_option( self::LEARNDASH_SETUP_WIZARD_STELLARSITES, false )
+				&& $wizard_status !== self::STATUS_COMPLETED
+				&& $wizard_status !== self::STATUS_CLOSED
 			) {
 				$should_display = true;
 			}

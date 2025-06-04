@@ -10,7 +10,7 @@
  * @var int    $question_count Number of Question to display.
  *
  * @since 3.2.0
- * @version 4.21.3
+ * @version 4.21.1
  *
  * @package LearnDash\Templates\Legacy\Quiz
  */
@@ -18,8 +18,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-use LearnDash\Core\Template\Template;
 
 // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- we are inside of a template
 $global_points = 0;
@@ -230,27 +228,9 @@ $cat_points    = array();
 					/**
 					 * Print questions in a list for all other answer types
 					 */
-
-					$question_list_classes = [
-						'wpProQuiz_questionList',
-					];
-
-					if ( $question->getAnswerType() === 'sort_answer' ) {
-						$question_list_classes = array_merge(
-							$question_list_classes,
-							[
-								'ld-sortable',
-								'ld-sortable--sort_answer'
-							]
-						);
-					}
-
 					?>
-					<div
-						class="<?php echo esc_attr( implode( ' ', $question_list_classes ) ); ?>"
-						data-question_id="<?php echo esc_attr( $question->getId() ); ?>"
-						data-type="<?php echo esc_attr( $question->getAnswerType() ); ?>"
-					>
+					<div class="wpProQuiz_questionList" data-question_id="<?php echo esc_attr( $question->getId() ); ?>"
+						data-type="<?php echo esc_attr( $question->getAnswerType() ); ?>">
 						<?php
 						if ( $question->getAnswerType() === 'sort_answer' ) {
 							$answer_array_new = array();
@@ -309,27 +289,9 @@ $cat_points    = array();
 								if ( $question->getAnswerType() === 'sort_answer' || $question->getAnswerType() === 'matrix_sort_answer' ) {
 									$datapos = $v_idx; // LD_QuizPro::datapos( $question->getId(), $answer_index );
 								}
-
-								$question_list_item_classes = [
-									'wpProQuiz_questionListItem',
-								];
-
-								if ( $question->getAnswerType() === 'sort_answer' ) {
-									$question_list_item_classes = array_merge(
-										$question_list_item_classes,
-										[
-											'ld-sortable__item',
-											'ld-sortable__item--sort_answer'
-										]
-									);
-								}
-
 								?>
 
-								<div
-									class="<?php echo esc_attr( implode( ' ', $question_list_item_classes ) ); ?>"
-									data-pos="<?php echo esc_attr( $datapos ); ?>"
-								>
+								<div class="wpProQuiz_questionListItem" data-pos="<?php echo esc_attr( $datapos ); ?>">
 									<?php
 									/**
 									 *  Single/Multiple
@@ -352,76 +314,8 @@ $cat_points    = array();
 									} elseif ( $question->getAnswerType() === 'sort_answer' ) {
 										$json[ $question->getId() ]['correct'][] = (int) $answer_index;
 										?>
-										<button
-											class="wpProQuiz_sortable ld-sortable__item-handle"
-											id="ld-sortable__item-handle--<?php echo esc_attr( $question->getId() ); ?>-<?php echo esc_attr( $answer_index ); ?>"
-										>
-											<?php
-											Template::show_template(
-												'components/icons/drag',
-												[
-													'is_aria_hidden' => true,
-												]
-											);
-											?>
-											<div class="sr-only sr-only-reorder">
-												<?php esc_html_e( 'Reorder', 'learndash' ); ?>
-											</div>
-
-											<div
-												class="ld-sortable__item-text"
-												id="ld-sortable__item-text--<?php echo esc_attr( $question->getId() ); ?>-<?php echo esc_attr( $answer_index ); ?>"
-											>
-												<?php echo $answer_text; ?>
-											</div>
-										</button>
-
-										<div class="ld-sortable__item-move-container">
-											<button class="ld-sortable__item-move ld-sortable__item-move--down">
-												<?php
-												Template::show_template(
-													'components/icons/caret-down',
-													[
-														'is_aria_hidden' => true,
-													]
-												);
-												?>
-
-												<div class="sr-only sr-only-move">
-													<?php
-													echo esc_html(
-														sprintf(
-															// translators: placeholder: answer text.
-															__( 'Move "%s" down', 'learndash' ),
-															$answer_text
-														)
-													);
-													?>
-												</div>
-											</button>
-
-											<button class="ld-sortable__item-move ld-sortable__item-move--up">
-												<?php
-												Template::show_template(
-													'components/icons/caret-up',
-													[
-														'is_aria_hidden' => true,
-													]
-												);
-												?>
-
-												<div class="sr-only sr-only-move">
-													<?php
-													echo esc_html(
-														sprintf(
-															// translators: placeholder: answer text.
-															__( 'Move "%s" up', 'learndash' ),
-															$answer_text
-														)
-													);
-													?>
-												</div>
-											</button>
+										<div class="wpProQuiz_sortable">
+											<?php echo $answer_text; ?>
 										</div>
 
 										<?php

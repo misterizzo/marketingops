@@ -6,7 +6,7 @@
  * WIP
  *
  * @since 3.0.0
- * @version 4.21.3
+ * @version 4.21.4
  *
  * @package LearnDash\Templates\LD30
  */
@@ -365,6 +365,10 @@ endif; ?>
 				>
 					<span class="ld-icon-arrow-down ld-icon ld-primary-background"></span>
 					<span class="ld-text ld-primary-color"><?php esc_html_e( 'Expand', 'learndash' ); ?></span>
+
+					<span class="screen-reader-text">
+						<?php echo esc_html( get_the_title( $lesson['post']->ID ) ); ?>
+					</span>
 				</button> <!--/.ld-expand-button-->
 
 				<?php

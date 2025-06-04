@@ -73,5 +73,14 @@ class Provider extends ServiceProvider {
 				'enqueue_assets'
 			)
 		);
+
+		add_filter(
+			'learndash_admin_tab_sets',
+			$this->container->callback(
+				Admin::class,
+				'maybe_hide_license_tab'
+			),
+			20
+		);
 	}
 }

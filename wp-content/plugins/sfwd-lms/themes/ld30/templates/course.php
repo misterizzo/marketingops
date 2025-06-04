@@ -26,7 +26,7 @@
  * $lesson_topics               : (array) lessons topics
  *
  * @since 3.0.0
- * @version 4.20.2
+ * @version 4.21.4
  *
  * @package LearnDash\Templates\LD30
  */
@@ -260,6 +260,10 @@ $has_lesson_quizzes = learndash_30_has_lesson_quizzes( $course_id, $lessons ); ?
 							>
 								<span class="ld-icon-arrow-down ld-icon"></span>
 								<span class="ld-text"><?php echo esc_html_e( 'Expand All', 'learndash' ); ?></span>
+
+								<span class="screen-reader-text">
+									<?php echo esc_html( learndash_get_custom_label( 'lessons' ) ); ?>
+								</span>
 							</button> <!--/.ld-expand-button-->
 							<?php
 							/**

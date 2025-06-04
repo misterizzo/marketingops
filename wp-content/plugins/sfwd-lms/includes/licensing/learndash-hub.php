@@ -30,6 +30,9 @@ require_once __DIR__ . '/configs.php';
 require_once __DIR__ . '/src/functions.php';
 
 $boot = new \LearnDash\Hub\Boot();
+
+$boot->register_early_hooks();
+
 add_action( 'init', array( $boot, 'start' ) );
 add_action( 'delete_user', array( $boot, 'disallow_user' ) );
 add_action( 'set_user_role', array( $boot, 'update_access_list_after_role_update' ), 10, 2 );

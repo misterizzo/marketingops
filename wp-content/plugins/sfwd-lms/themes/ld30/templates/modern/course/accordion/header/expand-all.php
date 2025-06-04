@@ -3,7 +3,7 @@
  * View: Course Accordion Header - Expand All Button.
  *
  * @since 4.21.0
- * @version 4.21.0
+ * @version 4.21.4
  *
  * @var Course   $course              Course model object.
  * @var Lesson[] $lessons             Lessons.
@@ -52,6 +52,10 @@ if ( empty( $container_ids ) ) {
 		data-ld-expand-button-text-element="true"
 	>
 		<?php esc_html_e( 'Expand All', 'learndash' ); ?>
+	</span>
+
+	<span class="screen-reader-text">
+		<?php echo esc_html( learndash_get_custom_label( 'lessons' ) ); ?>
 	</span>
 
 	<?php

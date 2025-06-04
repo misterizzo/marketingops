@@ -3,7 +3,7 @@
  * LearnDash LD30 Displays a group row.
  *
  * @since 3.0.0
- * @version 4.21.2
+ * @version 4.21.4
  *
  * @var WP_Post $group   The group post object.
  * @var string  $context The context of the group row. Available contexts are: 'admin-group', 'user-group'. Available since v4.21.2.
@@ -40,6 +40,10 @@ $has_content = ( empty( $group->post_content ) ? false : true ); ?>
 				>
 					<span class="ld-icon-arrow-down ld-icon ld-primary-background"></span>
 					<span class="ld-text ld-primary-color"><?php esc_html_e( 'Expand', 'learndash' ); ?></span>
+
+					<span class="screen-reader-text">
+						<?php echo esc_html( get_the_title( $group->ID ) ); ?>
+					</span>
 				</button> <!--/.ld-expand-button-->
 			</div> <!--/.ld-item-details-->
 		<?php endif; ?>

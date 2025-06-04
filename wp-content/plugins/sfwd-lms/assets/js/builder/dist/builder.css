@@ -522,6 +522,10 @@
   fill: #c92c2c;
 }
 
+.ld-button-reset.accessibility-warning svg {
+  fill: #c77800;
+}
+
 .warning-icon {
   color: #c92c2c;
   display: inline-block;
@@ -538,6 +542,13 @@
   fill: #c92c2c;
   height: 16px;
   width: 16px;
+}
+
+.warning-icon--accessibility {
+  color: #c77800;
+}
+.warning-icon--accessibility svg {
+  fill: #c77800;
 }
 
 .ld-entity-builder-header {

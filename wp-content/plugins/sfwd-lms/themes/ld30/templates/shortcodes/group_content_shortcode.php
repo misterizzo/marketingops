@@ -12,7 +12,7 @@
  * $has_group_content		: Group has course content
  *
  * @since 4.0.0
- * @version 4.20.2
+ * @version 4.21.4
  *
  * @package LearnDash\Templates\LD30
  */
@@ -61,6 +61,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 				>
 					<span class="ld-icon-arrow-down ld-icon"></span>
 					<span class="ld-text"><?php echo esc_html_e( 'Expand All', 'learndash' ); ?></span>
+
+					<span class="screen-reader-text">
+						<?php echo esc_html( learndash_get_custom_label( 'courses' ) ); ?>
+					</span>
 				</button> <!--/.ld-expand-button-->
 				<?php
 			}

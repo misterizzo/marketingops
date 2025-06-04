@@ -1,3 +1,60 @@
+= [4.21.5] =
+
+* Fix - Resolved a conflict with the Paid Memberships Pro plugin related to the Stripe library.
+* Tweak - Added LearnDash onboarding wizard trigger for StellarSites users.
+* Tweak - Added a setting to enable/disable automatic progression for courses (disabled by default), which can be toggled under LearnDash > Courses > Settings.
+* Tweak - Hid the LearnDash Licensing page on StellarSites if the LearnDash license is valid.
+* Tweak - Changed setup link in the LearnDash fresh install pointer to link to the LearnDash onboarding wizard.
+* Tweak - Improved accessibility for the Focus Mode sidebar keyboard navigation.
+* Tweak - Improved accessibility for the focus mode sidebar trigger on mobile.
+* Tweak - Improved accessibility for focus mode sidebar navigation.
+* Tweak - Improved accessibility for Course step status icons.
+* Tweak - Improved the accessibility of the Focus Mode Sidebar on desktop and mobile.
+* Tweak - Improved the accessibility of the mark complete button.
+* Tweak - Improved accessibility for alerts shown on page load.
+* Tweak - Improved accessibility for the expand and collapse buttons for the Profile shortcode.
+* Tweak - Increased cache time for failed licensing server requests to avoid potential site slowdowns.
+* Tweak - Prevented future LearnDash core updates if the WP version is lower than 6.6.
+* Tweak - Improved accessibility for "Fill in the blank" questions.
+* Tweak - Added a "skip to content" link for Focus Mode.
+* Tweak - Added filters: `learndash_location_is_learndash_admin_page`, `learndash_module_licensing_failed_response_cache_time`, `learndash_setup_wizard_status`.
+* Tweak - Updated filters: `learndash_step_completed_redirect_immediately`.
+* Tweak - Updated functions: `learndash_30_show_step_completed_alert`, `learndash_mark_complete_process`.
+* Tweak - Updated templates: `themes/ld30/templates/focus/header.php`, `themes/ld30/templates/focus/index.php`, `themes/ld30/templates/focus/sidebar.php`, `themes/ld30/templates/modules/alert.php`, `themes/ld30/templates/modules/infobar.php`, `themes/ld30/templates/quiz/partials/show_quiz_questions_box.php`, `themes/ld30/templates/shortcodes/profile/course-row.php`, `themes/ld30/templates/widgets/navigation/lesson-row.php`, `themes/ld30/templates/widgets/navigation/quiz-row.php`, `themes/ld30/templates/widgets/navigation/topic-row.php`.
+
+= [4.21.4] =
+
+* Feature - Merged course grid addon feature to LearnDash core.
+* Fix - Fixed an issue where the [ld_course_list] shortcode/block could not return courses that have not been started yet.
+* Fix - Fixed the square outline on the quiz radio input for themes that override it.
+* Fix - Fixed a PHP deprecation notice on LearnDash profile page and single group page.
+* Fix - Resolved an issue where the Focus Sidebar could not be scrolled properly.
+* Fix - Resolved a potential fatal error if an invalid color were saved under LearnDash LMS -> Settings.
+* Fix - Resolved an issue where Quizzes couldn't be started with the Legacy Theme active.
+* Fix - Lesson status message now consistently appears on repeated page loads.
+* Tweak - Added a filter to allow redirecting the user immediately after a course step is completed.
+* Tweak - Added a warning message to the matrix sort answer question type in the backend about accessibility compliance.
+* Tweak - Improved accessibility for quiz Free Choice result label.
+* Tweak - Improved accessibility for quiz Matrix result label.
+* Tweak - Improved accessibility for quiz Fill in Blank result label.
+* Tweak - Improved accessibility for quiz free match result label.
+* Tweak - Improved accessibility for quiz single match result label.
+* Tweak - Added support for WP auto-updates.
+* Tweak - Updated the default custom label for the "Continue" button from "Click Here to Continue" to "Continue".
+* Tweak - Improved the RazorPay library to avoid PHP warnings related to the `REQUESTS_SILENCE_PSR0_DEPRECATIONS` constant.
+* Tweak - Increased YouTube playlist importer request timeout.
+* Tweak - Improved accessibility for correct and incorrect answers for the "sorting" choice question type.
+* Tweak - Added move icon for matrix sorting question answers to improve accessibility.
+* Tweak - Improved accessibility for expand and collapse button labels.
+* Tweak - Improved accessibility for quiz question inputs.
+* Tweak - Reverted the Quiz Questions template for the Legacy theme to avoid conflicts with the LD30 theme.
+* Tweak - Added LearnDash Legacy template end of support notice.
+* Tweak - Added actions: `learndash_course_grid_assets_loaded`, `learndash_course_grid_custom_css`.
+* Tweak - Added filters: `learndash_block_markers_shortcode_atts`, `learndash_course_grid_author`, `learndash_course_grid_block_editor_image_sizes`, `learndash_course_grid_block_editor_orderby`, `learndash_course_grid_block_editor_paginations`, `learndash_course_grid_block_editor_post_types`, `learndash_course_grid_block_editor_taxonomies`, `learndash_course_grid_cards`, `learndash_course_grid_card`, `learndash_course_grid_class`, `learndash_course_grid_course_class`, `learndash_course_grid_currency`, `learndash_course_grid_custom_button_link`, `learndash_course_grid_custom_button_text`, `learndash_course_grid_default_shortcode_attributes`, `learndash_course_grid_editor_fields`, `learndash_course_grid_excluded_post_types`, `learndash_course_grid_filter_default_shortcode_attributes`, `learndash_course_grid_html_output`, `learndash_course_grid_post_extra_course_grids`, `learndash_course_grid_post_types`, `learndash_course_grid_price_text_format`, `learndash_course_grid_price`, `learndash_course_grid_query_args`, `learndash_course_grid_reviews`, `learndash_course_grid_ribbon_class`, `learndash_course_grid_ribbon_text`, `learndash_course_grid_skins`, `learndash_course_grid_skin`, `learndash_course_grid_template_post_attributes`, `learndash_course_grid_template`, `learndash_module_course_grid_disabled`, `learndash_step_completed_redirect_immediately`, `learndash_step_completed_transient_expiration_time`.
+* Tweak - Added functions: `learndash_course_grid_count_students`, `learndash_course_grid_is_learndash_post_type`, `learndash_course_grid_load_card_template`, `learndash_course_grid_load_inline_script_locale_data`, `learndash_course_grid_load_resources`, `learndash_course_grid_prepare_template_post_attributes`.
+* Tweak - Deprecated functions: `LearnDash\course_grid`.
+* Tweak - Updated templates: `themes/ld30/templates/course.php`, `themes/ld30/templates/group.php`, `themes/ld30/templates/group/partials/course-row.php`, `themes/ld30/templates/lesson/listing.php`, `themes/ld30/templates/lesson/partials/row.php`, `themes/ld30/templates/modern/course/accordion/header/expand-all.php`, `themes/ld30/templates/modern/course/accordion/lessons/lesson/expand-button.php`, `themes/ld30/templates/shortcodes/course_content_shortcode.php`, `themes/ld30/templates/shortcodes/groups/row.php`, `themes/ld30/templates/shortcodes/profile.php`, `themes/ld30/templates/shortcodes/profile/course-row.php`, `themes/ld30/templates/widgets/course-navigation.php`, `themes/ld30/templates/widgets/navigation/lesson-row.php`, `themes/legacy/templates/quiz/partials/show_quiz_questions_box.php`.
+
 = [4.21.3] =
 
 * Fix - Resolved an issue where if the entered license key was expired, other LearnDash plugins could not be installed properly.
@@ -25,6 +82,7 @@
 * Tweak - Improved accessibility when a course step is completed.
 * Tweak - Improved accessibility for error messages on registration pages.
 * Tweak - Improved accessibility for tooltips.
+* Tweak - Removed the old and added a new LearnDash WP version support policy notice.
 * Tweak - Added filters: `learndash_payment_form_redirect_alert_countdown`.
 * Tweak - Added templates: `src/views/components/icons/drag.php`.
 * Tweak - Added functions: `learndash_30_show_step_completed_alert`, `learndash_course_get_step_completion_data`, `learndash_get_step_completed_transient_data`.

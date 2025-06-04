@@ -2,11 +2,12 @@
 /**
  * Plugin Name: LearnDash LMS
  * Plugin URI: http://www.learndash.com
+ * Update URI: learndash
  * Description: LearnDash LMS Plugin - Turn your WordPress site into a learning management system.
- * Version: 4.21.3
+ * Version: 4.21.5
  * Requires PHP: 7.4
  * Requires at least: 6.1
- * Tested up to: 6.8
+ * Tested up to: 6.8.1
  * Author: LearnDash
  * Author URI: http://www.learndash.com
  * Text Domain: learndash
@@ -33,7 +34,6 @@ use StellarWP\Learndash\StellarWP\Telemetry\Config as TelemetryConfig;
 use StellarWP\Learndash\StellarWP\Telemetry\Core as Telemetry;
 use StellarWP\Learndash\StellarWP\DB\DB;
 use StellarWP\Learndash\StellarWP\Validation\Config as ValidationConfig;
-use StellarWP\Learndash\StellarWP\Assets\Config as AssetsConfig;
 
 // CONSTANTS.
 
@@ -44,7 +44,7 @@ use StellarWP\Learndash\StellarWP\Assets\Config as AssetsConfig;
 *
 * @internal Will be set by LearnDash LMS. Semantic versioning is used.
 */
-define( 'LEARNDASH_VERSION', '4.21.3' );
+define( 'LEARNDASH_VERSION', '4.21.5' );
 
 
 if ( ! defined( 'LEARNDASH_LMS_PLUGIN_DIR' ) ) {

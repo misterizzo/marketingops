@@ -3,7 +3,7 @@
  * LearnDash LD30 Displays course navigation lesson row
  *
  * @since 3.0.0
- * @version 4.21.3
+ * @version 4.21.4
  *
  * @package LearnDash\Templates\LD30\Widgets
  */
@@ -86,8 +86,13 @@ endif; ?>
 
 <div class="<?php echo esc_attr( $lesson_class ); ?>">
 	<div class="ld-lesson-item-preview">
-		<a class="ld-lesson-item-preview-heading ld-primary-color-hover" href="<?php echo esc_url( learndash_get_step_permalink( $lesson['post']->ID, $course_id ) ); ?>">
-
+		<a
+			<?php if ( $is_current_lesson ) : ?>
+				aria-current="page"
+			<?php endif; ?>
+			class="ld-lesson-item-preview-heading ld-primary-color-hover"
+			href="<?php echo esc_url( learndash_get_step_permalink( $lesson['post']->ID, $course_id ) ); ?>"
+		>
 			<?php
 			$lesson_progress = learndash_lesson_progress( $lesson['post'] );
 			if ( is_array( $lesson_progress ) ) {
@@ -100,21 +105,20 @@ endif; ?>
 
 			<div class="ld-lesson-title">
 				<?php
-				// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
-				echo wp_kses_post( apply_filters( 'the_title', $lesson['post']->post_title, $lesson['post']->ID ) );
+				echo wp_kses_post( get_the_title( $lesson['post'] ) );
 				if ( ! empty( $attributes ) ) :
 					foreach ( $attributes as $attribute ) :
 						?>
 					<span class="ld-status-icon ld-tooltip <?php echo esc_attr( $attribute['class'] ?? '' ); ?>">
 						<span
 							class="ld-icon <?php echo esc_attr( $attribute['icon'] ); ?>"
-							aria-describedby="ld-navigation-widget__lesson-row-tooltip--<?php echo esc_attr( $attribute['icon'] ); ?>"
+							aria-describedby="ld-navigation-widget__lesson-row-tooltip--<?php echo esc_attr( $lesson['post']->ID ); ?>-<?php echo esc_attr( $attribute['icon'] ); ?>"
 							tabindex="0"
 						></span>
 
 						<span
 							class="ld-tooltip__text"
-							id="ld-navigation-widget__lesson-row-tooltip--<?php echo esc_attr( $attribute['icon'] ); ?>"
+							id="ld-navigation-widget__lesson-row-tooltip--<?php echo esc_attr( $lesson['post']->ID ); ?>-<?php echo esc_attr( $attribute['icon'] ); ?>"
 							role="tooltip"
 						>
 							<?php echo esc_html( $attribute['label'] ); ?>
@@ -148,14 +152,22 @@ endif; ?>
 			<button
 				aria-controls="<?php echo esc_attr( 'ld-nav-content-list-' . $lesson['post']->ID ); ?>"
 				aria-expanded="<?php echo strpos( $expand_class, 'ld-expanded' ) !== false ? 'true' : 'false'; ?>"
-				<?php // translators: placeholder: lesson. ?>
-				aria-label="<?php printf( esc_html_x( 'Expand %s', 'placeholder: Lesson', 'learndash' ), esc_html( learndash_get_custom_label( 'lesson' ) ) ); ?>"
 				class="ld-expand-button ld-button-alternate <?php echo esc_attr( $expand_class ); ?>"
-				data-ld-collapse-text="false"
 				data-ld-expands="<?php echo esc_attr( 'ld-nav-content-list-' . $lesson['post']->ID ); ?>"
+				data-ld-expand-text="<?php esc_html_e( 'Expand', 'learndash' ); ?>"
+				data-ld-collapse-text="<?php esc_html_e( 'Collapse', 'learndash' ); ?>"
 			>
 				<span class="ld-icon-arrow-down ld-icon ld-primary-background"></span>
-				<span class="ld-text ld-primary-color">
+
+				<span class="ld-text screen-reader-text">
+					<?php echo strpos( $expand_class, 'ld-expanded' ) !== false ? esc_html__( 'Collapse', 'learndash' ) : esc_html__( 'Expand', 'learndash' ); ?>
+				</span>
+
+				<span class="screen-reader-text">
+					<?php echo esc_html( get_the_title( $lesson['post']->ID ) ); ?>
+				</span>
+
+				<span class="ld-expand-text ld-primary-color">
 					<?php
 					if ( $content_count['topics'] > 0 ) {
 						printf(

@@ -11,7 +11,7 @@
  * $shortcode_atts : Array of values passed to shortcode
  *
  * @since 3.0.0
- * @version 4.21.3
+ * @version 4.21.4
  *
  * @package LearnDash\Templates\LD30
  */
@@ -211,6 +211,10 @@ endif; ?>
 					>
 						<span class="ld-icon-arrow-down ld-icon"></span>
 						<span class="ld-text"><?php echo esc_html_e( 'Expand All', 'learndash' ); ?></span>
+
+						<span class="screen-reader-text">
+							<?php echo esc_html( learndash_get_custom_label( 'courses' ) ); ?>
+						</span>
 					</button> <!--/.ld-expand-button-->
 				</div> <!--/.ld-course-list-actions-->
 			</div> <!--/.ld-section-heading-->

@@ -23,7 +23,7 @@
  * $lesson_progression_enabled : (true/false)
  *
  * @since 3.0.0
- * @version 4.20.2
+ * @version 4.21.4
  *
  * @package LearnDash\Templates\LD30
  */
@@ -114,6 +114,10 @@ if ( $has_course_content ) :
 						>
 							<span class="ld-icon-arrow-down ld-icon"></span>
 							<span class="ld-text"><?php echo esc_html_e( 'Expand All', 'learndash' ); ?></span>
+
+							<span class="screen-reader-text">
+								<?php echo esc_html( learndash_get_custom_label( 'lessons' ) ); ?>
+							</span>
 						</button> <!--/.ld-expand-button-->
 						<?php
 						/** This filter is documented in themes/ld30/templates/course.php */

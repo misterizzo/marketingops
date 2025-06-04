@@ -202,4 +202,35 @@ class Str {
 
 		return $result === false ? $subject : $result;
 	}
+
+	/**
+	 * Determines if a given string exactly matches one or multiple strings.
+	 *
+	 * @since 4.21.5
+	 *
+	 * @param string          $string      The string to check.
+	 * @param string|string[] $matches     The string(s) to match against.
+	 * @param bool            $ignore_case Whether to ignore case. Default false.
+	 *
+	 * @return bool Returns true if the string exactly matches any of the provided strings.
+	 */
+	public static function matches( string $string, $matches, bool $ignore_case = false ): bool {
+		if ( ! is_array( $matches ) ) {
+			$matches = array( $matches );
+		}
+
+		foreach ( $matches as $match ) {
+			if ( $ignore_case ) {
+				if ( strcasecmp( $string, $match ) === 0 ) {
+					return true;
+				}
+			} else { // phpcs:ignore Universal.ControlStructures.DisallowLonelyIf.Found -- For better clarity.
+				if ( $string === $match ) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
 }

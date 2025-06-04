@@ -1,4 +1,11 @@
 <?php
+/**
+ * Boot the plugin.
+ *
+ * @since 4.18.0
+ *
+ * @package LearnDash
+ */
 
 namespace LearnDash\Hub;
 
@@ -25,6 +32,24 @@ class Boot {
 	use License;
 
 	/**
+	 * The projects controller instance.
+	 *
+	 * @var Projects_Controller
+	 */
+	private $projects_controller;
+
+	/**
+	 * Constructor.
+	 *
+	 * @since 4.21.4
+	 *
+	 * @return void
+	 */
+	public function __construct() {
+		$this->projects_controller = new Projects_Controller();
+	}
+
+	/**
 	 * Run all the triggers in init runtime.
 	 */
 	public function start() {
@@ -35,7 +60,9 @@ class Boot {
 
 			// later we will check the permissions for each modules.
 			( new Main_Controller() );
-			( new Projects_Controller() )->register_hooks();
+
+			$this->projects_controller->register_hooks();
+
 			( new Settings_Controller() );
 			( new CheckPluginsRequirements() )->register_hooks();
 		} else {
@@ -43,6 +70,19 @@ class Boot {
 		}
 
 		( new RemoteBanners() )->register_hooks();
+	}
+
+	/**
+	 * Registers early hooks.
+	 *
+	 * It must be registered outside of the 'init' or 'plugins_loaded' hooks.
+	 *
+	 * @since 4.21.4
+	 *
+	 * @return void
+	 */
+	public function register_early_hooks() {
+		$this->projects_controller->register_early_hooks();
 	}
 
 	/**

@@ -247,8 +247,8 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 				'button_click_here_to_continue'            => array(
 					'name'      => 'button_click_here_to_continue',
 					'type'      => 'text',
-					'label'     => esc_html__( 'Click Here to Continue (Button)', 'learndash' ),
-					'help_text' => esc_html__( 'Label to replace "Click Here to Continue" button.', 'learndash' ),
+					'label'     => esc_html__( 'Continue (Button)', 'learndash' ),
+					'help_text' => esc_html__( 'Label to replace "Continue" button.', 'learndash' ),
 					'value'     => isset( $this->setting_option_values['button_click_here_to_continue'] ) ? $this->setting_option_values['button_click_here_to_continue'] : '',
 					'class'     => 'regular-text',
 				),

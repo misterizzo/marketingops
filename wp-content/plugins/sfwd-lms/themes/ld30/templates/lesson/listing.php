@@ -12,7 +12,7 @@
  * $topics    :   An array of the associated topics
  *
  * @since 3.0.0
- * @version 4.20.2
+ * @version 4.21.4
  *
  * @package LearnDash\Templates\LD30
  */
@@ -165,6 +165,10 @@ do_action( 'learndash-topic-list-before', $lesson['post']->ID, $course_id, $user
 				>
 					<span class="icon-simple-arrow-down ld-icon">
 					<span class="ld-text"><?php esc_html_e( 'Expand', 'learndash' ); ?></span>
+
+					<span class="screen-reader-text">
+						<?php echo esc_html( get_the_title( $lesson['post']->ID ) ); ?>
+					</span>
 				</button> <!--/.ld-expand-button-->
 			<?php endif; ?>
 

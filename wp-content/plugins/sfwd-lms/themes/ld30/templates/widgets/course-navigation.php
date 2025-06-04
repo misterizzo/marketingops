@@ -3,7 +3,7 @@
  * LearnDash LD30 Displays the course navigation widget.
  *
  * @since 3.0.0
- * @version 4.20.2
+ * @version 4.21.4
  *
  * @package LearnDash\Templates\LD30
  */
@@ -99,6 +99,10 @@ $widget_data_json = htmlspecialchars( wp_json_encode( $widget_data ) ); ?>
 					>
 						<span class="ld-icon-arrow-down ld-icon ld-primary-background"></span>
 						<span class="ld-text ld-primary-color"><?php esc_html_e( 'Expand All', 'learndash' ); ?></span>
+
+						<span class="screen-reader-text">
+							<?php echo esc_html( learndash_get_custom_label( 'lessons' ) ); ?>
+						</span>
 					</button>
 				<?php endif; ?>
 			</div> <!--/.ld-course-navigation-actions-->

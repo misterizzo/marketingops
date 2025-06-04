@@ -10,6 +10,7 @@
 namespace LearnDash\Hub\Controller;
 
 use Hub\Traits\Time;
+use LearnDash\Core\Utilities\Cast;
 use LearnDash\Hub\Component\API;
 use LearnDash\Hub\Component\Projects;
 use LearnDash\Hub\Framework\Controller;
@@ -19,12 +20,46 @@ use LearnDash\Hub\Traits\Permission;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Handle the plugin lists, install, activate and more.
+ * Handles the plugin lists, install, activate and more.
+ *
+ * @since 4.18.0
+ *
+ * @phpstan-type Translation array{
+ *     language: string,
+ *     version: string,
+ *     updated: string,
+ *     package: string,
+ *     autoupdate: string
+ * }
+ *
+ * @phpstan-type PluginUpdate array{
+ *     id?: string,
+ *     slug: string,
+ *     version: string,
+ *     url: string,
+ *     package?: string,
+ *     tested?: string,
+ *     requires_php?: string,
+ *     autoupdate?: bool,
+ *     icons?: array<string>,
+ *     banners?: array<string>,
+ *     banners_rtl?: array<string>,
+ *     translations?: array<Translation>
+ * }
  */
 class Projects_Controller extends Controller {
 	use Permission;
 	use Time;
 	use License;
+
+	/**
+	 * The default plugin URI.
+	 *
+	 * @since 4.21.4
+	 *
+	 * @var string
+	 */
+	private const DEFAULT_PLUGIN_URI = 'https://learndash.com';
 
 	/**
 	 * The page slug.
@@ -56,8 +91,82 @@ class Projects_Controller extends Controller {
 		add_action( 'wp_ajax_ld_hub_bulk_action', array( $this, 'bulk_action' ) );
 		add_filter( 'plugins_api', array( $this, 'filter_plugins_api' ), 10, 3 );
 		add_filter( 'site_transient_update_plugins', array( $this, 'push_update' ) );
-		add_filter( 'http_request_args', array( $this, 'maybe_append_auth_headers' ), 10, 2 );
 		add_action( 'upgrader_process_complete', array( $this, 'process_plugin_update' ), 10, 2 );
+	}
+
+	/**
+	 * Registers early hooks. Normally, outside of the 'init' or 'plugins_loaded' hooks.
+	 *
+	 * @since 4.21.4
+	 *
+	 * @return void
+	 */
+	public function register_early_hooks() {
+		/**
+		 * It allows us to inject the auth headers required for the plugin download.
+		 *
+		 * It must be registered outside of the 'init' or 'plugins_loaded' hooks to work with the WP auto-updates.
+		 */
+		add_filter( 'http_request_args', [ $this, 'maybe_append_auth_headers' ], 10, 2 );
+
+		// Clear the cache when the automatic updates are complete.
+
+		add_action(
+			'automatic_updates_complete',
+			function () {
+				delete_site_option( API::OPTION_NAME_UPDATE_PLUGINS_CACHE );
+			}
+		);
+
+		// WP auto-updates hooks.
+
+		add_filter( 'update_plugins_learndash', [ $this, 'update_plugins_learndash' ], 10, 3 );
+	}
+
+	/**
+	 * Handles the update response for learndash plugins (hostname: learndash)
+	 *
+	 * @since 4.21.4
+	 *
+	 * @param PluginUpdate|false   $update           The plugin update data with the latest details. Default false.
+	 * @param array<string, mixed> $plugin_data      Plugin headers.
+	 * @param string               $plugin_file      Plugin filename.
+	 *
+	 * @return PluginUpdate|false
+	 */
+	public function update_plugins_learndash( $update, $plugin_data, $plugin_file ) {
+		$projects = $this->get_api()->get_projects();
+
+		if (
+			! is_array( $projects )
+			|| empty( $projects )
+		) {
+			return $update;
+		}
+
+		$installed_projects = $this->get_service()->get_installed_projects( $projects );
+		foreach ( $installed_projects as $project ) {
+			$inner_plugin_file = $this->get_service()->get_plugin_slug( $project['slug'], $project['name'] );
+
+			if ( $inner_plugin_file !== $plugin_file ) {
+				continue;
+			}
+
+			return [
+				'id'           => $inner_plugin_file,
+				'slug'         => $project['slug'],
+				'plugin'       => $inner_plugin_file,
+				'version'      => Cast::to_string( $plugin_data['Version'] ),
+				'new_version'  => $project['latest_version'],
+				'url'          => ! empty( $project['plugin_uri'] ) ? $project['plugin_uri'] : self::DEFAULT_PLUGIN_URI,
+				'package'      => $project['download_url'] ?? '',
+				'requires'     => $project['requires'],
+				'requires_php' => $project['requires_php'],
+				'tested'       => $project['tested'],
+			];
+		}
+
+		return $update;
 	}
 
 	/**
@@ -166,7 +275,9 @@ class Projects_Controller extends Controller {
 		$do  = sanitize_text_field( wp_unslash( $do ) );
 		$ret = $this->get_service()->handle_plugin( $do, $slug );
 		if ( is_wp_error( $ret ) ) {
-			wp_send_json_error( $ret->get_error_message() );
+			$error_message = $this->sanitize_error_message( $ret->get_error_message() );
+
+			wp_send_json_error( $error_message );
 		}
 
 		if ( true === $ret ) {
@@ -220,7 +331,7 @@ class Projects_Controller extends Controller {
 							$item->plugin = $plugin_file;
 						}
 						$item->new_version            = $project['latest_version'];
-						$item->url                    = ! empty( $project['plugin_uri'] ) ? $project['plugin_uri'] : 'https://learndash.com';
+						$item->url                    = ! empty( $project['plugin_uri'] ) ? $project['plugin_uri'] : self::DEFAULT_PLUGIN_URI;
 						$item->package                = $project['download_url'] ?? '';
 						$item->requires               = $project['requires'];
 						$item->requires_php           = $project['requires_php'];
@@ -386,5 +497,28 @@ class Projects_Controller extends Controller {
 		}
 
 		return $this->service;
+	}
+
+	/**
+	 * Sanitizes a given error message so that it can be displayed via a JS Alert by accounting for common HTML tags.
+	 *
+	 * @since 4.21.5
+	 *
+	 * @param string $error_message The error message.
+	 *
+	 * @return string
+	 */
+	private function sanitize_error_message( string $error_message ): string {
+		preg_match_all( '/<a[^>]*?href="([^"]*?)"[^>]*?>([\s\S]*?)<\/a>\.?/i', $error_message, $matches );
+
+		if ( empty( $matches[0] ) ) {
+			return $error_message;
+		}
+
+		foreach ( $matches[0] as $index => $match ) {
+			$error_message = str_replace( $match, "{$matches[2][$index]}: {$matches[1][$index]}", $error_message );
+		}
+
+		return $error_message;
 	}
 }

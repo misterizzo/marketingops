@@ -74,6 +74,15 @@ class API extends Base {
 	public $base = LICENSING_SITE . '/wp-json/' . BASE_REST;
 
 	/**
+	 * The cache time for failed responses.
+	 *
+	 * @since 4.21.5
+	 *
+	 * @var int
+	 */
+	private static int $failed_response_cache_time = MINUTE_IN_SECONDS * 10;
+
+	/**
 	 * Trigger a license verification.
 	 *
 	 * @param string $email       The email that registered with LearnDash.
@@ -284,9 +293,9 @@ class API extends Base {
 		// Fetch from API.
 		$projects = $this->do_api_request( '/repo/plugins' );
 
-		// Handle errors - cache errors for 1 minute.
+		// Handle errors - cache errors.
 		if ( is_wp_error( $projects ) ) {
-			$this->cache_projects_data( $projects, MINUTE_IN_SECONDS ); // 1 minute cache for errors.
+			$this->cache_projects_data( $projects, $this->get_failed_response_cache_time() );
 
 			return $projects;
 		}
@@ -303,7 +312,7 @@ class API extends Base {
 
 		if ( empty( $projects ) ) {
 			// If the filtered variable is empty, then cache it with a short period.
-			$cache_time = MINUTE_IN_SECONDS;
+			$cache_time = $this->get_failed_response_cache_time();
 		}
 
 		// Cache the result for 12 hours.
@@ -315,6 +324,26 @@ class API extends Base {
 		update_site_option( self::OPTION_NAME_PLUGIN_SLUGS, $slugs );
 
 		return $projects;
+	}
+
+	/**
+	 * Gets the cache time for failed responses.
+	 *
+	 * @since 4.21.5
+	 *
+	 * @return int The cache time in seconds.
+	 */
+	private function get_failed_response_cache_time(): int {
+		/**
+		 * Filters the cache time for failed responses.
+		 *
+		 * @since 4.21.5
+		 *
+		 * @param int $cache_time The cache time in seconds.
+		 *
+		 * @return int The cache time in seconds.
+		 */
+		return apply_filters( 'learndash_module_licensing_failed_response_cache_time', self::$failed_response_cache_time );
 	}
 
 	/**

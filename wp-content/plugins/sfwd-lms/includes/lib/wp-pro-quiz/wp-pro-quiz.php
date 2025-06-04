@@ -128,7 +128,10 @@ function learndash_question_cloze_fetch_data( $answer_text, $convert_to_lower = 
 
 	preg_match_all( '#\{(.*?)\}#im', $answer_text, $matches, PREG_SET_ORDER );
 
-	$data = array();
+	$data = array(
+		'data'  => [],
+		'label' => '',
+	);
 
 	foreach ( $matches as $k => $v ) {
 		$text          = $v[1];
@@ -241,6 +244,36 @@ function learndash_question_cloze_fetch_data( $answer_text, $convert_to_lower = 
 		if ( false !== $pos ) {
 			$data['replace'] = substr_replace( $data['replace'], $replace_key, $pos, strlen( $v[0] ) );
 		}
+	}
+
+	// Generate a label for accessibility.
+	$data['label'] = $data['replace'] ?? '';
+
+	foreach ( $matches as $k => $v ) {
+		$replace_key = '@@wpProQuizCloze-' . $k . '@@';
+
+		$data['label'] = str_replace(
+			$replace_key,
+			sprintf(
+				// translators: placeholder: current number, total number.
+				_x( 'BLANK %1$d of %2$d', 'Placeholder for cloze answer inputs to use within the legend', 'learndash' ),
+				$k + 1,
+				count( $matches )
+			),
+			$data['label']
+		);
+
+		$data['data'][ $replace_key ] = '<label>' .
+			'<span class="screen-reader-text">' .
+				sprintf(
+					// translators: placeholder: current number, total number.
+					_x( 'Fill in the blank %1$d of %2$d', 'Placeholder for cloze answer inputs', 'learndash' ),
+					$k + 1,
+					count( $matches )
+				) .
+			'</span>' .
+			$data['data'][ $replace_key ] .
+		'</label>';
 	}
 
 	if ( isset( $data['replace'] ) ) {
@@ -356,7 +389,7 @@ function learndash_question_assessment_fetch_data( $answer_text, $quiz_id = 0, $
 
 						/**
 						 * Note: The 'data-index' value is purposely set to '0' for all answers.
-						 * This si because in the wpProQuiz_front.js (3.5.0) in the function
+						 * This is because in the wpProQuiz_front.js (3.5.0) in the function
 						 * fetchAllAnswerData() the value is assigned to the data-index array
 						 * position. And it needs to be in the '0' position.
 						 */

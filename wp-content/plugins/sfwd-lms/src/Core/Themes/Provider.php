@@ -26,6 +26,7 @@ class Provider extends ServiceProvider {
 	 */
 	public function register(): void {
 		$this->container->register( LD30\Provider::class );
+		$this->container->register( Legacy\Provider::class );
 		$this->container->register( Breezy\Provider::class );
 	}
 }

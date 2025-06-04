@@ -52,5 +52,6 @@ class Provider extends ServiceProvider {
 		// Support policy module hooks.
 
 		add_action( 'admin_init', $this->container->callback( WordPress::class, 'register_notices' ) );
+		add_filter( 'upgrader_pre_download', $this->container->callback( WordPress::class, 'check_required_wp_version' ), 10, 4 );
 	}
 }

@@ -21,7 +21,6 @@ use LearnDash\Core\Template\Views;
  * @since 1.2.5
  */
 class WpProQuiz_Controller_Front {
-
 	/**
 	 * @var WpProQuiz_Model_GlobalSettings
 	 */
@@ -79,7 +78,7 @@ class WpProQuiz_Controller_Front {
 			wp_localize_script(
 				'wpProQuiz_front_javascript',
 				'WpProQuizGlobal',
-				array(
+				[
 					'ajaxurl'            => str_replace( array( 'http:', 'https:' ), array( '', '' ), admin_url( 'admin-ajax.php' ) ),
 					'loadData'           => esc_html__( 'Loading', 'learndash' ),
 					// translators: placeholder: question
@@ -87,7 +86,16 @@ class WpProQuiz_Controller_Front {
 					// translators: placeholder: questions, quiz.
 					'questionsNotSolved' => sprintf( esc_html_x( 'You must answer all %1$s before you can complete the %2$s.', 'placeholder: questions, quiz', 'learndash' ), learndash_get_custom_label_lower( 'questions' ), learndash_get_custom_label_lower( 'quiz' ) ),
 					'fieldsNotFilled'    => esc_html__( 'All fields have to be filled.', 'learndash' ),
-				)
+					'correctAnswer'      => esc_html__( 'Correct', 'learndash' ),
+					'incorrectAnswer'    => sprintf(
+						// We are using @@LearnDash_Incorrect@@ as a placeholder to handle parsing in the wpProQuiz_front.js because that is where the answer is parsed.
+						// translators: placeholder: span open, correct answer placeholder, span close.
+						esc_html__( 'Incorrect, %1$sCorrect Answer: %2$s%3$s', 'learndash' ),
+						'<span class="ld-quiz__cloze-results--correct-answer">',
+						'@@LearnDash_Incorrect@@',
+						'</span>'
+					),
+				]
 			);
 
 			wp_enqueue_script(
@@ -140,7 +148,6 @@ class WpProQuiz_Controller_Front {
 	}
 
 	public function shortcode( $attr = array(), $content = '' ) {
-
 		global $learndash_shortcode_used, $learndash_shortcode_atts;
 		$learndash_shortcode_used = true;
 
@@ -234,7 +241,6 @@ class WpProQuiz_Controller_Front {
 		$maxQuestion = false;
 
 		if ( ( $quiz->isShowMaxQuestion() ) && ( $quiz->getShowMaxQuestionValue() > 0 ) ) {
-
 			$value = $quiz->getShowMaxQuestionValue();
 
 			if ( $quiz->isShowMaxQuestionPercent() ) {
@@ -243,12 +249,9 @@ class WpProQuiz_Controller_Front {
 				$value = ceil( $count * $value / 100 );
 			}
 
-			//$question = $questionMapper->fetchAll( $atts['quiz_pro_id'], true, $value );
 			$question    = $questionMapper->fetchAll( $quiz, true, $value );
 			$maxQuestion = true;
-
 		} else {
-			//$question = $questionMapper->fetchAll( $atts['quiz_pro_id'] );
 			$question = $questionMapper->fetchAll( $quiz );
 		}
 
@@ -273,7 +276,6 @@ class WpProQuiz_Controller_Front {
 	}
 
 	public function shortcodeToplist( $attr ) {
-
 		global $learndash_shortcode_used;
 		$learndash_shortcode_used = true;
 
@@ -400,7 +402,6 @@ class WpProQuiz_Controller_Front {
 			if ( ! empty( $quiz_post_id ) && $user_id ) {
 				$learndash_quiz_resume_enabled = learndash_get_setting( $quiz_post_id, 'quiz_resume' );
 				if ( true === $learndash_quiz_resume_enabled ) {
-					//$learndash_course_id            = learndash_get_course_id();
 					$learndash_quiz_resume_activity = LDLMS_User_Quiz_Resume::get_user_quiz_resume_activity( $user_id, $quiz_post_id, $learndash_course_id );
 					if ( ( is_a( $learndash_quiz_resume_activity, 'LDLMS_Model_Activity' ) ) && ( property_exists( $learndash_quiz_resume_activity, 'activity_id' ) ) && ( ! empty( $learndash_quiz_resume_activity->activity_id ) ) ) {
 						$learndash_quiz_resume_id = $learndash_quiz_resume_activity->activity_id;

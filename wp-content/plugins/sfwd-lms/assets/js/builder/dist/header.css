@@ -107,6 +107,10 @@
   --ld-color-brand-tertiary: #479bf8;
   --ld-color-semantic-success: #3eab6a;
   --ld-color-semantic-error: #e65255;
+  --ld-color-system-validation-error: #db0000;
+  --ld-color-semantic-error-light: #faeeee;
+  --ld-color-system-validation-success: #2f8351;
+  --ld-color-semantic-success-light: #eef7f1;
   --ld-color-system-dark: #0e2a90;
   --ld-color-system-body-text: #4a4a68;
   --ld-color-system-text-dark: #0e0e2c;

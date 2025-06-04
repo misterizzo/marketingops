@@ -3,7 +3,7 @@
  * View: Course Accordion Lesson - Expand Button.
  *
  * @since 4.21.0
- * @version 4.21.0
+ * @version 4.21.4
  *
  * @var Lesson   $lesson Lesson model object.
  * @var Template $this   Current Instance of template engine rendering this template.
@@ -32,6 +32,10 @@ if ( ! $lesson->has_steps() ) {
 		data-ld-expand-button-text-element="true"
 	>
 		<?php esc_html_e( 'Expand', 'learndash' ); ?>
+	</span>
+
+	<span class="screen-reader-text">
+		<?php echo esc_html( $lesson->get_title() ); ?>
 	</span>
 
 	<?php

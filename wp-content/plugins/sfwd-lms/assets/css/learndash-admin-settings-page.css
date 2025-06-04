@@ -638,14 +638,16 @@ body.users-php .tablenav.top .select2-container--learndash .select2-selection--s
   width: auto;
 }
 
-.sfwd_options .tooltip {
+.sfwd_options .tooltip ,
+.ld_question_title_custom .tooltip {
   position: relative;
   display: inline-block;
   opacity: 1;
 }
 
 /* Tooltip text */
-.sfwd_options .tooltip .tooltiptext {
+.sfwd_options .tooltip .tooltiptext,
+.ld_question_title_custom .tooltip .tooltiptext {
   visibility: hidden;
   width: 180px;
   background-color: #11a0d2 /* #1e8cbe */;
@@ -664,14 +666,16 @@ body.users-php .tablenav.top .select2-container--learndash .select2-selection--s
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
-.sfwd_options .-disabled.tooltip:hover .tooltiptext {
+.sfwd_options .tooltip:hover .tooltiptext,
+.ld_question_title_custom .tooltip:hover .tooltiptext {
   visibility: visible;
 }
 
 /* Tooltip top of element */
 
 /* Arrow */
-.sfwd_options .tooltip .tooltiptext::after {
+.sfwd_options .tooltip .tooltiptext::after,
+.ld_question_title_custom .tooltip .tooltiptext::after {
   content: " ";
   position: absolute;
   top: 100%; /* At the bottom of the tooltip */
@@ -1497,3 +1501,14 @@ body[data-active-tab="learndash_quiz_builder"] .postbox-header .handle-actions .
 	margin: 0;
 }
 /** end Action Items **/
+
+/* Accessibility warning */
+.ld-accessibility-warning {
+	fill: #F59E0B;
+	vertical-align: baseline !important;
+	padding-left: 0.625rem;
+}
+
+.ld-accessibility-warning.ld-accessibility-warning--automatic-progression-enabled {
+	padding: 0 0.25rem 0 0;
+}

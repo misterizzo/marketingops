@@ -3059,6 +3059,17 @@ const Icon = _ref => {
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("title", null, `${LearnDashData.i18n.question_data_invalid}`), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
       d: "M538.5,386.199L356.5,70.8c-16.4-28.4-46.7-45.9-79.501-45.9c-32.8,0-63.1,17.5-79.5,45.9L12.3,391.6 c-16.4,28.4-16.4,63.4,0,91.8C28.7,511.8,59,529.3,91.8,529.3H462.2c0.101,0,0.2,0,0.2,0c50.7,0,91.8-41.101,91.8-91.8 C554.2,418.5,548.4,400.8,538.5,386.199z M316.3,416.899c0,21.7-16.7,38.3-39.2,38.3s-39.2-16.6-39.2-38.3V416 c0-21.601,16.7-38.301,39.2-38.301S316.3,394.3,316.3,416V416.899z M317.2,158.7L297.8,328.1c-1.3,12.2-9.4,19.8-20.7,19.8 s-19.4-7.7-20.7-19.8L237,158.6c-1.3-13.1,5.801-23,18-23H299.1C311.3,135.7,318.5,145.6,317.2,158.7z"
     }));
+  } else if ('accessibility-warning' === icon) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      x: "0",
+      y: "0",
+      width: "554.2",
+      height: "554.199",
+      viewBox: "0 0 554.2 554.199"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("title", null, `${LearnDashData.i18n.matrix_sort_answer_accessibility_warning_label}`), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
+      d: "M538.5,386.199L356.5,70.8c-16.4-28.4-46.7-45.9-79.501-45.9c-32.8,0-63.1,17.5-79.5,45.9L12.3,391.6 c-16.4,28.4-16.4,63.4,0,91.8C28.7,511.8,59,529.3,91.8,529.3H462.2c0.101,0,0.2,0,0.2,0c50.7,0,91.8-41.101,91.8-91.8 C554.2,418.5,548.4,400.8,538.5,386.199z M316.3,416.899c0,21.7-16.7,38.3-39.2,38.3s-39.2-16.6-39.2-38.3V416 c0-21.601,16.7-38.301,39.2-38.301S316.3,394.3,316.3,416V416.899z M317.2,158.7L297.8,328.1c-1.3,12.2-9.4,19.8-20.7,19.8 s-19.4-7.7-20.7-19.8L237,158.6c-1.3-13.1,5.801-23,18-23H299.1C311.3,135.7,318.5,145.6,317.2,158.7z"
+    }));
   }
   return null;
 };
@@ -4144,7 +4155,16 @@ class NodeHeader extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       className: "screen-reader-text"
     }, `${LearnDashData.i18n.answer_missing}`), 0 === questionAlerts.correctAnswersCount && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
       className: "screen-reader-text"
-    }, `${LearnDashData.i18n.correct_answer_missing}`))), !showForm && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, `${LearnDashData.i18n.correct_answer_missing}`)), 'matrix_sort_answer' === node.question_type && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+      className: "ld-button-reset accessibility-warning",
+      onClick: toggleNode
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "warning-icon warning-icon--accessibility -header"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_icon__WEBPACK_IMPORTED_MODULE_8__["default"], {
+      icon: "accessibility-warning"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+      className: "screen-reader-text"
+    }, `${LearnDashData.i18n.matrix_sort_answer_accessibility_warning_label}`))), !showForm && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "row-actions -right"
     }, 'section-heading' !== node.type && node.edit_link && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
       className: "edit"
@@ -8712,7 +8732,18 @@ class QuestionWorkspace extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
         icon: "warning"
       })), "\xA0", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
         className: "warning description-red"
-      }, `${LearnDashData.i18n.correct_answer_missing}`, ".")), question.answers && 0 !== question.answers.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_beautiful_dnd__WEBPACK_IMPORTED_MODULE_12__.Droppable, {
+      }, `${LearnDashData.i18n.correct_answer_missing}`, ".")), 'matrix_sort_answer' === question.question_type && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "ld-builder__accessibility-warning"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "warning-icon warning-icon--accessibility -answer"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_common_icon__WEBPACK_IMPORTED_MODULE_10__["default"], {
+        icon: "accessibility-warning"
+      })), "\xA0", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+        className: "warning",
+        dangerouslySetInnerHTML: {
+          __html: LearnDashData.i18n.matrix_sort_answer_accessibility_warning_html
+        }
+      })), question.answers && 0 !== question.answers.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_beautiful_dnd__WEBPACK_IMPORTED_MODULE_12__.Droppable, {
         droppableId: JSON.stringify({
           ID: question.ID,
           type: 'question',

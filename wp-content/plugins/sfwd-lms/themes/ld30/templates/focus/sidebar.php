@@ -3,7 +3,7 @@
  * LearnDash LD30 focus mode sidebar.
  *
  * @since 3.0.0
- * @version 4.21.3
+ * @version 4.21.5
  *
  * @package LearnDash\Templates\LD30
  */
@@ -18,9 +18,10 @@ global $course_pager_results;
 do_action( 'learndash-focus-sidebar-before', $course_id, $user_id ); ?>
 
 <div
+	aria-modal="true"
 	class="ld-focus-sidebar"
 	id="ld-focus-sidebar"
-	role="complementary"
+	role="dialog"
 >
 	<div class="ld-course-navigation-heading">
 
@@ -40,7 +41,7 @@ do_action( 'learndash-focus-sidebar-before', $course_id, $user_id ); ?>
 			aria-controls="ld-focus-sidebar"
 			<?php // This filter is documented in themes/ld30/templates/focus/header.php. ?>
 			aria-expanded="<?php echo esc_attr( apply_filters( 'learndash_focus_mode_collapse_sidebar', false ) ? 'false' : 'true' ); ?>"
-			aria-label="<?php echo esc_attr_x( 'Toggle sidebar navigation', 'Accessibility label for sidebar toggle button', 'learndash' ); ?>" 
+			aria-label="<?php echo esc_attr_x( 'Toggle sidebar navigation', 'Accessibility label for sidebar toggle button', 'learndash' ); ?>"
 			class="ld-focus-sidebar-trigger"
 			id="ld-focus-sidebar-toggle"
 		>
@@ -123,7 +124,10 @@ do_action( 'learndash-focus-sidebar-before', $course_id, $user_id ); ?>
 		 */
 		do_action( 'learndash-focus-sidebar-between-heading-navigation', $course_id, $user_id );
 		?>
-		<nav class="ld-course-navigation">
+		<nav
+			class="ld-course-navigation"
+			aria-label="<?php echo esc_attr_x( sprintf( '%s', LearnDash_Custom_Label::get_label( 'course' ) ), sprintf( 'Accessibility label for the focus mode %s navigation', LearnDash_Custom_Label::get_label( 'course' ) ), 'learndash' ); ?>"
+		>
 			<div class="ld-course-navigation-list">
 				<div class="ld-lesson-navigation">
 					<div class="ld-lesson-items" id="<?php echo esc_attr( 'ld-lesson-list-' . $course_id ); ?>">

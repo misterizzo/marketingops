@@ -343,6 +343,7 @@ function learndash_lesson_topics_completed( $lesson_id, $mark_lesson_complete = 
  *
  * @since 2.1.0
  * @since 4.11.0 Removed the $post argument.
+ * @since 4.21.5. Updated to use the new 'Automatic Progression' setting.
  *
  * @return void
  */
@@ -409,9 +410,52 @@ function learndash_mark_complete_process() {
 		setcookie( 'learndash_timer_cookie_' . $timer_cookie_key, '', time() - 3600 );
 	}
 
-	// Set a transient to allow extra processing after the step is completed.
+	$is_automatic_progression_enabled = LearnDash_Settings_Section::get_section_setting(
+		'LearnDash_Settings_Courses_Management_Display',
+		'course_automatic_progression'
+	) === 'yes';
 
-	LDLMS_Transients::set( "learndash_step_completed_{$post_id}_{$course_id}_{$user_id}", true, HOUR_IN_SECONDS );
+	/**
+	 * Filters whether to redirect the user immediately after the step is completed.
+	 *
+	 * @since 4.21.4
+	 * @since 4.21.5. Changed the default value to true if automatic progression is enabled.
+	 *
+	 * @param boolean $redirect_immediately Whether to redirect the user immediately. True if automatic progression is enabled.
+	 *
+	 * @return boolean Returns true if the user should be redirected immediately, otherwise false.
+	 */
+	if ( apply_filters( 'learndash_step_completed_redirect_immediately', $is_automatic_progression_enabled ) ) {
+		// Redirect immediately to the step completion URL.
+
+		learndash_safe_redirect(
+			learndash_course_get_step_completion_url( $post_id, $course_id, $user_id )
+		);
+	} else {
+		// Set a transient to allow extra processing after the step is completed.
+
+		set_transient(
+			"learndash_step_completed_{$post_id}_{$course_id}_{$user_id}",
+			true,
+			/**
+			 * Filters the transient expiration time for the step completed transient.
+			 *
+			 * @since 4.21.4
+			 *
+			 * @param int     $expiration_time The transient expiration time. Default 10 minutes.
+			 * @param int     $post_id         The post ID.
+			 * @param int     $course_id       The course ID.
+			 * @param int     $user_id         The user ID.
+			 */
+			apply_filters(
+				'learndash_step_completed_transient_expiration_time',
+				10 * MINUTE_IN_SECONDS,
+				$post_id,
+				$course_id,
+				$user_id
+			)
+		);
+	}
 }
 
 add_action( 'wp', 'learndash_mark_complete_process' );
@@ -419,8 +463,8 @@ add_action( 'wp', 'learndash_mark_complete_process' );
 /**
  * Returns the step (Lesson or Topic) completed transient data when a step is completed by a user through the `learndash_mark_complete_process` function.
  *
- * It's a workaround to allow us to do some extra one-time processing after the step is completed.
- * This function checks if the `learndash_step_completed` transient exists and removes it after returning the data.
+ * It's a workaround to allow us to do some extra processing after the step is completed.
+ * This function only returns the data if the `learndash_step_completed` transient exists. By default, the transient expires in 10 minutes.
  *
  * Note this function does not work for quizzes, as they don't use the `learndash_mark_complete_process` function to complete the step.
  *
@@ -443,13 +487,9 @@ function learndash_get_step_completed_transient_data( $step_id, $course_id, $use
 
 	// If the transient does not exist, return false.
 
-	if ( false === LDLMS_Transients::get( $transient_key ) ) {
+	if ( false === get_transient( $transient_key ) ) {
 		return false;
 	}
-
-	// Remove the transient.
-
-	LDLMS_Transients::delete( $transient_key );
 
 	// Return the step completion data.
 

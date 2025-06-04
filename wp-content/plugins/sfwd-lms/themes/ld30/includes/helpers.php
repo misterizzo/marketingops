@@ -852,38 +852,48 @@ function learndash_status_icon( $status = 'not-completed', $post_type = null, $a
 		switch ( $status ) {
 			case ( 'not-completed' ):
 				$class .= 'ld-status-incomplete';
-				$markup = '<div class="' . $class . '"></div>';
+				$markup = '<div class="' . $class . '" role="img" aria-label="' . esc_attr__( 'Not completed', 'learndash' ) . '"></div>';
 				break;
 			case ( 'completed' ):
 				$class .= 'ld-status-complete ld-secondary-background';
-				$markup = '<div class="' . $class . '"><span class="ld-icon-checkmark ld-icon"></span></div>';
+				$markup = '<div class="' . $class . '" role="img" aria-label="' . esc_attr__( 'Completed', 'learndash' ) . '"><span class="ld-icon-checkmark ld-icon" aria-hidden="true"></span></div>';
 				break;
 			case ( 'progress' ):
 			case ( 'in-progress' ):
 				$class .= 'ld-status-in-progress ld-secondary-in-progress-icon';
-				$markup = '<div class="' . $class . '"></div>';
+				$markup = '<div class="' . $class . '" role="img" aria-label="' . esc_attr__( 'In progress', 'learndash' ) . '"></div>';
 				break;
 			case ( 'not-started' ):
 			default:
 				$class .= 'ld-status-incomplete';
-				$markup = '<div class="' . $class . '"></div>';
+				$markup = '<div class="' . $class . '" role="img" aria-label="' . esc_attr__( 'Not started', 'learndash' ) . '"></div>';
 				break;
 		}
 	} else {
 		switch ( $status ) {
 			case ( 'notcompleted' ):
 			case ( 'failed' ):
+				$text = esc_attr__( 'Incomplete', 'learndash' );
+				if ( $status === 'failed' ) {
+					$text = esc_attr__( 'Failed', 'learndash' );
+				}
+
 				$class .= 'ld-quiz-incomplete';
-				$markup = '<div class="' . $class . '"><span class="ld-icon ld-icon-quiz"></span></div>';
+				$markup = '<div class="' . $class . '" role="img" aria-label="' . esc_attr( $text ) . '"><span class="ld-icon ld-icon-quiz" aria-hidden="true"></span></div>';
 				break;
 			case ( 'completed' ):
 			case ( 'passed' ):
+				$text = esc_attr__( 'Completed', 'learndash' );
+				if ( $status === 'passed' ) {
+					$text = esc_attr__( 'Passed', 'learndash' );
+				}
+
 				$class .= 'ld-quiz-complete ld-secondary-color';
-				$markup = '<div class="' . $class . '"><span class="ld-icon ld-icon-quiz"></span></div>';
+				$markup = '<div class="' . $class . '" role="img" aria-label="' . esc_attr( $text ) . '"><span class="ld-icon ld-icon-quiz" aria-hidden="true"></span></div>';
 				break;
 			case ( 'pending' ):
 				$class .= 'ld-quiz-pending';
-				$markup = '<div class="' . $class . '"><span class="ld-icon ld-icon-quiz"></span></div>';
+				$markup = '<div class="' . $class . '" role="img" aria-label="' . esc_attr__( 'Pending', 'learndash' ) . '"><span class="ld-icon ld-icon-quiz" aria-hidden="true"></span></div>';
 				break;
 		}
 	}
@@ -1258,7 +1268,13 @@ function learndash_30_template_assets() {
 	$theme_template_url = LearnDash_Theme_Register::get_active_theme_base_url();
 
 	// These assets really should be moved to the /templates directory since they are part of the theme.
-	wp_register_style( 'learndash-front', $theme_template_url . '/assets/css/learndash' . learndash_min_asset() . '.css', array(), LEARNDASH_SCRIPT_VERSION_TOKEN );
+	wp_register_style(
+		'learndash-front',
+		$theme_template_url . '/assets/css/learndash' . learndash_min_asset() . '.css',
+		[ 'dashicons' ],
+		LEARNDASH_SCRIPT_VERSION_TOKEN
+	);
+
 	wp_register_script( 'learndash-front', $theme_template_url . '/assets/js/learndash.js', array( 'jquery' ), LEARNDASH_SCRIPT_VERSION_TOKEN, true );
 
 	if ( get_post_type() === learndash_get_post_type_slug( 'exam' ) ) {
@@ -1410,14 +1426,35 @@ add_action( 'wp_enqueue_scripts', 'learndash_30_custom_colors' );
  * @since 3.0.0
  */
 function learndash_30_custom_colors() {
-	$colors = [
-		'primary'   => LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Theme_LD30', 'color_primary' ),
-		'secondary' => LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Theme_LD30', 'color_secondary' ),
-		'tertiary'  => LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Theme_LD30', 'color_tertiary' ),
-	];
+	/**
+	 * Grabs the set colors from the settings.
+	 *
+	 * If the set colors are invalid or empty, try to pull the colors from the matching Constants.
+	 *
+	 * If the Constants are empty or invalid, then the key will not exist in the resulting Array.
+	 */
+	$colors = wp_parse_args(
+		array_filter(
+			[
+				'primary'   => sanitize_hex_color( LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Theme_LD30', 'color_primary' ) ),
+				'secondary' => sanitize_hex_color( LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Theme_LD30', 'color_secondary' ) ),
+				'tertiary'  => sanitize_hex_color( LearnDash_Settings_Section::get_section_setting( 'LearnDash_Settings_Theme_LD30', 'color_tertiary' ) ),
+			]
+		),
+		array_filter(
+			[
+				'primary'   => sanitize_hex_color( constant( 'LD_30_COLOR_PRIMARY' ) ),
+				'secondary' => sanitize_hex_color( constant( 'LD_30_COLOR_SECONDARY' ) ),
+				'tertiary'  => sanitize_hex_color( constant( 'LD_30_COLOR_TERTIARY' ) ),
+			]
+		)
+	);
 
-	// Attempt to pick a button text color that is accessible based on the chosen background color.
-	$colors['primary_button_text'] = Color::pick_foreground_color( $colors['primary'], '#ffffff', '#000000' );
+	// Protects against an edge case where LD_30_COLOR_PRIMARY is empty or invalid.
+	if ( ! empty( $colors['primary'] ) ) {
+		// Attempt to pick a button text color that is accessible based on the chosen background color.
+		$colors['primary_button_text'] = Color::pick_foreground_color( $colors['primary'], '#ffffff', '#000000' );
+	}
 
 	/**
 	 * Filters default custom colors used in settings to set accent color, progress color, and notifications settings.
@@ -2922,11 +2959,12 @@ function learndash_30_has_topics( $course_id = null, $lessons = null ) {
 }
 
 /**
- * Shows the step completed alert just after the step (Lesson or Topic) is completed.
+ * Shows the step completed alert after the step (Lesson or Topic) is completed.
  *
  * Quizzes don't have a completion alert, as they have their own completion mechanism (extra page)
  *
  * @since 4.21.3
+ * @since 4.21.5. Don't show the alert if automatic progression is enabled.
  *
  * @param int    $step_id   Step ID.
  * @param int    $course_id Course ID.
@@ -2936,6 +2974,15 @@ function learndash_30_has_topics( $course_id = null, $lessons = null ) {
  * @return void
  */
 function learndash_30_show_step_completed_alert( int $step_id, int $course_id, int $user_id, string $context ): void {
+	$course_automatic_progression = LearnDash_Settings_Section::get_section_setting(
+		'LearnDash_Settings_Courses_Management_Display',
+		'course_automatic_progression'
+	);
+
+	if ( $course_automatic_progression === 'yes' ) {
+		return; // Bail early if automatic progression is enabled.
+	}
+
 	$step_completion_transient_data = learndash_get_step_completed_transient_data( $step_id, $course_id, $user_id );
 
 	if ( ! $step_completion_transient_data ) {
@@ -2970,7 +3017,12 @@ function learndash_30_show_step_completed_alert( int $step_id, int $course_id, i
 				'label' => $button_label,
 				'url'   => $step_completion_transient_data['next_step_url'],
 			],
-			'icon_content' => Template::get_template( 'components/icons/lesson-complete' ),
+			'icon_content' => Template::get_template(
+				'components/icons/lesson-complete',
+				[
+					'is_aria_hidden' => true,
+				]
+			),
 			'message'      => $message,
 			'role'         => 'alert',
 			'type'         => 'success ld-alert--step-completed',

@@ -6,6 +6,8 @@
  * @package LearnDash\Settings\Sections
  */
 
+use LearnDash\Core\Template\Template;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -17,14 +19,12 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 	 * @since 3.0.0
 	 */
 	class LearnDash_Settings_Courses_Management_Display extends LearnDash_Settings_Section {
-
 		/**
 		 * Protected constructor for class
 		 *
 		 * @since 3.0.0
 		 */
 		protected function __construct() {
-
 			// What screen ID are we showing on.
 			$this->settings_screen_id = 'sfwd-courses_page_courses-options';
 
@@ -158,6 +158,10 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 
 			if ( ! isset( $this->setting_option_values['course_completion_page'] ) ) {
 				$this->setting_option_values['course_completion_page'] = '';
+			}
+
+			if ( ! isset( $this->setting_option_values['course_automatic_progression'] ) ) {
+				$this->setting_option_values['course_automatic_progression'] = '';
 			}
 		}
 
@@ -390,7 +394,7 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 							'yes' => '',
 						),
 					),
-					'course_completion_page' => [
+					'course_completion_page'         => [
 						'name'             => 'course_completion_page',
 						'type'             => 'select',
 						'label'            => sprintf(
@@ -409,6 +413,33 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 						),
 						'value'            => $this->setting_option_values['course_completion_page'],
 						'display_callback' => [ LearnDash_Settings_Section_Registration_Pages::class, 'display_pages_selector' ],
+					],
+					'course_automatic_progression'   => [
+						'name'      => 'course_automatic_progression',
+						'type'      => 'checkbox-switch',
+						'label'     => sprintf(
+							esc_html__( 'Automatic Progression', 'learndash' )
+						),
+						'help_text' => sprintf(
+							// translators: placeholders: lesson, topic, course.
+							esc_html__( 'Automatically move users to the next step when they complete a %1$s or %2$s. When enabled, this skips the "Step Completed" message and takes users directly to the next %3$s step.', 'learndash' ),
+							learndash_get_custom_label_lower( 'lesson' ),
+							learndash_get_custom_label_lower( 'topic' ),
+							learndash_get_custom_label_lower( 'course' )
+						),
+						'value'     => $this->setting_option_values['course_automatic_progression'],
+						'options'   => [
+							''    => __( 'Enabling this setting does not meet accessibility standards', 'learndash' ),
+							'yes' => Template::get_template(
+								'components/icons/warning',
+								[
+									'classes' => [
+										'ld-accessibility-warning',
+										'ld-accessibility-warning--automatic-progression-enabled',
+									],
+								]
+							) . __( 'Enabling this setting does not meet accessibility standards', 'learndash' ),
+						],
 					],
 				)
 			);
@@ -440,7 +471,6 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 					// Manage Course Builder, Per Page, and Share Steps.
 					if ( ( isset( $current_values['course_builder_enabled'] ) ) && ( 'yes' === $current_values['course_builder_enabled'] ) ) {
 						$current_values['course_builder_per_page'] = absint( $current_values['course_builder_per_page'] );
-
 					} else {
 						$current_values['course_builder_shared_steps'] = '';
 						$current_values['course_builder_per_page']     = LEARNDASH_LMS_DEFAULT_WIDGET_PER_PAGE;
@@ -496,6 +526,10 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 				if ( ! isset( $current_values['course_completion_page'] ) ) {
 					$current_values['course_completion_page'] = '';
 				}
+
+				if ( ! isset( $current_values['course_automatic_progression'] ) ) {
+					$current_values['course_automatic_progression'] = '';
+				}
 			}
 
 			return $current_values;
@@ -504,7 +538,7 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Lear
 }
 add_action(
 	'learndash_settings_sections_init',
-	function() {
+	function () {
 		LearnDash_Settings_Courses_Management_Display::add_section_instance();
 	}
 );

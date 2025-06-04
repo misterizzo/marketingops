@@ -5812,51 +5812,47 @@ var Step4 = function Step4() {
     _useState2 = _slicedToArray(_useState, 2),
     CBInstall = _useState2[0],
     setCBInstall = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(setup.data.course_amount === "multiple" || setup.data.course_type.includes("certificate") || setup.data.course_type.includes("timed") || setup.data.course_type.includes("group_courses")),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(setup.data.charge === "yes" && setup.data.charge_method === "woocommerce"),
     _useState4 = _slicedToArray(_useState3, 2),
-    CGInstall = _useState4[0],
-    setCGInstall = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(setup.data.charge === "yes" && setup.data.charge_method === "woocommerce"),
+    WCInstall = _useState4[0],
+    setWCInstall = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState6 = _slicedToArray(_useState5, 2),
-    WCInstall = _useState6[0],
-    setWCInstall = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    showAllSettings = _useState6[0],
+    setShowAllSettings = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('yes' === setup.data.group_access),
     _useState8 = _slicedToArray(_useState7, 2),
-    showAllSettings = _useState8[0],
-    setShowAllSettings = _useState8[1];
+    groupArchivePage = _useState8[0],
+    setGroupArchivePage = _useState8[1];
   var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('yes' === setup.data.group_access),
     _useState10 = _slicedToArray(_useState9, 2),
-    groupArchivePage = _useState10[0],
-    setGroupArchivePage = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('yes' === setup.data.group_access),
+    publicGroup = _useState10[0],
+    setPublicGroup = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('yes' === setup.data.group_leader),
     _useState12 = _slicedToArray(_useState11, 2),
-    publicGroup = _useState12[0],
-    setPublicGroup = _useState12[1];
+    manageUser = _useState12[0],
+    setManageUser = _useState12[1];
   var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('yes' === setup.data.group_leader),
     _useState14 = _slicedToArray(_useState13, 2),
-    manageUser = _useState14[0],
-    setManageUser = _useState14[1];
+    groupAutoEnroll = _useState14[0],
+    setGroupAutoEnroll = _useState14[1];
   var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('yes' === setup.data.group_leader),
     _useState16 = _slicedToArray(_useState15, 2),
-    groupAutoEnroll = _useState16[0],
-    setGroupAutoEnroll = _useState16[1];
+    courseAutoEnroll = _useState16[0],
+    setCourseAutoEnroll = _useState16[1];
   var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('yes' === setup.data.group_leader),
     _useState18 = _slicedToArray(_useState17, 2),
-    courseAutoEnroll = _useState18[0],
-    setCourseAutoEnroll = _useState18[1];
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('yes' === setup.data.group_leader),
-    _useState20 = _slicedToArray(_useState19, 2),
-    bypassCourseLimit = _useState20[0],
-    setByPassCourseLimit = _useState20[1];
+    bypassCourseLimit = _useState18[0],
+    setByPassCourseLimit = _useState18[1];
 
   // Because we will download and install plugins, it will make the request take long and can be timeout, better to
   // separate it to many small tasks.
   var steps = ['save_default_currency', 'create_registration_pages', 'process_course_listing', 'process_certificate_builder', 'process_woo', 'update_settings'];
   var step = 0;
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState22 = _slicedToArray(_useState21, 2),
-    loading = _useState22[0],
-    setLoading = _useState22[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState20 = _slicedToArray(_useState19, 2),
+    loading = _useState20[0],
+    setLoading = _useState20[1];
   var finalize = function finalize() {
     setLoading(true);
     var curr_step = steps[step];
@@ -5874,7 +5870,6 @@ var Step4 = function Step4() {
         course_auto_enroll: courseAutoEnroll,
         bypass_course_limit: bypassCourseLimit,
         certificate_builder: CBInstall,
-        course_grid: CGInstall,
         woocommerce: WCInstall
       })
     })).then(function (res) {
@@ -6163,43 +6158,6 @@ var Step4 = function Step4() {
     checked: CBInstall,
     onChange: function onChange(e) {
       setCBInstall(e.target.checked);
-    },
-    type: "checkbox",
-    className: "sr-only toggle"
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "w-9 h-3.5 bg-gray-light rounded-full shadow-inner"
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "dot absolute w-5 h-5 bg-base-white rounded-full shadow -left-0 -top-1 transition"
-  }))))))), /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center mt-4 overflow-hidden"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "h-14 w-14 min-w-14 float-left rounded-full mr-4 bg-gray-icon flex items-center justify-center"
-  }, /*#__PURE__*/React.createElement("img", {
-    className: "inline-block w-6",
-    src: ldSetupWizard.urls.assets + 'img/icon-courses-grid.png',
-    alt: ""
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "flex justify-between w-full"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("strong", {
-    className: "font-medium text-sm block"
-  }, __('Course Grid', 'learndash')), /*#__PURE__*/React.createElement("p", {
-    className: "text-sm font-light pt-1 pr-6"
-  }, __('Display all available courses in a grid on the Courses page.', 'learndash'))), /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center justify-center"
-  }, /*#__PURE__*/React.createElement("label", {
-    htmlFor: "course-grid",
-    className: "flex items-center cursor-pointer mr-2"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "relative"
-  }, setup.plugins_status.course_grid === true ? /*#__PURE__*/React.createElement("span", {
-    className: "text-xs font-medium rounded-2xl bg-base-silver inline-block -mr-2 py-1.5 px-3"
-  }, __('Installed', 'learndash')) : /*#__PURE__*/React.createElement("div", {
-    className: "mr-3"
-  }, /*#__PURE__*/React.createElement("input", {
-    id: "course-grid",
-    checked: CGInstall,
-    onChange: function onChange(e) {
-      setCGInstall(e.currentTarget.checked);
     },
     type: "checkbox",
     className: "sr-only toggle"

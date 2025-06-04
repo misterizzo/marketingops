@@ -5,7 +5,7 @@
  * This file contains the wrapper for a custom alert message
  *
  * @since 3.0.0
- * @version 4.21.3
+ * @version 4.21.5
  *
  * @package LearnDash\Templates\LD30
  */
@@ -123,7 +123,7 @@ if ( ( isset( $message ) ) && ( ! empty( $message ) ) ) :
 
 			if ( ! empty( $icon ) ) :
 				?>
-				<div class="<?php echo esc_attr( $icon ); ?>">
+				<div aria-hidden="true" class="<?php echo esc_attr( $icon ); ?>">
 					<?php if ( isset( $icon_content ) && ! empty( $icon_content ) ) : ?>
 						<?php echo $icon_content; ?>
 					<?php endif; ?>

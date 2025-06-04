@@ -226,10 +226,17 @@ if ( ! class_exists( 'LearnDash_Course_Wizard' ) ) {
 						'return_url'    => rawurlencode( $return_url ),
 					)
 				),
+				'timeout'   => 30,
 			);
 
 			$request = wp_remote_post( self::PLAYLIST_PROCESS_SERVER_ENDPOINT . '/process_url', $args );
-			$body    = json_decode( wp_remote_retrieve_body( $request ) );
+
+			if ( is_wp_error( $request ) ) {
+				$this->update_processing_data( $playlist_url, 'error_message', $request->get_error_message() );
+				learndash_safe_redirect( $return_url );
+			}
+
+			$body = json_decode( wp_remote_retrieve_body( $request ) );
 
 			if ( ! $body || ! empty( $body->message ) ) {
 				$this->update_processing_data( $playlist_url, 'error_message', ! empty( $body->message ) ? $body->message : __( 'Error on access LearnDash service. Please try it again in a few minutes.', 'learndash' ) );
@@ -371,8 +378,14 @@ if ( ! class_exists( 'LearnDash_Course_Wizard' ) ) {
 				),
 				array(
 					'sslverify' => self::PLAYLIST_PROCESS_SERVER_SSL_VERIFY,
+					'timeout'   => 30,
 				)
 			);
+
+			// Return error message if the request returns WP_Error.
+			if ( is_wp_error( $request ) ) {
+				return $request->get_error_message();
+			}
 
 			$body = json_decode( wp_remote_retrieve_body( $request ) );
 			if ( ! $body || ! empty( $body->message ) ) {

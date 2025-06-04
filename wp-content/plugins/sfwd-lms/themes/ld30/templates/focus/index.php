@@ -3,7 +3,7 @@
  * LearnDash LD30 focus mode.
  *
  * @since 3.0.0
- * @version 4.21.1
+ * @version 4.21.5
  *
  * @package LearnDash\Templates\LD30
  */
@@ -94,7 +94,7 @@ if ( have_posts() ) :
 		do_action( 'learndash-focus-masthead-after', $course_id, $user_id );
 		?>
 
-		<div class="ld-focus-content">
+		<div id="ld-focus-content" class="ld-focus-content">
 
 			<?php
 			/**

@@ -1,3 +1,6 @@
+/**
+ * @var {Object} WpProQuizGlobal Global object for wpProQuiz.
+ */
 const learndash = window.learndash || {};
 
 learndash.forms = learndash.forms || {};
@@ -3234,6 +3237,11 @@ learndash.forms.sortable = learndash.forms.sortable || {};
 									.find('.wpProQuiz_responsePoints')
 									.text(result.p);
 
+								// Hide the move icon in matrix sorting answer box after answer checking is successful.
+								$this
+									.find('.wpProQuiz_sortStringItem_icon')
+									.hide();
+
 								$this.data('check', true);
 							}
 						});
@@ -3296,10 +3304,16 @@ learndash.forms.sortable = learndash.forms.sortable || {};
 							typeof result.e.c !== 'undefined' &&
 							result.e.c.length > 0
 						) {
-							$question
-								.find('span.wpProQuiz_freeCorrect')
-								.text(result.e.c.join(', '))
-								.show();
+							autosizeInput($question.find('input[type="text"]'), 12);
+
+							// If the answer is incorrect, show the correct answer message.
+							if (!result.c) {
+								let message = WpProQuizGlobal.incorrectAnswer.replace('@@LearnDash_Incorrect@@', result.e.c.join(', '));
+								$question
+									.find('span.wpProQuiz_freeCorrect')
+									.html(message)
+									.show();
+							}
 						}
 						break;
 
@@ -3318,15 +3332,13 @@ learndash.forms.sortable = learndash.forms.sortable || {};
 
 								if (result.s[i]) {
 									//input.css('background-color', '#B0DAB0');
-									input.addClass('wpProQuiz_answerCorrect');
+									$this.addClass('wpProQuiz_answerCorrect');
+									span.show();
 								} else {
-									input.addClass('wpProQuiz_answerIncorrect');
-									//input.css('background-color', '#FFBABA');
+									$this.addClass('wpProQuiz_answerIncorrect');
 
 									if (typeof result.e.c[i] !== 'undefined') {
-										span.html(
-											'(' + result.e.c[i].join() + ')'
-										);
+										span.html( '<span class="ld-quiz__cloze-results--correct-answer">(' + result.e.c[i].join() + ')</span>' );
 										span.show();
 									}
 								}
@@ -3352,6 +3364,48 @@ learndash.forms.sortable = learndash.forms.sortable || {};
 								learndash.forms.sortable.destroySortable(
 									$questionList[0] ?? null
 								);
+
+								/**
+								 * Improve accessibility of answered sortable list.
+								 *
+								 * This is destructive, and not easily reversible.
+								 * Therefore, it is not a part of learndash.forms.sortable.destroySortable().
+								 */
+								if ($questionList[0]) {
+									const $items =
+										$questionList.find(
+											'.ld-sortable__item'
+										);
+
+									$items.each(function(index, item) {
+										const $handle = $(item).find(
+											'.ld-sortable__item-handle'
+										);
+
+										$handle.removeAttr('tabindex');
+
+										const attributes = {};
+										$.each(
+											$handle[0]
+												? $handle[0].attributes
+												: {},
+											function () {
+												attributes[this.nodeName] =
+													this.nodeValue;
+											}
+										);
+
+										// Convert the handle to a <div> so that a screen reader won't treat it as a button.
+										const $nonButtonHandle = $(
+											'<div />',
+											attributes
+										).append($handle.contents());
+
+										$handle.replaceWith($nonButtonHandle);
+
+										$(item).attr('tabindex', '0');
+									});
+								}
 							}
 
 							// Clone the student answert list in order to show the correct order.
@@ -3378,6 +3432,19 @@ learndash.forms.sortable = learndash.forms.sortable || {};
 							$questionList_correct
 								.children('.wpProQuiz_questionListItem')
 								.addClass('wpProQuiz_answerCorrect');
+
+							if (
+								$questionList_correct.hasClass(
+									'ld-sortable--sort_answer'
+								)
+							) {
+								$questionList_correct
+									.children('.ld-sortable__item')
+									.addClass(
+										'ld-sortable__item--correct-answer'
+									);
+							}
+
 							// Show the correct/incorrect indicators on the student answers.
 							jQuery.each(
 								result.e.c,
@@ -3400,11 +3467,31 @@ learndash.forms.sortable = learndash.forms.sortable || {};
 												jQuery(student_item_el),
 												true
 											);
+
+											if (
+												$(student_item_el).hasClass(
+													'ld-sortable__item'
+												)
+											) {
+												$(student_item_el).addClass(
+													'ld-sortable__item--correct'
+												);
+											}
 										} else {
 											plugin.methode.marker(
 												jQuery(student_item_el),
 												false
 											);
+
+											if (
+												$(student_item_el).hasClass(
+													'ld-sortable__item'
+												)
+											) {
+												$(student_item_el).addClass(
+													'ld-sortable__item--incorrect'
+												);
+											}
 										}
 									}
 								}
@@ -5003,6 +5090,31 @@ learndash.forms.sortable = learndash.forms.sortable || {};
 			}
 		});
 	};
+
+	/**
+	 * Autosize the input field.
+	 * 
+	 * @since 4.21.4
+	 * 
+	 * @param {jQuery} $input       - The input field to autosize.
+	 * @param {number} [$padding=0] - The padding to add to the input field.
+	 */
+	function autosizeInput($input, $padding = 0) {
+		const $sizer = $('<span>').css({
+			position: 'absolute',
+			visibility: 'hidden',
+			whiteSpace: 'pre',
+			font: $input.css('font'),
+		}).appendTo('body');
+		
+		function update() {
+			$sizer.text($input.val() || $input.attr('placeholder') || '');
+			$input.width($sizer.width() + 6 + $padding);
+		}
+		
+		$input.on('input', update);
+		update();
+	}
 })(jQuery);
 
 var learndash_prepare_quiz_resume_data = function (config) {

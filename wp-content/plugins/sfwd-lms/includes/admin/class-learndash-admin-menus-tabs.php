@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use LearnDash\Core\Utilities\Cast;
 use StellarWP\Learndash\StellarWP\SuperGlobals\SuperGlobals;
+use LearnDash\Core\Modules\Quiz\Question;
 
 if ( ! class_exists( 'Learndash_Admin_Menus_Tabs' ) ) {
 	/**
@@ -1210,7 +1211,6 @@ if ( ! class_exists( 'Learndash_Admin_Menus_Tabs' ) ) {
 					'incorrect_answer_message'           => esc_html__( 'Message for incorrect answer - optional', 'learndash' ),
 
 					'essay_answer_message'               => esc_html__( 'Message after Essay is submitted - optional', 'learndash' ),
-
 					'solution_hint'                      => esc_html__( 'Solution hint', 'learndash' ),
 					'different_points_for_each_answer'   => esc_html__( 'Different points for each answer', 'learndash' ),
 					'points'                             => esc_html__( 'points', 'learndash' ),
@@ -1435,6 +1435,8 @@ if ( ! class_exists( 'Learndash_Admin_Menus_Tabs' ) ) {
 					'essay_graded_full_points'           => esc_html_x( 'Graded, Full Points Awarded', 'Essay answer grading option', 'learndash' ),
 					'essay_not_set'                      => esc_html_x( 'Not set', 'Essay answer grading option has not been set', 'learndash' ),
 					'supported_media_in_answers'         => esc_html_x( 'Only image, video and audio files are supported.', 'Supported media formats in question answers', 'learndash' ),
+					'matrix_sort_answer_accessibility_warning_html' => Question\Admin\Edit::get_matrix_sort_answer_accessibility_warning(),
+					'matrix_sort_answer_accessibility_warning_label' => Question\Admin\Edit::get_matrix_sort_answer_accessibility_warning( false ),
 				),
 			);
 

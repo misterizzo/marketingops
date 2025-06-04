@@ -127,6 +127,7 @@ if ( ( class_exists( 'LearnDash_Theme_Settings_Section' ) ) && ( ! class_exists(
 						'data-default-color' => LD_30_COLOR_PRIMARY,
 						'placeholder'        => LD_30_COLOR_PRIMARY,
 					),
+					'validate_callback' => 'sanitize_hex_color',
 				),
 				'color_secondary'             => array(
 					'name'      => 'color_secondary',
@@ -138,6 +139,7 @@ if ( ( class_exists( 'LearnDash_Theme_Settings_Section' ) ) && ( ! class_exists(
 						'data-default-color' => LD_30_COLOR_SECONDARY,
 						'placeholder'        => LD_30_COLOR_SECONDARY,
 					),
+					'validate_callback' => 'sanitize_hex_color',
 				),
 				'color_tertiary'              => array(
 					'name'      => 'color_tertiary',
@@ -149,6 +151,7 @@ if ( ( class_exists( 'LearnDash_Theme_Settings_Section' ) ) && ( ! class_exists(
 						'data-default-color' => LD_30_COLOR_TERTIARY,
 						'placeholder'        => LD_30_COLOR_TERTIARY,
 					),
+					'validate_callback' => 'sanitize_hex_color',
 				),
 				'focus_mode_enabled'          => array(
 					'name'                => 'focus_mode_enabled',
