@@ -1,5 +1,11 @@
 body.login div#login h1 a {background-image: url('/wp-content/uploads/2022/08/cropped-cropped-logo_inst.png');width: 400px;background-size: contain;background-position: center;}
 .login .g-recaptcha {transform: scale(0.89);transform-origin: left;margin: 0 0 15px;}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {transition: background-color 5000s ease-in-out 0s;-webkit-text-fill-color: #fff !important;}
+
 @media only screen and ( min-width: 1200px ) {
 	.register_page.elementor-section.elementor-section-boxed > .elementor-container {max-width: 990px;}
 	.elementor-section .elementor-container {display: flex;margin-right: auto;margin-left: auto;position: relative;}
