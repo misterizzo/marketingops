@@ -4,7 +4,7 @@ body.login div#login h1 a {background-image: url('/wp-content/uploads/2022/08/cr
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
-input:-webkit-autofill:active {transition: background-color 5000s ease-in-out 0s;-webkit-text-fill-color: #fff !important;}
+input:-webkit-autofill:active {transition: background-color 5000s ease-in-out 0s;-webkit-text-fill-color: #6D7B83 !important;}
 
 @media only screen and ( min-width: 1200px ) {
 	.register_page.elementor-section.elementor-section-boxed > .elementor-container {max-width: 990px;}
