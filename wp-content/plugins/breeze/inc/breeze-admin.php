@@ -127,6 +127,7 @@ class Breeze_Admin {
 	 * @param string $new_status
 	 * @param string $old_status
 	 * @param object $post
+	 *
 	 * @return void
 	 */
 	public function on_all_status_transitions( $new_status, $old_status, $post ) {
@@ -265,19 +266,15 @@ class Breeze_Admin {
 		// Fix viewport images when lazy-load is active.
 		if ( true === $is_lazy_load_enabled ) {
 			if ( false === $is_lazy_load_native ) {
-				$data = 'const lazyLoadInstance = new LazyLoad({
+				$data = 'document.addEventListener("DOMContentLoaded", function () {
+								    const lazyLoadInstance = new LazyLoad({
 						    elements_selector: ".br-lazy",
 						    data_src: "breeze",
 						    data_srcset: "brsrcset",
 						    data_sizes: "brsizes",
 						    class_loaded: "br-loaded",
 						    threshold: 300,
-						    callback_enter: (element) => {
-						        console.log("Entered viewport:", element);
-						    },
-						    callback_loaded: (element) => {
-						        console.log("Loaded:", element);
-						    }
+								    });
 						});';
 				wp_add_inline_script( 'breeze-lazy', $data, 'after' );
 			} else {

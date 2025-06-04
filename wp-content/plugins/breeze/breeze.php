@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Breeze
  * Description: Breeze is a WordPress cache plugin with extensive options to speed up your website. All the options including Varnish Cache are compatible with Cloudways hosting.
- * Version: 2.2.10
+ * Version: 2.2.11
  * Text Domain: breeze
  * Domain Path: /languages
  * Author: Cloudways
@@ -37,7 +37,7 @@ if ( ! defined( 'BREEZE_PLUGIN_DIR' ) ) {
 	define( 'BREEZE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 }
 if ( ! defined( 'BREEZE_VERSION' ) ) {
-	define( 'BREEZE_VERSION', '2.2.10' );
+	define( 'BREEZE_VERSION', '2.2.11' );
 }
 if ( ! defined( 'BREEZE_SITEURL' ) ) {
 	define( 'BREEZE_SITEURL', get_site_url() );
@@ -85,8 +85,6 @@ require_once BREEZE_PLUGIN_DIR . 'inc/plugin-incompatibility/breeze-amp-compatib
 require_once BREEZE_PLUGIN_DIR . 'inc/helpers.php';
 require_once BREEZE_PLUGIN_DIR . 'inc/functions.php';
 
-// Version Upgrade routines
-require_once BREEZE_PLUGIN_DIR . 'inc/upgrade.php';
 
 // Handle Heartbeat options.
 require_once BREEZE_PLUGIN_DIR . 'inc/class-breeze-heartbeat-settings.php';
@@ -184,6 +182,9 @@ add_action(
 require_once BREEZE_PLUGIN_DIR . 'inc/compatibility/class-breeze-shortpixel-compatibility.php';
 require_once BREEZE_PLUGIN_DIR . 'inc/compatibility/class-breeze-avada-cache.php';
 require_once BREEZE_PLUGIN_DIR . 'inc/compatibility/class-breeze-elementor-template.php';
+
+// Version Upgrade routines
+require_once BREEZE_PLUGIN_DIR . 'inc/upgrade.php';
 
 /**
  * Buffer to work with the contents before any changes occured

@@ -4,6 +4,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Manages upgrade routines for the Breeze plugin.
+ *
+ * This class handles version-specific upgrade tasks for the Breeze plugin. It ensures that
+ * stored plugin version information is updated, appropriate hooks are triggered, caches are cleared,
+ * configuration files are refreshed, and compatibility adjustments are made for different WordPress setups
+ * (e.g., single-site or multisite installations).
+ */
 class Breeze_Upgrade {
 
 	public $breeze_version;
@@ -11,17 +19,62 @@ class Breeze_Upgrade {
 	public function __construct() {}
 
 	public function init() {
-
 		$this->breeze_version = get_option( 'breeze_version' );
 
 		if ( empty( $this->breeze_version ) || version_compare( BREEZE_VERSION, $this->breeze_version, '!=' ) ) {
+
 			add_action( 'wp_loaded', array( $this, 'do_breeze_upgrade' ) );
 			update_option( 'breeze_version', BREEZE_VERSION, true );
-			self::refresh_config_files();
-			do_action( 'breeze_clear_all_cache' );
+			$this->do_breeze_clear_cache();
+			$this->do_breeze_config_refresh();
+
 		}
 	}
 
+	/**
+	 * Clears all cached data managed by the Breeze plugin.
+	 *
+	 * This method checks for the existence of the Breeze_Admin class,
+	 * loads the Breeze_MinificationCache class if not already loaded,
+	 * and executes the cache-clearing functionality provided by the Breeze plugin.
+	 *
+	 * @return void
+	 */
+	private function do_breeze_clear_cache() {
+		if ( class_exists( 'Breeze_Admin' ) ) {
+			if ( ! class_exists( 'Breeze_MinificationCache' ) ) {
+				require_once BREEZE_PLUGIN_DIR . 'inc/minification/breeze-minification-cache.php';
+			}
+
+			$admin = new Breeze_Admin();
+			$admin->breeze_clear_all_cache();
+		}
+
+	}
+
+	/**
+	 * Refreshes the configuration files for the Breeze plugin.
+	 *
+	 * This method ensures that the plugin's configuration files
+	 * are updated by invoking the refresh_config_files method.
+	 *
+	 * @return void
+	 */
+	private function do_breeze_config_refresh() {
+			self::refresh_config_files();
+	}
+
+	/**
+	 * Handles the upgrade routines for different versions of the Breeze plugin.
+	 *
+	 * This method performs conditional upgrade tasks based on the current version
+	 * of the Breeze plugin. It ensures that specific update routines from older
+	 * versions are executed and applies necessary changes for newer versions.
+	 * Also triggers a custom action after the upgrade routines and updates
+	 * the stored version value accordingly.
+	 *
+	 * @return void
+	 */
 	public function do_breeze_upgrade() {
 		$is_older_than_v2118 = false;
 
@@ -88,6 +141,14 @@ class Breeze_Upgrade {
 		}
 	}
 
+	/**
+	 * Handles upgrade routines for version 2.1.19 by unscheduling specific cron events.
+	 *
+	 * This method checks the status of WP-Cron and required functions. If valid cron jobs exist,
+	 * it unschedules the 'breeze_after_update_scheduled_hook' events to prevent conflicts or redundancy.
+	 *
+	 * @return void
+	 */
 	public function v2119_upgrades() {
 		if ( defined( 'DISABLE_WP_CRON' ) && DISABLE_WP_CRON ) {
 			return;
@@ -112,6 +173,16 @@ class Breeze_Upgrade {
 		}
 	}
 
+	/**
+	 * Handles the upgrades introduced in version 2.11.8 of the plugin.
+	 *
+	 * This method verifies if WooCommerce is active, ensures the Breeze_Ecommerce_Cache class is loaded,
+	 * and performs configuration updates for each site within a multisite network or for a single site setup.
+	 * Specifically, it writes the configuration cache depending on the settings inheritance status
+	 * for multisite setups or directly for single-site installations.
+	 *
+	 * @return void
+	 */
 	public function v2118_Upgrades() {
 
 		if ( ! is_woocommerce_active() ) {

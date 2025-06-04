@@ -12,7 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Breeze_Elementor_Template {
 	public function __construct() {
 		// Hook into Elementor's "save" action.
-		add_action( 'elementor/editor/after_save', array( $this, 'clear_breeze_cache_on_elementor_template_update' ), 10, 2 );
+		add_action( 'elementor/editor/after_save', array( $this, 'clear_breeze_cache_on_elementor_template_update' ) );
+		// Hook into Elementor's clear files and data ajax action.
+		add_action( 'elementor/core/files/clear_cache', array( $this, 'clear_all_breeze_cache' ) );
 	}
 
 	/**
@@ -22,12 +24,12 @@ class Breeze_Elementor_Template {
 	 * or footer. If the template is built with Elementor, it triggers the Breeze cache clearing
 	 * mechanism.
 	 *
-	 * @param int $post_id The ID of the post being saved.
+	 * @param int   $post_id The ID of the post being saved.
 	 * @param array $editor_data Data related to the Elementor editor for the current post.
 	 *
 	 * @return void
 	 */
-	function clear_breeze_cache_on_elementor_template_update( int $post_id, array $editor_data ): void {
+	function clear_breeze_cache_on_elementor_template_update( int $post_id ) {
 
 		// Retrieve the Elementor template type for the current post.
 		$_elementor_template_type = get_metadata( 'post', $post_id, '_elementor_template_type', true );
@@ -36,8 +38,17 @@ class Breeze_Elementor_Template {
 		if ( in_array( $_elementor_template_type, array( 'header', 'footer' ), true ) ) {
 
 			// Trigger an action to clear Breeze cache across the site when an eligible Elementor template is updated.
-			do_action( 'breeze_clear_all_cache' );
+			$this->clear_all_breeze_cache();
 		}
+	}
+
+	/**
+	 * Clear all cache of breeze.
+	 *
+	 * @return void
+	 */
+	public function clear_all_breeze_cache() {
+		do_action( 'breeze_clear_all_cache' );
 	}
 }
 
@@ -59,7 +70,6 @@ function breeze_load_elementor_compatibility() {
 		// Init compatibility code.
 		new Breeze_Elementor_Template();
 	}
-
 }
 
 add_action( 'plugins_loaded', 'breeze_load_elementor_compatibility' );
