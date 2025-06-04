@@ -23,7 +23,8 @@
 
 use SkyVerge\WooCommerce\Memberships\Integrations\Courseware\LearnDash;
 use SkyVerge\WooCommerce\Memberships\Integrations\Courseware\Sensei;
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
+use SkyVerge\WooCommerce\Memberships\Integrations\Elementor_Builder;
+use SkyVerge\WooCommerce\Memberships\Integrations\User_Switching;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -97,10 +98,7 @@ class WC_Memberships_Integrations {
 
 		// Elementor Builder
 		if ( $this->is_elementor_builder_active() ) {
-
-			require_once( wc_memberships()->get_plugin_path() . '/src/integrations/Elementor_Builder.php' );
-
-			$this->elementor_builder = new \SkyVerge\WooCommerce\Memberships\Integrations\Elementor_Builder();
+			$this->elementor_builder = new Elementor_Builder();
 		}
 
 		// Groups
@@ -110,9 +108,6 @@ class WC_Memberships_Integrations {
 
 		// LearnDash
 		if ( wc_memberships()->is_plugin_active( 'sfwd_lms.php' ) ) {
-
-			require_once( wc_memberships()->get_plugin_path() . '/src/integrations/Courseware.php' );
-			require_once( wc_memberships()->get_plugin_path() . '/src/integrations/Courseware/LearnDash.php' );
 
 			$this->learndash = new LearnDash();
 
@@ -137,9 +132,6 @@ class WC_Memberships_Integrations {
 		// Sensei
 		if ( $this->is_sensei_active() ) {
 
-			require_once( wc_memberships()->get_plugin_path() . '/src/integrations/Courseware.php' );
-			require_once( wc_memberships()->get_plugin_path() . '/src/integrations/Courseware/Sensei.php' );
-
 			$this->sensei = new Sensei();
 
 			// @TODO remove this class alias by version 3.0.0 or by April 2022 {unfulvio 2021-04-29}
@@ -154,9 +146,7 @@ class WC_Memberships_Integrations {
 		// User Switching
 		if ( $this->is_user_switching_active() ) {
 
-			require_once( wc_memberships()->get_plugin_path() . '/src/integrations/User_Switching.php' );
-
-			$this->user_switching = new \SkyVerge\WooCommerce\Memberships\Integrations\User_Switching();
+			$this->user_switching = new User_Switching();
 
 			/** @deprecated remove legacy class aliases when the plugin has fully migrated to namespaces */
 			class_alias( \SkyVerge\WooCommerce\Memberships\Integrations\User_Switching::class, 'WC_Memberships_Integration_User_Switching', false );

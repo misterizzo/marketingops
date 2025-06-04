@@ -23,7 +23,7 @@
 
 use SkyVerge\WooCommerce\Memberships\Profile_Fields\Profile_Field;
 use SkyVerge\WooCommerce\Memberships\Profile_Fields;
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_15_8 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -43,8 +43,12 @@ class WC_Memberships_User_Membership {
 	/** @var int User Membership plan id */
 	public $plan_id;
 
-	/** @var \WC_Memberships_Membership_Plan User Membership plan */
-	public $plan;
+	/**
+	 * This property is protected so that we don't have to populate it in the constructor, which can cause "translation triggered
+	 * too early" issues. Instead it's retrieved via the magic method __get() when needed. Also {@see static::get_plan()}.
+	 * @var \WC_Memberships_Membership_Plan
+	 */
+	protected $plan;
 
 	/** @var int User Membership user (author) id */
 	public $user_id;
@@ -128,11 +132,16 @@ class WC_Memberships_User_Membership {
 		}
 
 		$this->set_meta_keys();
-
-		// set membership type
-		$this->type = $this->get_type();
 	}
 
+	public function __get($name)
+	{
+		if (method_exists($this, 'get_'.$name)) {
+			return call_user_func([$this, 'get_'.$name]);
+		}
+
+		return null;
+	}
 
 	/**
 	 * Gets the user membership ID.
@@ -286,6 +295,9 @@ class WC_Memberships_User_Membership {
 	 * @return string
 	 */
 	public function get_type() {
+		if ( ! empty( $this->type ) ) {
+			return $this->type;
+		}
 
 		$type = 'manually-assigned';
 		$plan = $this->get_plan();

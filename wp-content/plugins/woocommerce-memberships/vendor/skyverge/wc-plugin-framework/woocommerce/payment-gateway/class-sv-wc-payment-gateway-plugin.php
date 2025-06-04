@@ -18,20 +18,20 @@
  *
  * @package   SkyVerge/WooCommerce/Payment-Gateway/Classes
  * @author    SkyVerge
- * @copyright Copyright (c) 2013-2023, SkyVerge, Inc.
+ * @copyright Copyright (c) 2013-2024, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-namespace SkyVerge\WooCommerce\PluginFramework\v5_12_1;
+namespace SkyVerge\WooCommerce\PluginFramework\v5_15_8;
 
 use Automattic\WooCommerce\Admin\Notes\WC_Admin_Note;
 use Automattic\WooCommerce\Admin\Notes\WC_Admin_Notes;
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1\Payment_Gateway\Blocks\Gateway_Blocks_Handler;
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1\Payment_Gateway\External_Checkout\Google_Pay\Google_Pay;
+use SkyVerge\WooCommerce\PluginFramework\v5_15_8\Payment_Gateway\Blocks\Gateway_Blocks_Handler;
+use SkyVerge\WooCommerce\PluginFramework\v5_15_8\Payment_Gateway\External_Checkout\Google_Pay\Google_Pay;
 
 defined( 'ABSPATH' ) or exit;
 
-if ( ! class_exists( '\\SkyVerge\\WooCommerce\\PluginFramework\\v5_12_1\\SV_WC_Payment_Gateway_Plugin' ) ) :
+if ( ! class_exists( '\\SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Plugin' ) ) :
 
 
 /**
@@ -166,8 +166,6 @@ abstract class SV_WC_Payment_Gateway_Plugin extends SV_WC_Plugin {
 	 */
 	protected function init_rest_api_handler() {
 
-		require_once( $this->get_payment_gateway_framework_path() . '/rest-api/class-sv-wc-payment-gateway-plugin-rest-api.php' );
-
 		$this->rest_api_handler = new Payment_Gateway\REST_API( $this );
 	}
 
@@ -180,9 +178,6 @@ abstract class SV_WC_Payment_Gateway_Plugin extends SV_WC_Plugin {
 	 * @return void
 	 */
 	protected function init_blocks_handler() : void {
-
-		require_once( $this->get_framework_path() . '/Blocks/Blocks_Handler.php' );
-		require_once( $this->get_framework_path() . '/payment-gateway/Blocks/Gateway_Blocks_Handler.php' );
 
 		// individual gateway plugins should initialize their block integrations handler by overriding this method
 		$this->blocks_handler = new Gateway_Blocks_Handler( $this );
@@ -290,84 +285,8 @@ abstract class SV_WC_Payment_Gateway_Plugin extends SV_WC_Plugin {
 	 */
 	private function includes() {
 
-		$payment_gateway_framework_path = $this->get_payment_gateway_framework_path();
-
-		// interfaces
-		require_once( $payment_gateway_framework_path . '/api/interface-sv-wc-payment-gateway-api.php' );
-		require_once( $payment_gateway_framework_path . '/api/interface-sv-wc-payment-gateway-api-request.php' );
-		require_once( $payment_gateway_framework_path . '/api/interface-sv-wc-payment-gateway-api-response.php' );
-		require_once( $payment_gateway_framework_path . '/api/interface-sv-wc-payment-gateway-api-authorization-response.php' );
-		require_once( $payment_gateway_framework_path . '/api/interface-sv-wc-payment-gateway-api-create-payment-token-response.php' );
-		require_once( $payment_gateway_framework_path . '/api/interface-sv-wc-payment-gateway-api-get-tokenized-payment-methods-response.php' );
-		require_once( $payment_gateway_framework_path . '/api/interface-sv-wc-payment-gateway-api-payment-notification-response.php' );
-		require_once( $payment_gateway_framework_path . '/api/interface-sv-wc-payment-gateway-api-payment-notification-credit-card-response.php' );
-		require_once( $payment_gateway_framework_path . '/api/interface-sv-wc-payment-gateway-api-payment-notification-echeck-response.php' );
-		require_once( $payment_gateway_framework_path . '/api/interface-sv-wc-payment-gateway-api-payment-notification-tokenization-response.php' );
-		require_once( $payment_gateway_framework_path . '/api/interface-sv-wc-payment-gateway-api-customer-response.php' );
-
-		// exceptions
-		require_once( $payment_gateway_framework_path . '/exceptions/class-sv-wc-payment-gateway-exception.php' );
-
-		// gateway
-		require_once( $payment_gateway_framework_path . '/class-sv-wc-payment-gateway.php' );
-		require_once( $payment_gateway_framework_path . '/class-sv-wc-payment-gateway-direct.php' );
-		require_once( $payment_gateway_framework_path . '/class-sv-wc-payment-gateway-hosted.php' );
-		require_once( $payment_gateway_framework_path . '/class-sv-wc-payment-gateway-payment-form.php' );
-		require_once( $payment_gateway_framework_path . '/class-sv-wc-payment-gateway-my-payment-methods.php' );
-
-		// handlers
-		require_once( $payment_gateway_framework_path . '/Handlers/Abstract_Payment_Handler.php' );
-		require_once( $payment_gateway_framework_path . '/Handlers/Abstract_Hosted_Payment_Handler.php' );
-		require_once( $payment_gateway_framework_path . '/Handlers/Capture.php' );
-
-		// External Checkout
-		require_once( "{$payment_gateway_framework_path}/External_Checkout/External_Checkout.php" );
-		require_once( "{$payment_gateway_framework_path}/External_Checkout/Admin.php" );
-		require_once( "{$payment_gateway_framework_path}/External_Checkout/Frontend.php" );
-		require_once( "{$payment_gateway_framework_path}/External_Checkout/Orders.php" );
-
-		// Apple Pay
-		require_once( "{$payment_gateway_framework_path}/External_Checkout/apple-pay/class-sv-wc-payment-gateway-apple-pay.php" );
-		require_once( "{$payment_gateway_framework_path}/External_Checkout/apple-pay/class-sv-wc-payment-gateway-apple-pay-admin.php" );
-		require_once( "{$payment_gateway_framework_path}/External_Checkout/apple-pay/class-sv-wc-payment-gateway-apple-pay-frontend.php" );
-		require_once( "{$payment_gateway_framework_path}/External_Checkout/apple-pay/class-sv-wc-payment-gateway-apple-pay-ajax.php" );
-		require_once( "{$payment_gateway_framework_path}/External_Checkout/apple-pay/api/class-sv-wc-payment-gateway-apple-pay-payment-response.php" );
-
-		// Google Pay
-		require_once( "{$payment_gateway_framework_path}/External_Checkout/Google_Pay/Google_Pay.php" );
-		require_once( "{$payment_gateway_framework_path}/External_Checkout/Google_Pay/Admin.php" );
-		require_once( "{$payment_gateway_framework_path}/External_Checkout/Google_Pay/AJAX.php" );
-		require_once( "{$payment_gateway_framework_path}/External_Checkout/Google_Pay/Frontend.php" );
-
-		// payment tokens
-		require_once( $payment_gateway_framework_path . '/payment-tokens/class-sv-wc-payment-gateway-payment-token.php' );
-		require_once( $payment_gateway_framework_path . '/payment-tokens/class-sv-wc-payment-gateway-payment-tokens-handler.php' );
-
-		// helpers
-		require_once( $payment_gateway_framework_path . '/api/class-sv-wc-payment-gateway-api-response-message-helper.php' );
-		require_once( $payment_gateway_framework_path . '/class-sv-wc-payment-gateway-helper.php' );
-
-		// admin
-		require_once( $payment_gateway_framework_path . '/admin/class-sv-wc-payment-gateway-admin-order.php' );
-		require_once( $payment_gateway_framework_path . '/admin/class-sv-wc-payment-gateway-admin-user-handler.php' );
-		require_once( $payment_gateway_framework_path . '/admin/class-sv-wc-payment-gateway-admin-payment-token-editor.php' );
-
-		// integrations
-		require_once( $payment_gateway_framework_path . '/integrations/abstract-sv-wc-payment-gateway-integration.php' );
-
-		// subscriptions
-		if ( $this->is_subscriptions_active() ) {
-			require_once( $payment_gateway_framework_path . '/integrations/class-sv-wc-payment-gateway-integration-subscriptions.php' );
-		}
-
-		// pre-orders
-		if ( $this->is_pre_orders_active() ) {
-			require_once( $payment_gateway_framework_path . '/integrations/class-sv-wc-payment-gateway-integration-pre-orders.php' );
-		}
-
 		// privacy
 		if ( SV_WC_Plugin_Compatibility::is_wc_version_gte( '3.4' ) ) {
-			require_once( "{$payment_gateway_framework_path}/class-sv-wc-payment-gateway-privacy.php" );
 			$this->privacy_handler = new SV_WC_Payment_Gateway_Privacy( $this );
 		}
 	}
@@ -1272,7 +1191,7 @@ abstract class SV_WC_Payment_Gateway_Plugin extends SV_WC_Plugin {
 	 */
 	public function get_gateway_class_names() {
 
-		assert( ! empty( $this->gateways ) );
+		$this->assert( ! empty( $this->gateways ) );
 
 		$gateway_class_names = array();
 
@@ -1294,7 +1213,7 @@ abstract class SV_WC_Payment_Gateway_Plugin extends SV_WC_Plugin {
 	 */
 	public function get_gateway_class_name( $gateway_id ) {
 
-		assert( isset( $this->gateways[ $gateway_id ]['gateway_class_name'] ) );
+		$this->assert( isset( $this->gateways[ $gateway_id ]['gateway_class_name'] ) );
 
 		return $this->gateways[ $gateway_id ]['gateway_class_name'];
 	}
@@ -1310,7 +1229,7 @@ abstract class SV_WC_Payment_Gateway_Plugin extends SV_WC_Plugin {
 	 */
 	public function get_gateways() {
 
-		assert( ! empty( $this->gateways ) );
+		$this->assert( ! empty( $this->gateways ) );
 
 		$gateways = array();
 
@@ -1384,7 +1303,7 @@ abstract class SV_WC_Payment_Gateway_Plugin extends SV_WC_Plugin {
 	 */
 	public function get_gateway_ids() {
 
-		assert( ! empty( $this->gateways ) );
+		$this->assert( ! empty( $this->gateways ) );
 
 		return array_keys( $this->gateways );
 	}
@@ -1439,19 +1358,28 @@ abstract class SV_WC_Payment_Gateway_Plugin extends SV_WC_Plugin {
 
 
 	/**
-	 * Checks is WooCommerce Subscriptions is active
+	 * Checks is WooCommerce Subscriptions is active as a plugin or as a core library
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return bool true if the WooCommerce Subscriptions plugin is active, false if not active
 	 */
-	public function is_subscriptions_active() {
+	public function is_subscriptions_active() : bool {
 
 		if ( is_bool( $this->subscriptions_active ) ) {
 			return $this->subscriptions_active;
 		}
 
-		return $this->subscriptions_active = $this->is_plugin_active( 'woocommerce-subscriptions.php' );
+		/**
+		 * Filters whether WooCommerce Subscriptions is active.
+		 *
+		 * This future proofs the plugin for when WooCommerce Subscriptions is included as a core library or third party plugin embedding the core library.
+		 *
+		 * @param bool $subscriptions_active
+		 */
+		$this->subscriptions_active = (bool) apply_filters( 'sv_wc_payment_gateway_is_subscriptions_active',  class_exists( 'WC_Subscriptions_Core_Plugin' ) || $this->is_plugin_active( 'woocommerce-subscriptions.php' ) );
+
+		return $this->subscriptions_active;
 	}
 
 

@@ -23,7 +23,7 @@
 
 namespace SkyVerge\WooCommerce\Memberships\Restrictions;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_15_8 as Framework;
 use WC_Product;
 use WC_Product_Variation;
 

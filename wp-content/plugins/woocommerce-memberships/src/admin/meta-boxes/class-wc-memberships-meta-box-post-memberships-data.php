@@ -21,8 +21,6 @@
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
-
 defined( 'ABSPATH' ) or exit;
 
 /**
@@ -126,7 +124,7 @@ class WC_Memberships_Meta_Box_Post_Memberships_Data extends \WC_Memberships_Meta
 			<?php
 
 			// load content restriction rules view
-			require_once( wc_memberships()->get_plugin_path() . '/src/admin/meta-boxes/views/class-wc-memberships-meta-box-view-content-restriction-rules.php' );
+			require_once( wc_memberships()->get_plugin_path() . '/src/Admin/meta-boxes/views/class-wc-memberships-meta-box-view-content-restriction-rules.php' );
 
 			// output content restriction rules view
 			$view = new \WC_Memberships_Meta_Box_View_Content_Restriction_Rules( $this );

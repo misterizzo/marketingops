@@ -23,9 +23,6 @@
 
 defined( 'ABSPATH' ) or exit;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
-
-
 /**
  * Creates a human readable list of an array.
  *

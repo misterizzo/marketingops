@@ -23,8 +23,8 @@
 
 use SkyVerge\WooCommerce\Memberships\Frontend\My_Account;
 use SkyVerge\WooCommerce\Memberships\Frontend\Profile_Fields;
-use \SkyVerge\WooCommerce\Memberships\Profile_Fields as Profile_Fields_Handler;
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
+use SkyVerge\WooCommerce\Memberships\Profile_Fields as Profile_Fields_Handler;
+use SkyVerge\WooCommerce\PluginFramework\v5_15_8 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -57,9 +57,9 @@ class WC_Memberships_Frontend {
 	public function __construct() {
 
 		// load classes
-		$this->profile_fields = wc_memberships()->load_class( '/src/frontend/Profile_Fields.php',                'SkyVerge\WooCommerce\Memberships\Frontend\Profile_Fields' );
-		$this->my_account     = wc_memberships()->load_class( '/src/frontend/My_Account.php',                    My_Account::class );
-		$this->checkout       = wc_memberships()->load_class( '/src/frontend/class-wc-memberships-checkout.php', 'WC_Memberships_Checkout' );
+		$this->profile_fields = wc_memberships()->load_class( '/src/Frontend/Profile_Fields.php',                'SkyVerge\WooCommerce\Memberships\Frontend\Profile_Fields' );
+		$this->my_account     = wc_memberships()->load_class( '/src/Frontend/My_Account.php',                    My_Account::class );
+		$this->checkout       = wc_memberships()->load_class( '/src/Frontend/class-wc-memberships-checkout.php', 'WC_Memberships_Checkout' );
 
 		// enqueue JS and styles
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts_and_styles' ] );

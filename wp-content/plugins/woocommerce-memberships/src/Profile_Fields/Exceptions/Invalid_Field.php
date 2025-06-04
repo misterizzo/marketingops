@@ -23,7 +23,7 @@
 
 namespace SkyVerge\WooCommerce\Memberships\Profile_Fields\Exceptions;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_15_8 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 

@@ -22,7 +22,7 @@
  */
 
 use SkyVerge\WooCommerce\Memberships\Helpers\Strings_Helper;
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_15_8 as Framework;
 
 /**
  * Manage User Memberships from WP CLI.

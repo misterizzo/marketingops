@@ -21,7 +21,7 @@
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_15_8 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -61,6 +61,42 @@ class WC_Memberships_Integration_Subscriptions_Admin {
 
 		// adds subscriptions data to system status report output
 		add_filter( 'wc_memberships_get_system_status_membership_plan_data', array( $this, 'add_system_status_membership_plan_data' ), 1, 2 );
+
+		// enqueue admin assets
+		add_action('admin_enqueue_scripts', [$this, 'enqueueAdminAssets']);
+	}
+
+	public function enqueueAdminAssets() : void
+	{
+		$screen = Framework\SV_WC_Helper::get_current_screen();
+		if (! $screen) {
+			return;
+		}
+
+		$screens = [
+			'wc_user_membership', // edit single membership
+		];
+
+		if (in_array($screen->id, $screens, true)) {
+			wp_enqueue_script(
+				'wc-memberships-subscriptions',
+				wc_memberships()->get_plugin_url() . '/assets/js/admin/wc-memberships-subscriptions.min.js',
+				['jquery'],
+				WC_Memberships::VERSION,
+				[
+					'in_footer' => true,
+				]
+			);
+
+			wp_localize_script(
+				'wc-memberships-subscriptions',
+				'wcMembershipsSubscriptions',
+				[
+					'ajaxUrl' => admin_url('admin-ajax.php'),
+					'subscriptionIdUpdatedNonce' => wp_create_nonce('wc_membership_subscription_id_changed')
+				]
+			);
+		}
 	}
 
 
@@ -117,25 +153,23 @@ class WC_Memberships_Integration_Subscriptions_Admin {
 				class="sv-wc-enhanced-search"
 				id="_subscription_id"
 				name="_subscription_id"
+				style="width:100%"
 				data-action="wc_memberships_edit_membership_subscription_link"
 				data-nonce="<?php echo wp_create_nonce( 'edit-membership-subscription-link' ); ?>"
 				data-placeholder="<?php esc_attr_e( 'Link to a Subscription or keep empty to leave unlinked', 'woocommerce-memberships' ); ?>"
-				data-allow_clear="true">
+				data-allow_clear="true"
+			>
 				<?php if ( $subscription instanceof \WC_Subscription ) : ?>
 					<option value="<?php echo $subscription_id; ?>"><?php echo $subscription_id; ?></option>
 				<?php endif; ?>
 			</select>
 		</span>
+		<span id="wc-memberships-subscription-id-changed-notice"></span>
 		<?php
 
 		Framework\SV_WC_Helper::render_select2_ajax();
 
 		$input .= ob_get_clean();
-
-		// toggle editing of subscription id link
-		wc_enqueue_js( '
-			$( ".js-edit-subscription-link-toggle" ).on( "click", function( e ) { e.preventDefault(); $( ".wc-memberships-edit-subscription-link-field" ).toggle(); } ).click();
-		' );
 
 		return $input;
 	}

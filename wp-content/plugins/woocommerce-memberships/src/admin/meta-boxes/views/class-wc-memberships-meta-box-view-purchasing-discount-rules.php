@@ -21,8 +21,6 @@
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
-
 defined( 'ABSPATH' ) or exit;
 
 /**
@@ -105,7 +103,7 @@ class WC_Memberships_Meta_Box_View_Purchasing_Discount_Rules extends \WC_Members
 			<?php
 
 			// load purchasing discount rule view object
-			require_once( wc_memberships()->get_plugin_path() . '/src/admin/meta-boxes/views/class-wc-memberships-meta-box-view-purchasing-discount-rule.php' );
+			require_once( wc_memberships()->get_plugin_path() . '/src/Admin/meta-boxes/views/class-wc-memberships-meta-box-view-purchasing-discount-rule.php' );
 
 			// get the purchasing discount rules
 			$purchasing_discount_rules = $this->meta_box->get_purchasing_discount_rules();

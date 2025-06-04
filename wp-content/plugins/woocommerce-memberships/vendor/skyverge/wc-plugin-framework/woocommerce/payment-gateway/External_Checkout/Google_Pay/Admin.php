@@ -18,17 +18,17 @@
  *
  * @package   SkyVerge/WooCommerce/Payment-Gateway/External_Checkout/Google-Pay
  * @author    SkyVerge
- * @copyright Copyright (c) 2013-2023, SkyVerge, Inc.
+ * @copyright Copyright (c) 2013-2024, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-namespace SkyVerge\WooCommerce\PluginFramework\v5_12_1\Payment_Gateway\External_Checkout\Google_Pay;
+namespace SkyVerge\WooCommerce\PluginFramework\v5_15_8\Payment_Gateway\External_Checkout\Google_Pay;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1\SV_WC_Helper;
+use SkyVerge\WooCommerce\PluginFramework\v5_15_8\SV_WC_Helper;
 
 defined( 'ABSPATH' ) or exit;
 
-if ( ! class_exists( '\\SkyVerge\\WooCommerce\\PluginFramework\\v5_12_1\\Payment_Gateway\\External_Checkout\\Google_Pay\\Admin' ) ) :
+if ( ! class_exists( '\\SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\Payment_Gateway\\External_Checkout\\Google_Pay\\Admin' ) ) :
 
 
 /**
@@ -37,7 +37,7 @@ if ( ! class_exists( '\\SkyVerge\\WooCommerce\\PluginFramework\\v5_12_1\\Payment
  * @since 5.10.0
  */
 #[\AllowDynamicProperties]
-class Admin extends \SkyVerge\WooCommerce\PluginFramework\v5_12_1\Payment_Gateway\External_Checkout\Admin {
+class Admin extends \SkyVerge\WooCommerce\PluginFramework\v5_15_8\Payment_Gateway\External_Checkout\Admin {
 
 
 	/** @var Google_Pay the Google Pay handler instance */
@@ -95,6 +95,14 @@ class Admin extends \SkyVerge\WooCommerce\PluginFramework\v5_12_1\Payment_Gatewa
 				'desc'            => _x( 'Accept Google Pay', 'For the merchant to accept Google Pay payments', 'woocommerce-plugin-framework' ),
 				'type'            => 'checkbox',
 				'default'         => 'no',
+			],
+
+			[
+				'id'              => 'sv_wc_google_pay_merchant_id',
+				'title'           => __( 'Merchant ID', 'woocommerce-plugin-framework' ),
+				/** translators: Placeholders: %1$s - <a href="..."> tag, %2$s - </a> tag */
+				'desc'            => sprintf( __( 'A Google merchant identifier issued after registration with the %1$sGoogle Pay & Wallet Console%2$s. 12-18 characters. Required in production environment.', 'woocommerce-plugin-framework' ), '<a href="https://pay.google.com/business/console" target="_blank">', '</a>' ),
+				'type'            => 'text',
 			],
 
 			[

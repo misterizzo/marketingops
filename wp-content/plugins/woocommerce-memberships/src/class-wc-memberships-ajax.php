@@ -26,7 +26,7 @@ use SkyVerge\WooCommerce\Memberships\Frontend\Profile_Fields as Profile_Fields_F
 use SkyVerge\WooCommerce\Memberships\Helpers\Strings_Helper;
 use SkyVerge\WooCommerce\Memberships\Profile_Fields;
 use SkyVerge\WooCommerce\Memberships\Profile_Fields\Profile_Field_Definition;
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_15_8 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -108,7 +108,7 @@ class WC_Memberships_AJAX {
 
 		/* @var Profile_Fields_Frontend $profile_fields_frontend instance */
 		if ( ! class_exists( Profile_Fields_Frontend::class, false ) ) {
-			$profile_fields_frontend = wc_memberships()->load_class( '/src/frontend/Profile_Fields.php', Profile_Fields_Frontend::class );
+			$profile_fields_frontend = wc_memberships()->load_class( '/src/Frontend/Profile_Fields.php', Profile_Fields_Frontend::class );
 		} elseif ( $frontend = wc_memberships()->get_frontend_instance() ) {
 			$profile_fields_frontend = $frontend->get_profile_fields_instance();
 		} else {
@@ -376,11 +376,11 @@ class WC_Memberships_AJAX {
 		if ( $post_id > 0 ) {
 
 			// load views abstract
-			require_once( wc_memberships()->get_plugin_path() . '/src/admin/meta-boxes/views/abstract-wc-memberships-meta-box-view.php' );
+			require_once( wc_memberships()->get_plugin_path() . '/src/Admin/meta-boxes/views/abstract-wc-memberships-meta-box-view.php' );
 
 			// load views
-			require( wc_memberships()->get_plugin_path() . '/src/admin/meta-boxes/views/class-wc-memberships-meta-box-view-membership-note.php' );
-			require( wc_memberships()->get_plugin_path() . '/src/admin/meta-boxes/views/class-wc-memberships-meta-box-view-membership-recent-activity-note.php' );
+			require( wc_memberships()->get_plugin_path() . '/src/Admin/meta-boxes/views/class-wc-memberships-meta-box-view-membership-note.php' );
+			require( wc_memberships()->get_plugin_path() . '/src/Admin/meta-boxes/views/class-wc-memberships-meta-box-view-membership-recent-activity-note.php' );
 
 			$new_note_view            = new \WC_Memberships_Meta_Box_View_Membership_Note();
 			$new_recent_activity_view = new \WC_Memberships_Meta_Box_View_Membership_Recent_Activity_Note();

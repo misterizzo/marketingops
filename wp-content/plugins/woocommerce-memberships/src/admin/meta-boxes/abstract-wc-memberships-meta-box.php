@@ -21,7 +21,7 @@
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_15_8 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -79,7 +79,7 @@ abstract class WC_Memberships_Meta_Box {
 	public function __construct() {
 
 		// load the HTML view abstract
-		require_once( wc_memberships()->get_plugin_path() . '/src/admin/meta-boxes/views/abstract-wc-memberships-meta-box-view.php' );
+		require_once( wc_memberships()->get_plugin_path() . '/src/Admin/meta-boxes/views/abstract-wc-memberships-meta-box-view.php' );
 
 		// add/edit screen hooks
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );

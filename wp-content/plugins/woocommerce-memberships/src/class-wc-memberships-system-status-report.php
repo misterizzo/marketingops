@@ -23,8 +23,6 @@
 
 namespace SkyVerge\WooCommerce\Memberships;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
-
 defined( 'ABSPATH' ) or exit;
 
 
@@ -40,7 +38,7 @@ class System_Status_Report {
 	 * Gets the system status report data for the system status page and API response.
 	 *
 	 * @see \WC_Memberships_Admin::add_system_status_report_block()
-	 * @see \SkyVerge\WooCommerce\Memberships\REST_API::get_system_status_data()
+	 * @see REST_API::get_system_status_data()
 	 *
 	 * @since 1.12.0
 	 *

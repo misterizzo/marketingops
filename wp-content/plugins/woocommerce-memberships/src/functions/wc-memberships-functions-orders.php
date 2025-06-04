@@ -23,9 +23,6 @@
 
 defined( 'ABSPATH' ) or exit;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
-
-
 /**
  * Returns memberships granted access meta from order.
  *

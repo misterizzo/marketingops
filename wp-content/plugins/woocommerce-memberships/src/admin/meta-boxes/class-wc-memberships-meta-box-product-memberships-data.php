@@ -22,7 +22,6 @@
  */
 
 use SkyVerge\WooCommerce\Memberships\Helpers\Strings_Helper;
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -307,7 +306,7 @@ class WC_Memberships_Meta_Box_Product_Memberships_Data extends \WC_Memberships_M
 						<?php
 
 						// load content restriction rules view
-						require_once( wc_memberships()->get_plugin_path() . '/src/admin/meta-boxes/views/class-wc-memberships-meta-box-view-product-restriction-rules.php' );
+						require_once( wc_memberships()->get_plugin_path() . '/src/Admin/meta-boxes/views/class-wc-memberships-meta-box-view-product-restriction-rules.php' );
 
 						// output content restriction rules view
 						$view = new \WC_Memberships_Meta_Box_View_Product_Restriction_Rules( $this );
@@ -544,7 +543,7 @@ class WC_Memberships_Meta_Box_Product_Memberships_Data extends \WC_Memberships_M
 				<?php
 
 				// load purchasing discounts rules view
-				require_once( wc_memberships()->get_plugin_path() . '/src/admin/meta-boxes/views/class-wc-memberships-meta-box-view-purchasing-discount-rules.php' );
+				require_once( wc_memberships()->get_plugin_path() . '/src/Admin/meta-boxes/views/class-wc-memberships-meta-box-view-purchasing-discount-rules.php' );
 
 				// output purchasing discounts rules view
 				$view = new \WC_Memberships_Meta_Box_View_Purchasing_Discount_Rules( $this );

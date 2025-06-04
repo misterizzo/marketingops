@@ -21,8 +21,13 @@
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
+use Composer\Autoload\ClassLoader;
+use SkyVerge\WooCommerce\Memberships\Admin\Setup_Wizard;
+use SkyVerge\WooCommerce\Memberships\REST_API;
+use SkyVerge\WooCommerce\Memberships\API\Webhooks;
+use SkyVerge\WooCommerce\Memberships\Blocks;
 use SkyVerge\WooCommerce\Memberships\Shortcodes;
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_15_8 as Framework;
 use SkyVerge\WooCommerce\Memberships\Profile_Fields;
 
 defined( 'ABSPATH' ) or exit;
@@ -38,7 +43,7 @@ class WC_Memberships extends Framework\SV_WC_Plugin  {
 
 
 	/** plugin version number */
-	const VERSION = '1.26.11';
+	const VERSION = '1.27.2';
 
 	/** @var \WC_Memberships single instance of this plugin */
 	protected static $instance;
@@ -88,15 +93,16 @@ class WC_Memberships extends Framework\SV_WC_Plugin  {
 	/** @var \WC_Memberships_Utilities instance */
 	private $utilities;
 
-	/** @var \SkyVerge\WooCommerce\Memberships\REST_API instance */
+	/** @var REST_API instance */
 	private $rest_api;
 
-	/** @var \SkyVerge\WooCommerce\Memberships\API\Webhooks instance */
+	/** @var Webhooks instance */
 	private $webhooks;
 
-	/** @var \SkyVerge\WooCommerce\Memberships\Blocks instance */
+	/** @var Blocks instance */
 	private $blocks;
 
+	protected ?ClassLoader $composerAutoloader = null;
 
 	/**
 	 * Initializes the plugin.
@@ -172,14 +178,19 @@ class WC_Memberships extends Framework\SV_WC_Plugin  {
 	 *
 	 * @since 1.11.0
 	 */
-	public function init_plugin() {
-		require_once $this->get_plugin_path() . '/vendor/autoload.php';
+	public function init_plugin()
+	{
+		$this->autoload();
 
 		$this->includes();
 
 		$this->add_milestone_hooks();
 	}
 
+	protected function autoload() : ClassLoader
+	{
+		return $this->composerAutoloader ??= require $this->get_plugin_path().'/vendor/autoload.php';
+	}
 
 	/**
 	 * Build and initialize the Setup Wizard handler.
@@ -190,9 +201,9 @@ class WC_Memberships extends Framework\SV_WC_Plugin  {
 
 		parent::init_setup_wizard_handler();
 
-		require_once( $this->get_plugin_path() . '/src/admin/class-wc-memberships-setup-wizard.php' );
+		require_once( $this->get_plugin_path() . '/src/Admin/class-wc-memberships-setup-wizard.php' );
 
-		$this->setup_wizard_handler = new \SkyVerge\WooCommerce\Memberships\Admin\Setup_Wizard( $this );
+		$this->setup_wizard_handler = new Setup_Wizard( $this );
 	}
 
 
@@ -256,14 +267,9 @@ class WC_Memberships extends Framework\SV_WC_Plugin  {
 	 * @internal
 	 *
 	 * @since 1.0.0
+	 * @since 1.27.0 Cache and helper classes, data stores, and profile field objects are autoloaded.
 	 */
 	public function includes() {
-
-		// load cache classes
-		require_once( $this->get_plugin_path() . '/src/Cache/MembershipNotesCountCache.php' );
-
-		// load helpers
-		require_once( $this->get_plugin_path() . '/src/Helpers/Strings_Helper.php' );
 
 		// load post types
 		require_once( $this->get_plugin_path() . '/src/class-wc-memberships-post-types.php' );
@@ -273,16 +279,6 @@ class WC_Memberships extends Framework\SV_WC_Plugin  {
 
 		// load helper functions
 		require_once( $this->get_plugin_path() . '/src/functions/wc-memberships-functions.php' );
-
-		// load data stores
-		require_once( $this->get_plugin_path() . '/src/Data_Stores/Profile_Field_Definition/Option.php' );
-		require_once( $this->get_plugin_path() . '/src/Data_Stores/Profile_Field/User_Meta.php' );
-
-		// load profile field objects
-		require_once( $this->get_plugin_path() . '/src/Profile_Fields/Exceptions/Invalid_Field.php' );
-		require_once( $this->get_plugin_path() . '/src/Profile_Fields/Profile_Field_Definition.php' );
-		require_once( $this->get_plugin_path() . '/src/Profile_Fields/Profile_Field.php' );
-		require_once( $this->get_plugin_path() . '/src/Profile_Fields.php' );
 
 		// init general classes
 		$this->rules            = $this->load_class( '/src/class-wc-memberships-rules.php',            'WC_Memberships_Rules' );
@@ -341,7 +337,7 @@ class WC_Memberships extends Framework\SV_WC_Plugin  {
 	 */
 	private function admin_includes() {
 
-		$this->admin = $this->load_class( '/src/admin/class-wc-memberships-admin.php', 'WC_Memberships_Admin' );
+		$this->admin = $this->load_class( '/src/Admin/class-wc-memberships-admin.php', 'WC_Memberships_Admin' );
 
 		// message handler
 		$this->admin->message_handler = $this->get_message_handler();
@@ -375,7 +371,20 @@ class WC_Memberships extends Framework\SV_WC_Plugin  {
 		Shortcodes::initialize();
 
 		// load front end
-		$this->frontend = $this->load_class( '/src/frontend/class-wc-memberships-frontend.php', 'WC_Memberships_Frontend' );
+		$this->frontend = $this->load_class( '/src/Frontend/class-wc-memberships-frontend.php', 'WC_Memberships_Frontend' );
+	}
+
+	public function load_class($local_path, $class_name)
+	{
+		if (! $this->composerAutoloader) {
+			$this->autoload();
+		}
+
+		if (class_exists($class_name)) {
+			return new $class_name;
+		}
+
+		return parent::load_class($local_path, $class_name);
 	}
 
 
@@ -672,15 +681,15 @@ class WC_Memberships extends Framework\SV_WC_Plugin  {
 	 *
 	 * @since 1.11.0
 	 *
-	 * @return \SkyVerge\WooCommerce\Memberships\REST_API
+	 * @return REST_API
 	 */
 	public function get_rest_api_instance() {
 
 		if ( null === $this->rest_api ) {
 
-			require_once( $this->get_plugin_path() . '/src/api/class-wc-memberships-rest-api.php' );
+			require_once( $this->get_plugin_path() . '/src/class-wc-memberships-rest-api.php' );
 
-			$this->rest_api = new \SkyVerge\WooCommerce\Memberships\REST_API( $this );
+			$this->rest_api = new REST_API( $this );
 		}
 
 		return $this->rest_api;
@@ -692,12 +701,12 @@ class WC_Memberships extends Framework\SV_WC_Plugin  {
 	 *
 	 * @since 1.13.1
 	 *
-	 * @return \SkyVerge\WooCommerce\Memberships\API\Webhooks
+	 * @return Webhooks
 	 */
 	public function get_webhooks_instance() {
 
 		if ( null === $this->webhooks ) {
-			$this->webhooks = $this->load_class( '/src/api/class-wc-memberships-webhooks.php', '\SkyVerge\WooCommerce\Memberships\API\Webhooks' );
+			$this->webhooks = new Webhooks();
 		}
 
 		return $this->webhooks;
@@ -709,7 +718,7 @@ class WC_Memberships extends Framework\SV_WC_Plugin  {
 	 *
 	 * @since 1.15.0
 	 *
-	 * @return \SkyVerge\WooCommerce\Memberships\Blocks
+	 * @return Blocks
 	 */
 	public function get_blocks_instance() {
 

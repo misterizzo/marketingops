@@ -1,5 +1,20 @@
 *** WooCommerce Memberships Changelog ***
 
+2025.05.20 - version 1.27.2
+ * Fix - Plan data not loading when using `wc_memberships_get_user_memberships()` before the `init` hook.
+ * Fix - Reduced the priority on our content restriction hook for compatibility with Beaver Builder Themer
+
+2025.05.06 - version 1.27.1
+ * Fix - "Memberships" section not rendering on WooCommerce Status page
+ * Fix - Custom profile fields not rendering on admin "Edit User Membership" screen
+
+2025.04.30 - version 1.27.0
+ * Tweak - Subscriptions - When changing the subscription ID linked to a membership, we now automatically change the status/expires date based on the new subscription details (a notice is shown when this happens to convey the change)
+ * Fix - Elementor - Membership visibility not appearing in "Edit Container" advanced settings
+ * Fix - Addressed error about translations being triggered too early
+ * Dev - Updated a few directory and file names to better work with class autoloading
+ * Dev - Updated the SkyVerge Plugin Framework to v5.15.8
+
 2025.02.28 - version 1.26.11
  * Fix - Errors with "Membership Note" email when using the experimental "Email Improvements" feature
  * Dev - Add a filter hook on an existing membership found for a purchased plan

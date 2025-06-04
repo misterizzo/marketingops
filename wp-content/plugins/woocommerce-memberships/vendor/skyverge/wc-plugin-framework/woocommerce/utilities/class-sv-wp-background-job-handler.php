@@ -18,16 +18,16 @@
  *
  * @package   SkyVerge/WooCommerce/Utilities
  * @author    SkyVerge / Delicious Brains
- * @copyright Copyright (c) 2015-2023 Delicious Brains Inc.
- * @copyright Copyright (c) 2013-2023, SkyVerge, Inc.
+ * @copyright Copyright (c) 2015-2024 Delicious Brains Inc.
+ * @copyright Copyright (c) 2013-2024, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-namespace SkyVerge\WooCommerce\PluginFramework\v5_12_1;
+namespace SkyVerge\WooCommerce\PluginFramework\v5_15_8;
 
 defined( 'ABSPATH' ) or exit;
 
-if ( ! class_exists( '\\SkyVerge\\WooCommerce\\PluginFramework\\v5_12_1\\SV_WP_Background_Job_Handler' ) ) :
+if ( ! class_exists( '\\SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WP_Background_Job_Handler' ) ) :
 
 
 /**
@@ -203,10 +203,11 @@ abstract class SV_WP_Background_Job_Handler extends SV_WP_Async_Request {
 		$processing = '%"status":"processing"%';
 
 		$count = $wpdb->get_var( $wpdb->prepare( "
-			SELECT COUNT(*)
+			SELECT COUNT(option_id)
 			FROM {$wpdb->options}
 			WHERE option_name LIKE %s
 			AND ( option_value LIKE %s OR option_value LIKE %s )
+   			LIMIT 1
 		", $key, $queued, $processing ) );
 
 		return ( $count > 0 ) ? false : true;

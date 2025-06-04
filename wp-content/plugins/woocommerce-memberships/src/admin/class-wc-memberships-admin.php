@@ -25,7 +25,8 @@ use SkyVerge\WooCommerce\Memberships\Admin\Views\Modals\Profile_Field\Confirm_De
 use SkyVerge\WooCommerce\Memberships\Admin\Views\Modals\User_Membership\Confirm_Edit_Profile_Fields;
 use SkyVerge\WooCommerce\Memberships\Admin\Profile_Fields;
 use SkyVerge\WooCommerce\Memberships\Profile_Fields as Profile_Fields_Handler;
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
+use SkyVerge\WooCommerce\Memberships\System_Status_Report;
+use SkyVerge\WooCommerce\PluginFramework\v5_15_8 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -76,7 +77,7 @@ class WC_Memberships_Admin {
 	public function __construct() {
 
 		// load rules admin helper static class
-		require_once( wc_memberships()->get_plugin_path() . '/src/admin/class-wc-memberships-admin-membership-plan-rules.php' );
+		require_once( wc_memberships()->get_plugin_path() . '/src/Admin/class-wc-memberships-admin-membership-plan-rules.php' );
 
 		// display admin messages
 		add_action( 'admin_notices', [ $this, 'show_admin_messages' ] );
@@ -448,7 +449,7 @@ class WC_Memberships_Admin {
 	 */
 	public function add_settings_page( $settings ) {
 
-		$settings[] = wc_memberships()->load_class( '/src/admin/class-wc-memberships-settings.php', 'WC_Settings_Memberships' );
+		$settings[] = wc_memberships()->load_class( '/src/Admin/class-wc-memberships-settings.php', 'WC_Settings_Memberships' );
 
 		return $settings;
 	}
@@ -777,38 +778,38 @@ class WC_Memberships_Admin {
 			case 'edit-shop_order' :
 			case 'shop_subscription' :
 			case 'edit-shop_subscription' :
-				$this->orders = wc_memberships()->load_class( '/src/admin/class-wc-memberships-admin-orders.php', 'WC_Memberships_Admin_Orders' );
+				$this->orders = wc_memberships()->load_class( '/src/Admin/class-wc-memberships-admin-orders.php', 'WC_Memberships_Admin_Orders' );
 			break;
 
 			case 'product' :
 			case 'edit-product' :
-				$this->products = wc_memberships()->load_class( '/src/admin/class-wc-memberships-admin-products.php', 'WC_Memberships_Admin_Products' );
+				$this->products = wc_memberships()->load_class( '/src/Admin/class-wc-memberships-admin-products.php', 'WC_Memberships_Admin_Products' );
 			break;
 
 			case 'wc_membership_plan' :
 			case 'edit-wc_membership_plan' :
-				$this->membership_plans = wc_memberships()->load_class( '/src/admin/class-wc-memberships-admin-membership-plans.php',  'WC_Memberships_Admin_Membership_Plans');
+				$this->membership_plans = wc_memberships()->load_class( '/src/Admin/class-wc-memberships-admin-membership-plans.php',  'WC_Memberships_Admin_Membership_Plans');
 			break;
 
 			case 'wc_user_membership' :
 			case 'edit-wc_user_membership' :
-				$this->user_memberships = wc_memberships()->load_class( '/src/admin/class-wc-memberships-admin-user-memberships.php',  'WC_Memberships_Admin_User_Memberships' );
+				$this->user_memberships = wc_memberships()->load_class( '/src/Admin/class-wc-memberships-admin-user-memberships.php',  'WC_Memberships_Admin_User_Memberships' );
 				// the import / export handler runs bulk export on User Memberships screen
-				$this->import_export = wc_memberships()->load_class( '/src/admin/class-wc-memberships-import-export-handler.php', 'WC_Memberships_Admin_Import_Export_Handler' );
+				$this->import_export = wc_memberships()->load_class( '/src/Admin/class-wc-memberships-import-export-handler.php', 'WC_Memberships_Admin_Import_Export_Handler' );
 			break;
 
 			case 'admin_page_wc_memberships_import_export' :
-				$this->import_export = wc_memberships()->load_class( '/src/admin/class-wc-memberships-import-export-handler.php', 'WC_Memberships_Admin_Import_Export_Handler' );
+				$this->import_export = wc_memberships()->load_class( '/src/Admin/class-wc-memberships-import-export-handler.php', 'WC_Memberships_Admin_Import_Export_Handler' );
 			break;
 
 			case 'admin_page_wc_memberships_profile_fields' :
-				$this->profile_fields = wc_memberships()->load_class( '/src/admin/Profile_Fields.php', 'SkyVerge\WooCommerce\Memberships\Admin\Profile_Fields' );
+				$this->profile_fields = new Profile_Fields();
 			break;
 
 			case 'users' :
 			case 'user-edit' :
 			case 'profile' :
-				$this->users = wc_memberships()->load_class( '/src/admin/class-wc-memberships-admin-users.php', 'WC_Memberships_Admin_Users' );
+				$this->users = wc_memberships()->load_class( '/src/Admin/class-wc-memberships-admin-users.php', 'WC_Memberships_Admin_Users' );
 			break;
 		}
 
@@ -830,7 +831,7 @@ class WC_Memberships_Admin {
 	 * @since 1.9.0
 	 *
 	 * @param string $prefix prefix of each class name
-	 * @param array $files associative array of object names and relative file paths (to src/admin)
+	 * @param array $files associative array of object names and relative file paths (to src/Admin)
 	 * @return array
 	 */
 	private function init_objects( $prefix, array $files ) {
@@ -850,20 +851,19 @@ class WC_Memberships_Admin {
 			$file_path = wc_memberships()->get_plugin_path() . $path . $file_name;
 
 			if ( is_readable( $file_path ) && ! class_exists( $class ) ) {
-
 				require_once( $file_path );
+			}
 
-				if ( class_exists( $class ) ) {
+			if ( class_exists( $class ) ) {
 
-					// handle namespaced class names
-					if ( Framework\SV_WC_Helper::str_starts_with( $class, '\\' ) ) {
-						$object_name = str_replace( '\\', '-', str_replace( '\\SkyVerge\\WooCommerce\\Memberships\\', '', $class ) );
-					} else {
-						$object_name = strtolower( str_replace( $prefix . '_', '', $class ) );
-					}
-
-					$objects[ $object_name ] = new $class();
+				// handle namespaced class names
+				if ( Framework\SV_WC_Helper::str_starts_with( $class, '\\' ) ) {
+					$object_name = str_replace( '\\', '-', str_replace( '\\SkyVerge\\WooCommerce\\Memberships\\', '', $class ) );
+				} else {
+					$object_name = strtolower( str_replace( $prefix . '_', '', $class ) );
 				}
+
+				$objects[ $object_name ] = new $class();
 			}
 		}
 
@@ -881,35 +881,35 @@ class WC_Memberships_Admin {
 		if ( $screen_id = $this->get_current_screen_id() ) {
 
 			// load abstracts
-			require_once( wc_memberships()->get_plugin_path() . '/src/admin/modals/abstract-wc-memberships-modal.php' );
-			require_once( wc_memberships()->get_plugin_path() . '/src/admin/modals/abstract-wc-memberships-member-modal.php' );
-			require_once( wc_memberships()->get_plugin_path() . '/src/admin/modals/abstract-wc-memberships-batch-job-modal.php' );
+			require_once( wc_memberships()->get_plugin_path() . '/src/Admin/modals/abstract-wc-memberships-modal.php' );
+			require_once( wc_memberships()->get_plugin_path() . '/src/Admin/modals/abstract-wc-memberships-member-modal.php' );
+			require_once( wc_memberships()->get_plugin_path() . '/src/Admin/modals/abstract-wc-memberships-batch-job-modal.php' );
 
 			$this->modals   = new stdClass();
 			$modals_classes = [];
 
 			// new user membership screen
 			if ( 'edit-wc_user_membership' === $screen_id ) {
-				$modals_classes['WC_Memberships_Modal_Add_User_Membership'] = '/src/admin/modals/';
-				$modals_classes['WC_Memberships_Modal_Import_Export_User_Memberships'] = '/src/admin/modals/';
+				$modals_classes['WC_Memberships_Modal_Add_User_Membership'] = '/src/Admin/modals/';
+				$modals_classes['WC_Memberships_Modal_Import_Export_User_Memberships'] = '/src/Admin/modals/';
 			// edit user membership screen
 			} elseif ( 'wc_user_membership' === $screen_id ) {
-				$modals_classes['WC_Memberships_Modal_Add_User_Membership'] = '/src/admin/modals/';
-				$modals_classes['WC_Memberships_Modal_Transfer_User_Membership'] = '/src/admin/modals/';
-				$modals_classes['WC_Memberships_Modal_Import_Export_User_Memberships'] = '/src/admin/modals/';
-				$modals_classes[ '\\' . Confirm_Edit_Profile_Fields::class ] = '/src/admin/Views/Modals/User_Membership/';
+				$modals_classes['WC_Memberships_Modal_Add_User_Membership'] = '/src/Admin/modals/';
+				$modals_classes['WC_Memberships_Modal_Transfer_User_Membership'] = '/src/Admin/modals/';
+				$modals_classes['WC_Memberships_Modal_Import_Export_User_Memberships'] = '/src/Admin/modals/';
+				$modals_classes[ '\\' . Confirm_Edit_Profile_Fields::class ] = '/src/Admin/Views/Modals/User_Membership/';
 			// membership plan screens
 			} elseif ( in_array( $screen_id, [ 'wc_membership_plan', 'edit-wc-membership-plan' ], true ) ) {
-				$modals_classes['WC_Memberships_Modal_Grant_Access_Membership_Plan'] = '/src/admin/modals/';
+				$modals_classes['WC_Memberships_Modal_Grant_Access_Membership_Plan'] = '/src/Admin/modals/';
 			// user memberships import/export screens
 			} elseif ( 'admin_page_wc_memberships_import_export' === $screen_id ) {
-				$modals_classes['WC_Memberships_Modal_Import_Export_User_Memberships'] = '/src/admin/modals/';
+				$modals_classes['WC_Memberships_Modal_Import_Export_User_Memberships'] = '/src/Admin/modals/';
 			// email settings screens
 			} elseif ( isset( $_GET['tab'], $_GET['section'] ) && 'email' === $_GET['tab'] && in_array( $_GET['section'], array( 'wc_memberships_user_membership_ending_soon_email', 'wc_memberships_user_membership_renewal_reminder_email' ), true ) && Framework\SV_WC_Plugin_Compatibility::normalize_wc_screen_id() === $screen_id ) {
-				$modals_classes['WC_Memberships_Modal_Reschedule_User_Memberships_Events'] = '/src/admin/modals/';
+				$modals_classes['WC_Memberships_Modal_Reschedule_User_Memberships_Events'] = '/src/Admin/modals/';
 			// profile fields screens
 			} elseif ( $this->get_profile_fields_instance() && $this->get_profile_fields_instance()->is_profile_fields_screen( [ Profile_Fields::SCREEN_ACTION_NEW, Profile_Fields::SCREEN_ACTION_EDIT ] ) ) {
-				$modals_classes[ '\\' . Confirm_Deletion::class ] = '/src/admin/Views/Modals/Profile_Field/';
+				$modals_classes[ '\\' . Confirm_Deletion::class ] = '/src/Admin/Views/Modals/Profile_Field/';
 			}
 
 			// load and instantiate objects
@@ -955,32 +955,32 @@ class WC_Memberships_Admin {
 
 		// load meta boxes abstract class
 		if ( ! class_exists( 'WC_Memberships_Meta_Box' ) ) {
-			require_once( wc_memberships()->get_plugin_path() . '/src/admin/meta-boxes/abstract-wc-memberships-meta-box.php' );
+			require_once( wc_memberships()->get_plugin_path() . '/src/Admin/meta-boxes/abstract-wc-memberships-meta-box.php' );
 		}
 
 		$this->meta_boxes = new stdClass();
 
 		// load restriction meta boxes on post screen only
-		$meta_box_classes[ 'WC_Memberships_Meta_Box_Post_Memberships_Data'] = '/src/admin/meta-boxes/';
+		$meta_box_classes[ 'WC_Memberships_Meta_Box_Post_Memberships_Data'] = '/src/Admin/meta-boxes/';
 
 		// product-specific meta boxes
 		if ( 'product' === $screen->id ) {
-			$meta_box_classes['WC_Memberships_Meta_Box_Product_Memberships_Data'] = '/src/admin/meta-boxes/';
+			$meta_box_classes['WC_Memberships_Meta_Box_Product_Memberships_Data'] = '/src/Admin/meta-boxes/';
 		}
 
 		// load user membership meta boxes on user membership screen only
 		if ( 'wc_membership_plan' === $screen->id ) {
-			$meta_box_classes['WC_Memberships_Meta_Box_Membership_Plan_Data'] = '/src/admin/meta-boxes/';
-			$meta_box_classes['WC_Memberships_Meta_Box_Membership_Plan_Email_Content_Merge_Tags'] = '/src/admin/meta-boxes/';
+			$meta_box_classes['WC_Memberships_Meta_Box_Membership_Plan_Data'] = '/src/Admin/meta-boxes/';
+			$meta_box_classes['WC_Memberships_Meta_Box_Membership_Plan_Email_Content_Merge_Tags'] = '/src/Admin/meta-boxes/';
 		}
 
 		// load user membership meta boxes on user membership screen only
 		if ( 'wc_user_membership' === $screen->id ) {
-			$meta_box_classes['WC_Memberships_Meta_Box_User_Membership_Data'] = '/src/admin/meta-boxes/';
-			$meta_box_classes['WC_Memberships_Meta_Box_User_Membership_Notes'] = '/src/admin/meta-boxes/';
-			$meta_box_classes['WC_Memberships_Meta_Box_User_Membership_Member_Details'] = '/src/admin/meta-boxes/';
-			$meta_box_classes['\\SkyVerge\\WooCommerce\\Memberships\\Admin\\Views\\Meta_Boxes\\User_Membership\\Profile_Fields'] = '/src/admin/Views/Meta_Boxes/User_Membership/';
-			$meta_box_classes['WC_Memberships_Meta_Box_User_Membership_Recent_Activity' ] = '/src/admin/meta-boxes/';
+			$meta_box_classes['WC_Memberships_Meta_Box_User_Membership_Data'] = '/src/Admin/meta-boxes/';
+			$meta_box_classes['WC_Memberships_Meta_Box_User_Membership_Notes'] = '/src/Admin/meta-boxes/';
+			$meta_box_classes['WC_Memberships_Meta_Box_User_Membership_Member_Details'] = '/src/Admin/meta-boxes/';
+			$meta_box_classes['\\SkyVerge\\WooCommerce\\Memberships\\Admin\\Views\\Meta_Boxes\\User_Membership\\Profile_Fields'] = '/src/Admin/Views/Meta_Boxes/User_Membership/';
+			$meta_box_classes['WC_Memberships_Meta_Box_User_Membership_Recent_Activity' ] = '/src/Admin/meta-boxes/';
 		}
 
 		// load and instantiate objects
@@ -1284,7 +1284,7 @@ class WC_Memberships_Admin {
 			<tbody>
 				<?php
 
-				foreach ( \SkyVerge\WooCommerce\Memberships\System_Status_Report::get_system_status_report_data() as $export_key => $data ) :
+				foreach ( System_Status_Report::get_system_status_report_data() as $export_key => $data ) :
 
 					if ( ! empty( $data['label'] ) && ! empty( $data['html'] ) ) :
 

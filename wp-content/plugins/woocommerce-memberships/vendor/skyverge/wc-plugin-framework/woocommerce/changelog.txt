@@ -1,5 +1,73 @@
 *** SkyVerge WooCommerce Plugin Framework Changelog ***
 
+2025.nn.nn - version 5.15.8
+
+2025.04.29 - version 5.15.7
+* Fix: Avoid triggering notices for loading translations too early
+
+2025.03.11 - version 5.15.6
+* New: Added additional helper methods to the trait `HasEmailPreviewValuesTrait`
+
+2025.03.05 - version 5.15.5
+* New: Add a trait to assist in compatibility with new WooCommerce email preview feature
+* Fix: Undefined array key errors
+
+2025.02.20 - version 5.15.4
+* New: Added PageHelper class to assist in determining page contexts.
+* New: Add a helper method to get WooCommerce object meta values.
+* New: Add an array helper method to get value with dot notation and default value.
+
+2025.01.24 - version 5.15.3
+* Fix - Add Merchant ID to Google Pay, distinguishing it from Gateway merchant ID
+
+2024.11.25 - version 5.15.2
+* Fix - Prevent "Capture Charge" bulk action from loading on non-order pages
+
+2024.10.10 - version 5.15.1
+* Fix - Fixing the SASS and POT file building processes
+* Fix - Account for Subscriptions Core library when checking for Subscriptions
+* Misc - Deprecate Enhanced navigation feature integration
+* Misc - Handle backwards compatibility for old HPOS compatibility format
+
+2024.09.02 - version 5.15.0
+* Feature - Add new `NumberHelper` class for number formatting operations
+
+2024.08.30 - version 5.14.0
+* Feature - Add a trait to get a singular instance of a class: `IsSingletonTrait`
+* Feature - Add a trait to get an instance (non-singular) of a class: `CanGetNewInstanceTrait`
+* Feature - Add a trait to convert an object into an array: `CanConvertToArrayTrait`
+* Feature - Add a new `ArrayHelper` class for array-related utility methods
+* Dev - Add support for autoloading. Plugins now need to require the `vendor/autoload.php` file if not already.
+
+2024.08.21 - version 5.13.0
+ * Feature - Add a trait for enum-like classes
+ * Misc - Set the checkout page context in the session when rendering payment fields
+
+2024.08.16 - version 5.12.7
+ * Feature - Allow gateways to declare support for having a separate payment page after the checkout page
+
+2024.07.31 - version 5.12.6
+ * Fix - Make sure payment gateway form script dependencies are loaded correctly
+
+2024.07.31 - version 5.12.6
+ * Fix: Ensure we always list jQuery as a dependency when enqueuing JavaScript.
+
+2024.06.28 - version 5.12.5
+ * Fix - Prevent blank orders from being generated when adding a payment method
+
+2024.06.03 - version 5.12.4
+ * Fix - Ensure gateway scripts are compiled as regular JS rather than modules
+ * Fix - Address an issue where multiple save buttons were displayed when editing a payment method in My Account
+ * Misc - Disable clicking on other payment methods when editing a payment method in My Account
+
+2024.05.06 - version 5.12.3
+ * Fix - Ensure gateway block handler files are loaded from payment gateway framework path
+ * Misc - Improve background job database query performance
+
+2024.03.21 - version 5.12.2
+ * Tweak - Add non-gateway cart and checkout blocks supporting logic
+ * Tweak - Ensure gateway block scripts use unique handles
+
 2024.02.27 - version 5.12.1
  * Tweak - Handle support in gateways for external checkouts while corresponding express payment methods are in use in the cart and checkout blocks
  * Fix - Check if the session is set before trying to add a WooCommerce notice

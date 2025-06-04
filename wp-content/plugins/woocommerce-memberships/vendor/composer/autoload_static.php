@@ -4,16 +4,26 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit72bf82e3c7e60afee5b833bf64497895
+class ComposerStaticInitb6557a7bb788dcc5bdb0d7d02bbda193
 {
     public static $prefixLengthsPsr4 = array (
         'S' => 
         array (
+            'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\' => 45,
+            'SkyVerge\\WooCommerce\\Memberships\\Integrations\\' => 46,
             'SkyVerge\\WooCommerce\\Memberships\\' => 33,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce',
+        ),
+        'SkyVerge\\WooCommerce\\Memberships\\Integrations\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/integrations',
+        ),
         'SkyVerge\\WooCommerce\\Memberships\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
@@ -22,14 +32,96 @@ class ComposerStaticInit72bf82e3c7e60afee5b833bf64497895
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'SV_WC_Framework_Bootstrap' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/class-sv-wc-framework-bootstrap.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\API\\Abstract_Cacheable_API_Base' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/api/Abstract_Cacheable_API_Base.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\API\\Traits\\Cacheable_Request_Trait' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/api/Traits/Cacheable_Request_Trait.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\Admin\\Notes_Helper' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/admin/Notes_Helper.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\Admin\\Setup_Wizard' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/admin/abstract-sv-wc-plugin-admin-setup-wizard.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\Payment_Gateway\\Admin\\Setup_Wizard' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/admin/abstract-sv-wc-payment-gateway-plugin-admin-setup-wizard.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\Payment_Gateway\\Blocks\\Gateway_Blocks_Handler' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/Blocks/Gateway_Blocks_Handler.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\Payment_Gateway\\Blocks\\Gateway_Checkout_Block_Integration' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/Blocks/Gateway_Checkout_Block_Integration.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\Payment_Gateway\\External_Checkout\\Admin' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/External_Checkout/Admin.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\Payment_Gateway\\External_Checkout\\External_Checkout' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/External_Checkout/External_Checkout.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\Payment_Gateway\\External_Checkout\\Frontend' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/External_Checkout/Frontend.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\Payment_Gateway\\External_Checkout\\Google_Pay\\AJAX' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/External_Checkout/Google_Pay/AJAX.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\Payment_Gateway\\External_Checkout\\Google_Pay\\Admin' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/External_Checkout/Google_Pay/Admin.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\Payment_Gateway\\External_Checkout\\Google_Pay\\Frontend' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/External_Checkout/Google_Pay/Frontend.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\Payment_Gateway\\External_Checkout\\Google_Pay\\Google_Pay' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/External_Checkout/Google_Pay/Google_Pay.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\Payment_Gateway\\External_Checkout\\Orders' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/External_Checkout/Orders.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\Payment_Gateway\\Handlers\\Abstract_Hosted_Payment_Handler' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/Handlers/Abstract_Hosted_Payment_Handler.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\Payment_Gateway\\Handlers\\Abstract_Payment_Handler' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/Handlers/Abstract_Payment_Handler.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\Payment_Gateway\\Handlers\\Capture' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/Handlers/Capture.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\Payment_Gateway\\PaymentFormContextChecker' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/PaymentFormContextChecker.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\Payment_Gateway\\REST_API' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/rest-api/class-sv-wc-payment-gateway-plugin-rest-api.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\REST_API' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/rest-api/class-sv-wc-plugin-rest-api.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\REST_API\\Controllers\\Settings' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/rest-api/Controllers/Settings.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_API_Base' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/api/class-sv-wc-api-base.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_API_Exception' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/api/class-sv-wc-api-exception.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_API_JSON_Request' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/api/abstract-sv-wc-api-json-request.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_API_JSON_Response' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/api/abstract-sv-wc-api-json-response.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_API_Request' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/api/interface-sv-wc-api-request.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_API_Response' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/api/interface-sv-wc-api-response.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_API_XML_Request' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/api/abstract-sv-wc-api-xml-request.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_API_XML_Response' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/api/abstract-sv-wc-api-xml-response.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Admin_Notice_Handler' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/class-sv-wc-admin-notice-handler.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Data_Compatibility' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/compatibility/abstract-sv-wc-data-compatibility.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Helper' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/class-sv-wc-helper.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Hook_Deprecator' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/class-sv-wc-hook-deprecator.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Order_Compatibility' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/compatibility/class-sv-wc-order-compatibility.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/class-sv-wc-payment-gateway.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_API' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/api/interface-sv-wc-payment-gateway-api.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_API_Authorization_Response' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/api/interface-sv-wc-payment-gateway-api-authorization-response.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_API_Create_Payment_Token_Response' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/api/interface-sv-wc-payment-gateway-api-create-payment-token-response.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_API_Customer_Response' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/api/interface-sv-wc-payment-gateway-api-customer-response.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_API_Get_Tokenized_Payment_Methods_Response' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/api/interface-sv-wc-payment-gateway-api-get-tokenized-payment-methods-response.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_API_Payment_Notification_Credit_Card_Response' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/api/interface-sv-wc-payment-gateway-api-payment-notification-credit-card-response.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_API_Payment_Notification_Response' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/api/interface-sv-wc-payment-gateway-api-payment-notification-response.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_API_Payment_Notification_eCheck_Response' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/api/interface-sv-wc-payment-gateway-api-payment-notification-echeck-response.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_API_Request' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/api/interface-sv-wc-payment-gateway-api-request.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_API_Response' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/api/interface-sv-wc-payment-gateway-api-response.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_API_Response_Message_Helper' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/api/class-sv-wc-payment-gateway-api-response-message-helper.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Admin_Order' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/admin/class-sv-wc-payment-gateway-admin-order.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Admin_Payment_Token_Editor' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/admin/class-sv-wc-payment-gateway-admin-payment-token-editor.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Admin_User_Handler' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/admin/class-sv-wc-payment-gateway-admin-user-handler.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Apple_Pay' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/External_Checkout/apple-pay/class-sv-wc-payment-gateway-apple-pay.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Apple_Pay_AJAX' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/External_Checkout/apple-pay/class-sv-wc-payment-gateway-apple-pay-ajax.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Apple_Pay_API' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/External_Checkout/apple-pay/api/class-sv-wc-payment-gateway-apple-pay-api.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Apple_Pay_API_Request' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/External_Checkout/apple-pay/api/class-sv-wc-payment-gateway-apple-pay-api-request.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Apple_Pay_API_Response' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/External_Checkout/apple-pay/api/class-sv-wc-payment-gateway-apple-pay-api-response.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Apple_Pay_Admin' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/External_Checkout/apple-pay/class-sv-wc-payment-gateway-apple-pay-admin.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Apple_Pay_Frontend' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/External_Checkout/apple-pay/class-sv-wc-payment-gateway-apple-pay-frontend.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Apple_Pay_Payment_Response' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/External_Checkout/apple-pay/api/class-sv-wc-payment-gateway-apple-pay-payment-response.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Direct' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/class-sv-wc-payment-gateway-direct.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Exception' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/exceptions/class-sv-wc-payment-gateway-exception.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Helper' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/class-sv-wc-payment-gateway-helper.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Hosted' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/class-sv-wc-payment-gateway-hosted.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Integration' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/integrations/abstract-sv-wc-payment-gateway-integration.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Integration_Pre_Orders' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/integrations/class-sv-wc-payment-gateway-integration-pre-orders.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Integration_Subscriptions' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/integrations/class-sv-wc-payment-gateway-integration-subscriptions.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_My_Payment_Methods' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/class-sv-wc-payment-gateway-my-payment-methods.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Payment_Form' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/class-sv-wc-payment-gateway-payment-form.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Payment_Notification_Tokenization_Response' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/api/interface-sv-wc-payment-gateway-api-payment-notification-tokenization-response.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Payment_Token' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/payment-tokens/class-sv-wc-payment-gateway-payment-token.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Payment_Tokens_Handler' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/payment-tokens/class-sv-wc-payment-gateway-payment-tokens-handler.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Plugin' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/class-sv-wc-payment-gateway-plugin.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Payment_Gateway_Privacy' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/payment-gateway/class-sv-wc-payment-gateway-privacy.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Plugin' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/class-sv-wc-plugin.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Plugin_Compatibility' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/class-sv-wc-plugin-compatibility.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Plugin_Dependencies' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/class-sv-wc-plugin-dependencies.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Plugin_Exception' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/class-sv-wc-plugin-exception.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WC_Subscription_Compatibility' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/compatibility/class-sv-wc-subscription-compatibility.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WP_Admin_Message_Handler' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/class-sv-wp-admin-message-handler.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WP_Async_Request' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/utilities/class-sv-wp-async-request.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WP_Background_Job_Handler' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/utilities/class-sv-wp-background-job-handler.php',
+        'SkyVerge\\WooCommerce\\PluginFramework\\v5_15_8\\SV_WP_Job_Batch_Handler' => __DIR__ . '/..' . '/skyverge/wc-plugin-framework/woocommerce/utilities/class-sv-wp-job-batch-handler.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit72bf82e3c7e60afee5b833bf64497895::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit72bf82e3c7e60afee5b833bf64497895::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit72bf82e3c7e60afee5b833bf64497895::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitb6557a7bb788dcc5bdb0d7d02bbda193::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitb6557a7bb788dcc5bdb0d7d02bbda193::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitb6557a7bb788dcc5bdb0d7d02bbda193::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -50,8 +50,8 @@ class My_Account {
 	 */
 	public function __construct() {
 
-		$this->members_area        = wc_memberships()->load_class( '/src/frontend/My_Account/Members_Area.php',        Members_Area::class );
-		$this->profile_fields_area = wc_memberships()->load_class( '/src/frontend/My_Account/Profile_Fields_Area.php', Profile_Fields_Area::class );
+		$this->members_area        = wc_memberships()->load_class( '/src/Frontend/My_Account/Members_Area.php',        Members_Area::class );
+		$this->profile_fields_area = wc_memberships()->load_class( '/src/Frontend/My_Account/Profile_Fields_Area.php', Profile_Fields_Area::class );
 
 		/** @deprecated remove this legacy class alias when the plugin has fully migrated to namespaces */
 		class_alias( Members_Area::class, 'WC_Memberships_Members_Area' );

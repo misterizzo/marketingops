@@ -23,8 +23,6 @@
 
 namespace SkyVerge\WooCommerce\Memberships;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
-
 defined( 'ABSPATH' ) or exit;
 
 /**

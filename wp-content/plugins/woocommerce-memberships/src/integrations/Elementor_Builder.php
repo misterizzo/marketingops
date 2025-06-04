@@ -80,13 +80,16 @@ class Elementor_Builder {
 		// add section for settings
 		add_action( 'elementor/element/common/_section_style/after_section_end', [ $this, 'register_wcm_visibility_section' ] );
 		add_action( 'elementor/element/section/section_advanced/after_section_end', [ $this, 'register_wcm_visibility_section' ] );
+		add_action( 'elementor/element/container/section_layout/after_section_end', [ $this, 'register_wcm_visibility_section' ] );
 
 		// register section controls
 		add_action( 'elementor/element/common/' . $this->section_visibility . '/before_section_end', [ $this, 'register_wcm_visibility_controls' ] );
 		add_action( 'elementor/element/section/' . $this->section_visibility . '/before_section_end', [ $this, 'register_wcm_visibility_controls' ] );
+		add_action( 'elementor/element/container/' . $this->section_visibility . '/before_section_end', [ $this, 'register_wcm_visibility_controls' ] );
 
 		// determine whether element should be rendered or not
 		add_filter( 'elementor/frontend/section/should_render', [ $this, 'elementor_should_render_element' ], 10, 2 );
+		add_filter( 'elementor/frontend/container/should_render', [ $this, 'elementor_should_render_element' ], 10, 2 );
 		add_filter( 'elementor/frontend/widget/should_render', [ $this, 'elementor_should_render_element' ], 10, 2 );
 		add_filter( 'elementor/frontend/repeater/should_render', [ $this, 'elementor_should_render_element' ], 10, 2 );
 

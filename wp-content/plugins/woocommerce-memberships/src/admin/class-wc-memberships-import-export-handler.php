@@ -21,8 +21,6 @@
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
-
 defined( 'ABSPATH' ) or exit;
 
 /**
@@ -145,7 +143,7 @@ class WC_Memberships_Admin_Import_Export_Handler {
 	 * Sets the Memberships admin menu item as active while viewing the Import / Export tab page.
 	 *
 	 * @internal
-	 * @see \SkyVerge\WooCommerce\Memberships\Admin\Profile_Fields::set_current_admin_menu_item()
+	 * @see Profile_Fields::set_current_admin_menu_item()
 	 *
 	 * @since 1.6.2
 	 *

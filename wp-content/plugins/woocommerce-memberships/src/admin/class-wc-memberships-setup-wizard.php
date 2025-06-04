@@ -25,7 +25,7 @@ namespace SkyVerge\WooCommerce\Memberships\Admin;
 
 defined( 'ABSPATH' ) or exit;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_15_8 as Framework;
 
 /**
  * Onboarding Setup Wizard.

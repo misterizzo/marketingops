@@ -28,7 +28,7 @@ use SkyVerge\WooCommerce\Memberships\Admin\Views\Meta_Boxes\Profile_Field\Data;
 use SkyVerge\WooCommerce\Memberships\Admin\Views\Meta_Boxes\Profile_Field\Publish;
 use SkyVerge\WooCommerce\Memberships\Profile_Fields as Profile_Fields_Handler;
 use SkyVerge\WooCommerce\Memberships\Profile_Fields\Profile_Field_Definition;
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_15_8 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -84,8 +84,6 @@ class Edit_Screen {
 	 */
 	public function render_data_meta_box() {
 
-		require_once( wc_memberships()->get_plugin_path() . '/src/admin/Views/Meta_Boxes/Profile_Field/Data.php' );
-
 		Data::create_and_render( $this->get_profile_fields_admin_handler()->get_admin_screen_profile_field_definition() ?: new Profile_Field_Definition() );
 	}
 
@@ -98,8 +96,6 @@ class Edit_Screen {
 	 * @since 1.19.0
 	 */
 	public function render_publish_meta_box() {
-
-		require_once( wc_memberships()->get_plugin_path() . '/src/admin/Views/Meta_Boxes/Profile_Field/Publish.php' );
 
 		Publish::create_and_render( $this->get_profile_fields_admin_handler()->get_admin_screen_profile_field_definition() ?: new Profile_Field_Definition() );
 	}

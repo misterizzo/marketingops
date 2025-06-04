@@ -24,7 +24,7 @@
 namespace SkyVerge\WooCommerce\Memberships\Restrictions;
 
 use SkyVerge\WooCommerce\Memberships\Helpers\Strings_Helper;
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_15_8 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -59,7 +59,7 @@ class Posts {
 	public function __construct() {
 
 		// handle content restriction according to the chosen restriction mode
-		add_action( 'wp',            [ $this, 'handle_restriction_modes' ] );
+		add_action( 'wp',            [ $this, 'handle_restriction_modes' ], 9 ); // note: the 9 priority is important for Beaver Builder Themer compatibility, which execute scode on priority 10 -- we need to be in before that!
 		add_action( 'rest_api_init', [ $this, 'handle_restriction_modes' ] );
 
 		// handle restrictions to individual posts or terms in REST API requests

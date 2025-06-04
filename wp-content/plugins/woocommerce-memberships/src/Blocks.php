@@ -23,7 +23,10 @@
 
 namespace SkyVerge\WooCommerce\Memberships;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
+use SkyVerge\WooCommerce\Memberships\Blocks\Block;
+use SkyVerge\WooCommerce\Memberships\Blocks\Member_Content;
+use SkyVerge\WooCommerce\Memberships\Blocks\Members_Directory;
+use SkyVerge\WooCommerce\Memberships\Blocks\Non_Member_Content;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -41,7 +44,7 @@ class Blocks {
 	/** @var bool whether the block editor is supported */
 	private $has_block_editor;
 
-	/** @var \SkyVerge\WooCommerce\Memberships\Blocks\Block[] array of block instances */
+	/** @var Block[] array of block instances */
 	private $blocks = [];
 
 
@@ -154,18 +157,14 @@ class Blocks {
 		// register blocks scripts & styles
 		$this->register_blocks_scripts_styles();
 
-		// blocks abstracts & interfaces
-		require_once( wc_memberships()->get_plugin_path() . '/src/blocks/Block.php' );
-		require_once( wc_memberships()->get_plugin_path() . '/src/blocks/Dynamic_Content_Block.php' );
-
 		// initialize and register individual blocks
 		$this->blocks = [
-			'member-content'     => wc_memberships()->load_class( '/src/blocks/Member_Content.php', '\\SkyVerge\\WooCommerce\\Memberships\\Blocks\\Member_Content' ),
-			'non-member-content' => wc_memberships()->load_class(  '/src/blocks/Non_Member_Content.php', '\\SkyVerge\\WooCommerce\\Memberships\\Blocks\\Non_Member_Content' ),
+			'member-content'     => new Member_Content(),
+			'non-member-content' => new Non_Member_Content(),
 		];
 
 		if ( wc_memberships()->is_member_directory_enabled() ) {
-			$this->blocks['directory'] = wc_memberships()->load_class( '/src/blocks/Members_Directory.php', '\\SkyVerge\\WooCommerce\\Memberships\\Blocks\\Members_Directory' );
+			$this->blocks['directory'] = new Members_Directory();
 		}
 	}
 

@@ -21,7 +21,7 @@
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_15_8 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -948,24 +948,38 @@ class WC_Memberships_Integration_Subscriptions {
 
 		// sanity check, although this shouldn't happen.
 		if ( ! $subscription_status && ! $membership_status ) {
-
 			$has_same_status = true;
-
 		} else {
+			$convertedSubscriptionStatus = $this->convertSubscriptionStatusToMembershipStatus($subscription_status);
 
-			// Subscription status name => Membership status name.
-			$map = array(
-				'active'         => 'active',
-				'on-hold'        => 'paused',
-				'expired'        => 'expired',
-				'pending-cancel' => 'pending',
-				'trash'          => 'cancelled',
-			);
-
-			$has_same_status = ! array_key_exists( $subscription_status, $map ) ? false : $map[ $subscription_status ] === $membership_status;
+			if ($convertedSubscriptionStatus === null) {
+				$has_same_status = false;
+			} else {
+				$has_same_status = $this->convertSubscriptionStatusToMembershipStatus($subscription_status) === $membership_status;
+			}
 		}
 
 		return $has_same_status;
+	}
+
+	/**
+	 * Converts a WooCommerce Subscription status to the corresponding Membership status.
+	 *
+	 * @param string $subscriptionStatus
+	 * @return string|null
+	 */
+	public function convertSubscriptionStatusToMembershipStatus(string $subscriptionStatus) : ?string
+	{
+		// subscription status name => membership status name
+		$map = [
+			'active'         => 'active',
+			'on-hold'        => 'paused',
+			'expired'        => 'expired',
+			'pending-cancel' => 'pending',
+			'trash'          => 'cancelled',
+		];
+
+		return $map[$subscriptionStatus] ?? null;
 	}
 
 

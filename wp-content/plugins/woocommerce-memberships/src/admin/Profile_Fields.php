@@ -25,8 +25,8 @@ namespace SkyVerge\WooCommerce\Memberships\Admin;
 
 use SkyVerge\WooCommerce\Memberships\Admin\Profile_Fields\Edit_Screen;
 use SkyVerge\WooCommerce\Memberships\Admin\Profile_Fields\List_Screen;
+use SkyVerge\WooCommerce\Memberships\Profile_Fields as Base_Profile_Fields;
 use SkyVerge\WooCommerce\Memberships\Profile_Fields\Profile_Field_Definition;
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -58,11 +58,6 @@ class Profile_Fields {
 	 * @since 1.19.0
 	 */
 	public function __construct() {
-
-		require_once( wc_memberships()->get_plugin_path() . '/src/admin/Views/Meta_Boxes/Profile_Field/Meta_Box.php' );
-		require_once( wc_memberships()->get_plugin_path() . '/src/admin/Profile_Fields/Edit_Screen.php' );
-		require_once( wc_memberships()->get_plugin_path() . '/src/admin/Profile_Fields/List_Screen.php' );
-		require_once( wc_memberships()->get_plugin_path() . '/src/admin/Profile_Fields/List_Table.php' );
 
 		// make sure that the Memberships menu item is set to currently active
 		add_filter( 'parent_file', [ $this, 'set_current_admin_menu_item' ] );
@@ -128,7 +123,7 @@ class Profile_Fields {
 
 		if ( null === $this->profile_field_definition && isset( $_GET['profile_field'] ) && ( $profile_field_id = trim( (string) $_GET['profile_field'] ) ) ) {
 
-			foreach ( \SkyVerge\WooCommerce\Memberships\Profile_Fields::get_profile_field_definitions() as $profile_field_definition ) {
+			foreach ( Base_Profile_Fields::get_profile_field_definitions() as $profile_field_definition ) {
 
 				if ( $profile_field_id === $profile_field_definition->get_id() ) {
 

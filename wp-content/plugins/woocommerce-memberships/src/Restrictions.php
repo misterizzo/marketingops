@@ -24,7 +24,8 @@
 namespace SkyVerge\WooCommerce\Memberships;
 
 use SkyVerge\WooCommerce\Memberships\Helpers\Strings_Helper;
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
+use SkyVerge\WooCommerce\Memberships\Restrictions\Posts;
+use SkyVerge\WooCommerce\Memberships\Restrictions\Products;
 use WC_Product;
 use WP_Post;
 use WP_Term;
@@ -44,7 +45,10 @@ class Restrictions {
 	/** @var string the restriction mode option key */
 	private $restriction_mode_option = 'wc_memberships_restriction_mode';
 
-	/** @var string the restriction mode as per plugin settings */
+	/**
+	 * @var string the restriction mode as per plugin settings
+	 * This property should NOT be called directly. Use {@see static::get_restriction_mode()} instead.
+	 */
 	private $restriction_mode;
 
 	/** @var string the redirect page ID option key */
@@ -77,10 +81,10 @@ class Restrictions {
 	/** @var string transient key to store cached IDs of posts forced public */
 	private $public_posts_transient_key = 'wc_memberships_public_content';
 
-	/** @var \SkyVerge\WooCommerce\Memberships\Restrictions\Posts instance of general content restrictions handler */
+	/** @var Posts instance of general content restrictions handler */
 	private $posts_restrictions;
 
-	/** @var \SkyVerge\WooCommerce\Memberships\Restrictions\Products instance of products restrictions handler */
+	/** @var Products instance of products restrictions handler */
 	private $products_restrictions;
 
 	/** @var array cached user access conditions */
@@ -98,7 +102,8 @@ class Restrictions {
 	public function __construct() {
 
 		// init restriction options
-		$this->restriction_mode           = $this->get_restriction_mode();
+		// NOTE: we intentionally do not initialize `$restriction_mode` because it triggers translations
+		// instead the `get_restriction_mode()` method should be accessed when needed
 		$this->hiding_restricted_products = $this->hiding_restricted_products();
 		$this->showing_excerpts           = $this->showing_excerpts();
 		$this->inherit_restrictions       = $this->inherit_restriction_rules();
@@ -112,7 +117,7 @@ class Restrictions {
 			$this->posts_restrictions = $this->get_posts_restrictions_instance();
 
 			/** @deprecated remove legacy class aliases when the plugin has fully migrated to namespaces */
-			class_alias( \SkyVerge\WooCommerce\Memberships\Restrictions\Posts::class, 'WC_Memberships_Posts_Restrictions' );
+			class_alias( Posts::class, 'WC_Memberships_Posts_Restrictions' );
 		}
 
 		if ( ! $is_admin ) {
@@ -120,7 +125,7 @@ class Restrictions {
 			$this->products_restrictions = $this->get_products_restrictions_instance();
 
 			/** @deprecated remove legacy class aliases when the plugin has fully migrated to namespaces */
-			class_alias( \SkyVerge\WooCommerce\Memberships\Restrictions\Products::class, 'WC_Memberships_Products_Restrictions' );
+			class_alias( Products::class, 'WC_Memberships_Products_Restrictions' );
 		}
 	}
 
@@ -130,15 +135,12 @@ class Restrictions {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @return \SkyVerge\WooCommerce\Memberships\Restrictions\Posts
+	 * @return Posts
 	 */
 	public function get_posts_restrictions_instance() {
 
-		if ( ! $this->posts_restrictions instanceof \SkyVerge\WooCommerce\Memberships\Restrictions\Posts ) {
-
-			require_once( wc_memberships()->get_plugin_path() . '/src/Restrictions/Posts.php' );
-
-			$this->posts_restrictions = new \SkyVerge\WooCommerce\Memberships\Restrictions\Posts();
+		if ( ! $this->posts_restrictions instanceof Posts ) {
+			$this->posts_restrictions = new Posts();
 		}
 
 		return $this->posts_restrictions;
@@ -150,15 +152,12 @@ class Restrictions {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @return \SkyVerge\WooCommerce\Memberships\Restrictions\Products
+	 * @return Products
 	 */
 	public function get_products_restrictions_instance() {
 
-		if ( ! $this->products_restrictions instanceof \SkyVerge\WooCommerce\Memberships\Restrictions\Products ) {
-
-			require_once( wc_memberships()->get_plugin_path() . '/src/Restrictions/Products.php' );
-
-			$this->products_restrictions = new \SkyVerge\WooCommerce\Memberships\Restrictions\Products();
+		if ( ! $this->products_restrictions instanceof Products ) {
+			$this->products_restrictions = new Products();
 		}
 
 		return $this->products_restrictions;
@@ -215,7 +214,7 @@ class Restrictions {
 	 * @return bool
 	 */
 	public function is_restriction_mode( $mode ) {
-		return is_array( $mode ) ? in_array( $this->get_restriction_mode(), $mode, true ) : $mode === $this->restriction_mode;
+		return is_array( $mode ) ? in_array( $this->get_restriction_mode(), $mode, true ) : $mode === $this->get_restriction_mode();
 	}
 
 

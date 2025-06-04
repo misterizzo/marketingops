@@ -21,8 +21,6 @@
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
-
 defined( 'ABSPATH' ) or exit;
 
 /**
@@ -104,7 +102,7 @@ class WC_Memberships_Meta_Box_User_Membership_Recent_Activity extends \WC_Member
 			if ( ! empty( $notes ) ) :
 
 				// load recent activity note view
-				require_once( wc_memberships()->get_plugin_path() . '/src/admin/meta-boxes/views/class-wc-memberships-meta-box-view-membership-recent-activity-note.php' );
+				require_once( wc_memberships()->get_plugin_path() . '/src/Admin/meta-boxes/views/class-wc-memberships-meta-box-view-membership-recent-activity-note.php' );
 
 				foreach ( $notes as $note ) :
 

@@ -21,6 +21,9 @@
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
+use SkyVerge\WooCommerce\PluginFramework\v5_15_8 as Framework;
+use SkyVerge\WooCommerce\Memberships\CLI\Import_User_Memberships;
+
 /**
  * Manage WooCommerce Memberships with WP CLI
  *
@@ -37,7 +40,7 @@ if ( ! class_exists( 'WP_CLI_Command', false ) ) {
 }
 
 // WooCommerce v3.0 CLI implementation is different
-if ( SkyVerge\WooCommerce\PluginFramework\v5_12_1\SV_WC_Plugin_Compatibility::is_wc_version_gte( '3.0' ) && ! class_exists( 'WC_CLI_Command', false ) ) {
+if ( Framework\SV_WC_Plugin_Compatibility::is_wc_version_gte( '3.0' ) && ! class_exists( 'WC_CLI_Command', false ) ) {
 
 	/**
 	 * Re-introduce WooCommerce WC_CLI_Command for compatibility.
@@ -516,5 +519,5 @@ require_once __DIR__ . '/cli/class-wc-memberships-cli-user-membership.php';
 \WP_CLI::add_command(
 	'wc user_membership import',
 	[ '\\SkyVerge\\WooCommerce\\Memberships\\CLI\\Import_User_Memberships', 'import' ],
-	[ 'synopsis' => \SkyVerge\WooCommerce\Memberships\CLI\Import_User_Memberships::synopsis() ]
+	[ 'synopsis' => Import_User_Memberships::synopsis() ]
 );

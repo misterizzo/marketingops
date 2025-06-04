@@ -24,7 +24,6 @@
 namespace SkyVerge\WooCommerce\Memberships\Integrations;
 
 use SkyVerge\WooCommerce\Memberships\Integrations\Courseware\Admin;
-use SkyVerge\WooCommerce\PluginFramework\v5_12_1 as Framework;
 use WC_Memberships_User_Membership;
 
 defined( 'ABSPATH' ) or exit;
@@ -72,9 +71,6 @@ abstract class Courseware {
 
 		// load the courseware admin handler
 		add_action( 'admin_init', function() {
-
-			require_once( wc_memberships()->get_plugin_path() . '/src/integrations/Courseware/Admin.php' );
-
 			new Admin( $this );
 		} );
 

@@ -3,7 +3,7 @@
         'name' => 'skyverge/woocommerce-memberships',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'e2e92b87fe1fc755eb996ef9af01304644e71a6a',
+        'reference' => 'b62e00888122d86538eac7b85fe2782e8b26ec13',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'skyverge/wc-plugin-framework' => array(
-            'pretty_version' => '5.12.1',
-            'version' => '5.12.1.0',
-            'reference' => 'c78046e2a97463afbc64a2b847dedfdc87bf38d7',
+            'pretty_version' => '5.15.8',
+            'version' => '5.15.8.0',
+            'reference' => '22c54b8a6a8b86df2feb5644a298759e9d6d1056',
             'type' => 'library',
             'install_path' => __DIR__ . '/../skyverge/wc-plugin-framework',
             'aliases' => array(),
@@ -22,7 +22,7 @@
         'skyverge/woocommerce-memberships' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'e2e92b87fe1fc755eb996ef9af01304644e71a6a',
+            'reference' => 'b62e00888122d86538eac7b85fe2782e8b26ec13',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
