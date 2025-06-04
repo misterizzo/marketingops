@@ -2774,14 +2774,11 @@ jQuery( document ).ready( function( $ ) {
 		var plan              = ( false !== moc_get_url_vars() ) ? moc_get_url_vars()['plan'] : '';	
 		var add_to_cart       = ( false !== moc_get_url_vars() ) ? moc_get_url_vars()['add_to_cart'] : '';
 		var this_button       = $( this );
-		this_button.text( 'profile creating' );
-		var process_execute  = true;
-		var email            = this_button.closest( '.moc_signup_form' ).find( '.moc-email' ).val();
-		var password         = this_button.closest( '.moc_signup_form' ).find( '.moc-password' ).val();
-		var confirm_password = this_button.closest( '.moc_signup_form' ).find( '.moc-confirm-password' ).val();
-		var random_otp       = moc_make_otp( 4, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' );
-		var _nonce_          = '@A9@' + random_otp + '#2A#';
-		var who_reffered_you = $( 'input[name="who_referred_you"]' ).val();
+		var process_execute   = true;
+		var email             = this_button.closest( '.moc_signup_form' ).find( '.moc-email' ).val();
+		var random_otp        = moc_make_otp( 4, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' );
+		var _nonce_           = '@A9@' + random_otp + '#2A#';
+		var who_reffered_you  = $( 'input[name="who_referred_you"]' ).val();
 
 		// If this is agency registration.
 		if ( 1 === is_valid_string( registration_type ) ) {
@@ -2827,32 +2824,43 @@ jQuery( document ).ready( function( $ ) {
 			process_execute = false;
 		}
 
-		// check password input is valid or not.
-		if ( '' === password ) {
-			this_button.closest( '.moc_signup_form' ).find( '.moc_password_err span' ).text( user_bio_empty_err_msg );
-			process_execute = false;
-		}
-		if ( -1 === is_valid_password( password ) ) {
-			this_button.closest( '.moc_signup_form' ).find( '.moc_password_err span' ).text( password_strength_error );
-			process_execute = false;
-		}
-		// check password input is match with confirm password.
-		if ( '' !== password && password !== confirm_password ) {
-			this_button.closest( '.moc_signup_form' ).find( '.moc_confirm_password_err span').text( not_match_password_err );
-			process_execute = false;
+		// Check the password if the user is not logged in.
+		if ( 0 === current_user_id )  {
+			var password         = this_button.closest( '.moc_signup_form' ).find( '.moc-password' ).val();
+			var confirm_password = this_button.closest( '.moc_signup_form' ).find( '.moc-confirm-password' ).val();
+
+			// check password input is valid or not.
+			if ( '' === password ) {
+				this_button.closest( '.moc_signup_form' ).find( '.moc_password_err span' ).text( user_bio_empty_err_msg );
+				process_execute = false;
+			}
+			if ( -1 === is_valid_password( password ) ) {
+				this_button.closest( '.moc_signup_form' ).find( '.moc_password_err span' ).text( password_strength_error );
+				process_execute = false;
+			}
+			// check password input is match with confirm password.
+			if ( '' !== password && password !== confirm_password ) {
+				this_button.closest( '.moc_signup_form' ).find( '.moc_confirm_password_err span').text( not_match_password_err );
+				process_execute = false;
+			}
+
+			// check confirm_password input is empty or not.
+			if ( '' === confirm_password ) {
+				this_button.closest( '.moc_signup_form' ).find( '.moc_confirm_password_err span' ).text( user_bio_empty_err_msg );
+				process_execute = false;
+			}
+		} else {
+			var password         = '';
+			var confirm_password = '';
 		}
 
-		// check confirm_password input is empty or not.
-		if ( '' === confirm_password ) {
-			this_button.closest( '.moc_signup_form' ).find( '.moc_confirm_password_err span' ).text( user_bio_empty_err_msg );
-			process_execute = false;
-		}
 		if ( false === process_execute ) {
 			moc_show_toast( 'bg-danger', 'fa-skull-crossbones', toast_error_heading, invalid_empty_message );
 			this_button.text( 'Create Profile' );
 			return false;
 		} else {
-			moc_ajax_callback_verification_otp( 'moc_register_user', username, agencyname, email, password, confirm_password, plan, add_to_cart, _nonce_, 'moc_first_time_event', 'moc-register-container', who_reffered_you, this_button, 0 );
+			this_button.text( 'Creating your profile...' );
+			moc_ajax_callback_verification_otp( 'moc_register_user', current_user_id, username, agencyname, email, password, confirm_password, plan, add_to_cart, _nonce_, 'moc_first_time_event', 'moc-register-container', who_reffered_you, this_button, 0 );
 		}
 	} );
 
@@ -2916,7 +2924,7 @@ jQuery( document ).ready( function( $ ) {
 
 			return false;
 		} else {
-			$.ajax({
+			$.ajax( {
 				dataType: 'json',
 				url: ajaxurl,
 				type: 'POST',
@@ -2983,7 +2991,7 @@ jQuery( document ).ready( function( $ ) {
 		$( '.moc_error span' ).text( '' );
 
 		// Shoot the ajax for user or agency registration.
-		moc_ajax_callback_verification_otp( 'moc_register_user', username, agencyname, email, password, confirm_password, plan, add_to_cart, _nonce_, 'moc_resend_callback_event', 'moc-otp-section', who_reffered_you, '', click_count );
+		moc_ajax_callback_verification_otp( 'moc_register_user', current_user_id, username, agencyname, email, password, confirm_password, plan, add_to_cart, _nonce_, 'moc_resend_callback_event', 'moc-otp-section', who_reffered_you, '', click_count );
 	} );
 
 	/**
@@ -4420,7 +4428,7 @@ jQuery( document ).ready( function( $ ) {
 	/**
 	 * Function to return ajax call for sending otp to email.
 	 */
-	function moc_ajax_callback_verification_otp( action, username, agencyname = '', email, password, confirm_password, plan, add_to_cart, _nonce_, evnet, moc_block_element, who_reffered_you, this_button, click_count ) {
+	function moc_ajax_callback_verification_otp( action, current_user_id, username, agencyname = '', email, password, confirm_password, plan, add_to_cart, _nonce_, evnet, moc_block_element, who_reffered_you, this_button, click_count ) {
 		// Send the ajax for individual or agency registration.
 		$.ajax( {
 			dataType: 'json',
@@ -4428,6 +4436,7 @@ jQuery( document ).ready( function( $ ) {
 			type: 'POST',
 			data: {
 				action: action,
+				current_user_id: current_user_id,
 				username: username,
 				agencyname: agencyname,
 				email: email,
@@ -4444,6 +4453,12 @@ jQuery( document ).ready( function( $ ) {
 				block_element( $( '.' + moc_block_element + ' .loader_bg' ) );
 			},
 			success: function( response ) {
+				if ( 'marketingops-agency-created-successfully' === response.data.code ) {
+					moc_show_toast( 'bg-success', 'fa-check-circle', toast_success_heading, response.data.toast_message );
+					window.location.href = response.data.redirect_to;
+					return false;
+				}
+
 				if ( 'marketingops=already-email-exist' === response.data.code ) {
 					moc_show_toast( 'bg-danger', 'fa-skull-crossbones', toast_error_heading, invalid_empty_message );
 					if ('username' === response.data.flag) {

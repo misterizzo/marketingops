@@ -2857,6 +2857,8 @@ class Marketing_Ops_Core_Public {
 		$toast_message    = '';
 		$flag             = '';
 		$html             = '';
+		$redirect_to      = '';
+		$current_user_id  = (int) filter_input( INPUT_POST, 'current_user_id', FILTER_SANITIZE_NUMBER_INT );
 		$username         = filter_input( INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$agencyname       = filter_input( INPUT_POST, 'agencyname', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$email            = filter_input( INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
@@ -2874,12 +2876,68 @@ class Marketing_Ops_Core_Public {
 		$who_reffered_you = filter_input( INPUT_POST, 'who_reffered_you', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$click_count      = (int) filter_input( INPUT_POST, 'click_count', FILTER_SANITIZE_NUMBER_INT );
 
-		if ( 'moc_resend_callback_event' !== $event ) {
-			if ( username_exists( $username ) == null && email_exists( $email ) === false ) {
-				// Create the new user
-				$message .= 'marketingops-user-inserted-successfully';
-				$toast_message       .= __( 'You are successfully registered.', 'marketingops' );	
-				$html                .= moc_otp_varification_html( $click_count );
+		// If the user is logged in and agency name is provided.
+		if ( 0 !== $current_user_id && ! empty( $agencyname ) ) {
+			// Create an agency.
+			wp_insert_post(
+				array(
+					'post_title'   => $agencyname,
+					'post_type'    => 'agency',
+					'post_status'  => 'publish',
+					'post_author'  => $current_user_id,
+					'meta_input'   => array(
+						'agency_owner'      => $current_user_id,
+						'agency_user_email' => $email,
+					),
+				)
+			);
+
+			// Assign the agency membership to the user.
+			wc_memberships_create_user_membership(
+				array(
+					'plan_id' => $plan, // Enter the ID (post ID) of the plan to grant at registration
+					'user_id' => $current_user_id,
+				)
+			);
+
+			// Ajax success message.
+			$message       = 'marketingops-agency-created-successfully';
+			$toast_message = __( 'Agency created. We are taking you to your agency profile.', 'marketingops' );
+			$html          = '';
+			$redirect_to   = wc_get_page_permalink( 'myaccount' ) . 'agency-profile/';
+		} else {
+			if ( 'moc_resend_callback_event' !== $event ) {
+				if ( username_exists( $username ) == null && email_exists( $email ) === false ) {
+					// Create the new user
+					$message .= 'marketingops-user-inserted-successfully';
+					$toast_message       .= __( 'You are successfully registered.', 'marketingops' );	
+					$html                .= moc_otp_varification_html( $click_count );
+					$site_title           = get_option( 'blogname' );
+					$admin_email          = get_option('admin_email');
+					$headers              = 'From:' . $site_title . '<' . $admin_email . "> \r\n";
+					$headers             .= 'Reply-To:' . $admin_email . "\r\n";
+					$headers             .= "X-Priority: 1\r\n";
+					$headers             .= 'MIME-Version: 1.0' . "\n";
+					$headers             .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+					$subject_setting      = get_field( 'email_otp_verification_template', 'option' );
+					$subject_to_text      = $subject_setting['subject'];
+					$body_content_to_text = moc_email_template_html( $_nonce_array );
+					wp_mail( $email, $subject_to_text, $body_content_to_text, $headers );
+				} else {
+					if ( email_exists( $email ) !== false ) {
+						$toast_message = __( 'User with this email address already exists.', 'marketingops' );
+						$flag          = 'email';
+					} else {
+						$toast_message = __( 'This profile handle is already taken. Please change it to something else.', 'marketingops' );
+						$flag          = 'username';
+					}
+					$message = 'marketingops=already-email-exist';
+					$html    = '';
+				}
+			} else {
+				$message              = 'marketingops-user-inserted-successfully';
+				$toast_message        = __( 'OTP resent. Please check your inbox.', 'marketingops' );
+				$html                 = moc_otp_varification_html( $click_count );
 				$site_title           = get_option( 'blogname' );
 				$admin_email          = get_option('admin_email');
 				$headers              = 'From:' . $site_title . '<' . $admin_email . "> \r\n";
@@ -2891,32 +2949,7 @@ class Marketing_Ops_Core_Public {
 				$subject_to_text      = $subject_setting['subject'];
 				$body_content_to_text = moc_email_template_html( $_nonce_array );
 				wp_mail( $email, $subject_to_text, $body_content_to_text, $headers );
-			} else {
-				if ( email_exists( $email ) !== false ) {
-					$toast_message .= __( 'User with this email address already exists.', 'marketingops' );
-					$flag          .= 'email';
-				} else {
-					$toast_message .= __( 'This profile handle is already taken. Please change it to something else.', 'marketingops' );
-					$flag          .= 'username';
-				}
-				$message       .= 'marketingops=already-email-exist';
-				$html          .= '';
 			}
-		} else {
-			$message             .= 'marketingops-user-inserted-successfully';
-			$toast_message       .= __( 'OTP resent. Please check your inbox.', 'marketingops' );
-			$html                .= moc_otp_varification_html( $click_count );
-			$site_title           = get_option( 'blogname' );
-			$admin_email          = get_option('admin_email');
-			$headers              = 'From:' . $site_title . '<' . $admin_email . "> \r\n";
-			$headers             .= 'Reply-To:' . $admin_email . "\r\n";
-			$headers             .= "X-Priority: 1\r\n";
-			$headers             .= 'MIME-Version: 1.0' . "\n";
-			$headers             .= 'Content-type: text/html; charset=utf-8' . "\r\n";
-			$subject_setting      = get_field( 'email_otp_verification_template', 'option' );
-			$subject_to_text      = $subject_setting['subject'];
-			$body_content_to_text = moc_email_template_html( $_nonce_array );
-			wp_mail( $email, $subject_to_text, $body_content_to_text, $headers );
 		}
 
 		// Send the AJAX response.
@@ -2932,6 +2965,7 @@ class Marketing_Ops_Core_Public {
 				'plan'             => $plan,
 				'who_reffered_you' => $who_reffered_you,
 				'html'			   => $html,
+				'redirect_to'      => $redirect_to,
 			)
 		);
 		wp_die();
@@ -2994,7 +3028,7 @@ class Marketing_Ops_Core_Public {
 
 				// If the agency name is provided, create an agency.
 				if ( ! empty( $agencyname ) ) {
-					$agency_id = wp_insert_post(
+					wp_insert_post(
 						array(
 							'post_title'   => $agencyname,
 							'post_type'    => 'agency',

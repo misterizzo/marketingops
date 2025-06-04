@@ -14,16 +14,20 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly.
 
+global $current_user;
+
 get_header();
 
 $type        = filter_input( INPUT_GET, 'type', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 $heading     = ( ! is_null( $type ) && 'agency' === $type ) ? __( 'Create Your Free Agency Profile', 'marketingops' ) : __( 'Create Your Free Profile', 'marketingops' );
 $show_signup = true;
+$user_email  = '';
+$plan_id     = (int) filter_input( INPUT_GET, 'plan', FILTER_SANITIZE_NUMBER_INT );
 
 if ( is_user_logged_in() ) {
 	// Check if the user already has the plan requested in the URL.
-	$plan_id                 = (int) filter_input( INPUT_GET, 'plan', FILTER_SANITIZE_NUMBER_INT );
 	$user_active_memberships = moc_get_membership_plan_object();
+	$user_email              = $current_user->data->user_email;
 
 	// If there are active memberships, check if the plan ID is in the list.
 	if ( ! empty( $user_active_memberships ) && is_array( $user_active_memberships ) ) {
@@ -65,10 +69,15 @@ if ( true === $show_signup ) {
 					<h2 class="elementor-heading-title elementor-size-default"><?php echo esc_html( $heading ); ?></h2>
 				</div>
 			</div>
-			<div class="elementor-element profilesubheading elementor-widget elementor-widget-text-editor">
-				<div class="elementor-widget-container">
-				<?php esc_html_e( 'Already a member?', 'marketingops' ); ?> <a href="<?php echo esc_url( site_url( 'log-in' ) ); ?>"><?php esc_html_e( 'Log in', 'marketingops' ); ?></a> </div>
-			</div>
+
+			<!-- is the user is not logged in -->
+			<?php if ( ! is_user_logged_in() ) { ?>
+				<div class="elementor-element profilesubheading elementor-widget elementor-widget-text-editor">
+					<div class="elementor-widget-container">
+					<?php esc_html_e( 'Already a member?', 'marketingops' ); ?> <a href="<?php echo esc_url( site_url( 'log-in' ) ); ?>"><?php esc_html_e( 'Log in', 'marketingops' ); ?></a> </div>
+				</div>
+			<?php } ?>
+
 			<div class="elementor-element profilfrm elementor-widget elementor-widget-shortcode moc_signup_form">
 				<div class="elementor-widget-container">
 					<div class="elementor-shortcode">
@@ -98,37 +107,42 @@ if ( true === $show_signup ) {
 								<?php } ?>
 								<div class="moc-form-field-wrap reg-email fw-full fda-standard fld-above">
 									<div class="moc-form-field-input-textarea-wrap">
-										<input name="reg_email" type="email" placeholder="E-mail Address" class="moc-form-field reg-email moc-email" required="required">
+										<input name="reg_email" type="email" placeholder="E-mail Address" class="moc-form-field reg-email moc-email" required="required" value="<?php echo esc_attr( ! empty( $user_email ) ? $user_email : '' ); ?>" <?php echo esc_attr( ! empty( $user_email ) ? 'disabled' : '' ); ?>>
 										<div class="moc_error moc_email_err">
 											<span></span>
 										</div>
 									</div>
 								</div>
-								<div class="moc-form-field-wrap reg-password moc-password-element fw-full has-password-visibility-icon fda-standard fld-above">
-									<div class="moc-form-field-input-textarea-wrap">
-										<input name="reg_password" type="password" placeholder="Password (6+ characters, 1 capital letter, 1 special letter, 1 number)" class="moc-form-field reg-password moc-password" required="required">
-										<a href="#" class="password_icon moc_pass_icon">
-											<input name="reg_password_present" type="hidden" value="true">
-											<img src="/wp-content/plugins/marketing-ops-core/public/images/password_unhide_icon.svg" alt="password_unhide" />
-										</a>
-										<i class="moc-form-material-icons"><?php esc_html_e( 'visibility', 'marketingops' ); ?></i>
-										<div class="moc_error moc_password_err">
-											<span></span>
+
+								<!-- is the user is not logged in -->
+								<?php if ( ! is_user_logged_in() ) { ?>
+									<div class="moc-form-field-wrap reg-password moc-password-element fw-full has-password-visibility-icon fda-standard fld-above">
+										<div class="moc-form-field-input-textarea-wrap">
+											<input name="reg_password" type="password" placeholder="Password (6+ characters, 1 capital letter, 1 special letter, 1 number)" class="moc-form-field reg-password moc-password" required="required">
+											<a href="#" class="password_icon moc_pass_icon">
+												<input name="reg_password_present" type="hidden" value="true">
+												<img src="/wp-content/plugins/marketing-ops-core/public/images/password_unhide_icon.svg" alt="password_unhide" />
+											</a>
+											<i class="moc-form-material-icons"><?php esc_html_e( 'visibility', 'marketingops' ); ?></i>
+											<div class="moc_error moc_password_err">
+												<span></span>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="moc-form-field-wrap reg-confirm-password moc-password-element fw-full fda-standard fld-above">
-									<div class="moc-form-field-input-textarea-wrap">
-										<input name="reg_password2" type="password" placeholder="Confirm Password" class="moc-form-field reg-confirm-password moc-confirm-password" required="required">
-										<a href="#" class="password_icon moc_pass_icon">
-											<input name="reg_password_present" type="hidden" value="true">
-											<img src="/wp-content/plugins/marketing-ops-core/public/images/password_unhide_icon.svg" alt="password_unhide" />
-										</a>
-										<div class="moc_error moc_confirm_password_err">
-											<span></span>
+									<div class="moc-form-field-wrap reg-confirm-password moc-password-element fw-full fda-standard fld-above">
+										<div class="moc-form-field-input-textarea-wrap">
+											<input name="reg_password2" type="password" placeholder="Confirm Password" class="moc-form-field reg-confirm-password moc-confirm-password" required="required">
+											<a href="#" class="password_icon moc_pass_icon">
+												<input name="reg_password_present" type="hidden" value="true">
+												<img src="/wp-content/plugins/marketing-ops-core/public/images/password_unhide_icon.svg" alt="password_unhide" />
+											</a>
+											<div class="moc_error moc_confirm_password_err">
+												<span></span>
+											</div>
 										</div>
 									</div>
-								</div>
+								<?php } ?>
+
 								<div class="moc-form-field-wrap reg-cpf-who-referred-youtext fw-full fda-standard fld-above">
 									<div class="moc-form-field-input-textarea-wrap">
 										<input name="who_referred_you" type="text" placeholder="How did you hear about us?" class="moc-form-field reg-cpf moc-referred">
