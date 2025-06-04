@@ -2028,7 +2028,8 @@ class Marketing_Ops_Core_Public {
 			return admin_url();
 		}
 
-		return site_url( 'profile/' . $user->user_nicename );
+		// If user is not admin, redirect to the profile page.
+		return home_url( '/profile/' );
 	}
 	/**
 	 * Function to return ajax to fire for cancel Bio section.
@@ -3633,88 +3634,6 @@ class Marketing_Ops_Core_Public {
 	}
 
 	/**
-	 * Function to asign shortcode for login form.
-	 *
-	 * @since 1.0.0
-	 */
-	public function moc_user_login_form_callback() {
-		return moc_render_login_form_html( 'login' );
-	}
-
-	/**
-	 * Function to return ajax call for login process.
-	 *
-	 * @since 1.0.0
-	 */
-	public function moc_user_login_process_callback() {
-		$email    = filter_input( INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-		$email    = filter_var( $email, FILTER_SANITIZE_EMAIL );
-		$password = filter_input( INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-		$ref_url  = filter_input( INPUT_POST, 'previous_url', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-
-		if ( ! empty( $email ) && is_email( $email ) ) {
-			if ( $user = get_user_by_email( $email ) ) {
-				$username = $user->user_login;
-			}
-		}
-
-		if ( '119.252.195.156' === $_SERVER['REMOTE_ADDR'] ) {
-			// var_dump( $username );
-			// var_dump( $password );
-			// debug( $user );
-		}
-
-		$user_signon          = wp_signon(
-			array(
-				'user_login'    => $username,
-				'user_password' => $password,
-				'remember'      => true,
-			),
-			true
-		);
-
-		if ( '119.252.195.156' === $_SERVER['REMOTE_ADDR'] ) {
-			// debug( $user_signon );
-			// die;
-		}
-
-		$user_signon_response = $user_signon->errors;
-
-		if ( empty( $user_signon_response )  ) {
-			$user_response_msg = __( 'You are successfully logged in.', 'marketingops' );
-			$message           = 'moc-successfully-login';
-			$redirect_to       = ( ! empty( $ref_url ) && ( $ref_url !== site_url() && $ref_url !== site_url( 'log-in' ) ) ) ? site_url() . $ref_url : site_url( 'profile' );
-			$user              = get_user_by('login', $username);
-
-			clean_user_cache( $user->data->ID );
-			wp_clear_auth_cookie();
-			wp_set_current_user( $user->data->ID );
-			wp_set_auth_cookie( $user->data->ID, true, true );
-			update_user_caches( $user );
-		} else {
-			if ( array_key_exists( 'empty_username', $user_signon_response ) ) {
-				$user_response_msg = __( 'Email address does not exist!', 'marketingops' );
-			} else if ( array_key_exists( 'incorrect_password', $user_signon_response ) ) {
-				$user_response_msg = __( 'The password you entered for the user ' . $email . ' is incorrect.', 'marketingops' );
-			} else {
-				$user_response_msg = __( 'Something went wrong! Please try again.', 'marketingops' );
-			}
-			$message     = 'moc-failure-login';
-			$redirect_to = '';
-		}
-
-		// Send the AJAX response.
-		wp_send_json_success(
-			array(
-				'code'              => $message,
-				'user_response_msg' => $user_response_msg,
-				'redirect_to'       => $redirect_to,
-			)
-		);
-		wp_die();
-	}
-
-	/**
 	 * Function to assign shortcode for forgot password link.
 	 *
 	 * @since 1.0.0
@@ -4015,15 +3934,13 @@ class Marketing_Ops_Core_Public {
 							<?php
 						}
 						?>
-						<li>
-							<a href="<?php echo esc_url( wp_logout_url( home_url() ) ); ?>">
+						<li class="logout-menu">
+							<a href="<?php echo esc_url( wp_logout_url() ); ?>">
 								<span class="text"><?php esc_html_e( 'Logout', 'marketingops' ); ?><span>
 							</a>
 						</li>
 					</ul>
 					<?php
-				} else {
-					// echo '<div class="menu_hover">' . moc_render_login_form_html( 'header' ) . '</div>';
 				}
 				?>
 			</div>
@@ -4240,7 +4157,7 @@ class Marketing_Ops_Core_Public {
 																	<?php
 																}
 																?>
-																<li>
+																<li class="logout-menu-2">
 																	<a href="<?php echo esc_url( wp_logout_url( home_url() ) ); ?>" class="sub-nav-item" >
 																		<span class="text"><?php esc_html_e( 'Logout', 'marketingops' ); ?><span>
 																	</a>
@@ -5143,13 +5060,10 @@ class Marketing_Ops_Core_Public {
 		$current_url        = $current_url_expl;
 		$site_url           = site_url();
 		$flags              = ( ! empty ( $current_url ) && str_contains( $current_url, $site_url ) ) ? true : false;
-		$login_url          = site_url( 'log-in' );
-		$login_url_string   = str_replace( site_url(), '', $login_url );
-		$url_to_add_hidden  = ( ( $current_url_string !== site_url() ) && ( $current_url !== $login_url_string ) ) ? $login_url . '?redirect_to=' .$current_url : $login_url . '?redirect_to=' . '/profile';
 		?>
-		<a class="headerlogin moc_header_login" href="<?php echo $url_to_add_hidden; ?>">Sign In</a>
+		<a class="headerlogin moc_header_login" href="<?php echo home_url( '/log-in/' ); ?>">Sign In</a>
 		<input type="hidden" class="moc_hidder_redirect_url" value ="<?php echo $url_to_add_hidden; ?>">
-		<a class="headerlogout" href="/wp-login.php?loggedout=true">Logout</a>
+		<a class="headerlogout" href="<?php echo wp_logout_url(); ?>">Logout</a>
 		<?php
 
 		return ob_get_clean();
@@ -6778,28 +6692,5 @@ class Marketing_Ops_Core_Public {
 		$posted_array = filter_input_array( INPUT_POST );
 		debug( $posted_array );
 		die;
-	}
-
-	/**
-	 * Logout callback.
-	 *
-	 * @param int $user_id User ID.
-	 *
-	 * @return void
-	 *
-	 * @since 1.0.0
-	 */
-	public function mops_wp_logout_callback( $user_id ) {
-		$redirectto = ( ! empty( $_COOKIE['redirectto'] ) ) ? $_COOKIE['redirectto'] : '';
-
-		// Check if the redirectto is a valid URL.
-		if ( ! empty( $redirectto ) && false !== filter_var( $redirectto, FILTER_VALIDATE_URL ) ) {
-			// Clear the cookie.
-			setcookie( 'redirectto', '', time() - 3600, '/' );
-
-			// Do the redirect.
-			wp_safe_redirect( $redirectto, 301 );
-			exit;
-		}
 	}
 }

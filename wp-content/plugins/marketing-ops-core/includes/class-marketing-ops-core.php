@@ -296,8 +296,6 @@ class Marketing_Ops_Core {
 		$this->loader->add_action( 'wp_ajax_moc_block_content_for_non_member', $plugin_public, 'moc_block_content_for_non_member_callback' );
 		$this->loader->add_shortcode( 'moc_size_chart', $plugin_public, 'moc_size_chart_shortcode_callback' );
 		$this->loader->add_action( 'woocommerce_before_add_to_cart_quantity', $plugin_public, 'moc_quantity_add_label_callback', 99 );
-		$this->loader->add_shortcode( 'moc_user_login_form', $plugin_public, 'moc_user_login_form_callback' );
-		$this->loader->add_action( 'wp_ajax_nopriv_moc_user_login_process', $plugin_public, 'moc_user_login_process_callback' );
 		$this->loader->add_shortcode( 'moc_user_forgot_password_form', $plugin_public, 'moc_user_forgot_password_form_shortcode_callback' );
 		$this->loader->add_action( 'wp_ajax_nopriv_moc_user_forgot_password_process', $plugin_public, 'moc_user_forgot_password_process_callback' );
 		$this->loader->add_action( 'wp_ajax_moc_user_forgot_password_process', $plugin_public, 'moc_user_forgot_password_process_callback' );
@@ -399,7 +397,6 @@ class Marketing_Ops_Core {
 		$this->loader->add_action( 'wp_ajax_update_agency', $plugin_public, 'mops_update_agency_callback' );
 		$this->loader->add_action( 'wp_ajax_filter_agencies', $plugin_public, 'mops_filter_agencies_callback' );
 		$this->loader->add_action( 'wp_ajax_nopriv_filter_agencies', $plugin_public, 'mops_filter_agencies_callback' );
-		$this->loader->add_action( 'wp_logout', $plugin_public, 'mops_wp_logout_callback', 99 );
 	}
 
 	/**
