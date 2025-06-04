@@ -1,0 +1,354 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"X-Generator: babel-plugin-makepot\n"
+
+#: assets/js/blocks/src/components/block-member-content.js:13
+msgid "Member Content"
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:15
+msgid "Only members of the selected plan(s) can see this content."
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:195
+msgid ""
+"Visitors without the required plan will see a custom restriction message "
+"instead of this block."
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:198
+msgid ""
+"Visitors without the required plan will see the restriction message "
+"specified in %1$sMemberships Settings%2$s instead of this block."
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:202
+msgid "This block will be invisible to anyone without the required plan access."
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:211
+msgid "No message"
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:212
+msgid "Default restriction message"
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:213
+msgid "Custom restriction message"
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:229
+msgid "Basic HTML is allowed. You can also use the following merge tags:"
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:245
+msgid "The content below will be visible only to users who are members of any plan."
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:247
+msgid "The content below will be visible only to users who are members of %s."
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:253
+msgid "End of member-only content block."
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:263
+#: assets/js/blocks/src/components/block-non-member-content.js:89
+msgid "or"
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:282
+#: assets/js/blocks/src/components/block-non-member-content.js:108
+msgid "Membership plans"
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:301
+msgid ""
+"Members of any selected plan(s) will see this block's content. Leave blank "
+"to show this content to members of any plan."
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:307
+msgid "Delay access"
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:312
+msgid "Determine when members should be able to see this content."
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:315
+msgid "Immediately"
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:316
+msgid "After being a member for a specific time"
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:317
+msgid "After a specific date"
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:333
+msgid "Active members can see block content after this date."
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:347
+msgid "Days"
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:348
+msgid "Weeks"
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:349
+msgid "Months"
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:350
+msgid "Years"
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:355
+msgid "Active members can see block content after this period."
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:361
+msgid "Hide block from members during free trial"
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:362
+msgid ""
+"If enabled, members of a subscription plan can access this content "
+"immediately after their free trial ends, unless a specific time to get "
+"access from is selected."
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:369
+msgid "Restricted content message"
+msgstr ""
+
+#: assets/js/blocks/src/components/block-member-content.js:378
+msgid "Message Content"
+msgstr ""
+
+#: assets/js/blocks/src/components/block-non-member-content.js:12
+msgid "Non-Member Content"
+msgstr ""
+
+#: assets/js/blocks/src/components/block-non-member-content.js:127
+msgid ""
+"Users who are not members of the selected plan(s) will see the content "
+"within this block. Leave blank to show this content to users who don't "
+"belong to any plan."
+msgstr ""
+
+#: assets/js/blocks/src/components/block-non-member-content.js:14
+msgid "Only non-members can see this content."
+msgstr ""
+
+#: assets/js/blocks/src/components/block-non-member-content.js:71
+msgid "This content will only be shown to guests or non-members."
+msgstr ""
+
+#: assets/js/blocks/src/components/block-non-member-content.js:73
+msgid ""
+"This content will only be shown to guests or users who are not members of "
+"%s."
+msgstr ""
+
+#: assets/js/blocks/src/components/block-non-member-content.js:79
+msgid "End of content for non-members only."
+msgstr ""
+
+#: assets/js/blocks/src/directory/edit.js:130
+msgid "Directory Settings"
+msgstr ""
+
+#: assets/js/blocks/src/directory/edit.js:136
+msgid "Plans"
+msgstr ""
+
+#: assets/js/blocks/src/directory/edit.js:137
+msgid "Only show members with these plans. Separate with comma or enter key"
+msgstr ""
+
+#: assets/js/blocks/src/directory/edit.js:166
+msgid "Status"
+msgstr ""
+
+#: assets/js/blocks/src/directory/edit.js:167
+msgid "Only show members with these statuses. Separate with comma or enter key"
+msgstr ""
+
+#: assets/js/blocks/src/directory/edit.js:196
+msgid "Members per page"
+msgstr ""
+
+#: assets/js/blocks/src/directory/edit.js:214
+msgid "Columns"
+msgstr ""
+
+#: assets/js/blocks/src/directory/edit.js:232
+msgid "Content"
+msgstr ""
+
+#: assets/js/blocks/src/directory/edit.js:237
+msgid "Avatar"
+msgstr ""
+
+#: assets/js/blocks/src/directory/edit.js:247
+msgid "Avatar size %d"
+msgstr ""
+
+#: assets/js/blocks/src/directory/edit.js:259
+msgid "Bio"
+msgstr ""
+
+#: assets/js/blocks/src/directory/edit.js:271
+msgid ""
+"We recommend restricting access to pages with members’ personal "
+"information, such as email address, home address, or phone number."
+msgstr ""
+
+#: assets/js/blocks/src/directory/edit.js:280
+#: assets/js/blocks/src/directory/view/DirectoryItem.js:40
+msgid "Email"
+msgstr ""
+
+#: assets/js/blocks/src/directory/edit.js:287
+msgid "Phone"
+msgstr ""
+
+#: assets/js/blocks/src/directory/edit.js:294
+#: assets/js/blocks/src/directory/view/DirectoryItem.js:52
+msgid "Address"
+msgstr ""
+
+#: assets/js/blocks/src/directory/edit.js:301
+msgid "Profile Fields"
+msgstr ""
+
+#: assets/js/blocks/src/directory/edit.js:327
+msgid "Color"
+msgstr ""
+
+#: assets/js/blocks/src/directory/edit.js:332
+msgid "Button color"
+msgstr ""
+
+#: assets/js/blocks/src/directory/edit.js:337
+msgid "Button hover color"
+msgstr ""
+
+#: assets/js/blocks/src/directory/index.js:10
+msgid "Member Directory"
+msgstr ""
+
+#: assets/js/blocks/src/directory/index.js:12
+msgid "Display a grid of members with selected plans and statuses."
+msgstr ""
+
+#: assets/js/blocks/src/directory/index.js:22
+msgid "membership"
+msgstr ""
+
+#: assets/js/blocks/src/directory/index.js:23
+msgid "memberships"
+msgstr ""
+
+#: assets/js/blocks/src/directory/index.js:24
+msgid "member"
+msgstr ""
+
+#: assets/js/blocks/src/directory/index.js:25
+msgid "members"
+msgstr ""
+
+#: assets/js/blocks/src/directory/index.js:26
+msgid "non-member"
+msgstr ""
+
+#: assets/js/blocks/src/directory/index.js:27
+msgid "non-members"
+msgstr ""
+
+#: assets/js/blocks/src/directory/index.js:28
+msgid "directory"
+msgstr ""
+
+#: assets/js/blocks/src/directory/index.js:29
+msgid "directories"
+msgstr ""
+
+#: assets/js/blocks/src/directory/index.js:30
+msgid "list"
+msgstr ""
+
+#: assets/js/blocks/src/directory/index.js:31
+msgid "listing"
+msgstr ""
+
+#: assets/js/blocks/src/directory/index.js:32
+msgid "index"
+msgstr ""
+
+#: assets/js/blocks/src/directory/index.js:33
+msgid "reference"
+msgstr ""
+
+#: assets/js/blocks/src/directory/index.js:34
+msgid "roster"
+msgstr ""
+
+#: assets/js/blocks/src/directory/view/DirectoryItem.js:16
+msgid "Avatar Placeholder"
+msgstr ""
+
+#: assets/js/blocks/src/directory/view/DirectoryItem.js:26
+msgid "N/A"
+msgstr ""
+
+#: assets/js/blocks/src/directory/view/DirectoryItem.js:35
+msgid "PLAN"
+msgstr ""
+
+#: assets/js/blocks/src/directory/view/DirectoryItem.js:46
+msgid "Phone number"
+msgstr ""
+
+#: assets/js/blocks/src/directory/view/Header.js:16
+msgid "All Plans"
+msgstr ""
+
+#: assets/js/blocks/src/directory/view/Header.js:22
+msgid "All Statuses"
+msgstr ""
+
+#: assets/js/blocks/src/directory/view/Header.js:30
+msgid "Filter"
+msgstr ""
+
+#: assets/js/blocks/src/directory/view/Header.js:9
+msgid "Search"
+msgstr ""
+
+#: assets/js/blocks/src/directory/view/NoResults.js:6
+msgid "No search results"
+msgstr ""
+
+#: assets/js/blocks/src/directory/view/NoResults.js:8
+msgid ""
+"We didn’t find any members. Please try a different search or check for "
+"typos."
+msgstr ""
+
+#: assets/js/blocks/src/directory/view/Pagination.js:11
+msgid "Next"
+msgstr ""
+
+#: assets/js/blocks/src/directory/view/Pagination.js:8
+msgid "Previous"
+msgstr ""
