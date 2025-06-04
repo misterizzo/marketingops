@@ -52,10 +52,15 @@ if ( true === $show_signup ) {
 	if ( 'purchase' === $plan_access_method ) {
 		$product_ids = get_post_meta( $plan_id, '_product_ids', true );
 
-		// If the product ID is available, redirect the user to the WooCommerce checkout page.
-		if ( ! empty( $product_ids[0] ) ) {
-			wp_safe_redirect( wc_get_checkout_url() . '?add-to-cart=' . $product_ids[0] );
-			exit;
+		if ( ! empty( $product_ids ) && is_array( $product_ids ) ) {
+			foreach ( $product_ids as $key => $product_id ) {
+				$wc_product = wc_get_product( $product_id );
+
+				if ( 'subscription_variation' === $wc_product->get_type() ) {
+					wp_safe_redirect( wc_get_checkout_url() . '?add-to-cart=' . $product_id );
+					exit;
+				}
+			}
 		}
 	}
 	?>
