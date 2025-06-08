@@ -3047,6 +3047,7 @@ jQuery( document ).ready( function( $ ) {
 		var yimo              = $( '#moc_years_in_marketing_operation' ).val();
 		var jsd               = $( '#moc_job_seeker_details' ).val();
 		var previously_img_id = $( '.moc_previously_stored_attach_id' ).val();
+		var signup_redirect   = $( 'input[name="moc_signup_redirect_url"]' ).val();
 		var process_execute   = true;
 		var arrow_html        = moc_arrow_html();
 		var file_input        = $( '.moc_profie_pic' );
@@ -3111,6 +3112,7 @@ jQuery( document ).ready( function( $ ) {
 			formData.append( 'yimo', yimo );
 			formData.append( 'jsd', jsd );
 			formData.append( 'previously_img_id', previously_img_id );
+			formData.append( 'signup_redirect', signup_redirect );
 
 			if ( undefined !== add_to_cart ) {
 				formData.append( 'add_to_cart', add_to_cart );

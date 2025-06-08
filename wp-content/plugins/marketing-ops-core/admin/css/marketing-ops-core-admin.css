@@ -10,7 +10,6 @@
 .moc_product_professor_tab a:before {content: "\f110" !important;}
 .hubwoo-ms-deals-stages-conf-table select {padding: 0 5px !important;width: 100%;}
 .conference-video-featured-image img {width: 100%;}
-
 .user-community-badge {display: flex;align-items: center;align-content: center;margin: 0 0 15px;}
 .user-community-badge img {width: 150px;margin: 0 20px;}
 .user-community-badge label {float: left;border: none;outline: none;cursor: pointer;padding: 14px 16px;transition: 0.3s;font-size: 17px;}
@@ -21,3 +20,5 @@
 .user-community-badge input[type=checkbox]:before {content: '';position: absolute;right: 50%;top: 50%;width: 4px;height: 10px;border: solid #f0f0f1;border-width: 0 2px 2px 0;margin: -1px -1px 0 -1px;transform: rotate(45deg) translate(-50%, -50%);z-index: 2;}
 .wc-memberships#wc-memberships-membership-plan-data ul.wc-tabs li.restrict_popup_content_tab a:before {content: "\f116" !important;}
 .wc-memberships#wc-memberships-membership-plan-data ul.wc-tabs li.signup_redirect_tab a:before {content: "\f504" !important;}
+.signup_redirect_internal_field,
+.signup_redirect_external_field {display: none;}

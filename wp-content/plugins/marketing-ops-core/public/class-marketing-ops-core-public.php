@@ -3172,6 +3172,7 @@ class Marketing_Ops_Core_Public {
 		$yimo              = $posted_array['yimo'];
 		$jsd               = $posted_array['jsd'];
 		$previously_img_id = $posted_array['previously_img_id'];
+		$signup_redirect   = $posted_array['signup_redirect'];
 		$previously_img_id = ! empty( $previously_img_id ) ? $previously_img_id : '';
 		$user_id           = (int) $posted_array['user_id'];
 		$add_to_cart       = ! empty( $posted_array['add_to_cart'] ) ? $posted_array['add_to_cart'] : '';
@@ -3194,10 +3195,7 @@ class Marketing_Ops_Core_Public {
 				$filename         = basename( $review_file_name );
 				$upload_dir       = wp_upload_dir();
 				$file_path        = ( ! empty( $upload_dir['path'] ) ) ? $upload_dir['path'] . '/' . $filename : $upload_dir['basedir'] . '/' . $filename;
-				$wp_filesystem->put_contents(
-					$file_path,
-					$file_data,
-				);
+				$wp_filesystem->put_contents( $file_path, $file_data );
 
 				// Upload it as WP attachment.
 				$wp_filetype  = wp_check_filetype( $filename, null );
@@ -3208,11 +3206,11 @@ class Marketing_Ops_Core_Public {
 					'post_content'   => '',
 					'post_status'    => 'inherit',
 				);
-				$attach_id = wp_insert_attachment( $attachment, $file_path );
+				$attach_id   = wp_insert_attachment( $attachment, $file_path );
 				$attach_data = wp_generate_attachment_metadata( $attach_id, $filename );
 				wp_update_attachment_metadata( $attach_id, $attach_data );
 
-				if( ! empty( $attach_id ) ) {
+				if ( ! empty( $attach_id ) ) {
 					update_user_meta( $user_id , 'wp_user_avatar', $attach_id );
 					update_post_meta( $attach_id , '_wp_attachment_wp_user_avatar', $user_id );
 				}
@@ -3229,7 +3227,7 @@ class Marketing_Ops_Core_Public {
 					$get_product_permalink = get_the_permalink( $add_to_cart );
 					$redirect_url          = $get_product_permalink;
 				} else {
-					$redirect_url = 'https://community.marketingops.com/';
+					$redirect_url = $signup_redirect;
 				}
 
 				update_user_meta( $user_id, 'first_name', $first_name );
@@ -3258,7 +3256,7 @@ class Marketing_Ops_Core_Public {
 				$get_product_permalink = get_the_permalink( $add_to_cart );
 				$redirect_url          = $get_product_permalink;
 			} else {
-				$redirect_url = 'https://community.marketingops.com/';
+				$redirect_url = $signup_redirect;
 			}
 
 			update_user_meta( $user_id, 'first_name', $first_name );

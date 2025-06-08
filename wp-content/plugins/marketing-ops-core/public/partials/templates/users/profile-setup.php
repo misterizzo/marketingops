@@ -14,39 +14,63 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
-get_header();
-if ( is_user_logged_in() ) {
-	global $wpdb;
-	$ppress_custom_fields = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM ' . $wpdb->prefix . 'ppress_profile_fields WHERE field_key = %s', array( 'experience' ) ), ARRAY_A );
-	$options              = $ppress_custom_fields[0]['options'];
-	$options              = explode( ',', $options );
-	$experience_years     = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM ' . $wpdb->prefix . 'ppress_profile_fields WHERE field_key = %s', array( 'experience_years' ) ), ARRAY_A );
-	$years_options        = $experience_years[0]['options'];
-	$years_options        = explode( ',', $years_options );
-	$all_user_meta        = get_user_meta( get_current_user_id() );
-	$first_name           = ! empty ( $all_user_meta['first_name'][0] ) ? $all_user_meta['first_name'][0] : '';
-	$lastname             = ! empty( $all_user_meta['last_name'][0] ) ? $all_user_meta['last_name'][0] : '';
-	$location             = ! empty( $all_user_meta['country'][0] ) ? $all_user_meta['country'][0] : ( ! empty( $all_user_meta['billing_country'][0] ) ? $all_user_meta['billing_country'][0] : '' );
-	$location            = ! empty( $location ) ? $location : '';
-	$profetional_title    = ! empty( get_user_meta( get_current_user_id(), 'profetional_title', true ) ) ? get_user_meta( get_current_user_id(), 'profetional_title', true ) : '';
-	$wipm                 = ! empty( get_user_meta( get_current_user_id(), 'experience', true ) ) ? get_user_meta( get_current_user_id(), 'experience', true ) : '';
-	$year_experience      = ! empty( get_user_meta( get_current_user_id(), 'experience_years', true ) ) ? ceil( get_user_meta( get_current_user_id(), 'experience_years', true ) ) : '' ;
-	$job_seeker_fields    = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM ' . $wpdb->prefix . 'ppress_profile_fields WHERE field_key = %s', array( 'job_seeker_details' ) ), ARRAY_A );
-	$job_options          =  $job_seeker_fields[0]['options'];
-	$job_options          =  explode( ',', $job_options );
-	$job_seeker_details   = ! empty( get_user_meta( get_current_user_id(), 'job_seeker_details', true ) ) ? get_user_meta( get_current_user_id(), 'job_seeker_details', true ) : '' ;
-	$default_user_img     = get_field( 'moc_user_default_image', 'option' );
-	$user_img_id          = ! empty( get_user_meta( get_current_user_id(), 'wp_user_avatar', true ) ) ? get_user_meta( get_current_user_id(), 'wp_user_avatar', true ) : '' ;
-	$user_img_url         = ! empty( $user_img_id ) ? wp_get_attachment_image_src( $user_img_id, 'full' ) : '';
-	$image_url            = ! empty( $user_img_url ) ? $user_img_url[0] : $default_user_img;
-	$main_div_class       = ! empty( $user_img_id ) ? 'pic_here' : 'blank_pic';
-	$delete_div_class     = ! empty( $user_img_id ) ? 'pic_no_delete_button' : 'pic_delete_button';
-	$wipm_selected        = ! empty( $wipm ) ? 'moc_change_selection' : '';
-	$ye_selected          = ! empty( $year_experience ) ? 'moc_change_selection' : '';
-	$location_class       = ! empty( $location ) ? 'moc_change_selection' : '';
-	$jsd_selected_class   = ! empty( $job_seeker_details ) ? 'moc_change_selection' : '';
-?>
 
+global $wpdb;
+
+get_header();
+
+// Redirect the user to the login page if they are not logged in.
+if ( ! is_user_logged_in() ) {
+	wp_redirect( home_url( 'log-in' ), 301 );
+	exit;
+}
+
+$ppress_custom_fields = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM ' . $wpdb->prefix . 'ppress_profile_fields WHERE field_key = %s', array( 'experience' ) ), ARRAY_A );
+$options              = $ppress_custom_fields[0]['options'];
+$options              = explode( ',', $options );
+$experience_years     = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM ' . $wpdb->prefix . 'ppress_profile_fields WHERE field_key = %s', array( 'experience_years' ) ), ARRAY_A );
+$years_options        = $experience_years[0]['options'];
+$years_options        = explode( ',', $years_options );
+$all_user_meta        = get_user_meta( get_current_user_id() );
+$first_name           = ! empty ( $all_user_meta['first_name'][0] ) ? $all_user_meta['first_name'][0] : '';
+$lastname             = ! empty( $all_user_meta['last_name'][0] ) ? $all_user_meta['last_name'][0] : '';
+$location             = ! empty( $all_user_meta['country'][0] ) ? $all_user_meta['country'][0] : ( ! empty( $all_user_meta['billing_country'][0] ) ? $all_user_meta['billing_country'][0] : '' );
+$location            = ! empty( $location ) ? $location : '';
+$profetional_title    = ! empty( get_user_meta( get_current_user_id(), 'profetional_title', true ) ) ? get_user_meta( get_current_user_id(), 'profetional_title', true ) : '';
+$wipm                 = ! empty( get_user_meta( get_current_user_id(), 'experience', true ) ) ? get_user_meta( get_current_user_id(), 'experience', true ) : '';
+$year_experience      = ! empty( get_user_meta( get_current_user_id(), 'experience_years', true ) ) ? ceil( get_user_meta( get_current_user_id(), 'experience_years', true ) ) : '' ;
+$job_seeker_fields    = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM ' . $wpdb->prefix . 'ppress_profile_fields WHERE field_key = %s', array( 'job_seeker_details' ) ), ARRAY_A );
+$job_options          =  $job_seeker_fields[0]['options'];
+$job_options          =  explode( ',', $job_options );
+$job_seeker_details   = ! empty( get_user_meta( get_current_user_id(), 'job_seeker_details', true ) ) ? get_user_meta( get_current_user_id(), 'job_seeker_details', true ) : '' ;
+$default_user_img     = get_field( 'moc_user_default_image', 'option' );
+$user_img_id          = ! empty( get_user_meta( get_current_user_id(), 'wp_user_avatar', true ) ) ? get_user_meta( get_current_user_id(), 'wp_user_avatar', true ) : '' ;
+$user_img_url         = ! empty( $user_img_id ) ? wp_get_attachment_image_src( $user_img_id, 'full' ) : '';
+$image_url            = ! empty( $user_img_url ) ? $user_img_url[0] : $default_user_img;
+$main_div_class       = ! empty( $user_img_id ) ? 'pic_here' : 'blank_pic';
+$delete_div_class     = ! empty( $user_img_id ) ? 'pic_no_delete_button' : 'pic_delete_button';
+$wipm_selected        = ! empty( $wipm ) ? 'moc_change_selection' : '';
+$ye_selected          = ! empty( $year_experience ) ? 'moc_change_selection' : '';
+$location_class       = ! empty( $location ) ? 'moc_change_selection' : '';
+$jsd_selected_class   = ! empty( $job_seeker_details ) ? 'moc_change_selection' : '';
+$member_plan_obj      = moc_get_membership_plan_object();
+
+// Set the redirection based on the most recently activated membership plan.
+if ( ! empty( $member_plan_obj[0]->plan_id ) ) {
+	$signup_redirect_type = get_post_meta( $member_plan_obj[0]->plan_id, 'signup_redirect_type', true );
+	$signup_redirect_url  = 'https://community.marketingops.com/';
+
+	// If the signup redirection is internal.
+	if ( 'internal' === $signup_redirect_type ) {
+		$page_id             = get_post_meta( $member_plan_obj[0]->plan_id, 'signup_redirect_internal', true );
+		$signup_redirect_url = ( ! empty( $page_id ) ) ? get_permalink( $page_id ) : $signup_redirect_url;
+	} elseif ( 'external' === $signup_redirect_type ) {
+		$external_url        = get_post_meta( $member_plan_obj[0]->plan_id, 'signup_redirect_external', true );
+		$signup_redirect_url = ( ! empty( $external_url ) ) ? $external_url : $signup_redirect_url;
+	}
+}
+
+?>
 <section class="profile_setup">
 	<div class="loader_bg">
 		<div class="loader"></div>  
@@ -239,6 +263,7 @@ if ( is_user_logged_in() ) {
 						<p><?php esc_html_e( 'You will be able to fill in more profile data later', 'marketingops' ); ?></p>
 
 						<!-- btn -->
+						<input type="hidden" name="moc_signup_redirect_url" value="<?php echo esc_url( $signup_redirect_url ); ?>">
 						<button type="button" class="btn moc_save_final_step">
 							<span class="text"><?php esc_html_e( 'Save & Next', 'marketingops' ); ?></span>
 							<span class="svg">
@@ -255,9 +280,6 @@ if ( is_user_logged_in() ) {
 		</div>
 	</div>
 </section>
-
 <?php
-} else {
-	wp_redirect( home_url( 'login' ), 301 );
-}
+
 get_footer();

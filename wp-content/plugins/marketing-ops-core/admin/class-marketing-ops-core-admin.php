@@ -1045,6 +1045,29 @@ class Marketing_Ops_Core_Admin {
 	public function moc_wc_membership_plan_data_panels_callback() {
 		global $post;
 
+		// Get the list of all the pages.
+		$pages    = array();
+		$pages[]  = __( 'Select a page', 'marketingops' ); // Add a default option. This will be used in the select dropdown for the pages.
+		$page_ids = get_posts(
+			array(
+				'post_type'      => 'page',
+				'post_status'    => 'publish',
+				'posts_per_page' => -1,
+				'fields'         => 'ids',
+			)
+		);
+
+		// Get the list of all the pages.
+		if ( ! empty( $page_ids ) && is_array( $page_ids ) ) {
+			// Get the page titles.
+			foreach ( $page_ids as $page_id ) {
+				$page_title = get_the_title( $page_id );
+				if ( ! empty( $page_title ) ) {
+					$pages[ $page_id ] = $page_title;
+				}
+			}
+		}
+
 		// Start preparing the HTML.
 		ob_start();
 		?>
@@ -1104,15 +1127,49 @@ class Marketing_Ops_Core_Admin {
 		<div id="signup-redirect-content" class="panel woocommerce_options_panel">
 			<div class="options_group">
 				<?php
+				// Redirection type.
+				woocommerce_wp_select(
+					array(
+						'id'          => 'signup_redirect_type',
+						'name'        => 'signup_redirect_type',
+						'label'       => __( 'Redirect type', 'marketingops' ),
+						'options'     => array(
+							''         => __( 'Select redirection type', 'marketingops' ),
+							'internal' => __( 'Internal', 'marketingops' ),
+							'external' => __( 'External', 'marketingops' ),
+						),
+						'value'       => get_post_meta( $post->ID, 'signup_redirect_type', true ),
+						'desc_tip'    => true,
+						'description' => __( 'This decides whether the redirect should happen to any internal or external URL. If this is not set, the default redirection is to the community.', 'marketingops' ),
+					)
+				);
+
+				// Redirection internal url.
+				woocommerce_wp_select(
+					array(
+						'id'          => 'signup_redirect_internal',
+						'name'        => 'signup_redirect_internal',
+						'label'       => __( 'Redirect internal URL', 'marketingops' ),
+						'options'     => $pages,
+						'value'       => get_post_meta( $post->ID, 'signup_redirect_internal', true ),
+						'desc_tip'    => true,
+						'description' => __( 'This decides whether the redirect should happen to any internal or external URL.', 'marketingops' ),
+						'custom_attributes' => array(
+							'style' => 'display: none;',
+						),
+					)
+				);
+
+				// Redirection external url.
 				woocommerce_wp_text_input( 
-					array( 
-						'id'          => 'signup_redirect_url',
-						'name'        => 'signup_redirect_url',
-						'label'       => __( 'Redirect URL', 'marketingops' ),
+					array(
+						'id'          => 'signup_redirect_external',
+						'name'        => 'signup_redirect_external',
+						'label'       => __( 'Redirect external URL', 'marketingops' ),
 						'placeholder' => __( 'https://example.com', 'marketingops' ),
-						'desc_tip'    => 'true',
-						'description' => __( 'The URL where the signing up user should be redirected to after the profile setup is completed. Please enter full URL whether it is native or external.', 'marketingops' ),
-						'value'       => get_post_meta( $post->ID, '_signup_redirect', true ),
+						'desc_tip'    => true,
+						'description' => __( 'The URL where the signing up user should be redirected to after the profile setup is completed. Please enter full external URL.', 'marketingops' ),
+						'value'       => get_post_meta( $post->ID, 'signup_redirect_external', true ),
 					)
 				);
 				?>
@@ -1143,13 +1200,19 @@ class Marketing_Ops_Core_Admin {
 			$restrict_popup_description = filter_input( INPUT_POST, 'membership_restrict_popup_description', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 			$restrict_popup_btn_title   = filter_input( INPUT_POST, 'membership_restrict_popup_btn_title', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 			$restrict_popup_btn_link    = filter_input( INPUT_POST, 'membership_restrict_popup_btn_link', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-			$signup_redirect_url        = filter_input( INPUT_POST, 'signup_redirect_url', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-
 			update_post_meta( $post_id, 'membership_restrict_popup_title', $restrict_popup_title );
 			update_post_meta( $post_id, 'membership_restrict_popup_description', $restrict_popup_description );
 			update_post_meta( $post_id, 'membership_restrict_popup_btn_title', $restrict_popup_btn_title );
 			update_post_meta( $post_id, 'membership_restrict_popup_btn_link', $restrict_popup_btn_link );
-			update_post_meta( $post_id, '_signup_redirect', $signup_redirect_url );
+
+			// Update the signup redirect type.
+			$signup_redirect_type     = filter_input( INPUT_POST, 'signup_redirect_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+			$signup_redirect_internal = filter_input( INPUT_POST, 'signup_redirect_internal', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+			$signup_redirect_external = filter_input( INPUT_POST, 'signup_redirect_external', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+
+			update_post_meta( $post_id, 'signup_redirect_type', $signup_redirect_type );
+			update_post_meta( $post_id, 'signup_redirect_internal', $signup_redirect_internal );
+			update_post_meta( $post_id, 'signup_redirect_external', $signup_redirect_external );
 		}
 	}
 

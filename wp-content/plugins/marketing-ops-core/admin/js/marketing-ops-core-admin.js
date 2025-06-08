@@ -2,6 +2,27 @@ jQuery( document ).ready( function ( $ ) {
 	// Localized variables.
 	var ajaxurl = Moc_Admin_JS_Obj.ajaxurl;
 
+	// Membership plan signup redirect type.
+	$( document ).on( 'change', '#signup_redirect_type', function() {
+		var redirect_type = $( this ).val();
+
+		// Hide both redirect fields initially.
+		$( '.signup_redirect_internal_field' ).hide();
+		$( '.signup_redirect_external_field' ).hide();
+
+		if ( 'internal' === redirect_type ) {
+			$( '.signup_redirect_internal_field' ).show();
+			$( '.signup_redirect_external_field' ).hide();
+		} else if ( 'external' === redirect_type ) {
+			$( '.signup_redirect_internal_field' ).hide();
+			$( '.signup_redirect_external_field' ).show();
+		}
+	} );
+
+	// Set the initial state of the redirect fields.
+	var membership_plan_signup_redirect_type = $( '#signup_redirect_type' ).val();
+	$( '#signup_redirect_type' ).trigger( 'change' );
+
 	// Mark agency featured.
 	$( document ).on( 'click', '.featured-agency', function() {
 		var this_element = $( this );
