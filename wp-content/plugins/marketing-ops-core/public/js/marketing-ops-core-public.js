@@ -208,17 +208,16 @@ jQuery( document ).ready( function( $ ) {
 			// Open the restriction popup.
 			var required_memberships       = $( '#hidden-popup-required-membership-levels-' + video_post_id ).text();
 			var required_memberships_array = JSON.parse( required_memberships );
-			var membership_levels_diff     = [];
+			var common_membership_levels   = [];
 			var i                          = 0;
 
 			// If the required memberships match, then allow the video to open, restrict otherwise.
-			$.grep( member_plan_slug, function( el ) {
-				if ( $.inArray( el, required_memberships_array ) == -1 ) membership_levels_diff.push( el );
-				i++;
+			common_membership_levels = $.grep( member_plan_slug, function( el ) {
+				return $.inArray( el, required_memberships_array ) !== -1;
 			} );
 
 			// If the difference is available, means we have to show the popup, not otherwise.
-			if ( 0 < membership_levels_diff.length || 0 === current_user_id ) {
+			if ( 0 === common_membership_levels.length || 0 === current_user_id ) {
 				var popup_headline                 = $( '#hidden-popup-headline-' + video_post_id ).text();
 				var popup_description              = $( '#hidden-popup-description-' + video_post_id ).text();
 				var popup_button_title             = $( '#hidden-popup-button-title-' + video_post_id ).text();
@@ -5814,4 +5813,3 @@ jQuery(document).ready(function ($) {
   });
 });
 /* toggle */
-
