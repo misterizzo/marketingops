@@ -3926,7 +3926,12 @@ class Marketing_Ops_Core_Public {
 								<?php
 							}
 
-							if ( ! empty( $member_slug ) && ( in_array( 'mo-pros-monthly-member', $member_slug, true ) || in_array( 'mo-pros-yearly-member', $member_slug, true ) ) ) { ?>
+							if (
+								! empty( $member_slug ) && ( 
+									in_array( 'mo-pros-monthly-member', $member_slug, true ) || 
+									in_array( 'mo-pros-yearly-member', $member_slug, true ) || 
+									in_array( 'pro-plus-membership', $member_slug, true ) 
+								) ) { ?>
 								<div class="profile_menu_box_btn moc_community_forum_btn">
 									<div class="profile_pro_btn">
 										<a href="<?php echo esc_url( 'https://community.marketingops.com/oauth2/callback?__hstc=229962755.b93bca378ed6bbf1357104dfe4fb5e02.1655156614636.1655156614636.1655190485045.2&__hssc=229962755.1.1655190485045&__hsfp=1603849430' ); ?>" class="btn gradient_btn">
