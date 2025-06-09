@@ -174,26 +174,9 @@ jQuery( document ).ready( function( $ ) {
 		}
 	}
 
-	// Open the conference details page.
-	if ( $( '.conferencevaultinnergridboximage .innerimageboxdescriptions .session-title a' ).length ) {
-		$( document ).on( 'click', '.conferencevaultinnergridboximage .innerimageboxdescriptions .session-title a', function() {
-			var this_link                         = $( this );
-			var container_user_subscription_class = $( 'section.marketingopstemplatesconfernace' ).data( 'usersubscriptionclass' ); // Check if the current video is available based on user membership.
-
-			// Open the restriction modal.
-			if ( 1 === is_valid_string( container_user_subscription_class ) && 'is-pro-plus-member' !== container_user_subscription_class ) {
-				$( '.moc_paid_content_restriction_modal' ).addClass( 'active blog_popup' );
-				return false;
-			}
-
-			// Open the conference details page.
-			window.location.href = this_link.parents( 'li' ).data( 'url' );
-		} );
-	}
-
 	// Open the conference popup.
 	if ( $( '.conferencevaultinnergridboximage .openPopupBtn' ).length ) {
-		$( document ).on( 'click', '.conferencevaultinnergridboximage .openPopupBtn', function() {
+		$( document ).on( 'click', '.conferencevaultinnergridboximage .openPopupBtn, .conferencevaultinnergridboximage .innerimageboxdescriptions .session-title a', function() {
 			var this_button        = $( this );
 			var parent_li          = this_button.parents( 'li' );
 			var video_post_id      = parent_li.data( 'post' );
