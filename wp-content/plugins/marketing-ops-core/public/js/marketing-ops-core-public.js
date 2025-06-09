@@ -174,62 +174,84 @@ jQuery( document ).ready( function( $ ) {
 		}
 	}
 
+	// Open the conference vault popup.
+	if ( $( '.conferencevaultinnergridboximage .innerimageboxdescriptions .session-title a' ).length ) {
+		$( document ).on( 'click', '.conferencevaultinnergridboximage .innerimageboxdescriptions .session-title a', function() {
+			moc_open_conference_vault_restriction_popup( $( this ) );
+		} );
+	}
+
 	// Open the conference popup.
 	if ( $( '.conferencevaultinnergridboximage .openPopupBtn' ).length ) {
-		$( document ).on( 'click', '.conferencevaultinnergridboximage .openPopupBtn, .conferencevaultinnergridboximage .innerimageboxdescriptions .session-title a', function() {
-			var this_button        = $( this );
-			var parent_li          = this_button.parents( 'li' );
-			var video_post_id      = parent_li.data( 'post' );
-			var enable_restriction = parseInt( $( '#hidden-enable-restriction-' + video_post_id ).text() );
-
-			// If the video is not restricted, open the video details page.
-			if ( 0 === enable_restriction ) {
-				window.location.href = parent_li.data( 'url' );
-				return false;
-			}
-
-			// Open the restriction popup.
-			var required_memberships       = $( '#hidden-popup-required-membership-levels-' + video_post_id ).text();
-			var required_memberships_array = JSON.parse( required_memberships );
-			var common_membership_levels   = [];
-			var i                          = 0;
-
-			// If the required memberships match, then allow the video to open, restrict otherwise.
-			common_membership_levels = $.grep( member_plan_slug, function( el ) {
-				return $.inArray( el, required_memberships_array ) !== -1;
-			} );
-
-			// If the difference is available, means we have to show the popup, not otherwise.
-			if ( 0 === common_membership_levels.length || 0 === current_user_id ) {
-				var popup_headline                 = $( '#hidden-popup-headline-' + video_post_id ).text();
-				var popup_description              = $( '#hidden-popup-description-' + video_post_id ).text();
-				var popup_button_title             = $( '#hidden-popup-button-title-' + video_post_id ).text();
-				var popup_button_url               = $( '#hidden-popup-button-url-' + video_post_id ).text();
-				var popup_footer_text_not_loggedin = $( '#hidden-popup-footer-text-not-loggedin-' + video_post_id ).text();
-				var popup_footer_text_loggedin     = $( '#hidden-popup-footer-text-loggedin-' + video_post_id ).text();
-
-				$( '.moc_paid_content_dynamic_restriction_modal .contnet_box .popup_content h2' ).html( popup_headline );
-				$( '.moc_paid_content_dynamic_restriction_modal .contnet_box .popup_content p.main-description' ).html( popup_description );
-				$( '.moc_paid_content_dynamic_restriction_modal .contnet_box .popup_content a.black_btn' ).attr( 'href', popup_button_url );
-				$( '.moc_paid_content_dynamic_restriction_modal .contnet_box .popup_content a.black_btn' ).attr( 'href', popup_button_url );
-				$( '.moc_paid_content_dynamic_restriction_modal .contnet_box .popup_content a.black_btn' ).attr( 'target', '_self' );
-				$( '.moc_paid_content_dynamic_restriction_modal .contnet_box .popup_content a.black_btn span' ).not( '.icon' ).text( popup_button_title );
-
-				// If the user is loggedin.
-				if ( 0 !== current_user_id ) {
-					$( '.moc_paid_content_dynamic_restriction_modal .contnet_box .popup_content .link_box' ).html( popup_footer_text_loggedin );
-				} else {
-					$( '.moc_paid_content_dynamic_restriction_modal .contnet_box .popup_content .link_box' ).html( popup_footer_text_not_loggedin );
-				}
-
-				// Open the restriction modal.
-				$( '.moc_paid_content_dynamic_restriction_modal' ).addClass( 'active blog_popup' );
-				return false;
-			}
-
-			// Open the video details page.
-			window.location.href = parent_li.data( 'url' );
+		$( document ).on( 'click', '.conferencevaultinnergridboximage .openPopupBtn', function() {
+			moc_open_conference_vault_restriction_popup( $( this ) );
 		} );
+	}
+
+	/**
+	 * Open the restriction popup for the conference vault.
+	 * This function checks if the video is restricted and opens a popup.
+	 * If the video is not restricted, it redirects to the video details page.
+	 * It also checks the user's membership level against the required memberships for the video.
+	 * If the user does not have the required membership, it shows a popup with details about the restriction.
+	 * If the user has the required membership, it redirects to the video details page.
+	 * 
+	 * @param {jQuery} current_element - The jQuery element that triggered the popup.
+	 *
+	 * @returns {boolean}
+	 */
+	function moc_open_conference_vault_restriction_popup( current_element ) {
+		var parent_li          = current_element.parents( 'li' );
+		var video_post_id      = parent_li.data( 'post' );
+		var enable_restriction = parseInt( $( '#hidden-enable-restriction-' + video_post_id ).text() );
+
+		// If the video is not restricted, open the video details page.
+		if ( 0 === enable_restriction ) {
+			window.location.href = parent_li.data( 'url' );
+			return false;
+		}
+
+		// Open the restriction popup.
+		var required_memberships       = $( '#hidden-popup-required-membership-levels-' + video_post_id ).text();
+		var required_memberships_array = JSON.parse( required_memberships );
+		var common_membership_levels   = [];
+		var i                          = 0;
+
+		// If the required memberships match, then allow the video to open, restrict otherwise.
+		common_membership_levels = $.grep( member_plan_slug, function( el ) {
+			return $.inArray( el, required_memberships_array ) !== -1;
+		} );
+
+		// If the difference is available, means we have to show the popup, not otherwise.
+		if ( 0 === common_membership_levels.length || 0 === current_user_id ) {
+			var popup_headline                 = $( '#hidden-popup-headline-' + video_post_id ).text();
+			var popup_description              = $( '#hidden-popup-description-' + video_post_id ).text();
+			var popup_button_title             = $( '#hidden-popup-button-title-' + video_post_id ).text();
+			var popup_button_url               = $( '#hidden-popup-button-url-' + video_post_id ).text();
+			var popup_footer_text_not_loggedin = $( '#hidden-popup-footer-text-not-loggedin-' + video_post_id ).text();
+			var popup_footer_text_loggedin     = $( '#hidden-popup-footer-text-loggedin-' + video_post_id ).text();
+
+			$( '.moc_paid_content_dynamic_restriction_modal .contnet_box .popup_content h2' ).html( popup_headline );
+			$( '.moc_paid_content_dynamic_restriction_modal .contnet_box .popup_content p.main-description' ).html( popup_description );
+			$( '.moc_paid_content_dynamic_restriction_modal .contnet_box .popup_content a.black_btn' ).attr( 'href', popup_button_url );
+			$( '.moc_paid_content_dynamic_restriction_modal .contnet_box .popup_content a.black_btn' ).attr( 'href', popup_button_url );
+			$( '.moc_paid_content_dynamic_restriction_modal .contnet_box .popup_content a.black_btn' ).attr( 'target', '_self' );
+			$( '.moc_paid_content_dynamic_restriction_modal .contnet_box .popup_content a.black_btn span' ).not( '.icon' ).text( popup_button_title );
+
+			// If the user is loggedin.
+			if ( 0 !== current_user_id ) {
+				$( '.moc_paid_content_dynamic_restriction_modal .contnet_box .popup_content .link_box' ).html( popup_footer_text_loggedin );
+			} else {
+				$( '.moc_paid_content_dynamic_restriction_modal .contnet_box .popup_content .link_box' ).html( popup_footer_text_not_loggedin );
+			}
+
+			// Open the restriction modal.
+			$( '.moc_paid_content_dynamic_restriction_modal' ).addClass( 'active blog_popup' );
+			return false;
+		}
+
+		// Open the video details page.
+		window.location.href = parent_li.data( 'url' );
 	}
 
 	// Filter the conference main page.
