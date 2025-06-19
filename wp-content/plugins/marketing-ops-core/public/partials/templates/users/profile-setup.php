@@ -25,26 +25,30 @@ if ( ! is_user_logged_in() ) {
 	exit;
 }
 
+$user_id = get_current_user_id();
+
+var_dump( get_user_meta( $user_id, 'experience_years', true ) );
+
 $ppress_custom_fields = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM ' . $wpdb->prefix . 'ppress_profile_fields WHERE field_key = %s', array( 'experience' ) ), ARRAY_A );
 $options              = $ppress_custom_fields[0]['options'];
 $options              = explode( ',', $options );
 $experience_years     = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM ' . $wpdb->prefix . 'ppress_profile_fields WHERE field_key = %s', array( 'experience_years' ) ), ARRAY_A );
 $years_options        = $experience_years[0]['options'];
 $years_options        = explode( ',', $years_options );
-$all_user_meta        = get_user_meta( get_current_user_id() );
+$all_user_meta        = get_user_meta( $user_id );
 $first_name           = ! empty ( $all_user_meta['first_name'][0] ) ? $all_user_meta['first_name'][0] : '';
 $lastname             = ! empty( $all_user_meta['last_name'][0] ) ? $all_user_meta['last_name'][0] : '';
 $location             = ! empty( $all_user_meta['country'][0] ) ? $all_user_meta['country'][0] : ( ! empty( $all_user_meta['billing_country'][0] ) ? $all_user_meta['billing_country'][0] : '' );
 $location            = ! empty( $location ) ? $location : '';
-$profetional_title    = ! empty( get_user_meta( get_current_user_id(), 'profetional_title', true ) ) ? get_user_meta( get_current_user_id(), 'profetional_title', true ) : '';
-$wipm                 = ! empty( get_user_meta( get_current_user_id(), 'experience', true ) ) ? get_user_meta( get_current_user_id(), 'experience', true ) : '';
-$year_experience      = ! empty( get_user_meta( get_current_user_id(), 'experience_years', true ) ) ? ceil( get_user_meta( get_current_user_id(), 'experience_years', true ) ) : '' ;
+$profetional_title    = ! empty( get_user_meta( $user_id, 'profetional_title', true ) ) ? get_user_meta( $user_id, 'profetional_title', true ) : '';
+$wipm                 = ! empty( get_user_meta( $user_id, 'experience', true ) ) ? get_user_meta( $user_id, 'experience', true ) : '';
+$year_experience      = ! empty( get_user_meta( $user_id, 'experience_years', true ) ) ? ceil( get_user_meta( $user_id, 'experience_years', true ) ) : '' ;
 $job_seeker_fields    = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM ' . $wpdb->prefix . 'ppress_profile_fields WHERE field_key = %s', array( 'job_seeker_details' ) ), ARRAY_A );
 $job_options          =  $job_seeker_fields[0]['options'];
 $job_options          =  explode( ',', $job_options );
-$job_seeker_details   = ! empty( get_user_meta( get_current_user_id(), 'job_seeker_details', true ) ) ? get_user_meta( get_current_user_id(), 'job_seeker_details', true ) : '' ;
+$job_seeker_details   = ! empty( get_user_meta( $user_id, 'job_seeker_details', true ) ) ? get_user_meta( $user_id, 'job_seeker_details', true ) : '' ;
 $default_user_img     = get_field( 'moc_user_default_image', 'option' );
-$user_img_id          = ! empty( get_user_meta( get_current_user_id(), 'wp_user_avatar', true ) ) ? get_user_meta( get_current_user_id(), 'wp_user_avatar', true ) : '' ;
+$user_img_id          = ! empty( get_user_meta( $user_id, 'wp_user_avatar', true ) ) ? get_user_meta( $user_id, 'wp_user_avatar', true ) : '' ;
 $user_img_url         = ! empty( $user_img_id ) ? wp_get_attachment_image_src( $user_img_id, 'full' ) : '';
 $image_url            = ! empty( $user_img_url ) ? $user_img_url[0] : $default_user_img;
 $main_div_class       = ! empty( $user_img_id ) ? 'pic_here' : 'blank_pic';
