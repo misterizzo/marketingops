@@ -27,8 +27,6 @@ if ( ! is_user_logged_in() ) {
 
 $user_id = get_current_user_id();
 
-var_dump( get_user_meta( $user_id, 'experience_years', true ) );
-
 $ppress_custom_fields = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM ' . $wpdb->prefix . 'ppress_profile_fields WHERE field_key = %s', array( 'experience' ) ), ARRAY_A );
 $options              = $ppress_custom_fields[0]['options'];
 $options              = explode( ',', $options );
