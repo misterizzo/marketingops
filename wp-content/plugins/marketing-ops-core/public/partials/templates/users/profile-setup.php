@@ -42,7 +42,7 @@ $location             = ! empty( $all_user_meta['country'][0] ) ? $all_user_meta
 $location            = ! empty( $location ) ? $location : '';
 $profetional_title    = ! empty( get_user_meta( $user_id, 'profetional_title', true ) ) ? get_user_meta( $user_id, 'profetional_title', true ) : '';
 $wipm                 = ! empty( get_user_meta( $user_id, 'experience', true ) ) ? get_user_meta( $user_id, 'experience', true ) : '';
-$year_experience      = ! empty( get_user_meta( $user_id, 'experience_years', true ) ) ? ceil( get_user_meta( $user_id, 'experience_years', true ) ) : '' ;
+$year_experience      = ! empty( get_user_meta( $user_id, 'experience_years', true ) ) ? get_user_meta( $user_id, 'experience_years', true ) : '' ;
 $job_seeker_fields    = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM ' . $wpdb->prefix . 'ppress_profile_fields WHERE field_key = %s', array( 'job_seeker_details' ) ), ARRAY_A );
 $job_options          =  $job_seeker_fields[0]['options'];
 $job_options          =  explode( ',', $job_options );
