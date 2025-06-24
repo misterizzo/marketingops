@@ -162,6 +162,11 @@ $agency_services          = get_terms( // Get the agency services.
 							continue;
 						}
 
+						// If the agency is not published, skip.
+						if ( 'publish' !== get_post_status( $featured_agency_id ) ) {
+							continue;
+						}
+
 						// Print the agency list item.
 						echo mops_agency_list_item( $featured_agency_id, $agency_member, 'paid' );
 					}
@@ -180,6 +185,11 @@ $agency_services          = get_terms( // Get the agency services.
 						$is_featured = $wpdb->get_row( "SELECT `meta_value` FROM `{$wpdb->postmeta}` WHERE `post_id` = {$agency_id['post_id']} AND `meta_key` = 'is_featured'", ARRAY_A );
 
 						if ( ! empty( $is_featured['meta_value'] ) && 'yes' === $is_featured['meta_value'] ) {
+							continue;
+						}
+
+						// If the agency is not published, skip.
+						if ( 'publish' !== get_post_status( $agency_id['post_id'] ) ) {
 							continue;
 						}
 
@@ -204,6 +214,11 @@ $agency_services          = get_terms( // Get the agency services.
 						$is_featured = $wpdb->get_row( "SELECT `meta_value` FROM `{$wpdb->postmeta}` WHERE `post_id` = {$agency_id['post_id']} AND `meta_key` = 'is_featured'", ARRAY_A );
 
 						if ( ! empty( $is_featured['meta_value'] ) && 'yes' === $is_featured['meta_value'] ) {
+							continue;
+						}
+
+						// If the agency is not published, skip.
+						if ( 'publish' !== get_post_status( $agency_id['post_id'] ) ) {
 							continue;
 						}
 

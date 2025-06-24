@@ -9738,7 +9738,7 @@ if ( ! function_exists( 'mops_agency_list_item' ) ) {
 			$agency_featured_image = wp_get_attachment_url( get_post_thumbnail_id( $agency_id ) );
 			$agency_services       = wp_get_object_terms( $agency_id, 'agency_service' );
 			?>
-			<li class="agency-list-item" data-membership-id="<?php echo esc_attr( $agency_member->ID ); ?>" data-agencyowner-id="<?php echo esc_attr( $agency_member->post_author ); ?>" data-membership-creation-date="<?php echo esc_attr( $agency_member->post_date ); ?>">
+			<li class="agency-list-item" data-agency="<?php echo esc_attr( $agency_id ); ?>" data-membership-id="<?php echo esc_attr( $agency_member->ID ); ?>" data-agencyowner-id="<?php echo esc_attr( $agency_member->post_author ); ?>" data-membership-creation-date="<?php echo esc_attr( $agency_member->post_date ); ?>">
 				<a href="<?php echo esc_url( get_permalink( $agency_id ) ); ?>" class="learnmorebtnagency">
 					<div class="inneragencylistbox">
 						<!-- partner tag shows up only for the paid agency memberships -->
