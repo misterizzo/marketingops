@@ -7269,7 +7269,10 @@ if ( ! function_exists( 'moc_get_courses_by_search_keyword' ) ) {
 
 function moc_convert_link_to_embed( $videoLink, $width, $height ) {
 	$embed = '';
-	if (preg_match('/https:\/\/(?:www.)?(youtube).com\/watch\\?v=(.*?)/', $videoLink))
+
+	debug( $videoLink );
+
+	if ( preg_match( '/https:\/\/(?:www.)?(youtube).com\/watch\\?v=(.*?)/', $videoLink ) )
 		$embed = preg_replace("/\s*[a-zA-Z\/\/:\.]*youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i", "<iframe width=\"" . $width . "\" height=\"" . $height . "\" src=\"//www.youtube.com/embed/$1\" frameborder=\"0\" allowfullscreen></iframe>", $videoLink);
 	if (preg_match('/https:\/\/vimeo.com\/(\\d+)/', $videoLink, $regs))
 		$embed = '<iframe src="https://player.vimeo.com/video/' . $regs[1] . '?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;color=ffffff" width="' . $width . '" height="' . $height . '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
