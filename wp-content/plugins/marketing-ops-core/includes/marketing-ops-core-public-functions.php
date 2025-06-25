@@ -6498,7 +6498,7 @@ if ( ! function_exists( 'moc_courses_products_html' ) ) {
 				}
 			}
 
-			$professior_ids = array_unique( $professior_ids );
+			$professior_ids = ( ! empty( $professior_ids ) && is_array( $professior_ids ) ) ? array_unique( $professior_ids ) : array();
 			?>
 			<div class="courses_product_page">
 				<div class="loader_bg">
