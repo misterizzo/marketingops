@@ -7274,9 +7274,7 @@ function moc_convert_link_to_embed( $videoLink, $width, $height ) {
 		return $embed;
 	}
 
-	$video_link = wp_parse_url( $videoLink['video_link'] );
-
-	var_dump( $video_link );
+	$video_link = $videoLink['video_link'];
 
 	if ( preg_match( '/https:\/\/(?:www.)?(youtube).com\/watch\\?v=(.*?)/', $video_link ) )
 		$embed = preg_replace("/\s*[a-zA-Z\/\/:\.]*youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i", "<iframe width=\"" . $width . "\" height=\"" . $height . "\" src=\"//www.youtube.com/embed/$1\" frameborder=\"0\" allowfullscreen></iframe>", $video_link );
