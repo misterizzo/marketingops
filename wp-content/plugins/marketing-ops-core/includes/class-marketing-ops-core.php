@@ -180,7 +180,7 @@ class Marketing_Ops_Core {
 		$this->loader->add_action( 'restrict_manage_posts', $plugin_admin, 'moc_restrict_manage_posts_callback' );
 		$this->loader->add_filter( 'parse_query', $plugin_admin, 'moc_parse_query_callback' );
 		$this->loader->add_filter( 'lostpassword_url', $plugin_admin, 'moc_lostpassword_url_callback', 99 );
-		$this->loader->add_filter( 'register_url', $plugin_admin, 'moc_register_url_callback', 99 );
+		$this->loader->add_filter( 'register', $plugin_admin, 'moc_register_callback', 99 );
 		$this->loader->add_filter( 'manage_edit-agency_columns', $plugin_admin, 'moc_manage_edit_agency_columns_callback' );
 		$this->loader->add_action( 'manage_agency_posts_custom_column', $plugin_admin, 'moc_manage_agency_posts_custom_column_callback', 10, 2 );
 		$this->loader->add_action( 'wp_ajax_feature_agency', $plugin_admin, 'moc_feature_agency_callback' );

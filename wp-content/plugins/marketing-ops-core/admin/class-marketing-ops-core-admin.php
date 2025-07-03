@@ -1704,11 +1704,11 @@ class Marketing_Ops_Core_Admin {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @see https://developer.wordpress.org/reference/hooks/register_url/
+	 * @see https://developer.wordpress.org/reference/hooks/register/
 	 */
-	public function moc_register_url_callback( $url ) {
+	public function moc_register_callback( $url ) {
 
-		return home_url( '/subscribe/' );
+		return sprintf( '<a class="wp-login-register" href="%s">%s</a>', esc_url( home_url( '/subscribe/' ) ), __( 'Subscribe', 'marketingops' ) );
 	}
 
 	/**
