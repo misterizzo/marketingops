@@ -4753,14 +4753,12 @@ class Marketing_Ops_Core_Public {
 	public function moc_open_video_popup_callback() {
 		$videourl    = filter_input( INPUT_POST, 'videourl', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$embeded_url = moc_convert_link_to_embed( $videourl, '640', '360' );
-
-		var_dump( $embeded_url ); die;
-
-		$response    = array(
-			'code' => 'moc-open-video-course-success',
-			'html' => $embeded_url,
+		wp_send_json_success(
+			array(
+				'code' => 'moc-open-video-course-success',
+				'html' => $embeded_url,
+			)
 		);
-		wp_send_json_success( $response );
 		wp_die();
 	}
 

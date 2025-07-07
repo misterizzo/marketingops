@@ -7270,11 +7270,7 @@ if ( ! function_exists( 'moc_get_courses_by_search_keyword' ) ) {
 function moc_convert_link_to_embed( $videoLink, $width, $height ) {
 	$embed = '';
 
-	if ( empty( $videoLink['video_link'] ) ) {
-		return $embed;
-	}
-
-	$video_link = $videoLink['video_link'];
+	$video_link = ( ! empty( $videoLink['video_link'] ) ) ? $videoLink['video_link'] : $videoLink;
 
 	if ( preg_match( '/https:\/\/(?:www.)?(youtube).com\/watch\\?v=(.*?)/', $video_link ) )
 		$embed = preg_replace("/\s*[a-zA-Z\/\/:\.]*youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i", "<iframe width=\"" . $width . "\" height=\"" . $height . "\" src=\"//www.youtube.com/embed/$1\" frameborder=\"0\" allowfullscreen></iframe>", $video_link );
