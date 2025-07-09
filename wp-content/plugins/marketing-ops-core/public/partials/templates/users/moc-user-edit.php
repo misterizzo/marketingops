@@ -547,12 +547,7 @@ if ( ! wp_is_mobile() ) {
 									<div class="loader"></div>  
 								</div>
 								<!-- Avatar_content Start -->
-								<?php
-
-									// HTML comes from common function moc_user_skill_html, Located in common function file in include folder.
-
-									echo moc_user_avtar_image( get_current_user_id() );
-								?>
+								<?php echo moc_user_avtar_image( get_current_user_id() ); // HTML comes from common function moc_user_skill_html, Located in common function file in include folder. ?>
 							</div>
 							<!-- what_welse_do_content Start -->
 							<?php
@@ -566,12 +561,13 @@ if ( ! wp_is_mobile() ) {
 									<div class="sub_title_with_content">
 										<!-- Become an ambassador -->
 										<?php
-										$is_ambassador = mops_is_user_ambassador( $current_userid );
-										echo ( $is_ambassador ) ? moc_create_a_blog_html( $current_userid ) : moc_become_ambassador_html();
+										$is_ambassador     = mops_is_user_ambassador( $current_userid );
+										$is_agency_partner = mops_is_user_agency_partner( $current_userid );
+										echo ( $is_ambassador || $is_agency_partner ) ? moc_create_a_blog_html( $current_userid ) : moc_become_ambassador_html();
 										?>
-										<!-- Become an ambassador -->
+										<!-- Be a guest on ops cast -->
 										<?php echo moc_be_a_guest_on_ops_cast_html(); ?>
-										<!-- Become an ambassador -->
+										<!-- Host a workshop -->
 										<?php echo moc_host_a_workshop_html(); ?>
 									</div>
 								</div>
@@ -1079,7 +1075,7 @@ if ( ! wp_is_mobile() ) {
 										<h3><?php echo esc_html( $sidebar_title ); ?></h3>
 									</div>
 									<div class="sub_title_with_content">
-										<!-- Become an ambassador -->
+										<!-- community badges -->
 										<?php 
 										$community_badges = ! empty( get_user_meta( $current_userid, 'moc_community_badges', true ) ) ? get_user_meta( $current_userid, 'moc_community_badges', true ) : array();
 										if ( ! empty( $community_badges ) && is_array( $community_badges ) ) {
@@ -1105,9 +1101,9 @@ if ( ! wp_is_mobile() ) {
 											echo moc_create_a_blog_html( $current_userid );
 										}
 										?>
-										<!-- Become an ambassador -->
+										<!-- Be a guest on ops cast -->
 										<?php echo moc_be_a_guest_on_ops_cast_html(); ?>
-										<!-- Become an ambassador -->
+										<!-- Host a workshop -->
 										<?php echo moc_host_a_workshop_html(); ?>
 									</div>
 								</div>

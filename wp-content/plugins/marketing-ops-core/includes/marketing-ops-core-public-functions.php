@@ -1507,7 +1507,7 @@ if ( ! function_exists( 'moc_user_bio_html' ) ) {
 		$flag_for_primary_automation = array();
 		if ( ! empty( $moc_martech_info ) && is_array( $moc_martech_info ) ) {
 			foreach ( $moc_martech_info as $moc_martech ) {
-				if ( 'yes' === $moc_martech['primary_value'] ) {
+				if ( ! empty( $moc_martech['primary_value'] ) && 'yes' === $moc_martech['primary_value'] ) {
 					$flag_for_primary_automation[] = 'yes';
 				}
 			}
@@ -1515,7 +1515,7 @@ if ( ! function_exists( 'moc_user_bio_html' ) ) {
 
 		if ( ! empty( $moc_martech_info ) && is_array( $moc_martech_info ) ) {
 			foreach ( $moc_martech_info as $moc_martech ) {
-				if ( 'yes' === $moc_martech['primary_value'] ) {
+				if ( ! empty( $moc_martech['primary_value'] ) && 'yes' === $moc_martech['primary_value'] ) {
 					// if ( $moc_martech['platform'] === )
 					$primary_automation[] = $moc_martech['platform'];
 				}
@@ -1554,7 +1554,7 @@ if ( ! function_exists( 'moc_user_bio_html' ) ) {
 
 		if (  ! empty( $moc_martech_info ) && is_array( $moc_martech_info ) ) {
 			foreach ( $moc_martech_info as $moc_martech ) {
-				if ( 'yes' === $moc_martech['primary_value'] ) {
+				if ( ! empty( $moc_martech['primary_value'] ) && 'yes' === $moc_martech['primary_value'] ) {
 					// if ( $moc_martech['platform'] === )
 					$skill_level = (int) $moc_martech['skill_level'];
 					if ( 1 <= $skill_level && 2 > $skill_level ) {
@@ -1882,9 +1882,9 @@ if ( ! function_exists( 'moc_user_martech_tools_experience_html' ) ) {
 									$skill_html      = '<a id="' . $skill_class . '" class="expert_btn btn ' . esc_attr( $skill_class ) . '">' .esc_html( $skill_level_txt ) .'</a>';
 								}
 								$excperience_description = $moc_martech_row['exp_descp'];
-								$moc_primary             = ( 'yes' === $moc_martech_row['primary_value'] ) ? 'checked' : '';
-								$primary_text_class      = ( 'yes' === $moc_martech_row['primary_value'] ) ? 'moc_main_platform' : '';
-								$primary_text            = ( 'yes' === $moc_martech_row['primary_value'] ) ? 'Main platform' : 'Platform';
+								$moc_primary             = ( ! empty( $moc_martech_row['primary_value'] ) && 'yes' === $moc_martech_row['primary_value'] ) ? 'checked' : '';
+								$primary_text_class      = ( ! empty( $moc_martech_row['primary_value'] ) && 'yes' === $moc_martech_row['primary_value'] ) ? 'moc_main_platform' : '';
+								$primary_text            = ( ! empty( $moc_martech_row['primary_value'] ) && 'yes' === $moc_martech_row['primary_value'] ) ? 'Main platform' : 'Platform';
 								?>
 								<div class="moc_martech_inner_section">
 									<div class="moc_not_editable_data">
@@ -5994,15 +5994,11 @@ if ( ! function_exists( 'moc_load_write_a_post_html' ) ) {
 			'taxonomy'     => $taxonomy,
 			'exclude'      => 1,
 		);
-		$categories = get_categories( $category_args );
+		$categories    = get_categories( $category_args );
 		$selected_cats = ! empty( $post_id ) ? wp_get_object_terms( $post_id, $taxonomy ) : array();
-		foreach ( $selected_cats as $selected_cat_data ) {
-			$post_term_ids[] = $selected_cat_data->term_id;
-		}
-		// debug( $post_term_ids );
-		// die;
-
-		$tags_args = array(
+		$post_term_ids = array();
+		$post_tag_ids  = array();
+		$tags_args     = array(
 			'type'         => $post_type,
 			'orderby'      => 'name',
 			'order'        => 'ASC',
@@ -6011,13 +6007,20 @@ if ( ! function_exists( 'moc_load_write_a_post_html' ) ) {
 			'taxonomy'     => 'post_tag',
 			'exclude'      => 1,
 		);
-		$tags = get_categories( $tags_args );
+		$tags          = get_categories( $tags_args );
 		$selected_tags = ! empty( $post_id ) ? wp_get_object_terms( $post_id, 'post_tag' ) : array();
-		foreach ( $selected_tags as $selected_tag_data ) {
-			$post_tag_ids[] = $selected_tag_data->term_id;
+
+		if ( ! empty( $selected_cats ) && is_array( $selected_cats ) ) {
+			foreach ( $selected_cats as $selected_cat_data ) {
+				$post_term_ids[] = $selected_cat_data->term_id;
+			}
 		}
-		// debug( $post_tag_ids );
-		// die;
+
+		if ( ! empty( $post_tag_ids ) && is_array( $post_tag_ids ) ) {
+			foreach ( $selected_tags as $selected_tag_data ) {
+				$post_tag_ids[] = $selected_tag_data->term_id;
+			}
+		}
 		?>
 		<div class="tabbing_content_details">
 			<div class="tabbing_row">

@@ -321,7 +321,6 @@ class Marketing_Ops_Core {
 		$this->loader->add_action( 'wp_ajax_get_courses', $plugin_public, 'moc_get_courses_callback' );
 		$this->loader->add_action( 'wp_ajax_nopriv_get_courses', $plugin_public, 'moc_get_courses_callback' );
 		$this->loader->add_action( 'wp_ajax_moc_save_post_data', $plugin_public, 'moc_save_post_data_callback' );
-		$this->loader->add_action( 'wp_ajax_nopriv_moc_save_post_data', $plugin_public, 'moc_save_post_data_callback' );
 		$this->loader->add_shortcode( 'moc_google_calendly', $plugin_public, 'moc_for_google_calendly_setting_shortcode_callback' );
 		$this->loader->add_action( 'wp_ajax_moc_load_post_count_data', $plugin_public, 'moc_load_post_count_data_callback' );
 		$this->loader->add_action( 'wp_ajax_nopriv_moc_load_post_count_data', $plugin_public, 'moc_load_post_count_data_callback' );

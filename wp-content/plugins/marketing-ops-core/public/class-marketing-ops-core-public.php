@@ -4543,9 +4543,8 @@ class Marketing_Ops_Core_Public {
 		$post_permalink   = filter_input( INPUT_POST, 'post_permalink', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$post_id          = filter_input( INPUT_POST, 'post_id', FILTER_SANITIZE_NUMBER_INT );
 		$date             = filter_input( INPUT_POST, 'date', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-		$date             = ! empty( $date ) ? $date : gmdate('Y-m-d h:i:s');
+		$date             = ( ! empty( $date ) ) ? $date : gmdate('Y-m-d h:i:s');
 		$status           = filter_input( INPUT_POST, 'status', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-		$gmtdate          = gmdate( 'Y-m-d H:i:s', $date );
 		$post_description = filter_input( INPUT_POST, 'description' ); 
 		$posted_array     = filter_input_array( INPUT_POST );
 		$post_categories  = ! empty( $posted_array['post_categories'] ) ? $posted_array['post_categories'][0] : array();
