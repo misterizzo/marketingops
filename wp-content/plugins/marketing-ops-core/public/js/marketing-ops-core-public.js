@@ -5651,14 +5651,15 @@ jQuery( document ).ready( function( $ ) {
 				var linkedin          = this_person.find( '.linkedin' ).val();
 				var displaypicture    = this_person.find( '.displaypicture' ).prop( 'files' )[0];
 				var displaypicture_id = this_person.find( '.displaypicture_id' ).val();
-
-				agency_people.push( {
+				var agency_person_obj = {
 					'fullname': fullname,
 					'position': position,
 					'linkedin': linkedin,
-					'displaypicture': displaypicture,
+					// 'displaypicture': displaypicture,
 					'displaypicture_id': displaypicture_id,
-				} );
+				};
+
+				agency_people.push( agency_person_obj );
 			} );
 
 			// Loop through the article ids.
@@ -5696,7 +5697,7 @@ jQuery( document ).ready( function( $ ) {
 			agency_form_data.append( 'agency_video', agency_video );
 
 			// Send the AJAX request for updating the agency details.
-			$.ajax({
+			$.ajax( {
 				dataType: 'JSON',
 				url: ajaxurl,
 				type: 'POST',
@@ -5764,28 +5765,33 @@ jQuery( document ).ready( function( $ ) {
 
 /* image preview */
 jQuery(document).ready(function ($) {
-  $('.imageInput').on('change', function () {
-	const container = $(this).closest('.image-upload-container');
-	const previewContainer = container.find('.preview-container');
-	const img = container.find('.preview-image');
-	if (this.files && this.files[0]) {
-	  const reader = new FileReader();
-	  reader.onload = function (e) {
-		img.attr('src', e.target.result);
-		previewContainer.show();
-	  };
-	  reader.readAsDataURL(this.files[0]);
-	}
-  });
-  $('.remove-preview-btn').on('click', function () {
-	const container = $(this).closest('.image-upload-container');
-	const previewContainer = container.find('.preview-container');
-	const inputFile = container.find('.imageInput');
-	const img = container.find('.preview-image');
-	img.attr('src', '');
-	previewContainer.hide();
-	inputFile.val('');
-  });
+	$( document ).on( 'change', '.imageInput', function () {
+		const container        = $(this).closest( '.image-upload-container' );
+		const previewContainer = container.find( '.preview-container' );
+		const img              = container.find( '.preview-image' );
+
+		console.log( 'this.files', this.files );
+
+		if ( this.files && this.files[0] && this.files[0].type.match('image.*') ) {
+			const reader  = new FileReader();
+			reader.onload = function (e) {
+				img.attr( 'src', e.target.result );
+				previewContainer.show();
+	  		};
+	 		reader.readAsDataURL(this.files[0]);
+		}
+  } );
+
+	$('.remove-preview-btn').on('click', function () {
+		const container        = $(this).closest('.image-upload-container');
+		const previewContainer = container.find('.preview-container');
+		const inputFile        = container.find('.imageInput');
+		const img              = container.find('.preview-image');
+
+		img.attr( 'src', '' );
+		previewContainer.hide();
+		inputFile.val( '' );
+	});
 });
 /* image preview */
 

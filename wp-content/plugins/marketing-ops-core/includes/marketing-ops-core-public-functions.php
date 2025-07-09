@@ -9559,14 +9559,15 @@ if ( ! function_exists( 'mops_is_user_agency_partner' ) ) {
 	 *
 	 * @since 1.0.0
 	 */
-	function mops_is_user_agency_partner( $user_id ) {
+	function mops_is_user_agency_partner( $user_id, $is_paid_agency = false ) {
 		// If the function is not defined.
 		if ( ! function_exists( 'wc_memberships_get_user_memberships' ) ) {
 			return false;
 		}
 
 		// Get the user memberships.
-		$user_active_memberships = wc_memberships_get_user_active_memberships( $user_id );
+		$user_active_memberships     = wc_memberships_get_user_active_memberships( $user_id );
+		$user_active_memberships_arr = array();
 
 		// If there are no active memberships.
 		if ( empty( $user_active_memberships ) || ! is_array( $user_active_memberships ) ) {
@@ -9575,13 +9576,19 @@ if ( ! function_exists( 'mops_is_user_agency_partner' ) ) {
 
 		// Loop through the active memberships.
 		foreach ( $user_active_memberships as $membership_data ) {
-			// If the appropriate memberhsip is assigned.
+			// If the appropriate membership is assigned.
 			if ( ! empty( $membership_data->plan->slug ) ) {
-				if ( 'mo-pros-agency-monthly-membership' === $membership_data->plan->slug ) {
-					return true;
-				} elseif ( 'free-agency-membership' === $membership_data->plan->slug ) {
-					return true;
-				}
+				$user_active_memberships_arr[] = $membership_data->plan->slug;
+			}
+		}
+
+		// Check if the user is agency partner.
+		if ( in_array( 'mo-pros-agency-monthly-membership', $user_active_memberships_arr, true ) || in_array( 'free-agency-membership', $user_active_memberships_arr, true ) ) {
+			// If the is_paid_agency is true, then check for the paid agency membership.
+			if ( $is_paid_agency && in_array( 'mo-pros-agency-monthly-membership', $user_active_memberships_arr, true ) ) {
+				return true;
+			} elseif ( ! $is_paid_agency && in_array( 'free-agency-membership', $user_active_memberships_arr, true ) ) {
+				return true;
 			}
 		}
 

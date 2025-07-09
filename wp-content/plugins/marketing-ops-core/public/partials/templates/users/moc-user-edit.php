@@ -554,15 +554,14 @@ if ( ! wp_is_mobile() ) {
 							if ( true === $flag ) {
 								?>
 								<div class="box_else_do_content box_about_content box_content moc_siderbar_content">
-									<div class="title_with_btn">
-										<!-- Avatar title -->
-											<h3><?php echo esc_html( $sidebar_title ); ?></h3>
-									</div>
+									<!-- Sidebar title -->
+									<div class="title_with_btn"><h3><?php echo esc_html( $sidebar_title ); ?></h3></div>
 									<div class="sub_title_with_content">
 										<!-- Become an ambassador -->
 										<?php
 										$is_ambassador     = mops_is_user_ambassador( $current_userid );
-										$is_agency_partner = mops_is_user_agency_partner( $current_userid );
+										$is_agency_partner = mops_is_user_agency_partner( $current_userid, true );
+
 										echo ( $is_ambassador || $is_agency_partner ) ? moc_create_a_blog_html( $current_userid ) : moc_become_ambassador_html();
 										?>
 										<!-- Be a guest on ops cast -->

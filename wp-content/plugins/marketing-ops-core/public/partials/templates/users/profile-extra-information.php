@@ -25,7 +25,7 @@ if ( is_user_logged_in() ) {
 
 	$user_id           = get_current_user_id();
 	$is_ambassador     = mops_is_user_ambassador( $user_id );
-	$is_agency_partner = mops_is_user_agency_partner( $user_id );
+	$is_agency_partner = mops_is_user_agency_partner( $user_id, true );
 	$source            = filter_input( INPUT_GET, 'source', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 	if ( ! ( $is_ambassador || $is_agency_partner ) ) {

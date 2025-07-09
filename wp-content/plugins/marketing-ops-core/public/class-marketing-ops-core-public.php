@@ -6642,6 +6642,7 @@ class Marketing_Ops_Core_Public {
 		// Loop through the agency people and update the details.
 		if ( ! empty( $agency_people ) && is_array( $agency_people ) ) {
 			foreach ( $agency_people as $agency_person ) {
+				debug( $agency_person ); die;
 				$agency_people_data[] = array(
 					'full_name'        => ( ! empty( $agency_person['fullname'] ) ) ? $agency_person['fullname'] : '',
 					'position'         => ( ! empty( $agency_person['position'] ) ) ? $agency_person['position'] : '',

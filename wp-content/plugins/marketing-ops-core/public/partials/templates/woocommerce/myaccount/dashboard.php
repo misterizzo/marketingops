@@ -328,7 +328,7 @@ $profile_points      = ( ! empty( $customer_profile_info['moc_certificates'] ) &
 		 */
 		$is_ambassador    = mops_is_user_ambassador( $current_user->ID );
 		$is_administrator = ( ! empty( $current_user->roles ) && in_array( 'administrator', $current_user->roles, true ) ) ? true : false;
-		$is_agency_owner  = mops_is_user_agency_partner( $current_user->ID );
+		$is_agency_owner  = mops_is_user_agency_partner( $current_user->ID, true );
 
 		if ( true === $is_ambassador || true === $is_administrator || true === $is_agency_owner ) {
 			?>
