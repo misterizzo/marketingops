@@ -130,6 +130,13 @@ class Marketing_Ops_Core_Admin {
 				'siteurl' => site_url(),
 			)
 		);
+
+		// See, if there is a redirect URL set in the address bar.
+		$redirect_to = filter_input( INPUT_GET, 'redirect_to', FILTER_SANITIZE_URL );
+
+		if ( ! is_null( $redirect_to ) ) {
+			setcookie( 'mops_redirect_to', $redirect_to, time() + 600, COOKIEPATH );
+		}
 	}
 
 	/**

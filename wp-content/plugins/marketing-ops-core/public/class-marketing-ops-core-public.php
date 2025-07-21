@@ -2021,6 +2021,17 @@ class Marketing_Ops_Core_Public {
 			return $redirect_to;
 		}
 
+		// If the login redirect is set in the cookie, return it first.
+		$mops_redirect_to = ( ! empty( $_COOKIE['mops_redirect_to'] ) ) ? $_COOKIE['mops_redirect_to'] : false;
+
+		// If the cookie is set, return the redirect url.
+		if ( false !== $mops_redirect_to ) {
+			return $mops_redirect_to;
+			
+			// Nullify the cookie.
+			setcookie( null, null, -1, null );
+		}
+
 		// Get the user roles.
 		$user_roles = ( ! empty( $user->roles[0] ) ) ? $user->roles[0] : '';
 
